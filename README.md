@@ -1,20 +1,20 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Charachorder Launchpad is a training tool for Charachorder users. It allows these users to practing their typing, trigrams, and chording. It is a essentially a web port of the application found here: https://www.charachorder.com/.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+### npm start
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Runs the app in the development mode.
+Open http://localhost:8080 to view it in the browser.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+The page will reload if you make edits.
+You will also see any lint errors in the console.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+### npm run build
+
+Builds a static copy of your site to the `build/` folder.
+Your app is ready to be deployed!
+
+### npm test
+
+Launches the application test runner.
+Run with the `--watch` flag (`npm test -- --watch`) to run in interactive watch mode.
