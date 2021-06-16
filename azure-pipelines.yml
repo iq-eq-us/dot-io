@@ -20,5 +20,5 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- publish: $(System.DefaultWorkingDirectory)/public
+- publish: $(System.DefaultWorkingDirectory)/build
   artifact: WebAppBuild
