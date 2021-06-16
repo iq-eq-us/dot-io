@@ -9,6 +9,8 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+container: mcr.microsoft.com/playwright:focal
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -17,8 +19,19 @@ steps:
 
 - script: |
     npm install
+  displayName: 'npm install'
+
+- script: |
+    npm run lint
+  displayName: 'npm run lint'
+
+- script: |
+    npm test
+  displayName: 'npm test'
+
+- script: |
     npm run build
-  displayName: 'npm install and build'
+  displayName: 'npm build'
 
 - publish: $(System.DefaultWorkingDirectory)/build
   artifact: WebAppBuild

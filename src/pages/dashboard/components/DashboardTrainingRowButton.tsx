@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 
 interface DashboardTrainingRowButtonProps {
@@ -7,7 +7,7 @@ interface DashboardTrainingRowButtonProps {
 
 export default function DashboardTrainingRowButton({
   title,
-}: DashboardTrainingRowButtonProps) {
+}: DashboardTrainingRowButtonProps): ReactElement {
   return <Button>{title}</Button>;
 }
 

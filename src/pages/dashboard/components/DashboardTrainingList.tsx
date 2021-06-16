@@ -5,7 +5,7 @@ import DashboardTrainingItemRow, {
 import Column from '../../../components/column';
 import styled from 'styled-components';
 
-export default function DashboardTrainingList() {
+const DashboardTrainingList = (): ReactElement => {
   return (
     <DashboardListColumn>
       <AlphabeticTierRow />
@@ -16,7 +16,9 @@ export default function DashboardTrainingList() {
       <VerticalBlueBar />
     </DashboardListColumn>
   );
-}
+};
+
+export default DashboardTrainingList;
 
 const AlphabeticTierRow = () => (
   <DashboardTrainingItemRow

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import Row from '../../../components/row';
 import Column from '../../../components/column';
@@ -12,13 +12,13 @@ interface DashboardTrainingItemProps {
   tierTitle?: string;
 }
 
-export default function DashboardTrainingItemRow({
+const DashboardTrainingItemRow = ({
   tierTitle,
   contentText,
   shouldDisplayHeader,
   tutorialButtonTitle,
   exerciseButtonTitle,
-}: DashboardTrainingItemProps) {
+}: DashboardTrainingItemProps): ReactElement => {
   return (
     <Wrapper>
       <DashboardTrainingItemRowContainer>
@@ -48,7 +48,9 @@ export default function DashboardTrainingItemRow({
       <EndCapCircle />
     </Wrapper>
   );
-}
+};
+
+export default DashboardTrainingItemRow;
 
 export const TRAINING_BAR_COLOR = '#6D9FE6';
 const ROW_HEIGHT = 24;

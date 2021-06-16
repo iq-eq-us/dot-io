@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Row from '../../components/row';
 import DashboardHeader from './components/DashboardHeader';
 import DashboardPageContainer from './components/DashboardPageContainer';
@@ -6,7 +6,7 @@ import DashboardTrainingList from './components/DashboardTrainingList';
 import { DashboardColumn } from './components/DashboardRow';
 import { Link } from 'react-router-dom';
 
-export default function Dashboard() {
+const Dashboard = (): ReactElement => {
   return (
     <DashboardPageContainer>
       <Row>
@@ -29,4 +29,6 @@ export default function Dashboard() {
       </Row>
     </DashboardPageContainer>
   );
-}
+};
+
+export default Dashboard;
