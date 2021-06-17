@@ -33,12 +33,14 @@ steps:
     npm run build
   displayName: 'npm build'
 
-- publish: $(System.DefaultWorkingDirectory)/build
-  artifact: WebAppBuild
+- publish: build
+  artifact: WebAppBuild/
 
 - task: AzureStaticWebApp@0
   inputs:
     app_location: '$(System.DefaultWorkingDirectory)'
+    app_build_command: 'npm run build'
     output_location: '$(System.DefaultWorkingDirectory)/build'
-  env:
-    azure_static_web_apps_api_token: $(deployment_token)
+    skip_app_build: false
+    azure_static_web_apps_api_token: 'e4ad7adc8b9955e35dc9c1fa835c7ee7c95efc3e3c72bec430f86a274d3d5718-ec169abf-f148-4438-90e1-45fa58218fbe01020114'
+
