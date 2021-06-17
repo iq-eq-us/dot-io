@@ -34,7 +34,7 @@ steps:
   displayName: 'npm build'
 
 - publish: build
-  artifact: WebAppBuild/
+  artifact: WebAppBuild
 
 - task: AzureStaticWebApp@0
   inputs:
