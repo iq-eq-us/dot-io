@@ -35,3 +35,10 @@ steps:
 
 - publish: $(System.DefaultWorkingDirectory)/build
   artifact: WebAppBuild
+
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: '$(System.DefaultWorkingDirectory)'
+    output_location: '$(System.DefaultWorkingDirectory)/build'
+  env:
+    azure_static_web_apps_api_token: $(deployment_token)
