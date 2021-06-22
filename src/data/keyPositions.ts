@@ -1,4 +1,4 @@
-import type { KeyHighlightPosition } from 'src/helpers/convertStringToKeyHighlightPositions';
+import type { KeyHighlightPosition } from '../models/keyHighlightPositions';
 
 export const keyPositions: Record<string, KeyHighlightPosition> = {
   '317-57': {
@@ -75,7 +75,7 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
   },
   '446-60': {
     sectorGroup: 12,
-    w: 'SOUTH',
+    direction: 'SOUTH',
   },
   '101-35': {
     sectorGroup: 2,

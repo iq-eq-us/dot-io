@@ -3,7 +3,7 @@ import { useStoreState, useStoreActions } from '../../../store/store';
 import styled from 'styled-components';
 import ProgressBar from './progressBar';
 import CharachorderOverlay from './charachorderOverlay';
-import type { TrainingScenario } from '../../../types/trainingScenario';
+import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useCurrentTrainingScenario } from '../useCurrentTrainingScenario';
 
 export default function MainTrainingColumn(): ReactElement {
@@ -35,7 +35,14 @@ export default function MainTrainingColumn(): ReactElement {
   }, [userEnteredText, targetWord]);
 
   const isErrorInUserEnteredText =
-    !targetWord?.startsWith(userEnteredText) || false;
+    !(isInAlphabetMode ? targetWord : targetWord + ' ')?.startsWith(
+      userEnteredText,
+    ) || false;
+
+  const setErrorOccurredWhileTypingTargetChord = useStoreActions(
+    (store) => store.setErrorOccurredWhileAttemptingToTypeTargetChord,
+  );
+  if (isErrorInUserEnteredText) setErrorOccurredWhileTypingTargetChord(true);
 
   const previousText = getTextToShowBehindCurrentWord(
     indexOfCurrentLineOfTrainingText,
@@ -53,6 +60,10 @@ export default function MainTrainingColumn(): ReactElement {
     indexOfCurrentLineOfTrainingText,
     trainingText,
     currentTrainingMode,
+  );
+
+  const timeTakenToTypePreviousChord = useStoreState(
+    (store) => store.timeTakenToTypePreviousChord,
   );
 
   return (
@@ -92,7 +103,7 @@ export default function MainTrainingColumn(): ReactElement {
 
       <div className="flex flex-row items-center mt-8 w-3/4 mx-8">
         <p className="mr-4" style={{ whiteSpace: 'nowrap' }}>
-          Last: 39
+          Last: {timeTakenToTypePreviousChord?.toFixed(0)}
         </p>
         <input
           autoFocus

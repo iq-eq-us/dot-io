@@ -4,12 +4,15 @@ import SettingsMenu from './components/settingsMenu';
 import MainTrainingColumn from './components/mainTrainingColumn';
 import StatisticColumn from './components/statisticColumn';
 import { useUpdateTrainingModeOnURLChange } from '../../hooks/useUpdateTrainingModeOnURLChange';
+import { ClosingPrompt } from './components/closingPrompt';
 
 const Training = (): ReactElement => {
   useUpdateTrainingModeOnURLChange();
 
   return (
     <PageContainer>
+      <ClosingPrompt />
+
       <MainContentRow>
         <ContentColumn>
           <SettingsMenu />

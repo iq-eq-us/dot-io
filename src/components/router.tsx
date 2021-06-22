@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from '../pages/dashboard/dashboard';
 import Test from '../pages/dashboard/alternateDashboard';
 import Navbar from '../components/navbar';
@@ -14,7 +14,7 @@ export const ROUTER_PATHS = {
 
 const Router = (): ReactElement => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route path={ROUTER_PATHS.home} exact>
           <Dashboard />
@@ -37,7 +37,7 @@ const Router = (): ReactElement => {
           <Training />
         </Route>
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

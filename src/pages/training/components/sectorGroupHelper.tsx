@@ -9,7 +9,7 @@ function SectorGroupHelper({ scale }: Props): ReactElement {
   const [isDragging, setIsDragging] = useState(true);
   const [posX, setPosX] = useState(0);
   const [posY, setPosY] = useState(0);
-  const sectorRef = useRef();
+  const sectorRef = useRef<HTMLDivElement>(null);
 
   return (
     <div

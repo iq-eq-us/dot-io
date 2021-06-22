@@ -1,10 +1,4 @@
-export type KeyboardKeyID = number;
-
-export interface KeyboardKey {
-  id: KeyboardKeyID;
-  title: string;
-  titleTransformOverride?: string;
-}
+import type { KeyboardKey } from './keyboardKey';
 
 export const AltKey: KeyboardKey = {
   title: 'Alt',

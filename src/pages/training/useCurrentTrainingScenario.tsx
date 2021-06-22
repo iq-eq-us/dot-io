@@ -1,5 +1,5 @@
 import { useStoreState } from '../../store/store';
-import type { TrainingScenario } from '../../types/trainingScenario';
+import type { TrainingScenario } from '../../models/trainingScenario';
 
 export const useCurrentTrainingScenario = (): TrainingScenario | void => {
   const currentTrainingMode = useStoreState(

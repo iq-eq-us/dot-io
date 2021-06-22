@@ -8,9 +8,14 @@
     "eslint.alwaysShowStatus": true,
     "typescript.tsdk": "node_modules/typescript/lib",
     "editor.tabSize": 2,
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "typescript.preferences.importModuleSpecifier": "relative"
   },
   "extensions": {
-    "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "aaron-bond.better-comments"
+    ]
   }
 }

@@ -1,9 +1,11 @@
 import { createStore, createTypedHooks } from 'easy-peasy';
 import type { CompleteStoreModel } from '../models/storeModel';
+import { TrainingStorageStore } from './statisticsStorageStore';
 import { TrainingStore } from './trainingStore';
 
 export const defaultStoreState: CompleteStoreModel = {
   isDebug: false,
+  ...TrainingStorageStore,
   ...TrainingStore,
 };
 

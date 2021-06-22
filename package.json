@@ -5,7 +5,8 @@
     "test": "web-test-runner \"src/**/*.test.tsx\" --node-resolve --playwright --browsers chromium firefox",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint -c ./.eslintrc.js \"src/**/*.{ts,tsx}\" ",
-    "lint:fix": "eslint -c ./.eslintrc.js \"src/**/*.{ts,tsx}\" --fix"
+    "lint:fix": "eslint -c ./.eslintrc.js \"src/**/*.{ts,tsx}\" --fix",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "easy-peasy": "^5.0.3",

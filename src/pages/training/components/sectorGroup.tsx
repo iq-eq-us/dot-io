@@ -2,13 +2,15 @@ import React, { ReactElement } from 'react';
 import StaticSector from './staticSector';
 import {
   SectorGroupMap,
-  SectorGroupSpecifier,
-  SectorGroupData,
   BlankSectorGroupData,
 } from '../../../models/sectorGroupSpecifier';
 import { useStoreState } from '../../../store/store';
-import type { Direction } from '../../../helpers/convertStringToKeyHighlightPositions';
 import { useIsDebug } from '../../../hooks/useDebug';
+import type {
+  SectorGroupData,
+  SectorGroupSpecifier,
+} from '../../../models/sectorGroup';
+import type { Direction } from '../../../models/keyHighlightPositions';
 
 interface Props {
   top: number;
