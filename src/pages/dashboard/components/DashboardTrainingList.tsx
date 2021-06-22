@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import DashboardTrainingItemRow, {
   TRAINING_BAR_COLOR,
 } from './DashboardTrainingItem';

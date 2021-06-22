@@ -15,6 +15,7 @@ export default {
       },
     ],
     '@snowpack/plugin-postcss',
+    './reload-global-css-after-file-changes.js'
   ],
   routes: [
     /* Enable an SPA Fallback in development: */

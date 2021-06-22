@@ -5,11 +5,18 @@ import Test from '../pages/dashboard/alternateDashboard';
 import Navbar from '../components/navbar';
 import Training from '../pages/training/training';
 
+export const ROUTER_PATHS = {
+  home: '/',
+  alphabetTraining: '/training-alphabet',
+  trigramTraining: '/training-trigram',
+  chordTraining: '/training-chord',
+};
+
 const Router = (): ReactElement => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact>
+        <Route path={ROUTER_PATHS.home} exact>
           <Dashboard />
         </Route>
 
@@ -18,7 +25,15 @@ const Router = (): ReactElement => {
           <Test />
         </Route>
 
-        <Route path="/training">
+        <Route path={ROUTER_PATHS.alphabetTraining}>
+          <Training />
+        </Route>
+
+        <Route path={ROUTER_PATHS.trigramTraining}>
+          <Training />
+        </Route>
+
+        <Route path={ROUTER_PATHS.chordTraining}>
           <Training />
         </Route>
       </Switch>

@@ -1,8 +1,9 @@
-import type { Action } from 'easy-peasy';
+import type { TrainingStoreModel } from 'src/store/trainingStore';
 
-interface StoreModel {
-  todos: string[];
-  addTodo: Action<StoreModel, string>;
+interface AppStoreModel {
+  isDebug: boolean;
 }
 
-export default StoreModel;
+type CompleteStoreModel = AppStoreModel & TrainingStoreModel;
+
+export { CompleteStoreModel };

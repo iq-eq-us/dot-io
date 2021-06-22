@@ -4,9 +4,8 @@
     "build": "snowpack build",
     "test": "web-test-runner \"src/**/*.test.tsx\" --node-resolve --playwright --browsers chromium firefox",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "lint": "eslint -c ./.eslintrc.js './src/**/*.{ts,tsx}' ",
-    "lint:fix": "eslint -c ./.eslintrc.js './src/**/*.{ts,tsx}' --fix",
-    "prepare": "husky install"
+    "lint": "eslint -c ./.eslintrc.js \"src/**/*.{ts,tsx}\" ",
+    "lint:fix": "eslint -c ./.eslintrc.js \"src/**/*.{ts,tsx}\" --fix"
   },
   "dependencies": {
     "easy-peasy": "^5.0.3",
@@ -38,7 +37,6 @@
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.24.0",
-    "husky": "^6.0.0",
     "i": "^0.3.6",
     "npm": "^7.17.0",
     "postcss": "^8.3.4",

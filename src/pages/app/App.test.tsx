@@ -3,12 +3,12 @@
 // import App from './App';
 import { expect } from 'chai';
 import { createStore } from 'easy-peasy';
-import type StoreModel from '../../models/storeModel';
+import type { CompleteStoreModel } from '../../models/storeModel';
 import { defaultStoreState } from '../../store/store';
 
 describe('<App>', () => {
   it('can successfully create a store', () => {
-    const store = createStore<StoreModel>(defaultStoreState);
+    const store = createStore<CompleteStoreModel>(defaultStoreState);
     expect(store).is.not.null;
     expect(store).is.not.undefined;
   });

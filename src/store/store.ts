@@ -1,16 +1,15 @@
-import { createStore, action, createTypedHooks } from 'easy-peasy';
-import type StoreModel from 'src/models/storeModel';
+import { createStore, createTypedHooks } from 'easy-peasy';
+import type { CompleteStoreModel } from '../models/storeModel';
+import { TrainingStore } from './trainingStore';
 
-export const defaultStoreState: StoreModel = {
-  todos: ['Create store', 'Wrap application', 'Use store'],
-  addTodo: action((state, payload) => {
-    state.todos.push(payload);
-  }),
+export const defaultStoreState: CompleteStoreModel = {
+  isDebug: false,
+  ...TrainingStore,
 };
 
-const store = createStore<StoreModel>(defaultStoreState);
+const store = createStore<CompleteStoreModel>(defaultStoreState);
 
-const typedHooks = createTypedHooks<StoreModel>();
+const typedHooks = createTypedHooks<CompleteStoreModel>();
 
 export const useStoreActions = typedHooks.useStoreActions;
 export const useStoreDispatch = typedHooks.useStoreDispatch;

@@ -5,6 +5,7 @@ import DashboardPageContainer from './components/DashboardPageContainer';
 import DashboardTrainingList from './components/DashboardTrainingList';
 import { DashboardColumn } from './components/DashboardRow';
 import { Link } from 'react-router-dom';
+import { ROUTER_PATHS } from '../../components/router';
 
 const Dashboard = (): ReactElement => {
   return (
@@ -20,9 +21,21 @@ const Dashboard = (): ReactElement => {
             </button>
           </Link>
 
-          <Link to="training">
+          <Link to={ROUTER_PATHS.alphabetTraining}>
             <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-              Training
+              Alphabet Training
+            </button>
+          </Link>
+
+          <Link to={ROUTER_PATHS.trigramTraining}>
+            <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              Trigram Training
+            </button>
+          </Link>
+
+          <Link to={ROUTER_PATHS.chordTraining}>
+            <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              Chord Training
             </button>
           </Link>
         </DashboardColumn>
