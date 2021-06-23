@@ -51,7 +51,8 @@ function ratePercentageInput(
 ) {
   return (
     <NumberInput
-      labelTitle="Target Chords:"
+      disabled={trainingSettings.autoOrCustom === 'AUTO'}
+      labelTitle="Rate (%):"
       value={trainingSettings.ratePercentage}
       onChange={(e) =>
         setTrainingSettings({
@@ -69,6 +70,7 @@ function speedGoalInput(
 ) {
   return (
     <NumberInput
+      disabled={trainingSettings.autoOrCustom === 'AUTO'}
       labelTitle="Speed Goal:"
       value={trainingSettings.speedGoal}
       onChange={(e) =>
@@ -87,6 +89,7 @@ function targetChordinput(
 ) {
   return (
     <NumberInput
+      disabled={trainingSettings.autoOrCustom === 'AUTO'}
       labelTitle="Target Chords:"
       value={trainingSettings.targetChords}
       onChange={(e) =>

@@ -9,7 +9,7 @@ export const AltKey: KeyboardKey = {
 export const NumShiftKey: KeyboardKey = {
   title: 'Num Shift',
   id: 2,
-  titleTransformOverride: 'rotate(135deg) translate(5px, 12px) scale(0.8)',
+  titleTransformOverride: 'rotate(135deg) translate(8px, 17px) scale(0.8)',
 };
 
 export const AmbiThrowKey: KeyboardKey = {
@@ -21,13 +21,13 @@ export const AmbiThrowKey: KeyboardKey = {
 export const ShiftKey: KeyboardKey = {
   title: 'Shift',
   id: 4,
-  titleTransformOverride: 'rotate(135deg) translate(10px, 8px)',
+  titleTransformOverride: 'rotate(135deg) translate(16px, 14px)',
 };
 
 export const CtrlKey: KeyboardKey = {
   title: 'Ctrl',
   id: 5,
-  titleTransformOverride: 'rotate(135deg) translate(8px, 3px)',
+  titleTransformOverride: 'rotate(135deg) translate(12px, 8px)',
 };
 
 export const BlankKey: KeyboardKey = {
@@ -57,7 +57,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   9: {
     title: 'Del',
     id: 9,
-    titleTransformOverride: 'rotate(135deg) translate(5px, 3px)',
+    titleTransformOverride: 'rotate(135deg) translate(8px, 7px)',
   },
   10: {
     title: '.',
@@ -108,7 +108,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   21: {
     title: 'Click',
     id: 21,
-    titleTransformOverride: 'rotate(135deg) translate(10px, 7px) scale(0.9)',
+    titleTransformOverride: 'rotate(135deg) translate(16px, 12px) scale(0.9)',
   },
   22: {
     title: 'W',
@@ -130,7 +130,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   26: {
     title: 'Middle Click',
     id: 26,
-    titleTransformOverride: 'translate(-22px, -5px) rotate(135deg) scale(0.65)',
+    titleTransformOverride: 'translate(-25px, -5px) rotate(135deg) scale(0.65)',
   },
   27: {
     title: 'Esc',
@@ -162,7 +162,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   33: {
     title: 'Enter',
     id: 33,
-    titleTransformOverride: 'rotate(135deg) translate(12px, 6px)',
+    titleTransformOverride: 'rotate(135deg) translate(16px, 10px)',
   },
   34: {
     title: 'A',
@@ -196,7 +196,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   41: {
     title: 'Tab',
     id: 41,
-    titleTransformOverride: 'rotate(135deg) translate(8px, 3px)',
+    titleTransformOverride: 'rotate(135deg) translate(10px, 6px)',
   },
   42: {
     title: 'L',
@@ -213,7 +213,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   45: {
     title: 'Ctrl',
     id: 45,
-    titleTransformOverride: 'rotate(135deg) translate(8px, 3px)',
+    titleTransformOverride: 'rotate(135deg) translate(12px, 8px)',
   },
   46: {
     title: 'Y',
@@ -267,6 +267,6 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   58: {
     title: 'Right Click',
     id: 58,
-    titleTransformOverride: 'rotate(-45deg) translate(-8px, -15px) scale(0.7)',
+    titleTransformOverride: 'rotate(-45deg) translate(-8px, -18px) scale(0.7)',
   },
 };

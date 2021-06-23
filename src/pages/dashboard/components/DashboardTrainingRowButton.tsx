@@ -3,16 +3,35 @@ import styled from 'styled-components';
 
 interface DashboardTrainingRowButtonProps {
   title: string;
+  onClick?: () => void;
+  doubleButtonVariant?: boolean;
 }
 
 export default function DashboardTrainingRowButton({
   title,
+  onClick,
+  doubleButtonVariant,
 }: DashboardTrainingRowButtonProps): ReactElement {
-  return <Button>{title}</Button>;
+  return (
+    <Button
+      doubleButtonVariant={doubleButtonVariant}
+      active={!!onClick}
+      onClick={onClick}
+    >
+      {title}
+    </Button>
+  );
 }
 
-const Button = styled.button`
-  background-color: #4daf4a;
+interface ButtonProps {
+  active?: boolean;
+  doubleButtonVariant?: boolean;
+}
+
+const Button = styled.button<ButtonProps>`
+  ${(props) =>
+    props.active ? `background-color: #4daf4a;` : `background-color: #bbb;`}
+
   height: calc(90% - 20px);
   padding: 0.5rem 0.3rem;
   color: white;
@@ -22,4 +41,8 @@ const Button = styled.button`
   margin: 10px;
   width: 150px;
   font-size: 1.2rem;
+
+  ${(props) =>
+    props.doubleButtonVariant &&
+    'margin: 2px 10px; padding: 0.25rem 0.15rem; border-radius: 12px; font-size: 1rem;'}
 `;

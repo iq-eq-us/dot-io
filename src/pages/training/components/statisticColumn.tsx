@@ -15,7 +15,10 @@ export default function StatisticColumn(): ReactElement {
   );
 
   return (
-    <div className="p-4 flex flex-col items-end overflow-y-scroll h-screen">
+    <div
+      className="p-4 flex flex-col items-end overflow-y-scroll h-screen"
+      style={{ fontWeight: 500 }}
+    >
       <div className="flex flex-row">
         <input
           className="mr-2 leading-tight"
@@ -28,7 +31,9 @@ export default function StatisticColumn(): ReactElement {
             });
           }}
         />
-        <span className="text-sm">AutoWrite</span>
+        <span className="text-sm" style={{ color: 'skyblue' }}>
+          AutoWrite
+        </span>
       </div>
 
       <table className="text-gray-500">
@@ -42,7 +47,7 @@ export default function StatisticColumn(): ReactElement {
           </tr>
         </thead>
         <tbody>
-          <tr className="text-blue-300">
+          <tr style={{ color: 'skyblue' }}>
             <td className="w-28">Cumulative:</td>
             <td>{getCumulativeAverageChordTypeTime(sortedStats)}</td>
             <td>{timeTakenToTypePreviousChord?.toFixed(0)}</td>
@@ -71,7 +76,7 @@ export default function StatisticColumn(): ReactElement {
   );
 }
 
-const getCumulativeAverageChordTypeTime = (
+export const getCumulativeAverageChordTypeTime = (
   stats: ChordStatistics[],
 ): string => {
   const statsWithUntypedChordsRemoved = stats.filter(
@@ -91,7 +96,7 @@ const getCumulativeAverageChordTypeTime = (
   return (isNaN(average) ? '0' : average?.toFixed()) || '0';
 };
 
-const getCumulativeValueByPropertyName = <T,>(
+export const getCumulativeValueByPropertyName = <T,>(
   object: T[],
   propertyName: keyof T,
 ): string => {

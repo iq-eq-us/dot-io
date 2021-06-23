@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
-const Row = styled.div`
+interface Props {
+  center?: boolean;
+}
+
+const Row = styled.div<Props>`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  ${(props) => (props.center ? 'align-items: center;' : '')}
 `;
 
 export default Row;

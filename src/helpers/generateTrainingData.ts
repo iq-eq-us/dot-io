@@ -1,11 +1,15 @@
 import { chordLibrary } from '../data/chordLibrary';
 
+const generateNRandomLetters = (n: number) => {
+  const array = [];
+  for (let i = 0; i < n; i++)
+    array.push(String.fromCharCode(97 + Math.floor(Math.random() * 26)));
+
+  return array;
+};
+
 export const generateCharacterTrainingData = (): string[][] => {
-  return [
-    ['p', 'j', 'f', 'v', 'y', 't', 'a', 'd', 'h', 'c', 'q', 'a', 'x'],
-    ['a', 'a', 'c', 'd', 'f', 'h', 'j', 'q', 't', 'v', 'x', 'y', 'p'],
-    ['y', 'x', 'v', 't', 'q', 'p', 'j', 'h', 'f', 'd', 'c', 'a', 'a'],
-  ];
+  return [generateNRandomLetters(20)];
 };
 
 export const generateTrigramTrainingData = (): string[][] => {

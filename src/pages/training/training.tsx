@@ -30,7 +30,9 @@ const Training = (): ReactElement => {
 
 const PageContainer = styled.div.attrs({
   className: 'bg-black h-screen w-screen text-white',
-})``;
+})`
+  font-family: 'Courier New';
+`;
 
 const MainContentRow = styled.div.attrs({
   className: 'flex flex-row px-4 justify-between',

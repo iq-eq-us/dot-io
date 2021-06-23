@@ -4,7 +4,6 @@ import {
   generateChordsForChordedTrainingRandomly,
   generateTrigramTrainingData,
 } from '../helpers/generateTrainingData';
-import { ROUTER_PATHS } from '../components/router';
 import { defaultTrainingSettings } from '../models/trainingSettingsStateModel';
 import { ConvertStringToKeyHighlightPositions } from '../helpers/convertStringToKeyHighlightPositions';
 import type { TrainingStoreModel } from '../models/trainingStore';
@@ -15,8 +14,9 @@ import {
   TrainingStatistics,
 } from '../models/trainingStatistics';
 import { ChordLibrary, chordLibrary } from '../data/chordLibrary';
+import { getCurrentTrainingScenario } from '../pages/training/useCurrentTrainingScenario';
 
-const CHORD_LINE_LENGTH = 40;
+const CHORD_LINE_LENGTH = 30;
 
 const TrainingStore: TrainingStoreModel = {
   // * State
@@ -35,23 +35,6 @@ const TrainingStore: TrainingStoreModel = {
     const targetWord = state.targetWord;
     return ConvertStringToKeyHighlightPositions(targetWord || '');
   }),
-  currentTrainingMode: computed(() => {
-    const location = document?.location;
-
-    /**
-     * ? This may need to change in the future if you want to switch up your training mode based on
-     * ? something other than the url location
-     */
-
-    if (location.toString().endsWith(ROUTER_PATHS.alphabetTraining))
-      return 'ALPHABET';
-    else if (location.toString().endsWith(ROUTER_PATHS.trigramTraining))
-      return 'TRIGRAM';
-    else if (location.toString().endsWith(ROUTER_PATHS.chordTraining))
-      return 'CHORDING';
-
-    return undefined;
-  }),
   targetWord: computed((state) => {
     const trainingText = state.trainingText;
     const targetWord =
@@ -65,8 +48,16 @@ const TrainingStore: TrainingStoreModel = {
   setTrainingSettings: action((state, payload) => {
     state.trainingSettings = payload;
   }),
+  beginTrainingLexicalMode: action((state) => {
+    state.trainingText = [];
+    state.trainingStatistics = { statistics: [] };
+    resetTrainingStore(state);
+  }),
   beginTrainingAlphabetMode: action((state) => {
-    state.trainingText = generateCharacterTrainingData();
+    state.trainingText = [
+      generateCharacterTrainingData()[0],
+      generateCharacterTrainingData()[0],
+    ];
     state.trainingStatistics = generateEmptyChordStatistics('letters');
     resetTrainingStore(state);
   }),
@@ -106,6 +97,7 @@ function resetTrainingStore(state: TrainingStoreModel) {
   state.currentSubindexInTrainingText = 0;
   state.timeOfLastChordStarted = performance.now();
   state.timeTakenToTypePreviousChord = 0;
+  state.trainingSettings = defaultTrainingSettings;
 }
 
 function resetTargetChordMetaInformation(state: TrainingStoreModel) {
@@ -164,14 +156,23 @@ function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
   if (isReadyToAdvanceToNextLineOfTrainingText) {
     state.currentLineOfTrainingText += 1;
     state.currentSubindexInTrainingText = 0;
-    if ((state.currentTrainingMode as unknown as string) === 'CHORDING')
-      state.trainingText = [
-        ...state.trainingText,
-        ...generateChordsForChordedTrainingRandomly(1, CHORD_LINE_LENGTH),
-      ];
+    generateNextLineOfInputdata(state);
   } else {
     state.currentSubindexInTrainingText += 1;
   }
+}
+
+function generateNextLineOfInputdata(state: TrainingStoreModel) {
+  if (getCurrentTrainingScenario() === 'CHORDING')
+    state.trainingText = [
+      ...state.trainingText,
+      ...generateChordsForChordedTrainingRandomly(1, CHORD_LINE_LENGTH),
+    ];
+  if (getCurrentTrainingScenario() === 'ALPHABET')
+    state.trainingText = [
+      ...state.trainingText,
+      ...generateCharacterTrainingData(),
+    ];
 }
 
 function generateEmptyChordStatistics(

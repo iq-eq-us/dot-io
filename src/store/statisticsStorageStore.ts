@@ -1,4 +1,5 @@
-import { action } from 'easy-peasy';
+import { action, computed } from 'easy-peasy';
+import { chordLibrary } from '../data/chordLibrary';
 import type { StatisticsStore } from '../models/statisticsStorage';
 import {
   ChordStatistics,
@@ -10,6 +11,9 @@ const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
 const storedTrainingStats: TrainingStatistics = JSON.parse(
   localStorage.getItem(SAVED_STATS_STORAGE_KEY) || '{"statistics":[]}',
 ) as TrainingStatistics;
+
+const ifHasOccurredAtLeastOnce = (e: ChordStatistics): boolean =>
+  e.numberOfOccurrences !== 0;
 
 const TrainingStorageStore: StatisticsStore = {
   totalSavedTrainingStatistics: storedTrainingStats,
@@ -23,15 +27,39 @@ const TrainingStorageStore: StatisticsStore = {
     if (statisticsAlreadyExist) {
       handleStatsMerge(store as StatisticsStore, payload);
     } else {
+      const objectToSave = {
+        statistics: payload.statistics.filter(ifHasOccurredAtLeastOnce),
+      };
+      store.totalSavedTrainingStatistics = objectToSave;
       localStorage.setItem(
         SAVED_STATS_STORAGE_KEY,
-        JSON.stringify({
-          statistics: payload.statistics.filter(
-            (e) => e.numberOfOccurrences !== 0,
-          ),
-        }),
+        JSON.stringify(objectToSave),
       );
     }
+  }),
+  totalSavedCharacterChordStats: computed((store) => {
+    const totalSavedStats = store.totalSavedTrainingStatistics;
+    const characterKeys = Object.keys(chordLibrary.letters);
+
+    return {
+      statistics: totalSavedStats.statistics.filter((s) =>
+        characterKeys.includes(s.id),
+      ),
+    };
+  }),
+  totalSavedChordStats: computed((store) => {
+    const totalSavedStats = store.totalSavedTrainingStatistics;
+    const characterKeys = Object.keys(chordLibrary.chords);
+
+    return {
+      statistics: totalSavedStats.statistics.filter((s) =>
+        characterKeys.includes(s.id),
+      ),
+    };
+  }),
+  clearAllStorage: action((store) => {
+    store.totalSavedTrainingStatistics = { statistics: [] };
+    localStorage.clear();
   }),
 };
 
@@ -39,16 +67,24 @@ const handleStatsMerge = (
   store: StatisticsStore,
   payload: TrainingStatistics,
 ) => {
-  const existingStatistics = store.totalSavedTrainingStatistics;
-  const statisticsToMerge = payload;
+  const existingStatistics = {
+    statistics: store.totalSavedTrainingStatistics.statistics.filter(
+      ifHasOccurredAtLeastOnce,
+    ),
+  };
+  const statisticsToMerge = {
+    statistics: payload.statistics.filter(ifHasOccurredAtLeastOnce),
+  };
 
   const allChordKeys = [
-    ...existingStatistics.statistics
-      .filter((s: ChordStatistics) => s.numberOfOccurrences > 0)
-      .map((s: ChordStatistics) => s.id),
-    ...statisticsToMerge.statistics
-      .filter((s: ChordStatistics) => s.numberOfOccurrences > 0)
-      .map((s: ChordStatistics) => s.id),
+    ...new Set([
+      ...existingStatistics.statistics
+        .filter((s: ChordStatistics) => s.numberOfOccurrences > 0)
+        .map((s: ChordStatistics) => s.id),
+      ...statisticsToMerge.statistics
+        .filter((s: ChordStatistics) => s.numberOfOccurrences > 0)
+        .map((s: ChordStatistics) => s.id),
+    ]),
   ];
 
   const newStats: ChordStatistics[] = [];
@@ -83,7 +119,12 @@ const handleStatsMerge = (
     newStats.push(newStat);
   });
 
-  localStorage.setItem(SAVED_STATS_STORAGE_KEY, JSON.stringify(newStats));
+  const objectToSave = {
+    statistics: newStats,
+  };
+
+  store.totalSavedTrainingStatistics = objectToSave;
+  localStorage.setItem(SAVED_STATS_STORAGE_KEY, JSON.stringify(objectToSave));
 };
 
 export { TrainingStorageStore };

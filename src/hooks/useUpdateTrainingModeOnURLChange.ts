@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useCurrentTrainingScenario } from '../pages/training/useCurrentTrainingScenario';
 import { useStoreActions } from '../store/store';
 
@@ -13,11 +13,15 @@ function useUpdateTrainingModeOnURLChange(): void {
   const startChordTraining = useStoreActions(
     (store) => store.beginTrainingChordMode,
   );
+  const startLexicalTraining = useStoreActions(
+    (store) => store.beginTrainingLexicalMode,
+  );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (currentTrainingScenario === 'ALPHABET') startAlphabetTraining();
     else if (currentTrainingScenario === 'TRIGRAM') startTrigramTraining();
     else if (currentTrainingScenario === 'CHORDING') startChordTraining();
+    else if (currentTrainingScenario === 'LEXICAL') startLexicalTraining();
   }, [currentTrainingScenario]);
 }
 

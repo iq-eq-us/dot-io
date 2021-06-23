@@ -5,7 +5,7 @@ export default function HUDToggle(): ReactElement {
   const [trainingSettings, setTrainingSettings] = useTrainingSettings();
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row" style={{ color: 'skyblue' }}>
       <span className="text-sm">HUD</span>
       <input
         className="ml-2 leading-tight"

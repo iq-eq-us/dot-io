@@ -10,6 +10,9 @@ interface DashboardTrainingItemProps {
   tutorialButtonTitle?: string;
   exerciseButtonTitle?: string;
   tierTitle?: string;
+  onClickTutorialButton?: () => void;
+  onClickExerciseButton?: () => void;
+  isDoubleButtonVariant?: boolean;
 }
 
 const DashboardTrainingItemRow = ({
@@ -18,11 +21,14 @@ const DashboardTrainingItemRow = ({
   shouldDisplayHeader,
   tutorialButtonTitle,
   exerciseButtonTitle,
+  onClickTutorialButton,
+  onClickExerciseButton,
+  isDoubleButtonVariant,
 }: DashboardTrainingItemProps): ReactElement => {
   return (
     <Wrapper>
       <DashboardTrainingItemRowContainer>
-        <ButtonRow>
+        <ButtonRow center>
           <DashboardHeaderText>
             {shouldDisplayHeader ? 'Tutorials' : ''}
           </DashboardHeaderText>
@@ -35,9 +41,25 @@ const DashboardTrainingItemRow = ({
         <DashboardHeaderContentText>{contentText}</DashboardHeaderContentText>
       </DashboardTrainingItemRowContainer>
       <ContentContainer>
-        <FullHeightRow>
-          <DashboardTrainingRowButton title={tutorialButtonTitle || ''} />
-          <DashboardTrainingRowButton title={exerciseButtonTitle || ''} />
+        <FullHeightRow center>
+          {isDoubleButtonVariant ? (
+            <div className="flex flex-col justify-center">
+              <DashboardTrainingRowButton
+                doubleButtonVariant
+                title="Impulse Chords"
+              />
+              <DashboardTrainingRowButton doubleButtonVariant title="Macros" />
+            </div>
+          ) : (
+            <DashboardTrainingRowButton
+              onClick={onClickTutorialButton}
+              title={tutorialButtonTitle || ''}
+            />
+          )}
+          <DashboardTrainingRowButton
+            onClick={onClickExerciseButton}
+            title={exerciseButtonTitle || ''}
+          />
         </FullHeightRow>
 
         <TitleColumn>
@@ -70,6 +92,7 @@ interface TextProps {
 const TitleColumnText = styled.p<TextProps>`
   font-size: ${(props) => (props.footer ? '1.2rem' : '2rem')};
   margin: 0;
+  margin-left: 16px;
 `;
 
 const FullHeightRow = styled(Row)`
@@ -77,7 +100,7 @@ const FullHeightRow = styled(Row)`
 `;
 
 const ButtonRow = styled(Row)`
-  margin-left: 72px;
+  margin-left: 60px;
 `;
 
 const ContentContainer = styled.div`
@@ -136,5 +159,5 @@ const EndCapCircle = styled.div`
 `;
 
 const Spacer = styled.div`
-  width: 108px;
+  width: 88px;
 `;

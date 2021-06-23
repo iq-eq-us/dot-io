@@ -1,16 +1,15 @@
 import type { Action, Computed } from 'easy-peasy';
 import type { KeyHighlightPosition } from './keyHighlightPositions';
-import type { TrainingScenario } from './trainingScenario';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
 import type { TrainingStatistics } from './trainingStatistics';
 
 export interface TrainingStoreModel {
   trainingSettings: TrainingSettingsState;
   setTrainingSettings: Action<TrainingStoreModel, TrainingSettingsState>;
-  currentTrainingMode: Computed<TrainingStoreModel, TrainingScenario | void>;
   beginTrainingAlphabetMode: Action<TrainingStoreModel>;
   beginTrainingTrigramMode: Action<TrainingStoreModel>;
   beginTrainingChordMode: Action<TrainingStoreModel>;
+  beginTrainingLexicalMode: Action<TrainingStoreModel>;
   trainingText: string[][];
   currentLineOfTrainingText: number;
   currentSubindexInTrainingText: number;

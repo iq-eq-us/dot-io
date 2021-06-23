@@ -10,6 +10,7 @@ export const ROUTER_PATHS = {
   alphabetTraining: '/training-alphabet',
   trigramTraining: '/training-trigram',
   chordTraining: '/training-chord',
+  lexicalTraining: '/training-lexical',
 };
 
 const Router = (): ReactElement => {
@@ -30,6 +31,10 @@ const Router = (): ReactElement => {
         </Route>
 
         <Route path={ROUTER_PATHS.trigramTraining}>
+          <Training />
+        </Route>
+
+        <Route path={ROUTER_PATHS.lexicalTraining}>
           <Training />
         </Route>
 

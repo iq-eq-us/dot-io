@@ -3,5 +3,6 @@ import Column from '../../../components/column';
 
 export const DashboardColumn = styled(Column)`
   align-items: flex-start;
-  width: 600px;
+  width: 650px;
+  margin-right: 40px;
 `;

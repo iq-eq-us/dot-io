@@ -5,4 +5,5 @@ export default styled.div`
   width: 100vw;
   background-color: black;
   color: white;
+  font-family: 'Courier New';
 `;

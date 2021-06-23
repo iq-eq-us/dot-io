@@ -2,10 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0px;
+@font-face {
+  font-family: 'WigendaTypewrite';
+  src: url('./fonts/WigendaTypewrite.woff');
+  font-weight: 500;
+  font-style: normal;
 }
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
 }

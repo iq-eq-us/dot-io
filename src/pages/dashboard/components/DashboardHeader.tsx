@@ -18,7 +18,7 @@ const DashboardHeaderRow = styled(Row)`
   padding: 24px;
 `;
 
-const LOGO_SIZE = '72px';
+const LOGO_SIZE = '54px';
 
 const Logo = styled.img`
   height: ${LOGO_SIZE};
@@ -29,8 +29,7 @@ const Logo = styled.img`
 const CharachorderLogo = () => <Logo src={CharachorderLogoImage} />;
 
 const CharachorderTitle = styled.h1`
-  font-size: 3.5rem;
-  line-height: 3.5rem;
+  font-size: 3rem;
+  line-height: 3.25rem;
   height: 3rem;
-  margin: 0px;
 `;
