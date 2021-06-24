@@ -1,7 +1,7 @@
-import { action, computed } from 'easy-peasy';
+import { action, actionOn, computed } from 'easy-peasy';
 import {
-  generateCharacterTrainingData,
-  generateChordsForChordedTrainingRandomly,
+  generateCharacterTrainingDataWithRecursionRate,
+  generateChordTrainingDataWithRecursionRate,
   generateTrigramTrainingData,
 } from '../helpers/generateTrainingData';
 import { defaultTrainingSettings } from '../models/trainingSettingsStateModel';
@@ -16,20 +16,23 @@ import {
 import { ChordLibrary, chordLibrary } from '../data/chordLibrary';
 import { getCurrentTrainingScenario } from '../pages/training/useCurrentTrainingScenario';
 
-const CHORD_LINE_LENGTH = 30;
+const CHORD_LINE_LENGTH = 24;
+export const DEFAULT_SPEED_GOAL = 200;
 
 const TrainingStore: TrainingStoreModel = {
   // * State
   trainingText: [],
   currentLineOfTrainingText: 0,
   currentSubindexInTrainingText: 0,
-  trainingSettings: defaultTrainingSettings,
+  trainingSettings: JSON.parse(JSON.stringify(defaultTrainingSettings)),
   errorOccurredWhileAttemptingToTypeTargetChord: false,
   timeOfLastChordStarted: 0,
   timeTakenToTypePreviousChord: 0,
   trainingStatistics: {
     statistics: [],
   },
+  currentLevel: 0,
+  timeAtTrainingStart: 0,
   // * Computed State
   currentlyHighlightedKeys: computed((state) => {
     const targetWord = state.targetWord;
@@ -44,34 +47,71 @@ const TrainingStore: TrainingStoreModel = {
 
     return targetWord;
   }),
+  previousTargetChord: computed((state) => {
+    const trainingText = state.trainingText;
+    const theTargetWordIsAtTheBeginningOfALine =
+      state.currentSubindexInTrainingText == 0;
+    if (theTargetWordIsAtTheBeginningOfALine) {
+      const previousLine = trainingText?.[state.currentLineOfTrainingText - 1];
+      return previousLine?.[previousLine.length - 1];
+    }
+
+    return trainingText?.[state.currentLineOfTrainingText]?.[
+      state.currentSubindexInTrainingText - 1
+    ];
+  }),
   // * Actions
   setTrainingSettings: action((state, payload) => {
     state.trainingSettings = payload;
   }),
   beginTrainingLexicalMode: action((state) => {
+    resetTrainingStore(state as any);
     state.trainingText = [];
     state.trainingStatistics = { statistics: [] };
-    resetTrainingStore(state);
   }),
   beginTrainingAlphabetMode: action((state) => {
+    resetTrainingStore(state as any);
     state.trainingText = [
-      generateCharacterTrainingData()[0],
-      generateCharacterTrainingData()[0],
+      generateCharacterTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
+      generateCharacterTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
     ];
     state.trainingStatistics = generateEmptyChordStatistics('letters');
-    resetTrainingStore(state);
   }),
   beginTrainingTrigramMode: action((state) => {
+    resetTrainingStore(state as any);
     state.trainingText = generateTrigramTrainingData();
-    resetTrainingStore(state);
   }),
   beginTrainingChordMode: action((state) => {
-    state.trainingText = generateChordsForChordedTrainingRandomly(
-      2,
-      CHORD_LINE_LENGTH,
-    );
+    resetTrainingStore(state as any);
+    state.trainingText = [
+      generateChordTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
+      generateChordTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
+    ];
     state.trainingStatistics = generateEmptyChordStatistics('chords');
-    resetTrainingStore(state);
   }),
   proceedToNextWord: action((state) => {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining
@@ -84,10 +124,67 @@ const TrainingStore: TrainingStoreModel = {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     resetTargetChordMetaInformation(state);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    updateRecursionRateSettings(state);
   }),
   setErrorOccurredWhileAttemptingToTypeTargetChord: action((state, payload) => {
     state.errorOccurredWhileAttemptingToTypeTargetChord = payload;
   }),
+  // Every time we advance to the next word, we check to see if we have "complete the level"
+  // Which just means all the chords have been conquered
+  // Which by extension means that all the chords we have typed have an average speed lower than
+  // our configured speed goal.
+  checkForAdvanceToNextTrainingLevel: actionOn(
+    (actions) => actions.proceedToNextWord,
+    (state, target) => {
+      // Update the current level based on the formula (200 - speedGoal)
+      // If the user is in "Auto" or "Goal Driven" mode, then the following properties are updated automatically on level change
+      //    Speed goal is set to (1 - slowestChord.averageSpeed)
+      //    Number of target chords is set to the number of existing chords whose average speed is greater than the new speed goal
+
+      const speedThesholdToCompleteLevel = state.trainingSettings.speedGoal;
+      const hasCompletedLevel =
+        state.trainingStatistics.statistics.filter(
+          (s) =>
+            s.averageSpeed === 0 ||
+            s.averageSpeed > speedThesholdToCompleteLevel,
+        ).length === 0;
+      const isSettingsSetToAuto =
+        state.trainingSettings.autoOrCustom === 'AUTO';
+
+      if (hasCompletedLevel && isSettingsSetToAuto) {
+        // const targetChord = state.previousTargetChord;
+        const targetChordStatistics = state.trainingStatistics.statistics.sort(
+          (a, b) => b.averageSpeed - a.averageSpeed,
+        )[0];
+
+        if (targetChordStatistics) {
+          const newSpeedGoal = Math.floor(
+            targetChordStatistics?.averageSpeed - 1,
+          );
+          const newNumberOfTargetChords =
+            state.trainingStatistics.statistics.filter(
+              (s) => s.averageSpeed > newSpeedGoal,
+            )?.length;
+
+          state.trainingSettings.speedGoal = newSpeedGoal;
+          state.trainingSettings.targetChords = newNumberOfTargetChords;
+          state.currentLevel = Math.max(0, 200 - newSpeedGoal); // So that the level never goes negative
+        } else {
+          console.error(
+            'Could not find the correct chord statistic to update the level.',
+          );
+        }
+      } else if (isSettingsSetToAuto) {
+        const newNumberOfTargetChords =
+          state.trainingStatistics.statistics.filter(
+            (s) => s.averageSpeed > state.trainingSettings.speedGoal,
+          )?.length;
+        state.trainingSettings.targetChords = newNumberOfTargetChords;
+      }
+    },
+  ),
 };
 
 export { TrainingStore, TrainingStoreModel };
@@ -97,7 +194,8 @@ function resetTrainingStore(state: TrainingStoreModel) {
   state.currentSubindexInTrainingText = 0;
   state.timeOfLastChordStarted = performance.now();
   state.timeTakenToTypePreviousChord = 0;
-  state.trainingSettings = defaultTrainingSettings;
+  state.timeAtTrainingStart = performance.now();
+  state.trainingSettings = JSON.parse(JSON.stringify(defaultTrainingSettings));
 }
 
 function resetTargetChordMetaInformation(state: TrainingStoreModel) {
@@ -166,13 +264,26 @@ function generateNextLineOfInputdata(state: TrainingStoreModel) {
   if (getCurrentTrainingScenario() === 'CHORDING')
     state.trainingText = [
       ...state.trainingText,
-      ...generateChordsForChordedTrainingRandomly(1, CHORD_LINE_LENGTH),
+      generateChordTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
     ];
-  if (getCurrentTrainingScenario() === 'ALPHABET')
+  if (getCurrentTrainingScenario() === 'ALPHABET') {
     state.trainingText = [
       ...state.trainingText,
-      ...generateCharacterTrainingData(),
+      generateCharacterTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
     ];
+  }
 }
 
 function generateEmptyChordStatistics(
@@ -184,4 +295,29 @@ function generateEmptyChordStatistics(
       return createEmptyChordStatistics(key);
     }),
   };
+}
+
+function updateRecursionRateSettings(state: TrainingStoreModel) {
+  const chordsWithSpeedHigherThanSpeedGoal =
+    state.trainingStatistics.statistics.filter(
+      (s) => s.averageSpeed > state.trainingSettings.speedGoal,
+    );
+  const numberOfChordsAboveSpeedGoal =
+    chordsWithSpeedHigherThanSpeedGoal.length;
+  const currentTrainingScenario = getCurrentTrainingScenario();
+  let recursionRate = 95;
+
+  if (state.trainingSettings.autoOrCustom === 'AUTO') {
+    if (currentTrainingScenario === 'ALPHABET') {
+      if (numberOfChordsAboveSpeedGoal <= 2)
+        recursionRate = numberOfChordsAboveSpeedGoal * 35;
+      else if (numberOfChordsAboveSpeedGoal == 0) recursionRate = 0;
+    } else if (currentTrainingScenario === 'CHORDING') {
+      if (numberOfChordsAboveSpeedGoal <= 10)
+        recursionRate = numberOfChordsAboveSpeedGoal * 8 + 12;
+      else if (numberOfChordsAboveSpeedGoal == 0) recursionRate = 0;
+    }
+
+    state.trainingSettings.recursionRate = recursionRate;
+  }
 }

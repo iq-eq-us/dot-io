@@ -1,4 +1,4 @@
-import type { Action, Computed } from 'easy-peasy';
+import type { Action, ActionOn, Computed } from 'easy-peasy';
 import type { KeyHighlightPosition } from './keyHighlightPositions';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
 import type { TrainingStatistics } from './trainingStatistics';
@@ -32,4 +32,8 @@ export interface TrainingStoreModel {
   >;
   timeOfLastChordStarted: number;
   timeTakenToTypePreviousChord: number;
+  checkForAdvanceToNextTrainingLevel: ActionOn<TrainingStoreModel>;
+  previousTargetChord: Computed<TrainingStoreModel, string | undefined>;
+  currentLevel: number;
+  timeAtTrainingStart: number;
 }

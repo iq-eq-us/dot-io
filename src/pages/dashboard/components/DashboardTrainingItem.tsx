@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Row from '../../../components/row';
 import Column from '../../../components/column';
 import DashboardTrainingRowButton from './DashboardTrainingRowButton';
+import useWindowSize from '../../../hooks/useWindowSize';
 
 interface DashboardTrainingItemProps {
   shouldDisplayHeader?: boolean;
@@ -25,6 +26,9 @@ const DashboardTrainingItemRow = ({
   onClickExerciseButton,
   isDoubleButtonVariant,
 }: DashboardTrainingItemProps): ReactElement => {
+  const windowSize = useWindowSize();
+  const shouldShrinkTextToFitWindowSize = windowSize.width < 1920;
+
   return (
     <Wrapper>
       <DashboardTrainingItemRowContainer>
@@ -63,7 +67,9 @@ const DashboardTrainingItemRow = ({
         </FullHeightRow>
 
         <TitleColumn>
-          <TitleColumnText>{tierTitle || ''}</TitleColumnText>
+          <TitleColumnText reducedTextSize={shouldShrinkTextToFitWindowSize}>
+            {tierTitle || ''}
+          </TitleColumnText>
           <TitleColumnText footer>Tier</TitleColumnText>
         </TitleColumn>
       </ContentContainer>
@@ -87,10 +93,12 @@ const TitleColumn = styled(Column)`
 
 interface TextProps {
   footer?: boolean;
+  reducedTextSize?: boolean;
 }
 
 const TitleColumnText = styled.p<TextProps>`
-  font-size: ${(props) => (props.footer ? '1.2rem' : '2rem')};
+  font-size: ${(props) =>
+    props.footer ? '1.2rem' : props.reducedTextSize ? '1.6rem' : '2rem'};
   margin: 0;
   margin-left: 16px;
 `;

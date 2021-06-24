@@ -31,8 +31,8 @@ function DashboardGrid(): ReactElement {
 const GridContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1.95fr 1fr;
-  grid-template-rows: 0.9fr 1fr;
+  grid-template-columns: 55% 35%;
+  grid-template-rows: 40vh 60vh;
   gap: 20px 20px;
   grid-template-areas:
     'Top Top'
@@ -53,7 +53,7 @@ const BottomRightGridArea = styled.div`
 `;
 
 const FitImageButMaintainAspectRatio = styled.img`
-  height: 100%;
+  height: 90%;
   max-height: 100%;
 `;
 

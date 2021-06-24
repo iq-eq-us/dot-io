@@ -4,7 +4,7 @@ import { useStoreState } from '../../../store/store';
 import { useCurrentTrainingScenario } from '../useCurrentTrainingScenario';
 import ProgressBar from './progressBar';
 
-const blueTextStyle = {
+export const blueTextStyle = {
   color: 'SkyBlue',
   fontSize: '0.8rem',
 };
@@ -26,27 +26,33 @@ function TrainingProgressContainer(): ReactElement {
     return 1;
   };
 
+  const totalNumberOfChords = calculateTotalNumberOfChords();
+  const totalNumerOfChordsConquered =
+    trainingStatsWithAverageSpeedOverSpeedGoal.length;
+  const numberOfChordsRemaining =
+    totalNumberOfChords - totalNumerOfChordsConquered;
+
   const progress = Math.round(
-    (trainingStatsWithAverageSpeedOverSpeedGoal.length /
-      calculateTotalNumberOfChords()) *
+    (trainingStatsWithAverageSpeedOverSpeedGoal.length / totalNumberOfChords) *
       100,
   );
 
+  const currentLevel = useStoreState((store) => store.currentLevel);
+
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-4xl mb-4 text-[skyblue]">Lvl: 0</h1>
+      <h1 className="text-4xl mb-4 text-[skyblue]">Lvl: {currentLevel}</h1>
       <div className="flex flex-row">
         <div className="flex flex-col items-center">
           <p style={blueTextStyle}>Letters Conquered</p>
-          <p style={blueTextStyle}>0</p>
+          <p style={blueTextStyle}>{totalNumerOfChordsConquered}</p>
         </div>
         <div className="flex flex-col px-8" style={{ width: '500px' }}>
           <ProgressBar progress={progress} />
-          <p style={blueTextStyle}>∞ wpm</p>
         </div>
         <div className="flex flex-col items-center">
           <p style={blueTextStyle}>To Next Level</p>
-          <p style={blueTextStyle}>0</p>
+          <p style={blueTextStyle}>{numberOfChordsRemaining}</p>
         </div>
       </div>
     </div>

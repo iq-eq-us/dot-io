@@ -39,16 +39,16 @@ export default function StatisticColumn(): ReactElement {
       <table className="text-gray-500">
         <thead>
           <tr>
-            <th style={{ minWidth: 48 }}></th>
-            <th style={{ minWidth: 48 }}>avg</th>
-            <th style={{ minWidth: 48 }}>last</th>
-            <th style={{ minWidth: 48 }}>err</th>
-            <th style={{ minWidth: 48 }}>x</th>
+            <th style={{ minWidth: 42 }}></th>
+            <th style={{ minWidth: 42 }}>avg</th>
+            <th style={{ minWidth: 42 }}>last</th>
+            <th style={{ minWidth: 42 }}>err</th>
+            <th style={{ minWidth: 42 }}>x</th>
           </tr>
         </thead>
         <tbody>
           <tr style={{ color: 'skyblue' }}>
-            <td className="w-28">Cumulative:</td>
+            <td className="w-28">Sum:</td>
             <td>{getCumulativeAverageChordTypeTime(sortedStats)}</td>
             <td>{timeTakenToTypePreviousChord?.toFixed(0)}</td>
             <td>
@@ -61,10 +61,21 @@ export default function StatisticColumn(): ReactElement {
               )}
             </td>
           </tr>
-          {sortedStats.map((stat) => (
+          {sortedStats.map((stat, i) => (
             <tr key={stat.id}>
               <td>{stat.displayTitle}</td>
-              <td>{stat?.averageSpeed?.toFixed(0)}</td>
+              <td className="relative">
+                {stat?.averageSpeed?.toFixed(0)}{' '}
+                {i < trainingSettings.targetChords && (
+                  <div
+                    className={`${
+                      trainingSettings.autoOrCustom === 'AUTO'
+                        ? 'bg-yellow-300'
+                        : 'bg-gray-300'
+                    } w-2 h-[26px] absolute right-0 top-0`}
+                  ></div>
+                )}
+              </td>
               <td>{stat?.lastSpeed?.toFixed(0)}</td>
               <td>{stat.numberOfErrors}</td>
               <td>{stat.numberOfOccurrences}</td>

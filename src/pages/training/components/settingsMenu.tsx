@@ -53,11 +53,11 @@ function ratePercentageInput(
     <NumberInput
       disabled={trainingSettings.autoOrCustom === 'AUTO'}
       labelTitle="Rate (%):"
-      value={trainingSettings.ratePercentage}
+      value={trainingSettings.recursionRate}
       onChange={(e) =>
         setTrainingSettings({
           ...trainingSettings,
-          ratePercentage: Number(e.target.value),
+          recursionRate: Number(e.target.value),
         })
       }
     />

@@ -25,7 +25,7 @@ const TrainingStorageStore: StatisticsStore = {
       store.totalSavedTrainingStatistics?.statistics?.length > 0;
 
     if (statisticsAlreadyExist) {
-      handleStatsMerge(store as StatisticsStore, payload);
+      handleStatsMerge(store as any, payload);
     } else {
       const objectToSave = {
         statistics: payload.statistics.filter(ifHasOccurredAtLeastOnce),

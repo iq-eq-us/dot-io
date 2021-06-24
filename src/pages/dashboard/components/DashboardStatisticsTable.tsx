@@ -25,11 +25,11 @@ function DashboardStatisticsTable(): ReactElement {
     // Character Table
     <div
       className="flex flex-row ml-4 bg-white relative"
-      style={{ maxHeight: 450 }}
+      style={{ maxHeight: '90%' }}
     >
       <button
         className="absolute bg-white p-1 px-2 rounded-sm right-0 -top-10"
-        onClick={clearAllStatisticsWithoutPromptingUser}
+        onClick={() => clearAllStatisticsWithoutPromptingUser()}
       >
         Clear All Progress
       </button>

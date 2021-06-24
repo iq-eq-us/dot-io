@@ -6,7 +6,7 @@ export interface TrainingSettingsState {
   autoOrCustom: AutoOrCustom;
   targetChords: number;
   speedGoal: number;
-  ratePercentage: number;
+  recursionRate: number;
   isErrorBurst: boolean;
   isDisplayingHUD: boolean;
   contrastPercentage: number;
@@ -15,11 +15,11 @@ export interface TrainingSettingsState {
 
 export const defaultTrainingSettings: TrainingSettingsState = {
   isHighlightingKeys: true,
-  isUsingRecursion: false,
+  isUsingRecursion: true,
   autoOrCustom: 'AUTO',
   targetChords: 0,
   speedGoal: 200,
-  ratePercentage: 0,
+  recursionRate: 0,
   isErrorBurst: false,
   isDisplayingHUD: true,
   contrastPercentage: 100,

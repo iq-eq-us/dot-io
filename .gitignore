@@ -5,3 +5,4 @@ node_modules
 .vscode
 test.txt
 src/helpers/highlightConversion.js
+ci-cd/.env.js
