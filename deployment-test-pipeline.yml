@@ -26,6 +26,10 @@ steps:
   - script: |
       npm test
     displayName: "npm test"
+    
+  - script: |
+      echo $(Build.BuildId);
+    displayName: "Show BuildId"
 
   - task: AzureStaticWebApp@0
     inputs:
