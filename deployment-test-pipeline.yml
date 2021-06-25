@@ -18,18 +18,14 @@ steps:
   - script: |
       npm install
     displayName: 'npm install'
-    
+
   - script: |
       npm run lint
-    displayName: "npm run lint"
-    
+    displayName: 'npm run lint'
+
   - script: |
       npm test
-    displayName: "npm test"
-    
-  - script: |
-      echo $(Build.BuildId);
-    displayName: "Show BuildId"
+    displayName: 'npm test'
 
   - task: AzureStaticWebApp@0
     inputs:
@@ -50,6 +46,6 @@ steps:
 
   - script: |
       node ci-cd\index.js $(Build.BuildId)
-    displayName: "Publish URL to PR"
+    displayName: 'Publish URL to PR'
     env:
       AZURE_API_KEY: $(Azure_API_Key)

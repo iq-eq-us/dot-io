@@ -3,62 +3,69 @@ const azdev = require('azure-devops-node-api');
 const {
   PullRequestStatus,
 } = require('azure-devops-node-api/interfaces/GitInterfaces');
-const { AzureAPIKey } = require('./.env.js');
+const AzureAPIKey = process.env.AZURE_API_KEY;
+
+if (!AzureAPIKey) {
+  console.error(
+    'Could not run script because AzureAPIKey was not passed into program.',
+  );
+  process.exit();
+}
 
 // your collection url
-let orgUrl = 'https://dev.azure.com/caitfs3';
+const orgUrl = 'https://dev.azure.com/caitfs3';
 
 // let token: string = "process.env.AZURE_PERSONAL_ACCESS_TOKE"N; // e.g "cbdeb34vzyuk5l4gxc4qfczn3lko3avfkfqyb47etahq6axpcqha";
-let token = AzureAPIKey;
+const token = AzureAPIKey;
 
-// Right now this script isn't in working order
-// So I added a return so the script does nothing but load the API key
-// I want to make this add a comment to a pull request with the URL where the site is deployed
-// This way we can have preview urls or something akin to it
-return;
+const authHandler = azdev.getPersonalAccessTokenHandler(token);
+const connection = new azdev.WebApi(orgUrl, authHandler);
+const inputBuildID = process.argv[2];
 
-let authHandler = azdev.getPersonalAccessTokenHandler(token);
-let connection = new azdev.WebApi(orgUrl, authHandler);
+if (!inputBuildID) {
+  console.error(
+    'Could not run script because BuildID was not passed into program.',
+  );
+  process.exit();
+}
 
 connection
   .connect()
   .then(async () => {
+    // Get the build object based on the passed in buildID
     const gitAPI = await connection.getGitApi();
-    const pipelinesAPI = await connection.getBuildApi();
-    const builds = await pipelinesAPI.getBuilds('CharaChorder');
-    const developBuilds = builds.filter(
-      (b) => b?.requestedFor?.displayName === 'Liam McMains',
-    );
-    const mostRecentDevelopBuild = developBuilds.sort(
-      (a, b) => Date.parse(b) - Date.parse(a),
-    )[0];
+    const buildAPI = await connection.getBuildApi();
+    const response = await buildAPI.getBuild('CharaChorder', inputBuildID);
+    const ciMessage = response?.triggerInfo?.['ci.message'];
 
-    if (mostRecentDevelopBuild) {
-      const sourceSha = mostRecentDevelopBuild?.triggerInfo?.['ci.sourceSha'];
+    // Get the ID of the PR that the build is associated to
+    const prRegex = /Merged PR (\d*):/gm;
+    const prID = prRegex.exec(ciMessage)[1];
 
-      const allRepos = await gitAPI.getRepositories('CharaChorder');
-      const { id } = allRepos.find((r) => r.name === 'Launchpad');
-
-      const pullRequests = await gitAPI.getPullRequests(id, {
-        status: PullRequestStatus.All,
-      });
-      const pullRequestCorrespondingToBuild = pullRequests.filter(
-        (pr) => pr?.lastMergeCommit?.commitId === sourceSha,
-      )?.[0];
-
-      // await gitAPI.createThread(
-      //   {
-      //     comments: [
-      //       {
-      //         content:
-      //           '[BOT]: The site has been built and deployed at: https://proud-island-036737910.azurestaticapps.net/#/',
-      //       },
-      //     ],
-      //   },
-      //   id,
-      //   pullRequestCorrespondingToBuild.pullRequestId,
-      // );
+    if (!prID) {
+      console.error(
+        'Could not find PR that is associated with this build. Exiting...',
+      );
+      process.exit();
     }
+
+    // Find the ID of the launchpad repository
+    const allRepos = await gitAPI.getRepositories('CharaChorder');
+    const { id: repoID } = allRepos.find((r) => r.name === 'Launchpad');
+
+    // Create a comment on the associated PR with a link to the site.
+    await gitAPI.createThread(
+      {
+        comments: [
+          {
+            content:
+              '[BUILD BOT]: The site has been built and deployed at: https://proud-island-036737910.azurestaticapps.net',
+          },
+        ],
+      },
+      repoID,
+      prID,
+    );
   })
   .catch((err) => {
     console.error(err);
