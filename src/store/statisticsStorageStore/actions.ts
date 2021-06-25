@@ -1,22 +1,20 @@
-import { action, computed } from 'easy-peasy';
-import { chordLibrary } from '../data/chordLibrary';
-import type { StatisticsStore } from '../models/statisticsStorage';
+import { action } from 'easy-peasy';
+import type {
+  StatisticsStore,
+  StatisticsStoreActions,
+} from '../../models/statisticsStorage';
 import {
   ChordStatistics,
   createEmptyChordStatistics,
   TrainingStatistics,
-} from '../models/trainingStatistics';
+} from '../../models/trainingStatistics';
 
 const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
-const storedTrainingStats: TrainingStatistics = JSON.parse(
-  localStorage.getItem(SAVED_STATS_STORAGE_KEY) || '{"statistics":[]}',
-) as TrainingStatistics;
 
 const ifHasOccurredAtLeastOnce = (e: ChordStatistics): boolean =>
   e.numberOfOccurrences !== 0;
 
-const TrainingStorageStore: StatisticsStore = {
-  totalSavedTrainingStatistics: storedTrainingStats,
+const statisticsStorageStoreActions: StatisticsStoreActions = {
   setTotalSavedTrainingStatistics: action((store, payload) => {
     // If there are no statistics, we can just set them
     // If statistics are already there, we need to merge them together
@@ -36,26 +34,6 @@ const TrainingStorageStore: StatisticsStore = {
         JSON.stringify(objectToSave),
       );
     }
-  }),
-  totalSavedCharacterChordStats: computed((store) => {
-    const totalSavedStats = store.totalSavedTrainingStatistics;
-    const characterKeys = Object.keys(chordLibrary.letters);
-
-    return {
-      statistics: totalSavedStats.statistics.filter((s) =>
-        characterKeys.includes(s.id),
-      ),
-    };
-  }),
-  totalSavedChordStats: computed((store) => {
-    const totalSavedStats = store.totalSavedTrainingStatistics;
-    const characterKeys = Object.keys(chordLibrary.chords);
-
-    return {
-      statistics: totalSavedStats.statistics.filter((s) =>
-        characterKeys.includes(s.id),
-      ),
-    };
   }),
   clearAllStorage: action((store) => {
     store.totalSavedTrainingStatistics = { statistics: [] };
@@ -127,4 +105,4 @@ const handleStatsMerge = (
   localStorage.setItem(SAVED_STATS_STORAGE_KEY, JSON.stringify(objectToSave));
 };
 
-export { TrainingStorageStore };
+export default statisticsStorageStoreActions;

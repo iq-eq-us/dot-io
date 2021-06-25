@@ -1,5 +1,8 @@
 import React, { ReactElement } from 'react';
-import { chordLibrary } from '../../../data/chordLibrary';
+import {
+  chordLibrary,
+  getChordLibraryForTrainingScenario,
+} from '../../../data/chordLibrary';
 import { useStoreState } from '../../../store/store';
 import { useCurrentTrainingScenario } from '../useCurrentTrainingScenario';
 import ProgressBar from './progressBar';
@@ -19,11 +22,10 @@ function TrainingProgressContainer(): ReactElement {
     );
 
   const calculateTotalNumberOfChords = () => {
-    if (trainingMode === 'ALPHABET')
-      return Object.keys(chordLibrary.letters).length;
-    if (trainingMode === 'CHORDING')
-      return Object.keys(chordLibrary.chords).length;
-    return 1;
+    const chordsToCheckLengthOn =
+      getChordLibraryForTrainingScenario(trainingMode || undefined) || {};
+
+    return Object.keys(chordsToCheckLengthOn).length;
   };
 
   const totalNumberOfChords = calculateTotalNumberOfChords();

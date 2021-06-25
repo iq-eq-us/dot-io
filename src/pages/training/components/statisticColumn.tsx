@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useHUD } from '../../../hooks/useHUD';
 
 import { useTrainingSettings } from '../../../hooks/useTrainingSettings';
 import type { ChordStatistics } from '../../../models/trainingStatistics';
@@ -13,6 +14,8 @@ export default function StatisticColumn(): ReactElement {
   const timeTakenToTypePreviousChord = useStoreState(
     (store) => store.timeTakenToTypePreviousChord,
   );
+
+  const shouldDisplayHUD = useHUD();
 
   return (
     <div
@@ -49,12 +52,14 @@ export default function StatisticColumn(): ReactElement {
         <tbody>
           <tr style={{ color: 'skyblue' }}>
             <td className="w-28">Sum:</td>
-            <td>{getCumulativeAverageChordTypeTime(sortedStats)}</td>
+            <td className={`${shouldDisplayHUD ? '' : 'invisible'}`}>
+              {getCumulativeAverageChordTypeTime(sortedStats)}
+            </td>
             <td>{timeTakenToTypePreviousChord?.toFixed(0)}</td>
             <td>
               {getCumulativeValueByPropertyName(sortedStats, 'numberOfErrors')}
             </td>
-            <td>
+            <td className={`${shouldDisplayHUD ? '' : 'invisible'}`}>
               {getCumulativeValueByPropertyName(
                 sortedStats,
                 'numberOfOccurrences',

@@ -1,73 +1,51 @@
-import { action, actionOn, computed } from 'easy-peasy';
+import { action, actionOn } from 'easy-peasy';
+import { ChordLibrary, chordLibrary } from '../../data/chordLibrary';
 import {
   generateCharacterTrainingDataWithRecursionRate,
   generateChordTrainingDataWithRecursionRate,
-  generateTrigramTrainingData,
-} from '../helpers/generateTrainingData';
-import { defaultTrainingSettings } from '../models/trainingSettingsStateModel';
-import { ConvertStringToKeyHighlightPositions } from '../helpers/convertStringToKeyHighlightPositions';
-import type { TrainingStoreModel } from '../models/trainingStore';
+  generateLexicalTrainingDataWithRecursionRate,
+  generateTrigramTrainingDataWithRecursionRate,
+} from '../../helpers/generateTrainingData';
+import type { TrainingScenario } from '../../models/trainingScenario';
+import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
 import {
   ChordStatistics,
   createEmptyChordStatistics,
   MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   TrainingStatistics,
-} from '../models/trainingStatistics';
-import { ChordLibrary, chordLibrary } from '../data/chordLibrary';
-import { getCurrentTrainingScenario } from '../pages/training/useCurrentTrainingScenario';
+} from '../../models/trainingStatistics';
+import type {
+  TrainingStoreActionsModel,
+  TrainingStoreModel,
+  TrainingStoreStateModel,
+} from '../../models/trainingStore';
+import { getCurrentTrainingScenario } from '../../pages/training/useCurrentTrainingScenario';
 
 const CHORD_LINE_LENGTH = 24;
-export const DEFAULT_SPEED_GOAL = 200;
 
-const TrainingStore: TrainingStoreModel = {
-  // * State
-  trainingText: [],
-  currentLineOfTrainingText: 0,
-  currentSubindexInTrainingText: 0,
-  trainingSettings: JSON.parse(JSON.stringify(defaultTrainingSettings)),
-  errorOccurredWhileAttemptingToTypeTargetChord: false,
-  timeOfLastChordStarted: 0,
-  timeTakenToTypePreviousChord: 0,
-  trainingStatistics: {
-    statistics: [],
-  },
-  currentLevel: 0,
-  timeAtTrainingStart: 0,
-  // * Computed State
-  currentlyHighlightedKeys: computed((state) => {
-    const targetWord = state.targetWord;
-    return ConvertStringToKeyHighlightPositions(targetWord || '');
-  }),
-  targetWord: computed((state) => {
-    const trainingText = state.trainingText;
-    const targetWord =
-      trainingText?.[state.currentLineOfTrainingText]?.[
-        state.currentSubindexInTrainingText
-      ];
-
-    return targetWord;
-  }),
-  previousTargetChord: computed((state) => {
-    const trainingText = state.trainingText;
-    const theTargetWordIsAtTheBeginningOfALine =
-      state.currentSubindexInTrainingText == 0;
-    if (theTargetWordIsAtTheBeginningOfALine) {
-      const previousLine = trainingText?.[state.currentLineOfTrainingText - 1];
-      return previousLine?.[previousLine.length - 1];
-    }
-
-    return trainingText?.[state.currentLineOfTrainingText]?.[
-      state.currentSubindexInTrainingText - 1
-    ];
-  }),
-  // * Actions
+const trainingStoreActions: TrainingStoreActionsModel = {
   setTrainingSettings: action((state, payload) => {
     state.trainingSettings = payload;
   }),
   beginTrainingLexicalMode: action((state) => {
     resetTrainingStore(state as any);
-    state.trainingText = [];
-    state.trainingStatistics = { statistics: [] };
+    state.trainingText = [
+      generateLexicalTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
+      generateLexicalTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
+    ];
+    state.trainingStatistics = generateEmptyChordStatistics('lexical');
   }),
   beginTrainingAlphabetMode: action((state) => {
     resetTrainingStore(state as any);
@@ -91,7 +69,23 @@ const TrainingStore: TrainingStoreModel = {
   }),
   beginTrainingTrigramMode: action((state) => {
     resetTrainingStore(state as any);
-    state.trainingText = generateTrigramTrainingData();
+    state.trainingText = [
+      generateTrigramTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
+      generateTrigramTrainingDataWithRecursionRate(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
+    ];
+    state.trainingStatistics = generateEmptyChordStatistics('trigrams');
   }),
   beginTrainingChordMode: action((state) => {
     resetTrainingStore(state as any);
@@ -185,9 +179,14 @@ const TrainingStore: TrainingStoreModel = {
       }
     },
   ),
+  resetTrainingText: action((store) => {
+    store.trainingText = [];
+    store.currentLineOfTrainingText = 0;
+    store.currentSubindexInTrainingText = 0;
+    generateNextLineOfInputdata(store as unknown as TrainingStoreStateModel);
+    generateNextLineOfInputdata(store as unknown as TrainingStoreStateModel);
+  }),
 };
-
-export { TrainingStore, TrainingStoreModel };
 
 function resetTrainingStore(state: TrainingStoreModel) {
   state.currentLineOfTrainingText = 0;
@@ -260,32 +259,6 @@ function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
   }
 }
 
-function generateNextLineOfInputdata(state: TrainingStoreModel) {
-  if (getCurrentTrainingScenario() === 'CHORDING')
-    state.trainingText = [
-      ...state.trainingText,
-      generateChordTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-    ];
-  if (getCurrentTrainingScenario() === 'ALPHABET') {
-    state.trainingText = [
-      ...state.trainingText,
-      generateCharacterTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-    ];
-  }
-}
-
 function generateEmptyChordStatistics(
   library: keyof ChordLibrary,
 ): TrainingStatistics {
@@ -295,6 +268,40 @@ function generateEmptyChordStatistics(
       return createEmptyChordStatistics(key);
     }),
   };
+}
+
+function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
+  const trainingDataGenerationMap: Record<
+    TrainingScenario,
+    (
+      stats: ChordStatistics[],
+      recursionRate: number,
+      numberOfChords: number,
+      recursionDepth: number,
+      recursionIsEnabledGlobally: boolean,
+    ) => string[]
+  > = {
+    CHORDING: generateChordTrainingDataWithRecursionRate,
+    ALPHABET: generateCharacterTrainingDataWithRecursionRate,
+    LEXICAL: generateLexicalTrainingDataWithRecursionRate,
+    TRIGRAM: generateTrigramTrainingDataWithRecursionRate,
+  };
+
+  const trainingScenario = getCurrentTrainingScenario();
+  if (trainingScenario) {
+    const textGenerationFunctionToUse =
+      trainingDataGenerationMap[trainingScenario];
+    state.trainingText = [
+      ...state.trainingText,
+      textGenerationFunctionToUse(
+        state.trainingStatistics.statistics,
+        state.trainingSettings.recursionRate,
+        CHORD_LINE_LENGTH,
+        state.trainingSettings.targetChords,
+        state.trainingSettings.isUsingRecursion,
+      ),
+    ];
+  }
 }
 
 function updateRecursionRateSettings(state: TrainingStoreModel) {
@@ -311,13 +318,19 @@ function updateRecursionRateSettings(state: TrainingStoreModel) {
     if (currentTrainingScenario === 'ALPHABET') {
       if (numberOfChordsAboveSpeedGoal <= 2)
         recursionRate = numberOfChordsAboveSpeedGoal * 35;
-      else if (numberOfChordsAboveSpeedGoal == 0) recursionRate = 0;
-    } else if (currentTrainingScenario === 'CHORDING') {
+      if (numberOfChordsAboveSpeedGoal == 0) recursionRate = 0;
+    } else if (
+      currentTrainingScenario === 'CHORDING' ||
+      currentTrainingScenario === 'LEXICAL' ||
+      currentTrainingScenario === 'TRIGRAM'
+    ) {
       if (numberOfChordsAboveSpeedGoal <= 10)
         recursionRate = numberOfChordsAboveSpeedGoal * 8 + 12;
-      else if (numberOfChordsAboveSpeedGoal == 0) recursionRate = 0;
+      if (numberOfChordsAboveSpeedGoal == 0) recursionRate = 0;
     }
 
     state.trainingSettings.recursionRate = recursionRate;
   }
 }
+
+export default trainingStoreActions;

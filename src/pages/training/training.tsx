@@ -5,12 +5,14 @@ import MainTrainingColumn from './components/mainTrainingColumn';
 import StatisticColumn from './components/statisticColumn';
 import { useUpdateTrainingModeOnURLChange } from '../../hooks/useUpdateTrainingModeOnURLChange';
 import { ClosingPrompt } from './components/closingPrompt';
+import { useContrast } from '../../hooks/useContrast';
 
 const Training = (): ReactElement => {
   useUpdateTrainingModeOnURLChange();
+  const backgroundColor = useContrast();
 
   return (
-    <PageContainer>
+    <PageContainer {...{ backgroundColor }}>
       <ClosingPrompt />
 
       <MainContentRow>
@@ -28,10 +30,15 @@ const Training = (): ReactElement => {
   );
 };
 
-const PageContainer = styled.div.attrs({
-  className: 'bg-black h-screen w-screen text-white',
+interface Props {
+  backgroundColor: string;
+}
+
+const PageContainer = styled.div.attrs<Props>({
+  className: 'h-screen w-screen text-white',
 })`
   font-family: 'Courier New';
+  background-color: ${(props) => props.backgroundColor};
 `;
 
 const MainContentRow = styled.div.attrs({

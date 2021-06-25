@@ -6,7 +6,7 @@ const {
 const AzureAPIKey = process.env.AZURE_API_KEY;
 
 if (!AzureAPIKey) {
-  console.error(
+  console.warn(
     'Could not run script because AzureAPIKey was not passed into program.',
   );
   process.exit();
@@ -23,7 +23,7 @@ const connection = new azdev.WebApi(orgUrl, authHandler);
 const inputBuildID = process.argv[2];
 
 if (!inputBuildID) {
-  console.error(
+  console.warn(
     'Could not run script because BuildID was not passed into program.',
   );
   process.exit();
@@ -40,10 +40,10 @@ connection
 
     // Get the ID of the PR that the build is associated to
     const prRegex = /Merged PR (\d*):/gm;
-    const prID = prRegex.exec(ciMessage)[1];
+    const prID = prRegex.exec(ciMessage)?.[1];
 
     if (!prID) {
-      console.error(
+      console.warn(
         'Could not find PR that is associated with this build. Exiting...',
       );
       process.exit();

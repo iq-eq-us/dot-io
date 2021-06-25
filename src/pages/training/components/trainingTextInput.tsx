@@ -1,4 +1,5 @@
 import React, { ReactElement, useRef, useState, useEffect } from 'react';
+import { useHUD } from '../../../hooks/useHUD';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import { useCurrentTrainingScenario } from '../useCurrentTrainingScenario';
 
@@ -24,6 +25,10 @@ function TrainingTextInput(): ReactElement {
     (store) => store.proceedToNextWord,
   );
 
+  const refreshTrainingText = useStoreActions(
+    (store) => store.resetTrainingText,
+  );
+
   useEffect(() => {
     const checkToSeeIfProgramShouldProceedToNextWord = () => {
       const wordToCompare = isInAlphabetMode ? targetWord : targetWord + ' ';
@@ -42,13 +47,18 @@ function TrainingTextInput(): ReactElement {
   );
   if (isErrorInUserEnteredText) setErrorOccurredWhileTypingTargetChord(true);
 
+  const shouldDisplayHUD = useHUD();
+
   return (
     <div className="flex flex-row items-center mt-8 w-3/4 mx-8">
       <p
         className="mr-4"
         style={{ whiteSpace: 'nowrap', color: 'skyblue', fontSize: '0.9rem' }}
       >
-        Last: {timeTakenToTypePreviousChord?.toFixed(0)}
+        Last:{' '}
+        <span className={`${shouldDisplayHUD ? '' : 'invisible'}`}>
+          {timeTakenToTypePreviousChord?.toFixed(0)}
+        </span>
       </p>
       <input
         autoFocus
@@ -65,6 +75,7 @@ function TrainingTextInput(): ReactElement {
         className="h-10 shadow hover:bg-black focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-r border-[1px] border-white border-solid border-l-0 h-[40px]"
         type="button"
         onClick={() => {
+          refreshTrainingText();
           setUserEnteredText('');
           inputTextBoxRef?.current?.focus();
         }}
