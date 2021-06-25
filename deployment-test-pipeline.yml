@@ -35,17 +35,8 @@ steps:
     env:
       azure_static_web_apps_api_token: e4ad7adc8b9955e35dc9c1fa835c7ee7c95efc3e3c72bec430f86a274d3d5718-ec169abf-f148-4438-90e1-45fa58218fbe01020114
 
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '12.17.x'
-    displayName: 'Install Node.js'
-
   - script: |
-      npm install
-    displayName: 'npm install'
-
-  - script: |
-      node ci-cd\index.js $(Build.BuildId)
+      node ci-cd/index.js $(Build.BuildId)
     displayName: 'Publish URL to PR'
     env:
       AZURE_API_KEY: $(Azure_API_Key)
