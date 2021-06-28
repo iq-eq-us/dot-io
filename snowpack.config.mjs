@@ -15,7 +15,7 @@ export default {
       },
     ],
     '@snowpack/plugin-postcss',
-    './reload-global-css-after-file-changes.js'
+    './reload-global-css-after-file-changes.js',
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
@@ -26,7 +26,7 @@ export default {
     // "bundle": true,
   },
   packageOptions: {
-    /* ... */
+    polyfillNode: true,
   },
   devOptions: {
     tailwindConfig: './tailwind.config.js',

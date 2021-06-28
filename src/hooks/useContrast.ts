@@ -4,5 +4,7 @@ export const useContrast = (): string => {
   const trainingSettings = useStoreState((store) => store.trainingSettings);
 
   const alphaValue = trainingSettings.contrastPercentage / 100;
-  return `rgba(255, 255, 255, ${1 - alphaValue})`;
+  return `rgb(${255 * (1 - alphaValue)}, ${255 * (1 - alphaValue)}, ${
+    255 * (1 - alphaValue)
+  })`;
 };

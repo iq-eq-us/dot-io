@@ -5,6 +5,7 @@ import type { TrainingStoreStateModel } from '../../models/trainingStore';
 
 const trainingStoreState: TrainingStoreStateModel = {
   // * State
+  typedTrainingText: '',
   trainingText: [],
   currentLineOfTrainingText: 0,
   currentSubindexInTrainingText: 0,
@@ -46,6 +47,7 @@ const trainingStoreState: TrainingStoreStateModel = {
       state.currentSubindexInTrainingText - 1
     ];
   }),
+  currentTrainingScenario: undefined,
 };
 
 export default trainingStoreState;

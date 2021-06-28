@@ -2,14 +2,14 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { chordLibrary } from '../../../data/chordLibrary';
 import {
+  getCumulativeAverageChordTypeTime,
+  getCumulativeValueByPropertyName,
+} from '../../../helpers/aggregation';
+import {
   createEmptyChordStatistics,
   TrainingStatistics,
 } from '../../../models/trainingStatistics';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import {
-  getCumulativeAverageChordTypeTime,
-  getCumulativeValueByPropertyName,
-} from '../../training/components/statisticColumn';
 
 function DashboardStatisticsTable(): ReactElement {
   const savedCharacterChordStats = useStoreState(

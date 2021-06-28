@@ -1,5 +1,3 @@
-import type { TrainingScenario } from '../models/trainingScenario';
-
 export interface ChordLibrary {
   letters: Record<string, string[]>;
   chords: Record<string, string[]>;
@@ -750,15 +748,4 @@ export const chordLibrary: ChordLibrary = {
       ...this.chords,
     };
   },
-};
-
-export const getChordLibraryForTrainingScenario = (
-  scenario?: TrainingScenario,
-): Record<string, string[]> | undefined => {
-  if (scenario === 'ALPHABET') return chordLibrary.letters;
-  else if (scenario === 'CHORDING') return chordLibrary.chords;
-  else if (scenario === 'LEXICAL') return chordLibrary.lexical;
-  else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
-
-  return undefined;
 };

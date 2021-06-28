@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import type { Location } from 'history';
+import React, { ReactElement, useEffect } from 'react';
 import store, { useStoreActions } from '../../../store/store';
 import { PromptBeforeClosing } from '../../../components/promptBeforeClosing';
 import { useHistory } from 'react-router-dom';
@@ -10,7 +9,7 @@ export function ClosingPrompt(): ReactElement {
     (store) => store.setTotalSavedTrainingStatistics,
   );
 
-  const handleLocationChange = (location: Location) => {
+  const handleLocationChange = () => {
     // If the user navigates off of a training page, we want to save their data, but only if they have AutoWrite enabled
     const didLeaveTrainingSession = '/';
     const isAutoWriteEnabled = store.getState().trainingSettings.isAutoWrite;

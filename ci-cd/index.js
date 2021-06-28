@@ -1,9 +1,12 @@
 /* eslint-disable */
+require('dotenv').config();
+
 const azdev = require('azure-devops-node-api');
 const {
   PullRequestStatus,
 } = require('azure-devops-node-api/interfaces/GitInterfaces');
 const AzureAPIKey = process.env.AZURE_API_KEY;
+const fs = require('fs');
 
 if (!AzureAPIKey) {
   console.warn(
@@ -53,13 +56,16 @@ connection
     const allRepos = await gitAPI.getRepositories('CharaChorder');
     const { id: repoID } = allRepos.find((r) => r.name === 'Launchpad');
 
+    const codeCoverage = await getCodeCoverage();
+
     // Create a comment on the associated PR with a link to the site.
     await gitAPI.createThread(
       {
         comments: [
           {
-            content:
-              '[BUILD BOT]: The site has been built and deployed at: https://proud-island-036737910.azurestaticapps.net',
+            content: `###**[BUILD BOT]:**\n\nThe site has been built and deployed at: https://proud-island-036737910.azurestaticapps.net${
+              !!codeCoverage ? `\n\nCode Coverage: ${codeCoverage}` : ''
+            }`,
           },
         ],
       },
@@ -70,3 +76,21 @@ connection
   .catch((err) => {
     console.error(err);
   });
+
+const getCodeCoverage = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile('test_run_output.txt', 'utf8', (err, data) => {
+      if (!err) {
+        const regex = /Code coverage: (\d*?\.\d*? %)/gm;
+        const match = regex.exec(data);
+        if (match) {
+          resolve(match[1]);
+        } else {
+          reject();
+        }
+      } else {
+        reject();
+      }
+    });
+  });
+};

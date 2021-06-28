@@ -1,5 +1,6 @@
-import type { Action, ActionOn, Computed } from 'easy-peasy';
+import type { Action, ActionOn, Computed, ThunkOn } from 'easy-peasy';
 import type { KeyHighlightPosition } from './keyHighlightPositions';
+import type { TrainingScenario } from './trainingScenario';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
 import type { TrainingStatistics } from './trainingStatistics';
 
@@ -16,6 +17,14 @@ export interface TrainingStoreActionsModel {
   >;
   checkForAdvanceToNextTrainingLevel: ActionOn<TrainingStoreModel>;
   resetTrainingText: Action<TrainingStoreModel>;
+  setTypedTrainingText: Action<TrainingStoreModel, string>;
+  onChangeTypedTrainingText: ThunkOn<TrainingStoreModel>;
+  /**
+   * This should not be called directly, it is only used for testing purposes.
+   * You should rely on the beginTrainingXYZMode actions to generate training data rather than set it directly with this action.
+   * See: `beginTrainingAlphabetMode` || `beginTrainingTrigramMode` || `beginTrainingChordMode` || `beginTrainingLexicalMode`
+   */
+  UNSAFE_setTrainingText: Action<TrainingStoreModel, string[][]>;
 }
 
 export interface TrainingStoreStateModel {
@@ -40,6 +49,8 @@ export interface TrainingStoreStateModel {
   previousTargetChord: Computed<TrainingStoreModel, string | undefined>;
   currentLevel: number;
   timeAtTrainingStart: number;
+  typedTrainingText: string;
+  currentTrainingScenario: TrainingScenario | undefined;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

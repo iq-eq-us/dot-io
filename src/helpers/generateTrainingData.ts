@@ -1,7 +1,7 @@
 import { chordLibrary } from '../data/chordLibrary';
 import type { ChordStatistics } from '../models/trainingStatistics';
 
-const getRandomElementFromArray = (list: any[]) =>
+const getRandomElementFromArray = (list: string[]) =>
   list[Math.floor(Math.random() * list.length)];
 
 /**

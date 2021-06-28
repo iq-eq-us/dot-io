@@ -36,7 +36,7 @@ interface Props {
 
 const PageContainer = styled.div.attrs<Props>({
   className: 'h-screen w-screen text-white',
-})`
+})<Props>`
   font-family: 'Courier New';
   background-color: ${(props) => props.backgroundColor};
 `;

@@ -6,6 +6,7 @@ import Column from '../../../components/column';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { ROUTER_PATHS } from '../../../components/router';
+import { useStoreActions } from '../../../store/store';
 
 const TRAINING_VIDEOS = {
   alphabet: 'https://www.youtube.com/watch?v=Vq8NJd3J0Ag',
@@ -34,6 +35,9 @@ export default DashboardTrainingList;
 
 const AlphabeticTierRow = () => {
   const history = useHistory();
+  const startAlphabetTraining = useStoreActions(
+    (store) => store.beginTrainingAlphabetMode,
+  );
 
   return (
     <DashboardTrainingItemRow
@@ -43,6 +47,7 @@ const AlphabeticTierRow = () => {
       tierTitle="Alphabetic"
       shouldDisplayHeader
       onClickExerciseButton={() => {
+        startAlphabetTraining();
         history.push(ROUTER_PATHS.alphabetTraining);
       }}
       onClickTutorialButton={() => {
@@ -54,6 +59,9 @@ const AlphabeticTierRow = () => {
 
 const AmalgamateTierRow = () => {
   const history = useHistory();
+  const startTrigramTraining = useStoreActions(
+    (store) => store.beginTrainingTrigramMode,
+  );
 
   return (
     <DashboardTrainingItemRow
@@ -62,6 +70,7 @@ const AmalgamateTierRow = () => {
       contentText="Average Writing Speed = 13 wpm"
       tierTitle="Amalgamate"
       onClickExerciseButton={() => {
+        startTrigramTraining();
         history.push(ROUTER_PATHS.trigramTraining);
       }}
       onClickTutorialButton={() => {
@@ -73,6 +82,9 @@ const AmalgamateTierRow = () => {
 
 const LexicalTierRow = () => {
   const history = useHistory();
+  const startLexicalTraining = useStoreActions(
+    (store) => store.beginTrainingLexicalMode,
+  );
 
   return (
     <DashboardTrainingItemRow
@@ -81,6 +93,7 @@ const LexicalTierRow = () => {
       contentText="Average Speed of 'Hunt & Peck' Typist = 27 wpm"
       tierTitle="Lexical"
       onClickExerciseButton={() => {
+        startLexicalTraining();
         history.push(ROUTER_PATHS.lexicalTraining);
       }}
       onClickTutorialButton={() => {
@@ -92,6 +105,9 @@ const LexicalTierRow = () => {
 
 const ChordalTierRow = () => {
   const history = useHistory();
+  const startChordTraining = useStoreActions(
+    (store) => store.beginTrainingChordMode,
+  );
 
   return (
     <DashboardTrainingItemRow
@@ -100,6 +116,7 @@ const ChordalTierRow = () => {
       contentText="Average Speed of Keyboard User = 40 wpm"
       tierTitle="Chordal"
       onClickExerciseButton={() => {
+        startChordTraining();
         history.push(ROUTER_PATHS.chordTraining);
       }}
       onClickTutorialButton={() => {
@@ -110,7 +127,7 @@ const ChordalTierRow = () => {
 };
 
 const ExpertTrainingRow = () => {
-  const history = useHistory();
+  // const history = useHistory();
 
   return (
     <DashboardTrainingItemRow
@@ -119,14 +136,14 @@ const ExpertTrainingRow = () => {
       contentText="Average Speed of Human Speech = 120 wpm"
       tierTitle="SuperSonic"
       onClickExerciseButton={() => {
-        history.push(ROUTER_PATHS.chordTraining);
+        // history.push(ROUTER_PATHS.chordTraining);
       }}
     />
   );
 };
 
 const AdvancedTrainingRow = () => {
-  const history = useHistory();
+  // const history = useHistory();
 
   return (
     <DashboardTrainingItemRow
@@ -135,7 +152,7 @@ const AdvancedTrainingRow = () => {
       contentText="Average Speed of Professional Typist = 75 wpm"
       tierTitle="LexicoGraphic"
       onClickExerciseButton={() => {
-        history.push(ROUTER_PATHS.chordTraining);
+        // history.push(ROUTER_PATHS.chordTraining);
       }}
     />
   );

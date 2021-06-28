@@ -1,51 +1,25 @@
-import React, { ReactElement, useRef, useState, useEffect } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import { useCurrentTrainingScenario } from '../useCurrentTrainingScenario';
 
 function TrainingTextInput(): ReactElement {
   const inputTextBoxRef = useRef<HTMLInputElement>(null);
-  const [userEnteredText, setUserEnteredText] = useState('');
+  const userEnteredText = useStoreState((store) => store.typedTrainingText);
+  const setUserEnteredText = useStoreActions(
+    (store) => store.setTypedTrainingText,
+  );
 
   const timeTakenToTypePreviousChord = useStoreState(
     (store) => store.timeTakenToTypePreviousChord,
-  );
-
-  const currentTrainingMode = useCurrentTrainingScenario();
-  const isInAlphabetMode = currentTrainingMode === 'ALPHABET';
-  const targetWord = useStoreState((store) => store.targetWord);
-
-  const isErrorInUserEnteredText = targetWord
-    ? !(isInAlphabetMode ? targetWord : targetWord + ' ')?.startsWith(
-        userEnteredText,
-      ) || false
-    : false;
-
-  const proceedToNextTargetString = useStoreActions(
-    (store) => store.proceedToNextWord,
   );
 
   const refreshTrainingText = useStoreActions(
     (store) => store.resetTrainingText,
   );
 
-  useEffect(() => {
-    const checkToSeeIfProgramShouldProceedToNextWord = () => {
-      const wordToCompare = isInAlphabetMode ? targetWord : targetWord + ' ';
-      const userHasEnteredChordCorrectly = wordToCompare === userEnteredText;
-      if (userHasEnteredChordCorrectly) {
-        proceedToNextTargetString();
-        setUserEnteredText('');
-      }
-    };
-
-    checkToSeeIfProgramShouldProceedToNextWord();
-  }, [userEnteredText, targetWord]);
-
-  const setErrorOccurredWhileTypingTargetChord = useStoreActions(
-    (store) => store.setErrorOccurredWhileAttemptingToTypeTargetChord,
+  const isErrorInUserEnteredText = useStoreState(
+    (store) => store.errorOccurredWhileAttemptingToTypeTargetChord,
   );
-  if (isErrorInUserEnteredText) setErrorOccurredWhileTypingTargetChord(true);
 
   const shouldDisplayHUD = useHUD();
 

@@ -1,4 +1,4 @@
-import { action, actionOn } from 'easy-peasy';
+import { action, actionOn, Actions, thunkOn } from 'easy-peasy';
 import { ChordLibrary, chordLibrary } from '../../data/chordLibrary';
 import {
   generateCharacterTrainingDataWithRecursionRate,
@@ -19,13 +19,15 @@ import type {
   TrainingStoreModel,
   TrainingStoreStateModel,
 } from '../../models/trainingStore';
-import { getCurrentTrainingScenario } from '../../pages/training/useCurrentTrainingScenario';
 
 const CHORD_LINE_LENGTH = 24;
 
 const trainingStoreActions: TrainingStoreActionsModel = {
   setTrainingSettings: action((state, payload) => {
     state.trainingSettings = payload;
+  }),
+  UNSAFE_setTrainingText: action((state, payload) => {
+    state.trainingText = payload;
   }),
   beginTrainingLexicalMode: action((state) => {
     resetTrainingStore(state as any);
@@ -46,6 +48,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       ),
     ];
     state.trainingStatistics = generateEmptyChordStatistics('lexical');
+    state.currentTrainingScenario = 'LEXICAL';
   }),
   beginTrainingAlphabetMode: action((state) => {
     resetTrainingStore(state as any);
@@ -66,6 +69,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       ),
     ];
     state.trainingStatistics = generateEmptyChordStatistics('letters');
+    state.currentTrainingScenario = 'ALPHABET';
   }),
   beginTrainingTrigramMode: action((state) => {
     resetTrainingStore(state as any);
@@ -86,6 +90,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       ),
     ];
     state.trainingStatistics = generateEmptyChordStatistics('trigrams');
+    state.currentTrainingScenario = 'TRIGRAM';
   }),
   beginTrainingChordMode: action((state) => {
     resetTrainingStore(state as any);
@@ -106,6 +111,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       ),
     ];
     state.trainingStatistics = generateEmptyChordStatistics('chords');
+    state.currentTrainingScenario = 'CHORDING';
   }),
   proceedToNextWord: action((state) => {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining
@@ -131,7 +137,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   // our configured speed goal.
   checkForAdvanceToNextTrainingLevel: actionOn(
     (actions) => actions.proceedToNextWord,
-    (state, target) => {
+    (state) => {
       // Update the current level based on the formula (200 - speedGoal)
       // If the user is in "Auto" or "Goal Driven" mode, then the following properties are updated automatically on level change
       //    Speed goal is set to (1 - slowestChord.averageSpeed)
@@ -186,7 +192,66 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     generateNextLineOfInputdata(store as unknown as TrainingStoreStateModel);
     generateNextLineOfInputdata(store as unknown as TrainingStoreStateModel);
   }),
+  setTypedTrainingText: action((state, payload) => {
+    state.typedTrainingText = payload;
+  }),
+  // This needs to be a thunkOn so that we can dispatch multiple actions
+  // when the target word matches the word the user has entered
+  onChangeTypedTrainingText: thunkOn(
+    (actions) => actions.setTypedTrainingText,
+    (actions, _, { getState }) => {
+      const storeState = getState();
+
+      // Check for error
+      const currentTrainingMode = storeState.currentTrainingScenario;
+      const isInAlphabetMode = currentTrainingMode === 'ALPHABET';
+
+      checkIfErrorExistsInUserEnteredText(
+        storeState as unknown as TrainingStoreStateModel,
+        isInAlphabetMode,
+        actions,
+      );
+
+      checkIfShouldProceedToNextTargetChord(
+        isInAlphabetMode,
+        storeState as unknown as TrainingStoreStateModel,
+        actions,
+      );
+    },
+  ),
 };
+
+function checkIfShouldProceedToNextTargetChord(
+  isInAlphabetMode: boolean,
+  storeState: TrainingStoreStateModel,
+  actions: Actions<TrainingStoreModel>,
+) {
+  const wordToCompare = isInAlphabetMode
+    ? storeState.targetWord
+    : storeState.targetWord + ' ';
+  const userHasEnteredChordCorrectly =
+    wordToCompare === storeState.typedTrainingText;
+  if (userHasEnteredChordCorrectly) {
+    actions.proceedToNextWord();
+    actions.setTypedTrainingText('');
+  }
+}
+
+function checkIfErrorExistsInUserEnteredText(
+  storeState: TrainingStoreStateModel,
+  isInAlphabetMode: boolean,
+  actions: Actions<TrainingStoreActionsModel>,
+) {
+  const isErrorInUserEnteredText = storeState.targetWord
+    ? !(
+        isInAlphabetMode
+          ? storeState.targetWord + '' // The superfluos addition of an empty string is here to silence the type warnings about Computed properties in the store
+          : storeState.targetWord + ' '
+      )?.startsWith(storeState.typedTrainingText) || false
+    : false;
+  if (isErrorInUserEnteredText)
+    actions.setErrorOccurredWhileAttemptingToTypeTargetChord(true);
+}
 
 function resetTrainingStore(state: TrainingStoreModel) {
   state.currentLineOfTrainingText = 0;
@@ -287,7 +352,8 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
     TRIGRAM: generateTrigramTrainingDataWithRecursionRate,
   };
 
-  const trainingScenario = getCurrentTrainingScenario();
+  const trainingScenario = state.currentTrainingScenario;
+
   if (trainingScenario) {
     const textGenerationFunctionToUse =
       trainingDataGenerationMap[trainingScenario];
@@ -311,8 +377,9 @@ function updateRecursionRateSettings(state: TrainingStoreModel) {
     );
   const numberOfChordsAboveSpeedGoal =
     chordsWithSpeedHigherThanSpeedGoal.length;
-  const currentTrainingScenario = getCurrentTrainingScenario();
   let recursionRate = 95;
+
+  const currentTrainingScenario = state.currentTrainingScenario;
 
   if (state.trainingSettings.autoOrCustom === 'AUTO') {
     if (currentTrainingScenario === 'ALPHABET') {

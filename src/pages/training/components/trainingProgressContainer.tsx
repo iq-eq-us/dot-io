@@ -1,8 +1,6 @@
 import React, { ReactElement } from 'react';
-import {
-  chordLibrary,
-  getChordLibraryForTrainingScenario,
-} from '../../../data/chordLibrary';
+import { chordLibrary } from '../../../data/chordLibrary';
+import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreState } from '../../../store/store';
 import { useCurrentTrainingScenario } from '../useCurrentTrainingScenario';
 import ProgressBar from './progressBar';
@@ -60,5 +58,16 @@ function TrainingProgressContainer(): ReactElement {
     </div>
   );
 }
+
+const getChordLibraryForTrainingScenario = (
+  scenario?: TrainingScenario,
+): Record<string, string[]> | undefined => {
+  if (scenario === 'ALPHABET') return chordLibrary.letters;
+  else if (scenario === 'CHORDING') return chordLibrary.chords;
+  else if (scenario === 'LEXICAL') return chordLibrary.lexical;
+  else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
+
+  return undefined;
+};
 
 export default TrainingProgressContainer;
