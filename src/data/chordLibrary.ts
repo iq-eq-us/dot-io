@@ -1,9 +1,11 @@
+export type ChordLibraryRecord = Record<string, string[]>;
+
 export interface ChordLibrary {
-  letters: Record<string, string[]>;
-  chords: Record<string, string[]>;
-  trigrams: Record<string, string[]>;
-  lexical: Record<string, string[]>;
-  all: Record<string, string[]>;
+  letters: ChordLibraryRecord;
+  chords: ChordLibraryRecord;
+  trigrams: ChordLibraryRecord;
+  lexical: ChordLibraryRecord;
+  all: ChordLibraryRecord;
 }
 
 export const chordLibrary: ChordLibrary = {

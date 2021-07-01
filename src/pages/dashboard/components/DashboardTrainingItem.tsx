@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Row from '../../../components/row';
 import Column from '../../../components/column';
 import DashboardTrainingRowButton from './DashboardTrainingRowButton';
-import useWindowSize from '../../../hooks/useWindowSize';
+import { large, extraLarge } from '../../../helpers/breakpoints';
 
 interface DashboardTrainingItemProps {
   shouldDisplayHeader?: boolean;
@@ -26,21 +26,16 @@ const DashboardTrainingItemRow = ({
   onClickExerciseButton,
   isDoubleButtonVariant,
 }: DashboardTrainingItemProps): ReactElement => {
-  const windowSize = useWindowSize();
-  const shouldShrinkTextToFitWindowSize = windowSize.width < 1920;
-
   return (
     <Wrapper>
       <DashboardTrainingItemRowContainer>
-        <ButtonRow center>
-          <DashboardHeaderText>
-            {shouldDisplayHeader ? 'Tutorials' : ''}
-          </DashboardHeaderText>
-          <Spacer />
-          <DashboardHeaderText>
-            {shouldDisplayHeader ? 'Exercises' : ''}
-          </DashboardHeaderText>
-        </ButtonRow>
+        {shouldDisplayHeader && (
+          <ButtonRow center>
+            <DashboardHeaderText>Tutorials</DashboardHeaderText>
+            <Spacer />
+            <DashboardHeaderText>Exercises</DashboardHeaderText>
+          </ButtonRow>
+        )}
 
         <DashboardHeaderContentText>{contentText}</DashboardHeaderContentText>
       </DashboardTrainingItemRowContainer>
@@ -67,9 +62,7 @@ const DashboardTrainingItemRow = ({
         </FullHeightRow>
 
         <TitleColumn>
-          <TitleColumnText reducedTextSize={shouldShrinkTextToFitWindowSize}>
-            {tierTitle || ''}
-          </TitleColumnText>
+          <TitleColumnText>{tierTitle || ''}</TitleColumnText>
           <TitleColumnText footer>Tier</TitleColumnText>
         </TitleColumn>
       </ContentContainer>
@@ -93,12 +86,10 @@ const TitleColumn = styled(Column)`
 
 interface TextProps {
   footer?: boolean;
-  reducedTextSize?: boolean;
 }
 
 const TitleColumnText = styled.p<TextProps>`
-  font-size: ${(props) =>
-    props.footer ? '1.2rem' : props.reducedTextSize ? '1.6rem' : '2rem'};
+  font-size: ${(props) => (props.footer ? '1.2em' : '1.6em')};
   margin: 0;
   margin-left: 16px;
 `;
@@ -122,12 +113,29 @@ const ContentContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0px 16px;
+
+  @media only screen and (max-width: ${extraLarge}) {
+    height: 87px;
+  }
+
+  @media only screen and (max-width: ${large}) {
+    height: 73px;
+  }
 `;
 
 const Wrapper = styled.div`
   position: relative;
   z-index: 10;
   width: 100%;
+  font-size: 1rem;
+
+  @media only screen and (max-width: ${extraLarge}) {
+    font-size: 0.9rem;
+  }
+
+  @media only screen and (max-width: ${large}) {
+    font-size: 0.8rem;
+  }
 `;
 
 const DashboardTrainingItemRowContainer = styled(Row)`
@@ -141,7 +149,7 @@ const DashboardTrainingItemRowContainer = styled(Row)`
 `;
 
 const DashboardHeaderText = styled.p`
-  font-size: 14px;
+  font-size: 0.875em;
   height: 24px;
   margin: 0px;
   padding: 4px 0px;
@@ -151,7 +159,9 @@ const DashboardHeaderText = styled.p`
 
 const DashboardHeaderContentText = styled(DashboardHeaderText)`
   color: ${TRAINING_BAR_COLOR};
-  font-size: 14px;
+  font-size: 0.875em;
+  flex: 1;
+  text-align: right;
 `;
 
 const EndCapCircle = styled.div`

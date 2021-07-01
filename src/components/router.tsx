@@ -4,6 +4,7 @@ import Dashboard from '../pages/dashboard/dashboard';
 import Test from '../pages/dashboard/alternateDashboard';
 import Navbar from '../components/navbar';
 import Training from '../pages/training/training';
+import AlternateTraining from '../pages/training/alternateTraining';
 
 export const ROUTER_PATHS = {
   home: '/',
@@ -24,6 +25,11 @@ const Router = (): ReactElement => {
         <Route path="/altDash">
           <Navbar />
           <Test />
+        </Route>
+
+        <Route path="/altTrain">
+          <Navbar />
+          <AlternateTraining />
         </Route>
 
         <Route path={ROUTER_PATHS.alphabetTraining}>

@@ -6,6 +6,7 @@ import StatisticColumn from './components/statisticColumn';
 import { useUpdateTrainingModeOnURLChange } from '../../hooks/useUpdateTrainingModeOnURLChange';
 import { ClosingPrompt } from './components/closingPrompt';
 import { useContrast } from '../../hooks/useContrast';
+import EditChordsModal from './components/editChordsModal';
 
 const Training = (): ReactElement => {
   useUpdateTrainingModeOnURLChange();
@@ -14,17 +15,18 @@ const Training = (): ReactElement => {
   return (
     <PageContainer {...{ backgroundColor }}>
       <ClosingPrompt />
+      <EditChordsModal />
 
       <MainContentRow>
-        <ContentColumn>
+        <FixedWidthColumn width="225px">
           <SettingsMenu />
-        </ContentColumn>
+        </FixedWidthColumn>
         <ContentColumn>
           <MainTrainingColumn />
         </ContentColumn>
-        <ContentColumn>
+        <FixedWidthColumn width="275px">
           <StatisticColumn />
-        </ContentColumn>
+        </FixedWidthColumn>
       </MainContentRow>
     </PageContainer>
   );
@@ -46,7 +48,18 @@ const MainContentRow = styled.div.attrs({
 })``;
 
 const ContentColumn = styled.div.attrs({
-  className: 'flex flex-col',
+  className: 'flex flex-col flex-1 max-w-[1000px]',
 })``;
+
+interface WidthProps {
+  width: string;
+}
+
+const FixedWidthColumn = styled.div.attrs<WidthProps>({
+  className: 'flex flex-col flex-1',
+})<WidthProps>`
+  ${(props) => `width: ${props.width}`};
+  ${(props) => `max-width: ${props.width}`};
+`;
 
 export default Training;

@@ -48,6 +48,8 @@ const trainingStoreState: TrainingStoreStateModel = {
     ];
   }),
   currentTrainingScenario: undefined,
+  isDisplayingChordEditModal: false,
+  chordsToPullFrom: {},
 };
 
 export default trainingStoreState;

@@ -28,7 +28,7 @@ function DashboardStatisticsTable(): ReactElement {
       style={{ maxHeight: '90%' }}
     >
       <button
-        className="absolute bg-white p-1 px-2 rounded-sm right-0 -top-10"
+        className="absolute bg-white p-1 px-2 rounded-sm right-0 -top-10 hover:bg-gray-200 active:bg-gray-300"
         onClick={() => clearAllStatisticsWithoutPromptingUser()}
       >
         Clear All Progress
@@ -121,7 +121,7 @@ export default DashboardStatisticsTable;
 function CumulativeChordRow(savedCharacterChordStats: TrainingStatistics) {
   return (
     <div className="flex flex-row">
-      <TableCell className="w-1/4 text-[12px] leading-6">CUMULATIVE:</TableCell>
+      <TableCell className="w-1/4 text-[12px] leading-6">SUM:</TableCell>
       <TableCell className="w-1/4">
         {getCumulativeAverageChordTypeTime(savedCharacterChordStats.statistics)}
       </TableCell>

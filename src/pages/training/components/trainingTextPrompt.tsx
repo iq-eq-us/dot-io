@@ -34,7 +34,7 @@ function TrainingTextPrompt(): ReactElement {
   );
 
   return (
-    <div className="text-4xl mt-8 text-center">
+    <div className="text-2xl xl:text-4xl mt-8 text-center">
       <div className="row flex-row">
         <p className="inline">
           {previousText}

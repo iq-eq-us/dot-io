@@ -1,4 +1,5 @@
 import type { Action, ActionOn, Computed, ThunkOn } from 'easy-peasy';
+import type { ChordLibraryRecord } from '../data/chordLibrary';
 import type { KeyHighlightPosition } from './keyHighlightPositions';
 import type { TrainingScenario } from './trainingScenario';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
@@ -19,6 +20,14 @@ export interface TrainingStoreActionsModel {
   resetTrainingText: Action<TrainingStoreModel>;
   setTypedTrainingText: Action<TrainingStoreModel, string>;
   onChangeTypedTrainingText: ThunkOn<TrainingStoreModel>;
+  toggleChordEditModal: Action<TrainingStoreModel>;
+  /**
+   * This action allows you to manually update the chords used in a particular training mode
+   * For example, if you were in Lexical training, you can use the top right "View/Edit" chords box
+   * to remove a chord or add a new one. This action will take care of all the necessary changes that
+   * occur when updating target chords.
+   */
+  updateChordsUsedForTraining: Action<TrainingStoreModel, ChordLibraryRecord>;
   /**
    * This should not be called directly, it is only used for testing purposes.
    * You should rely on the beginTrainingXYZMode actions to generate training data rather than set it directly with this action.
@@ -51,6 +60,8 @@ export interface TrainingStoreStateModel {
   timeAtTrainingStart: number;
   typedTrainingText: string;
   currentTrainingScenario: TrainingScenario | undefined;
+  isDisplayingChordEditModal: boolean;
+  chordsToPullFrom: ChordLibraryRecord;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

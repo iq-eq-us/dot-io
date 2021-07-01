@@ -11,19 +11,16 @@ export const blueTextStyle = {
 };
 
 function TrainingProgressContainer(): ReactElement {
-  const trainingMode = useCurrentTrainingScenario();
   const trainingStats = useStoreState((store) => store.trainingStatistics);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
+  const chordsToUse = useStoreState((store) => store.chordsToPullFrom);
   const trainingStatsWithAverageSpeedOverSpeedGoal =
     trainingStats.statistics.filter(
       (s) => s.averageSpeed < trainingSettings.speedGoal && s.averageSpeed != 0,
     );
 
   const calculateTotalNumberOfChords = () => {
-    const chordsToCheckLengthOn =
-      getChordLibraryForTrainingScenario(trainingMode || undefined) || {};
-
-    return Object.keys(chordsToCheckLengthOn).length;
+    return Object.keys(chordsToUse).length;
   };
 
   const totalNumberOfChords = calculateTotalNumberOfChords();
@@ -44,14 +41,18 @@ function TrainingProgressContainer(): ReactElement {
       <h1 className="text-4xl mb-4 text-[skyblue]">Lvl: {currentLevel}</h1>
       <div className="flex flex-row">
         <div className="flex flex-col items-center">
-          <p style={blueTextStyle}>Letters Conquered</p>
+          <p className="text-center" style={blueTextStyle}>
+            Letters Conquered
+          </p>
           <p style={blueTextStyle}>{totalNumerOfChordsConquered}</p>
         </div>
-        <div className="flex flex-col px-8" style={{ width: '500px' }}>
+        <div className="w-[300px] xl:w-[500px] flex flex-col px-8">
           <ProgressBar progress={progress} />
         </div>
         <div className="flex flex-col items-center">
-          <p style={blueTextStyle}>To Next Level</p>
+          <p className="text-center" style={blueTextStyle}>
+            To Next Level
+          </p>
           <p style={blueTextStyle}>{numberOfChordsRemaining}</p>
         </div>
       </div>
@@ -59,8 +60,8 @@ function TrainingProgressContainer(): ReactElement {
   );
 }
 
-const getChordLibraryForTrainingScenario = (
-  scenario?: TrainingScenario,
+export const getChordLibraryForTrainingScenario = (
+  scenario?: TrainingScenario | undefined,
 ): Record<string, string[]> | undefined => {
   if (scenario === 'ALPHABET') return chordLibrary.letters;
   else if (scenario === 'CHORDING') return chordLibrary.chords;

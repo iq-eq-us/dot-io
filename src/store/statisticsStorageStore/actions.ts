@@ -23,7 +23,14 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
       store.totalSavedTrainingStatistics?.statistics?.length > 0;
 
     if (statisticsAlreadyExist) {
-      handleStatsMerge(store as any, payload);
+      const objectToSave = {
+        statistics: handleStatsMerge(store.totalSavedChordStats, payload),
+      };
+      store.totalSavedTrainingStatistics = objectToSave;
+      localStorage.setItem(
+        SAVED_STATS_STORAGE_KEY,
+        JSON.stringify(objectToSave),
+      );
     } else {
       const objectToSave = {
         statistics: payload.statistics.filter(ifHasOccurredAtLeastOnce),
@@ -41,17 +48,15 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
   }),
 };
 
-const handleStatsMerge = (
-  store: StatisticsStore,
-  payload: TrainingStatistics,
-) => {
+export const handleStatsMerge = (
+  firstStats: TrainingStatistics,
+  secondStats: TrainingStatistics,
+): ChordStatistics[] => {
   const existingStatistics = {
-    statistics: store.totalSavedTrainingStatistics.statistics.filter(
-      ifHasOccurredAtLeastOnce,
-    ),
+    statistics: firstStats.statistics.filter(ifHasOccurredAtLeastOnce),
   };
   const statisticsToMerge = {
-    statistics: payload.statistics.filter(ifHasOccurredAtLeastOnce),
+    statistics: secondStats.statistics.filter(ifHasOccurredAtLeastOnce),
   };
 
   const allChordKeys = [
@@ -97,12 +102,7 @@ const handleStatsMerge = (
     newStats.push(newStat);
   });
 
-  const objectToSave = {
-    statistics: newStats,
-  };
-
-  store.totalSavedTrainingStatistics = objectToSave;
-  localStorage.setItem(SAVED_STATS_STORAGE_KEY, JSON.stringify(objectToSave));
+  return newStats;
 };
 
 export default statisticsStorageStoreActions;

@@ -11,13 +11,14 @@ export default function MainTrainingColumn(): ReactElement {
       <TrainingProgressContainer />
       <TrainingTextPrompt />
       <TrainingTextInput />
-      <CharachorderOverlay />
+
+      <div className="relative h-full w-full">
+        <CharachorderOverlay />
+      </div>
     </LocalColumn>
   );
 }
 
 const LocalColumn = styled.div.attrs({
-  className: 'flex flex-col items-center mt-4',
-})`
-  width: 1000px;
-`;
+  className: 'flex flex-col items-center mt-4 relative mx-4 h-full',
+})``;

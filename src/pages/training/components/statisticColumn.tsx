@@ -6,25 +6,44 @@ import {
 import { useHUD } from '../../../hooks/useHUD';
 
 import { useTrainingSettings } from '../../../hooks/useTrainingSettings';
-import { useStoreState } from '../../../store/store';
+import { useStoreActions, useStoreState } from '../../../store/store';
 
 export default function StatisticColumn(): ReactElement {
   const [trainingSettings, setTrainingSettings] = useTrainingSettings();
   const trainingStatistics = useStoreState((store) => store.trainingStatistics);
-  const sortedStats = trainingStatistics.statistics.sort(
-    (a, b) => b.averageSpeed - a.averageSpeed,
-  );
+  const chordsBeingUsed = useStoreState((store) => store.chordsToPullFrom);
+  const sortedStats = trainingStatistics.statistics
+    .filter((c) => !!chordsBeingUsed[c.id])
+    .sort((a, b) => b.averageSpeed - a.averageSpeed);
   const timeTakenToTypePreviousChord = useStoreState(
     (store) => store.timeTakenToTypePreviousChord,
   );
+  const currentTrainingMode = useStoreState(
+    (store) => store.currentTrainingScenario,
+  );
+
+  const toggleEditModal = useStoreActions(
+    (store) => store.toggleChordEditModal,
+  );
 
   const shouldDisplayHUD = useHUD();
+
+  const shouldShowChordEditButton =
+    currentTrainingMode === 'LEXICAL' || currentTrainingMode === 'TRIGRAM';
 
   return (
     <div
       className="p-4 flex flex-col items-end overflow-y-scroll h-screen"
       style={{ fontWeight: 500 }}
     >
+      {shouldShowChordEditButton && (
+        <div
+          onClick={() => toggleEditModal()}
+          className="border-[1px] border-solid border-white p-0.5 px-2 mb-2 cursor-pointer"
+        >
+          View/Edit All Chords
+        </div>
+      )}
       <div className="flex flex-row">
         <input
           className="mr-2 leading-tight"
@@ -54,7 +73,7 @@ export default function StatisticColumn(): ReactElement {
         </thead>
         <tbody>
           <tr style={{ color: 'skyblue' }}>
-            <td className="w-28">Sum:</td>
+            <td className="min-w-[40px]">Total:</td>
             <td className={`${shouldDisplayHUD ? '' : 'invisible'}`}>
               {getCumulativeAverageChordTypeTime(sortedStats)}
             </td>

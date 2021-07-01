@@ -21,13 +21,13 @@ export const AmbiThrowKey: KeyboardKey = {
 export const ShiftKey: KeyboardKey = {
   title: 'Shift',
   id: 4,
-  titleTransformOverride: 'rotate(135deg) translate(16px, 14px)',
+  titleTransformOverride: 'rotate(135deg) translate(12px, 8px)',
 };
 
 export const CtrlKey: KeyboardKey = {
   title: 'Ctrl',
   id: 5,
-  titleTransformOverride: 'rotate(135deg) translate(12px, 8px)',
+  titleTransformOverride: 'rotate(135deg) translate(8px, 2px)',
 };
 
 export const BlankKey: KeyboardKey = {
@@ -57,7 +57,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   9: {
     title: 'Del',
     id: 9,
-    titleTransformOverride: 'rotate(135deg) translate(8px, 7px)',
+    titleTransformOverride: 'rotate(135deg) translate(8px, 2px)',
   },
   10: {
     title: '.',
@@ -108,7 +108,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   21: {
     title: 'Click',
     id: 21,
-    titleTransformOverride: 'rotate(135deg) translate(16px, 12px) scale(0.9)',
+    titleTransformOverride: 'rotate(135deg) translate(10px, 6px)',
   },
   22: {
     title: 'W',
@@ -162,7 +162,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   33: {
     title: 'Enter',
     id: 33,
-    titleTransformOverride: 'rotate(135deg) translate(16px, 10px)',
+    titleTransformOverride: 'rotate(135deg) translate(12px, 7px)',
   },
   34: {
     title: 'A',

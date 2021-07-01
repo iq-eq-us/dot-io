@@ -1,19 +1,14 @@
 import React, { ReactElement } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Test = (): ReactElement => {
+  const history = useHistory();
+
   return (
     <div>
-      {/* <header className="shadow" style={{ backgroundColor: "#333" }}>
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-white">
-            Dashboard
-          </h1>
-        </div>
-      </header> */}
-
       <section
         className="text-gray-600 body-font min-h-screen"
-        style={{ backgroundColor: '#2a2a2a' }}
+        style={{ backgroundColor: '#151515' }}
       >
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap w-full mb-20">
@@ -23,122 +18,159 @@ const Test = (): ReactElement => {
               </h1>
               <div className="h-1 w-20 bg-green-500 rounded"></div>
             </div>
-            <p className="lg:w-1/2 w-full leading-relaxed text-gray-300">
+            <p className="lg:w-1/2 w-full leading-relaxed text-gray-300 font-semibold">
               Welcome to the LaunchPad Learn! Here you can view tutorials to get
               to know your Charachorder and practice your typing to level up
               your abilities! We&apos;re excited to see how far you will go!
             </p>
           </div>
 
-          <div className="flex flex-wrap -m-4">
-            <div className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <img
-                  className="h-40 rounded w-full object-cover object-center mb-6"
-                  src="https://dummyimage.com/720x400"
-                  alt="content"
-                />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                  Tier
-                </h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                  Alphabetic
-                </h2>
-                <p className="leading-relaxed text-base">
-                  Learn the basic key positions to begin your Charachorder
-                  journey.
-                </p>
-                <div className="flex flex-row">
-                  <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Orientation
-                  </button>
-                  <button className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Alphabet Training
-                  </button>
+          <div className="flex flex-col md:flex-row">
+            <div className="flex flex-wrap flex-col md:w-1/4">
+              <div className="p-4">
+                <div className="bg-white p-6 rounded-lg">
+                  <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
+                    Tier
+                  </h3>
+                  <h2 className="text-lg text-gray-900 font-bold title-font mb-4">
+                    Alphabetic
+                  </h2>
+
+                  <p className="leading-relaxed text-base">
+                    The average writing speed is 13 words per minute.
+                  </p>
+                  <div className="flex flex-row">
+                    <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                      Orientation
+                    </button>
+                    <button
+                      onClick={() => history.push('/altTrain')}
+                      className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Training
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4">
+                <div className="bg-white p-6 rounded-lg">
+                  <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
+                    Tier
+                  </h3>
+                  <h2 className="text-lg text-gray-900 font-bold title-font mb-4">
+                    Trigram
+                  </h2>
+
+                  <p className="leading-relaxed text-base">
+                    The average speed of a "Hunt & Peck" typist is 27 wpm.
+                  </p>
+                  <div className="flex flex-row">
+                    <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                      Orientation
+                    </button>
+                    <button
+                      onClick={() => history.push('/altTrain')}
+                      className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Training
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4">
+                <div className="bg-white p-6 rounded-lg">
+                  <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
+                    Tier
+                  </h3>
+                  <h2 className="text-lg text-gray-900 font-bold title-font mb-4">
+                    Lexical
+                  </h2>
+
+                  <p className="leading-relaxed text-base">
+                    The average speed of a keyboard user is 40 words per minute.
+                  </p>
+                  <div className="flex flex-row">
+                    <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                      Orientation
+                    </button>
+                    <button
+                      onClick={() => history.push('/altTrain')}
+                      className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Training
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4">
+                <div className="bg-white p-6 rounded-lg">
+                  <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
+                    Tier
+                  </h3>
+                  <h2 className="text-lg text-gray-900 font-bold title-font mb-4">
+                    Chording
+                  </h2>
+
+                  <p className="leading-relaxed text-base">
+                    The average speed of a professional typist is 75 words per
+                    minute.
+                  </p>
+                  <div className="flex flex-row">
+                    <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                      Orientation
+                    </button>
+                    <button
+                      onClick={() => history.push('/altTrain')}
+                      className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Training
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <img
-                  className="h-40 rounded w-full object-cover object-center mb-6"
-                  src="https://dummyimage.com/720x400"
-                  alt="content"
-                />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                  Tier
-                </h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                  Amalgamate
-                </h2>
-                <p className="leading-relaxed text-base">
-                  Start to learn the most common trigram patterns you&apos;ll be
-                  typing.
-                </p>
-                <div className="flex flex-row">
-                  <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Trigram Tutorial
-                  </button>
-                  <button className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Trigram Training
-                  </button>
+            <div className="md:w-3/4 mt-4">
+              <div className="flex flex-col sm:m-4 md:m-0 md:ml-36 lg:ml-20">
+                <span className="text-3xl text-white mb-4">Alphabet</span>
+                <div className="-my-2 overflow-x-auto -mx-5 sm:mx-0">
+                  <div className="py-2 align-middle inline-block min-w-full">
+                    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">{renderHeader()}</thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {renderFakeRow(1)}
+                          {renderFakeRow(2)}
+                          {renderFakeRow(3)}
+                          {renderFakeRow(4)}
+                          {renderFakeRow(5)}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <img
-                  className="h-40 rounded w-full object-cover object-center mb-6"
-                  src="https://dummyimage.com/720x400"
-                  alt="content"
-                />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                  Tier
-                </h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                  Lexical
-                </h2>
-                <p className="leading-relaxed text-base">
-                  Begin learning how to type short letter groups at your own
-                  pace.
-                </p>
-                <div className="flex flex-row">
-                  <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Lexical Tutorial
-                  </button>
-                  <button className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Lexical Training
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <img
-                  className="h-40 rounded w-full object-cover object-center mb-6"
-                  src="https://dummyimage.com/720x400"
-                  alt="content"
-                />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                  Tier
-                </h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                  Chordal
-                </h2>
-                <p className="leading-relaxed text-base">
-                  Start writing the most common full word chords to create full
-                  sentences.
-                </p>
-                <div className="flex flex-row">
-                  <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Trigram Tutorial
-                  </button>
-                  <button className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Trigram Training
-                  </button>
+              <div className="flex flex-col sm:m-4 md:m-0 md:ml-36 lg:ml-20 mt-12 md:mt-8">
+                <span className="text-3xl text-white mb-4">Chords</span>
+                <div className="-my-2 overflow-x-auto -mx-5 sm:mx-0">
+                  <div className="py-2 align-middle inline-block min-w-full">
+                    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">{renderHeader()}</thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {renderFakeRow(1)}
+                          {renderFakeRow(2)}
+                          {renderFakeRow(3)}
+                          {renderFakeRow(4)}
+                          {renderFakeRow(5)}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -151,8 +183,8 @@ const Test = (): ReactElement => {
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-green-500">
             Coming Soon...
           </h1>
-          <p className="lg:w-2/3 mx-auto leading-relaxed text-gray-50">
-            Charachoder is working daily to add and improve these training
+          <p className="lg:w-2/3 mx-auto leading-relaxed text-gray-50 px-4">
+            Charachorder is working daily to add and improve these training
             courses. Be sure to check back again soon to take your Charachorder
             skills to the next level!
           </p>
@@ -163,3 +195,53 @@ const Test = (): ReactElement => {
 };
 
 export default Test;
+
+function renderHeader() {
+  return (
+    <tr>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+      >
+        Chord
+      </th>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+      >
+        Average Speed
+      </th>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+      >
+        Total Errors
+      </th>
+      <th
+        scope="col"
+        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+      >
+        Total Times Typed
+      </th>
+    </tr>
+  );
+}
+
+function renderFakeRow(i: number) {
+  return (
+    <tr className={`${i % 2 === 0 ? 'bg-gray-100' : ''}`}>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="flex items-center">
+          <div className="text-sm font-medium text-gray-900">America</div>
+        </div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="text-sm text-gray-900">127</div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="text-sm text-gray-900">2</div>
+      </td>
+      <div className="px-6 py-4 whitespace-nowrap">20</div>
+    </tr>
+  );
+}

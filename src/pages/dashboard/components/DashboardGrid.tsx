@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import comingSoonImageTop from '../../../assets/ComingSoonTop.png';
 import comingSoonImageRight from '../../../assets/ComingSoonRight.png';
 import DashboardStatisticsTable from './DashboardStatisticsTable';
+import { extraLarge, large } from '../../../helpers/breakpoints';
 
 function DashboardGrid(): ReactElement {
   return (
@@ -37,10 +38,30 @@ const GridContainer = styled.div`
   grid-template-areas:
     'Top Top'
     'BottomLeft BottomRight';
+
+  @media only screen and (max-width: ${extraLarge}) {
+    grid-template-columns: 55% 35%;
+    grid-template-rows: 40vh 60vh;
+    grid-template-areas:
+      'Top Top'
+      'BottomLeft BottomLeft';
+  }
+
+  @media only screen and (max-width: ${large}) {
+    grid-template-areas: 'BottomLeft';
+    grid-template-rows: 100vh;
+    grid-template-columns: 100%;
+    margin-top: 48px;
+    margin-right: 12px;
+  }
 `;
 
 const TopGridArea = styled.div`
   grid-area: Top;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 
 const BottomLeftGridArea = styled.div`
@@ -50,6 +71,10 @@ const BottomLeftGridArea = styled.div`
 
 const BottomRightGridArea = styled.div`
   grid-area: BottomRight;
+
+  @media only screen and (max-width: ${extraLarge}) {
+    display: none;
+  }
 `;
 
 const FitImageButMaintainAspectRatio = styled.img`

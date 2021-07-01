@@ -1,15 +1,37 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useLayoutEffect, useRef, useState } from 'react';
 import SectorGroup from './sectorGroup';
 
-import charachorderBackground from '../../../assets/charachorder_background_feathered.png';
+import charachorderBackground from '../../../assets/charachorder_background_feathered_no_center.png';
+import styled from 'styled-components';
+import useWindowSize from '../../../hooks/useWindowSize';
 
-function CharachorderOverlay(): ReactElement {
+interface OverlayProps {
+  overrideBottom?: boolean;
+}
+
+function CharachorderOverlay({ overrideBottom }: OverlayProps): ReactElement {
   const [hasLoadedBackgroundImage, setHasLoadedBackgroundImage] =
     useState(false);
   const setHasLoadedToTrue = () => setHasLoadedBackgroundImage(true);
+  const overlayRef = useRef(null);
+  const [overlayScale, setOverlayScale] = useState({});
+
+  const screenSize = useWindowSize();
+
+  useLayoutEffect(() => {
+    const scaleObject = fitToParent(overlayRef?.current as any);
+    console.log(scaleObject);
+    setOverlayScale(scaleObject);
+  }, [screenSize]);
 
   return (
-    <div className="relative w-full">
+    <OverlayContainer
+      ref={overlayRef}
+      scaleWidth={overlayScale?.width}
+      scaleHeight={overlayScale?.height}
+      scale={overlayScale?.scale}
+      {...{ overrideBottom }}
+    >
       <img
         onLoad={setHasLoadedToTrue}
         src={charachorderBackground}
@@ -91,8 +113,38 @@ function CharachorderOverlay(): ReactElement {
           <SectorGroup left={81.5} top={68.2} scale={0.55} groupSpecifier={8} />
         </div>
       )}
-    </div>
+    </OverlayContainer>
   );
+}
+
+interface Props {
+  scaleHeight: number;
+  scaleWidth: number;
+  scale: number;
+}
+
+const OverlayContainer = styled.div.attrs<Props>({})<Props>`
+  position: absolute;
+
+  ${(props) => `transform: scale(${Math.min(1, props.scale)})`};
+  ${(props) => `top: ${(-(1 - props.scaleHeight) * 532) / 2}px`};
+  ${(props) => `left: ${(-(1 - props.scaleWidth) * 1000) / 2}px`};
+
+  width: 1000px;
+  height: 532px;
+`;
+
+function fitToParent(element: HTMLElement) {
+  const width = element?.parentElement?.clientWidth || 0;
+  const height = element?.parentElement?.clientHeight || 0;
+  const idealWidth = 1000;
+  const idealHeight = 532;
+
+  return {
+    width: width / idealWidth,
+    height: height / idealHeight,
+    scale: Math.min(width / idealWidth, height / idealHeight),
+  };
 }
 
 export default CharachorderOverlay;

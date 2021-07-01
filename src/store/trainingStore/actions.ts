@@ -1,12 +1,6 @@
 import { action, actionOn, Actions, thunkOn } from 'easy-peasy';
-import { ChordLibrary, chordLibrary } from '../../data/chordLibrary';
-import {
-  generateCharacterTrainingDataWithRecursionRate,
-  generateChordTrainingDataWithRecursionRate,
-  generateLexicalTrainingDataWithRecursionRate,
-  generateTrigramTrainingDataWithRecursionRate,
-} from '../../helpers/generateTrainingData';
-import type { TrainingScenario } from '../../models/trainingScenario';
+import { chordLibrary, ChordLibraryRecord } from '../../data/chordLibrary';
+import { generateChords } from '../../helpers/generateTrainingData';
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
 import {
   ChordStatistics,
@@ -19,6 +13,7 @@ import type {
   TrainingStoreModel,
   TrainingStoreStateModel,
 } from '../../models/trainingStore';
+import { getChordLibraryForTrainingScenario } from '../../pages/training/components/trainingProgressContainer';
 
 const CHORD_LINE_LENGTH = 24;
 
@@ -30,88 +25,48 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingText = payload;
   }),
   beginTrainingLexicalMode: action((state) => {
-    resetTrainingStore(state as any);
-    state.trainingText = [
-      generateLexicalTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-      generateLexicalTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-    ];
-    state.trainingStatistics = generateEmptyChordStatistics('lexical');
+    resetTrainingStore(state as unknown as TrainingStoreStateModel);
+    state.trainingStatistics = generateEmptyChordStatistics(
+      chordLibrary.lexical,
+    );
     state.currentTrainingScenario = 'LEXICAL';
+    state.chordsToPullFrom = getChordLibraryForTrainingScenario(
+      state.currentTrainingScenario,
+    ) as ChordLibraryRecord;
+    generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
   }),
   beginTrainingAlphabetMode: action((state) => {
-    resetTrainingStore(state as any);
-    state.trainingText = [
-      generateCharacterTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-      generateCharacterTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-    ];
-    state.trainingStatistics = generateEmptyChordStatistics('letters');
+    resetTrainingStore(state as unknown as TrainingStoreStateModel);
+    state.trainingStatistics = generateEmptyChordStatistics(
+      chordLibrary.letters,
+    );
     state.currentTrainingScenario = 'ALPHABET';
+    state.chordsToPullFrom = getChordLibraryForTrainingScenario(
+      state.currentTrainingScenario,
+    ) as ChordLibraryRecord;
+    generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
   }),
   beginTrainingTrigramMode: action((state) => {
-    resetTrainingStore(state as any);
-    state.trainingText = [
-      generateTrigramTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-      generateTrigramTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-    ];
-    state.trainingStatistics = generateEmptyChordStatistics('trigrams');
+    resetTrainingStore(state as unknown as TrainingStoreStateModel);
+    state.trainingStatistics = generateEmptyChordStatistics(
+      chordLibrary.trigrams,
+    );
     state.currentTrainingScenario = 'TRIGRAM';
+    state.chordsToPullFrom = getChordLibraryForTrainingScenario(
+      state.currentTrainingScenario,
+    ) as ChordLibraryRecord;
+    generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
   }),
   beginTrainingChordMode: action((state) => {
-    resetTrainingStore(state as any);
-    state.trainingText = [
-      generateChordTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-      generateChordTrainingDataWithRecursionRate(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-    ];
-    state.trainingStatistics = generateEmptyChordStatistics('chords');
+    resetTrainingStore(state as unknown as TrainingStoreStateModel);
+    state.trainingStatistics = generateEmptyChordStatistics(
+      chordLibrary.chords,
+    );
     state.currentTrainingScenario = 'CHORDING';
+    state.chordsToPullFrom = getChordLibraryForTrainingScenario(
+      state.currentTrainingScenario,
+    ) as ChordLibraryRecord;
+    generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
   }),
   proceedToNextWord: action((state) => {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining
@@ -219,6 +174,30 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       );
     },
   ),
+  toggleChordEditModal: action((state) => {
+    state.isDisplayingChordEditModal = !state.isDisplayingChordEditModal;
+  }),
+  updateChordsUsedForTraining: action((state, payload) => {
+    // Need to regenerate the chord statistics on the right side of the screen
+    // Need to generate two new lines of text for the input prompt
+    // Need to clear out the old trainingText from the training store.
+    // Need to update the level progress, letters conquered, and to next level fields.
+    // Need to reset the settings on the bottom left if set to auto (should be done automatically)
+    // Need to clear out the text input on the main training page.
+    state.timeOfLastChordStarted = performance.now();
+    state.chordsToPullFrom = payload;
+    state.trainingStatistics = generateEmptyChordStatistics(
+      state.chordsToPullFrom,
+    );
+    state.trainingText = [];
+    state.currentLineOfTrainingText = 0;
+    state.currentSubindexInTrainingText = 0;
+    state.trainingSettings = JSON.parse(
+      JSON.stringify(defaultTrainingSettings),
+    );
+    state.timeTakenToTypePreviousChord = 0;
+    generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
+  }),
 };
 
 function checkIfShouldProceedToNextTargetChord(
@@ -253,7 +232,7 @@ function checkIfErrorExistsInUserEnteredText(
     actions.setErrorOccurredWhileAttemptingToTypeTargetChord(true);
 }
 
-function resetTrainingStore(state: TrainingStoreModel) {
+function resetTrainingStore(state: TrainingStoreStateModel) {
   state.currentLineOfTrainingText = 0;
   state.currentSubindexInTrainingText = 0;
   state.timeOfLastChordStarted = performance.now();
@@ -325,49 +304,27 @@ function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
 }
 
 function generateEmptyChordStatistics(
-  library: keyof ChordLibrary,
+  library: ChordLibraryRecord,
 ): TrainingStatistics {
-  const chordLibraryForChords = chordLibrary[library];
   return {
-    statistics: Object.keys(chordLibraryForChords).map((key) => {
+    statistics: Object.keys(library).map((key) => {
       return createEmptyChordStatistics(key);
     }),
   };
 }
 
 function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
-  const trainingDataGenerationMap: Record<
-    TrainingScenario,
-    (
-      stats: ChordStatistics[],
-      recursionRate: number,
-      numberOfChords: number,
-      recursionDepth: number,
-      recursionIsEnabledGlobally: boolean,
-    ) => string[]
-  > = {
-    CHORDING: generateChordTrainingDataWithRecursionRate,
-    ALPHABET: generateCharacterTrainingDataWithRecursionRate,
-    LEXICAL: generateLexicalTrainingDataWithRecursionRate,
-    TRIGRAM: generateTrigramTrainingDataWithRecursionRate,
-  };
-
-  const trainingScenario = state.currentTrainingScenario;
-
-  if (trainingScenario) {
-    const textGenerationFunctionToUse =
-      trainingDataGenerationMap[trainingScenario];
-    state.trainingText = [
-      ...state.trainingText,
-      textGenerationFunctionToUse(
-        state.trainingStatistics.statistics,
-        state.trainingSettings.recursionRate,
-        CHORD_LINE_LENGTH,
-        state.trainingSettings.targetChords,
-        state.trainingSettings.isUsingRecursion,
-      ),
-    ];
-  }
+  state.trainingText = [
+    ...state.trainingText,
+    generateChords({
+      chordsToChooseFrom: state.chordsToPullFrom,
+      numberOfTargetChords: state.trainingSettings.targetChords,
+      recursionIsEnabledGlobally: state.trainingSettings.isUsingRecursion,
+      recursionRate: state.trainingSettings.recursionRate,
+      stats: state.trainingStatistics.statistics,
+      lineLength: CHORD_LINE_LENGTH,
+    }),
+  ];
 }
 
 function updateRecursionRateSettings(state: TrainingStoreModel) {
@@ -399,5 +356,19 @@ function updateRecursionRateSettings(state: TrainingStoreModel) {
     state.trainingSettings.recursionRate = recursionRate;
   }
 }
+
+const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
+  const generateOneLineOfChords = () =>
+    generateChords({
+      chordsToChooseFrom: state.chordsToPullFrom,
+      numberOfTargetChords: state.trainingSettings.targetChords,
+      recursionIsEnabledGlobally: state.trainingSettings.isUsingRecursion,
+      recursionRate: state.trainingSettings.recursionRate,
+      stats: state.trainingStatistics.statistics,
+      lineLength: CHORD_LINE_LENGTH,
+    });
+
+  state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
+};
 
 export default trainingStoreActions;
