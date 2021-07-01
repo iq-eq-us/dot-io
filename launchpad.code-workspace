@@ -8,7 +8,7 @@
     "eslint.alwaysShowStatus": true,
     "typescript.tsdk": "node_modules/typescript/lib",
     "editor.tabSize": 2,
-    "files.eol": "\n",
+    "files.eol": "\r\n",
     "typescript.preferences.importModuleSpecifier": "relative"
   },
   "extensions": {

@@ -108,6 +108,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       const isSettingsSetToAuto =
         state.trainingSettings.autoOrCustom === 'AUTO';
 
+      if (hasCompletedLevel) state.isShowingPlusIcon = true;
+      else state.isShowingPlusIcon = false;
+
       if (hasCompletedLevel && isSettingsSetToAuto) {
         // const targetChord = state.previousTargetChord;
         const targetChordStatistics = state.trainingStatistics.statistics.sort(

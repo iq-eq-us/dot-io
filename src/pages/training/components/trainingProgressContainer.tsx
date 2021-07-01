@@ -17,6 +17,7 @@ function TrainingProgressContainer(): ReactElement {
     trainingStats.statistics.filter(
       (s) => s.averageSpeed < trainingSettings.speedGoal && s.averageSpeed != 0,
     );
+  const isShowingPlusIcon = useStoreState((store) => store.isShowingPlusIcon);
 
   const calculateTotalNumberOfChords = () => {
     return Object.keys(chordsToUse).length;
@@ -37,7 +38,26 @@ function TrainingProgressContainer(): ReactElement {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-4xl mb-4 text-[skyblue]">Lvl: {currentLevel}</h1>
+      <div className="flex flex-row items-center mb-4">
+        <h1 className="text-4xl text-[skyblue] mr-2">Lvl: {currentLevel}</h1>
+        {isShowingPlusIcon && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="green"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="feather feather-plus"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        )}
+      </div>
       <div className="flex flex-row">
         <div className="flex flex-col items-center">
           <p className="text-center" style={blueTextStyle}>

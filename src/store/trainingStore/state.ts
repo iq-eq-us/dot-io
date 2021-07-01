@@ -50,6 +50,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   currentTrainingScenario: undefined,
   isDisplayingChordEditModal: false,
   chordsToPullFrom: {},
+  isShowingPlusIcon: false,
 };
 
 export default trainingStoreState;

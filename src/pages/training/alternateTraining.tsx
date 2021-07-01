@@ -201,8 +201,8 @@ function AlternateTraining(): ReactElement {
             <div className="xl:hidden flex flex-row justify-between w-full mb-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="32"
+                height="32"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#eee"
@@ -216,8 +216,8 @@ function AlternateTraining(): ReactElement {
               </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="32"
+                height="32"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#eee"
@@ -267,16 +267,14 @@ function AlternateTraining(): ReactElement {
                 </span>
               </div> */}
 
-              <div className="flex flex-row gap-4 justify-between w-full">
-                <span className="bg-gray-200 text-gray-800 rounded-lg px-4 py-0.5 pb-1">
-                  America
-                </span>
+              <div className="flex flex-row gap-6 justify-center w-full">
+                <span className="text-green-500 underline">America</span>
                 <span>song</span>
                 <span>most</span>
                 <span>learn</span>
                 <span>world</span>
               </div>
-              <div className="flex flex-row gap-4 justify-around w-full">
+              <div className="flex flex-row gap-6 justify-center w-full">
                 <span>light</span>
                 <span>water</span>
                 <span>have</span>
@@ -290,7 +288,7 @@ function AlternateTraining(): ReactElement {
             </div>
           </div>
 
-          <div className="hidden xl:block xl:w-1/4 mr-8 mt-8 mb-4 overflow-y-scroll max-h-full rounded-lg">
+          <div className="hidden xl:block xl:w-1/4 mr-2 2xl:mr-8 mt-8 mb-4 overflow-y-scroll max-h-full rounded-lg pr-2">
             <div className="flex flex-col items-end">
               <span className="text-white text-2xl mb-2 font-semibold">
                 Statistics
@@ -304,25 +302,25 @@ function AlternateTraining(): ReactElement {
                         <tr>
                           <th
                             scope="col"
-                            className="px-3 2xl:px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider font-bold"
+                            className="px-3 2xl:px-4 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider font-bold"
                           >
                             Chord
                           </th>
                           <th
                             scope="col"
-                            className="px-3 2xl:px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider font-bold"
+                            className="px-3 2xl:px-4 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider font-bold"
                           >
                             Speed
                           </th>
                           <th
                             scope="col"
-                            className="px-3 2xl:px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider font-bold"
+                            className="px-3 2xl:px-4 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider font-bold"
                           >
                             Errors
                           </th>
                           <th
                             scope="col"
-                            className="px-3 2xl:px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider font-bold"
+                            className="px-3 2xl:px-4 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider font-bold"
                           >
                             Occur
                           </th>
@@ -362,20 +360,20 @@ function AlternateTraining(): ReactElement {
 const ExampleTableTow = () => {
   return (
     <tr>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+      <td className="px-3 2xl:px-6 py-4 whitespace-nowrap text-sm text-gray-300">
         {
           Object.keys(chordLibrary.chords)[
             Math.floor(Math.random() * Object.keys(chordLibrary.chords).length)
           ]
         }
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+      <td className="px-3 2xl:px-6 py-4 whitespace-nowrap text-sm text-gray-300">
         {Math.floor(Math.random() * 150)}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+      <td className="px-3 2xl:px-6 py-4 whitespace-nowrap text-sm text-gray-300">
         {Math.floor(Math.random() * 2)}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+      <td className="px-3 2xl:px-6 py-4 whitespace-nowrap text-sm text-gray-300">
         {Math.floor(Math.random() * 20)}
       </td>
     </tr>

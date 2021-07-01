@@ -20,7 +20,6 @@ function CharachorderOverlay({ overrideBottom }: OverlayProps): ReactElement {
 
   useLayoutEffect(() => {
     const scaleObject = fitToParent(overlayRef?.current as any);
-    console.log(scaleObject);
     setOverlayScale(scaleObject);
   }, [screenSize]);
 

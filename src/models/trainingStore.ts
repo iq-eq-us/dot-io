@@ -62,6 +62,7 @@ export interface TrainingStoreStateModel {
   currentTrainingScenario: TrainingScenario | undefined;
   isDisplayingChordEditModal: boolean;
   chordsToPullFrom: ChordLibraryRecord;
+  isShowingPlusIcon: boolean;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &
