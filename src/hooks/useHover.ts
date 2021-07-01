@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
+type UseHoverI = [ref: React.RefObject<HTMLElement>, value: boolean];
+
 // Hook
-function useHover() {
+function useHover(): UseHoverI {
   const [value, setValue] = useState(false);
 
   const ref = useRef<HTMLElement>(null);

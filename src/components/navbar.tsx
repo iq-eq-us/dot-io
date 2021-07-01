@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import CharachorderLogoImage from '../assets/cc_logo_transparent.png';
 
 const Navbar = (): ReactElement => {

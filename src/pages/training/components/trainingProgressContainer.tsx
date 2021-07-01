@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { chordLibrary } from '../../../data/chordLibrary';
 import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreState } from '../../../store/store';
-import { useCurrentTrainingScenario } from '../useCurrentTrainingScenario';
 import ProgressBar from './progressBar';
 
 export const blueTextStyle = {

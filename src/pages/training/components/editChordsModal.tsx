@@ -92,7 +92,7 @@ function EditChordsModal(): ReactElement {
                 {tempChords.map((chord, index) => {
                   return (
                     <span
-                      onClick={(e) => {
+                      onClick={() => {
                         removeChord(index);
                       }}
                       key={Math.random()}

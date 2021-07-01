@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { chordLibrary } from '../../data/chordLibrary';
-import useHover from '../../hooks/useHover';
-import { AmbiThrowKey } from '../../models/keyboardKeysMap';
 import { useStoreActions, useStoreState } from '../../store/store';
 import CharachorderOverlay from '../training/components/charachorderOverlay';
 
-function AlternateTraining() {
+function AlternateTraining(): ReactElement {
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const setTrainingSettings = useStoreActions(
     (store) => store.setTrainingSettings,
   );
-  const [hoverRef, isHovered] = useHover();
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -36,7 +33,6 @@ function AlternateTraining() {
               Settings
             </span>
             <form
-              ref={hoverRef}
               className={`bg-[#222] max-w-[300px] text-gray-100 rounded-lg rounded-md px-8 pt-6 pb-8 w-full relative`}
             >
               <label className="block text-sm font-bold mb-1">

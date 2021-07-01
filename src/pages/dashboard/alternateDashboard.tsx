@@ -63,7 +63,8 @@ const Test = (): ReactElement => {
                   </h2>
 
                   <p className="leading-relaxed text-base">
-                    The average speed of a "Hunt & Peck" typist is 27 wpm.
+                    The average speed of a &quot;Hunt & Peck&quot; typist is 27
+                    wpm.
                   </p>
                   <div className="flex flex-row">
                     <button className="mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">

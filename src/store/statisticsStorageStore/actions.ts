@@ -1,8 +1,5 @@
 import { action } from 'easy-peasy';
-import type {
-  StatisticsStore,
-  StatisticsStoreActions,
-} from '../../models/statisticsStorage';
+import type { StatisticsStoreActions } from '../../models/statisticsStorage';
 import {
   ChordStatistics,
   createEmptyChordStatistics,
@@ -24,7 +21,10 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
 
     if (statisticsAlreadyExist) {
       const objectToSave = {
-        statistics: handleStatsMerge(store.totalSavedChordStats, payload),
+        statistics: handleStatsMerge(
+          store.totalSavedTrainingStatistics,
+          payload,
+        ),
       };
       store.totalSavedTrainingStatistics = objectToSave;
       localStorage.setItem(
