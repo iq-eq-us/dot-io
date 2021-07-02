@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-interface WindowSize {
+export interface WindowSize {
   width: number;
   height: number;
 }

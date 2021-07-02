@@ -9,26 +9,32 @@ interface OverlayProps {
   overrideBottom?: boolean;
 }
 
+interface OverlayContainerProps {
+  width?: number;
+  height?: number;
+  scale?: number;
+}
+
 function CharachorderOverlay({ overrideBottom }: OverlayProps): ReactElement {
   const [hasLoadedBackgroundImage, setHasLoadedBackgroundImage] =
     useState(false);
   const setHasLoadedToTrue = () => setHasLoadedBackgroundImage(true);
   const overlayRef = useRef(null);
-  const [overlayScale, setOverlayScale] = useState({});
+  const [overlayScale, setOverlayScale] = useState<OverlayContainerProps>({});
 
   const screenSize = useWindowSize();
 
   useLayoutEffect(() => {
-    const scaleObject = fitToParent(overlayRef?.current as any);
+    const scaleObject = fitToParent(overlayRef.current);
     setOverlayScale(scaleObject);
   }, [screenSize]);
 
   return (
     <OverlayContainer
       ref={overlayRef}
-      scaleWidth={overlayScale?.width}
-      scaleHeight={overlayScale?.height}
-      scale={overlayScale?.scale}
+      scaleWidth={overlayScale?.width || 1}
+      scaleHeight={overlayScale?.height || 1}
+      scale={overlayScale?.scale || 1}
       {...{ overrideBottom }}
     >
       <img
@@ -133,7 +139,7 @@ const OverlayContainer = styled.div.attrs<Props>({})<Props>`
   height: 532px;
 `;
 
-function fitToParent(element: HTMLElement) {
+function fitToParent(element: HTMLElement | null) {
   const width = element?.parentElement?.clientWidth || 0;
   const height = element?.parentElement?.clientHeight || 0;
   const idealWidth = 1000;

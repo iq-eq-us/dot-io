@@ -11,7 +11,7 @@ const Navbar = (): ReactElement => {
             <div className="sm:block sm:ml-6">
               <div className="flex space-x-4">
                 <a
-                  href="#/altDash"
+                  href="#/"
                   className="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-[#333]"
                   aria-current="page"
                 >

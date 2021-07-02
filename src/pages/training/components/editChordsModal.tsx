@@ -34,7 +34,7 @@ function EditChordsModal(): ReactElement {
     setTempChords(
       tempChords
         .map((c, i) => (i === index ? undefined : c))
-        .filter((c) => c !== undefined) as any,
+        .filter((item): item is string => typeof item === 'string'),
     );
   };
 
@@ -152,8 +152,9 @@ const getDefaultChords = (trainingMode?: TrainingScenario) =>
     (a, b) => a.localeCompare(b),
   );
 
-const stopPropagation = (e: React.MouseEvent<any, MouseEvent>) =>
-  e.stopPropagation();
+export const stopPropagation = (
+  e: React.MouseEvent<Element, MouseEvent>,
+): void => e.stopPropagation();
 
 const ThirdButton = ({ title, onClick }: ThirdButtonProps) => {
   return (

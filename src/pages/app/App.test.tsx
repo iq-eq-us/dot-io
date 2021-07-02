@@ -329,6 +329,7 @@ describe('<App>', () => {
 
   const testRecursionRatePercentageInMode = (
     actions: () => Actions<CompleteStoreModel>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state: () => any,
   ) => {
     timer?.tick(2500);
@@ -369,6 +370,7 @@ const mockPerformance = (): IMockPerfomance => {
 
 function trainAlphabet(
   actions: () => Actions<CompleteStoreModel>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   state: any,
   timer: IMockPerfomance | null,
 ) {

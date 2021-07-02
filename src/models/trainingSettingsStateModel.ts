@@ -11,6 +11,8 @@ export interface TrainingSettingsState {
   isDisplayingHUD: boolean;
   contrastPercentage: number;
   isAutoWrite: boolean;
+  isDisplayingSettingsModal: boolean;
+  isDisplayingStatisticsModal: boolean;
 }
 
 export const defaultTrainingSettings: TrainingSettingsState = {
@@ -24,4 +26,6 @@ export const defaultTrainingSettings: TrainingSettingsState = {
   isDisplayingHUD: true,
   contrastPercentage: 100,
   isAutoWrite: true,
+  isDisplayingSettingsModal: false,
+  isDisplayingStatisticsModal: false,
 };

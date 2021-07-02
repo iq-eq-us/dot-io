@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Test = (): ReactElement => {
+const Dashboard = (): ReactElement => {
   const history = useHistory();
 
   return (
@@ -21,7 +21,7 @@ const Test = (): ReactElement => {
             <p className="lg:w-1/2 w-full leading-relaxed text-gray-300 font-semibold">
               Welcome to the LaunchPad Learn! Here you can view tutorials to get
               to know your Charachorder and practice your typing to level up
-              your abilities! We&apos;re excited to see how far you will go!
+              your abilities. We&apos;re excited to see how far you will go!
             </p>
           </div>
 
@@ -44,7 +44,7 @@ const Test = (): ReactElement => {
                       Orientation
                     </button>
                     <button
-                      onClick={() => history.push('/altTrain')}
+                      onClick={() => history.push('/training')}
                       className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Training
@@ -71,7 +71,7 @@ const Test = (): ReactElement => {
                       Orientation
                     </button>
                     <button
-                      onClick={() => history.push('/altTrain')}
+                      onClick={() => history.push('/training')}
                       className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Training
@@ -97,7 +97,7 @@ const Test = (): ReactElement => {
                       Orientation
                     </button>
                     <button
-                      onClick={() => history.push('/altTrain')}
+                      onClick={() => history.push('/training')}
                       className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Training
@@ -124,7 +124,7 @@ const Test = (): ReactElement => {
                       Orientation
                     </button>
                     <button
-                      onClick={() => history.push('/altTrain')}
+                      onClick={() => history.push('/training')}
                       className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Training
@@ -195,7 +195,7 @@ const Test = (): ReactElement => {
   );
 };
 
-export default Test;
+export default Dashboard;
 
 function renderHeader() {
   return (

@@ -1,17 +1,12 @@
 import React, { ReactElement } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import Dashboard from '../pages/dashboard/dashboard';
-import Test from '../pages/dashboard/alternateDashboard';
+import Dashboard from '../pages/dashboard/alternateDashboard';
 import Navbar from '../components/navbar';
-import Training from '../pages/training/training';
-import AlternateTraining from '../pages/training/alternateTraining';
+import Training from '../pages/training/alternateTraining';
 
 export const ROUTER_PATHS = {
   home: '/',
-  alphabetTraining: '/training-alphabet',
-  trigramTraining: '/training-trigram',
-  chordTraining: '/training-chord',
-  lexicalTraining: '/training-lexical',
+  training: '/training',
 };
 
 const Router = (): ReactElement => {
@@ -19,32 +14,12 @@ const Router = (): ReactElement => {
     <HashRouter>
       <Switch>
         <Route path={ROUTER_PATHS.home} exact>
+          <Navbar />
           <Dashboard />
         </Route>
 
-        <Route path="/altDash">
+        <Route path={ROUTER_PATHS.training}>
           <Navbar />
-          <Test />
-        </Route>
-
-        <Route path="/altTrain">
-          <Navbar />
-          <AlternateTraining />
-        </Route>
-
-        <Route path={ROUTER_PATHS.alphabetTraining}>
-          <Training />
-        </Route>
-
-        <Route path={ROUTER_PATHS.trigramTraining}>
-          <Training />
-        </Route>
-
-        <Route path={ROUTER_PATHS.lexicalTraining}>
-          <Training />
-        </Route>
-
-        <Route path={ROUTER_PATHS.chordTraining}>
           <Training />
         </Route>
       </Switch>
