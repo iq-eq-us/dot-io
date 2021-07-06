@@ -5,7 +5,7 @@ import CenterTrainingColumn from './updated-components/CenterTrainingColumn';
 import { StatisticsColumn } from './updated-components/StatisticsColumn';
 import styled from 'styled-components';
 
-function AlternateTraining(): ReactElement {
+function TrainingPage(): ReactElement {
   return (
     <PageContainer>
       <InvisibleTextInput />
@@ -26,4 +26,4 @@ const PageContainer = styled.div.attrs({
   ${height}
 `;
 
-export default AlternateTraining;
+export default TrainingPage;

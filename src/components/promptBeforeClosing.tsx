@@ -34,5 +34,5 @@ export const PromptBeforeClosing = ({ onClose }: Props): ReactElement => {
     event.returnValue = '';
   };
 
-  return <span></span>;
+  return <span />;
 };

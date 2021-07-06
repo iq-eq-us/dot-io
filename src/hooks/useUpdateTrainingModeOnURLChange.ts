@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { useCurrentTrainingScenario } from '../pages/training/useCurrentTrainingScenario';
+import { useCurrentTrainingScenario } from './useCurrentTrainingScenario';
 import { useStoreActions } from '../store/store';
 
 function useUpdateTrainingModeOnURLChange(): void {

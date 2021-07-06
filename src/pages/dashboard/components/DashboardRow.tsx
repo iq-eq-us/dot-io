@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Column from '../../../components/column';
+import Column from '../../../components/Column';
 
 export const DashboardRow = styled(Column).attrs({
   className: 'w-[650px]',

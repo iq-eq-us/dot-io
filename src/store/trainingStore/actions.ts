@@ -21,6 +21,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setTrainingSettings: action((state, payload) => {
     state.trainingSettings = payload;
   }),
+  setIsDisplayingStatisticsModal: action((state, payload) => {
+    state.trainingSettings.isDisplayingStatisticsModal = payload;
+  }),
   UNSAFE_setTrainingText: action((state, payload) => {
     state.trainingText = payload;
   }),

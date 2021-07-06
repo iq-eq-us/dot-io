@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { ReactElement } from 'react';
-import Row from '../../../components/row';
+import Row from '../../../components/Row';
 import CharachorderLogoImage from '../../../assets/charachorder_logo.jpg';
 
 const DashboardHeader = (): ReactElement => {

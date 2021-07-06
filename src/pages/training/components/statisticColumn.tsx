@@ -64,7 +64,7 @@ export default function StatisticColumn(): ReactElement {
       <table className="text-gray-500">
         <thead>
           <tr>
-            <th style={{ minWidth: 42 }}></th>
+            <th style={{ minWidth: 42 }} />
             <th style={{ minWidth: 42 }}>avg</th>
             <th style={{ minWidth: 42 }}>last</th>
             <th style={{ minWidth: 42 }}>err</th>
@@ -100,7 +100,7 @@ export default function StatisticColumn(): ReactElement {
                         ? 'bg-yellow-300'
                         : 'bg-gray-300'
                     } w-2 h-[26px] absolute right-0 top-0`}
-                  ></div>
+                  />
                 )}
               </td>
               <td>{stat?.lastSpeed?.toFixed(0)}</td>

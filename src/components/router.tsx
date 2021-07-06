@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from '../pages/dashboard/alternateDashboard';
-import Navbar from '../components/navbar';
-import Training from '../pages/training/alternateTraining';
+import Navbar from './Navbar';
+import Training from '../pages/training/TrainingPage';
 
 export const ROUTER_PATHS = {
   home: '/',

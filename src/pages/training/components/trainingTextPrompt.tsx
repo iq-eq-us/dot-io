@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreState } from '../../../store/store';
-import { useCurrentTrainingScenario } from '../useCurrentTrainingScenario';
+import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingScenario';
 
 function TrainingTextPrompt(): ReactElement {
   const currentTrainingMode = useCurrentTrainingScenario();

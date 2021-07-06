@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react';
 import DashboardTrainingItemRow, {
   TRAINING_BAR_COLOR,
 } from './DashboardTrainingItem';
-import Column from '../../../components/column';
+import Column from '../../../components/Column';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { ROUTER_PATHS } from '../../../components/router';
+import { ROUTER_PATHS } from '../../../components/Router';
 import { useStoreActions } from '../../../store/store';
 
 const TRAINING_VIDEOS = {
@@ -48,7 +48,7 @@ const AlphabeticTierRow = () => {
       shouldDisplayHeader
       onClickExerciseButton={() => {
         startAlphabetTraining();
-        history.push(ROUTER_PATHS.alphabetTraining);
+        history.push(ROUTER_PATHS.home);
       }}
       onClickTutorialButton={() => {
         window.open(TRAINING_VIDEOS.alphabet, '_blank');
@@ -71,7 +71,7 @@ const AmalgamateTierRow = () => {
       tierTitle="Amalgamate"
       onClickExerciseButton={() => {
         startTrigramTraining();
-        history.push(ROUTER_PATHS.trigramTraining);
+        history.push(ROUTER_PATHS.home);
       }}
       onClickTutorialButton={() => {
         window.open(TRAINING_VIDEOS.trigram, '_blank');
@@ -94,7 +94,7 @@ const LexicalTierRow = () => {
       tierTitle="Lexical"
       onClickExerciseButton={() => {
         startLexicalTraining();
-        history.push(ROUTER_PATHS.lexicalTraining);
+        history.push(ROUTER_PATHS.home);
       }}
       onClickTutorialButton={() => {
         window.open(TRAINING_VIDEOS.lexical, '_blank');
@@ -117,7 +117,7 @@ const ChordalTierRow = () => {
       tierTitle="Chordal"
       onClickExerciseButton={() => {
         startChordTraining();
-        history.push(ROUTER_PATHS.chordTraining);
+        history.push(ROUTER_PATHS.home);
       }}
       onClickTutorialButton={() => {
         window.open(TRAINING_VIDEOS.chord, '_blank');

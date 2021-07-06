@@ -7,6 +7,7 @@ import type { TrainingStatistics } from './trainingStatistics';
 
 export interface TrainingStoreActionsModel {
   setTrainingSettings: Action<TrainingStoreModel, TrainingSettingsState>;
+  setIsDisplayingStatisticsModal: Action<TrainingStoreModel, boolean>;
   beginTrainingAlphabetMode: Action<TrainingStoreModel>;
   beginTrainingTrigramMode: Action<TrainingStoreModel>;
   beginTrainingChordMode: Action<TrainingStoreModel>;

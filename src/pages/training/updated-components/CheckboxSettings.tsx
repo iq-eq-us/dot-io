@@ -31,7 +31,7 @@ export function RecursionCheckboxSetting(props: CheckboxProps): JSX.Element {
           isUsingRecursion: !props.trainingSettings.isUsingRecursion,
         });
       }}
-    ></CheckboxSetting>
+    />
   );
 }
 
@@ -45,6 +45,20 @@ export function HUDCheckboxSetting(props: CheckboxProps): JSX.Element {
           isDisplayingHUD: !props.trainingSettings.isDisplayingHUD,
         });
       }}
-    ></CheckboxSetting>
+    />
+  );
+}
+
+export function AutosaveSetting(props: CheckboxProps): JSX.Element {
+  return (
+    <CheckboxSetting
+      title="Autosave Statistics"
+      checked={props.trainingSettings.isAutoWrite}
+      onChange={() => {
+        props.updateTrainingSetting({
+          isAutoWrite: !props.trainingSettings.isAutoWrite,
+        });
+      }}
+    />
   );
 }

@@ -18,7 +18,15 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint'],
-  rules: {},
+  rules: {
+    'react/self-closing-comp': [
+      'warn',
+      {
+        component: true,
+        html: true,
+      },
+    ],
+  },
   settings: {
     react: {
       version: 'detect',

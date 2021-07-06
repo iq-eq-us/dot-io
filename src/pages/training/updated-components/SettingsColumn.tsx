@@ -1,18 +1,22 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import useWindowSize, { WindowSize } from '../../../hooks/useWindowSize';
+import React, { ReactElement } from 'react';
+import useScreenSizeBoundary from '../../../hooks/useScreenSizeBoundary';
+import useWindowSize from '../../../hooks/useWindowSize';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import { stopPropagation } from '../components/editChordsModal';
 import { AutoCustomSetting } from './AutoCustomSetting';
 import {
   HighlightCheckboxSetting,
   RecursionCheckboxSetting,
   HUDCheckboxSetting,
+  AutosaveSetting,
 } from './CheckboxSettings';
 import { ContrastInputSetting } from './ContrastInputSetting';
 import { SettingsColumnContainer } from './SettingsColumnContainer';
 import { SettingsForm } from './SettingsForm';
 import { SettingsHeader } from './SettingsHeader';
 import { CustomTrainingSettingsBox } from './SettingsProps';
+import { stopPropagation } from '../components/editChordsModal';
+
+const HIDDEN_BREAKPOINT = 1280;
 
 function SettingsColumn(): ReactElement {
   const trainingSettings = useStoreState((store) => store.trainingSettings);
@@ -23,32 +27,23 @@ function SettingsColumn(): ReactElement {
   const updateTrainingSetting = (newProperty: Record<string, unknown>) =>
     setTrainingSettings({ ...trainingSettings, ...newProperty });
 
-  const screenSize = useWindowSize();
-  const [oldScreenSize, setOldScreenSize] = useState<WindowSize>({
-    width: 0,
-    height: 0,
+  useScreenSizeBoundary({
+    boundary: HIDDEN_BREAKPOINT,
+    callback: (direction) => {
+      updateTrainingSetting({
+        isDisplayingSettingsModal: direction === 'ABOVE',
+      });
+    },
   });
-
-  useEffect(() => {
-    if (oldScreenSize.width > 1280 && screenSize.width <= 1280)
-      updateTrainingSetting({
-        isDisplayingSettingsModal: false,
-      });
-
-    if (oldScreenSize.width <= 1280 && screenSize.width > 1280)
-      updateTrainingSetting({
-        isDisplayingSettingsModal: true,
-      });
-
-    setOldScreenSize(screenSize);
-  }, [screenSize]);
 
   const transitionTransform = `transform -translate-x-full transition-transform ${
     trainingSettings.isDisplayingSettingsModal && '-translate-x-0'
   }`;
 
+  const windowSize = useWindowSize();
   const onClickOutside = () => {
-    updateTrainingSetting({ isDisplayingSettingsModal: false });
+    if (windowSize.width < HIDDEN_BREAKPOINT)
+      updateTrainingSetting({ isDisplayingSettingsModal: false });
   };
 
   const shouldDisplayCustomSettings =
@@ -72,12 +67,17 @@ function SettingsColumn(): ReactElement {
         <RecursionCheckboxSetting
           trainingSettings={trainingSettings}
           updateTrainingSetting={updateTrainingSetting}
-        ></RecursionCheckboxSetting>
+        />
 
         <HUDCheckboxSetting
           trainingSettings={trainingSettings}
           updateTrainingSetting={updateTrainingSetting}
-        ></HUDCheckboxSetting>
+        />
+
+        <AutosaveSetting
+          trainingSettings={trainingSettings}
+          updateTrainingSetting={updateTrainingSetting}
+        />
 
         <AutoCustomSetting />
 
@@ -85,13 +85,13 @@ function SettingsColumn(): ReactElement {
           <CustomTrainingSettingsBox
             trainingSettings={trainingSettings}
             setTrainingSettings={setTrainingSettings}
-          ></CustomTrainingSettingsBox>
+          />
         )}
 
         <ContrastInputSetting
           trainingSettings={trainingSettings}
           setTrainingSettings={setTrainingSettings}
-        ></ContrastInputSetting>
+        />
       </SettingsForm>
     </SettingsColumnContainer>
   );
