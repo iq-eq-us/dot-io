@@ -51,6 +51,12 @@ const trainingStoreState: TrainingStoreStateModel = {
   isDisplayingChordEditModal: false,
   chordsToPullFrom: {},
   isShowingPlusIcon: false,
+  targetTextLineOne: computed((state) => {
+    return state.trainingText[state.currentLineOfTrainingText];
+  }),
+  targetTextLineTwo: computed((state) => {
+    return state.trainingText[state.currentLineOfTrainingText + 1];
+  }),
 };
 
 export default trainingStoreState;

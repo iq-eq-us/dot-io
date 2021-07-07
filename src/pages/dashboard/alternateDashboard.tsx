@@ -1,8 +1,21 @@
 import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useStoreActions } from '../../store/store';
 
 const Dashboard = (): ReactElement => {
   const history = useHistory();
+  const startAlphabetTraining = useStoreActions(
+    (store) => store.beginTrainingAlphabetMode,
+  );
+  const startChordTraining = useStoreActions(
+    (store) => store.beginTrainingChordMode,
+  );
+  const startTrigramTraining = useStoreActions(
+    (store) => store.beginTrainingTrigramMode,
+  );
+  const startLexicalTraining = useStoreActions(
+    (store) => store.beginTrainingLexicalMode,
+  );
 
   return (
     <div>
@@ -44,7 +57,10 @@ const Dashboard = (): ReactElement => {
                       Orientation
                     </button>
                     <button
-                      onClick={() => history.push('/training')}
+                      onClick={() => {
+                        startAlphabetTraining();
+                        history.push('/training');
+                      }}
                       className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Training
@@ -71,7 +87,10 @@ const Dashboard = (): ReactElement => {
                       Orientation
                     </button>
                     <button
-                      onClick={() => history.push('/training')}
+                      onClick={() => {
+                        startTrigramTraining();
+                        history.push('/training');
+                      }}
                       className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Training
@@ -97,7 +116,10 @@ const Dashboard = (): ReactElement => {
                       Orientation
                     </button>
                     <button
-                      onClick={() => history.push('/training')}
+                      onClick={() => {
+                        startLexicalTraining();
+                        history.push('/training');
+                      }}
                       className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Training
@@ -124,7 +146,10 @@ const Dashboard = (): ReactElement => {
                       Orientation
                     </button>
                     <button
-                      onClick={() => history.push('/training')}
+                      onClick={() => {
+                        startChordTraining();
+                        history.push('/training');
+                      }}
                       className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Training

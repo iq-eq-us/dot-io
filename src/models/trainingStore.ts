@@ -64,6 +64,8 @@ export interface TrainingStoreStateModel {
   isDisplayingChordEditModal: boolean;
   chordsToPullFrom: ChordLibraryRecord;
   isShowingPlusIcon: boolean;
+  targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
+  targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

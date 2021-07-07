@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import SettingsColumn from './updated-components/SettingsColumn';
-import InvisibleTextInput from './updated-components/InvisibleTextInput';
 import CenterTrainingColumn from './updated-components/CenterTrainingColumn';
 import { StatisticsColumn } from './updated-components/StatisticsColumn';
 import styled from 'styled-components';
@@ -8,8 +7,6 @@ import styled from 'styled-components';
 function TrainingPage(): ReactElement {
   return (
     <PageContainer>
-      <InvisibleTextInput />
-
       <SettingsColumn />
       <CenterTrainingColumn />
       <StatisticsColumn />

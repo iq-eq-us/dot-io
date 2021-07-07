@@ -6,6 +6,7 @@ import { GearIcon } from './GearIcon';
 import { ProgressBar } from './ProgressBar';
 import { StatisticsIcon } from './StatisticsIcon';
 import { TextPrompt } from './TextPrompt';
+import ChordTextInput from './ChordTextInput';
 
 function CenterTrainingColumn(): ReactElement {
   return (
@@ -16,7 +17,7 @@ function CenterTrainingColumn(): ReactElement {
       </SmallScreenButtons>
 
       <ProgressBar />
-
+      <ChordTextInput />
       <TextPrompt />
 
       <FullWidthFullHeightContainer>

@@ -15,7 +15,8 @@ import type {
 } from '../../models/trainingStore';
 import { getChordLibraryForTrainingScenario } from '../../pages/training/components/trainingProgressContainer';
 
-const CHORD_LINE_LENGTH = 24;
+const CHORD_LINE_LENGTH = 30;
+const ALPHABET_LINE_LENGTH = 24;
 
 const trainingStoreActions: TrainingStoreActionsModel = {
   setTrainingSettings: action((state, payload) => {
@@ -364,6 +365,11 @@ function updateRecursionRateSettings(state: TrainingStoreModel) {
 }
 
 const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
+  const lineLength =
+    state.currentTrainingScenario === 'ALPHABET'
+      ? ALPHABET_LINE_LENGTH
+      : CHORD_LINE_LENGTH;
+
   const generateOneLineOfChords = () =>
     generateChords({
       chordsToChooseFrom: state.chordsToPullFrom,
@@ -371,7 +377,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       recursionIsEnabledGlobally: state.trainingSettings.isUsingRecursion,
       recursionRate: state.trainingSettings.recursionRate,
       stats: state.trainingStatistics.statistics,
-      lineLength: CHORD_LINE_LENGTH,
+      lineLength,
     });
 
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
