@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import Row from '../../../components/Row';
-import Column from '../../../components/Column';
+import Row from '../../../components/row';
+import Column from '../../../components/column';
 import DashboardTrainingRowButton from './DashboardTrainingRowButton';
 import { large, extraLarge } from '../../../helpers/breakpoints';
 

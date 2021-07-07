@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from '../pages/dashboard/alternateDashboard';
-import Navbar from './Navbar';
+import Navbar from './navbar';
 import Training from '../pages/training/TrainingPage';
 
 export const ROUTER_PATHS = {

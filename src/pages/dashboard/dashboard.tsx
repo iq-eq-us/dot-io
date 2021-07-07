@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import Row from '../../components/Row';
+import Row from '../../components/row';
 import DashboardHeader from './components/DashboardHeader';
 import DashboardPageContainer from './components/DashboardPageContainer';
 import DashboardTrainingList from './components/DashboardTrainingList';

@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react';
 import DashboardTrainingItemRow, {
   TRAINING_BAR_COLOR,
 } from './DashboardTrainingItem';
-import Column from '../../../components/Column';
+import Column from '../../../components/router';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { ROUTER_PATHS } from '../../../components/Router';
+import { ROUTER_PATHS } from '../../../components/router';
 import { useStoreActions } from '../../../store/store';
 
 const TRAINING_VIDEOS = {
