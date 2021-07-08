@@ -4,10 +4,7 @@ import type { ChordStatistics } from '../../../models/trainingStatistics';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
-import {
-  getCumulativeAverageChordTypeTime,
-  getCumulativeValueByPropertyName,
-} from '../../../helpers/aggregation';
+import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences

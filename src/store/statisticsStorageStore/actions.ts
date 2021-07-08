@@ -1,10 +1,11 @@
-import { action } from 'easy-peasy';
+import { action, actionOn } from 'easy-peasy';
 import type { StatisticsStoreActions } from '../../models/statisticsStorage';
 import {
   ChordStatistics,
   createEmptyChordStatistics,
   TrainingStatistics,
 } from '../../models/trainingStatistics';
+import { SAVED_FASTEST_WPM_KEY } from './state';
 
 const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
 
@@ -46,6 +47,18 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
     store.totalSavedTrainingStatistics = { statistics: [] };
     localStorage.clear();
   }),
+  setFastestRecordedWordsPerMinute: action((store, payload) => {
+    store.fastestRecordedWordsPerMinute = payload;
+  }),
+  onChangeFastestWPM: actionOn(
+    (store) => store.setFastestRecordedWordsPerMinute,
+    (state) => {
+      localStorage.setItem(
+        SAVED_FASTEST_WPM_KEY,
+        state.fastestRecordedWordsPerMinute.toString(),
+      );
+    },
+  ),
 };
 
 export const handleStatsMerge = (

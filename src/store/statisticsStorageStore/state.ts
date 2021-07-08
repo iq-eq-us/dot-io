@@ -4,10 +4,15 @@ import type { StatisticsStoreState } from '../../models/statisticsStorage';
 import type { TrainingStatistics } from '../../models/trainingStatistics';
 
 const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
+export const SAVED_FASTEST_WPM_KEY = 'FASTEST_WPM_KEY';
 
 const storedTrainingStats: TrainingStatistics = JSON.parse(
   localStorage.getItem(SAVED_STATS_STORAGE_KEY) || '{"statistics":[]}',
 ) as TrainingStatistics;
+
+const fastestWPMFromStorage: number = parseFloat(
+  JSON.parse(localStorage.getItem(SAVED_FASTEST_WPM_KEY) || '0'),
+);
 
 const statisticsStoreState: StatisticsStoreState = {
   totalSavedTrainingStatistics: storedTrainingStats,
@@ -31,6 +36,7 @@ const statisticsStoreState: StatisticsStoreState = {
       ),
     };
   }),
+  fastestRecordedWordsPerMinute: fastestWPMFromStorage,
 };
 
 export default statisticsStoreState;

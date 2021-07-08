@@ -1,9 +1,15 @@
 import { getCumulativeValueByPropertyName } from '../helpers/aggregation';
-import { useStoreState } from '../store/store';
+import { useStoreState, useStoreActions } from '../store/store';
 
 export const useWordsPerMinute = (): number => {
   const timeAtTrainingStart = useStoreState(
     (store) => store.timeAtTrainingStart,
+  );
+  const fastestRecordedWPM = useStoreState(
+    (store) => store.fastestRecordedWordsPerMinute,
+  );
+  const setFastestWPM = useStoreActions(
+    (store) => store.setFastestRecordedWordsPerMinute,
   );
   const timeAtTrainingStartInSeconds = timeAtTrainingStart * 0.001;
   const timeNowInSeconds = performance.now() * 0.001;
@@ -17,5 +23,9 @@ export const useWordsPerMinute = (): number => {
     'numberOfOccurrences',
   );
 
-  return parseFloat(sumOfTrainingOccurrences) / timeDifferenceInMinutes;
+  const wpm = parseFloat(sumOfTrainingOccurrences) / timeDifferenceInMinutes;
+
+  if (wpm > fastestRecordedWPM) setFastestWPM(wpm);
+
+  return wpm;
 };

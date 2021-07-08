@@ -3,10 +3,13 @@ import SettingsColumn from './updated-components/SettingsColumn';
 import CenterTrainingColumn from './updated-components/CenterTrainingColumn';
 import { StatisticsColumn } from './updated-components/StatisticsColumn';
 import styled from 'styled-components';
+import { ClosingPrompt } from './components/closingPrompt';
 
 function TrainingPage(): ReactElement {
   return (
     <PageContainer>
+      <ClosingPrompt />
+
       <SettingsColumn />
       <CenterTrainingColumn />
       <StatisticsColumn />
