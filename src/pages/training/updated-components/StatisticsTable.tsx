@@ -4,6 +4,14 @@ import type { ChordStatistics } from '../../../models/trainingStatistics';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
+import {
+  getCumulativeAverageChordTypeTime,
+  getCumulativeValueByPropertyName,
+} from '../../../helpers/aggregation';
+
+// This is used to account for the header row as well as the "aggregate" row that shows average speed and
+// a sum of errors and occurrences
+const LIST_LENGTH_OFFSET = 2;
 
 function StatisticsTable(): ReactElement {
   const stats = useStoreState(
@@ -17,7 +25,7 @@ function StatisticsTable(): ReactElement {
     <TableContainer ref={ref}>
       <FixedSizeList
         height={dimensions.height || 0}
-        itemCount={stats.length + 1}
+        itemCount={stats.length + LIST_LENGTH_OFFSET}
         itemSize={36}
         width={300}
         itemData={{
@@ -58,14 +66,15 @@ const getStyle = (
 };
 
 const Row = ({ index, style, data }: RowData) => {
-  // Plus one to account for title row
-  const item = data?.stats?.[index - 1];
+  // Minus one to account for title row
+  const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
   if (index === 0) return Header;
+  else if (index === 1) return <AggregateRow data={data.stats} />;
 
   const headerStyle = getStyle(
     data.targetChords,
     data.isRecursionEnabled,
-    index - 1,
+    index - LIST_LENGTH_OFFSET,
   );
 
   return (
@@ -81,7 +90,11 @@ const Row = ({ index, style, data }: RowData) => {
 };
 
 const HeaderRow = styled.div.attrs({
-  className: `bg-[#262626] px-4 py-2 text-left text-xs text-gray-50 uppercase tracking-wider font-bold rounded-tr-lg flex flex-row justify-between align-center h-[36px]`,
+  className: `bg-[#2c2c2c] px-4 py-2 text-left text-xs text-gray-50 uppercase tracking-wider font-bold rounded-tr-lg flex flex-row justify-between align-center h-[36px]`,
+})``;
+
+const AggregateStatRow = styled.div.attrs({
+  className: `bg-[#262626] text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] items-center`,
 })``;
 
 const HeaderItem = styled.span.attrs({
@@ -97,6 +110,25 @@ const Header = (
   </HeaderRow>
 );
 
+const AggregateRow = ({ data }: { data: ChordStatistics[] }) => {
+  const average = getCumulativeAverageChordTypeTime(data);
+  let sumErrors = 0;
+  let sumOccurrences = 0;
+  data.forEach((d) => {
+    sumErrors += d.numberOfErrors;
+    sumOccurrences += d.numberOfOccurrences;
+  });
+
+  return (
+    <AggregateStatRow>
+      <RowStatItem>SUM</RowStatItem>
+      <RowStatItem>{average}</RowStatItem>
+      <RowStatItem>{sumErrors}</RowStatItem>
+      <RowStatItem>{sumOccurrences}</RowStatItem>
+    </AggregateStatRow>
+  );
+};
+
 const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
   (props) => ({
     className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] ${
@@ -111,6 +143,10 @@ const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
 
 const RowItem = styled.div.attrs({
   className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,
+})``;
+
+const RowStatItem = styled.div.attrs({
+  className: `px-3 2xl:px-6 whitespace-nowrap text-sm w-1/4 font-semibold`,
 })``;
 
 const TableContainer = styled.div.attrs({

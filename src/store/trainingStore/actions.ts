@@ -321,6 +321,11 @@ function generateEmptyChordStatistics(
 }
 
 function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
+  const lineLength =
+    state.currentTrainingScenario === 'ALPHABET'
+      ? ALPHABET_LINE_LENGTH
+      : CHORD_LINE_LENGTH;
+
   state.trainingText = [
     ...state.trainingText,
     generateChords({
@@ -329,7 +334,7 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       recursionIsEnabledGlobally: state.trainingSettings.isUsingRecursion,
       recursionRate: state.trainingSettings.recursionRate,
       stats: state.trainingStatistics.statistics,
-      lineLength: CHORD_LINE_LENGTH,
+      lineLength,
     }),
   ];
 }
