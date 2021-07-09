@@ -1,26 +1,50 @@
 import React, { ReactElement, useRef } from 'react';
+import { useHUD } from '../../../hooks/useHUD';
 import { useStoreActions, useStoreState } from '../../../store/store';
+import RefreshIcon from './RefreshIcon';
 
 function ChordTextInput(): ReactElement {
   const setStoreText = useStoreActions((store) => store.setTypedTrainingText);
   const textTyped = useStoreState((store) => store.typedTrainingText);
   const inputRef = useRef<HTMLInputElement>(null);
+  const regenerateTrainingText = useStoreActions(
+    (store) => store.resetTrainingText,
+  );
+  const timeTakenToTypePreviousChord = useStoreState(
+    (store) => store.timeTakenToTypePreviousChord,
+  );
+  const displayHUD = useHUD();
 
   return (
-    <input
-      className="mt-16 bg-transparent focus:outline-none text-4xl min-h-[40px] mb-2 mx-auto text-white font-bold text-center max-w-[80vw] pb-4 border-b-2 border-solid border-[#222]"
-      ref={inputRef}
-      autoFocus
-      value={textTyped}
-      onChange={(e) => {
-        setStoreText(e.target.value);
-      }}
-      onBlur={() => {
-        // setTimeout(() => {
-        //   inputRef.current?.focus();
-        // }, 1);
-      }}
-    />
+    <div className="w-full flex flex-row items-end mt-16 justify-center">
+      <span
+        className={`mb-2 mr-2 text-white font-semibold ${
+          !displayHUD && 'hidden'
+        }`}
+      >
+        Last: {timeTakenToTypePreviousChord.toFixed()}
+      </span>
+
+      <input
+        className="bg-transparent focus:outline-none text-4xl min-h-[40px] mb-2 text-white font-bold text-center max-w-[60vw] pb-4 border-b-2 border-solid border-[#222]"
+        ref={inputRef}
+        autoFocus
+        value={textTyped}
+        onChange={(e) => {
+          setStoreText(e.target.value);
+        }}
+      />
+
+      <div className="p-2 bg-[#333] flex items-center justify-center rounded mb-2 ml-2 cursor-pointer hover:bg-[#444] active:bg-[#222]">
+        <RefreshIcon
+          onClick={() => {
+            setStoreText('');
+            regenerateTrainingText();
+            inputRef.current?.focus();
+          }}
+        />
+      </div>
+    </div>
   );
 }
 

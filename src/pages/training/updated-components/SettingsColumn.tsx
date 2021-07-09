@@ -14,7 +14,6 @@ import { SettingsColumnContainer } from './SettingsColumnContainer';
 import { SettingsForm } from './SettingsForm';
 import { SettingsHeader } from './SettingsHeader';
 import { CustomTrainingSettingsBox } from './SettingsProps';
-import { stopPropagation } from '../components/editChordsModal';
 
 const HIDDEN_BREAKPOINT = 1280;
 
@@ -58,7 +57,10 @@ function SettingsColumn(): ReactElement {
     >
       <SettingsHeader transitionTransform={transitionTransform} />
       <SettingsForm
-        onClick={stopPropagation}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
         transitionTransform={transitionTransform}
       >
         <HighlightCheckboxSetting

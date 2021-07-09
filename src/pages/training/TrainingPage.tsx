@@ -4,10 +4,13 @@ import CenterTrainingColumn from './updated-components/CenterTrainingColumn';
 import { StatisticsColumn } from './updated-components/StatisticsColumn';
 import styled from 'styled-components';
 import { ClosingPrompt } from './components/closingPrompt';
+import { useContrast } from '../../hooks/useContrast';
 
 function TrainingPage(): ReactElement {
+  const contrast = useContrast();
+
   return (
-    <PageContainer>
+    <PageContainer contrast={contrast}>
       <ClosingPrompt />
 
       <SettingsColumn />
@@ -19,10 +22,14 @@ function TrainingPage(): ReactElement {
 
 const height = 'height: calc(100vh - 64px);';
 
-const PageContainer = styled.div.attrs({
+interface PageContainerProps {
+  contrast: string;
+}
+
+const PageContainer = styled.div.attrs<PageContainerProps>({
   className: 'text-gray-600 body-font flex flex-row',
-})`
-  background-color: #151515;
+})<PageContainerProps>`
+  background-color: ${(props) => props.contrast};
   ${height}
 `;
 

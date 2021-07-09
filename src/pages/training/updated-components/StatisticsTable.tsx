@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+import { useHUD } from '../../../hooks/useHUD';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences
@@ -18,6 +19,8 @@ function StatisticsTable(): ReactElement {
 
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
 
+  const shouldDisplayHUD = useHUD();
+
   return (
     <TableContainer ref={ref}>
       <FixedSizeList
@@ -29,6 +32,7 @@ function StatisticsTable(): ReactElement {
           stats,
           targetChords: trainingSettings.targetChords,
           isRecursionEnabled: trainingSettings.autoOrCustom === 'AUTO',
+          displayHUD: shouldDisplayHUD,
         }}
         style={{ borderRadius: 16 }}
       >
@@ -38,14 +42,17 @@ function StatisticsTable(): ReactElement {
   );
 }
 
+interface Data {
+  stats: ChordStatistics[];
+  targetChords: number;
+  isRecursionEnabled: boolean;
+  displayHUD: boolean;
+}
+
 interface RowData {
   index: number;
   style: React.CSSProperties;
-  data: {
-    stats: ChordStatistics[];
-    targetChords: number;
-    isRecursionEnabled: boolean;
-  };
+  data: Data;
 }
 
 type StatRowStyle = 'NORMAL' | 'TARGET_CHORD_ACTIVE' | 'TARGET_CHORD_INACTIVE';
@@ -66,7 +73,7 @@ const Row = ({ index, style, data }: RowData) => {
   // Minus one to account for title row
   const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
   if (index === 0) return Header;
-  else if (index === 1) return <AggregateRow data={data.stats} />;
+  else if (index === 1) return <AggregateRow data={data} />;
 
   const headerStyle = getStyle(
     data.targetChords,
@@ -107,11 +114,11 @@ const Header = (
   </HeaderRow>
 );
 
-const AggregateRow = ({ data }: { data: ChordStatistics[] }) => {
-  const average = getCumulativeAverageChordTypeTime(data);
+const AggregateRow = ({ data }: { data: Data }) => {
+  const average = getCumulativeAverageChordTypeTime(data.stats);
   let sumErrors = 0;
   let sumOccurrences = 0;
-  data.forEach((d) => {
+  data.stats.forEach((d) => {
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
   });
@@ -119,9 +126,9 @@ const AggregateRow = ({ data }: { data: ChordStatistics[] }) => {
   return (
     <AggregateStatRow>
       <RowStatItem>SUM</RowStatItem>
-      <RowStatItem>{average}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? average : ''}</RowStatItem>
       <RowStatItem>{sumErrors}</RowStatItem>
-      <RowStatItem>{sumOccurrences}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? sumOccurrences : ''}</RowStatItem>
     </AggregateStatRow>
   );
 };

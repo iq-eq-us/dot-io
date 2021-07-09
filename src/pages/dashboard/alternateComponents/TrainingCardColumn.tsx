@@ -24,39 +24,43 @@ export function TrainingCardColumn(): ReactElement {
   const trainingCardProps: TierCardProps[] = [
     {
       bodyText:
-        'The average writing speed is 13 words per minute. Progress past 13 words per minute to move onto the next training section.',
+        'Purpose: Familiarize yourself with your CharaChorder layout. \nGoal: Surpass average human writing speed (13 words per minute)',
       tierTitle: 'Alphabetic',
       onPressTraining: () =>
         runFunctionThenGoToTrainingPage(startAlphabetTraining),
       orientationLink: 'https://www.youtube.com/watch?v=Vq8NJd3J0Ag',
-      wpmToProgress: 13,
+      minWPM: 0,
+      maxWPM: 13,
     },
     {
       bodyText:
-        'The average speed of a "Hunt & Peck" typist is 27 wpm. Progress past 27 words per minute to move onto the next training section.',
+        'Purpose: Pratice common letter groupings. \nGoal: Surpass average speed of "Hunt & Peck" typists (27 words per minute)',
       tierTitle: 'Trigram',
       onPressTraining: () =>
         runFunctionThenGoToTrainingPage(startTrigramTraining),
       orientationLink: 'https://www.youtube.com/watch?v=IiuEYX7QFjA',
-      wpmToProgress: 27,
+      minWPM: 13,
+      maxWPM: 27,
     },
     {
       bodyText:
-        'The average speed of a keyboard user is 40 words per minute. Progress past 40 words per minute to move onto the next training section.',
+        'Purpose: Practice common words in character entry mode. \nGoal: Surpass average speed of a keyboard user (40 words per minute)',
       tierTitle: 'Lexical',
       onPressTraining: () =>
         runFunctionThenGoToTrainingPage(startLexicalTraining),
       orientationLink: 'https://www.youtube.com/watch?v=HvVvxD48cDI',
-      wpmToProgress: 40,
+      minWPM: 27,
+      maxWPM: 40,
     },
     {
       bodyText:
-        'The average speed of a professional typist is 75 words per minute. Progress past 75 words per minute to move onto the next training section.',
+        'The average speed of a professional typist is 75 words per minute. \nProgress past 75 words per minute to move onto the next training section.',
       tierTitle: 'Chording',
       onPressTraining: () =>
         runFunctionThenGoToTrainingPage(startChordTraining),
       orientationLink: 'https://www.youtube.com/watch?v=-4QuWCf8PKM',
-      wpmToProgress: 75,
+      minWPM: 40,
+      maxWPM: 75,
     },
   ];
 
@@ -82,8 +86,8 @@ export function TrainingCardColumn(): ReactElement {
       {trainingCardProps.map((props, i) => (
         <TrainingTierCard
           key={Math.random()}
-          {...props}
           statistics={getStatsFromIndex(i)}
+          {...props}
         />
       ))}
     </div>
