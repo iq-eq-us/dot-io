@@ -45,6 +45,7 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
   }),
   clearAllStorage: action((store) => {
     store.totalSavedTrainingStatistics = { statistics: [] };
+    store.fastestRecordedWordsPerMinute = 0;
     localStorage.clear();
   }),
   setFastestRecordedWordsPerMinute: action((store, payload) => {

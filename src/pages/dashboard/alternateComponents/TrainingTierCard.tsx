@@ -5,7 +5,6 @@ import { useStoreState } from '../../../store/store';
 import { CheckMark } from './CheckMark';
 import { StatisticsHeader } from './StatisticsHeader';
 import { StatRow } from './StatRow';
-import { StatsIcon } from './StatsIcon';
 import UnlockIcon from './UnlockIcon';
 import LockIcon from './LockIcon';
 import {
@@ -26,6 +25,7 @@ import {
   StatsHead,
   StatsBody,
 } from './TrainingTierCard.styled';
+import DisclosureIcon from './DisclosureIcon';
 
 export interface TierCardProps {
   tierTitle: string;
@@ -116,25 +116,19 @@ export function TrainingTierCard(props: TierCardProps): ReactElement {
 
         <Row>
           <CardButton
-            disabled={cardState === 'LOCKED'}
             onClick={() => {
               window.open(props.orientationLink, '_blank');
             }}
           >
             Orientation
           </CardButton>
-          <CardButton
-            disabled={cardState === 'LOCKED'}
-            onClick={props.onPressTraining}
-          >
-            Training
-          </CardButton>
+          <CardButton onClick={props.onPressTraining}>Training</CardButton>
         </Row>
 
         {props.statistics && (
           <StatsButtonContainer>
             <StatsButton onClick={() => setIsStatsOpen(!isStatsOpen)}>
-              <StatsIcon />
+              <DisclosureIcon open={isStatsOpen} />
             </StatsButton>
           </StatsButtonContainer>
         )}

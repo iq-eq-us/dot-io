@@ -6,6 +6,9 @@ import { StatisticsColumnContainer } from './StatisticsColumnContainer';
 import { StatisticsTableContainer } from './StatisticsTableContainer';
 import { StatisticsTableTitle } from './StatisticsTableTitle';
 import StatisticsTable from './StatisticsTable';
+import { EditChordsButton } from './EditChordsButton';
+import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingScenario';
+import styled from 'styled-components';
 
 const HIDDEN_BREAKPOINT = 1024;
 
@@ -33,16 +36,34 @@ export function StatisticsColumn(): ReactElement {
     if (windowSize.width < HIDDEN_BREAKPOINT) setIsDisplaying(false);
   };
 
+  const openChordEditModal = useStoreActions(
+    (store) => store.toggleChordEditModal,
+  );
+
+  const currentTrainingMode = useCurrentTrainingScenario();
+
+  const shouldDisplayEditChordsButton =
+    currentTrainingMode === 'LEXICAL' || currentTrainingMode === 'TRIGRAM';
+
   return (
     <StatisticsColumnContainer
       onClick={onClickOutside}
       isDisplayingModal={trainingSettings.isDisplayingStatisticsModal}
     >
       <StatisticsTableContainer transitionTransform={transitionTransform}>
-        <StatisticsTableTitle />
+        <Row>
+          {shouldDisplayEditChordsButton && (
+            <EditChordsButton openChordEditModal={openChordEditModal} />
+          )}
+          <StatisticsTableTitle />
+        </Row>
 
         <StatisticsTable />
       </StatisticsTableContainer>
     </StatisticsColumnContainer>
   );
 }
+
+const Row = styled.div.attrs({
+  className: `flex flex-row w-full justify-end items-end mb-4 `,
+})``;

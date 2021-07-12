@@ -10,6 +10,10 @@ import {
   ComingSoonTitle,
   ComingSoonText,
 } from './alternativeDashboard.styled';
+import { CardDataRowDisplay } from './alternateComponents/CardDataRowDisplay';
+import { BrandingMaterial } from './alternateComponents/BrandingMaterial';
+
+const SHOULD_DISPLAY_BRANDING_MATERIAL = false;
 
 const Dashboard = (): ReactElement => {
   return (
@@ -18,6 +22,7 @@ const Dashboard = (): ReactElement => {
         <LaunchpadHeader />
 
         <Column>
+          <CardDataRowDisplay />
           <TrainingCardColumn />
         </Column>
       </TopSectionContainer>
@@ -32,6 +37,8 @@ const Dashboard = (): ReactElement => {
           skills to the next level!
         </ComingSoonText>
       </ComingSoonContainer>
+
+      {SHOULD_DISPLAY_BRANDING_MATERIAL && <BrandingMaterial />}
     </DashboardPageContainer>
   );
 };

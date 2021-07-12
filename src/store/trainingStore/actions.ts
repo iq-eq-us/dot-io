@@ -199,9 +199,15 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingText = [];
     state.currentLineOfTrainingText = 0;
     state.currentSubindexInTrainingText = 0;
+    const oldDisplay = {
+      settings: state.trainingSettings.isDisplayingSettingsModal,
+      stats: state.trainingSettings.isDisplayingStatisticsModal,
+    };
     state.trainingSettings = JSON.parse(
       JSON.stringify(defaultTrainingSettings),
     );
+    state.trainingSettings.isDisplayingStatisticsModal = oldDisplay.stats;
+    state.trainingSettings.isDisplayingSettingsModal = oldDisplay.settings;
     state.timeTakenToTypePreviousChord = 0;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
   }),
@@ -246,6 +252,7 @@ function resetTrainingStore(state: TrainingStoreStateModel) {
   state.timeTakenToTypePreviousChord = 0;
   state.timeAtTrainingStart = performance.now();
   state.trainingSettings = JSON.parse(JSON.stringify(defaultTrainingSettings));
+  state.typedTrainingText = '';
 }
 
 function resetTargetChordMetaInformation(state: TrainingStoreModel) {

@@ -47,7 +47,7 @@ interface ChordProps {
 }
 
 const Chord = styled.span.attrs<ChordProps>((props) => ({
-  className: `${props.active ? 'text-green-500 underline' : ''} ${
+  className: `${props.active ? 'text-blue-500 underline' : ''} ${
     props.error ? 'text-red-500' : ''
   }`,
 }))<ChordProps>``;
@@ -61,4 +61,7 @@ const TextPromptContainer = styled.div.attrs({
     text-md font-bold mt-12 flex flex-col items-center w-full justify-center text-white
     sm:text-xl md:text-2xl xl:mt-12
   `,
-})``;
+})`
+  // font-family: 'Inconsolata', monospace;
+  // font-weight: 900 !important;
+`;

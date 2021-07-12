@@ -6,6 +6,8 @@ import useChordsNotConquered, {
 } from '../../../hooks/useChordsNotConquered';
 import useCurrentLevel from '../../../hooks/useCurrentLevel';
 import styled from 'styled-components';
+import { useStoreState } from '../../../store/store';
+import { PlusIcon } from './PlusIcon';
 
 export function ProgressBar(): ReactElement {
   const wpm = useWordsPerMinute();
@@ -13,6 +15,8 @@ export function ProgressBar(): ReactElement {
   const [currentLevel, maxLevel] = useCurrentLevel();
   const chordsRemaining = useChordsNotConquered();
   const totalNumberOfChords = useTotalChordsToConquer();
+  const trainingSettings = useStoreState((store) => store.trainingSettings);
+  const isShowingPlusIcon = useStoreState((store) => store.isShowingPlusIcon);
 
   const progress = (chordsConquered / totalNumberOfChords) * 100;
 
@@ -22,16 +26,21 @@ export function ProgressBar(): ReactElement {
         <DataText>Complete: {chordsConquered}</DataText>
         <DataText>
           Level: {currentLevel}/{maxLevel}
+          {isShowingPlusIcon && <PlusIcon />}
         </DataText>
         <DataText>Remaining: {chordsRemaining}</DataText>
       </TopDataRow>
       <BottomProgressBar>
         <ProgressBarOuter>
-          <ProgressBarInner progress={progress}>
-            <WPMText>WPM: {wpm.toFixed(0)}</WPMText>
-          </ProgressBarInner>
+          <ProgressBarInner progress={progress} />
         </ProgressBarOuter>
       </BottomProgressBar>
+      <BottomDataRow>
+        <WPMText>WPM: {wpm.toFixed(0)}</WPMText>
+        <SpeedGoalText>
+          Speed Goal: {trainingSettings.speedGoal.toFixed()}
+        </SpeedGoalText>
+      </BottomDataRow>
     </Container>
   );
 }
@@ -39,6 +48,14 @@ export function ProgressBar(): ReactElement {
 interface ProgressBarProgress {
   progress?: number;
 }
+
+const BottomDataRow = styled.div.attrs({
+  className: `flex flex-row w-full mt-2 justify-between text-white font-semibold`,
+})``;
+
+const SpeedGoalText = styled.span.attrs({
+  className: ``,
+})``;
 
 const ProgressBarInner = styled.div.attrs<ProgressBarProgress>({
   className: `relative rounded-r-xl bg-green-500 h-full rounded-l`,
@@ -51,7 +68,7 @@ const ProgressBarOuter = styled.div.attrs({
 })``;
 
 const WPMText = styled.div.attrs({
-  className: `absolute text-white font-semibold -right-20 -bottom-8 min-w-[80px]`,
+  className: `text-white font-semibold min-w-[80px]`,
 })``;
 
 const Container = styled.div.attrs({
@@ -63,7 +80,7 @@ const TopDataRow = styled.div.attrs({
 })``;
 
 const DataText = styled.div.attrs({
-  className: `text-white font-semibold`,
+  className: `text-white font-semibold flex flex-row items-center`,
 })``;
 
 const BottomProgressBar = styled.div.attrs({

@@ -1,4 +1,3 @@
-import { getCumulativeValueByPropertyName } from '../helpers/aggregation';
 import { useStoreState, useStoreActions } from '../store/store';
 
 export const useWordsPerMinute = (): number => {
@@ -18,12 +17,18 @@ export const useWordsPerMinute = (): number => {
   const timeDifferenceInMinutes = timeDifferenceInSeconds / 60;
   const trainingStatistics = useStoreState((store) => store.trainingStatistics);
 
-  const sumOfTrainingOccurrences = getCumulativeValueByPropertyName(
-    trainingStatistics.statistics,
-    'numberOfOccurrences',
-  );
+  let totalNumberOfCharactersTyped = 0;
+  trainingStatistics.statistics.forEach((stat) => {
+    const charactersTyped = stat.displayTitle.length * stat.numberOfOccurrences;
+    totalNumberOfCharactersTyped += charactersTyped;
+  });
 
-  const wpm = parseFloat(sumOfTrainingOccurrences) / timeDifferenceInMinutes;
+  // According to Riley, the equation for WPM is equal to (characters per minute typed correctly / 5)
+  // I believe the constant 5 is chosen to represent average word length
+  const charactersTypedCorrectly = totalNumberOfCharactersTyped;
+  const charactersTypedCorrectlyPerMinute =
+    charactersTypedCorrectly / timeDifferenceInMinutes;
+  const wpm = charactersTypedCorrectlyPerMinute / 5;
 
   if (wpm > fastestRecordedWPM) setFastestWPM(wpm);
 

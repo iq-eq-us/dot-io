@@ -35,7 +35,7 @@ export function TrainingCardColumn(): ReactElement {
     {
       bodyText:
         'Purpose: Pratice common letter groupings. \nGoal: Surpass average speed of "Hunt & Peck" typists (27 words per minute)',
-      tierTitle: 'Trigram',
+      tierTitle: 'Amalgamate',
       onPressTraining: () =>
         runFunctionThenGoToTrainingPage(startTrigramTraining),
       orientationLink: 'https://www.youtube.com/watch?v=IiuEYX7QFjA',

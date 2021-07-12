@@ -5,13 +5,16 @@ import { StatisticsColumn } from './updated-components/StatisticsColumn';
 import styled from 'styled-components';
 import { ClosingPrompt } from './components/closingPrompt';
 import { useContrast } from '../../hooks/useContrast';
+import EditChordsModal from './components/editChordsModal';
 
 function TrainingPage(): ReactElement {
   const contrast = useContrast();
 
   return (
     <PageContainer contrast={contrast}>
+      {/* This is responsible for prompting the user if they try and leave the page and don't have Auto Save enabled in the settings, so they don't lose their progress */}
       <ClosingPrompt />
+      <EditChordsModal />
 
       <SettingsColumn />
       <CenterTrainingColumn />

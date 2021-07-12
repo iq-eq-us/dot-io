@@ -135,7 +135,7 @@ const AggregateRow = ({ data }: { data: Data }) => {
 
 const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
   (props) => ({
-    className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] ${
+    className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] hover:bg-[#333] ${
       props.headerStyle === 'TARGET_CHORD_ACTIVE'
         ? 'bg-yellow-400 text-black font-bold'
         : props.headerStyle === 'TARGET_CHORD_INACTIVE'

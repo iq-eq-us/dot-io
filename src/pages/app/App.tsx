@@ -14,8 +14,11 @@ function WaitForStateRehydration({ children }: Props) {
 
 const App = (): ReactElement => {
   return (
+    // Inject the main application store into the application
     <StoreProvider store={store}>
+      {/* Don't render the router component until the store has finished hydrating its state from storage */}
       <WaitForStateRehydration>
+        {/* Finally, render out the router, which contains all the application's pages, once the store has been hydrated */}
         <Router />
       </WaitForStateRehydration>
     </StoreProvider>

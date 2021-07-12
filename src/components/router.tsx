@@ -9,6 +9,11 @@ export const ROUTER_PATHS = {
   training: '/training',
 };
 
+/**
+ * Currently there are two main paths in the application:
+ * The main dashboard page and the training page.
+ * The training page changes its functionality depending on which training mode is being used.
+ */
 const Router = (): ReactElement => {
   return (
     <HashRouter>
