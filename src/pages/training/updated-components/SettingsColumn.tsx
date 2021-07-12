@@ -27,7 +27,7 @@ function SettingsColumn(): ReactElement {
     setTrainingSettings({ ...trainingSettings, ...newProperty });
 
   // If the screen size changes from a small size to a large size, show this column
-  // If the screen size changes from a large size to a small size, make sure this column is hidden (until the user presses the button to open it again
+  // If the screen size changes from a large size to a small size, make sure this column is hidden (until the user presses the button to open it again)
   useScreenSizeBoundary({
     boundary: HIDDEN_BREAKPOINT,
     callback: (direction) => {
@@ -57,9 +57,8 @@ function SettingsColumn(): ReactElement {
     >
       <SettingsHeader transitionTransform={transitionTransform} />
       <SettingsForm
-        onClick={(e) => {
+        onSubmit={(e) => {
           e.preventDefault();
-          e.stopPropagation();
         }}
         transitionTransform={transitionTransform}
       >
