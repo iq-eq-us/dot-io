@@ -13,7 +13,7 @@ import { ContrastInputSetting } from './ContrastInputSetting';
 import { SettingsColumnContainer } from './SettingsColumnContainer';
 import { SettingsForm } from './SettingsForm';
 import { SettingsHeader } from './SettingsHeader';
-import { CustomTrainingSettingsBox } from './SettingsProps';
+import { CustomTrainingSettingsBox } from './CustomTrainingSettingsBox';
 
 const HIDDEN_BREAKPOINT = 1280;
 

@@ -1,15 +1,24 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import type { SettingsProps } from './SettingsProps';
+import type { SettingsProps } from './CustomTrainingSettingsBox';
 
 export function ContrastInputSetting(props: SettingsProps): ReactElement {
+  const [value, setValue] = useState<string | number>(
+    props.trainingSettings.contrastPercentage,
+  );
+
   const onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     const value = parseInt(e.target.value);
-    if (!isNaN(value) && value >= 50 && value <= 100)
+    const isValid = !isNaN(value) && value >= 50 && value <= 100;
+
+    if (isValid) {
       props.setTrainingSettings({
         ...props.trainingSettings,
         contrastPercentage: value,
       });
+    } else {
+      setValue(props.trainingSettings.contrastPercentage);
+    }
   };
 
   return (
@@ -18,7 +27,8 @@ export function ContrastInputSetting(props: SettingsProps): ReactElement {
 
       <ContrastInput
         onBlur={onBlur}
-        defaultValue={props.trainingSettings.contrastPercentage}
+        onChange={(e) => setValue(e.target.value)}
+        value={value}
         type="text"
         pattern="[0-9]*"
       />
