@@ -12,6 +12,7 @@ import {
 } from './alternativeDashboard.styled';
 import { CardDataRowDisplay } from './alternateComponents/CardDataRowDisplay';
 import { BrandingMaterial } from './alternateComponents/BrandingMaterial';
+import { CopyrightNotice } from './alternateComponents/CopyrightNotice';
 
 const SHOULD_DISPLAY_BRANDING_MATERIAL = false;
 
@@ -39,6 +40,8 @@ const Dashboard = (): ReactElement => {
       </ComingSoonContainer>
 
       {SHOULD_DISPLAY_BRANDING_MATERIAL && <BrandingMaterial />}
+
+      <CopyrightNotice lightBg={SHOULD_DISPLAY_BRANDING_MATERIAL} />
     </DashboardPageContainer>
   );
 };
