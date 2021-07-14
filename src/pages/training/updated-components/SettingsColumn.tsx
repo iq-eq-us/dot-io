@@ -60,6 +60,9 @@ function SettingsColumn(): ReactElement {
         onSubmit={(e) => {
           e.preventDefault();
         }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         transitionTransform={transitionTransform}
       >
         <HighlightCheckboxSetting

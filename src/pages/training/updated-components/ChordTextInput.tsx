@@ -1,5 +1,6 @@
 import React, { ReactElement, useRef } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
+import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import RefreshIcon from './RefreshIcon';
 
@@ -15,8 +16,14 @@ function ChordTextInput(): ReactElement {
   );
   const displayHUD = useHUD();
 
+  const { parentProps, Popper } = usePopover(
+    'Generate a new set of training text.',
+  );
+
   return (
     <div className="w-full flex flex-row items-end mt-16 justify-center">
+      {Popper}
+
       <span
         className={`mb-2 mr-2 text-white font-semibold ${
           !displayHUD && 'hidden'
@@ -35,7 +42,10 @@ function ChordTextInput(): ReactElement {
         }}
       />
 
-      <div className="p-2 bg-[#333] flex items-center justify-center rounded mb-2 ml-2 cursor-pointer hover:bg-[#444] active:bg-[#222]">
+      <div
+        className="p-2 bg-[#333] flex items-center justify-center rounded mb-2 ml-2 cursor-pointer hover:bg-[#444] active:bg-[#222]"
+        {...parentProps}
+      >
         <RefreshIcon
           onClick={() => {
             setStoreText('');

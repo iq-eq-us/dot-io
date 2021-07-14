@@ -1,33 +1,36 @@
 import React, { ReactElement } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import CharachorderLogoImage from '../assets/cc_logo_transparent.png';
+import BackButton from '../pages/dashboard/alternateComponents/BackButton';
+import { ROUTER_PATHS } from './router';
 
 const Navbar = (): ReactElement => {
+  const history = useHistory();
+  const needsBackButton = history.location.pathname.endsWith(
+    ROUTER_PATHS.training,
+  );
+
   return (
-    <nav style={{ backgroundColor: '#201F20' }}>
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-16">
-          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0 flex items-center" />
-            <div className="sm:block sm:ml-6">
-              <div className="flex space-x-4">
-                <a
-                  href="#/"
-                  className="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-[#333]"
-                  aria-current="page"
-                >
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src={CharachorderLogoImage}
-                    alt=""
-                  />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <nav
+      className={`bg-[#201F20] h-16 flex flex-row items-center justify-between pr-8 ${
+        !needsBackButton && 'flex-row-reverse'
+      } `}
+    >
+      {needsBackButton && <BackButton />}
+      <Link href="#/" aria-current="page">
+        <Logo src={CharachorderLogoImage} alt="" />
+      </Link>
     </nav>
   );
 };
 
 export default Navbar;
+
+const Logo = styled.img.attrs({
+  className: `h-8 w-8 rounded-full`,
+})``;
+
+const Link = styled.a.attrs({
+  className: `px-3 py-2 rounded-md hover:bg-[#333]`,
+})``;

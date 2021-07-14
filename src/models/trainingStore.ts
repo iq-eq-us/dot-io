@@ -22,6 +22,7 @@ export interface TrainingStoreActionsModel {
   setTypedTrainingText: Action<TrainingStoreModel, string>;
   onChangeTypedTrainingText: ThunkOn<TrainingStoreModel>;
   toggleChordEditModal: Action<TrainingStoreModel>;
+  clearTemporaryTrainingData: Action<TrainingStoreModel>;
   /**
    * This action allows you to manually update the chords used in a particular training mode
    * For example, if you were in Lexical training, you can use the top right "View/Edit" chords box

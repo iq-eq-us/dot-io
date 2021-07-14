@@ -1,6 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
+import usePopover from '../../../hooks/usePopover';
 import type { SettingsProps } from './CustomTrainingSettingsBox';
+import HelpCircleIcon from './HelpCircleIcon';
 
 export function ContrastInputSetting(props: SettingsProps): ReactElement {
   const [value, setValue] = useState<string | number>(
@@ -21,9 +23,17 @@ export function ContrastInputSetting(props: SettingsProps): ReactElement {
     }
   };
 
+  const { parentProps, Popper } = usePopover(
+    'Adjust the contrast of the colors on the page. Can be between 50-100%.',
+  );
+
   return (
     <Container>
-      <Label>Contrast</Label>
+      <Label {...parentProps}>
+        Contrast
+        <HelpCircleIcon />
+        {Popper}
+      </Label>
 
       <ContrastInput
         onBlur={onBlur}
@@ -37,7 +47,7 @@ export function ContrastInputSetting(props: SettingsProps): ReactElement {
 }
 
 const Label = styled.label.attrs({
-  className: `block text-sm font-bold mb-2`,
+  className: `text-sm font-bold mb-2 inline-flex flex-row gap-2 items-center`,
 })``;
 
 const ContrastInput = styled.input.attrs({

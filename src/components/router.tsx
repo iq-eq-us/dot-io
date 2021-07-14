@@ -3,6 +3,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from '../pages/dashboard/alternateDashboard';
 import Navbar from './navbar';
 import Training from '../pages/training/TrainingPage';
+import { ClosingPrompt } from '../pages/training/components/closingPrompt';
 
 export const ROUTER_PATHS = {
   home: '/',
@@ -17,6 +18,12 @@ export const ROUTER_PATHS = {
 const Router = (): ReactElement => {
   return (
     <HashRouter>
+      {/* 
+        This is responsible for prompting the user if they try and leave the page and don't have Auto Save enabled in the settings, so they don't lose their progress.
+        It also saves their progress when they navigate away if they do have Auto Save enabled.
+      */}
+      <ClosingPrompt />
+
       <Switch>
         <Route path={ROUTER_PATHS.home} exact>
           <Navbar />

@@ -26,6 +26,8 @@ import {
   StatsBody,
 } from './TrainingTierCard.styled';
 import DisclosureIcon from './DisclosureIcon';
+import ExternalLinkIcon from './ExternalLinkIcon';
+import RightArrowIcon from './RightArrowIcon';
 
 export interface TierCardProps {
   tierTitle: string;
@@ -120,9 +122,13 @@ export function TrainingTierCard(props: TierCardProps): ReactElement {
               window.open(props.orientationLink, '_blank');
             }}
           >
-            Orientation
+            View Orientation
+            <ExternalLinkIcon />
           </CardButton>
-          <CardButton onClick={props.onPressTraining}>Training</CardButton>
+          <CardButton onClick={props.onPressTraining}>
+            Start Training
+            <RightArrowIcon />
+          </CardButton>
         </Row>
 
         {props.statistics && (

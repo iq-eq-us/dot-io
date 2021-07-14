@@ -6,6 +6,7 @@ import { useStoreState } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 import { useHUD } from '../../../hooks/useHUD';
+import usePopover from '../../../hooks/usePopover';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences
@@ -34,7 +35,7 @@ function StatisticsTable(): ReactElement {
           isRecursionEnabled: trainingSettings.autoOrCustom === 'AUTO',
           displayHUD: shouldDisplayHUD,
         }}
-        style={{ borderRadius: 16 }}
+        style={{ borderRadius: 8 }}
       >
         {Row}
       </FixedSizeList>
@@ -72,7 +73,7 @@ const getStyle = (
 const Row = ({ index, style, data }: RowData) => {
   // Minus one to account for title row
   const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
-  if (index === 0) return Header;
+  if (index === 0) return <Header />;
   else if (index === 1) return <AggregateRow data={data} />;
 
   const headerStyle = getStyle(
@@ -82,7 +83,12 @@ const Row = ({ index, style, data }: RowData) => {
   );
 
   return (
-    <div style={style}>
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+      style={style}
+    >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{item?.displayTitle}</RowItem>
         <RowItem>{item?.averageSpeed.toFixed()}</RowItem>
@@ -105,14 +111,44 @@ const HeaderItem = styled.span.attrs({
   className: ``,
 })``;
 
-const Header = (
-  <HeaderRow>
-    <HeaderItem>Chord</HeaderItem>
-    <HeaderItem>Speed</HeaderItem>
-    <HeaderItem>Errors</HeaderItem>
-    <HeaderItem>Times</HeaderItem>
-  </HeaderRow>
-);
+interface HeaderItemRowProps {
+  helpText: string;
+  children: React.ReactNode;
+}
+
+const HeaderItemRow = ({ helpText, children }: HeaderItemRowProps) => {
+  const { parentProps, Popper } = usePopover(helpText);
+
+  return (
+    <HeaderItem {...parentProps}>
+      {children}
+      {Popper}
+    </HeaderItem>
+  );
+};
+
+const Header = () => {
+  return (
+    <HeaderRow
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <HeaderItemRow helpText="The name of the target chord or character you typed.">
+        Chord
+      </HeaderItemRow>
+      <HeaderItemRow helpText="The speed at which you typed the chord in hundreths of a second.">
+        Speed
+      </HeaderItemRow>
+      <HeaderItemRow helpText="The number of times you have made a mistake typing this chord.">
+        Errors
+      </HeaderItemRow>
+      <HeaderItemRow helpText="The total number of times you have typed this chord.">
+        Times
+      </HeaderItemRow>
+    </HeaderRow>
+  );
+};
 
 const AggregateRow = ({ data }: { data: Data }) => {
   const average = getCumulativeAverageChordTypeTime(data.stats);
@@ -124,7 +160,11 @@ const AggregateRow = ({ data }: { data: Data }) => {
   });
 
   return (
-    <AggregateStatRow>
+    <AggregateStatRow
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <RowStatItem>SUM</RowStatItem>
       <RowStatItem>{data.displayHUD ? average : ''}</RowStatItem>
       <RowStatItem>{sumErrors}</RowStatItem>

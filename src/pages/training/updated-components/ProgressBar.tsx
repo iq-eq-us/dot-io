@@ -8,6 +8,7 @@ import useCurrentLevel from '../../../hooks/useCurrentLevel';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
+import usePopover from '../../../hooks/usePopover';
 
 export function ProgressBar(): ReactElement {
   const wpm = useWordsPerMinute();
@@ -20,15 +21,26 @@ export function ProgressBar(): ReactElement {
 
   const progress = (chordsConquered / totalNumberOfChords) * 100;
 
+  const { parentProps, Popper } = usePopover(
+    'The number of chords that you have typed faster than your speed goal.',
+  );
+
+  const { parentProps: remainingProps, Popper: RemainingPopover } = usePopover(
+    'The number of chords that you have not typed faster than your speed goal.',
+  );
+
   return (
     <Container>
+      {Popper}
+      {RemainingPopover}
+
       <TopDataRow>
-        <DataText>Complete: {chordsConquered}</DataText>
+        <DataText {...parentProps}>Complete: {chordsConquered}</DataText>
         <DataText>
           Level: {currentLevel}/{maxLevel}
           {isShowingPlusIcon && <PlusIcon />}
         </DataText>
-        <DataText>Remaining: {chordsRemaining}</DataText>
+        <DataText {...remainingProps}>Remaining: {chordsRemaining}</DataText>
       </TopDataRow>
       <BottomProgressBar>
         <ProgressBarOuter>

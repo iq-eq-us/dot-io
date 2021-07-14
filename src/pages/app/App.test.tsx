@@ -199,10 +199,13 @@ describe('<App>', () => {
 
     actions().beginTrainingAlphabetMode();
 
-    timer?.tick(3000);
-
     const firstChord = state().targetWord + '';
     actions().setTypedTrainingText(firstChord);
+
+    timer?.tick(3000);
+
+    const nextChord = state().targetWord + '';
+    actions().setTypedTrainingText(nextChord);
 
     expect(state().trainingSettings.targetChords).to.equal(1);
   });
@@ -238,6 +241,9 @@ describe('<App>', () => {
 
     actions().beginTrainingAlphabetMode();
     expect(state().trainingSettings.recursionRate).to.equal(0);
+
+    timer?.tick(100);
+    actions().setTypedTrainingText(state().targetWord + '');
 
     timer?.tick(2500);
     actions().setTypedTrainingText(state().targetWord + '');
@@ -332,6 +338,9 @@ describe('<App>', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state: () => any,
   ) => {
+    timer?.tick(100);
+    actions().setTypedTrainingText(state().targetWord + ' ');
+
     timer?.tick(2500);
     actions().setTypedTrainingText(state().targetWord + ' ');
     expect(state().trainingSettings.recursionRate).to.equal(20);

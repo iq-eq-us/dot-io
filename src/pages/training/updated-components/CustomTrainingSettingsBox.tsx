@@ -1,7 +1,9 @@
 import type { ActionCreator } from 'easy-peasy';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import usePopover from '../../../hooks/usePopover';
 import type { TrainingSettingsState } from '../../../models/trainingSettingsStateModel';
+import HelpCircleIcon from './HelpCircleIcon';
 
 export interface SettingsProps {
   trainingSettings: TrainingSettingsState;
@@ -24,10 +26,28 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
     props.trainingSettings.recursionRate,
   );
 
+  const { parentProps: targetChordsProps, Popper: TargetChordPopover } =
+    usePopover(
+      'How many chords do you want to target to get better at through practice?',
+    );
+
+  const { parentProps: speedGoalProps, Popper: SpeelGoalPopover } = usePopover(
+    'How fast do you want to type each chord? This is measured in hundreths of a second, so a speed goal of 100 would equate to 1 second.',
+  );
+
+  const { parentProps: recursionRateProps, Popper: RecursionRatePopover } =
+    usePopover(
+      'How often do you want to be prompted for chords you are slow at? 0% means never, while 100% means always prompt me for slow chords.',
+    );
+
   return (
     <Container>
       <Row>
-        <Label>Target Chords</Label>
+        <Label {...targetChordsProps}>
+          Target Chords
+          <HelpCircleIcon />
+          {TargetChordPopover}
+        </Label>
 
         <Input
           onBlur={(e) => {
@@ -49,7 +69,11 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
       </Row>
 
       <Row>
-        <Label>Speed Goal</Label>
+        <Label {...speedGoalProps}>
+          Speed Goal
+          <HelpCircleIcon />
+          {SpeelGoalPopover}
+        </Label>
         <Input
           onBlur={(e) => {
             const isValid = isInt(e) && isPositive(e);
@@ -70,7 +94,11 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
       </Row>
 
       <Row>
-        <Label>Rate (%)</Label>
+        <Label {...recursionRateProps}>
+          Rate (%)
+          <HelpCircleIcon />
+          {RecursionRatePopover}
+        </Label>
         <Input
           onBlur={(e) => {
             const isValid =
@@ -95,7 +123,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
 }
 
 const Label = styled.label.attrs({
-  className: `block text-sm font-bold mb-2`,
+  className: `block text-sm font-bold mb-2 inline-flex flex-row items-center gap-2`,
 })``;
 
 const Input = styled.input.attrs({

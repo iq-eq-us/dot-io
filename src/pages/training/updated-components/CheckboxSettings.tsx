@@ -10,6 +10,7 @@ interface CheckboxProps {
 export function HighlightCheckboxSetting(props: CheckboxProps): JSX.Element {
   return (
     <CheckboxSetting
+      helpText="Highlight keys on the CharaChorder overlay in the bottom center of your screen."
       title="Highlight Keys"
       checked={props.trainingSettings.isHighlightingKeys}
       onChange={() =>
@@ -24,6 +25,7 @@ export function HighlightCheckboxSetting(props: CheckboxProps): JSX.Element {
 export function RecursionCheckboxSetting(props: CheckboxProps): JSX.Element {
   return (
     <CheckboxSetting
+      helpText="When checked, this setting will prompt you to type chords that you struggle with more often to help you practice."
       title="Practice Slow Chords"
       checked={props.trainingSettings.isUsingRecursion}
       onChange={() => {
@@ -38,6 +40,7 @@ export function RecursionCheckboxSetting(props: CheckboxProps): JSX.Element {
 export function HUDCheckboxSetting(props: CheckboxProps): JSX.Element {
   return (
     <CheckboxSetting
+      helpText="Show or hide certain elements of the heads up display to increase focus on typing."
       title="Display HUD"
       checked={props.trainingSettings.isDisplayingHUD}
       onChange={() => {
@@ -52,6 +55,7 @@ export function HUDCheckboxSetting(props: CheckboxProps): JSX.Element {
 export function AutosaveSetting(props: CheckboxProps): JSX.Element {
   return (
     <CheckboxSetting
+      helpText="Automatically save your statistics when you navigate away from this training session."
       title="Autosave Statistics"
       checked={props.trainingSettings.isAutoWrite}
       onChange={() => {

@@ -30,7 +30,11 @@ export const useWordsPerMinute = (): number => {
     charactersTypedCorrectly / timeDifferenceInMinutes;
   const wpm = charactersTypedCorrectlyPerMinute / 5;
 
-  if (wpm > fastestRecordedWPM) setFastestWPM(wpm);
+  const trainingScenario = useStoreState(
+    (store) => store.currentTrainingScenario,
+  );
+  const shouldUpdateFastestWPM = trainingScenario !== 'ALPHABET';
+  if (shouldUpdateFastestWPM && wpm > fastestRecordedWPM) setFastestWPM(wpm);
 
   return wpm;
 };

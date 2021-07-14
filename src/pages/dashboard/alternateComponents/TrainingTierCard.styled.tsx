@@ -1,17 +1,23 @@
 import styled from 'styled-components';
 
 export const Parent = styled.div.attrs<CardBodyProps>((props) => ({
-  className: `rounded-none sm:rounded-lg overflow-hidden -mx-5 sm:mx-4 lg:w-3/4 min-w-full lg:min-w-0 ${
-    props.areStatsOpen ? 'mb-6' : ''
-  }`,
-}))<CardBodyProps>``;
+  className: `
+    rounded-none overflow-hidden -mx-5 min-w-full
+    sm:rounded-lg 
+    lg:mx-4 lg:w-3/4 lg:min-w-0 
+  ${props.areStatsOpen ? 'mb-6' : ''}`,
+}))<CardBodyProps>`
+  @media only screen and (max-width: 641px) {
+    min-width: calc(100% + 2.5rem);
+  }
+`;
 
 export const CardButton = styled.button.attrs({
-  className: `mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-10 disabled:bg-gray-400 disabled:cursor-not-allowed`,
+  className: `flex flex-row items-center gap-1 mt-4 mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-10 disabled:bg-gray-400 disabled:cursor-not-allowed`,
 })``;
 
 export const Row = styled.div.attrs({
-  className: `flex flex-row`,
+  className: `flex flex-row mr-16`,
 })``;
 
 export const BodyText = styled.p.attrs({

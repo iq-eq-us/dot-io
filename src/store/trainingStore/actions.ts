@@ -28,6 +28,10 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   UNSAFE_setTrainingText: action((state, payload) => {
     state.trainingText = payload;
   }),
+  clearTemporaryTrainingData: action((state) => {
+    state.trainingStatistics = { statistics: [] };
+    state.trainingText = [];
+  }),
   beginTrainingLexicalMode: action((state) => {
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.trainingStatistics = generateEmptyChordStatistics(
@@ -115,7 +119,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       if (hasCompletedLevel) state.isShowingPlusIcon = true;
       else state.isShowingPlusIcon = false;
 
-      if (hasCompletedLevel && isSettingsSetToAuto) {
+      if (hasCompletedLevel) {
         // const targetChord = state.previousTargetChord;
         const targetChordStatistics = state.trainingStatistics.statistics.sort(
           (a, b) => b.averageSpeed - a.averageSpeed,
@@ -130,9 +134,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
               (s) => s.averageSpeed > newSpeedGoal,
             )?.length;
 
-          state.trainingSettings.speedGoal = newSpeedGoal;
-          state.trainingSettings.targetChords = newNumberOfTargetChords;
           state.currentLevel = Math.max(0, 200 - newSpeedGoal); // So that the level never goes negative
+
+          if (isSettingsSetToAuto) {
+            state.trainingSettings.speedGoal = newSpeedGoal;
+            state.trainingSettings.targetChords = newNumberOfTargetChords;
+          }
         } else {
           console.error(
             'Could not find the correct chord statistic to update the level.',
@@ -143,6 +150,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
           state.trainingStatistics.statistics.filter(
             (s) => s.averageSpeed > state.trainingSettings.speedGoal,
           )?.length;
+
         state.trainingSettings.targetChords = newNumberOfTargetChords;
       }
     },
@@ -278,8 +286,17 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
   if (store.errorOccurredWhileAttemptingToTypeTargetChord)
     chordStats.numberOfErrors++;
 
-  const timeTakenToTypeChord =
+  let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
+
+  // Don't penalize the user if this is the first character they type
+  // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
+  // So if this is their very first chord, we give them a very short time for it
+  const userIsTypingFirstChord =
+    store.currentLineOfTrainingText === 0 &&
+    store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
+  if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
+
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
   chordStats.lastSpeed = Math.min(
     timeTakenToTypeChord,

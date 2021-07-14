@@ -1,11 +1,20 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
+import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
 
 export function CardDataRowDisplay(): ReactElement {
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
   const clearStatsWithoutPrompt = useStoreActions(
     (store) => store.clearAllStorage,
+  );
+
+  const { parentProps: wpmProps, Popper: SpeedPopper } = usePopover(
+    'This shows the fastest you have typed in any training module. Get a faster top speed to progress through the training modules.',
+  );
+
+  const { parentProps: progressProps, Popper: ProgressPopper } = usePopover(
+    'Clear all of the progress you have saved, both your top speed as well as your chord statistics for each training module.',
   );
 
   const onClickRefreshButton = () => {
@@ -17,9 +26,12 @@ export function CardDataRowDisplay(): ReactElement {
 
   return (
     <CardDataRow>
-      <MaxWPMBadge>Max WPM: {maxWPM.toFixed()}</MaxWPMBadge>
+      {SpeedPopper}
+      {ProgressPopper}
 
-      <RefreshButton onClick={onClickRefreshButton}>
+      <MaxWPMBadge {...wpmProps}>Top Speed: {maxWPM.toFixed()} wpm</MaxWPMBadge>
+
+      <RefreshButton onClick={onClickRefreshButton} {...progressProps}>
         Clear Progress
       </RefreshButton>
     </CardDataRow>
@@ -27,7 +39,7 @@ export function CardDataRowDisplay(): ReactElement {
 }
 
 export const RefreshButton = styled.button.attrs({
-  className: `text-white rounded p-2 px-4 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] mr-2 lg:mr-0`,
+  className: `text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`,
 })``;
 
 export const MaxWPMBadge = styled.span.attrs({
@@ -35,5 +47,5 @@ export const MaxWPMBadge = styled.span.attrs({
 })``;
 
 export const CardDataRow = styled.div.attrs({
-  className: `w-full lg:w-3/4 mx-4 lg:mx-auto flex flex-row justify-end`,
+  className: `w-full lg:w-3/4 lg:mx-auto flex flex-row justify-end`,
 })``;
