@@ -8,42 +8,39 @@ trigger:
     include:
     - production
 
-
 pool:
   vmImage: ubuntu-latest
 
-container: mcr.microsoft.com/playwright:focal
-
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '12.17.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.17.1'
+    displayName: 'Install Node.js'
 
-- script: |
-    npm install
-  displayName: 'npm install'
+  - script: |
+      npm install
+    displayName: 'npm install'
 
-- script: |
-    npm run lint
-  displayName: 'npm run lint'
+  - script: |
+      npm run lint
+    displayName: 'npm run lint'
 
-- script: |
-    npm test
-  displayName: 'npm test'
+  - script: |
+      npm run test -- --coverage 2>&1 | tee test_run_output.txt
+    displayName: 'npm test'
 
-- script: |
-    npm run build
-  displayName: 'npm build'
+  - task: AzureStaticWebApp@0
+    inputs:
+      app_location: ''
+      app_build_command: 'npm run build'
+      output_location: '/build'
+    env:
+      azure_static_web_apps_api_token: 9328b79e6cc571ae7230fdbadcee32712a39b68e4646b47808ac496da53e81580-9822c1e9-cbe1-4ff2-9908-3770e5ad46df01024533
 
-- publish: build
-  artifact: WebAppBuild
-
-- task: AzureStaticWebApp@0
-  displayName: 'Deploy static app'
-  inputs:
-    app_location: 'build'
-    skip_app_build: true
-    azure_static_web_apps_api_token: '9328b79e6cc571ae7230fdbadcee32712a39b68e4646b47808ac496da53e81580-9822c1e9-cbe1-4ff2-9908-3770e5ad46df01024533'
+  - script: |
+      node ci-cd/index.js $(Build.BuildId)
+    displayName: 'Publish URL to PR'
+    env:
+      AZURE_API_KEY: $(Azure_API_Key)
 
 
