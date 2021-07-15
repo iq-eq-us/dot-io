@@ -33,7 +33,7 @@ export function ClosingPrompt(): ReactElement {
   }, []);
 
   const handleAutowriteData = (isAutoWriteEnabled: boolean) => {
-    // The other way we save data is if the user exits out of the tab entirely, which is done here, but again only if they have AutoWrite enabled
+    // The other way we save data is if the user exits out of the tab entirely, or refreshes the browser, which is done here, but again only if they have AutoWrite enabled
     if (isAutoWriteEnabled) {
       setStoredChordTrainingStats(store.getState().trainingStatistics);
       clearChordStatistics();

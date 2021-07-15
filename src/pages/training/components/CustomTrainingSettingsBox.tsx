@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import type { TrainingSettingsState } from '../../../models/trainingSettingsStateModel';
+import { useStoreState } from '../../../store/store';
 import HelpCircleIcon from './HelpCircleIcon';
 
 export interface SettingsProps {
@@ -16,6 +17,10 @@ const DEFAULT_PROPS = {
 };
 
 export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
+  const recursionDisabled = !useStoreState(
+    (store) => store.trainingSettings.isUsingRecursion,
+  );
+
   const [targetChords, setTargetChords] = useState<string | number>(
     props.trainingSettings.targetChords,
   );
@@ -37,8 +42,16 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
 
   const { parentProps: recursionRateProps, Popper: RecursionRatePopover } =
     usePopover(
-      'How often do you want to be prompted for chords you are slow at? 0% means never, while 100% means always prompt me for slow chords.',
+      'How often do you want to be prompted for chords you are slow at? 0% means never, while 100% means only prompt me for slow chords.',
     );
+
+  const { parentProps: recursionHelperProps, Popper: RecursionHelperPopover } =
+    usePopover(
+      'Target chords is not used unless "Practice Slow Chords" is enabled.',
+    );
+
+  const { parentProps: rateHelperProps, Popper: RateHelperPopover } =
+    usePopover('Rate % is not used unless "Practice Slow Chords" is enabled.');
 
   return (
     <Container>
@@ -47,6 +60,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
           Target Chords
           <HelpCircleIcon />
           {TargetChordPopover}
+          {recursionDisabled && RecursionHelperPopover}
         </Label>
 
         <Input
@@ -62,8 +76,10 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
               setTargetChords(props.trainingSettings.targetChords);
             }
           }}
+          disabled={recursionDisabled}
           onChange={(e) => setTargetChords(e.target.value)}
           value={targetChords}
+          {...recursionHelperProps}
           {...DEFAULT_PROPS}
         />
       </Row>
@@ -98,6 +114,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
           Rate (%)
           <HelpCircleIcon />
           {RecursionRatePopover}
+          {recursionDisabled && RateHelperPopover}
         </Label>
         <Input
           onBlur={(e) => {
@@ -115,6 +132,8 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
           }}
           onChange={(e) => setRate(e.target.value)}
           value={rate}
+          disabled={recursionDisabled}
+          {...rateHelperProps}
           {...DEFAULT_PROPS}
         />
       </Row>
@@ -127,7 +146,7 @@ const Label = styled.label.attrs({
 })``;
 
 const Input = styled.input.attrs({
-  className: `mr-2 leading-tight text-black shadow rounded h-8 w-full border-[1px] pl-2 border-solid border-gray-100`,
+  className: `mr-2 leading-tight text-black shadow rounded h-8 w-full border-[1px] pl-2 border-solid border-gray-100 disabled:bg-gray-300 disabled:border-gray-400 disabled:text-gray-500`,
 })``;
 
 const Row = styled.div.attrs({

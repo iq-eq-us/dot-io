@@ -3,6 +3,12 @@ import { ConvertStringToKeyHighlightPositions } from '../../helpers/convertStrin
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
 
+/**
+ * Here is the training store state, which contains the majority of the application state
+ * pertaining to the training sessions.
+ *
+ * This state is only modified by the actions in the ./actions.ts folder.
+ */
 const trainingStoreState: TrainingStoreStateModel = {
   // * State
   typedTrainingText: '',

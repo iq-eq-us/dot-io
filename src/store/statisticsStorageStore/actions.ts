@@ -12,6 +12,11 @@ const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
 const ifHasOccurredAtLeastOnce = (e: ChordStatistics): boolean =>
   e.numberOfOccurrences !== 0;
 
+/**
+ * This section contains all the state for the saved items in storage.
+ * It also handles merging existing stored data with new data.
+ * This logic is rather complex so it may take a few tries to understand it.
+ */
 const statisticsStorageStoreActions: StatisticsStoreActions = {
   setTotalSavedTrainingStatistics: action((store, payload) => {
     // If there are no statistics, we can just set them
@@ -73,6 +78,7 @@ export const handleStatsMerge = (
     statistics: secondStats.statistics.filter(ifHasOccurredAtLeastOnce),
   };
 
+  // Get an array of all possible chord statistics
   const allChordKeys = [
     ...new Set([
       ...existingStatistics.statistics
@@ -84,6 +90,7 @@ export const handleStatsMerge = (
     ]),
   ];
 
+  // Loop through all possible keys and construct a merged chord stat for that key
   const newStats: ChordStatistics[] = [];
   allChordKeys.map((key: string) => {
     const existingStat = existingStatistics.statistics.find(
@@ -95,6 +102,8 @@ export const handleStatsMerge = (
 
     let newStat: ChordStatistics = createEmptyChordStatistics(key);
 
+    // If there is both a stat to merge and an existing stat, we have to combine them
+    // Otherwise we can just use the stat that exists already
     if (existingStat && mergingStat) {
       newStat = {
         averageSpeed:

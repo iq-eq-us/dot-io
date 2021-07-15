@@ -19,17 +19,20 @@ const Router = (): ReactElement => {
   return (
     <HashRouter>
       {/* 
-        This is responsible for prompting the user if they try and leave the page and don't have Auto Save enabled in the settings, so they don't lose their progress.
+        This is responsible for prompting the user if they try and leave the training page and don't have Auto Save enabled in the settings, so they don't lose their progress.
         It also saves their progress when they navigate away if they do have Auto Save enabled.
       */}
       <ClosingPrompt />
 
       <Switch>
+        {/* This is the route to the dashboard page. */}
         <Route path={ROUTER_PATHS.home} exact>
           <Navbar />
           <Dashboard />
         </Route>
 
+        {/* This is the route to the training page, which will adapt depending on which training scenario is active. */}
+        {/* You can find the active training scenario in the state.ts file inside the trainingStore, specifically the currentTrainingScenario state variable */}
         <Route path={ROUTER_PATHS.training}>
           <Navbar />
           <Training />

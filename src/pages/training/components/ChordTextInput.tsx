@@ -44,15 +44,14 @@ function ChordTextInput(): ReactElement {
 
       <div
         className="p-2 bg-[#333] flex items-center justify-center rounded mb-2 ml-2 cursor-pointer hover:bg-[#444] active:bg-[#222]"
+        onClick={() => {
+          setStoreText('');
+          regenerateTrainingText();
+          inputRef.current?.focus();
+        }}
         {...parentProps}
       >
-        <RefreshIcon
-          onClick={() => {
-            setStoreText('');
-            regenerateTrainingText();
-            inputRef.current?.focus();
-          }}
-        />
+        <RefreshIcon />
       </div>
     </div>
   );

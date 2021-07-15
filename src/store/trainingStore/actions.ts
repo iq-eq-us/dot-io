@@ -18,6 +18,11 @@ import { getChordLibraryForTrainingScenario } from '../../pages/training/compone
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
 
+/**
+ * Here are all of the actions that modify the state in the ./state folder.
+ * Any change made to state here will automatically be reflected in any component that consumes this state.
+ * The majority of the application logic exists here.
+ */
 const trainingStoreActions: TrainingStoreActionsModel = {
   setTrainingSettings: action((state, payload) => {
     state.trainingSettings = payload;
@@ -25,13 +30,14 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setIsDisplayingStatisticsModal: action((state, payload) => {
     state.trainingSettings.isDisplayingStatisticsModal = payload;
   }),
-  UNSAFE_setTrainingText: action((state, payload) => {
-    state.trainingText = payload;
-  }),
   clearTemporaryTrainingData: action((state) => {
     state.trainingStatistics = { statistics: [] };
     state.trainingText = [];
   }),
+  /**
+   * These next four actions start each training mode
+   * These must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
+   */
   beginTrainingLexicalMode: action((state) => {
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.trainingStatistics = generateEmptyChordStatistics(
@@ -94,7 +100,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setErrorOccurredWhileAttemptingToTypeTargetChord: action((state, payload) => {
     state.errorOccurredWhileAttemptingToTypeTargetChord = payload;
   }),
-  // Every time we advance to the next word, we check to see if we have "complete the level"
+  // Every time we advance to the next word, we check to see if we have "completed the level"
   // Which just means all the chords have been conquered
   // Which by extension means that all the chords we have typed have an average speed lower than
   // our configured speed goal.
@@ -218,6 +224,13 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingSettings.isDisplayingSettingsModal = oldDisplay.settings;
     state.timeTakenToTypePreviousChord = 0;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
+  }),
+  /**
+   * Don't use this action unless you are testing.
+   * The trainingText should be set automatically by other actions, rather than set directly here.
+   */
+  UNSAFE_setTrainingText: action((state, payload) => {
+    state.trainingText = payload;
   }),
 };
 

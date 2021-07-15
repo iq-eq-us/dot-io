@@ -6,6 +6,11 @@ import { useContrast } from '../../hooks/useContrast';
 import EditChordsModal from './components/EditChordModal';
 import { PageContainer } from './training.styled';
 
+/**
+ * This is the main training page.
+ * It will adapt its content depending on which training scenario is currently active in the trainingStore.
+ * Be sure to check out the contents of the trainingStore to understand the application logic.
+ */
 function TrainingPage(): ReactElement {
   const contrast = useContrast();
 

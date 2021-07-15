@@ -12,6 +12,7 @@ function WaitForStateRehydration({ children }: Props) {
   return isRehydrated ? children : null;
 }
 
+// The main app component provides the store to the rest of the application, and renders the router
 const App = (): ReactElement => {
   return (
     // Inject the main application store into the application
