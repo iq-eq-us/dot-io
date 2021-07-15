@@ -37,10 +37,4 @@ steps:
     env:
       azure_static_web_apps_api_token: 9328b79e6cc571ae7230fdbadcee32712a39b68e4646b47808ac496da53e81580-9822c1e9-cbe1-4ff2-9908-3770e5ad46df01024533
 
-  - script: |
-      node ci-cd/index.js $(Build.BuildId)
-    displayName: 'Publish URL to PR'
-    env:
-      AZURE_API_KEY: $(Azure_API_Key)
-
 
