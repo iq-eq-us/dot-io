@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import CharachorderLogoImage from '../assets/cc_logo_transparent.png';
-import BackButton from '../pages/dashboard/alternateComponents/BackButton';
+import BackButton from '../pages/dashboard/components/BackButton';
 import { ROUTER_PATHS } from './router';
 
 const Navbar = (): ReactElement => {

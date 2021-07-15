@@ -5,7 +5,6 @@ import { chordLibrary, ChordLibraryRecord } from '../../../data/chordLibrary';
 import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import { ThirdButton } from './ThirdButton';
-import { getChordLibraryForTrainingScenario } from './trainingProgressContainer';
 import { XIcon } from './XIcon';
 
 function EditChordsModal(): ReactElement {
@@ -176,3 +175,13 @@ const ChordTag = styled.span.attrs({
 const ChordGrid = styled.div.attrs({
   className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start  overflow-scroll`,
 })``;
+
+export const getChordLibraryForTrainingScenario = (
+  scenario?: TrainingScenario | undefined,
+): Record<string, string[]> | undefined => {
+  if (scenario === 'ALPHABET') return chordLibrary.letters;
+  else if (scenario === 'CHORDING') return chordLibrary.chords;
+  else if (scenario === 'LEXICAL') return chordLibrary.lexical;
+  else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
+  return undefined;
+};

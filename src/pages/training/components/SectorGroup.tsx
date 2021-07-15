@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import StaticSector from './staticSector';
+import StaticSector from './StaticSector';
 import {
   SectorGroupMap,
   BlankSectorGroupData,

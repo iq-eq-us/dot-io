@@ -1,5 +1,5 @@
 import React, { ReactElement, useLayoutEffect, useRef, useState } from 'react';
-import SectorGroup from './sectorGroup';
+import SectorGroup from './SectorGroup';
 
 import charachorderBackground from '../../../assets/charachorder_background_feathered_no_center.png';
 import styled from 'styled-components';

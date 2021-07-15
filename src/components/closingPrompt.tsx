@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect } from 'react';
-import store, { useStoreActions } from '../../../store/store';
-import { PromptBeforeClosing } from '../../../components/promptBeforeClosing';
+import store, { useStoreActions } from '../store/store';
+import { PromptBeforeClosing } from './promptBeforeClosing';
 import { useHistory } from 'react-router-dom';
-import { ROUTER_PATHS } from '../../../components/router';
+import { ROUTER_PATHS } from './router';
 import type { Location } from 'history';
 
 export function ClosingPrompt(): ReactElement {

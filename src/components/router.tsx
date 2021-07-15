@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import Dashboard from '../pages/dashboard/alternateDashboard';
+import Dashboard from '../pages/dashboard/dashboard';
 import Navbar from './navbar';
-import Training from '../pages/training/TrainingPage';
-import { ClosingPrompt } from '../pages/training/components/closingPrompt';
+import Training from '../pages/training/training';
+import { ClosingPrompt } from './closingPrompt';
 
 export const ROUTER_PATHS = {
   home: '/',

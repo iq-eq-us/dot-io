@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import CharachorderOverlay from '../components/charachorderOverlay';
+import CharachorderOverlay from './CharachorderOverlay';
 import { FullWidthFullHeightContainer } from './FullWidthFullHeightContainer';
 import { GearIcon } from './GearIcon';
 import { ProgressBar } from './ProgressBar';

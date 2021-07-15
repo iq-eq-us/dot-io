@@ -13,7 +13,7 @@ import type {
   TrainingStoreModel,
   TrainingStoreStateModel,
 } from '../../models/trainingStore';
-import { getChordLibraryForTrainingScenario } from '../../pages/training/components/trainingProgressContainer';
+import { getChordLibraryForTrainingScenario } from '../../pages/training/components/EditChordModal';
 
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;

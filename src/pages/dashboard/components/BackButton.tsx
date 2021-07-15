@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ROUTER_PATHS } from '../../../components/router';
-import ChevronLeftIcon from '../../training/updated-components/ChevronLeftIcon';
+import ChevronLeftIcon from '../../training/components/ChevronLeftIcon';
 
 function BackButton(): ReactElement {
   const history = useHistory();
