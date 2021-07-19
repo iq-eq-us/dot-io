@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 import type { ChordStatistics } from '../../../models/trainingStatistics';
-import { useStoreState } from '../../../store/store';
+import { useStoreActions, useStoreState } from '../../../store/store';
 import { CheckMark } from './CheckMark';
 import { StatisticsHeader } from './StatisticsHeader';
 import { StatRow } from './StatRow';
@@ -24,29 +24,36 @@ import {
   StatsTable,
   StatsHead,
   StatsBody,
+  ClearButtonContainer,
 } from './TrainingTierCard.styled';
 import DisclosureIcon from './DisclosureIcon';
 import ExternalLinkIcon from './ExternalLinkIcon';
 import RightArrowIcon from './RightArrowIcon';
+import type { TrainingScenario } from '../../../models/trainingScenario';
+import TrashIcon from './TrashIcon';
+import usePopover from '../../../hooks/usePopover';
 
 export interface TierCardProps {
   tierTitle: string;
   bodyText: string;
-  orientationLink: string;
+  orientationLink?: string;
   onPressTraining: () => void;
   isComplete?: boolean;
   statistics?: ChordStatistics[];
   minWPM: number;
   maxWPM: number;
+  scenario: TrainingScenario;
+  previousScenario?: TrainingScenario;
 }
 
 type CardState = 'LOCKED' | 'UNLOCKED' | 'COMPLETED';
 
 export function TrainingTierCard(props: TierCardProps): ReactElement {
   const [isStatsOpen, setIsStatsOpen] = useState(false);
-  const fastestWPM = useStoreState(
+  const fastestWPMAll = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
   );
+  const fastestWPM = fastestWPMAll[props.scenario];
 
   const average = getCumulativeAverageChordTypeTime(props.statistics || []);
   let sumErrors = 0;
@@ -67,17 +74,38 @@ export function TrainingTierCard(props: TierCardProps): ReactElement {
 
   const cardState = ((): CardState => {
     if (fastestWPM > props.maxWPM) return 'COMPLETED';
-    else if (fastestWPM >= props.minWPM && fastestWPM <= props.maxWPM)
+    else if (
+      (props.previousScenario &&
+        fastestWPMAll[props.previousScenario] > props.minWPM) ||
+      !props.previousScenario ||
+      fastestWPMAll[props.scenario] !== 0
+    )
       return 'UNLOCKED';
     return 'LOCKED';
   })();
 
+  const { parentProps, Popper } = usePopover(
+    'Clear your stats for this training module only.',
+  );
+
+  const clearStatsForOneScenario = useStoreActions(
+    (store) => store.clearStatsForOneModule,
+  );
+  const clearStats = () => {
+    if (confirm('Are you sure you want to clear your stat for this module?'))
+      clearStatsForOneScenario(props.scenario);
+  };
+
   return (
     <Parent areStatsOpen={isStatsOpen}>
+      {Popper}
+
       <CardBody areStatsOpen={isStatsOpen}>
         {cardState === 'COMPLETED' && (
           <div className="flex flex-row justify-end absolute w-full top-3 right-4 items-center">
-            <p className="text-gray-800 font-lg mr-2">Complete</p>
+            <p className="text-gray-800 font-lg mr-2">
+              Complete: {fastestWPM.toFixed()} WPM
+            </p>
             <GreenIconContainer>
               <CheckMark />
             </GreenIconContainer>
@@ -87,12 +115,7 @@ export function TrainingTierCard(props: TierCardProps): ReactElement {
         {cardState === 'UNLOCKED' && (
           <div className="flex flex-row justify-end absolute w-full top-3 right-4 items-center">
             <p className="text-gray-800 font-lg mr-2">
-              In Progress -{' '}
-              {(
-                ((fastestWPM - props.minWPM) / (props.maxWPM - props.minWPM)) *
-                100
-              ).toFixed()}
-              %
+              In Progress - {((fastestWPM / props.maxWPM) * 100).toFixed()}%
             </p>
             <GrayIconContainer>
               <UnlockIcon />
@@ -117,14 +140,16 @@ export function TrainingTierCard(props: TierCardProps): ReactElement {
         ))}
 
         <Row>
-          <CardButton
-            onClick={() => {
-              window.open(props.orientationLink, '_blank');
-            }}
-          >
-            View Orientation
-            <ExternalLinkIcon />
-          </CardButton>
+          {props.orientationLink && (
+            <CardButton
+              onClick={() => {
+                window.open(props.orientationLink, '_blank');
+              }}
+            >
+              View Orientation
+              <ExternalLinkIcon />
+            </CardButton>
+          )}
           <CardButton onClick={props.onPressTraining}>
             Start Training
             <RightArrowIcon />
@@ -138,8 +163,13 @@ export function TrainingTierCard(props: TierCardProps): ReactElement {
             </StatsButton>
           </StatsButtonContainer>
         )}
-      </CardBody>
 
+        <ClearButtonContainer>
+          <StatsButton {...parentProps} onClick={clearStats}>
+            <TrashIcon />
+          </StatsButton>
+        </ClearButtonContainer>
+      </CardBody>
       <StatsTableParent areStatsOpen={isStatsOpen}>
         <StatsTableContainer>
           <StatsTable>

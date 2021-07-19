@@ -29,7 +29,9 @@ export function CardDataRowDisplay(): ReactElement {
       {SpeedPopper}
       {ProgressPopper}
 
-      <MaxWPMBadge {...wpmProps}>Top Speed: {maxWPM.toFixed()} wpm</MaxWPMBadge>
+      <MaxWPMBadge {...wpmProps}>
+        Top Speed: {Math.max.apply(Math, Object.values(maxWPM))?.toFixed()}
+      </MaxWPMBadge>
 
       <RefreshButton onClick={onClickRefreshButton} {...progressProps}>
         Clear Progress

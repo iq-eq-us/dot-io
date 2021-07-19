@@ -1,3 +1,5 @@
+import type { TrainingScenario } from './trainingScenario';
+
 export interface ChordStatistics {
   id: string;
   displayTitle: string;
@@ -5,13 +7,17 @@ export interface ChordStatistics {
   lastSpeed: number;
   numberOfErrors: number;
   numberOfOccurrences: number;
+  scenario?: TrainingScenario;
 }
 
 export interface TrainingStatistics {
   statistics: ChordStatistics[];
 }
 
-export const createEmptyChordStatistics = (id: string): ChordStatistics => {
+export const createEmptyChordStatistics = (
+  id: string,
+  scenario?: TrainingScenario,
+): ChordStatistics => {
   return {
     id,
     displayTitle: id,
@@ -19,6 +25,7 @@ export const createEmptyChordStatistics = (id: string): ChordStatistics => {
     lastSpeed: 0,
     numberOfErrors: 0,
     numberOfOccurrences: 0,
+    scenario,
   };
 };
 

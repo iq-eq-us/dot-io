@@ -45,7 +45,11 @@ export const StatsButton = styled.div.attrs({
 })``;
 
 export const StatsButtonContainer = styled.div.attrs({
-  className: `flex flex-row justify-end absolute bottom-4 right-4 w-full`,
+  className: `absolute bottom-4 right-16 cursor-pointer`,
+})``;
+
+export const ClearButtonContainer = styled.div.attrs({
+  className: `absolute bottom-4 right-4 cursor-pointer`,
 })``;
 
 interface CardBodyProps {

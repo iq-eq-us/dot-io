@@ -13,7 +13,7 @@ import usePopover from '../../../hooks/usePopover';
 export function ProgressBar(): ReactElement {
   const wpm = useWordsPerMinute();
   const chordsConquered = useNumberOfChordsConquered();
-  const [currentLevel, maxLevel] = useCurrentLevel();
+  const [currentLevel] = useCurrentLevel();
   const chordsRemaining = useChordsNotConquered();
   const totalNumberOfChords = useTotalChordsToConquer();
   const trainingSettings = useStoreState((store) => store.trainingSettings);
@@ -37,7 +37,7 @@ export function ProgressBar(): ReactElement {
       <TopDataRow>
         <DataText {...parentProps}>Complete: {chordsConquered}</DataText>
         <DataText>
-          Level: {currentLevel}/{maxLevel}
+          Level: {currentLevel}
           {isShowingPlusIcon && <PlusIcon />}
         </DataText>
         <DataText {...remainingProps}>Remaining: {chordsRemaining}</DataText>

@@ -15,7 +15,7 @@ import { BrandingMaterial } from './components/BrandingMaterial';
 import { CopyrightNotice } from './components/CopyrightNotice';
 
 // Change this variable to true to display Improving, Code Authority, and Code Launch branding material at the bottom of the dashboard screen
-const SHOULD_DISPLAY_BRANDING_MATERIAL = false;
+const SHOULD_DISPLAY_BRANDING_MATERIAL = true;
 
 /**
  * This is the main dashboard page. It is responsible for displaying all of the training cards, statistics tables, etc.

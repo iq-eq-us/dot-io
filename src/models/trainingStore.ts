@@ -8,10 +8,7 @@ import type { TrainingStatistics } from './trainingStatistics';
 export interface TrainingStoreActionsModel {
   setTrainingSettings: Action<TrainingStoreModel, TrainingSettingsState>;
   setIsDisplayingStatisticsModal: Action<TrainingStoreModel, boolean>;
-  beginTrainingAlphabetMode: Action<TrainingStoreModel>;
-  beginTrainingTrigramMode: Action<TrainingStoreModel>;
-  beginTrainingChordMode: Action<TrainingStoreModel>;
-  beginTrainingLexicalMode: Action<TrainingStoreModel>;
+  beginTrainingMode: Action<TrainingStoreModel, TrainingScenario>;
   proceedToNextWord: Action<TrainingStoreModel>;
   setErrorOccurredWhileAttemptingToTypeTargetChord: Action<
     TrainingStoreModel,

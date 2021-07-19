@@ -1,6 +1,7 @@
 import { computed } from 'easy-peasy';
 import { chordLibrary } from '../../data/chordLibrary';
 import type { StatisticsStoreState } from '../../models/statisticsStorage';
+import type { TrainingScenario } from '../../models/trainingScenario';
 import type { TrainingStatistics } from '../../models/trainingStatistics';
 
 /**
@@ -16,8 +17,17 @@ const storedTrainingStats: TrainingStatistics = JSON.parse(
   localStorage.getItem(SAVED_STATS_STORAGE_KEY) || '{"statistics":[]}',
 ) as TrainingStatistics;
 
-const fastestWPMFromStorage: number = parseFloat(
-  JSON.parse(localStorage.getItem(SAVED_FASTEST_WPM_KEY) || '0'),
+const defaultWPM = JSON.stringify({
+  ALPHABET: 0,
+  TRIGRAM: 0,
+  LEXICAL: 0,
+  CHORDING: 0,
+  LEXICOGRAPHIC: 0,
+  SUPERSONIC: 0,
+});
+
+const fastestWPMFromStorage: Record<TrainingScenario, number> = JSON.parse(
+  localStorage.getItem(SAVED_FASTEST_WPM_KEY) || defaultWPM,
 );
 
 /**

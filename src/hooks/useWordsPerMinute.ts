@@ -33,8 +33,14 @@ export const useWordsPerMinute = (): number => {
   const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
-  const shouldUpdateFastestWPM = trainingScenario !== 'ALPHABET';
-  if (shouldUpdateFastestWPM && wpm > fastestRecordedWPM) setFastestWPM(wpm);
+  if (typeof trainingScenario === 'string') {
+    if (wpm > fastestRecordedWPM[trainingScenario]) {
+      setFastestWPM({
+        ...fastestRecordedWPM,
+        [trainingScenario]: wpm,
+      });
+    }
+  }
 
   return wpm;
 };

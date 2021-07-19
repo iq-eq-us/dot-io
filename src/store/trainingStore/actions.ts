@@ -1,6 +1,7 @@
 import { action, actionOn, Actions, thunkOn } from 'easy-peasy';
-import { chordLibrary, ChordLibraryRecord } from '../../data/chordLibrary';
+import type { ChordLibraryRecord } from '../../data/chordLibrary';
 import { generateChords } from '../../helpers/generateTrainingData';
+import type { TrainingScenario } from '../../models/trainingScenario';
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
 import {
   ChordStatistics,
@@ -35,52 +36,23 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingText = [];
   }),
   /**
-   * These next four actions start each training mode
-   * These must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
+   * This must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
    */
-  beginTrainingLexicalMode: action((state) => {
+  beginTrainingMode: action((state, payload) => {
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
-    state.trainingStatistics = generateEmptyChordStatistics(
-      chordLibrary.lexical,
-    );
-    state.currentTrainingScenario = 'LEXICAL';
+    state.currentTrainingScenario = payload;
     state.chordsToPullFrom = getChordLibraryForTrainingScenario(
-      state.currentTrainingScenario,
+      payload,
     ) as ChordLibraryRecord;
-    generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
-  }),
-  beginTrainingAlphabetMode: action((state) => {
-    resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.trainingStatistics = generateEmptyChordStatistics(
-      chordLibrary.letters,
+      state.chordsToPullFrom,
+      payload,
     );
-    state.currentTrainingScenario = 'ALPHABET';
-    state.chordsToPullFrom = getChordLibraryForTrainingScenario(
-      state.currentTrainingScenario,
-    ) as ChordLibraryRecord;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
-  }),
-  beginTrainingTrigramMode: action((state) => {
-    resetTrainingStore(state as unknown as TrainingStoreStateModel);
-    state.trainingStatistics = generateEmptyChordStatistics(
-      chordLibrary.trigrams,
-    );
-    state.currentTrainingScenario = 'TRIGRAM';
-    state.chordsToPullFrom = getChordLibraryForTrainingScenario(
-      state.currentTrainingScenario,
-    ) as ChordLibraryRecord;
-    generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
-  }),
-  beginTrainingChordMode: action((state) => {
-    resetTrainingStore(state as unknown as TrainingStoreStateModel);
-    state.trainingStatistics = generateEmptyChordStatistics(
-      chordLibrary.chords,
-    );
-    state.currentTrainingScenario = 'CHORDING';
-    state.chordsToPullFrom = getChordLibraryForTrainingScenario(
-      state.currentTrainingScenario,
-    ) as ChordLibraryRecord;
-    generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
+
+    // Open the chord editing modal if the user is starting the fifth or sixth training module
+    if (payload === 'LEXICOGRAPHIC' || payload === 'SUPERSONIC')
+      state.isDisplayingChordEditModal = true;
   }),
   proceedToNextWord: action((state) => {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining
@@ -209,6 +181,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.chordsToPullFrom = payload;
     state.trainingStatistics = generateEmptyChordStatistics(
       state.chordsToPullFrom,
+      state.currentTrainingScenario,
     );
     state.trainingText = [];
     state.currentLineOfTrainingText = 0;
@@ -274,6 +247,9 @@ function resetTrainingStore(state: TrainingStoreStateModel) {
   state.timeAtTrainingStart = performance.now();
   state.trainingSettings = JSON.parse(JSON.stringify(defaultTrainingSettings));
   state.typedTrainingText = '';
+  state.currentLevel = 0;
+  state.errorOccurredWhileAttemptingToTypeTargetChord = false;
+  state.isShowingPlusIcon = false;
 }
 
 function resetTargetChordMetaInformation(state: TrainingStoreModel) {
@@ -349,10 +325,11 @@ function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
 
 function generateEmptyChordStatistics(
   library: ChordLibraryRecord,
+  scenario?: TrainingScenario,
 ): TrainingStatistics {
   return {
     statistics: Object.keys(library).map((key) => {
-      return createEmptyChordStatistics(key);
+      return createEmptyChordStatistics(key, scenario);
     }),
   };
 }

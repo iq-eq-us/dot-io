@@ -17,8 +17,8 @@ function CenterTrainingColumn(): ReactElement {
       </SmallScreenButtons>
 
       <ProgressBar />
-      <ChordTextInput />
       <TextPrompt />
+      <ChordTextInput />
 
       <FullWidthFullHeightContainer>
         <CharachorderOverlay />

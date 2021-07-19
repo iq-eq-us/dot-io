@@ -1,22 +1,15 @@
-import type { ActionCreator } from 'easy-peasy';
 import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
-import { chordLibrary } from '../../../data/chordLibrary';
-import { useTrainingStart } from '../../../hooks/useTrainingStart';
+import type { TrainingScenario } from '../../../models/trainingScenario';
 import type { ChordStatistics } from '../../../models/trainingStatistics';
-import { useStoreState } from '../../../store/store';
+import { useStoreActions, useStoreState } from '../../../store/store';
 import { TierCardProps, TrainingTierCard } from './TrainingTierCard';
 
 export function TrainingCardColumn(): ReactElement {
   const history = useHistory();
-  const {
-    startAlphabetTraining,
-    startTrigramTraining,
-    startLexicalTraining,
-    startChordTraining,
-  } = useTrainingStart();
+  const beginTraining = useStoreActions((store) => store.beginTrainingMode);
 
-  const runFunctionThenGoToTrainingPage = (func: ActionCreator<void>) => {
+  const runFunctionThenGoToTrainingPage = (func: () => void) => {
     func();
     history.push('/training');
   };
@@ -27,58 +20,88 @@ export function TrainingCardColumn(): ReactElement {
         'Purpose: Familiarize yourself with your CharaChorder layout. \nGoal: Surpass average human writing speed (13 words per minute)',
       tierTitle: 'Alphabetic',
       onPressTraining: () =>
-        runFunctionThenGoToTrainingPage(startAlphabetTraining),
+        runFunctionThenGoToTrainingPage(() => beginTraining('ALPHABET')),
       orientationLink: 'https://www.youtube.com/watch?v=Vq8NJd3J0Ag',
       minWPM: 0,
       maxWPM: 13,
+      scenario: 'ALPHABET',
     },
     {
       bodyText:
-        'Purpose: Pratice common letter groupings. \nGoal: Surpass average speed of "Hunt & Peck" typists (27 words per minute)',
+        'Purpose: Practice common letter groupings. \nGoal: Surpass average speed of "Hunt & Peck" typists (27 words per minute)',
       tierTitle: 'Amalgamate',
       onPressTraining: () =>
-        runFunctionThenGoToTrainingPage(startTrigramTraining),
+        runFunctionThenGoToTrainingPage(() => beginTraining('TRIGRAM')),
       orientationLink: 'https://www.youtube.com/watch?v=IiuEYX7QFjA',
       minWPM: 13,
       maxWPM: 27,
+      scenario: 'TRIGRAM',
+      previousScenario: 'ALPHABET',
     },
     {
       bodyText:
         'Purpose: Practice common words in character entry mode. \nGoal: Surpass average speed of a keyboard user (40 words per minute)',
       tierTitle: 'Lexical',
       onPressTraining: () =>
-        runFunctionThenGoToTrainingPage(startLexicalTraining),
+        runFunctionThenGoToTrainingPage(() => beginTraining('LEXICAL')),
       orientationLink: 'https://www.youtube.com/watch?v=HvVvxD48cDI',
       minWPM: 27,
       maxWPM: 40,
+      scenario: 'LEXICAL',
+      previousScenario: 'TRIGRAM',
     },
     {
       bodyText:
         'The average speed of a professional typist is 75 words per minute. \nProgress past 75 words per minute to move onto the next training section.',
       tierTitle: 'Chording',
       onPressTraining: () =>
-        runFunctionThenGoToTrainingPage(startChordTraining),
+        runFunctionThenGoToTrainingPage(() => beginTraining('CHORDING')),
       orientationLink: 'https://www.youtube.com/watch?v=-4QuWCf8PKM',
       minWPM: 40,
       maxWPM: 75,
+      scenario: 'CHORDING',
+      previousScenario: 'LEXICAL',
+    },
+    {
+      bodyText:
+        'The average speed of human speech is 120 words per minute. \nProgress past 120 words per minute to move onto the next training section.',
+      tierTitle: 'Lexicographic',
+      onPressTraining: () =>
+        runFunctionThenGoToTrainingPage(() => beginTraining('LEXICOGRAPHIC')),
+      minWPM: 75,
+      maxWPM: 120,
+      scenario: 'LEXICOGRAPHIC',
+      previousScenario: 'CHORDING',
+    },
+    {
+      bodyText:
+        'The speed of USCRA Federal Certified Realtime Reporter is 200 words per minute. \nProgress past 200 words per minute to move onto the next training section.',
+      tierTitle: 'SuperSonic',
+      onPressTraining: () =>
+        runFunctionThenGoToTrainingPage(() => beginTraining('SUPERSONIC')),
+      minWPM: 120,
+      maxWPM: 200,
+      scenario: 'SUPERSONIC',
+      previousScenario: 'LEXICOGRAPHIC',
     },
   ];
 
   const stats = useStoreState((store) => store.totalSavedTrainingStatistics);
 
   const getStatsFromIndex = (index: number): ChordStatistics[] | undefined => {
-    const chordLibraryKeysAlphabet = Object.keys(chordLibrary.letters);
-    const chordLibraryKeysChords = Object.keys(chordLibrary.chords);
+    // Don't return any stats for training modules 5 and 6
+    if (index > 3) return undefined;
 
-    if (index === 0)
-      return stats.statistics.filter((stat) =>
-        chordLibraryKeysAlphabet.includes(stat.id),
-      );
-    else if (index === 3)
-      return stats.statistics.filter((stat) =>
-        chordLibraryKeysChords.includes(stat.id),
-      );
-    return undefined;
+    const indexMap: Record<number, TrainingScenario> = {
+      0: 'ALPHABET',
+      1: 'TRIGRAM',
+      2: 'LEXICAL',
+      3: 'CHORDING',
+      4: 'LEXICOGRAPHIC',
+      5: 'SUPERSONIC',
+    };
+
+    return stats.statistics.filter((stat) => stat.scenario === indexMap[index]);
   };
 
   return (

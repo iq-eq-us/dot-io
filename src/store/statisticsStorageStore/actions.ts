@@ -1,5 +1,8 @@
 import { action, actionOn } from 'easy-peasy';
-import type { StatisticsStoreActions } from '../../models/statisticsStorage';
+import type {
+  StatisticsStoreActions,
+  StatisticsStoreState,
+} from '../../models/statisticsStorage';
 import {
   ChordStatistics,
   createEmptyChordStatistics,
@@ -18,6 +21,19 @@ const ifHasOccurredAtLeastOnce = (e: ChordStatistics): boolean =>
  * This logic is rather complex so it may take a few tries to understand it.
  */
 const statisticsStorageStoreActions: StatisticsStoreActions = {
+  clearStatsForOneModule: action((state, payload) => {
+    state.fastestRecordedWordsPerMinute[payload] = 0;
+    updateWPMInLocalStorage(state as unknown as StatisticsStoreState);
+    state.totalSavedTrainingStatistics = {
+      statistics: state.totalSavedTrainingStatistics.statistics.filter(
+        (stat) => stat.scenario !== payload,
+      ),
+    };
+    localStorage.setItem(
+      SAVED_STATS_STORAGE_KEY,
+      JSON.stringify(state.totalSavedTrainingStatistics),
+    );
+  }),
   setTotalSavedTrainingStatistics: action((store, payload) => {
     // If there are no statistics, we can just set them
     // If statistics are already there, we need to merge them together
@@ -50,7 +66,14 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
   }),
   clearAllStorage: action((store) => {
     store.totalSavedTrainingStatistics = { statistics: [] };
-    store.fastestRecordedWordsPerMinute = 0;
+    store.fastestRecordedWordsPerMinute = {
+      ALPHABET: 0,
+      TRIGRAM: 0,
+      LEXICAL: 0,
+      CHORDING: 0,
+      LEXICOGRAPHIC: 0,
+      SUPERSONIC: 0,
+    };
     localStorage.clear();
   }),
   setFastestRecordedWordsPerMinute: action((store, payload) => {
@@ -59,10 +82,7 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
   onChangeFastestWPM: actionOn(
     (store) => store.setFastestRecordedWordsPerMinute,
     (state) => {
-      localStorage.setItem(
-        SAVED_FASTEST_WPM_KEY,
-        state.fastestRecordedWordsPerMinute.toString(),
-      );
+      updateWPMInLocalStorage(state as unknown as StatisticsStoreState);
     },
   ),
 };
@@ -104,7 +124,11 @@ export const handleStatsMerge = (
 
     // If there is both a stat to merge and an existing stat, we have to combine them
     // Otherwise we can just use the stat that exists already
-    if (existingStat && mergingStat) {
+    if (
+      existingStat &&
+      mergingStat &&
+      existingStat.scenario === mergingStat.scenario
+    ) {
       newStat = {
         averageSpeed:
           (existingStat.averageSpeed + mergingStat.averageSpeed) / 2,
@@ -115,17 +139,24 @@ export const handleStatsMerge = (
         numberOfOccurrences:
           existingStat.numberOfOccurrences + mergingStat.numberOfOccurrences,
         lastSpeed: 0,
+        scenario: existingStat.scenario,
       };
-    } else if (existingStat && !mergingStat) {
-      newStat = existingStat;
-    } else if (!existingStat && mergingStat) {
-      newStat = mergingStat;
-    }
 
-    newStats.push(newStat);
+      newStats.push(newStat);
+    } else {
+      if (mergingStat) newStats.push(mergingStat);
+      if (existingStat) newStats.push(existingStat);
+    }
   });
 
   return newStats;
 };
+
+function updateWPMInLocalStorage(state: StatisticsStoreState) {
+  localStorage.setItem(
+    SAVED_FASTEST_WPM_KEY,
+    JSON.stringify(state.fastestRecordedWordsPerMinute),
+  );
+}
 
 export default statisticsStorageStoreActions;

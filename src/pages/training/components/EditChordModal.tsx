@@ -2,8 +2,11 @@ import React, { ReactElement, useRef, useState } from 'react';
 import { Portal } from 'react-portal';
 import styled from 'styled-components';
 import { chordLibrary, ChordLibraryRecord } from '../../../data/chordLibrary';
+import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingScenario';
+import usePopover from '../../../hooks/usePopover';
 import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreActions, useStoreState } from '../../../store/store';
+import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
 
@@ -15,7 +18,7 @@ function EditChordsModal(): ReactElement {
   const [chords, setChords] = useState(getDefaultChords(trainingMode));
   const [tempChords, setTempChords] = useState(chords);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState('');
+  const trainingScenario = useCurrentTrainingScenario();
 
   const updateChordsUsedInStore = useStoreActions(
     (store) => store.updateChordsUsedForTraining,
@@ -30,8 +33,28 @@ function EditChordsModal(): ReactElement {
     );
   };
 
+  const setInputValue = (value: string) => {
+    if (inputRef.current) inputRef.current.value = value;
+  };
+
+  // " " for first four modules
+  // "|" for fifth module
+  // "_" for sixth module
+  const separator =
+    trainingScenario === 'ALPHABET' ||
+    trainingScenario === 'CHORDING' ||
+    trainingScenario === 'LEXICAL' ||
+    trainingScenario === 'TRIGRAM'
+      ? ' '
+      : trainingScenario === 'LEXICOGRAPHIC'
+      ? '|'
+      : '_';
+
+  const canCloseModal =
+    trainingScenario === 'LEXICAL' || trainingScenario === 'TRIGRAM';
+
   const addChord = (chord?: string) => {
-    const parts = chord?.split(' ') || [];
+    const parts = chord?.split(separator) || [];
     if (parts.length) {
       setTempChords(
         [...tempChords, ...parts].sort((a, b) => a.localeCompare(b)),
@@ -45,17 +68,38 @@ function EditChordsModal(): ReactElement {
   };
 
   const cancelEditing = () => {
-    setTempChords(chords);
-    togglePortal();
-    setInputValue('');
+    if (canCloseModal) {
+      setTempChords(chords);
+      togglePortal();
+      setInputValue('');
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const groupIntoPairs = (array: any[]) => {
+    return (
+      array
+        .reduce(function (result, value, index, array) {
+          if (index % 2 === 0) result.push(array.slice(index, index + 2));
+          return result;
+        }, [])
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .map((e: any) => e.join(' '))
+    );
   };
 
   const confirmEditing = () => {
+    const shouldGroupChords = trainingScenario === 'SUPERSONIC';
+    let chordsToUse = [];
+    if (shouldGroupChords) chordsToUse = groupIntoPairs(tempChords);
+    else chordsToUse = tempChords;
+
     const hasChangeBeenMade =
-      JSON.stringify(tempChords) !== JSON.stringify(chords);
+      JSON.stringify(tempChords) !== JSON.stringify(chords) ||
+      trainingScenario === 'SUPERSONIC';
 
     if (hasChangeBeenMade) {
-      const newChordLibraryRecord = generateNewChordRecord(tempChords);
+      const newChordLibraryRecord = generateNewChordRecord(chordsToUse);
       updateChordsUsedInStore(newChordLibraryRecord);
       setChords(tempChords);
       setInputValue('');
@@ -77,6 +121,10 @@ function EditChordsModal(): ReactElement {
   const addChords = () => {
     if (inputRef.current?.value) addChord(inputRef.current?.value);
   };
+
+  const { parentProps, Popper } = usePopover(
+    `You can enter multiple chords at once by separating them with a "${separator}" character.`,
+  );
 
   return (
     <div>
@@ -107,16 +155,24 @@ function EditChordsModal(): ReactElement {
               </ChordGrid>
 
               <Row>
-                <ChordInput
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  type="text"
-                  placeholder="New chord..."
-                  ref={inputRef}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') addChords();
-                  }}
-                />
+                <div className="relative w-full mt-2">
+                  <ChordInput
+                    type="text"
+                    placeholder="New chord..."
+                    ref={inputRef}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') addChords();
+                    }}
+                  />
+
+                  <div
+                    {...parentProps}
+                    className="absolute right-0 top-0 h-full flex flex-col items-center justify-center w-10"
+                  >
+                    <HelpCircleIcon />
+                  </div>
+                </div>
+                {Popper}
 
                 <AddButton onClick={addChords}>Add</AddButton>
               </Row>
@@ -126,7 +182,9 @@ function EditChordsModal(): ReactElement {
                   title="Restore Defaults"
                   onClick={restoreDefaults}
                 />
-                <ThirdButton title="Cancel" onClick={cancelEditing} />
+                {canCloseModal && (
+                  <ThirdButton title="Cancel" onClick={cancelEditing} />
+                )}
                 <ThirdButton title="Confirm" onClick={confirmEditing} />
               </BottomButtonRow>
             </div>
@@ -157,7 +215,7 @@ const BottomButtonRow = styled.div.attrs({
 })``;
 
 const ChordInput = styled.input.attrs({
-  className: `mt-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`,
+  className: `relative shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`,
 })``;
 
 const Row = styled.div.attrs({
@@ -183,5 +241,7 @@ export const getChordLibraryForTrainingScenario = (
   else if (scenario === 'CHORDING') return chordLibrary.chords;
   else if (scenario === 'LEXICAL') return chordLibrary.lexical;
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
+  else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
+  else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
   return undefined;
 };
