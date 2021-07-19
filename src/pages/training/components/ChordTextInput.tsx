@@ -33,6 +33,8 @@ function ChordTextInput(): ReactElement {
       </span>
 
       <input
+        autoCorrect="off"
+        autoCapitalize="none"
         className="bg-transparent focus:outline-none text-4xl min-h-[40px] mb-2 text-white font-bold text-center max-w-[60vw] pb-4 border-b-2 border-solid border-[#222]"
         ref={inputRef}
         autoFocus

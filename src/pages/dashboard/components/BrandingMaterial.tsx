@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 // import CCLogoImage from '../../../assets/cc_logo_transparent.png';
-import CLLogoImage from '../../../assets/cl_white.png';
+import CLLogoImage from '../../../assets/cl.png';
 
 export function BrandingMaterial(): ReactElement {
   return (
@@ -9,7 +9,7 @@ export function BrandingMaterial(): ReactElement {
       {/* <Link href="https://www.charachorder.com/">
         <CCLogo src={CCLogoImage} alt="CC Logo" />
       </Link> */}
-      <Link href="https://www.codeauthority.com/">
+      {/* <Link href="https://www.codeauthority.com/">
         <CALogo
           src="https://www.codeauthority.com/images/ca-logo-9kb.png"
           alt="CA Logo"
@@ -20,7 +20,7 @@ export function BrandingMaterial(): ReactElement {
           src={'https://improving.com/images/improving-logo-white.png'}
           alt="CA Logo"
         />
-      </Link>
+      </Link> */}
       <Link href="https://codelaunch.com/">
         <CLLogo src={CLLogoImage} alt="CA Logo" />
       </Link>
@@ -38,16 +38,16 @@ const Link = styled.a.attrs({
 //   className: `max-w-40 max-h-40 cursor-pointer`,
 // })``;
 
-const CALogo = styled.img.attrs({
-  className: `w-40 h-full cursor-pointer`,
-})``;
+// const CALogo = styled.img.attrs({
+//   className: `w-40 h-full cursor-pointer`,
+// })``;
 
-const ImprovingLogo = styled.img.attrs({
-  className: `w-40 h-full cursor-pointer`,
-})``;
+// const ImprovingLogo = styled.img.attrs({
+//   className: `w-40 h-full cursor-pointer`,
+// })``;
 
 const CLLogo = styled.img.attrs({
-  className: `w-40 h-full cursor-pointer`,
+  className: `w-64 h-full cursor-pointer`,
 })``;
 
 const BrandingContainer = styled.div.attrs({

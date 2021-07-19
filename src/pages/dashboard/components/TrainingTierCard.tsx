@@ -37,7 +37,6 @@ export interface TierCardProps {
   tierTitle: string;
   bodyText: string;
   orientationLink?: string;
-  onPressTraining: () => void;
   isComplete?: boolean;
   statistics?: ChordStatistics[];
   minWPM: number;
@@ -46,9 +45,17 @@ export interface TierCardProps {
   previousScenario?: TrainingScenario;
 }
 
+interface OnPressInterface {
+  onPressTraining: () => void;
+}
+
+export type TierCardPropsWithFunction = TierCardProps & OnPressInterface;
+
 type CardState = 'LOCKED' | 'UNLOCKED' | 'COMPLETED';
 
-export function TrainingTierCard(props: TierCardProps): ReactElement {
+export function TrainingTierCard(
+  props: TierCardPropsWithFunction,
+): ReactElement {
   const [isStatsOpen, setIsStatsOpen] = useState(false);
   const fastestWPMAll = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
