@@ -77,15 +77,15 @@ function EditChordsModal(): ReactElement {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const groupIntoPairs = (array: any[]) => {
-    return (
-      array
-        .reduce(function (result, value, index, array) {
-          if (index % 2 === 0) result.push(array.slice(index, index + 2));
-          return result;
-        }, [])
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .map((e: any) => e.join(' '))
-    );
+    if (array.length < 2) {
+      return array;
+    } else {
+      return array
+        .map((e, i) =>
+          i < array.length - 1 ? [e + ' ' + array[i + 1]] : undefined,
+        )
+        .filter((e) => !!e);
+    }
   };
 
   const confirmEditing = () => {
