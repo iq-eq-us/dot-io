@@ -10,6 +10,7 @@ export interface ChordLibrary {
   supersonic: ChordLibraryRecord;
 }
 
+// This chord library maps to the key positions in the keyPositions.ts file
 export const chordLibrary: ChordLibrary = {
   supersonic: {
     word: [],
@@ -346,6 +347,7 @@ export const chordLibrary: ChordLibrary = {
     x: ['323-168'],
     y: ['439-35'],
     z: ['194-204'],
+    ' ': ['194-83'],
   },
   chords: {
     about: ['317-57', '316-180', '140-44', '71-60'],

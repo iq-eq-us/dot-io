@@ -19,6 +19,25 @@ import { getChordLibraryForTrainingScenario } from '../../pages/training/compone
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
 
+let globalDictionaries: Record<
+  TrainingScenario,
+  ChordLibraryRecord | undefined
+> = {
+  ALPHABET: undefined,
+  CHORDING: undefined,
+  LEXICAL: undefined,
+  LEXICOGRAPHIC: undefined,
+  SUPERSONIC: undefined,
+  TRIGRAM: undefined,
+};
+export const getGlobalDictionaries = (): typeof globalDictionaries =>
+  globalDictionaries;
+export const setGlobalDictionaries = (
+  dict: typeof globalDictionaries,
+): void => {
+  globalDictionaries = dict;
+};
+
 /**
  * Here are all of the actions that modify the state in the ./state folder.
  * Any change made to state here will automatically be reflected in any component that consumes this state.
@@ -41,18 +60,33 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   beginTrainingMode: action((state, payload) => {
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.currentTrainingScenario = payload;
-    state.chordsToPullFrom = getChordLibraryForTrainingScenario(
-      payload,
-    ) as ChordLibraryRecord;
+
+    // Pull the chord library from memory if it's there, otherwise pull it from defaults
+    if (
+      typeof state.currentTrainingScenario === 'string' &&
+      globalDictionaries[state.currentTrainingScenario] !== undefined
+    ) {
+      state.chordsToPullFrom = globalDictionaries[
+        state.currentTrainingScenario
+      ] as ChordLibraryRecord;
+    } else {
+      state.chordsToPullFrom = getChordLibraryForTrainingScenario(
+        payload,
+      ) as ChordLibraryRecord;
+    }
     state.trainingStatistics = generateEmptyChordStatistics(
       state.chordsToPullFrom,
       payload,
     );
+
+    state.numberOfChordsForTrainingLevel =
+      state.trainingStatistics.statistics.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
 
     // Open the chord editing modal if the user is starting the fifth or sixth training module
     if (payload === 'LEXICOGRAPHIC' || payload === 'SUPERSONIC')
       state.isDisplayingChordEditModal = true;
+    else state.isDisplayingChordEditModal = false;
   }),
   proceedToNextWord: action((state) => {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining
@@ -113,6 +147,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
             )?.length;
 
           state.currentLevel = Math.max(0, 200 - newSpeedGoal); // So that the level never goes negative
+          state.numberOfChordsForTrainingLevel = newNumberOfTargetChords;
 
           if (isSettingsSetToAuto) {
             state.trainingSettings.speedGoal = newSpeedGoal;
@@ -171,12 +206,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.isDisplayingChordEditModal = !state.isDisplayingChordEditModal;
   }),
   updateChordsUsedForTraining: action((state, payload) => {
-    // Need to regenerate the chord statistics on the right side of the screen
-    // Need to generate two new lines of text for the input prompt
-    // Need to clear out the old trainingText from the training store.
-    // Need to update the level progress, letters conquered, and to next level fields.
-    // Need to reset the settings on the bottom left if set to auto (should be done automatically)
-    // Need to clear out the text input on the main training page.
     state.timeOfLastChordStarted = performance.now();
     state.chordsToPullFrom = payload;
     state.trainingStatistics = generateEmptyChordStatistics(
@@ -196,6 +225,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingSettings.isDisplayingStatisticsModal = oldDisplay.stats;
     state.trainingSettings.isDisplayingSettingsModal = oldDisplay.settings;
     state.timeTakenToTypePreviousChord = 0;
+    state.numberOfChordsForTrainingLevel =
+      state.trainingStatistics.statistics.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
   }),
   /**
@@ -349,6 +380,7 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       recursionRate: state.trainingSettings.recursionRate,
       stats: state.trainingStatistics.statistics,
       lineLength,
+      speedGoal: state.trainingSettings.speedGoal,
     }),
   ];
 }
@@ -397,6 +429,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       recursionRate: state.trainingSettings.recursionRate,
       stats: state.trainingStatistics.statistics,
       lineLength,
+      speedGoal: state.trainingSettings.speedGoal,
     });
 
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];

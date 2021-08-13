@@ -1,5 +1,8 @@
 import { computed } from 'easy-peasy';
-import { ConvertStringToKeyHighlightPositions } from '../../helpers/convertStringToKeyHighlightPositions';
+import {
+  ConvertStringToKeyHighlightPositions,
+  CharacterEntryMode,
+} from '../../helpers/convertStringToKeyHighlightPositions';
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
 
@@ -24,12 +27,30 @@ const trainingStoreState: TrainingStoreStateModel = {
   },
   currentLevel: 0,
   timeAtTrainingStart: 0,
+  numberOfChordsForTrainingLevel: 0,
   // * Computed State
   currentlyHighlightedKeys: computed((state) => {
-    const targetWord = state.targetWord;
+    const highlightMode = state.characterEntryMode;
+    if (!highlightMode) return [];
+
     return state.trainingSettings.isHighlightingKeys
-      ? ConvertStringToKeyHighlightPositions(targetWord || '')
+      ? ConvertStringToKeyHighlightPositions(
+          state.targetWord || '',
+          highlightMode,
+          state.targetCharacterIndex ?? -1,
+        )
       : [];
+  }),
+  characterEntryMode: computed((state) => {
+    if (!state.currentTrainingScenario) return undefined;
+
+    const highlightMode: CharacterEntryMode =
+      state.currentTrainingScenario === 'ALPHABET' ||
+      state.currentTrainingScenario === 'LEXICAL' ||
+      state.currentTrainingScenario === 'TRIGRAM'
+        ? 'CHARACTER'
+        : 'CHORD';
+    return highlightMode;
   }),
   targetWord: computed((state) => {
     const trainingText = state.trainingText;
@@ -39,6 +60,21 @@ const trainingStoreState: TrainingStoreStateModel = {
       ];
 
     return targetWord;
+  }),
+  targetCharacterIndex: computed((state) => {
+    const targetWord = state.targetWord;
+    const enteredText = state.typedTrainingText;
+
+    if (targetWord) {
+      const largestLength = Math.max(targetWord.length, enteredText.length);
+      for (let i = 0; i < largestLength; i++) {
+        const targetLetter = targetWord[i];
+        const enteredLetter = enteredText[i];
+        if (targetLetter !== enteredLetter) return i;
+      }
+    }
+
+    return undefined;
   }),
   previousTargetChord: computed((state) => {
     const trainingText = state.trainingText;

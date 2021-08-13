@@ -71,7 +71,7 @@ const SpeedGoalText = styled.span.attrs({
 
 const ProgressBarInner = styled.div.attrs<ProgressBarProgress>({
   className: `relative rounded-r-xl bg-green-500 h-full rounded-l`,
-})<ProgressBarProgress>`
+}) <ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
 

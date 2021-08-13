@@ -4,6 +4,7 @@ export const useWordsPerMinute = (): number => {
   const timeAtTrainingStart = useStoreState(
     (store) => store.timeAtTrainingStart,
   );
+  const trainingSettings = useStoreState((store) => store.trainingSettings);
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
   );
@@ -33,12 +34,15 @@ export const useWordsPerMinute = (): number => {
   const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
-  if (typeof trainingScenario === 'string') {
-    if (wpm > fastestRecordedWPM[trainingScenario]) {
-      setFastestWPM({
-        ...fastestRecordedWPM,
-        [trainingScenario]: wpm,
-      });
+
+  if (trainingSettings.isAutoWrite) {
+    if (typeof trainingScenario === 'string') {
+      if (wpm > fastestRecordedWPM[trainingScenario]) {
+        setFastestWPM({
+          ...fastestRecordedWPM,
+          [trainingScenario]: wpm,
+        });
+      }
     }
   }
 

@@ -1,5 +1,6 @@
 import type { Action, ActionOn, Computed, ThunkOn } from 'easy-peasy';
 import type { ChordLibraryRecord } from '../data/chordLibrary';
+import type { CharacterEntryMode } from '../helpers/convertStringToKeyHighlightPositions';
 import type { KeyHighlightPosition } from './keyHighlightPositions';
 import type { TrainingScenario } from './trainingScenario';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
@@ -64,6 +65,12 @@ export interface TrainingStoreStateModel {
   isShowingPlusIcon: boolean;
   targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
+  numberOfChordsForTrainingLevel: number;
+  characterEntryMode: Computed<
+    TrainingStoreModel,
+    CharacterEntryMode | undefined
+  >;
+  targetCharacterIndex: Computed<TrainingStoreModel, number | undefined>;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &
