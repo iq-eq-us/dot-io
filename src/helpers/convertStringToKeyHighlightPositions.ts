@@ -4,6 +4,8 @@ import { keyPositions } from '../data/keyPositions';
 
 export type CharacterEntryMode = 'CHARACTER' | 'CHORD';
 
+const SPACE_KEY_LOCATION = keyPositions?.['194-83'];
+
 export const ConvertStringToKeyHighlightPositions = (
   text: string,
   highlightMode: CharacterEntryMode,
@@ -12,7 +14,7 @@ export const ConvertStringToKeyHighlightPositions = (
   if (highlightMode === 'CHORD') {
     return getHighlightPositionForString(text);
   } else {
-    if (characterIndex === -1) return getHighlightPositionForString(' ');
+    if (characterIndex === -1) return [SPACE_KEY_LOCATION];
     return getHighlightPositionForString(text[characterIndex]);
   }
 };

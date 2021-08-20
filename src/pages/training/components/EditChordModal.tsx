@@ -69,7 +69,7 @@ function EditChordsModal(): ReactElement {
   }
 
   const restoreDefaults = () => {
-    setTempChords(getDefaultChords(trainingMode));
+    setTempChords(getDefaultChordsFromChordLibrary(trainingMode));
   };
 
   const cancelEditing = () => {
@@ -214,6 +214,10 @@ const getDefaultChords = (trainingMode?: TrainingScenario) => {
   } else {
     return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
   }
+}
+
+const getDefaultChordsFromChordLibrary = (trainingMode?: TrainingScenario) => {
+  return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
 }
 
 export const stopPropagation = (

@@ -128,8 +128,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       const isSettingsSetToAuto =
         state.trainingSettings.autoOrCustom === 'AUTO';
 
-      if (hasCompletedLevel) state.isShowingPlusIcon = true;
-      else state.isShowingPlusIcon = false;
+      if (!hasCompletedLevel) state.isShowingPlusIcon = false;
 
       if (hasCompletedLevel) {
         // const targetChord = state.previousTargetChord;
@@ -146,8 +145,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
               (s) => s.averageSpeed > newSpeedGoal,
             )?.length;
 
-          state.currentLevel = Math.max(0, 200 - newSpeedGoal); // So that the level never goes negative
+          const newLevel = Math.max(0, 200 - newSpeedGoal); // So that the level never goes negative
+          if (newLevel <= state.currentLevel) return;
+
+          state.currentLevel = newLevel;
           state.numberOfChordsForTrainingLevel = newNumberOfTargetChords;
+          state.isShowingPlusIcon = true;
 
           if (isSettingsSetToAuto) {
             state.trainingSettings.speedGoal = newSpeedGoal;

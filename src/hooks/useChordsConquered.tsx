@@ -9,5 +9,5 @@ export default function useNumberOfChordsConquered(): number {
     (s) => s.averageSpeed > trainingSettings.speedGoal || s.averageSpeed === 0,
   ).length;
 
-  return Math.max(0, numberOfChords - statsLength);
+  return numberOfChords - statsLength;
 }
