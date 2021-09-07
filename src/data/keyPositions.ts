@@ -66,7 +66,7 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     direction: 'WEST',
   },
   '500-62': {
-    sectorGroup: 12,
+    sectorGroup: 13,
     direction: 'WEST',
   },
   '40-62': {

@@ -262,15 +262,20 @@ function checkIfErrorExistsInUserEnteredText(
   isInAlphabetMode: boolean,
   actions: Actions<TrainingStoreActionsModel>,
 ) {
-  const isErrorInUserEnteredText = storeState.targetWord
-    ? !(
-        isInAlphabetMode
-          ? storeState.targetWord + '' // The superfluos addition of an empty string is here to silence the type warnings about Computed properties in the store
-          : storeState.targetWord + ' '
-      )?.startsWith(storeState.typedTrainingText) || false
-    : false;
-  if (isErrorInUserEnteredText)
-    actions.setErrorOccurredWhileAttemptingToTypeTargetChord(true);
+  console.log(`"${storeState.targetWord}"`);
+  if (!storeState.targetWord) return;
+
+  if (isInAlphabetMode) {
+    const isError = !String(storeState.targetWord)?.startsWith(
+      storeState.typedTrainingText,
+    );
+    if (isError) actions.setErrorOccurredWhileAttemptingToTypeTargetChord(true);
+  } else if (storeState.typedTrainingText.includes(' ')) {
+    const isError = !String(storeState.targetWord + ' ')?.startsWith(
+      storeState.typedTrainingText,
+    );
+    if (isError) actions.setErrorOccurredWhileAttemptingToTypeTargetChord(true);
+  }
 }
 
 function resetTrainingStore(state: TrainingStoreStateModel) {

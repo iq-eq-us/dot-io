@@ -38,24 +38,14 @@ function EditChordsModal(): ReactElement {
     if (inputRef.current) inputRef.current.value = value;
   };
 
-  // " " for first four modules
-  // "|" for fifth module
-  // "_" for sixth module
-  const separator =
-    trainingScenario === 'ALPHABET' ||
-      trainingScenario === 'CHORDING' ||
-      trainingScenario === 'LEXICAL' ||
-      trainingScenario === 'TRIGRAM'
-      ? ' '
-      : trainingScenario === 'LEXICOGRAPHIC'
-        ? '|'
-        : ' ';
+  const phraseSeparator = " ";
+  const spaceSeparator = "_";
 
   const canCloseModal =
     trainingScenario === 'LEXICAL' || trainingScenario === 'TRIGRAM';
 
   const addChord = (chord?: string) => {
-    const parts = chord?.split(separator) || [];
+    const parts = chord?.split(phraseSeparator).map((e) => e.replaceAll(spaceSeparator, " ")) || [];
     if (parts.length) {
       setTempChords(
         [...tempChords, ...parts]
@@ -134,7 +124,7 @@ function EditChordsModal(): ReactElement {
   };
 
   const { parentProps, Popper } = usePopover(
-    `You can enter multiple chords at once by separating them with a "${separator}" character.`,
+    `You can enter multiple chords at once by separating them with a "${phraseSeparator}" character. Create multi-word chords by separating words with a "${spaceSeparator}"`,
   );
 
   return (

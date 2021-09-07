@@ -21,8 +21,6 @@ function StatisticsTable(): ReactElement {
 
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
 
-  const shouldDisplayHUD = useHUD();
-
   return (
     <TableContainer ref={ref}>
       <FixedSizeList
@@ -34,7 +32,7 @@ function StatisticsTable(): ReactElement {
           stats,
           targetChords: trainingSettings.targetChords,
           isRecursionEnabled: trainingSettings.autoOrCustom === 'AUTO',
-          displayHUD: shouldDisplayHUD,
+          displayHUD: true,
         }}
         style={{ borderRadius: 8 }}
       >

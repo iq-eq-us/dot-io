@@ -1,7 +1,7 @@
 import type { ChordLibraryRecord } from '../data/chordLibrary';
 import type { ChordStatistics } from '../models/trainingStatistics';
 
-const getRandomElementFromArray = (list: string[]) =>
+const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
 
 interface ChordGenerationParameters {
@@ -37,14 +37,14 @@ export const generateChords = (
   const numberOfChordsNotConquered = parameters.stats.filter(
     (s) => s.averageSpeed > parameters.speedGoal || s.averageSpeed === 0,
   ).length;
-  if (numberOfChordsNotConquered === 1) {
+  if (numberOfChordsNotConquered > 0) {
     // Check for one remaining chord with zero speed
     // This happens on the first pass through the chord library
     const chordsWithZeroSpeed = parameters.stats.filter(
       (stat) => stat.averageSpeed === 0,
     );
-    if (chordsWithZeroSpeed.length === 1)
-      chordToFeed = chordsWithZeroSpeed[0].displayTitle;
+    if (chordsWithZeroSpeed.length > 0)
+      chordToFeed = getRandomElementFromArray(chordsWithZeroSpeed).displayTitle;
     // If there is no chord with zero speed, then we move onto the highest
     else chordToFeed = chordsSortedByTypingSpeed[0].displayTitle;
   }
