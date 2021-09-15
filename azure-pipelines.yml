@@ -1,12 +1,10 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 
 trigger:
-  tags:
-    include:
-    - production
+  - develop
 
 pool:
   vmImage: ubuntu-latest
@@ -35,6 +33,4 @@ steps:
       app_build_command: 'npm run build'
       output_location: '/build'
     env:
-      azure_static_web_apps_api_token: 9328b79e6cc571ae7230fdbadcee32712a39b68e4646b47808ac496da53e81580-9822c1e9-cbe1-4ff2-9908-3770e5ad46df01024533
-
-
+      azure_static_web_apps_api_token: 6b5c8f9f52e050bfebdab581f844ab8c73e85647c027bcea1c2241e7ef86cafb0-6a27ab81-96a5-41a9-a2b2-cebb5539028c01035027
