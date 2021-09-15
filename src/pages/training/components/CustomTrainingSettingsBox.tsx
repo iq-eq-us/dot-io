@@ -17,6 +17,11 @@ const DEFAULT_PROPS = {
 };
 
 export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
+  const trainingSettings = useStoreState((store) => store.trainingSettings);
+
+  const shouldDisplayCustomSettings =
+    trainingSettings.autoOrCustom === 'CUSTOM';
+
   const recursionDisabled = !useStoreState(
     (store) => store.trainingSettings.isUsingRecursion,
   );
@@ -30,6 +35,12 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
   const [rate, setRate] = useState<string | number>(
     props.trainingSettings.recursionRate,
   );
+
+  React.useEffect(() => {
+    setTargetChords(trainingSettings.targetChords);
+    setSpeedGoal(trainingSettings.speedGoal);
+    setRate(trainingSettings.recursionRate);
+  }, [trainingSettings]);
 
   const { parentProps: targetChordsProps, Popper: TargetChordPopover } =
     usePopover(
@@ -76,7 +87,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
               setTargetChords(props.trainingSettings.targetChords);
             }
           }}
-          disabled={recursionDisabled}
+          disabled={recursionDisabled || !shouldDisplayCustomSettings}
           onChange={(e) => setTargetChords(e.target.value)}
           value={targetChords}
           {...recursionHelperProps}
@@ -104,6 +115,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
             }
           }}
           onChange={(e) => setSpeedGoal(e.target.value)}
+          disabled={!shouldDisplayCustomSettings}
           value={speedGoal}
           {...DEFAULT_PROPS}
         />
@@ -132,7 +144,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
           }}
           onChange={(e) => setRate(e.target.value)}
           value={rate}
-          disabled={recursionDisabled}
+          disabled={recursionDisabled || !shouldDisplayCustomSettings}
           {...rateHelperProps}
           {...DEFAULT_PROPS}
         />

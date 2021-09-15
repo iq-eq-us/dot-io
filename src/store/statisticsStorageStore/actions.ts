@@ -1,4 +1,4 @@
-import { action, actionOn } from 'easy-peasy';
+import { action } from 'easy-peasy';
 import type {
   StatisticsStoreActions,
   StatisticsStoreState,
@@ -78,13 +78,8 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
   }),
   setFastestRecordedWordsPerMinute: action((store, payload) => {
     store.fastestRecordedWordsPerMinute = payload;
+    updateWPMInLocalStorage(store as unknown as StatisticsStoreState);
   }),
-  onChangeFastestWPM: actionOn(
-    (store) => store.setFastestRecordedWordsPerMinute,
-    (state) => {
-      updateWPMInLocalStorage(state as unknown as StatisticsStoreState);
-    },
-  ),
 };
 
 export const handleStatsMerge = (

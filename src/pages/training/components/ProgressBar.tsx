@@ -10,6 +10,10 @@ import { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
 
+function clamp(number: number, min: number, max: number) {
+  return Math.max(min, Math.min(number, max));
+}
+
 export function ProgressBar(): ReactElement {
   const wpm = useWordsPerMinute();
   const chordsConquered = useNumberOfChordsConquered();
@@ -19,7 +23,7 @@ export function ProgressBar(): ReactElement {
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const isShowingPlusIcon = useStoreState((store) => store.isShowingPlusIcon);
 
-  const progress = (chordsConquered / totalNumberOfChords) * 100;
+  const progress = clamp((chordsConquered / totalNumberOfChords) * 100, 0, 100);
 
   const { parentProps, Popper } = usePopover(
     'The number of chords that you have typed faster than your speed goal.',
@@ -71,7 +75,7 @@ const SpeedGoalText = styled.span.attrs({
 
 const ProgressBarInner = styled.div.attrs<ProgressBarProgress>({
   className: `relative rounded-r-xl bg-green-500 h-full rounded-l`,
-})<ProgressBarProgress>`
+}) <ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
 

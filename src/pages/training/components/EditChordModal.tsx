@@ -6,6 +6,7 @@ import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingSce
 import usePopover from '../../../hooks/usePopover';
 import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreActions, useStoreState } from '../../../store/store';
+import { getGlobalDictionaries, setGlobalDictionaries } from '../../../store/trainingStore/actions';
 import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
@@ -37,34 +38,28 @@ function EditChordsModal(): ReactElement {
     if (inputRef.current) inputRef.current.value = value;
   };
 
-  // " " for first four modules
-  // "|" for fifth module
-  // "_" for sixth module
-  const separator =
-    trainingScenario === 'ALPHABET' ||
-    trainingScenario === 'CHORDING' ||
-    trainingScenario === 'LEXICAL' ||
-    trainingScenario === 'TRIGRAM'
-      ? ' '
-      : trainingScenario === 'LEXICOGRAPHIC'
-      ? '|'
-      : '_';
+  const phraseSeparator = " ";
+  const spaceSeparator = "_";
 
   const canCloseModal =
     trainingScenario === 'LEXICAL' || trainingScenario === 'TRIGRAM';
 
   const addChord = (chord?: string) => {
-    const parts = chord?.split(separator) || [];
+    const parts = chord?.split(phraseSeparator).map((e) => e.replaceAll(spaceSeparator, " ")) || [];
     if (parts.length) {
       setTempChords(
-        [...tempChords, ...parts].sort((a, b) => a.localeCompare(b)),
+        [...tempChords, ...parts]
       );
       setInputValue('');
     }
   };
 
+  const clearChords = () => {
+    setTempChords([]);
+  }
+
   const restoreDefaults = () => {
-    setTempChords(getDefaultChords(trainingMode));
+    setTempChords(getDefaultChordsFromChordLibrary(trainingMode));
   };
 
   const cancelEditing = () => {
@@ -89,8 +84,14 @@ function EditChordsModal(): ReactElement {
   };
 
   const confirmEditing = () => {
-    const shouldGroupChords = trainingScenario === 'SUPERSONIC';
+    if (typeof trainingScenario === "string")
+      setGlobalDictionaries({
+        ...getGlobalDictionaries(),
+        [trainingScenario]: generateNewChordRecord(tempChords),
+      });
+
     let chordsToUse = [];
+    const shouldGroupChords = trainingScenario === 'SUPERSONIC';
     if (shouldGroupChords) chordsToUse = groupIntoPairs(tempChords);
     else chordsToUse = tempChords;
 
@@ -123,7 +124,7 @@ function EditChordsModal(): ReactElement {
   };
 
   const { parentProps, Popper } = usePopover(
-    `You can enter multiple chords at once by separating them with a "${separator}" character.`,
+    `You can enter multiple chords at once by separating them with a "${phraseSeparator}" character. Create multi-word chords by separating words with a "${spaceSeparator}"`,
   );
 
   return (
@@ -136,7 +137,7 @@ function EditChordsModal(): ReactElement {
           >
             <div
               onClick={stopPropagation}
-              className="w-[400px] max-w-[100vw] bg-black p-2 shadow-lg"
+              className="w-[600px] max-w-[100vw] bg-black p-2 shadow-lg"
             >
               <ChordGrid>
                 {tempChords.map((chord, index) => {
@@ -186,6 +187,7 @@ function EditChordsModal(): ReactElement {
                   <ThirdButton title="Cancel" onClick={cancelEditing} />
                 )}
                 <ThirdButton title="Confirm" onClick={confirmEditing} />
+                <ThirdButton title="Clear" onClick={clearChords} />
               </BottomButtonRow>
             </div>
           </div>
@@ -195,10 +197,18 @@ function EditChordsModal(): ReactElement {
   );
 }
 
-const getDefaultChords = (trainingMode?: TrainingScenario) =>
-  Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {}).sort(
-    (a, b) => a.localeCompare(b),
-  );
+const getDefaultChords = (trainingMode?: TrainingScenario) => {
+  const globalDictionaries = getGlobalDictionaries();
+  if (trainingMode && globalDictionaries[trainingMode]) {
+    return Object.keys(globalDictionaries[trainingMode] as ChordLibraryRecord);
+  } else {
+    return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
+  }
+}
+
+const getDefaultChordsFromChordLibrary = (trainingMode?: TrainingScenario) => {
+  return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
+}
 
 export const stopPropagation = (
   e: React.MouseEvent<Element, MouseEvent>,

@@ -37,18 +37,13 @@ function SettingsColumn(): ReactElement {
     },
   });
 
-  const transitionTransform = `transform -translate-x-full transition-transform ${
-    trainingSettings.isDisplayingSettingsModal && '-translate-x-0'
-  }`;
+  const transitionTransform = `transform -translate-x-full transition-transform ${trainingSettings.isDisplayingSettingsModal && '-translate-x-0'}`;
 
   const windowSize = useWindowSize();
   const onClickOutside = () => {
     if (windowSize.width < HIDDEN_BREAKPOINT)
       updateTrainingSetting({ isDisplayingSettingsModal: false });
   };
-
-  const shouldDisplayCustomSettings =
-    trainingSettings.autoOrCustom === 'CUSTOM';
 
   return (
     <SettingsColumnContainer
@@ -87,12 +82,10 @@ function SettingsColumn(): ReactElement {
 
         <AutoCustomSetting />
 
-        {shouldDisplayCustomSettings && (
-          <CustomTrainingSettingsBox
-            trainingSettings={trainingSettings}
-            setTrainingSettings={setTrainingSettings}
-          />
-        )}
+        <CustomTrainingSettingsBox
+          trainingSettings={trainingSettings}
+          setTrainingSettings={setTrainingSettings}
+        />
 
         <ContrastInputSetting
           trainingSettings={trainingSettings}

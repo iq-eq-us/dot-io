@@ -7,6 +7,7 @@ import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
+import { truncateString } from '../../../helpers/truncateString';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences
@@ -20,8 +21,6 @@ function StatisticsTable(): ReactElement {
 
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
 
-  const shouldDisplayHUD = useHUD();
-
   return (
     <TableContainer ref={ref}>
       <FixedSizeList
@@ -33,7 +32,7 @@ function StatisticsTable(): ReactElement {
           stats,
           targetChords: trainingSettings.targetChords,
           isRecursionEnabled: trainingSettings.autoOrCustom === 'AUTO',
-          displayHUD: shouldDisplayHUD,
+          displayHUD: true,
         }}
         style={{ borderRadius: 8 }}
       >
@@ -90,7 +89,7 @@ const Row = ({ index, style, data }: RowData) => {
       style={style}
     >
       <NewStatisticsRow headerStyle={headerStyle}>
-        <RowItem>{item?.displayTitle}</RowItem>
+        <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
         <RowItem>{item?.averageSpeed.toFixed()}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
@@ -175,15 +174,14 @@ const AggregateRow = ({ data }: { data: Data }) => {
 
 const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
   (props) => ({
-    className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] hover:bg-[#333] ${
-      props.headerStyle === 'TARGET_CHORD_ACTIVE'
-        ? 'bg-yellow-400 text-black font-bold'
-        : props.headerStyle === 'TARGET_CHORD_INACTIVE'
+    className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] hover:bg-[#333] ${props.headerStyle === 'TARGET_CHORD_ACTIVE'
+      ? 'bg-yellow-400 text-black font-bold'
+      : props.headerStyle === 'TARGET_CHORD_INACTIVE'
         ? 'bg-[#aaa] text-black font-bold'
         : ''
-    }`,
+      }`,
   }),
-)<{ headerStyle: StatRowStyle }>``;
+) <{ headerStyle: StatRowStyle }>``;
 
 const RowItem = styled.div.attrs({
   className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,

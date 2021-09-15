@@ -22,6 +22,10 @@ const SHOULD_DISPLAY_BRANDING_MATERIAL = true;
  * The styled components for this page are located in the dashboard.styled.tsx file in the same directory.
  */
 const Dashboard = (): ReactElement => {
+  React.useEffect(() => {
+    document.title = "CharaChorder Launchpad"
+  }, []);
+
   return (
     <DashboardPageContainer>
       <TopSectionContainer>

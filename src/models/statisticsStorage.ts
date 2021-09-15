@@ -1,4 +1,4 @@
-import type { Action, ActionOn, Computed } from 'easy-peasy';
+import type { Action, Computed } from 'easy-peasy';
 import type { TrainingScenario } from './trainingScenario';
 import type { TrainingStatistics } from './trainingStatistics';
 
@@ -16,7 +16,6 @@ export interface StatisticsStoreActions {
     StatisticsStore,
     Record<TrainingScenario, number>
   >;
-  onChangeFastestWPM: ActionOn<StatisticsStore>;
   clearStatsForOneModule: Action<StatisticsStore, TrainingScenario>;
 }
 

@@ -5,6 +5,9 @@ import { StatisticsColumn } from './components/StatisticsColumn';
 import { useContrast } from '../../hooks/useContrast';
 import EditChordsModal from './components/EditChordModal';
 import { PageContainer } from './training.styled';
+import useTrainingScenarioAsDocumentTitle from '../../hooks/useTrainingScenarioAsDocumentTitle';
+import { useStoreState } from '../../store/store';
+import { Redirect } from 'react-router-dom';
 
 /**
  * This is the main training page.
@@ -13,9 +16,15 @@ import { PageContainer } from './training.styled';
  */
 function TrainingPage(): ReactElement {
   const contrast = useContrast();
+  const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
+  useTrainingScenarioAsDocumentTitle();
 
   return (
     <PageContainer contrast={contrast}>
+      {!currentTrainingScenario &&
+        <Redirect to="" />
+      }
+
       <EditChordsModal />
 
       <SettingsColumn />
@@ -26,3 +35,4 @@ function TrainingPage(): ReactElement {
 }
 
 export default TrainingPage;
+

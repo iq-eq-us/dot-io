@@ -1,21 +1,17 @@
-import type { ChordLibraryRecord } from '../data/chordLibrary';
 import { useStoreState } from '../store/store';
-import useNumberOfChordsConquered from './useChordsConquered';
-
-const calculateTotalNumberOfChords = (chordsToUse: ChordLibraryRecord) => {
-  return Object.keys(chordsToUse).length;
-};
 
 export function useTotalChordsToConquer(): number {
-  const chordsToUse = useStoreState((store) => store.chordsToPullFrom);
-  const totalNumberOfChords = calculateTotalNumberOfChords(chordsToUse);
-  return totalNumberOfChords;
+  return useStoreState((store) => store.numberOfChordsForTrainingLevel);
 }
 
 export default function useChordsNotConquered(): number {
-  const chordsConquered = useNumberOfChordsConquered();
-  const totalNumberOfChords = useTotalChordsToConquer();
-  const numberOfChordsRemaining = totalNumberOfChords - chordsConquered;
+  const trainingStats = useStoreState((store) => store.trainingStatistics);
+  const trainingSettings = useStoreState((store) => store.trainingSettings);
 
-  return numberOfChordsRemaining;
+  const statsWeCareAbout = trainingStats.statistics;
+  const stats = statsWeCareAbout.filter(
+    (s) => s.averageSpeed > trainingSettings.speedGoal || s.averageSpeed === 0,
+  );
+
+  return stats.length;
 }
