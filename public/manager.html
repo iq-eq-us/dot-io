@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Use correct character set. -->
+        <meta charset="utf-8">
+        <!-- Tell IE to use the latest, best version. -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <title>CharaChorder Web Serial Experiment</title>
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <style type="text/css">
+            .row-centered {
+                text-align:center;
+            }
+            .col-centered {
+                display:inline-block;
+                float:none;
+                text-align:left;
+                margin-right:-4px;
+            }
+
+            .button {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+              }
+
+              .button1 {background-color: #4CAF50;} /* Green */
+              .button2 {background-color: #008CBA;} /* Blue */
+              .button3 {background-color: #f44336;} /* Red */
+              .button4 {background-color: #e7e7e7; color: black;} /* Gray */
+              .button5 {background-color: #555555;} /* Black */
+
+        </style>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/webserial.js"></script>
+        <script scr="/js/lib/es5/index.js"></script>
+        <!-- <script src="/socket.io/socket.io.js"></script> -->
+    </head>
+    <body>
+        <h1>CharaChorder Web Serial Experiment</h1>
+        <p>Below is an example of how to use the Web Serial API to connect to the CharaChorder's Serial API</p>
+        <div class="options">
+          <button id="connectButton" onclick="startSerialConnection()">Connect</button>
+          <button id="countButton" onclick="getCount()">Count Chord Maps</button>
+          <button id="getAllButton" onclick="getGetAll()">Import from Device</button>
+          <button id="addChordMap" onclick="addChordMap()">Add Chord Map</button>
+          <button id="downloadChordMapLibrary" onclick="downloadChordMapLibrary()">Download</button>
+          <button id="uploadChordMapLibrary" onclick="document.getElementById('file-input').click();">Upload</button>
+          <input id="file-input" type="file" name="name" style="display: none;"/>
+          <button id="BootLoader" onclick="bootLoader()">BootLoader</button>
+        </div>
+        <div id="terminal">
+          <ul id="list">
+          </ul>
+          <table id="dataTable">
+          </table>
+        </div>
+    </body>
+</html>
