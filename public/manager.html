@@ -32,12 +32,14 @@
                 font-size: 16px;
               }
 
-              .button1 {background-color: #4CAF50;} /* Green */
+              .buttonEdit {background-color: #4CAF50;} /* Green */
               .button2 {background-color: #008CBA;} /* Blue */
-              .button3 {background-color: #f44336;} /* Red */
+              .buttonDelete {background-color: #f44336;} /* Red */
               .button4 {background-color: #e7e7e7; color: black;} /* Gray */
-              .button5 {background-color: #555555;} /* Black */
-
+              .buttonCommit {background-color: #555555;} /* Black */
+              table, th, td {
+                border: 1px solid black;
+              }
         </style>
         <script src="/js/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
@@ -50,18 +52,21 @@
         <p>Below is an example of how to use the Web Serial API to connect to the CharaChorder's Serial API</p>
         <div class="options">
           <button id="connectButton" onclick="startSerialConnection()">Connect</button>
+          <button id="idButton" onclick="getId()">Id</button>
           <button id="countButton" onclick="getCount()">Count Chord Maps</button>
           <button id="getAllButton" onclick="getGetAll()">Import from Device</button>
           <button id="addChordMap" onclick="addChordMap()">Add Chord Map</button>
           <button id="downloadChordMapLibrary" onclick="downloadChordMapLibrary()">Download</button>
           <button id="uploadChordMapLibrary" onclick="document.getElementById('file-input').click();">Upload</button>
           <input id="file-input" type="file" name="name" style="display: none;"/>
-          <button id="BootLoader" onclick="bootLoader()">BootLoader</button>
+          <button id="bootLoaderButton" onclick="bootLoader()">BootLoader</button>
+          <button id="RebootButton" onclick="reboot()">Reboot</button>
+          
         </div>
         <div id="terminal">
           <ul id="list">
           </ul>
-          <table id="dataTable">
+          <table id="dataTable" >
           </table>
         </div>
     </body>
