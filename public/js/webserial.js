@@ -858,9 +858,9 @@ async function sendCommandString(commandString,readProcess,linecount){
     console.log("writing "+commandString+"\r\n");
 
     let decoder = new TextDecoderStream();
-    inputDone = port.readable.pipeTo(decoder.writable);
+    let inputDone = port.readable.pipeTo(decoder.writable);
     console.log(inputDone);
-    inputStream = decoder.readable.pipeThrough(
+    let inputStream = decoder.readable.pipeThrough(
       new TransformStream(new LineBreakTransformer())
     );
 
@@ -968,9 +968,10 @@ function downloadChordMapLibrary(){
   document.body.removeChild(a);
 }
 
-$('document').ready(function(){
+document.addEventListener("DOMContentLoaded", function(event) { 
   document.getElementById('file-input').addEventListener('input', uploadChordMapLibrary);
 });
+
 
 
 function uploadChordMapLibrary(e){
