@@ -35,7 +35,7 @@
 
 
 let _actionMap = [
-  '0x00', //0x00 0
+  'NUL', //0x00 0
   'CCFunc', //0x01 1
   'STX', //0x02 2
   'ETX', //0x03 3
@@ -43,9 +43,9 @@ let _actionMap = [
   'ENQ', //0x05 5
   'ACK', //0x06 6
   'BEL', //0x07 7
-  'BS', //0x08 8
-  'HT', //0x09 9
-  'LF', //0x0A 10
+  'BAC', //0x08 8
+  'Tab', //0x09 9
+  'ENT', //0x0A 10
   'VT', //0x0B 11
   'FF', //0x0C 12
   'CR', //0x0D 13
@@ -67,7 +67,7 @@ let _actionMap = [
   'GS', //0x1D 29
   'RS', //0x1E 30
   'US', //0x1F 31
-  'Space', //0x20 32
+  'SPA', //0x20 32
   '!', //0x21 33
   '"', //0x22 34
   '#', //0x23 35
@@ -307,12 +307,12 @@ let _actionMap = [
   '0x010D', //0x010D 269
   '0x010E', //0x010E 270
   'Impulse', //0x010F 271
-  'LAmbiThrow', //0x0110 272
-  'RAmbiThrow', //0x0111 273
-  'LNumKeyMap', //0x0112 274
-  'RNumKeyMap', //0x0113 275
+  'LAT', //0x0110 272
+  'RAT', //0x0111 273
+  'LNS', //0x0112 274
+  'RNS', //0x0113 275
   'SpurToggle', //0x0114 276
-  'RepeatLastNote', //0x0115 277
+  'Prev', //0x0115 277
   'ImpulseToggle', //0x0116 278
   'GTM', //0x0117 279
   '0x0118', //0x0118 280
@@ -352,9 +352,9 @@ let _actionMap = [
   '0x013A', //0x013A 314
   '0x013B', //0x013B 315
   '0x013C', //0x013C 316
-  'MouseLeftBtnPressRelease', //0x013D 317
-  'MouseRightBtnPressRelease', //0x013E 318
-  'MouseMiddleBtnPressRelease', //0x013F 319
+  'MLB', //0x013D 317
+  'RMC', //0x013E 318
+  'MMB', //0x013F 319
   'MouseLeftBtnToggle', //0x0140 320
   'MouseRightBtnToggle', //0x0141 321
   'MouseMiddleBtnToggle', //0x0142 322
@@ -364,16 +364,16 @@ let _actionMap = [
   'MouseLeftBtnRelease', //0x0146 326
   'MouseRightBtnRelease', //0x0147 327
   'MouseMiddleBtnRelease', //0x0148 328
-  'MouseMoveDown', //0x0149 329
-  'MouseMoveRight', //0x014A 330
-  'MouseMoveUp', //0x014B 331
-  'MouseMoveLeft', //0x014C 332
-  'MouseScrollCoastDown', //0x014D 333
+  'M↓', //0x0149 329
+  'M→', //0x014A 330
+  'M↑', //0x014B 331
+  'M←', //0x014C 332
+  'MSD', //0x014D 333
   'MouseScrollCoastRight', //0x014E 334
-  'MouseScrollCoastUp', //0x014F 335
+  'MSU', //0x014F 335
   'MouseScrollCoastLeft', //0x0150 336
-  'DoubleClick', //0x0151 337
-  'DoubleClick', //0x0152 338
+  'LeftDoubleClick', //0x0151 337
+  'RightDoubleClick', //0x0152 338
   'TripleClick', //0x0153 339
   '0x0154', //0x0154 340
   '0x0155', //0x0155 341
@@ -419,15 +419,15 @@ let _actionMap = [
   '0x017D', //0x017D 381
   '0x017E', //0x017E 382
   'ReleaseMods', //0x017F 383
-  'LCtrl', //0x0180 384
-  'LShift', //0x0181 385
-  'LAlt', //0x0182 386
-  'LGui', //0x0183 387
-  'RCtrl', //0x0184 388
-  'RShift', //0x0185 389
-  'RAlt', //0x0186 390
-  'RGui', //0x0187 391
-  'CapsLock', //0x0188 392
+  'LCK', //0x0180 384
+  'LSK', //0x0181 385
+  'LAK', //0x0182 386
+  'LGK', //0x0183 387
+  'RCK', //0x0184 388
+  'RSK', //0x0185 389
+  'RAK', //0x0186 390
+  'RGK', //0x0187 391
+  'CAP', //0x0188 392
   'F1', //0x0189 393
   'F2', //0x018A 394
   'F3', //0x018B 395
@@ -449,10 +449,10 @@ let _actionMap = [
   'DeleteForward', //0x019B 411
   'End', //0x019C 412
   'PageDown', //0x019D 413
-  'RightArrow', //0x019E 414
-  'LeftArrow', //0x019F 415
-  'DownArrow', //0x01A0 416
-  'UpArrow', //0x01A1 417
+  '→', //0x019E 414
+  '←', //0x019F 415
+  '↓', //0x01A0 416
+  '↑', //0x01A1 417
   'NumLock', //0x01A2 418
   'F13', //0x01A3 419
   'F14', //0x01A4 420
@@ -547,8 +547,101 @@ let _actionMap = [
   'KMSleep', //0x01FD 509
   'KMCoffee', //0x01FE 510
   'KMRefresh', //0x01FF 511
-  'asdf', //0x0200 sdf
+  'CC_Physical', //0x0200 512
+  'RH_Thumb_3_Left', //0x0201 513
+  'RH_Thumb_3_Down', //0x0202 514
+  'RH_Thumb_3_Right', //0x0203 515
+  'RH_Thumb_3_Up', //0x0204 516
+  'RH_Thumb_3_Center', //0x0205 517
+  'RH_Thumb_2_Left', //0x0206 518
+  'RH_Thumb_2_Down', //0x0207 519
+  'RH_Thumb_2_Right', //0x0208 520
+  'RH_Thumb_2_Up', //0x0209 521
+  'RH_Thumb_2_Center', //0x0210 522
+  'RH_Thumb_1_Left', //0x0211 523
+  'RH_Thumb_1_Down', //0x0212 524
+  'RH_Thumb_1_Right', //0x0213 525
+  'RH_Thumb_1_Up', //0x0214 526
+  'RH_Thumb_1_Center', //0x0215 527
+  'RH_Pinky_Left', //0x0216 528
+  'RH_Pinky_Down', //0x0217 529
+  'RH_Pinky_Right', //0x0218 530
+  'RH_Pinky_Up', //0x0219 531
+  'RH_Pinky_Center', //0x0220 532
+  'RH_Ring_Secondary_Left', //0x0221 533
+  'RH_Ring_Secondary_Down', //0x0222 534
+  'RH_Ring_Secondary_Right', //0x0223 535
+  'RH_Ring_Secondary_Up', //0x0224 536
+  'RH_Ring_Secondary_Center', //0x0225 537
+  'RH_Ring_Primary_Left', //0x0226 538
+  'RH_Ring_Primary_Down', //0x0227 539
+  'RH_Ring_Primary_Right', //0x0228 540
+  'RH_Ring_Primary_Up', //0x0229 541
+  'RH_Ring_Primary_Center', //0x0230 542
+  'RH_Middle_Secondary_Left', //0x0231 543
+  'RH_Middle_Secondary_Down', //0x0232 544
+  'RH_Middle_Secondary_Right', //0x0233 545
+  'RH_Middle_Secondary_Up', //0x0234 546
+  'RH_Middle_Secondary_Center', //0x0235 547
+  'RH_Middle_Primary_Left', //0x0236 548
+  'RH_Middle_Primary_Down', //0x0237 549
+  'RH_Middle_Primary_Right', //0x0238 550
+  'RH_Middle_Primary_Up', //0x0239 551
+  'RH_Middle_Primary_Center', //0x0240 552
+  'RH_Index_Left', //0x0241 553
+  'RH_Index_Down', //0x0242 554
+  'RH_Index_Right', //0x0243 555
+  'RH_Index_Up', //0x0244 556
+  'RH_Index_Center', //0x0245 557
+  'LH_Thumb_3_Left', //0x0246 558
+  'LH_Thumb_3_Down', //0x0247 559
+  'LH_Thumb_3_Right', //0x0248 560
+  'LH_Thumb_3_Up', //0x0249 561
+  'LH_Thumb_3_Center', //0x0250 562
+  'LH_Thumb_2_Left', //0x0251 563
+  'LH_Thumb_2_Down', //0x0252 564
+  'LH_Thumb_2_Right', //0x0253 565
+  'LH_Thumb_2_Up', //0x0254 566
+  'LH_Thumb_2_Center', //0x0255 567
+  'LH_Thumb_1_Left', //0x0256 568
+  'LH_Thumb_1_Down', //0x0257 569
+  'LH_Thumb_1_Right', //0x0258 570
+  'LH_Thumb_1_Up', //0x0259 571
+  'LH_Thumb_1_Center', //0x0260 572
+  'LH_Pinky_Left', //0x0261 573
+  'LH_Pinky_Down', //0x0262 574
+  'LH_Pinky_Right', //0x0263 575
+  'LH_Pinky_Up', //0x0264 576
+  'LH_Pinky_Center', //0x0265 577
+  'LH_Ring_Secondary_Left', //0x0266 578
+  'LH_Ring_Secondary_Down', //0x0267 579
+  'LH_Ring_Secondary_Right', //0x0268 580
+  'LH_Ring_Secondary_Up', //0x0269 581
+  'LH_Ring_Secondary_Center', //0x0270 582
+  'LH_Ring_Primary_Left', //0x0271 583
+  'LH_Ring_Primary_Down', //0x0272 584
+  'LH_Ring_Primary_Right', //0x0273 585
+  'LH_Ring_Primary_Up', //0x0274 586
+  'LH_Ring_Primary_Center', //0x0275 587
+  'LH_Middle_Secondary_Left', //0x0276 588
+  'LH_Middle_Secondary_Down', //0x0277 589
+  'LH_Middle_Secondary_Right', //0x0278 590
+  'LH_Middle_Secondary_Up', //0x0279 591
+  'LH_Middle_Secondary_Center', //0x0280 592
+  'LH_Middle_Primary_Left', //0x0281 593
+  'LH_Middle_Primary_Down', //0x0282 594
+  'LH_Middle_Primary_Right', //0x0283 595
+  'LH_Middle_Primary_Up', //0x0284 596
+  'LH_Middle_Primary_Center', //0x0285 597
+  'LH_Index_Left', //0x0286 598
+  'LH_Index_Down', //0x0287 599
+  'LH_Index_Right', //0x0288 600
+  'LH_Index_Up', //0x0289 601
+  'LH_Index_Center' //0x0290 602
 ];
+
+
+
 
 let _keyMapDefaults = {
   'CHARACHORDER':[
@@ -1018,7 +1111,13 @@ function convertHumanStringToHexadecimalChord(humanString){
     let actionId = _actionMap.indexOf(part);
     console.log(actionId);
     if(_chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
-      let keyId = (_keyMapDefaults['CHARACHORDER']).indexOf(actionId);
+      let keyId;
+      if(actionId<0x0200){
+        keyId = (_keyMapDefaults['CHARACHORDER']).indexOf(actionId);
+      }else{
+        keyId = actionId-0x0200; //using the physical key position
+      }
+      
       console.log(keyId);
       bigNum+=BigInt(noteId_to_chord(keyId));
       console.log(bigNum);
@@ -1063,12 +1162,31 @@ function convertHexadecimalChordToHumanString(hexString){
           // 'decChordCompBigInt':BigInt(decString[i])*BigInt((BigInt(10)**(decString.length-i-1))),
           'noteId':chord_to_noteId(decString[i]*(10**(decString.length-i-1)))
         });
+        let noteId;
+        let actionId;
         if(decString[i]%2==1){ //if it is odd, then it is simple
-          humanString+=_actionMap[_keyMapDefaults['CHARACHORDER'][chord_to_noteId(decString[i]*10**(decString.length-i-1))]];
+          noteId = chord_to_noteId(decString[i]*10**(decString.length-i-1));
+          actionId = _keyMapDefaults['CHARACHORDER'][noteId];
+          if(actionId == 0){
+            actionId = 0x0200+noteId;
+          }
+          humanString+=_actionMap[actionId];
         }else{ //value is even, odd plus a 1
-          humanString+=_actionMap[_keyMapDefaults['CHARACHORDER'][chord_to_noteId((decString[i]-1)*10**(decString.length-i-1))]];
+          noteId = chord_to_noteId((decString[i]-1)*10**(decString.length-i-1));
+          actionId = _keyMapDefaults['CHARACHORDER'][noteId];
+          if(actionId == 0){
+            actionId = 0x0200+noteId;
+          }
+          humanString+=_actionMap[actionId];
+          
           humanString += " + ";
-          humanString+=_actionMap[_keyMapDefaults['CHARACHORDER'][chord_to_noteId(1*10**(decString.length-i-1))]];
+
+          noteId = chord_to_noteId(1*10**(decString.length-i-1));
+          actionId = _keyMapDefaults['CHARACHORDER'][noteId];
+          if(actionId == 0){
+            actionId = 0x0200+noteId;
+          }
+          humanString+=_actionMap[actionId];
         }
       }
     }
@@ -1091,6 +1209,18 @@ function convertHexadecimalChordToHumanString(hexString){
 
   console.log(humanString);
   return humanString;
+}
+
+function convertHumanStringToHexadecimalPhrase(humanString){
+  let hexString = "";
+	for (let i = 0; i<humanString.length; i ++) 
+  {
+		let hex = Number(humanString.charCodeAt(i)).toString(16);
+    hexString+=hex;
+  }
+  hexString = hexString.toUpperCase();
+  console.log(hexString);
+	return hexString;
 }
 
 function convertHexadecimalPhraseToAsciiString(hexString){
@@ -1268,6 +1398,7 @@ function appendToRow(data){
     chordTextNode = document.getElementById(virtualId.toString()+"-chord");
     console.log(chordTextNode);
     convertHumanStringToHexadecimalChord(chordText.innerHTML);
+    convertHumanStringToHexadecimalPhrase(phraseInput.value);
   }
 
   chordText.id = virtualId.toString()+"-chord";
