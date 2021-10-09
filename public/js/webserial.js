@@ -994,12 +994,15 @@ async function enableSerialChord(val){
     await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 01",readGetNone);
     await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_KEYBOARD+" 00",readGetNone);
     await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_MOUSE+" 00",readGetNone);
+    await readGetHexChord();
+    //TODO - add listen for chord - may require a readablestream with timeout
   }else{
     await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00",readGetNone);
     await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_KEYBOARD+" 01",readGetNone);
     await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_MOUSE+" 01",readGetNone);
   }
-  await sendCommandString("SELECT BASE",readGetOne); //toss the result of 17
+  await sendCommandString("SELECT BASE",readGetOne); //toss the result of 2000
+
 }
 
 async function getId(){
@@ -1071,10 +1074,10 @@ function uploadChordMapLibrary(e){
   console.log(e);
   const file = e.target.files[0];
 
-  const reader = new FileReader();
-  reader.readAsText(file,'UTF-8');
+  const fileReader = new FileReader();
+  fileReader.readAsText(file,'UTF-8');
 
-  reader.onload = readerEvent =>{
+  fileReader.onload = readerEvent =>{
     var content = readerEvent.target.result;
     console.log(content);
   }
@@ -1260,7 +1263,25 @@ async function readGetCount(){
 }
 
 async function readGetHexChord(){
+  if(port.readable.locked){
+    console.log(port.readable);
+    port.readable.locked = false;
+    console.log(reader);
+    //reader.releaseLock(); //assume we've already captured it
+  }
+  let decoder = new TextDecoderStream();
+  let inputDone = port.readable.pipeTo(decoder.writable);//throws error here
+  console.log(inputDone);
+  let inputStream = decoder.readable.pipeThrough(
+    new TransformStream(new LineBreakTransformer())
+  );
+  reader = inputStream.getReader();
+  
+
   const { value, done } = await reader.read();
+  reader.cancel();
+  await inputDone.catch(() => {});
+
   hexChordString = "";
   if(value){
     let arrValue = [...value];
@@ -1292,7 +1313,7 @@ async function readGetSome(expectedLineCount=100){
     if (value) {
       let arrValue = [...value];
       //ascii_to_hexa(arrValue);
-      strValue = String(arrValue.join(''));
+      let strValue = String(arrValue.join(''));
       console.log(strValue);
  
       hexChordString = strValue.substr(0, 16);
@@ -1305,7 +1326,9 @@ async function readGetSome(expectedLineCount=100){
       console.log(strValues);
  
       //appendToList(strValues);
-      _chordMaps.push(["0x"+hexChordString,strValues[1]]);
+      // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
+      _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]);
+      
  
       appendToRow(strValues);
     }
@@ -1333,7 +1356,8 @@ async function readLoop() {
      console.log(strValues);
 
      //appendToList(strValues);
-     _chordMaps.push(["0x"+hexChordString,strValues[1]]);
+    //  _chordMaps.push(["0x"+hexChordString,strValues[1]]);
+     _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]);
 
      appendToRow(strValues);
      if (done) {
