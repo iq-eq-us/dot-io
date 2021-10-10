@@ -36,6 +36,9 @@ export function CardDataRowDisplay(): ReactElement {
       <RefreshButton onClick={onClickRefreshButton} {...progressProps}>
         Clear Progress
       </RefreshButton>
+      <div className="feather feather-trash-2 p-0.5 text-gray-600">
+      <a href="https://lemon-flower-01b05aa10.azurestaticapps.net/manager.html" className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Chord Manager</a>
+      </div>
     </CardDataRow>
   );
 }

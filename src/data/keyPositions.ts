@@ -61,6 +61,10 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 6,
     direction: 'EAST',
   },
+  '224-180': {
+    sectorGroup: 6,
+    direction: 'SOUTH',
+  },
   '439-35': {
     sectorGroup: 12,
     direction: 'WEST',
@@ -69,9 +73,25 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 13,
     direction: 'WEST',
   },
+  '500-61': {
+    sectorGroup: 13,
+    direction: 'SOUTH',
+  },
   '40-62': {
     sectorGroup: 1,
     direction: 'EAST',
+  },
+  '40-61': {
+    sectorGroup: 1,
+    direction: 'WEST',
+  },
+  '40-63': {
+    sectorGroup: 1,
+    direction: 'NORTH',
+  },
+  '40-60': {
+    sectorGroup: 1,
+    direction: 'SOUTH',
   },
   '333-121': {
     sectorGroup: 14,

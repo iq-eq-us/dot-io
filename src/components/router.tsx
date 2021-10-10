@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from '../pages/dashboard/dashboard';
+import Manager from '../pages/manager/manager'
 import Navbar from './navbar';
 import Training from '../pages/training/training';
 import { ClosingPrompt } from './closingPrompt';
@@ -8,6 +9,7 @@ import { ClosingPrompt } from './closingPrompt';
 export const ROUTER_PATHS = {
   home: '/',
   training: '/training',
+  manager: '/manager',
 };
 
 /**
@@ -36,6 +38,13 @@ const Router = (): ReactElement => {
         <Route path={ROUTER_PATHS.training}>
           <Navbar />
           <Training />
+        </Route>
+
+        {/* This is the route to the training page, which will adapt depending on which training scenario is active. */}
+        {/* You can find the active training scenario in the state.ts file inside the trainingStore, specifically the currentTrainingScenario state variable */}
+        <Route path={ROUTER_PATHS.manager}>
+          <Navbar />
+          <Manager/>
         </Route>
       </Switch>
     </HashRouter>
