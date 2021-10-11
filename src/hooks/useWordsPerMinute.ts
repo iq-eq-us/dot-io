@@ -33,6 +33,8 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
 
+  const chordLength = totalNumberOfCharactersTyped/11;
+
 
  
   let wpm =0;
@@ -62,6 +64,7 @@ export const useWordsPerMinute = (): number => {
 
     }
 
+    
 
 
   // According to Riley, the equation for WPM is equal to (characters per minute typed correctly / 5)
@@ -77,8 +80,15 @@ export const useWordsPerMinute = (): number => {
     (store) => store.currentTrainingScenario,
   );
 
+  
+
   if (trainingSettings.isAutoWrite) {
-    if (typeof trainingScenario === 'string') {
+    if(chordLength < 11) {
+
+      wpm = Number.parseInt("calibrating...");
+
+    }
+    else if (typeof trainingScenario === 'string') {
       if (wpm > fastestRecordedWPM[trainingScenario]) {
         setFastestWPM({
           ...fastestRecordedWPM,

@@ -32,7 +32,7 @@ export function ProgressBar(): ReactElement {
   const { parentProps: remainingProps, Popper: RemainingPopover } = usePopover(
     'The number of chords that you have not typed faster than your speed goal.',
   );
-
+ 
   return (
     <Container>
       {Popper}
@@ -52,7 +52,7 @@ export function ProgressBar(): ReactElement {
         </ProgressBarOuter>
       </BottomProgressBar>
       <BottomDataRow>
-        <WPMText>WPM: {wpm.toFixed(0)}</WPMText>
+        <WPMText>WPM: {(isNaN(wpm)) ? "Calibrating..." : wpm.toFixed(0)}</WPMText>
         <SpeedGoalText>
           Speed Goal: {trainingSettings.speedGoal.toFixed()}
         </SpeedGoalText>
