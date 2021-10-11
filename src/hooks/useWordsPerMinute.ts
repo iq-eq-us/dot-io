@@ -11,6 +11,7 @@ export const useWordsPerMinute = (): number => {
   const setFastestWPM = useStoreActions(
     (store) => store.setFastestRecordedWordsPerMinute,
   );
+ 
 
   let totalNumberOfCharactersTyped = 0;
 
@@ -23,7 +24,7 @@ export const useWordsPerMinute = (): number => {
     timeNowInSeconds - timeAtTrainingStartInSeconds;
     //console.log(timeNowInSeconds);
     //console.log(timeAtTrainingStartInSeconds);
-  let timeDifferenceInMinutes = timeDifferenceInSeconds / 60;
+  const timeDifferenceInMinutes = timeDifferenceInSeconds / 60;
   const trainingStatistics = useStoreState((store) => store.trainingStatistics);
   
   trainingStatistics.statistics.forEach((stat) => {
@@ -31,11 +32,8 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
 
-  if(totalNumberOfCharactersTyped == 0) {
 
-    timeDifferenceInMinutes =0;
-    
-  }
+  
 
 
   // According to Riley, the equation for WPM is equal to (characters per minute typed correctly / 5)
