@@ -33,10 +33,9 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
 
-  const chordLength = totalNumberOfCharactersTyped/11;
+  const chordLength = totalNumberOfCharactersTyped/5.23;
 
 
- 
   let wpm =0;
   let speed =0;
 
