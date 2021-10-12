@@ -1,4 +1,6 @@
 import { useStoreState, useStoreActions } from '../store/store';
+import type { ChordStatistics } from '../models/trainingStatistics';
+import { getCumulativeAverageChordTypeTime } from '../helpers/aggregation';
 
 export const useWordsPerMinute = (): number => {
   const timeAtTrainingStart = useStoreState(
@@ -14,7 +16,7 @@ export const useWordsPerMinute = (): number => {
  
 
   let totalNumberOfCharactersTyped = 0;
-
+  let wpm =0;
   
   const timeAtTrainingStartInSeconds = timeAtTrainingStart * 0.001;
   
@@ -32,28 +34,31 @@ export const useWordsPerMinute = (): number => {
     const charactersTyped = stat.displayTitle.length * stat.numberOfOccurrences;
     totalNumberOfCharactersTyped += charactersTyped;
   });
+  const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
+  const average = parseInt(getCumulativeAverageChordTypeTime(y));
+  console.log(average)
+ 
+
 
   const chordLength = totalNumberOfCharactersTyped/5.23;
 
 
-  let wpm =0;
-  let speed =0;
+  
 
     if(totalNumberOfCharactersTyped == 0) {
 
       wpm =0;
-    } else{
-       speed = trainingStatistics.statistics.sort(
-        (s) => s.averageSpeed)[0].averageSpeed - 1;
-        
-       // const wpm = ((speed/5)/timeDifferenceInMinutes);
-        //console.log(wpm);
-    
-        const avgSpeedMilliseconds = speed * 10;
+    } else {
+          
+       
+
+        const avgSpeedMilliseconds = average * 10;
         const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
         const averageCharacterPerMin = 60000/millisecondsPerCharacter;
         wpm = averageCharacterPerMin/5;
-       
+        console.log(wpm);
+      
+
         //This is to prevent the WPM from displaying
         if(wpm < 1 || wpm > 1000000000000000000000000000000000000000000000000){
           wpm = 0;
@@ -82,7 +87,7 @@ export const useWordsPerMinute = (): number => {
   
 
   if (trainingSettings.isAutoWrite) {
-    if(chordLength < 11) {
+    if(chordLength <= 5) {
 
       wpm = Number.parseInt("calibrating...");
 
