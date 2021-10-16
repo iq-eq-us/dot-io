@@ -45,6 +45,7 @@
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/webserial.js"></script>
         <script scr="/js/lib/es5/index.js"></script>
+        
         <!-- <script src="/socket.io/socket.io.js"></script> -->
     </head>
     <body>
@@ -52,6 +53,7 @@
         <p>Below is an example of how to use the Web Serial API to connect to the CharaChorder's Serial API</p>
         <div class="options">
           <button id="connectButton" onclick="startSerialConnection()">Connect</button>
+          <button id="diconnectButton" onclick="disconnectSerialConnection()">Disconnect</button>
           <button id="idButton" onclick="getId()">Id</button>
           <button id="countButton" onclick="getCount()">Count Chord Maps</button>
           <button id="getAllButton" onclick="getGetAll()">Import from Device</button>
@@ -61,6 +63,7 @@
           <input id="file-input" type="file" name="name" style="display: none;"/>
           <button id="bootLoaderButton" onclick="bootLoader()">BootLoader</button>
           <button id="RebootButton" onclick="reboot()">Reboot</button>
+          <button id="CommitAllButton" onclick="commitAll()">Commit All</button>
           
         </div>
         <div id="terminal">
@@ -70,4 +73,7 @@
           </table>
         </div>
     </body>
+    <script>
+      onDocumentLoaded();
+    </script>
 </html>

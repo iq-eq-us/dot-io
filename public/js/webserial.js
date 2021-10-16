@@ -1,7 +1,6 @@
 //512 'actions'
 //phrase is an 'action sequence'
 
-
 // let _keys_to_humanreadableoutput_dict = {
 //   '0x0061':'a',
 //   '0x0062':'b',
@@ -29,9 +28,6 @@
 // 38,655,229,952
 // 0x00000000900080000
 
-
-
-// }
 
 
 let _actionMap = [
@@ -875,7 +871,7 @@ let _keyMap = [
 _keyMap = _keyMap.reverse();
 
 
-let _chordMaps = []
+let _chordMaps = [];
 
 if ("serial" in navigator) {
   // The Web Serial API is supported.
@@ -888,26 +884,74 @@ if ("serial" in navigator) {
 
 navigator.serial.addEventListener('connect', e => {
   // Add |e.port| to the UI or automatically connect.
-  console.log('port connected');
+  console.log('serial port connected');
 });
 
 navigator.serial.addEventListener('disconnect', e => {
   // Remove |e.port| from the UI. If the device was open the
   // disconnection can also be observed as a stream error.
-  console.log('port disconnected');
+  console.log('serial port disconnected');
 });
 
-port = null;
-reader = null;
+let serialPort = null;
+let portReader = null;
+let lineReader = null;
+let lineReaderDone = null;
+let abortController1 = new AbortController();
+let abortController2 = new AbortController();
+
+async function disconnectSerialConnection(){
+  console.log('disconnectSerialConnection()');
+  if(serialPort){
+    console.log('closing serial port');
+    lineReader.releaseLock();
+    console.log(serialPort.readable);
+    await lineReaderDone.catch(() => { /* Ingore the error */});
+    await serialPort.close();
+
+    console.log('serial port is closed');
+  }else{
+    console.log('there is no serial connection open to close');
+  }
+}
+
+
+
+async function openSerialPort(){
+  console.log("openSerialPort()");
+  await serialPort.open({ baudRate: 115200 });
+  console.log("connected to serial port");
+  console.log(serialPort.getInfo());
+}
+
+
+
+async function setupLineReader(){
+  if(serialPort){
+    console.log('setupLineRader()');
+    let decoder = new TextDecoderStream();
+    lineReaderDone = serialPort.readable.pipeTo(decoder.writable, {signal:abortController1.signal1});//throws error here
+    let inputStream = decoder.readable.pipeThrough(
+      new TransformStream(new LineBreakTransformer(), {signal:abortController2.signal})
+    );
+    lineReader = await inputStream.getReader();
+    console.log('setup line reader');
+  }else{
+    console.log('serial port is not open yet');
+  }
+}
+
+
 
 async function startSerialConnection() {
   console.log("startSerialConnection()");
   try {
     // Prompt user to select any serial port.
-    port = await navigator.serial.requestPort();
+    serialPort = await navigator.serial.requestPort();
     console.log("requestPort()");
     // Wait for the serial port to open.
-    openSerialPort(port);
+    await openSerialPort();
+    await setupLineReader();
 
   } catch(error) {
     console.log(error);
@@ -915,54 +959,40 @@ async function startSerialConnection() {
 
 }
 
-async function openSerialPort(){
-  console.log("openSerialPort()");
-  await port.open({ baudRate: 115200 });
-  console.log("connected to serial port");
-  console.log(port.getInfo());
-  // console.log(port);
-}
+
 
 async function bootLoader(){
   //Sends the bootloader command to the charachorder via the serial API
-  await sendCommandString("BOOTLOADER",readGetNone);
+  await sendCommandString("BOOTLOADER");
+  await readGetNone();
 }
 
 async function reboot(){
   //Sends the restart command to the charachorder via the serial API
-  await sendCommandString("RESTART",readGetNone);
+  await sendCommandString("RESTART");
+  await readGetNone();
 
 }
 
-async function sendCommandString(commandString,readProcess,linecount){
-  console.log(commandString);
-  if(port){
-    if(port.readable.locked){
-      console.log(port.readable);
-      port.readable.locked = false;
-      console.log(reader);
-      //reader.releaseLock(); //assume we've already captured it
+//TODO not sure this actually works
+async function cancelReader(){
+  if(serialPort){
+    if(lineReader){
+      if(lineReader.locked){
+        await lineReader.cancel().then(()=>{console.log('cleared line reader')});
+      }
     }
+  }
+}
+
+async function sendCommandString(commandString){
+  console.log(commandString);
+  if(serialPort){
     const encoder = new TextEncoder();
-    const writer = port.writable.getWriter();
+    const writer = serialPort.writable.getWriter();
     await writer.write(encoder.encode(commandString+"\r\n"));
     writer.releaseLock();
-
     console.log("writing "+commandString+"\r\n");
-
-    let decoder = new TextDecoderStream();
-    let inputDone = port.readable.pipeTo(decoder.writable);
-    console.log(inputDone);
-    let inputStream = decoder.readable.pipeThrough(
-      new TransformStream(new LineBreakTransformer())
-    );
-
-    reader = inputStream.getReader();
-    await readProcess(linecount);
-    console.log('cancelling reader');
-    reader.cancel();
-    await inputDone.catch(() => {});
-    // await inputDone;
   }else{
     console.log('serial port is not open yet');
   }
@@ -988,37 +1018,56 @@ const CONFIG_ID_ENABLE_CHORDING =         "28";
 const CONFIG_ID_CHAR_KILLER_TOGGLE =      "29";
 const CONFIG_ID_CHAR_COUNTER_KILLER =     "2A";
 
-async function enableSerialChord(val){
-  await sendCommandString("SELECT CONFIG",readGetOne); //toss the result of 17
+async function enableSerialChordOutput(val){
+  console.log('enableSerialChordOutput('+val.toString()+")");
+  await sendCommandString("SELECT CONFIG");
+  await readGetOneAndToss(); //toss the result of 17
   if(val==true){
-    await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 01",readGetNone);
-    await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_KEYBOARD+" 00",readGetNone);
-    await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_MOUSE+" 00",readGetNone);
-    await readGetHexChord();
-    //TODO - add listen for chord - may require a readablestream with timeout
+    await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 01");
+    await readGetNone();
+    await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_KEYBOARD+" 00");
+    await readGetNone();
+    await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_MOUSE+" 00");
+    await readGetNone();
   }else{
-    await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00",readGetNone);
-    await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_KEYBOARD+" 01",readGetNone);
-    await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_MOUSE+" 01",readGetNone);
+    await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
+    await readGetNone();
+    await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
+    await readGetNone();
+    await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_MOUSE+" 01");
+    await readGetNone();
   }
-  await sendCommandString("SELECT BASE",readGetOne); //toss the result of 2000
-
+  await sendCommandString("SELECT BASE");
+  await readGetNone(); //toss the result of 2000
 }
 
 async function getId(){
-  await sendCommandString("ID",readId);
+  await sendCommandString("ID");
+  await readDeviceId();
 }
 
 async function getCount(){
-  await sendCommandString("SELECT BASE",readGetCount);
+  await sendCommandString("SELECT BASE");
+  await readGetChordmapCount();
 }
 
 async function getGetAll1(){
-  await sendCommandString("GETALL",readGetAll);
+  await sendCommandString("GETALL");
+  await readGetAllChordmaps();
+}
+
+async function getGetAll2(){
+  await sendCommandString("GETSOME 0 "+_chordmapCountOnDevice);
+  await readGetSomeChordmaps(_chordmapCountOnDevice);
 }
 
 async function getGetAll(){
-  await sendCommandString("GETSOME 0 "+_chordmapCountOnDevice,readGetSome,_chordmapCountOnDevice);
+  for(let i=0;i<_chordmapCountOnDevice;i++){
+    await sendCommandString("GETSOME "
+      +(i+0).toString()+" "
+      +(i+1).toString());
+    await readGetOneChordmap();
+  }
 }
 
 
@@ -1084,7 +1133,6 @@ function uploadChordMapLibrary(e){
   //console.log(_chordMaps);
   //open file dialog box with only csv allowed
   //parse
-
 }
 
 
@@ -1244,17 +1292,41 @@ function convertHexadecimalPhraseToAsciiString(hexString){
 
 
 let _chordmapId = "DEFAULT";
-let _chordmapCountOnDevice = 50;
+let _chordmapCountOnDevice = 50; //TODO set this to zero by default
 
-async function readId(){
-  const { value, done } = await reader.read();
+async function readDeviceId(){
+  // await cancelReader();
+  // let decoder = new TextDecoderStream();
+  // let inputDone = serialPort.readable.pipeTo(decoder.writable);
+  // console.log(inputDone);
+  // let inputStream = decoder.readable.pipeThrough(
+  //   new TransformStream(new LineBreakTransformer())
+  // );
+  // lineReader = inputStream.getReader();
+  // console.log(lineReader);
+
+  // await readProcess(linecount);
+  // console.log('cancelling reader');
+  // await lineReader.cancel().then(()=>{console.log('then cancelled line reader');});
+  // await inputDone.catch(() => {});
+  // await inputDone;
+  const { value, done } = await lineReader.read();
   if(value){
-    _chordmapId = value;
-    console.log(_chordmapId);
+    
+    
+    if(value == "chordmaps loaded and ready"){
+      console.log("received: chordmaps loaded and ready, so the chord headers are enabled; turning this off");
+      await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00"); //disable chordmap outout
+      await sendCommandString("ID");
+      await readDeviceId();
+    }else{
+      _chordmapId = value;
+      console.log(_chordmapId);
+    }
   }
 }
 
-async function readGetCount(){
+async function readGetChordmapCount(){
   const { value, done } = await reader.read();
   if(value){
     _chordmapCountOnDevice = parseInt(value);
@@ -1262,53 +1334,87 @@ async function readGetCount(){
   }
 }
 
+
+//Not used?
 async function readGetHexChord(){
-  if(port.readable.locked){
-    console.log(port.readable);
-    port.readable.locked = false;
-    console.log(reader);
-    //reader.releaseLock(); //assume we've already captured it
-  }
-  let decoder = new TextDecoderStream();
-  let inputDone = port.readable.pipeTo(decoder.writable);//throws error here
-  console.log(inputDone);
-  let inputStream = decoder.readable.pipeThrough(
-    new TransformStream(new LineBreakTransformer())
-  );
-  reader = inputStream.getReader();
-  
+  let hexChordString = "";
+  if(serialPort){
+    
+    // let decoder = new TextDecoderStream();
+    // let inputDone = port.readable.pipeTo(decoder.writable);//throws error here
+    // console.log(inputDone);
+    // let inputStream = decoder.readable.pipeThrough(
+    //   new TransformStream(new LineBreakTransformer())
+    // );
+    // reader = inputStream.getReader();
 
-  const { value, done } = await reader.read();
-  reader.cancel();
-  await inputDone.catch(() => {});
+    const { value, done } = await lineReader.read();
+    console.log(['value',value]);
+    // await reader.cancel().then(()=>{console.log(['value',value]);console.log('then cancelled reader');});
+    // await inputDone.catch(() => {});
+    // reader.releaseLock();
 
-  hexChordString = "";
-  if(value){
-    let arrValue = [...value];
-    strValue = String(arrValue.join(''));
-    console.log(strValue);
-    hexChordString = strValue.substr(0, 16);
+    
+    if(value){
+      let arrValue = [...value];
+      strValue = String(arrValue.join(''));
+      console.log(strValue);
+      hexChordString = strValue.substr(0, 16);
+      await readGetOneAndToss(); //the "processing chord:" decimal output
+    }
   }
   return hexChordString;
 }
 
 async function readGetAll(){
-  readGetSome(_chordmapCountOnDevice);
+  readGetSomeChordmaps(_chordmapCountOnDevice);
 }
 
-async function readGetOne(){
-  const { value, done } = await reader.read();
+async function readGetOneAndToss(){
+  const { value, done } = await lineReader.read();
   //throw away the value
+  if(value){
+    console.log('toss value of: '+value);
+  }else{
+    console.log('value is null');
+  }
 }
 
 async function readGetNone(){
 }
 
-async function readGetSome(expectedLineCount=100){
+
+async function readGetOneChordmap(){
+  console.log('readGetOneChordmap()');
+  const { value } = await lineReader.read();
+  if (value) {
+    let arrValue = [...value];
+    //ascii_to_hexa(arrValue);
+    let strValue = String(arrValue.join(''));
+    console.log(strValue);
+
+    hexChordString = strValue.substr(0, 16);
+    hexAsciiString = strValue.substr(17, strValue.length);
+    strValues = ["","","",""];
+    strValues[0] = convertHexadecimalChordToHumanString(hexChordString);
+    strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
+    strValues[2] = hexChordString;
+    strValues[3] = hexAsciiString;
+    console.log(strValues);
+
+    //appendToList(strValues);
+    // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
+    _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]);
+
+    appendToRow(strValues);
+  }
+}
+
+async function readGetSomeChordmaps(expectedLineCount=100){
   console.log('readGetSome('+expectedLineCount+')');
   let i = 0;
   while (true) {
-    const { value } = await reader.read();
+    const { value } = await lineReader.read();
     i++;
     if (value) {
       let arrValue = [...value];
@@ -1338,36 +1444,36 @@ async function readGetSome(expectedLineCount=100){
   }
 }
 
-async function readLoop() {
- let i = 0;
- while (true) {
-   const { value } = await reader.read();
-   if (value) {
-     let arrValue = [...value];
-     //ascii_to_hexa(arrValue);
-     strValue = String(arrValue.join(''));
-     console.log(strValue);
+// async function readLoop() {
+//  let i = 0;
+//  while (true) {
+//    const { value } = await reader.read();
+//    if (value) {
+//      let arrValue = [...value];
+//      //ascii_to_hexa(arrValue);
+//      strValue = String(arrValue.join(''));
+//      console.log(strValue);
 
-     hexChordString = strValue.substr(0, 16);
-     hexAsciiString = strValue.substr(17, strValue.length);
-     strValues = ["",""];
-     strValues[0] = convertHexadecimalChordToHumanString(hexChordString);
-     strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
-     console.log(strValues);
+//      hexChordString = strValue.substr(0, 16);
+//      hexAsciiString = strValue.substr(17, strValue.length);
+//      strValues = ["",""];
+//      strValues[0] = convertHexadecimalChordToHumanString(hexChordString);
+//      strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
+//      console.log(strValues);
 
-     //appendToList(strValues);
-    //  _chordMaps.push(["0x"+hexChordString,strValues[1]]);
-     _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]);
+//      //appendToList(strValues);
+//     //  _chordMaps.push(["0x"+hexChordString,strValues[1]]);
+//      _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]);
 
-     appendToRow(strValues);
-     if (done) {
-      //  console.log("[readLoop] DONE", done);
-       reader.releaseLock();
-       break;
-     }
-   }
- }
-}
+//      appendToRow(strValues);
+//      if (done) {
+//       //  console.log("[readLoop] DONE", done);
+//        reader.releaseLock();
+//        break;
+//      }
+//    }
+//  }
+// }
 
 let _chordMapIdCounter = 0
 
@@ -1376,27 +1482,70 @@ function addChordMap(){
   appendToRow(["0000000000000000","< blank>","",""]);
 }
 
+
+function onDocumentLoaded(){
+  addHeadersToDataTable();
+}
+
+function addHeadersToDataTable(){
+  console.log("addHeadersToDataTable()");
+  var dataTable = document.getElementById("dataTable");
+  var header = dataTable.createTHead();
+  var row = header.insertRow(0); //insert row at top
+  var cells = []
+  cells.push(row.insertCell(-1)); //0 virtual id
+  cells[0].innerHTML = "Virtual Id";
+  cells.push(row.insertCell(-1)); //1 chord edit button
+  cells[1].innerHTML = "Edit Chord";
+  cells.push(row.insertCell(-1)); //2 chord string (locked)
+  cells[2].innerHTML = "Chord";
+  cells.push(row.insertCell(-1)); //3 phrase (locked)
+  cells[3].innerHTML = "Phrase";
+  cells.push(row.insertCell(-1)); //4 chord string new (locked)
+  cells[4].innerHTML = "New Chord";
+  cells.push(row.insertCell(-1)); //5 phrase new (open)
+  cells[5].innerHTML = "New Phrase";
+  cells.push(row.insertCell(-1)); //6 delete - flags chord for deletion
+  cells[6].innerHTML = "Delete";
+  cells.push(row.insertCell(-1)); //7 revert
+  cells[7].innerHTML = "Revert";
+  cells.push(row.insertCell(-1)); //8 commit
+  cells[8].innerHTML = "Commit";
+  cells.push(row.insertCell(-1)); //9 orig hex chord
+  cells[9].innerHTML = "Chord Hexadecimal (debug)";
+  cells.push(row.insertCell(-1)); //10 orig hex phrase
+  cells[10].innerHTML = "Phrase Hexadecimal (debug)";
+  
+}
+
 function appendToRow(data){
   var dataTable = document.getElementById("dataTable");
   var row = dataTable.insertRow(-1); //insert row at end of table
 
   var cells = []
-  cells.push(row.insertCell(-1)); //virtual id
-  cells.push(row.insertCell(-1)); //chord edit button
-  cells.push(row.insertCell(-1)); //chord string
-  cells.push(row.insertCell(-1)); //phrase
-  cells.push(row.insertCell(-1)); //delete
-  cells.push(row.insertCell(-1)); //commit
-  cells.push(row.insertCell(-1)); //orig hex chord
-  cells.push(row.insertCell(-1)); //orig hex phrase
-  cells[6].innerHTML = data[2];
-  cells[7].innerHTML = data[3];
+  cells.push(row.insertCell(-1)); //0 virtual id
+  cells.push(row.insertCell(-1)); //1 chord edit button
+  cells.push(row.insertCell(-1)); //2 chord string (locked)
+  cells.push(row.insertCell(-1)); //3 phrase (locked)
+  cells.push(row.insertCell(-1)); //4 chord string new (locked)
+  cells.push(row.insertCell(-1)); //5 phrase new (open)
+  cells.push(row.insertCell(-1)); //6 delete - flags chord for deletion
+  cells.push(row.insertCell(-1)); //7 revert
+  cells.push(row.insertCell(-1)); //8 commit
+  cells.push(row.insertCell(-1)); //9 orig hex chord
+  cells.push(row.insertCell(-1)); //10 orig hex phrase
+  cells[9].innerHTML = data[2];
+  cells[10].innerHTML = data[3];
 
   let btnEdit = document.createElement('input');
-  let chordText = document.createElement('div');
-  let phraseInput = document.createElement('input');
+  let chordTextOrig = document.createElement('div');
+  let phraseTextOrig = document.createElement('div');
+  let chordTextNew = document.createElement('div');
+  let phraseTextInput = document.createElement('input');
   let btnDelete = document.createElement('input');
+  let btnRevert = document.createElement('input');
   let btnCommit = document.createElement('input');
+  
 
   let virtualId = _chordMapIdCounter;
   cells[0].innerHTML = virtualId; //local id number
@@ -1408,32 +1557,38 @@ function appendToRow(data){
   btnEdit.value = "edit chord";
   cells[1].appendChild(btnEdit);
   btnEdit.onclick = async function(){
-    //TODO include code to enable raw inputs and detect chord or else timeout
-    enableSerialChord(true);
-    setTimeout(function(){
-      enableSerialChord(false);
-    },5000);
     
+    await enableSerialChordOutput(true); //TODO include code to enable raw inputs and detect chord or else timeout
     let hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
-    console.log(convertHexadecimalChordToHumanString(hexChord));
+    console.log(convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
+    await enableSerialChordOutput(false);
     
 
     document.getElementById(virtualId.toString()+"-commit").disabled = false;
-    chordTextNode = document.getElementById(virtualId.toString()+"-chord");
-    console.log(chordTextNode);
-    convertHumanStringToHexadecimalChord(chordText.innerHTML);
-    convertHumanStringToHexadecimalPhrase(phraseInput.value);
+    let chordTextNewNode = document.getElementById(virtualId.toString()+"-chordnew");
+    console.log(chordTextNewNode);
+    chordTextNewNode.innerHTML = convertHexadecimalChordToHumanString(hexChord);
+    // convertHumanStringToHexadecimalChord(chordTextNewNode.innerHTML);
+    //convertHumanStringToHexadecimalPhrase(phraseInput.value);
   }
 
-  chordText.id = virtualId.toString()+"-chord";
-  chordText.innerHTML = data[0];
-  cells[2].appendChild(chordText);
+  chordTextOrig.id = virtualId.toString()+"-chordorig";
+  chordTextOrig.innerHTML = data[0];
+  cells[2].appendChild(chordTextOrig);
 
-  phraseInput.id = virtualId.toString()+"-phrase";
-  phraseInput.setAttribute("type", "text");
-  phraseInput.value = data[1];
-  cells[3].appendChild(phraseInput);
-  phraseInput.onchange = function(){
+  phraseTextOrig.id = virtualId.toString()+"-phraseorig";
+  phraseTextOrig.innerHTML = data[1];
+  cells[3].appendChild(phraseTextOrig);
+
+  chordTextNew.id = virtualId.toString()+"-chordnew";
+  chordTextNew.innerHTML = "";
+  cells[4].appendChild(chordTextNew);
+  
+  phraseTextInput.id = virtualId.toString()+"-phraseinput";
+  phraseTextInput.setAttribute("type", "text");
+  phraseTextInput.value = "";
+  cells[5].appendChild(phraseTextInput);
+  phraseTextInput.onchange = function(){
     document.getElementById(virtualId.toString()+"-commit").disabled = false;
   }
 
@@ -1441,10 +1596,23 @@ function appendToRow(data){
   btnDelete.type = "button";
   btnDelete.className = "buttonDelete";
   btnDelete.value = "delete";
-  cells[4].appendChild(btnDelete);
+  cells[6].appendChild(btnDelete);
   btnDelete.onclick = function(){
+    document.getElementById(virtualId.toString()+"-chordnew").innerHTML = "DELETE";
     document.getElementById(virtualId.toString()+"-delete").disabled = true;
     document.getElementById(virtualId.toString()+"-commit").disabled = false;
+  }
+
+  btnRevert.id = virtualId.toString()+"-revert";
+  btnRevert.type = "button";
+  btnRevert.className = "buttonRevert";
+  btnRevert.value = "revert";
+  cells[7].appendChild(btnRevert);
+  btnRevert.onclick = function(){
+    document.getElementById(virtualId.toString()+"-chordnew").innerHTML = "";
+    document.getElementById(virtualId.toString()+"-phraseinput").value = "";
+    document.getElementById(virtualId.toString()+"-delete").disabled = false;
+    document.getElementById(virtualId.toString()+"-commit").disabled = true;
   }
 
   btnCommit.id = virtualId.toString()+"-commit";
@@ -1452,18 +1620,78 @@ function appendToRow(data){
   btnCommit.className = "buttonCommit";
   btnCommit.value = "commit";
   btnCommit.disabled = true;
-  cells[5].appendChild(btnCommit);
-  btnCommit.onclick = function(){
+  cells[8].appendChild(btnCommit);
+  btnCommit.onclick = async function(){
     if(document.getElementById(virtualId.toString()+"-delete").disabled){
       //delete the chord from the device, and then also delete from this list
       document.getElementById(virtualId.toString()+"-")
+      await sendCommandString("DEL "+data[2]);
+      await readGetOneAndToss();
+      //then remove the row from the table
+      var i = this.parentNode.parentNode.rowIndex;
+      // console.log(i);
+      // console.log(this.rowIndex);
+      // console.log(this);
+      // console.log(this.parentNode);
+      // console.log(this.parentNode.parentNode);
+      // console.log(this.parentNode.parentNode.rowIndex);
+      console.log('deleting row '+i.toString());
+      dataTable.deleteRow(i);
     }else{
       //if chord was changed, then we need to delete the chord from the device first
-      //push chord and phrase to device
+      if(false){
+        if(document.getElementById(virtualId.toString()+"-phraseinput").value.length>0){
+          //if phrase was changed, then just add new chordmap with new phrase
+        }else{
+          //if phrase was not changed, then just add new chordmap with the original phrase
+        }
+        //then delete the old chordmap
+      }else{
+        if(document.getElementById(virtualId.toString()+"-phraseinput").value.length>0){
+          //if just the phrase was changed, then update the chordmap with the original chord and new phrase
+          let hexChord = convertHumanStringToHexadecimalChord(document.getElementById(virtualId.toString()+"-chordorig").innerHTML);
+          let hexPhrase = convertHumanStringToHexadecimalPhrase(document.getElementById(virtualId.toString()+"-phraseinput").value);
+          await sendCommandString("SET "+hexChord+" "+hexPhrase);
+          //then move the new phrase into the original phrase text location in the table, and clear the new phrase input
+          document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
+          document.getElementById(virtualId.toString()+"-phraseinput").value = "";
+          document.getElementById(virtualId.toString()+"-chordnew").innerHTML = "";
+          document.getElementById(virtualId.toString()+"-phraseinput").value = "";
+          document.getElementById(virtualId.toString()+"-delete").disabled = false;
+          document.getElementById(virtualId.toString()+"-commit").disabled = true;
+        }else{
+          //somehow there isn't anything to commit bc there is no change detected
+        }
+      }
     }
   }
 }
 
+
+function commitAll(){
+  console.log("commitAll()");
+  var dataTable = document.getElementById("dataTable");
+  //iterate through table from bottom to top to see if there's a commit enabled
+  //TODO check if we need to skip the header row
+  for (var i = dataTable.rows.length-1; i>=1; i--) {
+    //iterate through rows
+    
+    let row = dataTable.rows[i];
+    console.log(row);
+    console.log(row.cells);
+    console.log(row.cells[0]);
+    console.log(row.cells[0].innerHTML);
+    let virtualId = parseInt(row.cells[0].innerHTML);
+    console.log('table row '+i+' has virtualId of '+virtualId);
+    document.getElementById(virtualId.toString()+"-commit")
+    let commitButton = document.getElementById(virtualId.toString()+"-commit");
+    if(commitButton.disabled==false){
+      commitButton.click();
+    }
+    
+    //rows would be accessed using the "row" variable assigned in the for loop
+ }
+}
 
 
 
