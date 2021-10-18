@@ -1024,21 +1024,21 @@ async function enableSerialChordOutput(val){
   await readGetOneAndToss(); //toss the result of 17
   if(val==true){
     await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 01");
-    await readGetNone();
+    // await readGetNone();
     await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_KEYBOARD+" 00");
-    await readGetNone();
+    // await readGetNone();
     await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_MOUSE+" 00");
-    await readGetNone();
+    // await readGetNone();
   }else{
     await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
-    await readGetNone();
+    // await readGetNone();
     await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
-    await readGetNone();
+    // await readGetNone();
     await sendCommandString("SET "+CONFIG_ID_ENABLE_HID_MOUSE+" 01");
-    await readGetNone();
+    // await readGetNone();
   }
   await sendCommandString("SELECT BASE");
-  await readGetNone(); //toss the result of 2000
+  await readGetOneAndToss(); //toss the result of 2000
 }
 
 async function getId(){
@@ -1498,9 +1498,9 @@ function addHeadersToDataTable(){
   cells.push(row.insertCell(-1)); //1 chord edit button
   cells[1].innerHTML = "Edit Chord";
   cells.push(row.insertCell(-1)); //2 chord string (locked)
-  cells[2].innerHTML = "Chord";
+  cells[2].innerHTML = "Current Chord";
   cells.push(row.insertCell(-1)); //3 phrase (locked)
-  cells[3].innerHTML = "Phrase";
+  cells[3].innerHTML = "Current Phrase";
   cells.push(row.insertCell(-1)); //4 chord string new (locked)
   cells[4].innerHTML = "New Chord";
   cells.push(row.insertCell(-1)); //5 phrase new (open)
@@ -1557,19 +1557,30 @@ function appendToRow(data){
   btnEdit.value = "edit chord";
   cells[1].appendChild(btnEdit);
   btnEdit.onclick = async function(){
-    
-    await enableSerialChordOutput(true); //TODO include code to enable raw inputs and detect chord or else timeout
-    let hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
-    console.log(convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
+    var btn = document.getElementById(virtualId.toString()+"-edit");
+    if(btn.value == "edit chord"){
+      btn.value = "listening";  
+      await enableSerialChordOutput(true); //TODO include code to enable raw inputs and detect chord or else timeout
+      let hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
+      console.log(convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
+      if(hexChord!=null){
+        document.getElementById(virtualId.toString()+"-chordnew").innerHTML = convertHexadecimalChordToHumanString(hexChord);
+        document.getElementById(virtualId.toString()+"-commit").disabled = false;
+        console.log('hexChord is '+hexChord);
+        // await readGetOneAndToss(); //extra processchord: serial output; this is already in the 'readGetHexChord()' method
+      }
+    }else{
+      console.log('cancelling lineReader');
+      console.log(await lineReader);
+      // console.log(await serialPort.getReader());
+      // await lineReader.releaseLock();
+      // await abortController2.abort();
+      //TODO need to find the way to cancel or abort the away lineReader stream; bc this isn't working
+      await cancelReader();
+      console.log('cancelled lineReader');
+    }
     await enableSerialChordOutput(false);
-    
-
-    document.getElementById(virtualId.toString()+"-commit").disabled = false;
-    let chordTextNewNode = document.getElementById(virtualId.toString()+"-chordnew");
-    console.log(chordTextNewNode);
-    chordTextNewNode.innerHTML = convertHexadecimalChordToHumanString(hexChord);
-    // convertHumanStringToHexadecimalChord(chordTextNewNode.innerHTML);
-    //convertHumanStringToHexadecimalPhrase(phraseInput.value);
+    btn.value = "edit chord";
   }
 
   chordTextOrig.id = virtualId.toString()+"-chordorig";
@@ -1629,23 +1640,32 @@ function appendToRow(data){
       await readGetOneAndToss();
       //then remove the row from the table
       var i = this.parentNode.parentNode.rowIndex;
-      // console.log(i);
-      // console.log(this.rowIndex);
-      // console.log(this);
-      // console.log(this.parentNode);
-      // console.log(this.parentNode.parentNode);
-      // console.log(this.parentNode.parentNode.rowIndex);
       console.log('deleting row '+i.toString());
       dataTable.deleteRow(i);
     }else{
-      //if chord was changed, then we need to delete the chord from the device first
-      if(false){
+      if(document.getElementById(virtualId.toString()+"-chordnew").innerHTML.length>0){
+        //if chord was changed, then we need to delete the chord from the device first
         if(document.getElementById(virtualId.toString()+"-phraseinput").value.length>0){
-          //if phrase was changed, then just add new chordmap with new phrase
+          //if phrase was changed, then just set the new chordmap with the new chord and the new phrase
+          let hexChord = convertHumanStringToHexadecimalChord(document.getElementById(virtualId.toString()+"-chordnew").innerHTML);
+          let hexPhrase = convertHumanStringToHexadecimalPhrase(document.getElementById(virtualId.toString()+"-phraseinput").value);
+          await sendCommandString("SET "+hexChord+" "+hexPhrase);
         }else{
-          //if phrase was not changed, then just add new chordmap with the original phrase
+          //if phrase was not changed, then just add/set new chordmap with the new chord and the original phrase
+          let hexChord = convertHumanStringToHexadecimalChord(document.getElementById(virtualId.toString()+"-chordnew").innerHTML);
+          let hexPhrase = convertHumanStringToHexadecimalPhrase(document.getElementById(virtualId.toString()+"-phraseorig").innerHTML);
+          await sendCommandString("SET "+hexChord+" "+hexPhrase);
         }
         //then delete the old chordmap
+        let hexChordOrigToDelete = convertHumanStringToHexadecimalChord(document.getElementById(virtualId.toString()+"-chordorig").innerHTML);
+        await sendCommandString("DEL "+hexChordOrigToDelete);
+        await readGetOneAndToss();
+        document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
+        document.getElementById(virtualId.toString()+"-phraseinput").value = "";
+        document.getElementById(virtualId.toString()+"-chordorig").innerHTML = document.getElementById(virtualId.toString()+"-chordnew").innerHTML;
+        document.getElementById(virtualId.toString()+"-chordnew").innerHTML = "";
+        document.getElementById(virtualId.toString()+"-delete").disabled = false;
+        document.getElementById(virtualId.toString()+"-commit").disabled = true;
       }else{
         if(document.getElementById(virtualId.toString()+"-phraseinput").value.length>0){
           //if just the phrase was changed, then update the chordmap with the original chord and new phrase
@@ -1655,8 +1675,7 @@ function appendToRow(data){
           //then move the new phrase into the original phrase text location in the table, and clear the new phrase input
           document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
           document.getElementById(virtualId.toString()+"-phraseinput").value = "";
-          document.getElementById(virtualId.toString()+"-chordnew").innerHTML = "";
-          document.getElementById(virtualId.toString()+"-phraseinput").value = "";
+          document.getElementById(virtualId.toString()+"-chordnew").innerHTML = ""; //this should already be empty, but clear anyways
           document.getElementById(virtualId.toString()+"-delete").disabled = false;
           document.getElementById(virtualId.toString()+"-commit").disabled = true;
         }else{
