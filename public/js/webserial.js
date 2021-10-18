@@ -930,7 +930,10 @@ async function setupLineReader(){
   if(serialPort){
     console.log('setupLineRader()');
     let decoder = new TextDecoderStream();
-    lineReaderDone = serialPort.readable.pipeTo(decoder.writable, {signal:abortController1.signal1});//throws error here
+    abortController1 = new AbortController(); //reset abortControler1
+    abortController2 = new AbortController(); //reset abortControler2
+    //preventAbort:true,
+    lineReaderDone = serialPort.readable.pipeTo(decoder.writable, {signal:abortController1.signal});//throws error here
     let inputStream = decoder.readable.pipeThrough(
       new TransformStream(new LineBreakTransformer(), {signal:abortController2.signal})
     );
@@ -978,12 +981,35 @@ async function reboot(){
 async function cancelReader(){
   if(serialPort){
     if(lineReader){
-      if(lineReader.locked){
+      // if(lineReader.locked){
         await lineReader.cancel().then(()=>{console.log('cleared line reader')});
-      }
+        // await serialPort.readable.releaseLock();
+        console.log(abortController1);
+        await abortController1.abort();
+        console.log(serialPort.readable);
+        await lineReaderDone.catch(() => {/* Ingore the error */}); //this frees up the serialPort.readable after the abortControl1.abort() signal
+        // await serialPort.readable.cancel();
+      // }
     }
   }
 }
+
+
+async function resetReader(){
+  console.log('resetting lineReader');
+  if(serialPort){
+    if(lineReader){
+      if(lineReader.locked){
+        await lineReader.releaseLock();
+      }
+      await lineReader.cancel().then(()=>{console.log('cleared line reader')});
+      await lineReaderDone.catch(() => { /* Ingore the error */});
+    }
+    await setupLineReader ();
+  }
+  console.log('reset lineReader');
+}
+
 
 async function sendCommandString(commandString){
   console.log(commandString);
@@ -1051,17 +1077,25 @@ async function getCount(){
   await readGetChordmapCount();
 }
 
+async function selectBase(){
+  await sendCommandString("SELECT BASE");
+  await readGetOneAndToss();
+}
+
 async function getGetAll1(){
+  await selectBase(); //select BASE
   await sendCommandString("GETALL");
   await readGetAllChordmaps();
 }
 
 async function getGetAll2(){
+  await selectBase(); //select BASE
   await sendCommandString("GETSOME 0 "+_chordmapCountOnDevice);
   await readGetSomeChordmaps(_chordmapCountOnDevice);
 }
 
 async function getGetAll(){
+  await selectBase(); //select BASE
   for(let i=0;i<_chordmapCountOnDevice;i++){
     await sendCommandString("GETSOME "
       +(i+0).toString()+" "
@@ -1327,7 +1361,7 @@ async function readDeviceId(){
 }
 
 async function readGetChordmapCount(){
-  const { value, done } = await reader.read();
+  const { value, done } = await lineReader.read();
   if(value){
     _chordmapCountOnDevice = parseInt(value);
     console.log(_chordmapCountOnDevice);
@@ -1347,21 +1381,28 @@ async function readGetHexChord(){
     //   new TransformStream(new LineBreakTransformer())
     // );
     // reader = inputStream.getReader();
+    await readGetOneAndToss(); //this is added for the latest firmware with customers, where decimal version
 
     const { value, done } = await lineReader.read();
-    console.log(['value',value]);
-    // await reader.cancel().then(()=>{console.log(['value',value]);console.log('then cancelled reader');});
-    // await inputDone.catch(() => {});
-    // reader.releaseLock();
-
-    
-    if(value){
-      let arrValue = [...value];
-      strValue = String(arrValue.join(''));
-      console.log(strValue);
-      hexChordString = strValue.substr(0, 16);
-      await readGetOneAndToss(); //the "processing chord:" decimal output
+    if(done){
+      console.log('reader is done');
+      // break;
+    }else{
+      console.log(['value',value]);
+      // await reader.cancel().then(()=>{console.log(['value',value]);console.log('then cancelled reader');});
+      // await inputDone.catch(() => {});
+      // reader.releaseLock();
+  
+      
+      if(value){
+        let arrValue = [...value];
+        strValue = String(arrValue.join(''));
+        console.log(strValue);
+        hexChordString = strValue.substr(0, 16);
+        await readGetOneAndToss(); //the "processing chord:" decimal output
+      }
     }
+    
   }
   return hexChordString;
 }
@@ -1561,6 +1602,7 @@ function appendToRow(data){
     if(btn.value == "edit chord"){
       btn.value = "listening";  
       await enableSerialChordOutput(true); //TODO include code to enable raw inputs and detect chord or else timeout
+      
       let hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
       console.log(convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
       if(hexChord!=null){
@@ -1569,6 +1611,7 @@ function appendToRow(data){
         console.log('hexChord is '+hexChord);
         // await readGetOneAndToss(); //extra processchord: serial output; this is already in the 'readGetHexChord()' method
       }
+      await enableSerialChordOutput(false);//if the lineReader is cancelled, then the code flow resumes here
     }else{
       console.log('cancelling lineReader');
       console.log(await lineReader);
@@ -1576,10 +1619,13 @@ function appendToRow(data){
       // await lineReader.releaseLock();
       // await abortController2.abort();
       //TODO need to find the way to cancel or abort the away lineReader stream; bc this isn't working
-      await cancelReader();
+      await cancelReader(); //forces the reader to call done
+      await setupLineReader();
+      // await resetReader();
       console.log('cancelled lineReader');
     }
-    await enableSerialChordOutput(false);
+    // setTimeout(()=>{enableSerialChordOutput(false);},100); //don't need to call this down here
+    // await enableSerialChordOutput(false); //don't need to call this down here
     btn.value = "edit chord";
   }
 
