@@ -53,17 +53,24 @@
         <!-- <p>Below is an example of how to use the Web Serial API to connect to the CharaChorder's Serial API</p> -->
         <div class="options">
           <button id="connectButton" onclick="startSerialConnection()">Connect</button>
-          <button id="diconnectButton" onclick="disconnectSerialConnection()">Disconnect</button>
-          <button id="idButton" onclick="getId()">Id</button>
+          <button id="disconnectButton" onclick="disconnectSerialConnection()">Disconnect</button>
+          <div id="statusDiv">status: </div>
+          <button id="idButton" onclick="getId()">Get Device Id</button>
+          <div id="deviceDiv">device: </div>
           <button id="countButton" onclick="getCount()">Count Chord Maps</button>
-          <button id="getAllButton" onclick="getGetAll()">Import from Device</button>
-          <button id="addChordMap" onclick="addChordMap()">Add Chord Map</button>
-          <button id="downloadChordMapLibrary" onclick="downloadChordMapLibrary()">Download</button>
-          <button id="uploadChordMapLibrary" onclick="document.getElementById('file-input').click();">Upload</button>
-          <input id="file-input" type="file" name="name" style="display: none;"/>
-          <button id="bootLoaderButton" onclick="bootLoader()">BootLoader</button>
-          <button id="RebootButton" onclick="reboot()">Reboot</button>
-          <button id="CommitAllButton" onclick="commitAll()">Commit All</button>
+          <div id="countDiv">count: >50?</div>
+          <button id="getAllButton" onclick="getGetAll()">Download from Device</button>
+          <button id="addChordMap" onclick="addChordMap()">Add Chord Map</button><br>
+          
+          <button id="exportChordMapLibrary" onclick="exportChordMapLibrary()">Export Library</button>
+          <button id="importChordMapLibrary" disabled=true onclick="document.getElementById('file-input').click();">Import Library</button>
+          <input id="file-input" type="file" name="name" style="display: none;"/><br>
+          
+          <button id="ClearTableButton" onclick="resetDataTable()">Clear Table</button>
+          <button id="CommitAllButton" onclick="commitAll()">Commit All Changes</button><br>
+
+          <button id="bootLoaderButton" onclick="bootLoader()">Activate BootLoader Mode</button>
+          <button id="RebootButton" onclick="reboot()">Reboot Device</button>
           
         </div>
         <div id="terminal">
