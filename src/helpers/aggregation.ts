@@ -5,8 +5,11 @@ export const getCumulativeAverageChordTypeTime = (
 ): string => {
   const statsWithUntypedChordsRemoved = stats.filter(
     (stat) => stat.averageSpeed != 0,
+    
   );
 
+  
+ 
   const average =
     statsWithUntypedChordsRemoved.reduce(
       (a, b) => ({
@@ -19,6 +22,16 @@ export const getCumulativeAverageChordTypeTime = (
 
   return (isNaN(average) ? '0' : average?.toFixed()) || '0';
 };
+
+export const getCumulativeOccurence = (
+  stats: ChordStatistics[],
+): string => {
+  const occur = stats.filter(
+    (stat) => stat.numberOfOccurrences != 0,
+    
+  );
+  return String(occur);
+}
 
 export const getCumulativeValueByPropertyName = <T>(
   object: T[],

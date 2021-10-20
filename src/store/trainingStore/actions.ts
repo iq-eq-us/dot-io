@@ -3,6 +3,8 @@ import type { ChordLibraryRecord } from '../../data/chordLibrary';
 import { generateChords } from '../../helpers/generateTrainingData';
 import type { TrainingScenario } from '../../models/trainingScenario';
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
+
+
 import {
   ChordStatistics,
   createEmptyChordStatistics,
@@ -78,6 +80,11 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.chordsToPullFrom,
       payload,
     );
+
+
+     
+
+
 
     state.numberOfChordsForTrainingLevel =
       state.trainingStatistics.statistics.length;

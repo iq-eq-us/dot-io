@@ -801,6 +801,8 @@ let _keyMapDefaults = {
 }
 
 
+  
+
 //this shouldn't be used anymore
 let _keyMap = [
   'GTM', //0
@@ -884,6 +886,8 @@ if ("serial" in navigator) {
 
 navigator.serial.addEventListener('connect', e => {
   // Add |e.port| to the UI or automatically connect.
+  console.log(_chordmapId);
+
   console.log('serial port connected');
 });
 
@@ -1066,8 +1070,11 @@ async function getGetAll(){
     await sendCommandString("GETSOME "
       +(i+0).toString()+" "
       +(i+1).toString());
+      console.log("MapID");
+  console.log(_chordmapId);
     await readGetOneChordmap();
   }
+  
 }
 
 
@@ -1152,6 +1159,7 @@ function chord_to_noteId(chord){
 }
 
 function convertHumanStringToHexadecimalChord(humanString){
+  
 
   let hexString = "";
   let bigNum = BigInt(0);
@@ -1321,6 +1329,7 @@ async function readDeviceId(){
       await readDeviceId();
     }else{
       _chordmapId = value;
+
       console.log(_chordmapId);
     }
   }

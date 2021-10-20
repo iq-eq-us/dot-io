@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
+import { ChordManagerHeader } from './components/ChordManagerHeader';
 
-export default function Template() {
+const Manager = (): ReactElement => {
+  React.useEffect(() => {
+    document.title = "CharaChorder Launchpad"
+  }, []);
 
   return (
-    <div>
-      
-    </div>
+    <ChordManagerHeader />
+ 
+
   );
-}
+};
+
+export default Manager;
