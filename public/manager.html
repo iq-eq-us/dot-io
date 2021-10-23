@@ -60,10 +60,10 @@
           <button id="countButton" onclick="getCount()">Count Chord Maps</button>
           <div id="countDiv">count: >50?</div>
           <button id="getAllButton" onclick="getGetAll()">Download from Device</button>
-          <button id="addChordMap" onclick="addChordMap()">Add Chord Map</button><br>
+          
           
           <button id="exportChordMapLibrary" onclick="exportChordMapLibrary()">Export Library</button>
-          <button id="importChordMapLibrary" disabled=true onclick="document.getElementById('file-input').click();">Import Library</button>
+          <button id="importChordMapLibrary" onclick="document.getElementById('file-input').click();">Import Library</button>
           <input id="file-input" type="file" name="name" style="display: none;"/><br>
           
           <button id="ClearTableButton" onclick="resetDataTable()">Clear Table</button>
@@ -79,6 +79,8 @@
           <table id="dataTable" >
           </table>
         </div>
+        
+        <button id="addChordMap" onclick="addChordMap()">Add Chord Map</button><br>
     </body>
     <script>
       onDocumentLoaded();

@@ -801,8 +801,6 @@ let _keyMapDefaults = {
 }
 
 
-  
-
 //this shouldn't be used anymore
 let _keyMap = [
   'GTM', //0
@@ -886,8 +884,6 @@ if ("serial" in navigator) {
 
 navigator.serial.addEventListener('connect', e => {
   // Add |e.port| to the UI or automatically connect.
-  console.log(_chordmapId);
-
   console.log('serial port connected');
 });
 
@@ -1130,11 +1126,8 @@ async function getGetAll(){
     await sendCommandString("GETSOME "
       +(i+0).toString()+" "
       +(i+1).toString());
-      console.log("MapID");
-  console.log(_chordmapId);
     await readGetOneChordmap();
   }
-  
 }
 
 
@@ -1206,10 +1199,28 @@ function importChordMapLibrary(e){
   fileReader.onload = readerEvent =>{
     var content = readerEvent.target.result;
     console.log(content);
+    //add here asdf
+    let lines = content.split('\n');
+    lines.forEach(async(line)=> {
+      let strAllValues = line.split(',');
+      let humanChord = strAllValues.shift();
+      let humanPhrase = strAllValues.join(','); //handles if there's a comma in the phrase
+      let hexChordString = convertHumanStringToHexadecimalChord(humanChord);
+      let hexPhraseString = convertHumanStringToHexadecimalPhrase(humanPhrase);
+      
+      
+      strValues = ["","","",""];
+      strValues[0] = humanChord;
+      strValues[1] = humanPhrase;
+      strValues[2] = hexChordString;
+      strValues[3] = hexPhraseString;
+      console.log(strValues);
+  
+      _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
+  
+      appendToRow(strValues,true);
+    });
   }
-  //console.log(_chordMaps);
-  //open file dialog box with only csv allowed
-  //parse
 }
 
 
@@ -1228,15 +1239,15 @@ function chord_to_noteId(chord){
   return full;
 }
 
-function convertHumanStringToHexadecimalChord(humanString){
-  
 
-  let hexString = "";
+
+async function convertHumanStringToBigNum(humanString){
+  console.log('convertHumanStringToBigNum');
   let bigNum = BigInt(0);
   //parse the pieces with _+_
-  humanStringParts = humanString.split(' + '); //assumes plus isn't being used; bc default is = for the +/= key
+  let humanStringParts = humanString.split(' + '); //assumes plus isn't being used; bc default is = for the +/= key
   console.log(humanStringParts);
-  humanStringParts.forEach(function(part){
+  humanStringParts.forEach(async (part)=>{
     let actionId = _actionMap.indexOf(part);
     console.log(actionId);
     if(_chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
@@ -1248,13 +1259,47 @@ function convertHumanStringToHexadecimalChord(humanString){
       }
       
       console.log(keyId);
-      bigNum+=BigInt(noteId_to_chord(keyId));
+      bigNum = await(bigNum,BigInt(noteId_to_chord(keyId)));
+      // bigNum+= BigInt(noteId_to_chord(keyId));
       console.log(bigNum);
     }else{
       //use other keymap
     }
   });
-  hexString = bigNum.toString(16).toUpperCase();
+  console.log(bigNum);
+  return bigNum;
+}
+
+
+
+function convertHumanStringToHexadecimalChord(humanString){
+
+  let bigNum = BigInt(0);
+  //parse the pieces with _+_
+  let humanStringParts = humanString.split(' + '); //assumes plus isn't being used; bc default is = for the +/= key
+  console.log(humanStringParts);
+  humanStringParts.forEach(async (part)=>{
+    let actionId = _actionMap.indexOf(part);
+    console.log(actionId);
+    if(_chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
+      let keyId;
+      if(actionId<0x0200){
+        keyId = (_keyMapDefaults['CHARACHORDER']).indexOf(actionId);
+      }else{
+        keyId = actionId-0x0200; //using the physical key position
+      }
+      
+      console.log(keyId);
+      bigNum+= BigInt(noteId_to_chord(keyId));
+      console.log(bigNum);
+    }else{
+      //use other keymap
+    }
+  });
+  console.log(bigNum);
+
+  
+  let hexString = bigNum.toString(16).toUpperCase();
   hexString = "0".repeat(16-hexString.length)+hexString; //add leading zeros up to 16 characters
   console.log(hexString);
 
@@ -1400,7 +1445,6 @@ async function readDeviceId(){
       await readDeviceId();
     }else{
       _chordmapId = value;
-
       console.log(_chordmapId);
     }
   }
@@ -1623,7 +1667,7 @@ function addHeadersToDataTable(){
   
 }
 
-function appendToRow(data){
+function appendToRow(data,isFromFile=false){
   var dataTable = document.getElementById("dataTable");
   var row = dataTable.insertRow(-1); //insert row at end of table
 
@@ -1802,8 +1846,19 @@ function appendToRow(data){
       }
     }
   }
+  if(isFromFile){
+    phraseTextInput.value = data[1];
+    btnCommit.disabled = false;
+  }
 }
 
+
+function pressCommitButton(virtualId){
+  let commitButton = document.getElementById(virtualId.toString()+"-commit");
+  if(commitButton.disabled==false){
+    commitButton.click();
+  }
+}
 
 function commitAll(){
   console.log("commitAll()");
@@ -1812,20 +1867,15 @@ function commitAll(){
   //TODO check if we need to skip the header row
   for (var i = dataTable.rows.length-1; i>=1; i--) {
     //iterate through rows
-    
     let row = dataTable.rows[i];
-    console.log(row);
-    console.log(row.cells);
-    console.log(row.cells[0]);
-    console.log(row.cells[0].innerHTML);
+    // console.log(row);
+    // console.log(row.cells);
+    // console.log(row.cells[0]);
+    // console.log(row.cells[0].innerHTML);
     let virtualId = parseInt(row.cells[0].innerHTML);
     console.log('table row '+i+' has virtualId of '+virtualId);
-    document.getElementById(virtualId.toString()+"-commit")
-    let commitButton = document.getElementById(virtualId.toString()+"-commit");
-    if(commitButton.disabled==false){
-      commitButton.click();
-    }
-    
+    // document.getElementById(virtualId.toString()+"-commit")
+    setTimeout(pressCommitButton,i*100,virtualId);
     //rows would be accessed using the "row" variable assigned in the for loop
  }
 }
