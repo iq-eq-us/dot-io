@@ -13,10 +13,7 @@ import {
 import { CardDataRowDisplay } from './components/CardDataRowDisplay';
 import { BrandingMaterial } from './components/BrandingMaterial';
 import { CopyrightNotice } from './components/CopyrightNotice';
-import { ConnectButton } from '../manager/components/connect'
-import { DisconnectButton } from '../manager/components/disconnect'
-import { ImportChords } from '../manager/components/importChords'
-import { Graph } from '../manager/components/chordGraphs'
+
 
 
 // Change this variable to true to display Improving, Code Authority, and Code Launch branding material at the bottom of the dashboard screen

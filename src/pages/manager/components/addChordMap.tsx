@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import {appendToRow} from "../../manager/controls/mainControls"
 
 export function addChordMap(){
-    appendToRow(["0000000000000000","< blank>","",""]);
+    return appendToRow(["0000000000000000","< blank>","",""]);
   }
 
   export function AddChordMap(): ReactElement {

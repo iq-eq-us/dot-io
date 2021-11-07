@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { render } from 'react-dom';
 import {
     MainControls,
      sendCommandString, 
@@ -62,11 +61,11 @@ export function addHeadersToDataTable(){
     
   }
   
-  function appendToRow(data){
+  function appendToRow(data:any){
     const dataTable = document.getElementById("dataTable") as HTMLTableElement;
-    let row = dataTable.insertRow(-1); //insert row at end of table
+    const row = dataTable.insertRow(-1); //insert row at end of table
   
-    let cells = []
+    const cells: any = []
     cells.push(row.insertCell(-1)); //0 virtual id
     cells.push(row.insertCell(-1)); //1 chord edit button
     cells.push(row.insertCell(-1)); //2 chord string (locked)
@@ -91,7 +90,7 @@ export function addHeadersToDataTable(){
     const btnCommit = document.createElement('input');
     
   
-    let virtualId = MainControls._chordMapIdCounter;
+    const virtualId = MainControls._chordMapIdCounter;
     
     cells[0].innerHTML = virtualId; //local id number
     MainControls._chordMapIdCounter++;
@@ -102,16 +101,20 @@ export function addHeadersToDataTable(){
     btnEdit.value = "edit chord";
     cells[1].appendChild(btnEdit);
     btnEdit.onclick = async function(){
-      let btn = document.getElementById(virtualId.toString()+"-edit") as HTMLInputElement;
+      const btn = document.getElementById(virtualId.toString()+"-edit") as HTMLInputElement;
       if(btn.value == "edit chord"){
         btn.value = "listening";  
         await enableSerialChordOutput(true); //TODO include code to enable raw inputs and detect chord or else timeout
         
-        let hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
+        const hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
         console.log(convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
         if(hexChord!=null){
-          document.getElementById(virtualId.toString()+"-chordnew").innerHTML = convertHexadecimalChordToHumanString(hexChord);
-          document.getElementById(virtualId.toString()+"-commit").disabled = false;
+          const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+          element.innerHTML = convertHexadecimalChordToHumanString(hexChord);
+    
+          const elementCom: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+          elementCom.disabled = false;
+
           console.log('hexChord is '+hexChord);
           // await readGetOneAndToss(); //extra processchord: serial output; this is already in the 'readGetHexChord()' method
         }
@@ -215,7 +218,7 @@ export function addHeadersToDataTable(){
         await sendCommandString("DEL "+data[2]);
         await readGetOneAndToss();
         //then remove the row from the table
-        let i = this.parentNode.parentNode.rowIndex;
+        const i = this.parentNode.parentNode.rowIndex;
         console.log('deleting row '+i.toString());
         dataTable.deleteRow(i);
       }else{
@@ -225,15 +228,15 @@ export function addHeadersToDataTable(){
           const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
           if(phraseinput.value.length>0){
             //if phrase was changed, then just set the new chordmap with the new chord and the new phrase
-            let hexChord = convertHumanStringToHexadecimalChord(chordNew.innerHTML);
-            let hexPhrase = convertHumanStringToHexadecimalPhrase(phraseinput.value);
+            const hexChord = convertHumanStringToHexadecimalChord(chordNew.innerHTML);
+            const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseinput.value);
             await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("SET "+hexChord+" "+hexPhrase);
             //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
             const chordig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
 
            
-            let hexChordOrigToDelete = convertHumanStringToHexadecimalChord(chordig.innerHTML);
+            const hexChordOrigToDelete = convertHumanStringToHexadecimalChord(chordig.innerHTML);
             await sendCommandString("DEL "+hexChordOrigToDelete);
             await readGetOneAndToss();
             const phraseorig: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement; //.innerHTML = "status: opened serial port";
@@ -286,8 +289,8 @@ export function addHeadersToDataTable(){
             const phraseinput5: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
 
 
-            let hexChord = convertHumanStringToHexadecimalChord(chordorig.innerHTML);
-            let hexPhrase = convertHumanStringToHexadecimalPhrase(phraseinput5.value);
+            const hexChord = convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+            const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseinput5.value);
             await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("SET "+hexChord+" "+hexPhrase);
             //then move the new phrase into the original phrase text location in the table, and clear the new phrase input

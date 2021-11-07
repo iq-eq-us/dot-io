@@ -1,9 +1,6 @@
 import { useStoreState, useStoreActions } from '../store/store';
-import type { ChordStatistics } from '../models/trainingStatistics';
 import { getCumulativeAverageChordTypeTime, getCumulativeOccurence } from '../helpers/aggregation';
-import { generateChords } from '../helpers/generateTrainingData';
-import {useState} from 'react';
-import {storeData, storeAverageData} from '../pages/manager/components/chordGraphs'
+
 
 
 export const useWordsPerMinute = (): number => {
@@ -61,8 +58,7 @@ export const useWordsPerMinute = (): number => {
 
   let averageSpeed = 0;
   let averageSpeedCount= 0;
-  let averageWPM = localStorage.getItem("averageSpeed");
-  let averageWPMCount = localStorage.getItem("averageSpeedCount");
+ 
   
 
   const chordLength = totalNumberOfCharactersTyped/5.23;

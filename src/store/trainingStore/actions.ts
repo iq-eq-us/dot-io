@@ -3,6 +3,7 @@ import type { ChordLibraryRecord } from '../../data/chordLibrary';
 import { generateChords } from '../../helpers/generateTrainingData';
 import type { TrainingScenario } from '../../models/trainingScenario';
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
+import { _keyMapDefaults  } from "../../pages/manager/controls/maps";
 
 
 import {
