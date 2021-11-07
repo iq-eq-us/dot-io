@@ -129,7 +129,8 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
   async function readGetSomeChordmaps(expectedLineCount=100){
     console.log('readGetSome('+expectedLineCount+')');
     let i = 0;
-    while (true) {
+    const tCheck = true;
+    while (tCheck) {
       const { value } = await MainControls.lineReader.read();
       i++;
       if (value) {
@@ -671,7 +672,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     }
   }
   function pressCommitButton(virtualId){
-    let commitButton = document.getElementById(virtualId.toString()+"-commit");
+    const commitButton = document.getElementById(virtualId.toString()+"-commit");
     if(commitButton.disabled==false){
       commitButton.click();
     }

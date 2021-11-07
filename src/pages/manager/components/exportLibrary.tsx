@@ -5,11 +5,11 @@ import {_chordMaps} from '../controls/maps'
 
 
 function exportChordMapLibrary(){
-    let dataTable = document.getElementById("dataTable");
+    const dataTable = document.getElementById("dataTable");
     //iterate through table from bottom to top to capture all the chords and phrases
     
     for (let i = 1; i<dataTable.rows.length; i++) { //start a 1 to skip the header
-      let row = dataTable.rows[i];
+      const row = dataTable.rows[i];
       _chordMaps.push([row.cells[2].childNodes[0].innerHTML,row.cells[3].childNodes[0].innerHTML]);
     }
   

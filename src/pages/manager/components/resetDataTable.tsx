@@ -6,7 +6,7 @@ import {addHeadersToDataTable} from '../components/addHeaders'
 
 
 export function resetDataTable(){
-    let dataTable = document.getElementById("dataTable") as HTMLTableElement;
+    const dataTable = document.getElementById("dataTable") as HTMLTableElement;
     dataTable.innerHTML = "";
     addHeadersToDataTable();
     MainControls._chordMapIdCounter = 0;

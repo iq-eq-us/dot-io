@@ -1,11 +1,7 @@
 import React, { ReactElement } from 'react';
-import {actionMap, keyMapDefaults, _chordMaps} from '../controls/maps'
+import {_chordMaps} from '../controls/maps'
 import {
-  MainControls,
-  sendCommandString, 
-  readGetOneAndToss, 
-  selectBase, 
-  selectConfig,
+
   convertHumanStringToHexadecimalChord,
   convertHumanStringToHexadecimalPhrase,
   appendToRow,
@@ -35,19 +31,19 @@ function importChordMapLibrary(e : any){
     fileReader.readAsText(file,'UTF-8');  
 
     fileReader.onload = readerEvent =>{
-      let content = readerEvent.target.result;
+      const content = readerEvent.target.result;
       console.log(content);
       //add here asdf
-      let lines = content.split('\n');
+      const lines = content.split('\n');
       lines.forEach(async(line)=> {
-        let strAllValues = line.split(',');
-        let humanChord = strAllValues.shift();
-        let humanPhrase = strAllValues.join(','); //handles if there's a comma in the phrase
-        let hexChordString = convertHumanStringToHexadecimalChord(humanChord);
-        let hexPhraseString = convertHumanStringToHexadecimalPhrase(humanPhrase);
+        const strAllValues = line.split(',');
+        const humanChord = strAllValues.shift();
+        const humanPhrase = strAllValues.join(','); //handles if there's a comma in the phrase
+        const hexChordString = convertHumanStringToHexadecimalChord(humanChord);
+        const hexPhraseString = convertHumanStringToHexadecimalPhrase(humanPhrase);
         
         
-        let strValues = ["","","",""];
+        const strValues = ["","","",""];
         strValues[0] = humanChord;
         strValues[1] = humanPhrase;
         strValues[2] = hexChordString;
