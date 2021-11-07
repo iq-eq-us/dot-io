@@ -1,7 +1,6 @@
 import  ApexCharts from 'apexcharts';
-import React, { ReactElement, Component } from 'react';
-import ReactApexChart from "react-apexcharts"
-import { useStoreState, useStoreActions } from '../../../store/store';
+import React, { ReactElement } from 'react';
+
 
 
 export function isThereWPMData(){
