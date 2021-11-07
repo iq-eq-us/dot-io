@@ -42,7 +42,6 @@ const Manager = (): ReactElement => {
     <ConnectButton/>
     <DisconnectButton/>
     <div/>    
-    <GetID/>
     <BootLoaderButton/>
     <RebootButton/>
     <Clear/>
