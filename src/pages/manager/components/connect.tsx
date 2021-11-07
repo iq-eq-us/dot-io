@@ -50,17 +50,12 @@ export async function startSerialConnection() {
       const decoder = new TextDecoderStream();
 
       //preventAbort:true,
-      console.log("writable "+decoder.writable)
-      
 
-      console.log(MainControls.abortController1.signal.aborted);
-
-      try {
+        console.log("writable "+decoder.writable)
+        console.log(MainControls.abortController1.signal.aborted);
         //MainControls.serialPort.readable.releaseLock()
-        MainControls.lineReaderDone = MainControls.serialPort.readable.pipeTo(decoder.writable, {preventAbort:true, signal:MainControls.abortController1.signal}).catch( console.error );//throws error here
-      } catch(e) {
-        console.log(e);
-    }
+        MainControls.abortController1 = new AbortController();
+        MainControls.lineReaderDone = MainControls.serialPort.readable.pipeTo(decoder.writable, {signal:MainControls.abortController1.signal});
 
     
       const inputStream = decoder.readable.pipeThrough(

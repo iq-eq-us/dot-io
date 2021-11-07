@@ -324,7 +324,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       controller.enqueue(this.chunks);
     }
   }
-  export function appendToList(str){
+  export function appendToList(str:any){
     const ul = document.getElementById("list");
     const li = document.createElement("li");
 
@@ -332,13 +332,13 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     ul.appendChild(li);
   }
 
-  export function ascii_to_hexa(arr) {
+  export function ascii_to_hexa(arr:any) {
     for (let i = 0; i < arr.length; i++) {
       arr[i] = Number(arr[i].charCodeAt(0)).toString(16);
     }
    }
 
-  export function convertHumanStringToHexadecimalPhrase(humanString){
+  export function convertHumanStringToHexadecimalPhrase(humanString:string) : string{
     let hexString = "";
     for (let i = 0; i<humanString.length; i ++) 
     {
@@ -350,7 +350,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     return hexString;
   }
 
-  export function convertHumanStringToHexadecimalChord(humanString : any){
+  export function convertHumanStringToHexadecimalChord(humanString) : string{
   
 
     let hexString = "";
@@ -358,13 +358,14 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     //parse the pieces with _+_
     const humanStringParts = humanString.split(' + '); //assumes plus isn't being used; bc default is = for the +/= key
     console.log(humanStringParts);
-    humanStringParts.forEach(function(part : any){
+    humanStringParts.forEach(async (part:any)=>{
       const actionId = _actionMap.indexOf(part);
-      console.log(actionId);
+      console.log('ActionID: '+actionId);
       if(MainControls._chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
         let keyId;
         if(actionId<0x0200){
           keyId = (_keyMapDefaults[0]).indexOf(actionId);
+          console.log(keyId);
         }else{
           keyId = actionId-0x0200; //using the physical key position
         }
@@ -376,6 +377,8 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
         //use other keymap
       }
     });
+    console.log(bigNum);
+
     hexString = bigNum.toString(16).toUpperCase();
     hexString = "0".repeat(16-hexString.length)+hexString; //add leading zeros up to 16 characters
     console.log(hexString);
@@ -383,7 +386,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     return hexString;
   }
 
-  export function noteId_to_chord(note:any){
+  export function noteId_to_chord(note:any) : bigint{
     return (BigInt((2*((note-1)%5))+1)) * (BigInt(10)**BigInt((Math.floor((note-1)/5))));
   }
 
@@ -415,7 +418,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
   }
 
 
-  export function appendToRow(data, isFromFile=false){
+  export function appendToRow(data, isFromFile=false) : any{
     const dataTable = document.getElementById("dataTable") as HTMLTableElement;
     const row = dataTable.insertRow(-1); //insert row at end of table
   
@@ -445,9 +448,9 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     
   
     const virtualId = MainControls._chordMapIdCounter;
+    console.log("ChordMap Counter: "+virtualId);
     cells[0].innerHTML = virtualId; //local id number
-    cells[0].setAttribute('style','border: 1px solid #D3D3D3;')
-
+    cells[0].setAttribute('style','border: 1px solid #D3D3D3;');
     MainControls._chordMapIdCounter++;
   
     btnEdit.id = virtualId.toString()+"-edit";
@@ -467,15 +470,16 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
         await enableSerialChordOutput(true); //TODO include code to enable raw inputs and detect chord or else timeout
         
         const hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
-        console.log(convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
+        console.log("Listening Hex Chord "+convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
+        
         if(hexChord!=null){
             
           const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
           element.innerHTML = convertHexadecimalChordToHumanString(hexChord);
           const elementT: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement; //.innerHTML = "status: opened serial port";
           elementT.disabled = false;
-
           console.log('hexChord is '+hexChord);
+
           // await readGetOneAndToss(); //extra processchord: serial output; this is already in the 'readGetHexChord()' method
         }
         await enableSerialChordOutput(false);//if the lineReader is cancelled, then the code flow resumes here
@@ -553,7 +557,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     cells[7].setAttribute('style','border: 1px solid #D3D3D3;')
 
     btnRevert.onclick = function(){
-      const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement;
+      const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLElement;
       element.innerHTML = "";
       const elementPhase: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;
       elementPhase.value = "";
@@ -585,28 +589,28 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       }else{
         const chordNew: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
         if(chordNew.innerHTML.length>0){
-          console.log("Check Length "+ chordNew.innerHTML.length);
           //if chord was changed, then we need to delete the chord from the device first
           const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
           if(phraseinput.value.length>0){
             //if phrase was changed, then just set the new chordmap with the new chord and the new phrase
-            const hexChord = convertHumanStringToHexadecimalChord(chordNew.innerHTML);
-            const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseinput.value);
-            console.log("Chord "+hexChord);
-            console.log("Phrase "+hexPhrase);
+            const chordNewIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+            const phraseInputIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+
+            const hexChord = convertHumanStringToHexadecimalChord(chordNewIn.innerHTML);
+            const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseInputIn.value);
             await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("SET "+hexChord+" "+hexPhrase);
+
             //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
             const chordorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
-            const phraseorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
-
            
             const hexChordOrigToDelete = convertHumanStringToHexadecimalChord(chordorig.innerHTML);
             await sendCommandString("DEL "+hexChordOrigToDelete);
             await readGetOneAndToss();
-            const phraseinput2: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
 
-            
+            const phraseorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+
+            const phraseinput2: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
             phraseorig.innerHTML = phraseinput2.value;
           }else{
             //if phrase was not changed, then just add/set new chordmap with the new chord and the original phrase
@@ -623,14 +627,14 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
             await readGetOneAndToss();
             // document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
           }
-          const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
           const phraseinput3: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+          const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
           const chordnew: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLElement;; //.innerHTML = "status: opened serial port";
           const delete2: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
           const commit2: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
 
-          chordorig.innerHTML = chordnew.innerHTML;
           phraseinput3.value = "";
+          chordorig.innerHTML = chordnew.innerHTML;
           chordnew.innerHTML = "";
           delete2.disabled = false;
           commit2.disabled = true;
@@ -639,23 +643,20 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
 
           if(check2.value.length>0){
             //if just the phrase was changed, then update the chordmap with the original chord and new phrase
-
-            const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port"; 
+            const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement; //.innerHTML = "status: opened serial port"; 
             const phraseinput5: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
-
-
             const hexChord = convertHumanStringToHexadecimalChord(chordorig.innerHTML);
             const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseinput5.value);
             await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("SET "+hexChord+" "+hexPhrase);
             //then move the new phrase into the original phrase text location in the table, and clear the new phrase input
-            const chordorig3: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
+            const phraseorig3: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
             const phraseinput3: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
             const chordnew: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLElement;; //.innerHTML = "status: opened serial port";
             const delete3: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
             const commit3: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
 
-            chordorig3.innerHTML = chordnew.innerHTML;
+            phraseorig3.innerHTML = phraseinput3.innerHTML;
             phraseinput3.value = "";
             chordnew.innerHTML = "";
             delete3.disabled = false;
