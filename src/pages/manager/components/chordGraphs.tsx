@@ -14,7 +14,7 @@ return false;
 }
 
 
-export function storeData(data, dateData){
+export function storeData(data:any, dateData:any){
 
   console.log("hererererererer")
   const wpmGraphWPM = [];
@@ -24,8 +24,8 @@ export function storeData(data, dateData){
   const checkExistWPM = localStorage.getItem("wpmGraphWPM");
   const checkExistWPMDc = JSON.parse(checkExistWPMD);
   const checkExistWPMc = JSON.parse(checkExistWPM);
-console.log(checkExistWPMDc);
-console.log(checkExistWPMc);
+  console.log(checkExistWPMDc);
+  console.log(checkExistWPMc);
 
 if((checkExistWPMD == null)&&(checkExistWPM== null)){
   console.log('It doesnt exist');

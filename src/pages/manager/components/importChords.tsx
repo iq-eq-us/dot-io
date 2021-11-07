@@ -65,9 +65,6 @@ function importChordMapLibrary(e : any){
   }
   function click(){
 
-
-      
-   
       const element: HTMLElement = document.getElementById("file-input") as HTMLInputElement; //.innerHTML = "status: opened serial port";
       element.addEventListener('input', importChordMapLibrary);
        console.log('Clicked')
