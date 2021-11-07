@@ -1,5 +1,30 @@
 import React, { ReactElement } from 'react';
 import { ChordManagerHeader } from './components/ChordManagerHeader';
+import { ConnectButton } from '../manager/components/connect'
+import { DisconnectButton } from '../manager/components/disconnect'
+import { ImportChords } from '../manager/components/importChords'
+import { BootLoaderButton } from '../manager/components/bootLoader'
+import { GetID } from '../manager/components/getID'
+import { GetCountButton } from '../manager/components/countChords'
+import { RebootButton } from '../manager/components/reboot'
+import { AddHeaders } from '../manager/components/addHeaders'
+import { Download } from '../manager/components/download'
+import { Clear } from '../manager/components/resetDataTable'
+import { Export } from '../manager/components/exportLibrary'
+import { AddChordMap } from '../manager/components/addChordMap'
+import { Graph } from '../manager/components/chordGraphs'
+
+
+
+import {
+  ManagerPageContainer,
+  Table,
+  ChordContainer,
+  PageContainer,
+  TopSectionContainer
+  
+  
+} from '../manager/manager.styled';
 
 const Manager = (): ReactElement => {
   React.useEffect(() => {
@@ -7,10 +32,47 @@ const Manager = (): ReactElement => {
   }, []);
 
   return (
-    <ChordManagerHeader />
- 
+    
 
+<React.Fragment>
+<ManagerPageContainer>
+  <TopSectionContainer>
+   <ChordManagerHeader/>
+   <Table>
+    <ConnectButton/>
+    <DisconnectButton/>
+    <div/>    
+    <GetID/>
+    <BootLoaderButton/>
+    <RebootButton/>
+    <Clear/>
+    <div/>
+    <ImportChords/>
+    <Download/>
+    <Export/>
+    </Table>
+    <PageContainer>
+    <AddHeaders/>
+    <ChordContainer>
+    <div/>
+    <div/>
+
+    <AddChordMap/>
+    </ChordContainer>
+
+    </PageContainer>
+  
+    </TopSectionContainer>
+    </ManagerPageContainer>
+    </React.Fragment>
+
+
+
+
+     
+    
   );
+
 };
 
 export default Manager;

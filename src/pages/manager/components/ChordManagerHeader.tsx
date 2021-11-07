@@ -11,7 +11,7 @@ export function ChordManagerHeader(): ReactElement {
       </div>
       <p className="lg:w-1/2 w-full leading-relaxed text-gray-300 font-semibold">
         Welcome to the ChordManager! Here you can exercise full control over your CharaChorder.
-        Below is an example of how to use the Web Serial API to connect to the CharaChorder&apos;s Serial API
+        
 
 
       </p>

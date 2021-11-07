@@ -7,6 +7,7 @@ export interface StatisticsStoreState {
   totalSavedCharacterChordStats: Computed<StatisticsStore, TrainingStatistics>;
   totalSavedChordStats: Computed<StatisticsStore, TrainingStatistics>;
   fastestRecordedWordsPerMinute: Record<TrainingScenario, number>;
+  fastestRecordedWordsPerMinuteGraph: string[][];
 }
 
 export interface StatisticsStoreActions {
@@ -16,7 +17,9 @@ export interface StatisticsStoreActions {
     StatisticsStore,
     Record<TrainingScenario, number>
   >;
-  clearStatsForOneModule: Action<StatisticsStore, TrainingScenario>;
+ 
+  setfastestRecordedWordsPerMinuteGraph: Action<string[][]>;
+
 }
 
 export type StatisticsStore = StatisticsStoreState & StatisticsStoreActions;

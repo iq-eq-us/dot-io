@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
+import { useHistory } from 'react-router-dom';
+import { ROUTER_PATHS } from '../../../components/router';
 
 export function CardDataRowDisplay(): ReactElement {
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
@@ -23,6 +25,7 @@ export function CardDataRowDisplay(): ReactElement {
     );
     if (shouldClear) clearStatsWithoutPrompt();
   };
+  const history = useHistory();
 
   return (
     <CardDataRow>
@@ -37,7 +40,7 @@ export function CardDataRowDisplay(): ReactElement {
         Clear Progress
       </RefreshButton>
       <div className="feather feather-trash-2 p-0.5 text-gray-600">
-      <a href="https://lemon-flower-01b05aa10.azurestaticapps.net/manager.html" className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Chord Manager</a>
+      <button onClick={() => {history.push(ROUTER_PATHS.manager);} }className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Chord Manager</button>
       </div>
     </CardDataRow>
   );

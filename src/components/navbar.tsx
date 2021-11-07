@@ -12,20 +12,25 @@ const Navbar = (): ReactElement => {
   const needsBackButton = history.location.pathname.endsWith(
     ROUTER_PATHS.training,
   );
-
+  const needsBackButton2 = history.location.pathname.endsWith(
+    ROUTER_PATHS.manager,
+);
   return (
     <nav
       className={`bg-[#201F20] h-16 flex flex-row items-center justify-between pr-8 ${
-        !needsBackButton && 'flex-row-reverse'
-      } `}
+        (!needsBackButton && 'flex-row-reverse') && (!needsBackButton2 && 'flex-row-reverse') 
+      } } `}
     >
       {needsBackButton && <BackButton />}
+      {needsBackButton2 && <BackButton />}
       <Link href="#/" aria-current="page">
         <Logo src={CharachorderLogoImage} alt="" />
       </Link>
       
       
     </nav>
+
+    
     
   );
 };

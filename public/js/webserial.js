@@ -903,8 +903,10 @@ let abortController2 = new AbortController();
 async function disconnectSerialConnection(){
   console.log('disconnectSerialConnection()');
   if(serialPort){
+ 
     console.log('closing serial port');
     lineReader.releaseLock();
+
     console.log(serialPort.readable);
     await abortController1.abort();
     await lineReaderDone.catch(() => { /* Ingore the error */});

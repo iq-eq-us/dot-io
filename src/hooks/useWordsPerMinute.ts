@@ -2,6 +2,8 @@ import { useStoreState, useStoreActions } from '../store/store';
 import type { ChordStatistics } from '../models/trainingStatistics';
 import { getCumulativeAverageChordTypeTime, getCumulativeOccurence } from '../helpers/aggregation';
 import { generateChords } from '../helpers/generateTrainingData';
+import {useState} from 'react';
+import {storeData, storeAverageData} from '../pages/manager/components/chordGraphs'
 
 
 export const useWordsPerMinute = (): number => {
@@ -9,14 +11,27 @@ export const useWordsPerMinute = (): number => {
     (store) => store.timeAtTrainingStart,
   );
   
+ 
+
   const trainingSceneario = useStoreState((store) => store.currentTrainingScenario);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
+
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
+  );
+
+  
+  const fastestRecordedWordsPerMinuteGraph = useStoreState(
+    (store) => store.fastestRecordedWordsPerMinuteGraph,
   );
   const setFastestWPM = useStoreActions(
     (store) => store.setFastestRecordedWordsPerMinute,
   );
+
+ const setGraphStats = useStoreActions(
+    (store) => store.setfastestRecordedWordsPerMinuteGraph
+);
+
 
 
 
@@ -44,13 +59,20 @@ export const useWordsPerMinute = (): number => {
   const average = parseInt(getCumulativeAverageChordTypeTime(y));
 
 
-
+  let averageSpeed = 0;
+  let averageSpeedCount= 0;
+  let averageWPM = localStorage.getItem("averageSpeed");
+  let averageWPMCount = localStorage.getItem("averageSpeedCount");
   
 
   const chordLength = totalNumberOfCharactersTyped/5.23;
 
+
+
 if(trainingSceneario == 'ALPHABET'){
     if(totalNumberOfCharactersTyped == 0) {
+
+
 
       wpm =0;
     } else {
@@ -58,6 +80,15 @@ if(trainingSceneario == 'ALPHABET'){
         const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
         const averageCharacterPerMin = 60000/millisecondsPerCharacter;
         wpm = (averageCharacterPerMin/5.23)/5;
+
+        averageSpeed =averageSpeed + wpm;
+        averageSpeedCount++;
+
+        
+        console.log("avgS" + averageSpeed);
+        const currentDate = new Date();
+
+       // storeAverageData( wpm, currentDate );
     }
 
   } else{
@@ -70,7 +101,15 @@ if(trainingSceneario == 'ALPHABET'){
         const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
         const averageCharacterPerMin = 60000/millisecondsPerCharacter;
         wpm = (averageCharacterPerMin/5.23);
-    }
+
+        averageSpeed += wpm;
+        averageSpeedCount++; 
+        const currentDate = new Date();
+        
+       // storeAverageData( averageSpeed, currentDate );
+        console.log("hereee fist 22")
+
+      }
 
   }
 
@@ -80,16 +119,12 @@ if(trainingSceneario == 'ALPHABET'){
   const charactersTypedCorrectly = totalNumberOfCharactersTyped;
   const charactersTypedCorrectlyPerMinute =
     charactersTypedCorrectly / timeDifferenceInMinutes;
-  //const wpm = charactersTypedCorrectlyPerMinute / 5;
-  //const wpm = ((totalNumberOfCharactersTyped/5)/timeDifferenceInMinutes);
 
 
   const trainingScenario = useStoreState(
-    (store) => store.currentTrainingScenario,
-  );
+    (store) => store.currentTrainingScenario);
 
   
-
   if (trainingSettings.isAutoWrite) {
     if(chordLength <= 5) {
 
@@ -98,10 +133,15 @@ if(trainingSceneario == 'ALPHABET'){
     }
     else if (typeof trainingScenario === 'string') {
       if (wpm > fastestRecordedWPM[trainingScenario]) {
+        const currentDate = new Date();
+
+  
+         // storeData(wpm, currentDate);
         setFastestWPM({
           ...fastestRecordedWPM,
           [trainingScenario]: wpm,
         });
+
       }
     }
   }
