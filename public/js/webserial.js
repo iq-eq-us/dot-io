@@ -871,7 +871,7 @@ let _keyMap = [
 _keyMap = _keyMap.reverse();
 
 
-let _chordMaps = [];
+const _chordMaps = [];
 
 if ("serial" in navigator) {
   // The Web Serial API is supported.

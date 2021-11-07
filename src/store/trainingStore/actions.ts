@@ -3,7 +3,7 @@ import type { ChordLibraryRecord } from '../../data/chordLibrary';
 import { generateChords } from '../../helpers/generateTrainingData';
 import type { TrainingScenario } from '../../models/trainingScenario';
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
-import { _keyMapDefaults, _actionMap, _keyMap } from "../../pages/manager/controls/maps";
+import { _keyMapDefaults  } from "../../pages/manager/controls/maps";
 
 
 import {
@@ -82,10 +82,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       payload,
     );
 
-
-     
-    let actionId = _keyMapDefaults;
-      console.log(actionId);
 
 
     state.numberOfChordsForTrainingLevel =

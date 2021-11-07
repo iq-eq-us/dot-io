@@ -1,12 +1,5 @@
 import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
-import {
-  ManagerPageContainer,
-  Table,
-  ButtonEdit,
-  Button2,
-  
-  
-} from '../manager.styled';
+
 
   export class MainControls{
      public static serialPort: any;

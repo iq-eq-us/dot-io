@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import {_chordMaps} from '../controls/maps'
-import {MainControls, sendCommandString, readGetOneAndToss,} from '../controls/mainControls'
+import {MainControls} from '../controls/mainControls'
 import {addHeadersToDataTable} from '../components/addHeaders'
 
 

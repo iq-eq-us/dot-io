@@ -842,7 +842,7 @@ const  CHARACHORDER = [
   
     ];
     
-    let _chordMaps = [];
+    const _chordMaps = [];
 
 
 export { _actionMap, _keyMapDefaults, _keyMap, _chordMaps };
