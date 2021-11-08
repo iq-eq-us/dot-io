@@ -8,7 +8,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
      public static lineReaderDone: any;
      public static abortController1 = new AbortController();
      public static abortController2 = new AbortController();
-     public static decoder = new TextDecoderStream();
+    // public static decoder = new TextDecoderStream();
      public static _chordmapId: any  = "Default";
      public static _chordmapCountOnDevice: any  = 50;
      public static _firmwareVersion: any  = "0";
@@ -291,12 +291,12 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
   export async function setupLineReader(){
     if(MainControls.serialPort){
       console.log('setupLineRader()');
-      MainControls.decoder = new TextDecoderStream();
+      const decoder = new TextDecoderStream();
       MainControls.abortController1 = new AbortController(); //reset abortControler1
       MainControls.abortController2 = new AbortController(); //reset abortControler2
       //preventAbort:true,
-      MainControls.lineReaderDone = MainControls.serialPort.readable.pipeTo(MainControls.decoder.writable, {preventAbort:true,signal:MainControls.abortController1.signal});//throws error here
-      const inputStream = MainControls.decoder.readable.pipeThrough(
+      MainControls.lineReaderDone = MainControls.serialPort.readable.pipeTo(decoder.writable, {preventAbort:true,signal:MainControls.abortController1.signal});//throws error here
+      const inputStream = decoder.readable.pipeThrough(
         new TransformStream(new LineBreakTransformer(), {signal:MainControls.abortController2.signal})
       );
       MainControls.lineReader = await inputStream.getReader();
