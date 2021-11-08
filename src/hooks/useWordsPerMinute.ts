@@ -1,6 +1,6 @@
 import { useStoreState, useStoreActions } from '../store/store';
-import { getCumulativeAverageChordTypeTime, getCumulativeOccurence } from '../helpers/aggregation';
-
+import { getCumulativeAverageChordTypeTime } from '../helpers/aggregation';
+import { storeAverageData, storeData } from '../pages/manager/components/chordGraphs'
 
 
 export const useWordsPerMinute = (): number => {
@@ -42,8 +42,6 @@ export const useWordsPerMinute = (): number => {
   const timeNowInMilli = timeNowInSeconds * 1000;
   const timeDifferenceInSeconds =
     timeNowInSeconds - timeAtTrainingStartInSeconds;
-    //console.log(timeNowInSeconds);
-    //console.log(timeAtTrainingStartInSeconds);
     
   const timeDifferenceInMinutes = timeDifferenceInSeconds / 60;
   const trainingStatistics = useStoreState((store) => store.trainingStatistics);
@@ -84,7 +82,7 @@ if(trainingSceneario == 'ALPHABET'){
         console.log("avgS" + averageSpeed);
         const currentDate = new Date();
 
-       // storeAverageData( wpm, currentDate );
+        storeAverageData( wpm, currentDate );
     }
 
   } else{
@@ -102,8 +100,7 @@ if(trainingSceneario == 'ALPHABET'){
         averageSpeedCount++; 
         const currentDate = new Date();
         
-       // storeAverageData( averageSpeed, currentDate );
-        console.log("hereee fist 22")
+        storeAverageData( averageSpeed, currentDate );
 
       }
 
@@ -132,7 +129,7 @@ if(trainingSceneario == 'ALPHABET'){
         const currentDate = new Date();
 
   
-         // storeData(wpm, currentDate);
+         storeData(wpm, currentDate);
         setFastestWPM({
           ...fastestRecordedWPM,
           [trainingScenario]: wpm,

@@ -25,9 +25,12 @@ export function storeData(data:any, dateData:any){
   const checkExistWPMc = JSON.parse(checkExistWPM);
   console.log(checkExistWPMDc);
   console.log(checkExistWPMc);
+  const currentDate = new Date();
+  const date = currentDate.getDate();
+ 
 
-if((checkExistWPMD == null)&&(checkExistWPM== null)){
-  console.log('It doesnt exist');
+if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem('topWPMDate'))==0)){
+    localStorage.setItem("topWPMDate", JSON.stringify(date));
 
   wpmGraphWPM.push(Math.round(data));
   wpmGraphDate.push(dateData);
@@ -35,8 +38,23 @@ if((checkExistWPMD == null)&&(checkExistWPM== null)){
   localStorage.setItem("wpmGraphDate", JSON.stringify(wpmGraphDate));
 
 }
- else{
+ else if((parseInt(localStorage.getItem("topWPMDate")) - date) == 0){
   console.log('It does exist still checking');
+  const ge2 = localStorage.getItem("wpmGraphDate");
+  const ge = localStorage.getItem("wpmGraphWPM");
+  
+  const wpmData = JSON.parse(ge);
+  const dateD = JSON.parse(ge2);
+
+  wpmData.splice((wpmData.length-1),1,Math.round(data));
+  dateD.splice((dateD.length-1),1,dateData);
+
+  localStorage.setItem("wpmGraphWPM", JSON.stringify(wpmData));
+  localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
+ } else{
+  console.log('Entering the last else statement but why am I doing this?');
+  localStorage.setItem("topWPMDate", JSON.stringify(date));
+
 
   const ge2 = localStorage.getItem("wpmGraphDate");
   const ge = localStorage.getItem("wpmGraphWPM");
@@ -44,27 +62,15 @@ if((checkExistWPMD == null)&&(checkExistWPM== null)){
   const wpmData = JSON.parse(ge);
   const dateD = JSON.parse(ge2);
 
+  wpmData.push(Math.round(data));
+  dateD.push(dateData);
 
-  if(dateD.filter(dateD => dateD.value == dateData)){
-    
-    console.log('It does exist first if statement');
-    let index = dateD.indexOf(dateData);
-    index = index+1;
-    wpmData[index] = Math.round(data);
-    localStorage.setItem("wpmGraphWPM", JSON.stringify(wpmData));
+  localStorage.setItem("wpmGraphWPM", JSON.stringify(wpmData));
+  localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
 
-
-  } else{
-    console.log('It does exist first else statement');
-
-      wpmData.push(Math.round(data));
-      dateD.push(dateData);
-      localStorage.setItem("wpmGraphWPM", JSON.stringify(wpmData));
-      localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
-  }
  }
-
 }
+  
 
 export function storeAverageData(avgData ,dateD){
 
@@ -79,8 +85,7 @@ export function storeAverageData(avgData ,dateD){
 
   const currentDate = new Date();
   const date = currentDate.getDate();
-  const month = currentDate.getMonth(); 
-  const year = currentDate.getFullYear();
+
 
   const checkInDate = localStorage.getItem("theDate");
   const ifCheckInDate = JSON.parse(checkInDate);
@@ -90,6 +95,7 @@ export function storeAverageData(avgData ,dateD){
   console.log(date + ifCheckInDate)
   console.log("Subchecker " + (date- parseInt(ifCheckInDate)))
 
+  //Checks to see if there is not theDate object in local storage or is he date is more that -2 daa
   if((localStorage.getItem("theDate")==null)|| ((date-ifCheckInDate)>=2)||((date-ifCheckInDate)<=-2)){
     const streak = 0;
     localStorage.setItem("streak", JSON.stringify(streak));
@@ -109,20 +115,14 @@ export function storeAverageData(avgData ,dateD){
       const avgGetGD = localStorage.getItem("avgGraphDate");
       const avgGetGW = localStorage.getItem("avgGraphWPM");
       
-      const avgWData = JSON.parse(avgGetGW);
       const avgDData = JSON.parse(avgGetGD);
-      console.log(dateD)
-  
-      console.log("This is avg " + avgWData)
-      console.log("This is avg " + avgDData)
-  
+      const avgWData = JSON.parse(avgGetGW);
+
+
       localStorage.setItem("theDate", JSON.stringify(date));
 
-  
-      const val = (avgData+parseInt(avgDParse[((avgDParse.length)-1)]))/2;
-        console.log('value '+ val);
-        console.log(avgData);
-        console.log(parseInt(avgDParse[((avgDParse.length)-1)]));
+      const val = (avgData+parseInt(avgWData[avgWData.length-1]))/2;
+
         avgWData.push(Math.round(val));
         avgDData.push(dateD);
   
@@ -132,6 +132,12 @@ export function storeAverageData(avgData ,dateD){
     
         console.log(avgWData);
         console.log(avgDData)
+
+        const streak = localStorage.getItem("streak");
+        const streakVal = JSON.parse(streak);
+
+        localStorage.setItem("streak", JSON.stringify(parseInt(streakVal)+1));
+
       } 
       else if((parseInt(localStorage.getItem("theDate")) - date) == 0){
   
@@ -151,7 +157,8 @@ export function storeAverageData(avgData ,dateD){
       console.log('value '+ val);
       console.log(avgData);
       console.log(parseInt(avgDParse[((avgDParse.length)-1)]));
-      avgWData.splice((avgData.length-1),1,Math.round(val));
+      
+      avgWData.splice((avgWData.length-1),1,Math.round(val));
       avgDData.splice((avgDData.length-1),1,dateD);
       console.log(avgDData.length);
       localStorage.setItem("avgGraphWPM", JSON.stringify(avgWData));
@@ -161,23 +168,7 @@ export function storeAverageData(avgData ,dateD){
       console.log(avgWData);
       console.log(avgDData)
     } else{
-      console.log('It does exist first else statement');
-      const val = (avgData+parseInt(avgDParse[((avgDParse.length)-1)]))/2;
-
-      const avgGetGD = localStorage.getItem("avgGraphDate");
-    const avgGetGW = localStorage.getItem("avgGraphWPM");
-    
-    const avgWData = JSON.parse(avgGetGW);
-    const avgDData = JSON.parse(avgGetGD);
-      
-    avgWData.push(Math.round(val));
-    avgDData.push(avgData);
-
-        console.log(avgWData);
-        console.log(avgDData)
-
-        localStorage.setItem("avgGraphWPM", JSON.stringify(avgWData));
-        localStorage.setItem("avgGraphDate", JSON.stringify(avgDData));
+      //Nothing
 
     }
   
@@ -202,14 +193,14 @@ console.log(checkExistWPMc);
     type: "area",
     height: 350,
     foreColor: "#FFFFFF",
-    stacked: true,
+    stacked: false,
     dropShadow: {
-      enabled: true,
+      enabled: false,
       enabledSeries: [0],
       top: -2,
       left: 2,
       blur: 5,
-      opacity: 0.7
+      opacity: 1
     }
     
 
@@ -292,17 +283,18 @@ function generateDayWiseTimeSeries1() {
   const wpmData = JSON.parse(ge);
   const dateD = JSON.parse(ge2);
   
-  const values = [ wpmData ];
- 
+  const currentDate = new Date();
+  const date = currentDate.getDate();
+
+ if((parseInt(localStorage.getItem("theDate")) - date) != 0){
+  storeData(0, currentDate);
+ }
+
   let i = 0;
   const series = [];
   if(wpmData != null){
     while (i < wpmData.length) {
-      series.push([dateD[0], values[0][0]]);
-
-
-      const todaysDate = new Date();
-
+      series.push([dateD[i], wpmData[i]]);
       
       i++;
     }
@@ -325,16 +317,22 @@ function generateDayWiseTimeSeries2() {
   const avgDateD = JSON.parse(ge2);
   console.log(ge2);
   console.log(ge);
-  const values = [
-    avgWpmData  ];
+
   let i = 0;
   const series = [];
 
-    
+  const currentDate = new Date();
+  const date = currentDate.getDate();
+//If this is called and the ecpressiton is true this means the user has not attempted a game. So we add the previously stored data to make the graph flush
+ if((parseInt(localStorage.getItem("theDate")) - date) != 0){
+  storeAverageData(0, currentDate);
+
+ }
+
   if(avgWpmData != null){
     while (i < avgWpmData.length) {
 
-      series.push([avgDateD[0], values[0][0]]);
+      series.push([avgDateD[i], avgWpmData[i]]);
       const todaysDate = new Date();
 
       console.log(todaysDate== avgDateD[0]);

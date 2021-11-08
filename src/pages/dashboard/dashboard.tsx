@@ -13,6 +13,7 @@ import {
 import { CardDataRowDisplay } from './components/CardDataRowDisplay';
 import { BrandingMaterial } from './components/BrandingMaterial';
 import { CopyrightNotice } from './components/CopyrightNotice';
+import {Graph} from '../../pages/manager/components/chordGraphs'
 
 
 
@@ -34,6 +35,8 @@ const Dashboard = (): ReactElement => {
       <TopSectionContainer>
         <LaunchpadHeader />
         <Column>
+        <Graph/>
+
           <CardDataRowDisplay />
           {/* This is the most important component in the dashboard. It includes the entire list of training module cards. */}
           <TrainingCardColumn />

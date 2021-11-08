@@ -4,6 +4,8 @@ import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import { useHistory } from 'react-router-dom';
 import { ROUTER_PATHS } from '../../../components/router';
+import {resetDataTable} from '../../manager/components/resetDataTable'
+import {disconnectSerialConnection} from '../../manager/components/disconnect'
 
 export function CardDataRowDisplay(): ReactElement {
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);

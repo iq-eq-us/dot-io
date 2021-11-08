@@ -9,7 +9,7 @@ import {
     import {resetDataTable} from '../../manager/components/resetDataTable'
 
 async function getGetAll(){
-  //resetDataTable();
+  resetDataTable();
     await selectBase(); //select BASE
     for(let i=0;i<MainControls._chordmapCountOnDevice;i++){
       await sendCommandString("GETSOME "
