@@ -54,8 +54,6 @@ export const useWordsPerMinute = (): number => {
   const average = parseInt(getCumulativeAverageChordTypeTime(y));
 
 
-  let averageSpeed = 0;
-  let averageSpeedCount= 0;
  
   
 
@@ -63,48 +61,6 @@ export const useWordsPerMinute = (): number => {
 
 
 
-if(trainingSceneario == 'ALPHABET'){
-    if(totalNumberOfCharactersTyped == 0) {
-
-
-
-      wpm =0;
-    } else {
-        const avgSpeedMilliseconds = average * 10;
-        const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
-        const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-        wpm = (averageCharacterPerMin/5.23)/5;
-
-        averageSpeed =averageSpeed + wpm;
-        averageSpeedCount++;
-
-        
-        console.log("avgS" + averageSpeed);
-        const currentDate = new Date();
-
-        storeAverageData( wpm, currentDate );
-    }
-
-  } else{
-    if(totalNumberOfCharactersTyped == 0) {
-
-      wpm =0;
-    } else {
-      
-        const avgSpeedMilliseconds = (average + numberOfSpaces) * 10;
-        const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
-        const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-        wpm = (averageCharacterPerMin/5.23);
-
-        averageSpeed += wpm;
-        averageSpeedCount++; 
-        const currentDate = new Date();
-        
-        storeAverageData( averageSpeed, currentDate );
-
-      }
-
-  }
 
 
   // According to Riley, the equation for WPM is equal to (characters per minute typed correctly / 5)
@@ -125,6 +81,53 @@ if(trainingSceneario == 'ALPHABET'){
 
     }
     else if (typeof trainingScenario === 'string') {
+
+
+      let averageSpeed = 0;
+      let averageSpeedCount= 0;
+    if(trainingSceneario == 'ALPHABET'){
+        if(totalNumberOfCharactersTyped == 0) {
+    
+    
+    
+          wpm =0;
+        } else {
+            const avgSpeedMilliseconds = average * 10;
+            const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
+            const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+            wpm = (averageCharacterPerMin/5.23)/5;
+    
+            averageSpeed =averageSpeed + wpm;
+            averageSpeedCount++;
+    
+            
+            //console.log("avgS" + averageSpeed);
+            const currentDate = new Date();
+    
+            storeAverageData( wpm, currentDate );
+        }
+    
+      } else{
+        if(totalNumberOfCharactersTyped == 0) {
+    
+          wpm =0;
+        } else {
+          
+            const avgSpeedMilliseconds = (average + numberOfSpaces) * 10;
+            const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
+            const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+            wpm = (averageCharacterPerMin/5.23);
+    
+            averageSpeed += wpm;
+            averageSpeedCount++; 
+            const currentDate = new Date();
+            
+            storeAverageData( averageSpeed, currentDate );
+    
+          }
+    
+      }
+
       if (wpm > fastestRecordedWPM[trainingScenario]) {
         const currentDate = new Date();
 

@@ -41,7 +41,7 @@ export function CardDataRowDisplay(): ReactElement {
         Clear Progress
       </RefreshButton>
       <div className="feather feather-trash-2 p-0.5 text-gray-600">
-      <a onClick={() => {history.push(ROUTER_PATHS.manager);} }className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Chord Manager</a>
+      <button onClick={() => {history.push(ROUTER_PATHS.manager);} }className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Chord Manager</button>
       </div>
     </CardDataRow>
   );
