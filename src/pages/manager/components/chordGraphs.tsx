@@ -214,11 +214,12 @@ export function myGraph(){
     enabled: false
   },
   series: [ {
-    name: 'Average Speed',
-    data: generateDayWiseTimeSeries2()
-  },{
     name: 'Best WPM',
     data: generateDayWiseTimeSeries1()
+  },
+  {
+    name: 'Average Speed',
+    data: generateDayWiseTimeSeries2()
   }],
   markers: {
     size: 0,

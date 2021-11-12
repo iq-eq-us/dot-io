@@ -7,17 +7,22 @@ import {_chordMaps} from '../controls/maps'
 function exportChordMapLibrary(){
     const dataTable = document.getElementById("dataTable");
     //iterate through table from bottom to top to capture all the chords and phrases
-    
+    _chordMaps.splice(0,_chordMaps.length);
     for (let i = 1; i<dataTable.rows.length; i++) { //start a 1 to skip the header
+      console.log("DataRows length "+dataTable.rows.length)
       const row = dataTable.rows[i];
       _chordMaps.push([row.cells[2].childNodes[0].innerHTML,row.cells[3].childNodes[0].innerHTML]);
+      //_chordMaps = [];
     }
   
     console.log(_chordMaps);
-    const csvRows = [];
+    let csvRows = [];
     
     //TODO, pull from table
     for(const chordMap of _chordMaps){
+      console.log(_chordMaps.length);
+      console.log(chordMap.length);
+
       csvRows.push(chordMap.join(','))
     }
     const csvData = csvRows.join('\n');
@@ -31,6 +36,8 @@ function exportChordMapLibrary(){
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    csvRows = [];
+
   }
 
   export function Export(): ReactElement {

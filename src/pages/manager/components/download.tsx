@@ -12,9 +12,8 @@ async function getGetAll(){
   resetDataTable();
     await selectBase(); //select BASE
     for(let i=0;i<MainControls._chordmapCountOnDevice;i++){
-      await sendCommandString("GETSOME "
-        +(i+0).toString()+" "
-        +(i+1).toString());
+      console.log(MainControls._chordmapCountOnDevice);
+      await sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
         console.log("MapID");
     console.log(MainControls._chordmapId);
       await readGetOneChordmap();

@@ -1,7 +1,8 @@
+
+
 import { useStoreState, useStoreActions } from '../store/store';
 import { getCumulativeAverageChordTypeTime } from '../helpers/aggregation';
 import { storeAverageData, storeData } from '../pages/manager/components/chordGraphs'
-
 
 export const useWordsPerMinute = (): number => {
   const timeAtTrainingStart = useStoreState(
@@ -31,7 +32,6 @@ export const useWordsPerMinute = (): number => {
 
 
 
-
   let totalNumberOfCharactersTyped = 0;
   let wpm =0;
   
@@ -50,15 +50,14 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
-  const numberOfSpaces = (y.length); 
-  const average = parseInt(getCumulativeAverageChordTypeTime(y));
 
+  const numberOfSpaces = (y.length); //Counts the nnumber of times the user presses the space bar. 
+  const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
 
  
   
 
   const chordLength = totalNumberOfCharactersTyped/5.23;
-
 
 
 
@@ -69,11 +68,10 @@ export const useWordsPerMinute = (): number => {
   const charactersTypedCorrectlyPerMinute =
     charactersTypedCorrectly / timeDifferenceInMinutes;
 
-
   const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario);
 
-  
+  console.log(wpm);
   if (trainingSettings.isAutoWrite) {
     if(chordLength <= 5) {
 
@@ -82,51 +80,50 @@ export const useWordsPerMinute = (): number => {
     }
     else if (typeof trainingScenario === 'string') {
 
-
       let averageSpeed = 0;
       let averageSpeedCount= 0;
     if(trainingSceneario == 'ALPHABET'){
-        if(totalNumberOfCharactersTyped == 0) {
-    
-    
-    
-          wpm =0;
-        } else {
-            const avgSpeedMilliseconds = average * 10;
-            const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
-            const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-            wpm = (averageCharacterPerMin/5.23)/5;
-    
-            averageSpeed =averageSpeed + wpm;
-            averageSpeedCount++;
-    
-            
-            //console.log("avgS" + averageSpeed);
-            const currentDate = new Date();
-    
-            storeAverageData( wpm, currentDate );
-        }
-    
-      } else{
-        if(totalNumberOfCharactersTyped == 0) {
-    
-          wpm =0;
-        } else {
+      if(totalNumberOfCharactersTyped == 0) {
+  
+  
+  
+        wpm =0;
+      } else {
+          const avgSpeedMilliseconds = average * 10;
+          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
+          const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+          wpm = (averageCharacterPerMin/5.23)/5;
+  
+          averageSpeed =averageSpeed + wpm;
+          averageSpeedCount++;
+  
           
-            const avgSpeedMilliseconds = (average + numberOfSpaces) * 10;
-            const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
-            const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-            wpm = (averageCharacterPerMin/5.23);
-    
-            averageSpeed += wpm;
-            averageSpeedCount++; 
-            const currentDate = new Date();
-            
-            storeAverageData( averageSpeed, currentDate );
-    
-          }
-    
+          //console.log("avgS" + averageSpeed);
+          const currentDate = new Date();
+  
+          storeAverageData( wpm, currentDate );
       }
+  
+    } else{
+      if(totalNumberOfCharactersTyped == 0) {
+  
+        wpm =0;
+      } else {
+        
+          const avgSpeedMilliseconds = (average + numberOfSpaces) * 10;
+          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
+          const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+          wpm = (averageCharacterPerMin/5.23);
+  
+          averageSpeed += wpm;
+          averageSpeedCount++; 
+          const currentDate = new Date();
+          
+          storeAverageData( averageSpeed, currentDate );
+  
+        }
+  
+    }
 
       if (wpm > fastestRecordedWPM[trainingScenario]) {
         const currentDate = new Date();
@@ -144,6 +141,5 @@ export const useWordsPerMinute = (): number => {
 
   
   return wpm;
-
 
 };
