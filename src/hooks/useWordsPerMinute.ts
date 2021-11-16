@@ -33,7 +33,7 @@ export const useWordsPerMinute = (): number => {
 
 
   let totalNumberOfCharactersTyped = 0;
-  let wpm =0;
+  let wpm;
   
   const timeAtTrainingStartInSeconds = timeAtTrainingStart * 0.001;
   
@@ -41,19 +41,20 @@ export const useWordsPerMinute = (): number => {
   const timeNowInSeconds = performance.now() * 0.001;
   const timeNowInMilli = timeNowInSeconds * 1000;
   const timeDifferenceInSeconds =
-    timeNowInSeconds - timeAtTrainingStartInSeconds;
+  timeNowInSeconds - timeAtTrainingStartInSeconds;
     
   const timeDifferenceInMinutes = timeDifferenceInSeconds / 60;
   const trainingStatistics = useStoreState((store) => store.trainingStatistics);
   trainingStatistics.statistics.forEach((stat) => {
-     const charactersTyped = stat.displayTitle.length * stat.numberOfOccurrences;
-    totalNumberOfCharactersTyped += charactersTyped;
+  const charactersTyped = stat.displayTitle.length * stat.numberOfOccurrences;
+  totalNumberOfCharactersTyped += charactersTyped;
   });
-  const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
+  const y = trainingStatistics.statistics.filter((s) => s.lastSpeed);
+  const x = trainingStatistics.statistics.filter((s) => s.averageSpeed);
 
-  const numberOfSpaces = (y.length); //Counts the nnumber of times the user presses the space bar. 
+  const numberOfSpaces = (y.length-4); //Counts the nnumber of times the user presses the space bar. 
   const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
-
+  const alphaAverage = parseInt(getCumulativeAverageChordTypeTime(x))
  
   
 
@@ -72,10 +73,13 @@ export const useWordsPerMinute = (): number => {
     (store) => store.currentTrainingScenario);
 
   console.log(wpm);
+
   if (trainingSettings.isAutoWrite) {
     if(chordLength <= 5) {
 
       wpm = Number.parseInt("calibrating...");
+      sessionStorage.setItem('storedWPM', JSON.stringify(0));
+
 
     }
     else if (typeof trainingScenario === 'string') {
@@ -84,37 +88,54 @@ export const useWordsPerMinute = (): number => {
       let averageSpeedCount= 0;
     if(trainingSceneario == 'ALPHABET'){
       if(totalNumberOfCharactersTyped == 0) {
-  
-  
-  
+
         wpm =0;
+        
       } else {
-          const avgSpeedMilliseconds = average * 10;
+
+        const getStoredWPM = sessionStorage.getItem('storedWPM');
+        const inWPM = JSON.parse(getStoredWPM);
+      
+          const avgSpeedMilliseconds = alphaAverage * 10;
+          
           const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-          wpm = (averageCharacterPerMin/5.23)/5;
+          const nWPM = (averageCharacterPerMin/5.23)/5.23;
+          const store = inWPM + nWPM;
+          wpm = store/(numberOfSpaces);
   
+
+          sessionStorage.setItem('storedWPM', JSON.stringify(store));
+
           averageSpeed =averageSpeed + wpm;
           averageSpeedCount++;
   
-          
           //console.log("avgS" + averageSpeed);
           const currentDate = new Date();
-  
           storeAverageData( wpm, currentDate );
       }
   
     } else{
       if(totalNumberOfCharactersTyped == 0) {
   
-        wpm =0;
+        wpm = 0;
+
       } else {
+
+        const getStoredWPM = sessionStorage.getItem('storedWPM');
+        const inWPM = JSON.parse(getStoredWPM);
+
         
           const avgSpeedMilliseconds = (average + numberOfSpaces) * 10;
           const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-          wpm = (averageCharacterPerMin/5.23);
-  
+          const nWPM = averageCharacterPerMin/5.23;
+          const store = inWPM + nWPM;
+          console.log(numberOfSpaces);
+          wpm = store/(numberOfSpaces);
+
+          sessionStorage.setItem('storedWPM', JSON.stringify(store));
+
           averageSpeed += wpm;
           averageSpeedCount++; 
           const currentDate = new Date();

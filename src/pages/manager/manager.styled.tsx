@@ -45,4 +45,7 @@ export const Column = styled.div.attrs({
   export const Table = styled.section.attrs({
     className: `margin-left-50px`,
   })``;
+  export const Section = styled.section.attrs({
+    className: `left-50px position-relative`,
+  })``;
 

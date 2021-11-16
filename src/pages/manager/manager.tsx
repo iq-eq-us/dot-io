@@ -12,6 +12,7 @@ import { Clear } from '../manager/components/resetDataTable'
 import { Export } from '../manager/components/exportLibrary'
 import { AddChordMap } from '../manager/components/addChordMap'
 import { Graph } from '../manager/components/chordGraphs'
+import Firmware from '../manager/components/firmwareDownloads'
 
 
 

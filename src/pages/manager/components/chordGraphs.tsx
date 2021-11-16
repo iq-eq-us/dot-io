@@ -27,6 +27,7 @@ export function storeData(data:any, dateData:any){
   //console.log(checkExistWPMc);
   const currentDate = new Date();
   const date = currentDate.getDate();
+
  
 
 if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem('topWPMDate'))==0)){
@@ -37,8 +38,11 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
   localStorage.setItem("wpmGraphWPM", JSON.stringify(wpmGraphWPM));
   localStorage.setItem("wpmGraphDate", JSON.stringify(wpmGraphDate));
 
-}
- else if((parseInt(localStorage.getItem("topWPMDate")) - date) == 0){
+} else if(data > parseInt(checkExistWPMc[checkExistWPMc.length-1])){
+console.log(checkExistWPMc[checkExistWPMc.length-1]);
+console.log(parseInt(checkExistWPMc[checkExistWPMc.length-1]));
+
+ if((parseInt(localStorage.getItem("topWPMDate")) - date) == 0){
   //console.log('It does exist still checking');
   const ge2 = localStorage.getItem("wpmGraphDate");
   const ge = localStorage.getItem("wpmGraphWPM");
@@ -69,6 +73,7 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
   localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
 
  }
+}
 }
   
 
