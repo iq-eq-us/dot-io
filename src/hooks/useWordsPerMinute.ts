@@ -72,7 +72,6 @@ export const useWordsPerMinute = (): number => {
   const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario);
 
-  console.log(wpm);
 
   if (trainingSettings.isAutoWrite) {
     if(chordLength <= 5) {
@@ -121,7 +120,6 @@ export const useWordsPerMinute = (): number => {
           const store = inWPM + nWPM;
           inCount.push(1);
           wpm = store/inCount.length;
-          console.log(inCount);
           sessionStorage.setItem('storedWPM', JSON.stringify(store));
           sessionStorage.setItem('count', JSON.stringify(inCount));
 
@@ -145,7 +143,6 @@ export const useWordsPerMinute = (): number => {
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
           const nWPM = averageCharacterPerMin/5.23;
           const store = inWPM + nWPM;
-          console.log(numberOfSpaces);
           wpm = store/(numberOfSpaces);
 
           sessionStorage.setItem('storedWPM', JSON.stringify(store));
@@ -172,7 +169,6 @@ export const useWordsPerMinute = (): number => {
 
       }
     }
-    console.log(wpm)
   }
 
   
