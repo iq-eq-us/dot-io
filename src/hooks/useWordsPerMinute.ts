@@ -33,7 +33,7 @@ export const useWordsPerMinute = (): number => {
 
 
   let totalNumberOfCharactersTyped = 0;
-  let wpm;
+  let wpm = 0;
   
   const timeAtTrainingStartInSeconds = timeAtTrainingStart * 0.001;
   
@@ -54,7 +54,7 @@ export const useWordsPerMinute = (): number => {
 
   const numberOfSpaces = (y.length-4); //Counts the nnumber of times the user presses the space bar. 
   const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
-  const alphaAverage = parseInt(getCumulativeAverageChordTypeTime(x))
+  const alphaAverage = parseInt(getCumulativeAverageChordTypeTime(x));
  
   
 
@@ -87,40 +87,22 @@ export const useWordsPerMinute = (): number => {
       let averageSpeed = 0;
       let averageSpeedCount= 0;
     if(trainingSceneario == 'ALPHABET'){
-      if(totalNumberOfCharactersTyped == 0) {
-
-        wpm =0;
-        
-      } else {
-
-        const getStoredWPM = sessionStorage.getItem('storedWPM');
-        const inWPM = JSON.parse(getStoredWPM);
-      
-          const avgSpeedMilliseconds = alphaAverage * 10;
           
+
+          const avgSpeedMilliseconds = alphaAverage * 10;
           const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-          const nWPM = (averageCharacterPerMin/5.23)/5.23;
-          const store = inWPM + nWPM;
-          wpm = store/(numberOfSpaces);
+          wpm = (averageCharacterPerMin/5.23)/5.23;
   
-
-          sessionStorage.setItem('storedWPM', JSON.stringify(store));
-
           averageSpeed =averageSpeed + wpm;
           averageSpeedCount++;
   
-          //console.log("avgS" + averageSpeed);
           const currentDate = new Date();
           storeAverageData( wpm, currentDate );
-      }
+      
   
     } else{
-      if(totalNumberOfCharactersTyped == 0) {
-  
-        wpm = 0;
-
-      } else {
+      
 
         const getStoredWPM = sessionStorage.getItem('storedWPM');
         const inWPM = JSON.parse(getStoredWPM);
@@ -142,7 +124,7 @@ export const useWordsPerMinute = (): number => {
           
           storeAverageData( averageSpeed, currentDate );
   
-        }
+        
   
     }
 
@@ -158,6 +140,7 @@ export const useWordsPerMinute = (): number => {
 
       }
     }
+    console.log(wpm)
   }
 
   
