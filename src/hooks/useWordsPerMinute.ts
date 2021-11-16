@@ -110,7 +110,7 @@ export const useWordsPerMinute = (): number => {
       const getCount = sessionStorage.getItem('count');
 
         const inWPM = JSON.parse(getStoredWPM);
-        let inCount = JSON.parse(getCount);
+        const inCount = JSON.parse(getCount);
 
         
           const avgSpeedMilliseconds = (average + numberOfSpaces) * 10;
