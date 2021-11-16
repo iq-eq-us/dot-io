@@ -78,7 +78,10 @@ export const useWordsPerMinute = (): number => {
     if(chordLength <= 5) {
 
       wpm = Number.parseInt("calibrating...");
+      const lengthCount = [];
+      lengthCount.push(1);
       sessionStorage.setItem('storedWPM', JSON.stringify(0));
+      sessionStorage.setItem('count', JSON.stringify(lengthCount));
 
 
     }
@@ -101,7 +104,36 @@ export const useWordsPerMinute = (): number => {
           storeAverageData( wpm, currentDate );
       
   
-    } else{
+    } else if(trainingSceneario == 'SUPERSONIC'){
+          
+
+      const getStoredWPM = sessionStorage.getItem('storedWPM');
+      const getCount = sessionStorage.getItem('count');
+
+        const inWPM = JSON.parse(getStoredWPM);
+        let inCount = JSON.parse(getCount);
+
+        
+          const avgSpeedMilliseconds = (average + numberOfSpaces) * 10;
+          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
+          const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+          const nWPM = averageCharacterPerMin/5.23;
+          const store = inWPM + nWPM;
+          inCount.push(1);
+          wpm = store/inCount.length;
+          console.log(inCount);
+          sessionStorage.setItem('storedWPM', JSON.stringify(store));
+          sessionStorage.setItem('count', JSON.stringify(inCount));
+
+          averageSpeed += wpm;
+          averageSpeedCount++; 
+          const currentDate = new Date();
+          
+          storeAverageData( averageSpeed, currentDate );
+  
+  
+
+} else{
       
 
         const getStoredWPM = sessionStorage.getItem('storedWPM');
