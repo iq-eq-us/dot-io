@@ -4,15 +4,12 @@ import { ConnectButton } from '../manager/components/connect'
 import { DisconnectButton } from '../manager/components/disconnect'
 import { ImportChords } from '../manager/components/importChords'
 import { BootLoaderButton } from '../manager/components/bootLoader'
-import { GetCountButton } from '../manager/components/countChords'
 import { RebootButton } from '../manager/components/reboot'
 import { AddHeaders } from '../manager/components/addHeaders'
 import { Download } from '../manager/components/download'
 import { Clear } from '../manager/components/resetDataTable'
 import { Export } from '../manager/components/exportLibrary'
 import { AddChordMap } from '../manager/components/addChordMap'
-import { Graph } from '../manager/components/chordGraphs'
-import Firmware from '../manager/components/firmwareDownloads'
 
 
 
