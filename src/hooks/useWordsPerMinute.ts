@@ -86,11 +86,12 @@ export const useWordsPerMinute = (): number => {
   
         wpm =0;
       } else {
+        console.log(average);
           const avgSpeedMilliseconds = average * 10;
-          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
+          const millisecondsPerCharacter = avgSpeedMilliseconds;
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-          wpm = (averageCharacterPerMin/5.23)/5;
-  
+            wpm = averageCharacterPerMin/5;
+
           averageSpeed =averageSpeed + wpm;
           averageSpeedCount++;
   
@@ -106,11 +107,11 @@ export const useWordsPerMinute = (): number => {
   
         wpm =0;
       } else {
-        
-          const avgSpeedMilliseconds = (average + numberOfSpaces) * 10;
+        console.log(average);
+          const avgSpeedMilliseconds = average * 10;
           const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-          wpm = (averageCharacterPerMin/5.23);
+          wpm = averageCharacterPerMin/5;
   
           averageSpeed += wpm;
           averageSpeedCount++; 
