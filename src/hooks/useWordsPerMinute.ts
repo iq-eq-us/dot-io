@@ -51,12 +51,11 @@ export const useWordsPerMinute = (): number => {
 
   const numberOfSpaces = (y.length); //Counts the nnumber of times the user presses the space bar. 
   const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
-
+  console.log(average);
  
   
 
   const chordLength = totalNumberOfCharactersTyped/5.23;
-
 
 
 
