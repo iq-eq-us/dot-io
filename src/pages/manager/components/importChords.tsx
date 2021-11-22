@@ -76,7 +76,6 @@ function importChordMapLibrary(e : any){
       id="importChordMapLibrary"
       className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
       onClick={() => {document.getElementById('file-input').click(); click()}}
-      
       >Import Library</button>
           
 

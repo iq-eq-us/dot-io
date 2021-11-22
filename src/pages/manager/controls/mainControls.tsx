@@ -265,6 +265,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
           if(humanString.length>0){
             humanString += " + "
           }
+          console.log('Im here');
           humanString+=_keyMap[64-binString.length+i];
         //console.log(i);
         //humanString+=_keyMap[(64-binString.length+i)];

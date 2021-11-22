@@ -15,7 +15,9 @@ export const useWordsPerMinute = (): number => {
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
   );
-
+  const fastestCounter = useStoreState(
+    (store) => store.fastestRecordedWordsPerMinute,
+  );
   
   const fastestRecordedWordsPerMinuteGraph = useStoreState(
     (store) => store.fastestRecordedWordsPerMinuteGraph,
@@ -48,10 +50,10 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
-
+  const x = trainingStatistics.statistics.filter((s) => s.numberOfOccurrences);
+  console.log(x);
   const numberOfSpaces = (y.length); //Counts the nnumber of times the user presses the space bar. 
   const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
-  console.log(average);
  
   
 
@@ -68,7 +70,6 @@ export const useWordsPerMinute = (): number => {
   const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario);
 
-  console.log(wpm);
   if (trainingSettings.isAutoWrite) {
     if(chordLength <= 5) {
 
@@ -86,7 +87,6 @@ export const useWordsPerMinute = (): number => {
   
         wpm =0;
       } else {
-        console.log(average);
           const avgSpeedMilliseconds = average * 10;
           const millisecondsPerCharacter = avgSpeedMilliseconds;
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
@@ -96,7 +96,6 @@ export const useWordsPerMinute = (): number => {
           averageSpeedCount++;
   
           
-          //console.log("avgS" + averageSpeed);
           const currentDate = new Date();
   
           storeAverageData( wpm, currentDate );
@@ -107,16 +106,14 @@ export const useWordsPerMinute = (): number => {
   
         wpm =0;
       } else {
-        console.log(average);
           const avgSpeedMilliseconds = average * 10;
-          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23
+          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23;//In the future 5.23 needs to be dynamic based on the practice
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
           wpm = averageCharacterPerMin/5;
   
           averageSpeed += wpm;
           averageSpeedCount++; 
           const currentDate = new Date();
-          
           storeAverageData( averageSpeed, currentDate );
   
         }

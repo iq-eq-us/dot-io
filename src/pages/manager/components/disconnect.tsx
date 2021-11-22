@@ -32,7 +32,7 @@ import {resetDataTable} from '../../manager/components/resetDataTable'
       <div id="statusDiv" style={{display:'none'}} >status: </div>
 
       <button
-      className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
+      className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-absolute"
       color="pink"
       onClick={() => disconnectSerialConnection()}
       >Disconnect </button>

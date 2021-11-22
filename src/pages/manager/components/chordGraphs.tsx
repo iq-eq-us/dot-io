@@ -39,8 +39,6 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
   localStorage.setItem("wpmGraphDate", JSON.stringify(wpmGraphDate));
 
 } else if(data > parseInt(checkExistWPMc[checkExistWPMc.length-1])){
-console.log(checkExistWPMc[checkExistWPMc.length-1]);
-console.log(parseInt(checkExistWPMc[checkExistWPMc.length-1]));
 
  if((parseInt(localStorage.getItem("topWPMDate")) - date) == 0){
   //console.log('It does exist still checking');
@@ -50,15 +48,14 @@ console.log(parseInt(checkExistWPMc[checkExistWPMc.length-1]));
   const wpmData = JSON.parse(ge);
   const dateD = JSON.parse(ge2);
 
-  wpmData.splice((wpmData.length-1),1,Math.round(data));
+  wpmData.splice((wpmData.length-1),1,(Math.round(data)));
   dateD.splice((dateD.length-1),1,dateData);
 
   localStorage.setItem("wpmGraphWPM", JSON.stringify(wpmData));
   localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
  } else{
-  //console.log('Entering the last else statement but why am I doing this?');
-  localStorage.setItem("topWPMDate", JSON.stringify(date));
 
+  localStorage.setItem("topWPMDate", JSON.stringify(date));
 
   const ge2 = localStorage.getItem("wpmGraphDate");
   const ge = localStorage.getItem("wpmGraphWPM");
@@ -73,6 +70,21 @@ console.log(parseInt(checkExistWPMc[checkExistWPMc.length-1]));
   localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
 
  }
+} else{ // This pushes the previous wpm for the new date to ensure the graph flows  
+  const ge2 = localStorage.getItem("wpmGraphDate");
+  const ge = localStorage.getItem("wpmGraphWPM");
+
+  const wpmData = JSON.parse(ge);
+  const dateD = JSON.parse(ge2);
+
+  console.log(wpmData[wpmData.length-1])
+  wpmData.push(parseInt(wpmData[wpmData.length-1]));
+  console.log(wpmData[wpmData.length-1]);
+  dateD.push(dateData);
+
+  localStorage.setItem("wpmGraphWPM", JSON.stringify(wpmData));
+  localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
+
 }
 }
   
@@ -82,40 +94,55 @@ export function storeAverageData(avgData ,dateD){
   const avgGraphWPM = [];
   const avgGraphDate = [];
 
-  const avgD = localStorage.getItem("avgGraphWPM");
- const avgDD = localStorage.getItem("avgGraphDate");
-
-  const avgDParse = JSON.parse(avgD);
-  const avgDDParse = JSON.parse(avgDD);
-
   const currentDate = new Date();
   const date = currentDate.getDate();
 
-
   const checkInDate = localStorage.getItem("theDate");
   const ifCheckInDate = JSON.parse(checkInDate);
-  //localStorage.setItem("theDate", JSON.stringify(monthDateYear));
-  //console.log(ifCheckInDate)
-
-  //console.log(date + ifCheckInDate)
- // console.log("Subchecker " + (date- parseInt(ifCheckInDate)))
-
+ 
   //Checks to see if there is not theDate object in local storage or is he date is more that -2 daa
   if((localStorage.getItem("theDate")==null)|| ((date-ifCheckInDate)>=2)||((date-ifCheckInDate)<=-2)){
-    const streak = 0;
+
+    localStorage.setItem("count", JSON.stringify(0));
+    localStorage.setItem("dailyWPMAVG", JSON.stringify(0));
+
+    const getCounterFromLocal = localStorage.getItem("count");
+    const getDailyWPM = localStorage.getItem("dailyWPMAVG");
+    
+    let parsedCounterFromLocal = JSON.parse(getCounterFromLocal);
+    let dailyWPM = JSON.parse(getDailyWPM);
+
+      parsedCounterFromLocal++;
+      localStorage.setItem("count", JSON.stringify(parsedCounterFromLocal));
+
+    const streak = 0;//Set the daily streak to 0 if a day has been missed
+    storeData(avgData, dateD); //Call the StoreData method to add StoreData value to graph
     localStorage.setItem("streak", JSON.stringify(streak));
-  
+
+    dailyWPM =+ avgData; 
     avgGraphWPM.push(avgData);
     avgGraphDate.push(dateD);
     localStorage.setItem("theDate", JSON.stringify(date));
-
-
     localStorage.setItem("avgGraphWPM", JSON.stringify(avgGraphWPM));
     localStorage.setItem("avgGraphDate", JSON.stringify(avgGraphDate));
+    localStorage.setItem("dailyWPMAVG", JSON.stringify(dailyWPM));
+
   
 
   }else {
     if(date-(parseInt(localStorage.getItem("theDate"))) == 1){
+      localStorage.setItem("count", JSON.stringify(0));//Set AVG counter to 0
+      localStorage.setItem("dailyWPMAVG", JSON.stringify(0));
+
+      const getCounterFromLocal = localStorage.getItem("count");
+      const getDailyWPM = localStorage.getItem("dailyWPMAVG");
+
+      let parsedCounterFromLocal = JSON.parse(getCounterFromLocal);
+      
+      parsedCounterFromLocal++;
+      localStorage.setItem("count", JSON.stringify(parsedCounterFromLocal));
+
+      storeData(avgData, dateD); //Call the StoreData method to add StoreData value to graph if it is a different day
     
       const avgGetGD = localStorage.getItem("avgGraphDate");
       const avgGetGW = localStorage.getItem("avgGraphWPM");
@@ -123,55 +150,38 @@ export function storeAverageData(avgData ,dateD){
       const avgDData = JSON.parse(avgGetGD);
       const avgWData = JSON.parse(avgGetGW);
 
-
       localStorage.setItem("theDate", JSON.stringify(date));
-
       const val = (avgData+parseInt(avgWData[avgWData.length-1]))/2;
 
-        avgWData.push(Math.round(val));
-        avgDData.push(dateD);
+      avgWData.push(Math.round(val));
+      avgDData.push(dateD);
   
-        localStorage.setItem("avgGraphWPM", JSON.stringify(avgWData));
-        localStorage.setItem("avgGraphDate", JSON.stringify(avgDData));
-  
-    
-        //console.log(avgWData);
-        //console.log(avgDData)
-
-        const streak = localStorage.getItem("streak");
-        const streakVal = JSON.parse(streak);
-
-        localStorage.setItem("streak", JSON.stringify(parseInt(streakVal)+1));
-
-      } 
-      else if((parseInt(localStorage.getItem("theDate")) - date) == 0){
-  
-    const avgGetGD = localStorage.getItem("avgGraphDate");
-    const avgGetGW = localStorage.getItem("avgGraphWPM");
-    
-    const avgWData = JSON.parse(avgGetGW);
-    const avgDData = JSON.parse(avgGetGD);
-    //console.log(dateD)
-
-    //console.log("This is avg " + avgWData)
-    //console.log("This is avg " + avgDData)
-
- 
-
-    const val = (avgData+parseInt(avgDParse[((avgDParse.length)-1)]))/2;
-     // console.log('value '+ val);
-     // console.log(avgData);
-    //  console.log(parseInt(avgDParse[((avgDParse.length)-1)]));
-      
-      avgWData.splice((avgWData.length-1),1,Math.round(val));
-      avgDData.splice((avgDData.length-1),1,dateD);
-     // console.log(avgDData.length);
       localStorage.setItem("avgGraphWPM", JSON.stringify(avgWData));
       localStorage.setItem("avgGraphDate", JSON.stringify(avgDData));
 
-  
-      //console.log(avgWData);
-      //console.log(avgDData)
+      const streak = localStorage.getItem("streak");
+      const streakVal = JSON.parse(streak);
+
+      localStorage.setItem("streak", JSON.stringify(parseInt(streakVal)+1));
+
+      } 
+      else if((parseInt(localStorage.getItem("theDate")) - date) == 0){ //If it is the same day
+        
+      const avgGetGD = localStorage.getItem("avgGraphDate");
+      const avgGetGW = localStorage.getItem("avgGraphWPM");
+
+      const avgWData = JSON.parse(avgGetGW);
+      const avgDData = JSON.parse(avgGetGD);
+
+      const val = (avgData+parseInt(avgWData[((avgWData.length)-1)]))/2;
+
+      avgWData.splice((avgWData.length-1),1,Math.round(val));
+      avgDData.splice((avgDData.length-1),1,dateD);
+
+      localStorage.setItem("avgGraphWPM", JSON.stringify(avgWData));
+      localStorage.setItem("avgGraphDate", JSON.stringify(avgDData));
+
+
     } else{
       //Nothing
 
@@ -181,17 +191,29 @@ export function storeAverageData(avgData ,dateD){
 
 }
 
+export function getHighestWPM(){
+  const checkWPMArray = localStorage.getItem("wpmGraphWPM");
+  const checkIt = JSON.parse(checkWPMArray);
+
+  if(checkIt == null) {
+    return 0;
+  } else{
+    return parseInt(JSON.parse(localStorage.getItem("wpmGraphWPM"))[JSON.parse(localStorage.getItem("wpmGraphWPM")).length-1]);
+  }
+}
+
+export function getAverageWPM(){
+  const checkWPMArray = localStorage.getItem("avgGraphWPM");
+  const checkIt = JSON.parse(checkWPMArray);
+
+  if(checkIt == null) {
+    return 0;
+  } else{
+    return parseInt(JSON.parse(localStorage.getItem("avgGraphWPM"))[JSON.parse(localStorage.getItem("avgGraphWPM")).length-1]);
+  }
+}
+
 export function myGraph(){
- // console.log(generateDayWiseTimeSeries1());
-
-  const checkExistWPMD = localStorage.getItem("wpmGraphDate");
-  const checkExistWPM = localStorage.getItem("wpmGraphWPM");
-  const checkExistWPMDc = JSON.parse(checkExistWPMD);
-  const checkExistWPMc = JSON.parse(checkExistWPM);
-//console.log(checkExistWPMDc);
-//console.log(checkExistWPMc);
-
- // console.log(generateDayWiseTimeSeries2());
 
  const options = {
   chart: {
@@ -292,7 +314,7 @@ function generateDayWiseTimeSeries1() {
   const currentDate = new Date();
   const date = currentDate.getDate();
 
- if((parseInt(localStorage.getItem("theDate"))) == null){
+ if((parseInt(localStorage.getItem("theDate"))) == null){//If a date doesn't exist
   storeData(0, currentDate);
  }
 
@@ -364,8 +386,13 @@ export function Graph(): ReactElement {
     
     <React.Fragment>
 
+      <div className='sc-ikJyIC w-full  lg:mx-auto flex flex-row '>
+      <h1 className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500">Practice Streak: {(localStorage.getItem("streak") == null ? 0 : localStorage.getItem("streak")) + ((parseInt(localStorage.getItem("streak")) != 1) ? " days": " day")}</h1>
+      <h1 className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500"> Top Speed: {(getHighestWPM() + " WPM")}</h1>
+      <h1 className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500">Average Speed: {(getAverageWPM() + " WPM")}</h1>
 
-      <h1>Day Streak: {localStorage.getItem("streak")}</h1>
+
+      </div>
       <div id="chart">
      <div id="timeline-chart"/>
       </div>

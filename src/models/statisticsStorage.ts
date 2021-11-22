@@ -8,6 +8,8 @@ export interface StatisticsStoreState {
   totalSavedChordStats: Computed<StatisticsStore, TrainingStatistics>;
   fastestRecordedWordsPerMinute: Record<TrainingScenario, number>;
   fastestRecordedWordsPerMinuteGraph: string[][];
+  fastestCounter: Record<TrainingScenario, number>;
+
 }
 
 export interface StatisticsStoreActions {
