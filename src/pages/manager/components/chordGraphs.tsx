@@ -1,16 +1,7 @@
 import  ApexCharts from 'apexcharts';
 import React, { ReactElement } from 'react';
-
-
-
-export function isThereWPMData(){
-
-  if(localStorage.getItem('wpmGraphData') == 'string') {
-
-    return true;
-  }
-return false;
-}
+import styled from 'styled-components';
+import usePopover from '../../../hooks/usePopover';
 
 
 export function storeData(data:any, dateData:any){
@@ -39,8 +30,8 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
   localStorage.setItem("wpmGraphDate", JSON.stringify(wpmGraphDate));
 
 } else if(data > parseInt(checkExistWPMc[checkExistWPMc.length-1])){
-
  if((parseInt(localStorage.getItem("topWPMDate")) - date) == 0){
+
   //console.log('It does exist still checking');
   const ge2 = localStorage.getItem("wpmGraphDate");
   const ge = localStorage.getItem("wpmGraphWPM");
@@ -73,13 +64,13 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
 } else{ // This pushes the previous wpm for the new date to ensure the graph flows  
   const ge2 = localStorage.getItem("wpmGraphDate");
   const ge = localStorage.getItem("wpmGraphWPM");
+  localStorage.setItem("topWPMDate", JSON.stringify(date));
+
 
   const wpmData = JSON.parse(ge);
   const dateD = JSON.parse(ge2);
 
-  console.log(wpmData[wpmData.length-1])
   wpmData.push(parseInt(wpmData[wpmData.length-1]));
-  console.log(wpmData[wpmData.length-1]);
   dateD.push(dateData);
 
   localStorage.setItem("wpmGraphWPM", JSON.stringify(wpmData));
@@ -89,22 +80,35 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
 }
   
 
-export function storeAverageData(avgData ,dateD){
-
+export function storeAverageData(avgData ,dateD, inChordMasterdValue){
   const avgGraphWPM = [];
   const avgGraphDate = [];
+  const masteredCounterArray: any =  [];
 
   const currentDate = new Date();
   const date = currentDate.getDate();
 
   const checkInDate = localStorage.getItem("theDate");
   const ifCheckInDate = JSON.parse(checkInDate);
- 
+  
   //Checks to see if there is not theDate object in local storage or is he date is more that -2 daa
-  if((localStorage.getItem("theDate")==null)|| ((date-ifCheckInDate)>=2)||((date-ifCheckInDate)<=-2)){
+  if((localStorage.getItem("theDate")==null) || ((date-ifCheckInDate)>=2)||((date-ifCheckInDate)<=-2)){
+
+    if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
+      localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
+      sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
+    }
+    //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond 
+    if(inChordMasterdValue>=100 && (inChordMasterdValue != JSON.parse(sessionStorage.getItem("prevMasteredChordVal"))) && (inChordMasterdValue != 6276)){
+      const mChords = JSON.parse(localStorage.getItem("masteredChords"));
+      mChords.push(0);
+      localStorage.setItem("masteredChords",JSON.stringify(mChords));
+      sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(inChordMasterdValue));
+    }
 
     localStorage.setItem("count", JSON.stringify(0));
     localStorage.setItem("dailyWPMAVG", JSON.stringify(0));
+
 
     const getCounterFromLocal = localStorage.getItem("count");
     const getDailyWPM = localStorage.getItem("dailyWPMAVG");
@@ -131,6 +135,17 @@ export function storeAverageData(avgData ,dateD){
 
   }else {
     if(date-(parseInt(localStorage.getItem("theDate"))) == 1){
+      if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
+        localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
+        sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
+      }     
+      //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond  
+      if(inChordMasterdValue>=100 && (inChordMasterdValue != JSON.parse(sessionStorage.getItem("prevMasteredChordVal")))&& (inChordMasterdValue != 6276)){
+        const mChords = JSON.parse(localStorage.getItem("masteredChords"));
+        mChords.push(0);
+        localStorage.setItem("masteredChords",JSON.stringify(mChords));
+        sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(inChordMasterdValue));
+      }
       localStorage.setItem("count", JSON.stringify(0));//Set AVG counter to 0
       localStorage.setItem("dailyWPMAVG", JSON.stringify(0));
 
@@ -166,7 +181,18 @@ export function storeAverageData(avgData ,dateD){
 
       } 
       else if((parseInt(localStorage.getItem("theDate")) - date) == 0){ //If it is the same day
-        
+        if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
+          localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
+          sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
+          
+        }
+        //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond 
+         if(inChordMasterdValue>=100 && (inChordMasterdValue != JSON.parse(sessionStorage.getItem("prevMasteredChordVal"))) && (inChordMasterdValue != 6276)){
+          const mChords = JSON.parse(localStorage.getItem("masteredChords"));
+          mChords.push(0);
+          localStorage.setItem("masteredChords",JSON.stringify(mChords));
+          sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(inChordMasterdValue));
+        }
       const avgGetGD = localStorage.getItem("avgGraphDate");
       const avgGetGW = localStorage.getItem("avgGraphWPM");
 
@@ -353,7 +379,7 @@ function generateDayWiseTimeSeries2() {
   const date = currentDate.getDate();
 //If this is called and the ecpressiton is true this means the user has not attempted a game. So we add the previously stored data to make the graph flush
  if((parseInt(localStorage.getItem("theDate"))) == null){
-  storeAverageData(0, currentDate);
+  storeAverageData(0, currentDate, 0);
 
  }
 
@@ -379,17 +405,36 @@ function generateDayWiseTimeSeries2() {
 
 
 export function Graph(): ReactElement {
+  
+  const { parentProps: topSpeed, Popper: SpeedPopper } = usePopover(
+    'This shows the fastest you have typed in any training module. Get a faster top speed to progress through the training modules',
+  );
+  const { parentProps: avgSpeed, Popper: avgPopper } = usePopover(
+    'This shows the average speed you have typed for the most recent day you have practiced.',
+  );
+  const { parentProps: chordsMastered, Popper: chordsPopper } = usePopover(
+    'This shows the number of words you have Mastered by completing a word at a speed of 100 WPM or higher.',
+  );
+  const { parentProps: practiceStreak, Popper: practicePopper } = usePopover(
+    'This shows how many days in a row you have practiced in any training module.',
+  );
+ 
   React.useEffect(() => {
     myGraph()
   }, []);
   return (
-    
     <React.Fragment>
+          {practicePopper}
+          {chordsPopper}
+          {avgPopper}
+          {SpeedPopper}
+
 
       <div className='sc-ikJyIC w-full  lg:mx-auto flex flex-row '>
-      <h1 className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500">Practice Streak: {(localStorage.getItem("streak") == null ? 0 : localStorage.getItem("streak")) + ((parseInt(localStorage.getItem("streak")) != 1) ? " days": " day")}</h1>
-      <h1 className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500"> Top Speed: {(getHighestWPM() + " WPM")}</h1>
-      <h1 className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500">Average Speed: {(getAverageWPM() + " WPM")}</h1>
+      <PracticeStreak {...practiceStreak}>Practice Streak: {(localStorage.getItem("streak") == null ? 0 : localStorage.getItem("streak")) + ((parseInt(localStorage.getItem("streak")) != 1) ? " days": " day")}</PracticeStreak>
+      <TopSpeed {...topSpeed}> Top Speed: {(getHighestWPM() + " WPM")}</TopSpeed>
+      <AverageSpeed {...avgSpeed}>Average Speed: {(getAverageWPM() + " WPM")}</AverageSpeed>
+      <ChordsMastered {...chordsMastered}>Chords Mastered: {(JSON.parse(localStorage.getItem("masteredChords")) == null ? 0 :  JSON.parse(localStorage.getItem("masteredChords")).length)}</ChordsMastered>
 
 
       </div>
@@ -400,3 +445,15 @@ export function Graph(): ReactElement {
     </React.Fragment>
   );
 }
+  export const AverageSpeed = styled.button.attrs({
+    className: `text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500`,
+  })``;
+  export const ChordsMastered = styled.button.attrs({
+    className: `text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500`,
+  })``;
+  export const TopSpeed = styled.button.attrs({
+    className: `text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500`,
+  })``;
+  export const PracticeStreak = styled.button.attrs({
+    className: `text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500`,
+  })``;

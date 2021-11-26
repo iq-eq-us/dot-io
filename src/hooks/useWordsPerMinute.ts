@@ -50,12 +50,9 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
-  const x = trainingStatistics.statistics.filter((s) => s.numberOfOccurrences);
-  console.log(x);
-  const numberOfSpaces = (y.length); //Counts the nnumber of times the user presses the space bar. 
+  let currentChordSpeed = y[y?.length-1]?.lastSpeed;
   const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
- 
-  
+
 
   const chordLength = totalNumberOfCharactersTyped/5.23;
 
@@ -66,6 +63,8 @@ export const useWordsPerMinute = (): number => {
   const charactersTypedCorrectly = totalNumberOfCharactersTyped;
   const charactersTypedCorrectlyPerMinute =
     charactersTypedCorrectly / timeDifferenceInMinutes;
+
+
 
   const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario);
@@ -80,6 +79,7 @@ export const useWordsPerMinute = (): number => {
 
       let averageSpeed = 0;
       let averageSpeedCount= 0;
+
     if(trainingSceneario == 'ALPHABET'){
       if(totalNumberOfCharactersTyped == 0) {
   
@@ -87,18 +87,25 @@ export const useWordsPerMinute = (): number => {
   
         wpm =0;
       } else {
-          const avgSpeedMilliseconds = average * 10;
-          const millisecondsPerCharacter = avgSpeedMilliseconds;
-          const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-            wpm = averageCharacterPerMin/5;
+
+          let avgSpeedMilliseconds = average * 10;
+          let millisecondsPerCharacter = avgSpeedMilliseconds;
+          let averageCharacterPerMin = 60000/millisecondsPerCharacter;
+          wpm = averageCharacterPerMin/5;
+
+          //This calculation calculates the current chords speed so that we can check if it is a mastered chord
+          avgSpeedMilliseconds = currentChordSpeed * 10;
+          millisecondsPerCharacter = avgSpeedMilliseconds/5.23;//In the future 5.23 needs to be dynamic based on the practice set
+          averageCharacterPerMin = 60000/millisecondsPerCharacter;
+          currentChordSpeed = averageCharacterPerMin/5;
 
           averageSpeed =averageSpeed + wpm;
           averageSpeedCount++;
   
           
           const currentDate = new Date();
-  
-          storeAverageData( wpm, currentDate );
+
+          storeAverageData( wpm, currentDate, currentChordSpeed);
       }
   
     } else{
@@ -106,15 +113,23 @@ export const useWordsPerMinute = (): number => {
   
         wpm =0;
       } else {
-          const avgSpeedMilliseconds = average * 10;
-          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23;//In the future 5.23 needs to be dynamic based on the practice
-          const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+
+          let avgSpeedMilliseconds = average * 10;
+          let millisecondsPerCharacter = avgSpeedMilliseconds/5.23;//In the future 5.23 needs to be dynamic based on the practice set
+          let averageCharacterPerMin = 60000/millisecondsPerCharacter;
           wpm = averageCharacterPerMin/5;
   
+          avgSpeedMilliseconds = currentChordSpeed * 10;
+          millisecondsPerCharacter = avgSpeedMilliseconds/5.23;//In the future 5.23 needs to be dynamic based on the practice set
+          averageCharacterPerMin = 60000/millisecondsPerCharacter;
+          currentChordSpeed = averageCharacterPerMin/5;
+        
+
           averageSpeed += wpm;
           averageSpeedCount++; 
           const currentDate = new Date();
-          storeAverageData( averageSpeed, currentDate );
+
+          storeAverageData( averageSpeed, currentDate, currentChordSpeed);
   
         }
   
