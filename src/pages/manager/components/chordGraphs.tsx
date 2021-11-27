@@ -114,10 +114,8 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
     }
     if(inAvgChordCount!= localStorage.getItem("prevAverageChordCounter")){
       let avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
+      avgCount =+ inAvgChordCount
       let prevAvgCount = JSON.parse(localStorage.getItem("prevAverageChordCounter"));
-
-      const inValtoAdd = inAvgChordCount == 6 ? 6: 1;//This is to offset the calibrating number
-      avgCount = avgCount + inValtoAdd;
       prevAvgCount = inAvgChordCount;
 
       localStorage.setItem("averageChordCounter",JSON.stringify(avgCount));
@@ -163,17 +161,7 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
         localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
         sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
       }   
-      if(inAvgChordCount!= localStorage.getItem("prevAverageChordCounter")){
-        let avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
-        let prevAvgCount = JSON.parse(localStorage.getItem("prevAverageChordCounter"));
-
-        const inValtoAdd = inAvgChordCount == 6 ? 6: 1;//This is to offset the calibrating number
-        avgCount = avgCount + inValtoAdd;
-        prevAvgCount = inAvgChordCount;
-
-        localStorage.setItem("averageChordCounter",JSON.stringify(avgCount));
-        localStorage.setItem("prevAverageChordCounter",JSON.stringify(prevAvgCount));
-      }  
+        
       //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond  
       if(inChordMasterdValue>=100 && (inChordMasterdValue != JSON.parse(sessionStorage.getItem("prevMasteredChordVal")))&& (inChordMasterdValue != 6276)){
         const mChords = JSON.parse(localStorage.getItem("masteredChords"));
