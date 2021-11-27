@@ -209,7 +209,6 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     }
     const bigNum = BigInt("0x"+hexString);
     
-  
     if(MainControls._chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
       const decString = String(bigNum).split(''); //no left zeros; that's ok
       console.log(decString);
@@ -257,7 +256,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
           }
         }
       }
-    }else{
+    }else if(MainControls._chordmapId == 'CHARACHORDERLITE'){
       const binString = bigNum.toString(2); //no left zeros; that's ok
       console.log(binString);
       for(let i=0;i<binString.length;i++){
@@ -265,14 +264,19 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
           if(humanString.length>0){
             humanString += " + "
           }
-          console.log('Im here');
           humanString+=_keyMap[64-binString.length+i];
         //console.log(i);
         //humanString+=_keyMap[(64-binString.length+i)];
+        if(_keyMap[64-binString.length+i] == 'GTM' || _keyMap[64-binString.length+i] == '0x0061'){
+          console.log('The two values ' + _keyMap[64-binString.length+i] );
+
+        }
         }
       }
     }
-    
+    else{
+      //nothing for now
+    }
   
   
     console.log(humanString);
@@ -673,33 +677,14 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       btnCommit.disabled = false;
     }
   }
-  function pressCommitButton(virtualId){
+  export function pressCommitButton(virtualId){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     if(commitButton.disabled==false){
       commitButton.click();
     }
   }
 
-  export function commitAll(){
-    console.log("commitAll()");
-    const dataTable = document.getElementById("dataTable");
-    //iterate through table from bottom to top to see if there's a commit enabled
-    //TODO check if we need to skip the header row
-    for (let i = dataTable.rows.length-1; i>=1; i--) {
-      //iterate through rows
-      const row = dataTable.rows[i];
-      // console.log(row);
-      // console.log(row.cells);
-      // console.log(row.cells[0]);
-      // console.log(row.cells[0].innerHTML);
-      const virtualId = parseInt(row.cells[0].innerHTML);
 
-      console.log('table row '+i+' has virtualId of '+virtualId);
-      // document.getElementById(virtualId.toString()+"-commit")
-      setTimeout(pressCommitButton,i*100,virtualId);
-      //rows would be accessed using the "row" variable assigned in the for loop
-   }
-  }
  
 
  export async function readGetNone(){

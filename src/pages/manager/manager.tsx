@@ -10,6 +10,8 @@ import { Download } from '../manager/components/download'
 import { Clear } from '../manager/components/resetDataTable'
 import { Export } from '../manager/components/exportLibrary'
 import { AddChordMap } from '../manager/components/addChordMap'
+import { PressCommit } from '../manager/components/commitAll'
+
 
 
 import {
@@ -41,6 +43,7 @@ const Manager = (): ReactElement => {
     <BootLoaderButton/>
     <RebootButton/>
     <Clear/>
+    <PressCommit/>
     <div/>
     <ImportChords/>
     <Download/>
