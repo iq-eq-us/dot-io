@@ -50,8 +50,10 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
+  
   let currentChordSpeed = y[y?.length-1]?.lastSpeed;
   const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
+  const averageDailyCount = y.length;
 
 
   const chordLength = totalNumberOfCharactersTyped/5.23;
@@ -102,10 +104,9 @@ export const useWordsPerMinute = (): number => {
           averageSpeed =averageSpeed + wpm;
           averageSpeedCount++;
   
-          
           const currentDate = new Date();
 
-          storeAverageData( wpm, currentDate, currentChordSpeed);
+          storeAverageData( wpm, currentDate, currentChordSpeed, averageDailyCount);
       }
   
     } else{
@@ -129,7 +130,7 @@ export const useWordsPerMinute = (): number => {
           averageSpeedCount++; 
           const currentDate = new Date();
 
-          storeAverageData( averageSpeed, currentDate, currentChordSpeed);
+          storeAverageData( averageSpeed, currentDate, currentChordSpeed, averageDailyCount);
   
         }
   

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 
 
+
 export function storeData(data:any, dateData:any){
 
   //console.log("hererererererer")
@@ -21,7 +22,7 @@ export function storeData(data:any, dateData:any){
 
  
 
-if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem('topWPMDate'))==0)){
+if(((localStorage.getItem('topWPMDate'))==null)){
     localStorage.setItem("topWPMDate", JSON.stringify(date));
 
   wpmGraphWPM.push(Math.round(data));
@@ -31,13 +32,13 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
 
 } else if(data > parseInt(checkExistWPMc[checkExistWPMc.length-1])){
  if((parseInt(localStorage.getItem("topWPMDate")) - date) == 0){
-
-  //console.log('It does exist still checking');
   const ge2 = localStorage.getItem("wpmGraphDate");
   const ge = localStorage.getItem("wpmGraphWPM");
   
   const wpmData = JSON.parse(ge);
   const dateD = JSON.parse(ge2);
+
+
 
   wpmData.splice((wpmData.length-1),1,(Math.round(data)));
   dateD.splice((dateD.length-1),1,dateData);
@@ -61,7 +62,9 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
   localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
 
  }
-} else{ // This pushes the previous wpm for the new date to ensure the graph flows  
+} if((parseInt(localStorage.getItem("topWPMDate")!= null)) &&(parseInt(localStorage.getItem("theDate")) != (parseInt(localStorage.getItem("topWPMDate"))))){ // This pushes the previous wpm for the new date to ensure the graph flows  
+  console.log('Entered the last else statement');
+
   const ge2 = localStorage.getItem("wpmGraphDate");
   const ge = localStorage.getItem("wpmGraphWPM");
   localStorage.setItem("topWPMDate", JSON.stringify(date));
@@ -80,7 +83,7 @@ if(((localStorage.getItem('topWPMDate'))==null)||(parseInt(localStorage.getItem(
 }
   
 
-export function storeAverageData(avgData ,dateD, inChordMasterdValue){
+export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChordCount){
   const avgGraphWPM = [];
   const avgGraphDate = [];
   const masteredCounterArray: any =  [];
@@ -92,8 +95,7 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue){
   const ifCheckInDate = JSON.parse(checkInDate);
   
   //Checks to see if there is not theDate object in local storage or is he date is more that -2 daa
-  if((localStorage.getItem("theDate")==null) || ((date-ifCheckInDate)>=2)||((date-ifCheckInDate)<=-2)){
-
+  if((localStorage.getItem("theDate")==null)){
     if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
       localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
       sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
@@ -104,6 +106,20 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue){
       mChords.push(0);
       localStorage.setItem("masteredChords",JSON.stringify(mChords));
       sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(inChordMasterdValue));
+    }
+    //These two if statements work on the avg counter
+    if(localStorage.getItem("averageChordCounter")==null){
+      localStorage.setItem("averageChordCounter",JSON.stringify(masteredCounterArray));
+      sessionStorage.setItem("prevAverageChordCounter",JSON.stringify(0));
+    }
+    if(inAvgChordCount!= localStorage.getItem("prevAverageChordCounter")){
+      let avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
+      avgCount =+ inAvgChordCount
+      let prevAvgCount = JSON.parse(localStorage.getItem("prevAverageChordCounter"));
+      prevAvgCount = inAvgChordCount;
+
+      localStorage.setItem("averageChordCounter",JSON.stringify(avgCount));
+      localStorage.setItem("prevAverageChordCounter",JSON.stringify(prevAvgCount));
     }
 
     localStorage.setItem("count", JSON.stringify(0));
@@ -134,7 +150,58 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue){
   
 
   }else {
-    if(date-(parseInt(localStorage.getItem("theDate"))) == 1){
+    if(((date-ifCheckInDate)>=2)||((date-ifCheckInDate)<=-2)){
+      if(localStorage.getItem('averageCount') == null){//Avg count number
+        localStorage.setItem('averageCount', JSON.stringify(0))
+      }else{
+        localStorage.setItem('averageCount', JSON.stringify(0))
+      }
+      
+      if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
+        localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
+        sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
+      }     
+      //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond  
+      if(inChordMasterdValue>=100 && (inChordMasterdValue != JSON.parse(sessionStorage.getItem("prevMasteredChordVal")))&& (inChordMasterdValue != 6276)){
+        const mChords = JSON.parse(localStorage.getItem("masteredChords"));
+        mChords.push(0);
+        localStorage.setItem("masteredChords",JSON.stringify(mChords));
+        sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(inChordMasterdValue));
+      }
+  
+      localStorage.setItem("count", JSON.stringify(0));
+      localStorage.setItem("dailyWPMAVG", JSON.stringify(0));
+  
+  
+      const getCounterFromLocal = localStorage.getItem("count");
+      const getDailyWPM = localStorage.getItem("dailyWPMAVG");
+
+      const avgGetGD = localStorage.getItem("avgGraphDate");
+      const avgGetGW = localStorage.getItem("avgGraphWPM");
+      
+      const avgDData = JSON.parse(avgGetGD);
+      const avgWData = JSON.parse(avgGetGW);
+      
+      let parsedCounterFromLocal = JSON.parse(getCounterFromLocal);
+      let dailyWPM = JSON.parse(getDailyWPM);
+  
+        parsedCounterFromLocal++;
+        localStorage.setItem("count", JSON.stringify(parsedCounterFromLocal));
+  
+      const streak = 0;//Set the daily streak to 0 if a day has been missed
+      storeData(avgData, dateD); //Call the StoreData method to add StoreData value to graph
+      localStorage.setItem("streak", JSON.stringify(streak));
+  
+      dailyWPM =+ avgData; 
+      avgWData.push(avgData);
+      avgDData.push(dateD);
+      localStorage.setItem("theDate", JSON.stringify(date));
+      localStorage.setItem("avgGraphWPM", JSON.stringify(avgWData));
+      localStorage.setItem("avgGraphDate", JSON.stringify(avgDData));
+      localStorage.setItem("dailyWPMAVG", JSON.stringify(dailyWPM));
+    }
+
+    else if(date-(parseInt(localStorage.getItem("theDate"))) == 1){
       if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
         localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
         sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
@@ -184,7 +251,6 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue){
         if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
           localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
           sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
-          
         }
         //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond 
          if(inChordMasterdValue>=100 && (inChordMasterdValue != JSON.parse(sessionStorage.getItem("prevMasteredChordVal"))) && (inChordMasterdValue != 6276)){
@@ -193,14 +259,33 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue){
           localStorage.setItem("masteredChords",JSON.stringify(mChords));
           sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(inChordMasterdValue));
         }
+         //These two if statements work on the avg counter
+          if(localStorage.getItem("averageChordCounter")==null){
+            localStorage.setItem("averageChordCounter",JSON.stringify(0));
+            sessionStorage.setItem("prevAverageChordCounter",JSON.stringify(0));
+            console.log('nully herere');
+          }
+          if(inAvgChordCount!= localStorage.getItem("prevAverageChordCounter")){
+            let avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
+            let prevAvgCount = JSON.parse(localStorage.getItem("prevAverageChordCounter"));
+
+            const inValtoAdd = inAvgChordCount == 6 ? 6: 1;//This is to offset the calibrating number
+            avgCount = avgCount + inValtoAdd;
+            prevAvgCount = inAvgChordCount;
+
+            localStorage.setItem("averageChordCounter",JSON.stringify(avgCount));
+            localStorage.setItem("prevAverageChordCounter",JSON.stringify(prevAvgCount));
+          }
+          const avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
+          
       const avgGetGD = localStorage.getItem("avgGraphDate");
       const avgGetGW = localStorage.getItem("avgGraphWPM");
 
       const avgWData = JSON.parse(avgGetGW);
       const avgDData = JSON.parse(avgGetGD);
 
-      const val = (avgData+parseInt(avgWData[((avgWData.length)-1)]))/2;
-
+      const val = (avgData+(parseInt(avgWData[((avgWData.length)-1)])*(avgCount-1)))/avgCount;
+    
       avgWData.splice((avgWData.length-1),1,Math.round(val));
       avgDData.splice((avgDData.length-1),1,dateD);
 
@@ -336,6 +421,9 @@ function generateDayWiseTimeSeries1() {
 
   const wpmData = JSON.parse(ge);
   const dateD = JSON.parse(ge2);
+
+  console.log(ge);
+  console.log(ge2);
   
   const currentDate = new Date();
   const date = currentDate.getDate();
@@ -369,15 +457,15 @@ function generateDayWiseTimeSeries2() {
 
   const avgWpmData = JSON.parse(ge);
   const avgDateD = JSON.parse(ge2);
-  //console.log(ge2);
-  //console.log(ge);
+  console.log(avgWpmData);
+  console.log(avgDateD);
 
   let i = 0;
   const series = [];
 
   const currentDate = new Date();
   const date = currentDate.getDate();
-//If this is called and the ecpressiton is true this means the user has not attempted a game. So we add the previously stored data to make the graph flush
+//If this is called and the expressiton is true this means the user has not attempted a training session. So we add the previously stored data to make the graph flush
  if((parseInt(localStorage.getItem("theDate"))) == null){
   storeAverageData(0, currentDate, 0);
 
