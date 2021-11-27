@@ -114,8 +114,10 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
     }
     if(inAvgChordCount!= localStorage.getItem("prevAverageChordCounter")){
       let avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
-      avgCount =+ inAvgChordCount
       let prevAvgCount = JSON.parse(localStorage.getItem("prevAverageChordCounter"));
+
+      const inValtoAdd = inAvgChordCount == 6 ? 6: 1;//This is to offset the calibrating number
+      avgCount = avgCount + inValtoAdd;
       prevAvgCount = inAvgChordCount;
 
       localStorage.setItem("averageChordCounter",JSON.stringify(avgCount));
@@ -160,7 +162,18 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
       if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
         localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
         sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
-      }     
+      }   
+      if(inAvgChordCount!= localStorage.getItem("prevAverageChordCounter")){
+        let avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
+        let prevAvgCount = JSON.parse(localStorage.getItem("prevAverageChordCounter"));
+
+        const inValtoAdd = inAvgChordCount == 6 ? 6: 1;//This is to offset the calibrating number
+        avgCount = avgCount + inValtoAdd;
+        prevAvgCount = inAvgChordCount;
+
+        localStorage.setItem("averageChordCounter",JSON.stringify(avgCount));
+        localStorage.setItem("prevAverageChordCounter",JSON.stringify(prevAvgCount));
+      }  
       //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond  
       if(inChordMasterdValue>=100 && (inChordMasterdValue != JSON.parse(sessionStorage.getItem("prevMasteredChordVal")))&& (inChordMasterdValue != 6276)){
         const mChords = JSON.parse(localStorage.getItem("masteredChords"));
@@ -207,11 +220,16 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
         sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
       }     
       //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond  
-      if(inChordMasterdValue>=100 && (inChordMasterdValue != JSON.parse(sessionStorage.getItem("prevMasteredChordVal")))&& (inChordMasterdValue != 6276)){
-        const mChords = JSON.parse(localStorage.getItem("masteredChords"));
-        mChords.push(0);
-        localStorage.setItem("masteredChords",JSON.stringify(mChords));
-        sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(inChordMasterdValue));
+      if(inAvgChordCount!= localStorage.getItem("prevAverageChordCounter")){
+        let avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
+        let prevAvgCount = JSON.parse(localStorage.getItem("prevAverageChordCounter"));
+
+        const inValtoAdd = inAvgChordCount == 6 ? 6: 1;//This is to offset the calibrating number
+        avgCount = avgCount + inValtoAdd;
+        prevAvgCount = inAvgChordCount;
+
+        localStorage.setItem("averageChordCounter",JSON.stringify(avgCount));
+        localStorage.setItem("prevAverageChordCounter",JSON.stringify(prevAvgCount));
       }
       localStorage.setItem("count", JSON.stringify(0));//Set AVG counter to 0
       localStorage.setItem("dailyWPMAVG", JSON.stringify(0));
@@ -263,7 +281,6 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
           if(localStorage.getItem("averageChordCounter")==null){
             localStorage.setItem("averageChordCounter",JSON.stringify(0));
             sessionStorage.setItem("prevAverageChordCounter",JSON.stringify(0));
-            console.log('nully herere');
           }
           if(inAvgChordCount!= localStorage.getItem("prevAverageChordCounter")){
             let avgCount = JSON.parse(localStorage.getItem("averageChordCounter"));
