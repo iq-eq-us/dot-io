@@ -169,6 +169,9 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
         localStorage.setItem("masteredChords",JSON.stringify(mChords));
         sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(inChordMasterdValue));
       }
+      localStorage.setItem("averageChordCounter",JSON.stringify(0));
+      localStorage.setItem("prevAverageChordCounter",JSON.stringify(6));
+      
   
       localStorage.setItem("count", JSON.stringify(0));
       localStorage.setItem("dailyWPMAVG", JSON.stringify(0));
@@ -203,6 +206,8 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
     }
 
     else if(date-(parseInt(localStorage.getItem("theDate"))) == 1){
+     
+      /////
       if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
         localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
         sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
@@ -219,6 +224,11 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
         localStorage.setItem("averageChordCounter",JSON.stringify(avgCount));
         localStorage.setItem("prevAverageChordCounter",JSON.stringify(prevAvgCount));
       }
+
+      localStorage.setItem("averageChordCounter",JSON.stringify(0));
+      localStorage.setItem("prevAverageChordCounter",JSON.stringify(6));
+      
+     
       localStorage.setItem("count", JSON.stringify(0));//Set AVG counter to 0
       localStorage.setItem("dailyWPMAVG", JSON.stringify(0));
 
