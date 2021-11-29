@@ -62,8 +62,8 @@ if(((localStorage.getItem('topWPMDate'))==null)){
   localStorage.setItem("wpmGraphDate", JSON.stringify(dateD));
 
  }
-} if((parseInt(localStorage.getItem("topWPMDate")!= null)) &&(parseInt(localStorage.getItem("theDate")) != (parseInt(localStorage.getItem("topWPMDate"))))){ // This pushes the previous wpm for the new date to ensure the graph flows  
-  console.log('Entered the last else statement');
+} if((JSON.parse(localStorage.getItem("topWPMDate")!= null)) &&(parseInt(JSON.parse(localStorage.getItem("theDate"))) != parseInt(JSON.parse(localStorage.getItem("topWPMDate"))))){ // This pushes the previous wpm for the new date to ensure the graph flows  
+  //console.log('Entered the last else statement');
 
   const ge2 = localStorage.getItem("wpmGraphDate");
   const ge = localStorage.getItem("wpmGraphWPM");
@@ -264,6 +264,7 @@ export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChord
 
       } 
       else if((parseInt(localStorage.getItem("theDate")) - date) == 0){ //If it is the same day
+        storeData(avgData, dateD);
         if(localStorage.getItem("masteredChords")==null){//This is here to create these objects incase this is the first time a user is using LaunchPad
           localStorage.setItem("masteredChords",JSON.stringify(masteredCounterArray));
           sessionStorage.setItem("prevMasteredChordVal",JSON.stringify(0));
@@ -437,8 +438,8 @@ function generateDayWiseTimeSeries1() {
   const wpmData = JSON.parse(ge);
   const dateD = JSON.parse(ge2);
 
-  console.log(ge);
-  console.log(ge2);
+  //console.log(ge);
+  //console.log(ge2);
   
   const currentDate = new Date();
   const date = currentDate.getDate();
@@ -472,8 +473,8 @@ function generateDayWiseTimeSeries2() {
 
   const avgWpmData = JSON.parse(ge);
   const avgDateD = JSON.parse(ge2);
-  console.log(avgWpmData);
-  console.log(avgDateD);
+  //console.log(avgWpmData);
+  //console.log(avgDateD);
 
   let i = 0;
   const series = [];
