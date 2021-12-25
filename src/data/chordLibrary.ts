@@ -8,6 +8,7 @@ export interface ChordLibrary {
   all: ChordLibraryRecord;
   lexicographic: ChordLibraryRecord;
   supersonic: ChordLibraryRecord;
+  chordsLite: ChordLibraryRecord;
 }
 
 // This chord library maps to the key positions in the keyPositions.ts file
@@ -472,7 +473,7 @@ export const chordLibrary: ChordLibrary = {
     know: ['243-121', '377-44', '140-44'],
     land: ['371-19', '317-57', '303-146'],
     large: ['371-19', '317-57', '223-56', '187-180'],
-    last: ['371-19', '317-57', '71-60'],
+    last: ['371-19', '317-57', '324-82'],
     later: ['371-19', '215-110', '223-56'],
     learn: ['371-19', '223-56'],
     leave: ['371-19', '194-82', '317-57', '215-110'],
@@ -650,6 +651,12 @@ export const chordLibrary: ChordLibrary = {
     your: ['439-35', '223-56'],
 
     	
+  },chordsLite: {
+  
+   
+    your: ['439-35', '223-56'],
+
+    	
   },
   trigrams: {
     the: [],
@@ -687,7 +694,6 @@ export const chordLibrary: ChordLibrary = {
     ont: [],
     was: [],
     sin: [],
-    eof: [],
     ons: [],
     era: [],
     ted: [],
@@ -1062,6 +1068,7 @@ export const chordLibrary: ChordLibrary = {
       ...this.lexical,
       ...this.letters,
       ...this.chords,
+      ...this.chordsLite,
     };
   },
 };
