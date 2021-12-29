@@ -8,7 +8,7 @@ import { RowGroupSpecifier } from '../sectorGroupCharachorderLite';
 
 
 export function Light(): ReactElement {
-  let styleValue = false;
+  const styleValue = false;
   const keysToHighlight = useStoreState(
     (store) => store.currentlyHighlightedKeys,
   );
@@ -25,7 +25,7 @@ export function Light(): ReactElement {
 
     return (
       <React.Fragment>
-    <div className="body" style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "#999", fontFamily: "system-ui, sans-serif", marginTop:"80px"}}>
+    <div className="body" style={keyboardBodyStyle}>
    <div className ="keyboard" style={keyboardStyle}>
   <div className="row" style={rowStyle}>
     <div style={ styleValue ?  enterButtonStyle : buttonStyle}>esc</div>
@@ -73,7 +73,7 @@ export function Light(): ReactElement {
     <div style={ compare2(3,9) ?  highlightedButtonStyle : buttonStyle}>K</div>
     <div style={ compare2(3,10) ?  highlightedButtonStyle : buttonStyle}>L</div>
     <div style={ compare2(3,11) ?  highlightedButtonStyle : buttonStyle}>;</div>
-    <div style={ compare2(3,12) ?  highlightedButtonStyle : buttonStyle}>'</div>
+    <div style={ compare2(3,12) ?  highlightedButtonStyle : buttonStyle}>&apos;</div>
     <div style={enterButtonStyle}>Enter</div>
   </div>
   <div className="row" style={rowStyle}>
@@ -116,10 +116,19 @@ export function Light(): ReactElement {
   }
 
  
-
+  const keyboardBodyStyle ={
+    display: "flex",
+    flexDirection: "column" as const,
+    justifyContent: "center",
+    alignItems: "center" as const, 
+     color: "#999",
+    fontFamily: "system-ui, sans-serif" as const,
+    marginTop:"80px"
+        }
+  
   const keyboardStyle = {
     display: "flex", 
-    flexDirection: "column",  
+    flexDirection: 'column' as const ,  
     justifyContent: "center", 
     alignItems: "center", 
     fontSize: "0", 
@@ -133,10 +142,11 @@ export function Light(): ReactElement {
     //backgroundImage: "radial-gradient(#111, #222)", 
     padding: "0.25rem", 
     font: "inherit", 
-    verticalAlign: "baseline",
+    //verticalAlign: "baseline",
     margin: "0"
   }
-
+  
+  
   const rowStyle ={ 
     height: "60px", 
     display: "flex", 
@@ -145,20 +155,20 @@ export function Light(): ReactElement {
     paddingTop: "1px", 
     marginBottom: "2px"
   }
-
+  
   const buttonStyle = 
   {
   borderRadius: "3px", 
-  //boxSizing: "border-box", 
+  boxSizing: "border-box" as const, 
   color: "white", 
   display: "inline-block", 
   fontFamily: "system-ui, sans-serif", 
   fontSize: "1rem", 
-  //fontWeight: "bold", 
+  fontWeight: "bold" as const, 
   lineHeight: "1.125", 
   padding: "0.33em 0.66em", 
-  //position: "relative", 
-  //textAlign: "center", 
+  position: "relative" as const, 
+  textAlign: "center" as const, 
   verticalAlign: "middle", 
   width: "60px", 
   height: "60px", 
@@ -174,22 +184,22 @@ export function Light(): ReactElement {
   outline: "0",
   borderLeftColor: "#b2afa8", 
   borderRightColor: "#b2afa8", 
-  backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 5%, transparent 10%, transparent 90%, #c9c9c9 95%, #e9e8e6)"
-};
-
-const highlightedButtonStyle = 
+  backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 5%, transparent 5%, transparent 95%, #c9c9c9 95%, #e9e8e6)"
+  };
+  
+  const highlightedButtonStyle = 
   {
   borderRadius: "3px", 
-  //boxSizing: "border-box", 
+  boxSizing: "border-box" as const, 
   color: "white", 
   display: "inline-block", 
   fontFamily: "system-ui, sans-serif", 
   fontSize: "1rem", 
-  //fontWeight: "bold", 
+  fontWeight: "bold" as const, 
   lineHeight: "1.125", 
   padding: "0.33em 0.66em", 
-  //position: "relative", 
-  //textAlign: "center", 
+  position: "relative" as const, 
+  textAlign: "center" as const, 
   verticalAlign: "middle", 
   width: "60px", 
   height: "60px", 
@@ -205,22 +215,23 @@ const highlightedButtonStyle =
   outline: "0",
   borderLeftColor: "#b2afa8", 
   borderRightColor: "#b2afa8", 
-  backgroundImage: "linear-gradient(to right, green, #c9c9c9 5%, transparent 10%, transparent 90%, #c9c9c9 95%, green)"
-};
-
-const shiftButtonStyle = 
-{
+  backgroundImage: "linear-gradient(to right, green, #c9c9c9 5%, transparent 5%, transparent 95%, #c9c9c9 95%, green)",
+  transform: "scale(0.96,0.96)     translate(0, 3px)"
+  };
+  
+  const shiftButtonStyle = 
+  {
     borderRadius: "3px", 
-    boxSizing: "border-box", 
+    boxSizing: "border-box" as const, 
     color: "white", 
     display: "inline-block", 
     fontFamily: "system-ui, sans-serif", 
     fontSize: "1rem", 
-    fontWeight: "bold", 
+    fontWeight: "bold" as const, 
     lineHeight: "1.125", 
     padding: "0.33em 0.66em", 
-    position: "relative", 
-    textAlign: "center", 
+    position: "relative" as const, 
+    textAlign: "center" as const, 
     verticalAlign: "middle", 
     width: "140px", 
     height: "60px", 
@@ -236,23 +247,23 @@ const shiftButtonStyle =
     outline: "0",
     borderLeftColor: "#b2afa8", 
     borderRightColor: "#b2afa8", 
-    backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 1%, transparent 5%, transparent 95%, #c9c9c9 99%, #e9e8e6)"
+    backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 2%, transparent 2%, transparent 98%, #c9c9c9 98%, #e9e8e6)"
   };
-
+  
   const enterButtonStyle = 
-{
+  {
   
     borderRadius: "3px", 
-    boxSizing: "border-box", 
+    boxSizing: "border-box" as const, 
     color: "white", 
     display: "inline-block", 
     fontFamily: "system-ui, sans-serif", 
     fontSize: "1rem", 
-    fontWeight: "bold", 
+    fontWeight: "bold" as const, 
     lineHeight: "1.125", 
     padding: "0.33em 0.66em", 
-    position: "relative", 
-    textAlign: "center", 
+    position: "relative" as const, 
+    textAlign: "center" as const, 
     verticalAlign: "middle", 
     width: "125px", 
     height: "60px", 
@@ -268,23 +279,55 @@ const shiftButtonStyle =
     outline: "0",
     borderLeftColor: "#b2afa8", 
     borderRightColor: "#b2afa8", 
-    backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 1%, transparent 5%, transparent 95%, #c9c9c9 99%, #e9e8e6)"
+    backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 3%, transparent 5%, transparent 95%, #c9c9c9 97%, #e9e8e6)"
   };
-
-  const capitalButtonStyle = 
-{
+  const highlightedEnterButtonStyle = 
+  {
+  
     borderRadius: "3px", 
-    fill:'#43e272',
-    boxSizing: "border-box", 
+    boxSizing: "border-box" as const, 
     color: "white", 
     display: "inline-block", 
     fontFamily: "system-ui, sans-serif", 
     fontSize: "1rem", 
-    fontWeight: "bold", 
+    fontWeight: "bold" as const, 
     lineHeight: "1.125", 
     padding: "0.33em 0.66em", 
-    position: "relative", 
-    textAlign: "center", 
+    position: "relative" as const, 
+    textAlign: "center" as const, 
+    verticalAlign: "middle", 
+    width: "125px", 
+    height: "60px", 
+    border: "3px solid transparent", 
+    borderTop: "2px solid transparent", 
+    borderBottom: "6px solid transparent", 
+    backgroundColor: "#43e272", 
+  borderColor: "#c3c0bb", 
+  borderTopColor: "#eeedeb", 
+  borderBottomColor: "#a6a29a", 
+  boxShadow: "0 -0.125em 0 -0.063em #a6a29a, 0 0.125em 0 -0.063em rgb(0 0 0 / 50%)", 
+  transition: "transform 100ms", 
+  outline: "0",
+  borderLeftColor: "#b2afa8", 
+  borderRightColor: "#b2afa8", 
+  backgroundImage: "linear-gradient(to right, green, #c9c9c9 5%, transparent 5%, transparent 95%, #c9c9c9 95%, green)",
+  transform: "scale(0.96,0.96)     translate(0, 3px)"
+  };
+  
+  const capitalButtonStyle = 
+  {
+    borderRadius: "3px", 
+    fill:'#43e272',
+    boxSizing: "border-box" as const, 
+    color: "white", 
+    display: "inline-block", 
+    fontFamily: "system-ui, sans-serif", 
+    fontSize: "1rem", 
+    fontWeight: "bold" as const, 
+    lineHeight: "1.125", 
+    padding: "0.33em 0.66em", 
+    position: "relative" as const, 
+    textAlign: "center" as const, 
     verticalAlign: "middle", 
     width: "120px", 
     height: "60px", 
@@ -300,21 +343,21 @@ const shiftButtonStyle =
     outline: "0",
     borderLeftColor: "#b2afa8", 
     borderRightColor: "#b2afa8", 
-    backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 1%, transparent 5%, transparent 95%, #c9c9c9 99%, #e9e8e6)"
+    backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 3%, transparent 5%, transparent 95%, #c9c9c9 97%, #e9e8e6)"
   };
   const tabButtonStyle = 
   {
       borderRadius: "3px", 
-      boxSizing: "border-box", 
+      boxSizing: "border-box" as const, 
       color: "white", 
       display: "inline-block", 
       fontFamily: "system-ui, sans-serif", 
       fontSize: "1rem", 
-      fontWeight: "bold", 
+      fontWeight: "bold" as const, 
       lineHeight: "1.125", 
       padding: "0.33em 0.66em", 
-      position: "relative", 
-      textAlign: "center", 
+      position: "relative" as const, 
+      textAlign: "center" as const, 
       verticalAlign: "middle", 
       width: "110px", 
       height: "60px", 
@@ -330,8 +373,5 @@ const shiftButtonStyle =
       outline: "0",
       borderLeftColor: "#b2afa8", 
        borderRightColor: "#b2afa8", 
-       backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 1%, transparent 5%, transparent 95%, #c9c9c9 99%, #e9e8e6)"
+       backgroundImage: "linear-gradient(to right, #e9e8e6, #c9c9c9 3%, transparent 1%, transparent 99%, #c9c9c9 97%, #e9e8e6)"
       };
-
-;
-  
