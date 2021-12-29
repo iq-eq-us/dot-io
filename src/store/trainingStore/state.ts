@@ -3,6 +3,9 @@ import {
   ConvertStringToKeyHighlightPositions,
   CharacterEntryMode,
 } from '../../helpers/convertStringToKeyHighlightPositions';
+import {
+  ConvertStringToKeyHighlightPositionsLite,
+} from '../../helpers/convertStringToKeyHighlightPositionsCharachorderLite';
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
 
@@ -41,7 +44,7 @@ const trainingStoreState: TrainingStoreStateModel = {
         )
       : [];
   }),
-  characterEntryMode: computed((state) => {
+    characterEntryMode: computed((state) => {
     if (!state.currentTrainingScenario) return undefined;
 
     const highlightMode: CharacterEntryMode =
@@ -51,6 +54,18 @@ const trainingStoreState: TrainingStoreStateModel = {
         ? 'CHARACTER'
         : 'CHORD';
     return highlightMode;
+  }),
+  currentlyHighlightedKeysLite: computed((state) => {
+    const highlightMode = state.characterEntryMode;
+    if (!highlightMode) return [];
+
+    return state.trainingSettings.isHighlightingKeys
+      ? ConvertStringToKeyHighlightPositionsLite(
+          state.targetWord || '',
+          highlightMode,
+          state.targetCharacterIndex ?? -1,
+        )
+      : [];
   }),
   targetWord: computed((state) => {
     const trainingText = state.trainingText;

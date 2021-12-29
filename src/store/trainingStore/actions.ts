@@ -448,4 +448,5 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
 };
 
+
 export default trainingStoreActions;

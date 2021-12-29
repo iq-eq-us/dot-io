@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 
+
 const r = Math.random;
 
 export function TextPrompt(): ReactElement {
@@ -20,9 +21,12 @@ export function TextPrompt(): ReactElement {
   const targetCharacterIndex = useStoreState((store) => store.targetCharacterIndex);
   const characterEntryMode = useStoreState((store) => store.characterEntryMode);
 
+
   return (
+
+    
     <TextPromptContainer>
-      <ChordRow>
+      <ChordRow >
         {(firstLineOfTargetText || [])?.map((chord, i) => {
           if (characterEntryMode === "CHORD" || i !== indexOfTargetChord)
             return <Chord

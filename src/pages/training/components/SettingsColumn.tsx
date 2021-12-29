@@ -9,6 +9,7 @@ import {
   HUDCheckboxSetting,
   AutosaveSetting,
 } from './CheckboxSettings';
+import DropDown from '../../../models/keyboardDropDownFolder/keyboardDropDown';
 import { ContrastInputSetting } from './ContrastInputSetting';
 import { SettingsColumnContainer } from './SettingsColumnContainer';
 import { SettingsForm } from './SettingsForm';
@@ -60,6 +61,8 @@ function SettingsColumn(): ReactElement {
         }}
         transitionTransform={transitionTransform}
       >
+        <DropDown />
+        
         <HighlightCheckboxSetting
           trainingSettings={trainingSettings}
           updateTrainingSetting={updateTrainingSetting}
@@ -91,6 +94,7 @@ function SettingsColumn(): ReactElement {
           trainingSettings={trainingSettings}
           setTrainingSettings={setTrainingSettings}
         />
+
       </SettingsForm>
     </SettingsColumnContainer>
   );

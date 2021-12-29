@@ -10,6 +10,7 @@ import { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
 
+
 function clamp(number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));
 }

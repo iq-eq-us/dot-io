@@ -2,6 +2,8 @@ import type { Action, ActionOn, Computed, ThunkOn } from 'easy-peasy';
 import type { ChordLibraryRecord } from '../data/chordLibrary';
 import type { CharacterEntryMode } from '../helpers/convertStringToKeyHighlightPositions';
 import type { KeyHighlightPosition } from './keyHighlightPositions';
+import type { KeyHighlightPositionLite } from './keyHighlightPositionsCharachorderLite';
+
 import type { TrainingScenario } from './trainingScenario';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
 import type { TrainingStatistics } from './trainingStatistics';
@@ -45,6 +47,10 @@ export interface TrainingStoreStateModel {
   currentlyHighlightedKeys: Computed<
     TrainingStoreModel,
     KeyHighlightPosition[]
+  >;
+  currentlyHighlightedKeysLite: Computed<
+    TrainingStoreModel,
+    KeyHighlightPositionLite[]
   >;
   /**
    * * These training statistics are local to the current training session.

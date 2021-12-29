@@ -17,6 +17,7 @@ import {Graph} from '../../pages/manager/components/chordGraphs'
 
 
 
+
 // Change this variable to true to display Improving, Code Authority, and Code Launch branding material at the bottom of the dashboard screen
 const SHOULD_DISPLAY_BRANDING_MATERIAL = true;
 

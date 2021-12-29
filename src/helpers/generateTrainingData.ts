@@ -69,6 +69,5 @@ export const generateChords = (
       );
     else allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
   }
-
   return allCharacters;
 };

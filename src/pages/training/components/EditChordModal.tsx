@@ -10,6 +10,8 @@ import { getGlobalDictionaries, setGlobalDictionaries } from '../../../store/tra
 import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
+import {pickerV1, pickerLite} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
+
 
 function EditChordsModal(): ReactElement {
   const isShowingPortal = useStoreState(
@@ -197,7 +199,7 @@ function EditChordsModal(): ReactElement {
   );
 }
 
-const getDefaultChords = (trainingMode?: TrainingScenario) => {
+export const getDefaultChords = (trainingMode?: TrainingScenario) => {
   const globalDictionaries = getGlobalDictionaries();
   if (trainingMode && globalDictionaries[trainingMode]) {
     return Object.keys(globalDictionaries[trainingMode] as ChordLibraryRecord);
@@ -206,7 +208,7 @@ const getDefaultChords = (trainingMode?: TrainingScenario) => {
   }
 }
 
-const getDefaultChordsFromChordLibrary = (trainingMode?: TrainingScenario) => {
+export const getDefaultChordsFromChordLibrary = (trainingMode?: TrainingScenario) => {
   return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
 }
 
@@ -248,7 +250,8 @@ export const getChordLibraryForTrainingScenario = (
   scenario?: TrainingScenario | undefined,
 ): Record<string, string[]> | undefined => {
   if (scenario === 'ALPHABET') return chordLibrary.letters;
-  else if (scenario === 'CHORDING') return chordLibrary.chords;
+  else if (scenario === 'CHORDING' && pickerV1) return chordLibrary.chords;
+  else if (scenario === 'CHORDING' && pickerLite) return chordLibrary.chordsLite;
   else if (scenario === 'LEXICAL') return chordLibrary.lexical;
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;

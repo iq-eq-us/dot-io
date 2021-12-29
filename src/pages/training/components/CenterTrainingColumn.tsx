@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import CharachorderOverlay from './CharachorderOverlay';
+import CharachorderOverlayLite from './CharachorderOverlayCharachorderLite';
 import { FullWidthFullHeightContainer } from './FullWidthFullHeightContainer';
 import { GearIcon } from './GearIcon';
 import { ProgressBar } from './ProgressBar';
@@ -15,13 +16,11 @@ function CenterTrainingColumn(): ReactElement {
         <GearIcon />
         <StatisticsIcon />
       </SmallScreenButtons>
-
       <ProgressBar />
       <TextPrompt />
       <ChordTextInput />
-
       <FullWidthFullHeightContainer>
-        <CharachorderOverlay />
+        <CharachorderOverlayLite />
       </FullWidthFullHeightContainer>
     </CenterTrainingColumnContainer>
   );
