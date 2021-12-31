@@ -64,11 +64,6 @@ const Manager = (): ReactElement => {
     </ManagerPageContainer>
     </React.Fragment>
 
-
-
-
-     
-    
   );
 
 };

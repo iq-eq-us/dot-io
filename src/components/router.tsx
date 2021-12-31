@@ -5,11 +5,13 @@ import Manager from '../pages/manager/manager'
 import Navbar from './navbar';
 import Training from '../pages/training/training';
 import { ClosingPrompt } from './closingPrompt';
+import Piano from '../pages/piano/piano';
 
 export const ROUTER_PATHS = {
   home: '/',
   training: '/training',
   manager: '/manager',
+  piano: '/piano'
 };
 
 /**
@@ -40,12 +42,18 @@ const Router = (): ReactElement => {
           <Training />
         </Route>
 
-        {/* This is the route to the training page, which will adapt depending on which training scenario is active. */}
-        {/* You can find the active training scenario in the state.ts file inside the trainingStore, specifically the currentTrainingScenario state variable */}
+        {/* This is the route to the chord manager page */}
         <Route path={ROUTER_PATHS.manager}>
           <Navbar />
           <Manager/>
         </Route>
+
+        {/* This is the route to the Chara Piano page. */}
+        <Route path={ROUTER_PATHS.piano}>
+          <Navbar />
+          <Piano />
+        </Route>
+
       </Switch>
     </HashRouter>
   );
