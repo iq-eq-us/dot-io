@@ -24,6 +24,5 @@
     "allowSyntheticDefaultImports": true,
     "importsNotUsedAsValues": "error",
     "noImplicitAny": false
-
   }
 }

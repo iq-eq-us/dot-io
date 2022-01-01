@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Piano, MidiNumbers } from "react-piano";
+import { MidiNumbers } from "react-piano";
 import "react-piano/dist/styles.css";
 import midiNumberToNote from "midi-note";
 import SoundfontProvider from "./SoundfontProvider";
