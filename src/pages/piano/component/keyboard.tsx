@@ -228,9 +228,8 @@ NoteSelector.propTypes = {
         value={props.value}
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
-        >
-        <ConvertNumbersToKeys/>
-        </select>
+      />
+    
     );
   }
   
@@ -242,9 +241,7 @@ NoteSelector.propTypes = {
         value={props.value}
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
-      >
-        <GetInstruments/>
-        </select>
+      />
      
     );
   }
