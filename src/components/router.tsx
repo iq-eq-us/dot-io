@@ -5,13 +5,11 @@ import Manager from '../pages/manager/manager'
 import Navbar from './navbar';
 import Training from '../pages/training/training';
 import { ClosingPrompt } from './closingPrompt';
-import Piano from '../pages/piano/piano';
 
 export const ROUTER_PATHS = {
   home: '/',
   training: '/training',
   manager: '/manager',
-  piano: '/piano'
 };
 
 /**
@@ -49,10 +47,7 @@ const Router = (): ReactElement => {
         </Route>
 
         {/* This is the route to the Chara Piano page. */}
-        <Route path={ROUTER_PATHS.piano}>
-          <Navbar />
-          <Piano />
-        </Route>
+        
 
       </Switch>
     </HashRouter>
