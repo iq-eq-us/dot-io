@@ -174,7 +174,7 @@ KeyboardConfig.propTypes = {
     instrument: PropTypes.any,
     handleChange: PropTypes.func,
     firstNote: PropTypes.any,
-    lastNote: PropTypes.string,
+    lastNote: PropTypes.any,
     defaultValue: PropTypes.any,
   };
 function KeyboardConfig(props) {
@@ -205,16 +205,16 @@ function KeyboardConfig(props) {
     </>
   );
   InstrumentSelector.propTypes = {
-    name: PropTypes.string,
-    value: PropTypes.string,
-    defaultValue: PropTypes.string,
+    name: PropTypes.any,
+    value: PropTypes.any,
+    defaultValue: PropTypes.any,
     handleChange: PropTypes.any,
     onChange: PropTypes.any
 }
 NoteSelector.propTypes = {
-  name: PropTypes.string,
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
+  name: PropTypes.any,
+  value: PropTypes.any,
+  defaultValue: PropTypes.any,
   handleChange: PropTypes.any,
   onChange: PropTypes.any
 
