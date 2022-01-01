@@ -1,18 +1,22 @@
 import React from 'react';
 import { Piano } from 'react-piano';
+import PropTypes from 'prop-types';
 
 const DURATION_UNIT = 0.2;
 const DEFAULT_NOTE_DURATION = DURATION_UNIT;
 
-class PianoWithRecording extends React.Component {
+class PianoWithRecording extends React.Component <any, any>{
   static defaultProps = {
     notesRecorded: false,
+    
     
   };
 
   state = {
     keysDown: {},
     noteDuration: DEFAULT_NOTE_DURATION,
+    notesRecorded: false,
+
   };
 
   onPlayNoteInput = midiNumber => {
@@ -30,6 +34,7 @@ class PianoWithRecording extends React.Component {
       });
     }
   };
+
 
   recordNotes = (midiNumbers, duration) => {
     if (this.props.recording.mode !== 'RECORDING') {

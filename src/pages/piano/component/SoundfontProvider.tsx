@@ -4,7 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Soundfont from 'soundfont-player';
 
-class SoundfontProvider extends React.Component {
+
+
+
+class SoundfontProvider extends React.Component <any, any>{
   static propTypes = {
     instrumentName: PropTypes.string.isRequired,
     hostname: PropTypes.string.isRequired,

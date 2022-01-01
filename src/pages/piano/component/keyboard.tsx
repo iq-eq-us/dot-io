@@ -6,6 +6,7 @@ import SoundfontProvider from "./SoundfontProvider";
 import KeyboardShortcuts from "./KeyboardShortcuts";
 import _ from 'lodash';
 import PianoWithRecording from './PianoWithRecording';
+import PropTypes from 'prop-types';
 
 
 
@@ -17,10 +18,11 @@ const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
 //!SECTION
 
-export default class PianoKeyBoard extends Component {
+
+export default class PianoKeyBoard extends React.Component <any, any> {
     constructor(props) {
         super(props);
-        this.state = {
+         this.state  = {
             recording: {
               mode: 'RECORDING',
               events: [],
@@ -166,7 +168,9 @@ export default class PianoKeyBoard extends Component {
 }
 
 function KeyboardConfig(props) {
+      
   return (
+      
     <>
       <label >Instrument: </label>
       <InstrumentSelector
@@ -191,6 +195,19 @@ function KeyboardConfig(props) {
       />
     </>
   );
+  InstrumentSelector.propTypes = {
+    name: PropTypes.string,
+    value: PropTypes.string,
+    defaultValue: PropTypes.string,
+    onChange: PropTypes.func.isRequired
+}
+NoteSelector.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
+  onChange: PropTypes.func.isRequired
+
+}
 
   function NoteSelector(props) {
     return (
@@ -206,6 +223,7 @@ function KeyboardConfig(props) {
     );
   }
 
+  
   function InstrumentSelector(props) {
     return (
       <select
@@ -220,7 +238,7 @@ function KeyboardConfig(props) {
     );
   }
 
-  function ConvertNumbersToKeys() {
+  function ConvertNumbersToKeys()  {
     const noteRangeC9G9 = {
       first: 12, // C0
       last: 127 // G9
@@ -247,7 +265,7 @@ function GetInstruments() {
     list.push(instruments[i]);
   }
 
-  return list.map(x => <option key={x}>{x}</option>);
+  return (list.map(x => <option key={x}>{x}</option>));
 }
 
 const instruments = [
