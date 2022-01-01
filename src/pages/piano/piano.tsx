@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import PianoKeyBoard from './component/keyboard';
 import {PianoHeader} from './component/PianoHeader';
 import {
     ManagerPageContainer,
@@ -21,6 +22,7 @@ import {
 
     <TopSectionContainer>
      <PianoHeader/>
+      <PianoKeyBoard/>
       </TopSectionContainer>
       </ManagerPageContainer>
       </React.Fragment>
