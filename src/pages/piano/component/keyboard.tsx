@@ -19,7 +19,9 @@ const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 //!SECTION
 
 
+
 export default class PianoKeyBoard extends React.Component <any, any> {
+    
     constructor(props) {
         super(props);
          this.state  = {
@@ -166,9 +168,15 @@ export default class PianoKeyBoard extends React.Component <any, any> {
     );
   }
 }
-
+KeyboardConfig.propTypes = {
+    name: PropTypes.any,
+    instrument: PropTypes.any,
+    handleChange: PropTypes.func,
+    firstNote: PropTypes.any,
+    lastNote: PropTypes.string,
+    defaultValue: PropTypes.any,
+  };
 function KeyboardConfig(props) {
-      
   return (
       
     <>
@@ -239,10 +247,7 @@ NoteSelector.propTypes = {
   }
 
   function ConvertNumbersToKeys()  {
-    const noteRangeC9G9 = {
-      first: 12, // C0
-      last: 127 // G9
-    };
+  
 
     const noteRange = {
       first: 21,
