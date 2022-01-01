@@ -230,7 +230,6 @@ NoteSelector.propTypes = {
       </select>
     );
   }
-
   
   function InstrumentSelector(props) {
     return (
