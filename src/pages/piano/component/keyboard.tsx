@@ -32,11 +32,12 @@ export default class PianoKeyBoard extends React.Component <any, any> {
               currentEvents: [],
               firstNote: "C3",
               lastNote: "B5",
-              instrument: "acoustic_grand_piano"
+              instrument: "acoustic_grand_piano",
+              scheduledEvents:[]
             },
           };
     this.handleChange = this.handleChange.bind(this);
-    this.scheduledEvents = [];
+    
 
   }
 
@@ -79,7 +80,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
       ]),
     );
     startAndEndTimes.forEach(time => {
-      this.scheduledEvents.push(
+      this.state.recording.scheduledEvents.push(
         setTimeout(() => {
           const currentEvents = this.state.recording.events.filter(event => {
             return event.time <= time && event.time + event.duration > time;
@@ -97,7 +98,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
   };
 
   onClickStop = () => {
-    this.scheduledEvents.forEach(scheduledEvent => {
+    this.state.recording.scheduledEvents.forEach(scheduledEvent => {
       clearTimeout(scheduledEvent);
     });
     this.setRecording({
@@ -227,8 +228,9 @@ NoteSelector.propTypes = {
         value={props.value}
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
-      />
-    
+        >
+        <ConvertNumbersToKeys/>
+        </select>
     );
   }
   
@@ -240,7 +242,9 @@ NoteSelector.propTypes = {
         value={props.value}
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
-      />
+      >
+        <GetInstruments/>
+        </select>
      
     );
   }
