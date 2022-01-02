@@ -359,7 +359,7 @@ export function myGraph(){
     
 
   },
-  colors: ['#00E396', '#0090FF'],
+  colors: ['#22C55E', '#0090FF'],
   stroke: {
     curve: "smooth",
     width: 3

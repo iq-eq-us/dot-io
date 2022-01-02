@@ -80,7 +80,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       console.log(MainControls._chordmapCountOnDevice);
     }
   }
-  export async function enableSerialChordOutput(val){
+  export async function enableSerialChordOutput(val: boolean){
     console.log("enableSerialChordOutput("+val.toString()+")");
     await selectConfig();
     if(val==true){
@@ -110,7 +110,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     }
   }
 
-  function convertHexadecimalPhraseToAsciiString(hexString){
+  function convertHexadecimalPhraseToAsciiString(hexString: string){
     let asciiString = "";
     console.log("convertHexadecimalPhraseToAsciiString()");
   
@@ -199,7 +199,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
   }
 
 
-  export function convertHexadecimalChordToHumanString(hexString){
+  export function convertHexadecimalChordToHumanString(hexString: string | any[]){
     let humanString = "";
     //let num = parseInt(hexString, 16);
     //humanString = String(num);
@@ -227,8 +227,8 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
             // 'decChordCompBigInt':BigInt(decString[i])*BigInt((BigInt(10)**(decString.length-i-1))),
             'noteId':chord_to_noteId(decString[i]*(10**(decString.length-i-1)))
           });
-          let noteId;
-          let actionId;
+          let noteId: number;
+          let actionId: number;
           if(decString[i]%2==1){ //if it is odd, then it is simple
             noteId = chord_to_noteId(decString[i]*10**(decString.length-i-1));
             actionId = _keyMapDefaults[0][noteId];
@@ -283,7 +283,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     return humanString;
   }
 
-  export function chord_to_noteId(chord){
+  export function chord_to_noteId(chord: number){
     const part1 = 5*Math.floor(Math.log10(chord));
     const part2 = (Math.floor(chord/(10**Math.floor(Math.log10(chord)))+1)/2);
     const part3 = Math.log10(chord)
@@ -355,7 +355,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     return hexString;
   }
 
-  export function convertHumanStringToHexadecimalChord(humanString) : string{
+  export function convertHumanStringToHexadecimalChord(humanString: string) : string{
   
 
     let hexString = "";
@@ -367,7 +367,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       const actionId = _actionMap.indexOf(part);
       console.log('ActionID: '+actionId);
       if(MainControls._chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
-        let keyId;
+        let keyId: number;
         if(actionId<0x0200){
           keyId = (_keyMapDefaults[0]).indexOf(actionId);
           console.log(keyId);
@@ -423,7 +423,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
   }
 
 
-  export function appendToRow(data, isFromFile=false) : any{
+  export function appendToRow(data: string[], isFromFile=false) : any{
     const dataTable = document.getElementById("dataTable") as HTMLTableElement;
     const row = dataTable.insertRow(-1); //insert row at end of table
   
@@ -677,7 +677,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       btnCommit.disabled = false;
     }
   }
-  export function pressCommitButton(virtualId){
+  export function pressCommitButton(virtualId: { toString: () => string; }){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     if(commitButton.disabled==false){
       commitButton.click();
