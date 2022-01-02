@@ -215,7 +215,6 @@ function KeyboardConfig(props: { handleChange: any; instrument: any; firstNote: 
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
       >
-        <ConvertNumbersToKeys/>
         </select>
     
     );
@@ -230,7 +229,6 @@ function KeyboardConfig(props: { handleChange: any; instrument: any; firstNote: 
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
       >
-     <GetInstruments/>
         </select>
     );
   }
