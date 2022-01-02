@@ -23,7 +23,7 @@ class SoundfontProvider extends React.Component <any, any>{
     instrumentName: 'acoustic_grand_piano',
   };
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       activeAudioNodes: {},
@@ -35,13 +35,13 @@ class SoundfontProvider extends React.Component <any, any>{
     this.loadInstrument(this.props.instrumentName);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: { instrumentName: any; }, prevState: any) {
     if (prevProps.instrumentName !== this.props.instrumentName) {
       this.loadInstrument(this.props.instrumentName);
     }
   }
 
-  loadInstrument = instrumentName => {
+  loadInstrument = (instrumentName: any) => {
     // Re-trigger loading state
     this.setState({
       instrument: null,
@@ -49,7 +49,7 @@ class SoundfontProvider extends React.Component <any, any>{
     Soundfont.instrument(this.props.audioContext, instrumentName, {
       format: this.props.format,
       soundfont: this.props.soundfont,
-      nameToUrl: (name, soundfont, format) => {
+      nameToUrl: (name: any, soundfont: any, format: any) => {
         return `${this.props.hostname}/${soundfont}/${name}-${format}.js`;
       },
     }).then(instrument => {
@@ -59,7 +59,7 @@ class SoundfontProvider extends React.Component <any, any>{
     });
   };
 
-  playNote = midiNumber => {
+  playNote = (midiNumber: any) => {
     this.props.audioContext.resume().then(() => {
       const audioNode = this.state.instrument.play(midiNumber);
       this.setState({
@@ -70,7 +70,7 @@ class SoundfontProvider extends React.Component <any, any>{
     });
   };
 
-  stopNote = midiNumber => {
+  stopNote = (midiNumber: string | number) => {
     this.props.audioContext.resume().then(() => {
       if (!this.state.activeAudioNodes[midiNumber]) {
         return;

@@ -157,9 +157,9 @@ export default class PianoKeyBoard extends React.Component <any, any> {
               )}
             />
           <div className="mt-5">
-          <button onClick={this.onClickPlay} className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Play</button>
-          <button onClick={this.onClickStop} className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Stop</button>
-          <button onClick={this.onClickClear} className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Clear</button>
+          <button onClick={this.onClickPlay} className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Play</button>
+          <button onClick={this.onClickStop} className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Stop</button>
+          <button onClick={this.onClickClear} className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Clear</button>
         </div>
         <div className="mt-5">
           <strong className ="text-white">Recorded notes</strong>
