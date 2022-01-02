@@ -1,6 +1,6 @@
 import React from "react";
 import { MidiNumbers } from "react-piano";
-import "react-piano/dist/styles.css";
+//import "react-piano/dist/styles.css";
 import midiNumberToNote from "midi-note";
 import SoundfontProvider from "./SoundfontProvider";
 import KeyboardShortcuts from "./KeyboardShortcuts";
@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 //SECTION
 
 // webkitAudioContext fallback needed to support Safari
-const audioContext = ('yer');
+const audioContext = new (window.AudioContext)();
 const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
 //!SECTION
@@ -215,6 +215,7 @@ function KeyboardConfig(props: { handleChange: any; instrument: any; firstNote: 
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
       >
+        <ConvertNumbersToKeys/>
         </select>
     
     );
@@ -229,6 +230,7 @@ function KeyboardConfig(props: { handleChange: any; instrument: any; firstNote: 
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
       >
+        <GetInstruments/>
         </select>
     );
   }
