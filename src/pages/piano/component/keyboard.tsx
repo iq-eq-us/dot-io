@@ -204,21 +204,7 @@ function KeyboardConfig(props: { handleChange: any; instrument: any; firstNote: 
       />
     </>
   );
-  InstrumentSelector.propTypes = {
-    name: PropTypes.any,
-    value: PropTypes.any,
-    defaultValue: PropTypes.any,
-    handleChange: PropTypes.any,
-    onChange: PropTypes.any
-}
-NoteSelector.propTypes = {
-  name: PropTypes.any,
-  value: PropTypes.any,
-  defaultValue: PropTypes.any,
-  handleChange: PropTypes.any,
-  onChange: PropTypes.any
 
-}
 
   function NoteSelector(props: { name: string | undefined; value?: string | number | readonly string[] | undefined; defaultValue: string | number | readonly string[] | undefined; handleChange: React.ChangeEventHandler<HTMLSelectElement> | undefined; }) {
     return (
