@@ -13,8 +13,8 @@ import PropTypes from 'prop-types';
 //SECTION
 
 // webkitAudioContext fallback needed to support Safari
-const audioContext = new (window.AudioContext)();
-const soundfontHostname = "yer";
+const audioContext = ('yer');
+const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
 //!SECTION
 
