@@ -1,6 +1,6 @@
 import React from "react";
 import { MidiNumbers } from "react-piano";
-//import "react-piano/dist/styles.css";
+import "react-piano/dist/styles.css";
 import midiNumberToNote from "midi-note";
 import SoundfontProvider from "./SoundfontProvider";
 import KeyboardShortcuts from "./KeyboardShortcuts";
@@ -35,9 +35,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
               instrument: "acoustic_grand_piano",
               scheduledEvents:[]
             },
-          };
-    this.handleChange = this.handleChange.bind(this);
-    
+          };    
 
   }
 
