@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { MidiNumbers } from "react-piano";
 import "react-piano/dist/styles.css";
 import midiNumberToNote from "midi-note";
@@ -22,7 +22,7 @@ const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
 export default class PianoKeyBoard extends React.Component <any, any> {
     
-    constructor(props) {
+    constructor(props: any) {
         super(props);
          this.state  = {
             recording: {
@@ -43,7 +43,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
 
 
 
-  handleChange(e) {
+  handleChange(e: { target: { name: any; value: unknown; }; }) {
       
     const { name, value } = e.target;
 
@@ -59,11 +59,11 @@ export default class PianoKeyBoard extends React.Component <any, any> {
       return 0;
     }
     return Math.max(
-      ...this.state.recording.events.map(event => event.time + event.duration),
+      ...this.state.recording.events.map((event: { time: any; duration: any; }) => event.time + event.duration),
     );
   };
 
-  setRecording = value => {
+  setRecording = (value: { mode?: string; currentEvents?: any; events?: never[]; currentTime?: number; }) => {
     this.setState({
       recording: Object.assign({}, this.state.recording, value),
     });
@@ -74,15 +74,15 @@ export default class PianoKeyBoard extends React.Component <any, any> {
       mode: 'PLAYING',
     });
     const startAndEndTimes = _.uniq(
-      _.flatMap(this.state.recording.events, event => [
+      _.flatMap(this.state.recording.events, (event: { time: any; duration: any; }) => [
         event.time,
         event.time + event.duration,
       ]),
     );
-    startAndEndTimes.forEach(time => {
+    startAndEndTimes.forEach((time: number) => {
       this.state.recording.scheduledEvents.push(
         setTimeout(() => {
-          const currentEvents = this.state.recording.events.filter(event => {
+          const currentEvents = this.state.recording.events.filter((event: { time: number; duration: any; }) => {
             return event.time <= time && event.time + event.duration > time;
           });
           this.setRecording({
@@ -98,7 +98,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
   };
 
   onClickStop = () => {
-    this.state.recording.scheduledEvents.forEach(scheduledEvent => {
+    this.state.recording.scheduledEvents.forEach((scheduledEvent: number | undefined) => {
       clearTimeout(scheduledEvent);
     });
     this.setRecording({
@@ -177,7 +177,7 @@ KeyboardConfig.propTypes = {
     lastNote: PropTypes.any,
     defaultValue: PropTypes.any,
   };
-function KeyboardConfig(props) {
+function KeyboardConfig(props: { handleChange: any; instrument: any; firstNote: any; lastNote: any; }) {
   return (
       
     <>
@@ -220,7 +220,7 @@ NoteSelector.propTypes = {
 
 }
 
-  function NoteSelector(props) {
+  function NoteSelector(props: { name: string | undefined; value?: string | number | readonly string[] | undefined; defaultValue: string | number | readonly string[] | undefined; handleChange: React.ChangeEventHandler<HTMLSelectElement> | undefined; }) {
     return (
       <select
       className="text-black"
@@ -228,12 +228,14 @@ NoteSelector.propTypes = {
         value={props.value}
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
-      />
+      >
+        <ConvertNumbersToKeys/>
+        </select>
     
     );
   }
   
-  function InstrumentSelector(props) {
+  function InstrumentSelector(props: { name: string | undefined; value?: string | number | readonly string[] | undefined; defaultValue: string | number | readonly string[] | undefined; handleChange: React.ChangeEventHandler<HTMLSelectElement> | undefined; }) {
     return (
       <select
         className="text-black"
@@ -241,8 +243,9 @@ NoteSelector.propTypes = {
         value={props.value}
         defaultValue={props.defaultValue}
         onChange={props.handleChange}
-      />
-     
+      >
+     <GetInstruments/>
+        </select>
     );
   }
 

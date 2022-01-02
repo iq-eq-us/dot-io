@@ -19,13 +19,13 @@ class PianoWithRecording extends React.Component <any, any>{
 
   };
 
-  onPlayNoteInput = midiNumber => {
+  onPlayNoteInput = (midiNumber: any) => {
     this.setState({
       notesRecorded: false,
     });
   };
 
-  onStopNoteInput = (midiNumber, { prevActiveNotes }) => {
+  onStopNoteInput = (midiNumber: any, { prevActiveNotes }: any) => {
     if (this.state.notesRecorded === false) {
       this.recordNotes(prevActiveNotes, this.state.noteDuration);
       this.setState({
@@ -36,11 +36,11 @@ class PianoWithRecording extends React.Component <any, any>{
   };
 
 
-  recordNotes = (midiNumbers, duration) => {
+  recordNotes = (midiNumbers: any[], duration: number) => {
     if (this.props.recording.mode !== 'RECORDING') {
       return;
     }
-    const newEvents = midiNumbers.map(midiNumber => {
+    const newEvents = midiNumbers.map((midiNumber: any) => {
       return {
         midiNumber,
         time: this.props.recording.currentTime,
@@ -64,7 +64,7 @@ class PianoWithRecording extends React.Component <any, any>{
 
     const { mode, currentEvents } = this.props.recording;
     const activeNotes =
-      mode === 'PLAYING' ? currentEvents.map(event => event.midiNumber) : null;
+      mode === 'PLAYING' ? currentEvents.map((event: { midiNumber: any; }) => event.midiNumber) : null;
     return (
       <div>
         <Piano

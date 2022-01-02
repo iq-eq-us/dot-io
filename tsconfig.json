@@ -14,7 +14,7 @@
       // More info: https://www.snowpack.dev/guides/streaming-imports
     },
     /* noEmit - Snowpack builds (emits) files, not tsc. */
-    "noEmit": false,
+    "noEmit": true,
     /* Additional Options */
     "strict": true,
     "skipLibCheck": true,
