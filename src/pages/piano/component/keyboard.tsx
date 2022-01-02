@@ -20,7 +20,7 @@ const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
 
 
-export default class PianoKeyBoard extends React.Component <any, any> {
+export default class PianoKeyBoard extends React.Component {
     
     constructor(props: any) {
         super(props);
@@ -41,7 +41,16 @@ export default class PianoKeyBoard extends React.Component <any, any> {
 
 
 
+  handleChange(e: { target: { name: any; value: unknown; }; }) {
+      
+    const { name, value } = e.target;
 
+      this.setState({
+        recording: Object.assign({}, this.state.recording, {[name]: value}),
+        
+      });
+     
+  }
 
     getRecordingEndTime = () => {
     if (this.state.recording.events.length === 0) {
@@ -121,7 +130,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
         <KeyboardConfig
           firstNote={this.state.recording.firstNote}
           lastNote={this.state.recording.lastNote}
-          handleChange={this.onClickClear}
+          handleChange={this.handleChange}
           instrument={this.state.recording.instrument}
         />
         <br />
