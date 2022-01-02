@@ -6,18 +6,6 @@ declare module '*.module.css' {
   const classes: { [key: string]: string };
   export default classes;
 }
-declare module 'react-piano' {
-  const classes: { [key: string]: string };
-  export default classes;
-}
-declare module 'midi-note' {
-  const classes: { [key: string]: string };
-  export default classes;
-}
-declare module 'lodash' {
-  const classes: { [key: string]: string };
-  export default classes;
-}
 declare module '*.module.scss' {
   const classes: { [key: string]: string };
   export default classes;
@@ -69,3 +57,6 @@ declare module '*.png' {
 }
 
 /* CUSTOM: ADD YOUR OWN HERE */
+declare module 'midi-note';
+declare module 'lodash';
+declare module 'react-piano';

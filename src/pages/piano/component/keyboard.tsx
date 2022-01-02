@@ -20,7 +20,7 @@ const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
 
 
-export default class PianoKeyBoard extends React.Component {
+export default class PianoKeyBoard extends React.Component <any, any> {
     
     constructor(props: any) {
         super(props);
@@ -35,7 +35,9 @@ export default class PianoKeyBoard extends React.Component {
               instrument: "acoustic_grand_piano",
               scheduledEvents:[]
             },
-          };    
+          };
+    this.handleChange = this.handleChange.bind(this);
+    
 
   }
 
