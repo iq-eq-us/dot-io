@@ -254,7 +254,7 @@ NoteSelector.propTypes = {
       last: 108
     };
 
-    const Notes = [];
+    const Notes = Array();
 
     for (let i = noteRange.first; i < noteRange.last + 1; i++) {
       Notes.push(midiNumberToNote(i));
@@ -265,7 +265,7 @@ NoteSelector.propTypes = {
 }
 
 function GetInstruments() {
-  const list = [];
+  const list = Array();
   for (let i = 0; i < instruments.length; i++) {
     list.push(instruments[i]);
   }
