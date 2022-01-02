@@ -6,7 +6,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint -c ./.eslintrc.js \"src/**/*.{ts,tsx}\" ",
     "lint:fix": "eslint -c ./.eslintrc.js \"src/**/*.{ts,tsx}\" --fix",
-    "check-types": "tsc --noEmit",
+    "check-types": "tsc --watch",
     "postinstall": "cd ci-cd && npm install"
   },
   "dependencies": {
