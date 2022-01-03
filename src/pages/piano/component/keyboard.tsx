@@ -142,7 +142,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
               instrumentName={this.state.recording.instrument}
               audioContext={audioContext}
               hostname={soundfontHostname}
-              render={({ isLoading, playNote, stopNote }) => (
+              render={({ isLoading, playNote, stopNote }: any) => (
                 <PianoWithRecording
                 recording={this.state.recording}
                 setRecording={this.setRecording}
