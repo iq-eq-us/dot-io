@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
-import {sendCommandString, readGetChordmapCount, MainControls} from '../controls/mainControls'
-import {_chordMaps} from '../controls/maps'
-
+import {sendCommandString, readGetChordmapCount, MainControls} from '../controls/mainControls';
+import {_chordMaps} from '../controls/maps';
 
 
 function exportChordMapLibrary(){

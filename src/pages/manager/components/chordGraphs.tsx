@@ -83,7 +83,7 @@ if(((localStorage.getItem('topWPMDate'))==null)){
 }
   
 
-export function storeAverageData(avgData ,dateD, inChordMasterdValue, inAvgChordCount){
+export function storeAverageData(avgData: number ,dateD: Date, inChordMasterdValue: number, inAvgChordCount: string | number | null | undefined){
   const avgGraphWPM = [];
   const avgGraphDate = [];
   const masteredCounterArray: any =  [];
@@ -480,10 +480,9 @@ function generateDayWiseTimeSeries2() {
   const series = [];
 
   const currentDate = new Date();
-  const date = currentDate.getDate();
 //If this is called and the expressiton is true this means the user has not attempted a training session. So we add the previously stored data to make the graph flush
  if((parseInt(localStorage.getItem("theDate"))) == null){
-  storeAverageData(0, currentDate, 0);
+  storeAverageData(0, currentDate, 0, 0);
 
  }
 
@@ -491,7 +490,6 @@ function generateDayWiseTimeSeries2() {
     while (i < avgWpmData.length) {
 
       series.push([avgDateD[i], avgWpmData[i]]);
-      const todaysDate = new Date();
 
       //console.log(todaysDate== avgDateD[0]);
       

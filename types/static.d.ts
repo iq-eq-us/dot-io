@@ -58,5 +58,4 @@ declare module '*.png' {
 
 /* CUSTOM: ADD YOUR OWN HERE */
 declare module 'midi-note';
-declare module 'lodash';
 declare module 'react-piano';

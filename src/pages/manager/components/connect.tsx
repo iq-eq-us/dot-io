@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import {
   MainControls,
   sendCommandString, 
-  setupLineReader, 
   selectBase, 
   selectConfig,
 } from '../controls/mainControls'

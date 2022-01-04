@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import {actionMap, keyMapDefaults} from '../controls/maps'
+import {_actionMap, _keyMapDefaults} from '../controls/maps'
 import {MainControls, sendCommandString, readGetOneAndToss} from '../controls/mainControls'
 
 

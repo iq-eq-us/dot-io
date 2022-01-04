@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useStoreState, useStoreActions } from '../../store/store';
 import HelpCircleIcon from '../../pages/training/components/HelpCircleIcon';
 import usePopover from '../../hooks/usePopover';

@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { render } from 'react-dom';
 import {
     MainControls,
      sendCommandString, 
@@ -26,7 +25,7 @@ async function getGetAll(){
       <div id="statusDiv" style={{display:'none'}} >Status: </div>
 
       <button
-      className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-absolute"
+      className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-absolute"
       color="pink"
       onClick={() => getGetAll()}
       >Download Chords </button>

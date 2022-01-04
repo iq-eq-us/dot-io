@@ -43,7 +43,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
 
 
 
-  handleChange(e: { target: { name: any; value: unknown; }; }) {
+  handleChange(e: { target: { name: any; value: any; }; }) {
       
     const { name, value } = e.target;
 
@@ -248,7 +248,7 @@ function KeyboardConfig(props: { handleChange: any; instrument: any; firstNote: 
       Notes.push(midiNumberToNote(i));
     }
 
-    return Notes.map(x => <option key={x}>{x}</option>);
+    return <>{Notes.map(x => <option key={x}>{x}</option>)}</>;
   }
 }
 
@@ -258,7 +258,7 @@ function GetInstruments() {
     list.push(instruments[i]);
   }
 
-  return (list.map(x => <option key={x}>{x}</option>));
+  return <>{list.map(x => <option key={x}>{x}</option>)}</>;
 }
 
 const instruments = [

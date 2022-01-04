@@ -17,8 +17,8 @@
     "noEmit": true,
     /* Additional Options */
     "strict": true,
-    "skipLibCheck": true,
-    "types": ["mocha", "snowpack-env"],
+    "skipLibCheck": false,
+    "types": ["mocha", "snowpack-env", "chai"],
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,

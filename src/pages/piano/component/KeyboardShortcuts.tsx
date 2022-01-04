@@ -1,6 +1,6 @@
 import { MidiNumbers } from "react-piano";
 
-function createKeyboardShortcuts({ firstNote, lastNote, keyboardConfig }) {
+function createKeyboardShortcuts({ firstNote, lastNote, keyboardConfig }: any) {
   let currentMidiNumber = firstNote;
   let naturalKeyIndex = 0;
   const keyboardShortcuts: any[] = [];
