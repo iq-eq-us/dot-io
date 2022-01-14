@@ -91,7 +91,7 @@ function EditChordsModal(): ReactElement {
         ...getGlobalDictionaries(),
         [trainingScenario]: generateNewChordRecord(tempChords),
       });
-
+      
     let chordsToUse = [];
     const shouldGroupChords = trainingScenario === 'SUPERSONIC';
     if (shouldGroupChords) chordsToUse = groupIntoPairs(tempChords);
@@ -195,8 +195,8 @@ function EditChordsModal(): ReactElement {
           </div>
         </Portal>
       )}
-    </div>
-  );
+    </div>   
+    );
 }
 
 export const getDefaultChords = (trainingMode?: TrainingScenario) => {
@@ -204,6 +204,7 @@ export const getDefaultChords = (trainingMode?: TrainingScenario) => {
   if (trainingMode && globalDictionaries[trainingMode]) {
     return Object.keys(globalDictionaries[trainingMode] as ChordLibraryRecord);
   } else {
+    console.log(Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {}))
     return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
   }
 }
@@ -249,12 +250,16 @@ const ChordGrid = styled.div.attrs({
 export const getChordLibraryForTrainingScenario = (
   scenario?: TrainingScenario | undefined,
 ): Record<string, string[]> | undefined => {
+  console.log('yerererer');
+  console.log('Lite: '+ pickerLite);
+  console.log('One: '+ pickerV1);
   if (scenario === 'ALPHABET') return chordLibrary.letters;
   else if (scenario === 'CHORDING' && pickerV1) return chordLibrary.chords;
   else if (scenario === 'CHORDING' && pickerLite) return chordLibrary.chordsLite;
   else if (scenario === 'LEXICAL') return chordLibrary.lexical;
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
-  else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
+  else if (scenario === 'LEXICOGRAPHIC' && pickerV1) return chordLibrary.chords;
+  else if (scenario === 'LEXICOGRAPHIC' && pickerLite) return chordLibrary.chordsLite;
   else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
   return undefined;
 };

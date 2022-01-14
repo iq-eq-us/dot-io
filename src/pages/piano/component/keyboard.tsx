@@ -137,7 +137,7 @@ export default class PianoKeyBoard extends React.Component <any, any> {
         />
         <br />
 
-        
+          <div style={yerr}>
             <SoundfontProvider
               instrumentName={this.state.recording.instrument}
               audioContext={audioContext}
@@ -153,9 +153,11 @@ export default class PianoKeyBoard extends React.Component <any, any> {
                   disabled={isLoading}
                   keyboardShortcuts={keyboardShortcuts}
                   
+                 
                 />
               )}
             />
+            </div>
           <div className="mt-5">
           <button onClick={this.onClickPlay} className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Play</button>
           <button onClick={this.onClickStop} className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Stop</button>
@@ -260,6 +262,21 @@ function GetInstruments() {
 
   return <>{list.map(x => <option key={x}>{x}</option>)}</>;
 }
+
+const yerr = {
+  display: "flex",
+  flexDirection: "column",
+  maxWidth: "1000px",
+  maxHeight: "1000px",
+  margin: "50px auto",
+  color: "#FFFFFF",
+  borderRadius: "100px",
+  background: "#FFFFFF",
+  height: "100% auto",
+  boxShadow: "10px 2px 10px #090909, 2px 10px 10px #090909",
+  width: "100% aut0",
+  position: "relative",
+      }
 
 const instruments = [
   "accordion",
