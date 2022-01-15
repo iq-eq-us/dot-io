@@ -135,7 +135,7 @@ function CharachorderOverlayLite({ overrideBottom }: OverlayProps): ReactElement
      <div style={buttonStyle}>alt</div>
      <div style={compare2(5,4) ?  highlightedEnterButtonStyle : enterButtonStyle}>Space<p>Past</p></div>
      <div style={buttonStyle}>Fn</div>
-     <div style={compare2(5,6) ? buttonStyle : highlightedButtonStyle}>DUP</div>
+     <div style={compare2(5,6) ?  highlightedButtonStyle : buttonStyle}>DUP</div>
      <div style={enterButtonStyle}>Space<p>Plural</p></div>
      <div style={buttonStyle}>⊞</div>
      <div style={buttonStyle}>Fn</div>
