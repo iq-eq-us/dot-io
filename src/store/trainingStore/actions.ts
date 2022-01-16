@@ -76,6 +76,10 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         payload,
       ) as ChordLibraryRecord;
+      console.log(state.chordsToPullFrom = getChordLibraryForTrainingScenario(
+        payload,
+      ) as ChordLibraryRecord);
+
     }
     state.trainingStatistics = generateEmptyChordStatistics(
       state.chordsToPullFrom,

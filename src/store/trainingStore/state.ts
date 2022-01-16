@@ -38,6 +38,7 @@ const trainingStoreState: TrainingStoreStateModel = {
 
     return state.trainingSettings.isHighlightingKeys
       ? ConvertStringToKeyHighlightPositions(
+        state.currentTrainingScenario,
           state.targetWord || '',
           highlightMode,
           state.targetCharacterIndex ?? -1,
@@ -61,6 +62,7 @@ const trainingStoreState: TrainingStoreStateModel = {
 
     return state.trainingSettings.isHighlightingKeys
       ? ConvertStringToKeyHighlightPositionsLite(
+        state.currentTrainingScenario,
           state.targetWord || '',
           highlightMode,
           state.targetCharacterIndex ?? -1,
