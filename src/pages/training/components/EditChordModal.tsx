@@ -204,7 +204,6 @@ export const getDefaultChords = (trainingMode?: TrainingScenario) => {
   if (trainingMode && globalDictionaries[trainingMode]) {
     return Object.keys(globalDictionaries[trainingMode] as ChordLibraryRecord);
   } else {
-    console.log(Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {}))
     return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
   }
 }
@@ -251,10 +250,11 @@ export const getChordLibraryForTrainingScenario = (
   scenario?: TrainingScenario | undefined,
 ): Record<string, string[]> | undefined => {
   if (scenario === 'ALPHABET') return chordLibrary.letters;
-  else if ((scenario === 'CHORDING') && pickerV1) {console.log('Im in the pickerV1'); console.log(chordLibrary.chords);return chordLibrary.chords;}
-  else if ((scenario === 'CHORDING') && pickerLite) {console.log('Im in the pickerLite'); console.log(chordLibrary.chordsLite); return chordLibrary.chordsLite;}
+  else if (scenario === 'CHORDING' && pickerV1) return chordLibrary.chords;
+  else if (scenario === 'CHORDING' && pickerLite) return chordLibrary.chordsLite;
   else if (scenario === 'LEXICAL') return chordLibrary.lexical;
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
   else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
+  return undefined;
 };
