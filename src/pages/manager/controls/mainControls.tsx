@@ -255,6 +255,10 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
             humanString+=_actionMap[actionId];
           }
         }
+        //This checks if the Chord has the sequence e + e inside if it does this changes it to the correct e + r diagonal press representation 
+    if(humanString.indexOf('e + e')!=-1 || humanString.indexOf('e + e') != 0) {
+      humanString = humanString.replace("e + e", "r + e");
+          }
       }
     }else if(MainControls._chordmapId == 'CHARACHORDERLITE'){
       const binString = bigNum.toString(2); //no left zeros; that's ok
@@ -277,7 +281,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     else{
       //nothing for now
     }
-  
+
   
     console.log(humanString);
     return humanString;
