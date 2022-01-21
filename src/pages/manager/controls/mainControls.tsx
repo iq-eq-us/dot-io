@@ -259,6 +259,11 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     if(humanString.indexOf('e + e')!=-1 || humanString.indexOf('e + e') != 0) {
       humanString = humanString.replace("e + e", "r + e");
           }
+        //This checks if the Chord has the sequence m + k inside if it does this changes it to the correct m + c diagonal press representation 
+
+          if(humanString.indexOf('m + k')!=-1 || humanString.indexOf('m + k') != 0) {
+            humanString = humanString.replace("m + k", "m + c");
+                }
       }
     }else if(MainControls._chordmapId == 'CHARACHORDERLITE'){
       const binString = bigNum.toString(2); //no left zeros; that's ok
