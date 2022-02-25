@@ -94,9 +94,9 @@ function CharachorderOverlayLite({ overrideBottom }: OverlayProps): ReactElement
      <div style={ compare2(2,9) ?  highlightedButtonStyle : buttonStyle}>I</div>
      <div style={ compare2(2,10) ?  highlightedButtonStyle : buttonStyle}>O</div>
      <div style={ compare2(2,11) ?  highlightedButtonStyle : buttonStyle}>P</div>
-     <div style={ compare2(2,12) ?  highlightedButtonStyle : buttonStyle}>[</div>
-     <div style={ compare2(2,13) ?  highlightedButtonStyle : buttonStyle}>]</div>
-     <div id='backslash' style={buttonStyle}>\</div>
+     <div style={ compare2(2,12) ?  highlightedButtonStyle : buttonStyle}> {'{'} [</div>
+     <div style={ compare2(2,13) ?  highlightedButtonStyle : buttonStyle}> {'}'} ]</div>
+     <div id='backslash' style={buttonStyle}>\ |</div>
    </div>
    <div className="row" style={rowStyle}>
      <div style={capitalButtonStyle}>Caps</div>
@@ -109,8 +109,8 @@ function CharachorderOverlayLite({ overrideBottom }: OverlayProps): ReactElement
      <div style={ compare2(3,8) ?  highlightedButtonStyle : buttonStyle}>J</div>
      <div style={ compare2(3,9) ?  highlightedButtonStyle : buttonStyle}>K</div>
      <div style={ compare2(3,10) ?  highlightedButtonStyle : buttonStyle}>L</div>
-     <div style={ compare2(3,11) ?  highlightedButtonStyle : buttonStyle}>;</div>
-     <div style={ compare2(3,12) ?  highlightedButtonStyle : buttonStyle}>&apos;</div>
+     <div style={ compare2(3,11) ?  highlightedButtonStyle : buttonStyle}>; :</div>
+     <div style={ compare2(3,12) ?  highlightedButtonStyle : buttonStyle}>&quot; &apos;</div>
      <div style={enterButtonStyle}>Enter</div>
    </div>
    <div className="row" style={rowStyle}>
@@ -122,9 +122,9 @@ function CharachorderOverlayLite({ overrideBottom }: OverlayProps): ReactElement
      <div style={ compare2(4,6) ?  highlightedButtonStyle : buttonStyle}>B</div>
      <div style={ compare2(4,7) ?  highlightedButtonStyle : buttonStyle}>N</div>
      <div style={ compare2(4,8) ?  highlightedButtonStyle : buttonStyle}>M </div>
-     <div style={buttonStyle}>,</div>
-     <div style={buttonStyle}>.</div>
-     <div style={buttonStyle}>/</div>
+     <div style={buttonStyle}>, &lt;</div>
+     <div style={buttonStyle}>. &gt;</div>
+     <div style={buttonStyle}>/ ?</div>
      <div style={ compare2(4,12) ? highlightedButtonStyle : buttonStyle}>⇧</div>
      <div style={buttonStyle}>↑</div>
      <div style={buttonStyle}>Del</div>
