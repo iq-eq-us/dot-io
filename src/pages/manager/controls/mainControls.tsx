@@ -38,6 +38,43 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
      
   }
 
+  function compare(a : any, b : any) {
+    if (a === b) {
+       return 0;
+    }
+
+    const a_components = a.split(".");
+    const b_components = b.split(".");
+
+    const len = Math.min(a_components.length, b_components.length);
+
+    // loop while the components are equal
+    for (let i = 0; i < len; i++) {
+        // A bigger than B
+        if (parseInt(a_components[i]) > parseInt(b_components[i])) {
+            return 1;
+        }
+
+        // B bigger than A
+        if (parseInt(a_components[i]) < parseInt(b_components[i])) {
+            return -1;
+        }
+    }
+
+    // If one's a prefix of the other, the longer one is greater.
+    if (a_components.length > b_components.length) {
+        return 1;
+    }
+
+    if (a_components.length < b_components.length) {
+        return -1;
+    }
+
+    // Otherwise they are the same.
+    return 0;
+}
+
+
   export async function selectBase(){
     
     await sendCommandString("SELECT BASE");
@@ -172,8 +209,14 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       //   new TransformStream(new LineBreakTransformer())
       // );
       // reader = inputStream.getReader();
-      await readGetOneAndToss(); //this is added for the latest firmware with customers, where decimal version
-  
+      if(MainControls._chordmapId=="CHARACHORDER" && (compare(MainControls._firmwareVersion, "0.9.0") ==-1)){
+        await readGetOneAndToss(); //this is added for the latest firmware with customers, where decimal version
+        console.log("i did indeed enter here")
+      }
+     
+      //console.log(MainControls._firmwareVersion);
+      //console.log(parseInt(MainControls._firmwareVersion))
+      //console.log('Compare for version method :' + compare(MainControls._firmwareVersion, "0.9.0"));
       const { value, done } = await MainControls.lineReader.read();
       if(done){
         console.log('reader is done');
@@ -181,7 +224,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       }else{
         console.log(['value',value]);
         // await reader.cancel().then(()=>{console.log(['value',value]);console.log('then cancelled reader');});
-        // await inputDone.catch(() => {});
+        // await inputDone.catch(() => {}); 
         // reader.releaseLock();
     
         
@@ -212,6 +255,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     if(MainControls._chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
       const decString = String(bigNum).split(''); //no left zeros; that's ok
       console.log(decString);
+      console.log(MainControls._chordmapId);
       for(let i=0;i<decString.length;i++){
         if(decString[i]!="0"){
           if(humanString.length>0){
@@ -266,6 +310,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
                 }
       }
     }else if(MainControls._chordmapId == 'CHARACHORDERLITE'){
+      console.log('ChordLite '+ bigNum);
       const binString = bigNum.toString(2); //no left zeros; that's ok
       console.log(binString);
       for(let i=0;i<binString.length;i++){
@@ -366,7 +411,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
 
   export function convertHumanStringToHexadecimalChord(humanString: string) : string{
   
-
+    console.log(humanString);
     let hexString = "";
     let bigNum = BigInt(0);
     //parse the pieces with _+_
@@ -376,6 +421,18 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       const actionId = _actionMap.indexOf(part);
       console.log('ActionID: '+actionId);
       if(MainControls._chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
+        let keyId: number;
+        if(actionId<0x0200){
+          keyId = (_keyMapDefaults[0]).indexOf(actionId);
+          console.log(keyId);
+        }else{
+          keyId = actionId-0x0200; //using the physical key position
+        }
+        
+        console.log(keyId);
+        bigNum+=BigInt(noteId_to_chord(keyId));
+        console.log(bigNum);
+      }else if(MainControls._chordmapId == 'CHARACHORDERLITE'){
         let keyId: number;
         if(actionId<0x0200){
           keyId = (_keyMapDefaults[0]).indexOf(actionId);
@@ -609,11 +666,13 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
             //if phrase was changed, then just set the new chordmap with the new chord and the new phrase
             const chordNewIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
             const phraseInputIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
-
             const hexChord = convertHumanStringToHexadecimalChord(chordNewIn.innerHTML);
             const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseInputIn.value);
             await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("SET "+hexChord+" "+hexPhrase);
+            console.log('ChordNew In'+ chordNewIn.innerHTML);
+            console.log('ChordNew In'+ phraseInputIn.value);
+
 
             //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
             const chordorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
