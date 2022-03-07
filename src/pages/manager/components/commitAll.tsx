@@ -21,7 +21,12 @@ export function commitAll(){
 
       console.log('table row '+i+' has virtualId of '+virtualId);
       // document.getElementById(virtualId.toString()+"-commit")
-      setTimeout(pressCommitButton,i*100,virtualId);
+      if(MainControls._chordmapId=="CHARACHORDER"){
+        setTimeout(pressCommitButton,i*200,virtualId);//Fiddle with this
+        console.log("i did indeed enter here")
+      } else{
+        setTimeout(pressCommitButton,i*50,virtualId);//Fiddle with this
+      }
       //rows would be accessed using the "row" variable assigned in the for loop
    }
   }
