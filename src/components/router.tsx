@@ -7,11 +7,12 @@ import Training from '../pages/training/training';
 import { ClosingPrompt } from './closingPrompt';
 import Piano from '../pages/piano/piano';
 
+
 export const ROUTER_PATHS = {
   home: '/',
   training: '/training',
   manager: '/manager',
-  piano: '/piano'
+  piano: '/piano',
 };
 
 /**

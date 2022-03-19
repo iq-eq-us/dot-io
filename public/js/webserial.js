@@ -32,7 +32,7 @@
 
 let _actionMap = [
   'NUL', //0x00 0
-  'CCFunc', //0x01 1
+  'CCFunc', //0x01
   'STX', //0x02 2
   'ETX', //0x03 3
   'EOT', //0x04 4

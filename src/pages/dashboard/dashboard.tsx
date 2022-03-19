@@ -14,7 +14,7 @@ import { CardDataRowDisplay } from './components/CardDataRowDisplay';
 import { BrandingMaterial } from './components/BrandingMaterial';
 import { CopyrightNotice } from './components/CopyrightNotice';
 import {Graph} from '../../pages/manager/components/chordGraphs'
-
+import CardData from './components/dataCard';
 
 
 
@@ -36,6 +36,7 @@ const Dashboard = (): ReactElement => {
       <TopSectionContainer>
         <LaunchpadHeader />
         <Column>
+        <CardData/>
         <Graph/>
 
           <CardDataRowDisplay />

@@ -774,7 +774,7 @@ const  CHARACHORDER = [
   'LAlt', //2
   'LSpace', //3
   'Present', //4
-  'Plural', //5
+  'Dup', //5 Plural
   'RSpace', //6
   'Dup', //7
   'Win', //8
@@ -802,7 +802,7 @@ const  CHARACHORDER = [
   'f', //30
   'g', //31
   'h', //32
-  'j', //33
+  'j', //33 
   'k', //34
   'l', //35
   ';', //36
@@ -842,7 +842,7 @@ const  CHARACHORDER = [
   
     ];
     
-    const _chordMaps = [];
+    const _chordMaps: any[][] = [];
 
 
 export { _actionMap, _keyMapDefaults, _keyMap, _chordMaps };
