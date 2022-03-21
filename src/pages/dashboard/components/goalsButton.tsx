@@ -10,6 +10,8 @@ const triggerResize = () => {
 
 export class PopUp extends Component {
 
+
+  
   handleClick = () => {
     this.props.toggle();
   };
@@ -26,22 +28,23 @@ export class PopUp extends Component {
     const goalChM = document.getElementById('goalCHM');
     const goalaCPM = document.getElementById('goalACPM');
 
-    const currenttWPM = getHighestWPM();
-    const currentaWPM = getAverageWPM();
-    const currentChM = getChordsMastered();
-    const currentACPM = getChordsPerMinute();
+    const currenttWPM = goaltWPM.value - getHighestWPM();
+    const currentaWPM = goalaWPM.value - getAverageWPM();
+    const currentChM = goalChM.value - getChordsMastered();
+    const currentACPM = goalaCPM.value - getChordsPerMinute();
 
-   
+    
 
     localStorage.setItem("storedGoalWPM", JSON.stringify(goalWPMArray));
     localStorage.setItem("storedGoalAWPM", JSON.stringify(goalAWPMArray));
     localStorage.setItem("storedGoalChM", JSON.stringify(goalChMArray));
     localStorage.setItem("storedGoalCPM", JSON.stringify(goalACPMArray));
 
-    goalWPMSet(goaltWPM.value);
-    goalAWPMSet(goalaWPM.value);
-    goalACPMSet(goalaCPM.value);
-    goalChMSet(goalChM.value);
+    goalWPMSet((currenttWPM/12));
+    goalAWPMSet((currentaWPM/12));
+    goalACPMSet((currentACPM/12));
+    goalChMSet((currentChM/12));
+
 
     dates(new Date());
     this.props.toggle();
@@ -57,38 +60,41 @@ export class PopUp extends Component {
             &times;
           </span>
           <form>
+          <div style={{color: "rgb(75 85 99)", fontWeight: "bold"}}>Set Your Typing Goals</div>
+          <div>Enter your goal number for each given category <div>(ex. current: 35, Goal: 50)</div></div>
+
           <table>
         <tr>
-          <th> </th>
+          <th/>
           <th>Current</th>
           <th>Goal</th>
-          <th>Weekly Goal</th>
+          <th> </th>
         </tr>
         <tr>
           <td>tWPM</td>
           <td>{getHighestWPM()}</td>
-          <td><input type="string" style={goalIndex} id = "goalWPM" required/></td>
-          <td>3.5</td>
+          <td><input type="number" style={goalIndex} id = "goalWPM"  required/></td>
+          <td id = "realTimeWeeklyValWPM"></td> 
 
         </tr>
         <tr>
           <td>aWPM</td>
           <td>{getAverageWPM()}</td>
-          <td><input type="string" style={goalIndex} id = "goalAWPM" required/></td>
-          <td>2.3</td>
+          <td><input type="number" style={goalIndex} id="goalAWPM" required/></td>
+          <td></td>
 
         </tr>
         <tr>
           <td>ChM</td>
           <td>{getChordsMastered()}</td>
-          <td><input type="string" style={goalIndex} id = "goalCHM" required/></td>
-          <td>1.4</td>
+          <td><input type="number" style={goalIndex} id = "goalCHM" required/></td>
+          <td></td>
         </tr>
         <tr>
           <td>aCPM</td>
           <td>{getChordsPerMinute()}</td>
-          <td ><input type="string" style={goalIndex} id = "goalACPM" required/></td>
-          <td>3.3</td>
+          <td ><input type="number" style={goalIndex} id = "goalACPM" required/></td>
+          <td></td>
         </tr>
 
       </table>
@@ -120,36 +126,14 @@ export default class GoalsButton extends React.Component {
     return (
       <div>
         <div className="btn" onClick={this.togglePop}>
-          <button className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">Set Goals</button>
+          <button className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]">{JSON.parse(localStorage.getItem("storedGoalAWPM")) == null ? "Set Goals" : "Reset Goals" }</button>
         </div>
         {this.state.seen ? <PopUp toggle={this.togglePop} /> : null}
       </div>
-    );
+    );    
   }
 }
 
-export class ResetGoalsButton extends React.Component {
-  state = {
-    seen: false
-  };
-
-  togglePop = () => {
-    this.setState({
-      seen: !this.state.seen
-    });
-  };
- 
-  render() {
-    return (
-      <div>
-        <div className="btn" onClick={this.togglePop}>
-          <button className="text-white rounded p-2 mb-4 inline-block ml-2 bg-green-500 hover:bg-[#3b3b3b] active:bg-[#222]">Reset Your Goals</button>
-        </div>
-        {this.state.seen ? <PopUp toggle={this.togglePop} /> : null}
-      </div>
-    );
-  }
-}
  function dates(current:any) {
   const week= []; 
   // Starting Monday not Sunday
@@ -166,9 +150,9 @@ export class ResetGoalsButton extends React.Component {
 }
 
 function convertDate(date : Date){
-  const month = date.getUTCMonth() + 1; //months from 1-12
-  const day = date.getUTCDate();
-  const year = date.getUTCFullYear();
+  const month = date.getMonth() + 1; //months from 1-12
+  const day = date.getDate();
+  const year = date.getFullYear();
   
   const newdate = month + "/" + day + "/" + year;
   return newdate;
@@ -176,9 +160,12 @@ function convertDate(date : Date){
 
 function goalWPMSet(goalV : any){
 
-  const tempStoredGoalWPM = JSON.parse(localStorage.getItem("storedGoalWPM"))
+  const tempStoredGoalWPM = JSON.parse(localStorage.getItem("storedGoalWPM"));
+  let number =0;
   for(let i =1; i<13; i++) {
-    tempStoredGoalWPM.push(getHighestWPM() + (i * goalV))
+    number = getHighestWPM() + (i * goalV);
+    number = Math.round(number * 10) / 10;
+    tempStoredGoalWPM.push(number);
   }
   localStorage.setItem("storedGoalWPM", JSON.stringify(tempStoredGoalWPM));
 
@@ -186,8 +173,11 @@ function goalWPMSet(goalV : any){
 function goalAWPMSet(goalV : any){
 
   const tempStoredGoalAWPM = JSON.parse(localStorage.getItem("storedGoalAWPM"));
+  let number = 0;
   for(let i =1; i<13; i++) {
-    tempStoredGoalAWPM.push(getAverageWPM() + (i * goalV));
+    number = getAverageWPM() + (i * goalV);
+    number = Math.round(number * 10) / 10;
+    tempStoredGoalAWPM.push(number);
   }
   localStorage.setItem("storedGoalAWPM", JSON.stringify(tempStoredGoalAWPM));
 
@@ -195,8 +185,11 @@ function goalAWPMSet(goalV : any){
 function goalChMSet(goalV : any){
 
   const tempStoredGoalChM = JSON.parse(localStorage.getItem("storedGoalChM"));
+  let number = 0;
   for(let i =1; i<13; i++) {
-    tempStoredGoalChM.push(getChordsMastered() + (i * goalV));
+    number = getChordsMastered() + (i * goalV);
+    number = Math.round(number * 10) / 10;
+    tempStoredGoalChM.push(number);
   }
   localStorage.setItem("storedGoalChM", JSON.stringify(tempStoredGoalChM));
 
@@ -204,13 +197,22 @@ function goalChMSet(goalV : any){
 function goalACPMSet(goalV : any){
 
   const tempStoredGoalACPM = JSON.parse(localStorage.getItem("storedGoalCPM"));
+  let number = 0;
   for(let i =1; i<13; i++) {
-    tempStoredGoalACPM.push(getChordsPerMinute() + (i * goalV));
+    number = getChordsPerMinute() + (i * goalV);
+    number = Math.round(number * 10) / 10;
+    tempStoredGoalACPM.push(number);
   }
   localStorage.setItem("storedGoalCPM", JSON.stringify(tempStoredGoalACPM));
 
 }
 
+function wpmRealTimeCalculator(){
+  const x = (document.getElementById('goalWPM') ==null) ? 0 : document.getElementById('goalWPM').value;
+  //console.log(x);
+  return x;
+
+}
 function goalValueSetter(current:any) {
   const week= []; 
   

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getAverageWPM, getHighestWPM, getChordsMastered, getChordsPerMinute } from '../../manager/components/chordGraphs';
 import styled from 'styled-components';
-import { ResetGoalsButton } from "./goalsButton";
 
 const triggerResize = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -73,7 +72,6 @@ export default class CardData extends React.Component {
     return (
       <React.Fragment> 
         
-        <div style={this.state.seenGoalTable ? resetGoalButtonStyleActive : resetGoalButtonStyleInactive}><ResetGoalsButton/></div>
            <table style={{borderTopLeftRadius: "5px", borderTopRightRadius: "5px", backgroundColor:"#333", color:"white", height:"60px"}}>
            
       <colgroup span={2}/>

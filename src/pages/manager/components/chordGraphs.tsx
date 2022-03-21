@@ -397,7 +397,7 @@ export function storeCharactersPerMinute(dateD: Date, inCharPerMinute: number, i
   const storeCharactersPerMinuteData = [];
   const storeCharactersPerMinuteDate = [];
   const cpmCounterArray: any = [];
-
+  console.log('In value for CharPerMin '+ inCharPerMinute);
   const currentDate = new Date();
   const date = currentDate.getDate();
 
@@ -466,28 +466,33 @@ export function storeCharactersPerMinute(dateD: Date, inCharPerMinute: number, i
           localStorage.setItem("CPMCount",JSON.stringify(avgCount));
           localStorage.setItem("prevCPMVal",JSON.stringify(prevCPerMinCount));
         }
-        
+        const avgCount = JSON.parse(localStorage.getItem("CPMCount"));
+
 
         storedPCValue = inCharPerMinute;
   
         //console.log(storedPCValue);
         //console.log(storedCCount);
-
-
-        storedCData.splice((storedCData.length - 1), 1, (storedCCount));
-        storedCDate.splice((storedCDate.length - 1), 1, dateD);
-
         //console.log('Chords per min' + storedCData )
         //console.log('Chords per min' + storedCDate )
+        const val = (inCharPerMinute+(parseInt(storedCData[((storedCData.length)-1)])*(avgCount-1)))/avgCount;
 
 
-
+        storedCData.splice((storedCData.length - 1), 1, (val));
+        storedCDate.splice((storedCDate.length - 1), 1, dateD);
         localStorage.setItem("storedCharactersPerMinuteData", JSON.stringify(storedCData));//Stringify and store DataArray in localStorage
         localStorage.setItem("storedCharactersPerMinuteDate", JSON.stringify(storedCDate));//Stringify and store dateArray in localStorage 
         //localStorage.setItem("prevCPMVal", JSON.stringify(0));//Set previously mastered chord to 0 since we have not mastered any Chords yet
         //localStorage.setItem("CPMCount", JSON.stringify(storedCCount));//This sets the chords mastered count to 0
         localStorage.setItem("CPMTheDate", JSON.stringify(date));//This sets the chords mastered count to 0
-    
+        localStorage.setItem("CPMCount",JSON.stringify(avgCount));
+
+        console.log(storedCData)
+        console.log(storedCDate)
+        console.log(date)
+        console.log(avgCount)
+        
+
 
       } else {
 
@@ -497,16 +502,23 @@ export function storeCharactersPerMinute(dateD: Date, inCharPerMinute: number, i
         const storedMC = localStorage.getItem("CPMCount");
 
 
-        const storedMData = JSON.parse(storedMD);
-        const storedMDate = JSON.parse(storedMDa);
+        const storedCData = JSON.parse(storedMD);
+        const storedCDate = JSON.parse(storedMDa);
         let storedPValue = JSON.parse(storedPVal);
         let storedMCount = JSON.parse(storedMC);
 
-        storedMCount = storedMCount + 1;
-        storedMData.push(storedMCount);
-        storedMDate.push(dateD);
+        storedMCount =  1;
+        storedCData.push(storedMCount);
+        storedCDate.push(dateD);
         storedPValue = inCharPerMinute;
         storedMCount = storedMCount + 1;
+        const avgCount = JSON.parse(localStorage.getItem("CPMCount"));
+
+        const val = (inCharPerMinute+(parseInt(storedCData[((storedCData.length)-1)])*(avgCount-1)))/avgCount;
+
+
+        storedCData.splice((storedCData.length - 1), 1, (val));
+        storedCDate.splice((storedCDate.length - 1), 1, dateD);
 
         localStorage.setItem("storedCharactersPerMinuteData", JSON.stringify(storedMData));
         localStorage.setItem("storedCharactersPerMinuteDate", JSON.stringify(storedMDate));
