@@ -453,7 +453,7 @@ export function storeCharactersPerMinute(dateD: Date, inCharPerMinute: number, i
         const storedCData = JSON.parse(storedMD);
         const storedCDate = JSON.parse(storedMDa);
         let storedPCValue = JSON.parse(storedPVal);
-        let storedCCount = JSON.parse(storedMC);
+        const storedCCount = JSON.parse(storedMC);
 
         if(inAvgChordCount!= localStorage.getItem("prevCPMVal")){
           let avgCount = JSON.parse(localStorage.getItem("CPMCount"));
