@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getAverageWPM, getHighestWPM, getChordsMastered, getChordsPerMinute } from '../../manager/components/chordGraphs';
+import PropTypes from 'prop-types';
 
 const triggerResize = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -9,7 +10,9 @@ const triggerResize = () => {
 };
 
 export class PopUp extends Component {
-
+  static propTypes = {
+    toggle: PropTypes.any,
+  };
 
   
   handleClick = () => {
@@ -111,6 +114,7 @@ export class PopUp extends Component {
   }
 }
 
+
 export default class GoalsButton extends React.Component {
   state = {
     seen: false
@@ -207,18 +211,6 @@ function goalACPMSet(goalV : any){
 
 }
 
-function wpmRealTimeCalculator(){
-  const x = (document.getElementById('goalWPM') ==null) ? 0 : document.getElementById('goalWPM').value;
-  //console.log(x);
-  return x;
-
-}
-function goalValueSetter(current:any) {
-  const week= []; 
-  
-
-}
-
 const modal = {
     position: "absolute" as const, 
     zIndex: "1" as const, 
@@ -228,6 +220,7 @@ const modal = {
     textAlign: "center" as const,
     backgroundColor: "rgba(0, 0, 0, 0.25)" as const
 };
+
 
 const modal_content = {
     backgroundColor: "white" as const,
@@ -242,17 +235,5 @@ const modal_content = {
       borderRadius: "5px", 
       border:"1.5px solid black"
     }
-    const gridContainer = {color: "#261f68", display: "flex", padding: "9.6px", marginTop: "20px", textAlign: "center"}
-     const gridItem = {
-      flexGrow: "0",
-      maxWidth: "100%",
-      flexBasis: "100%",
-      color: "#261f68", 
-      display: "table", 
-      padding: "9.6px", 
-      marginTop: "20px", 
-      textAlign: "center", 
-      boxSizing: "inherit", 
-      float:"left"
-      }
+
       
