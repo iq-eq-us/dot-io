@@ -106,10 +106,10 @@ export const useWordsPerMinute = (): number => {
 
           storeAverageData( wpm, currentDate, currentChordSpeed, averageDailyCount);
           if(currentChordSpeed>=100 && (currentChordSpeed != 6276)){//This checks if the WPM is equal to 100 wpm of higher
-            storeMasteredData(currentDate, currentChordSpeed);
+           // storeMasteredData(currentDate, currentChordSpeed);
             }
             if(trainingSceneario == ('ALPHABET'||'LEXICAL'||'TRIGRAM')){
-              storeCharactersPerMinute(currentDate, averageCharacterPerMin, averageDailyCount);
+            //  storeCharactersPerMinute(currentDate, averageCharacterPerMin, averageDailyCount);
             }
       }
   
@@ -136,11 +136,11 @@ export const useWordsPerMinute = (): number => {
 
           storeAverageData( averageSpeed, currentDate, currentChordSpeed, averageDailyCount);
           if(currentChordSpeed>=100 && (currentChordSpeed != 6276)){
-          storeMasteredData(currentDate, currentChordSpeed);
+          //storeMasteredData(currentDate, currentChordSpeed);
           
           }
           if(trainingScenario == ('LEXICAL'||'TRIGRAM')){
-            storeCharactersPerMinute(currentDate, averageCharacterPerMin, averageDailyCount);
+          //  storeCharactersPerMinute(currentDate, averageCharacterPerMin, averageDailyCount);
             console.log('am i even here')
           }
         }
