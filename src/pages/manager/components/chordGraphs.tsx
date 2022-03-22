@@ -644,14 +644,14 @@ export function myGraph(){
     name: 'Average Speed',
     data: generateDayWiseTimeSeries2()
   },
-  {
-    name: 'Chords Mastered',
-    data: generateDayWiseTimeSeries3()
-  },
-  {
-    name: 'Average Characters Per Minute',
-    data: generateDayWiseTimeSeries4()
-  }
+  //{
+    //name: 'Chords Mastered',
+    //data: generateDayWiseTimeSeries3()
+  //},
+  //{
+  //  name: 'Average Characters Per Minute',
+  //  data: generateDayWiseTimeSeries4()
+ // }
 ],
   markers: {
     size: 0,
@@ -882,6 +882,16 @@ export function Graph(): ReactElement {
           {chordsPopper}
           {avgPopper}
           {SpeedPopper}
+
+
+          <div className='sc-ikJyIC w-full  lg:mx-auto flex flex-row '>
+      <PracticeStreak {...practiceStreak}>Practice Streak: {(localStorage.getItem("streak") == null ? 0 : localStorage.getItem("streak")) + ((parseInt(localStorage.getItem("streak")) != 1) ? " days": " day")}</PracticeStreak>
+      <TopSpeed {...topSpeed}> Top Speed: {(getHighestWPM() + " WPM")}</TopSpeed>
+      <AverageSpeed {...avgSpeed}>Average Speed: {(getAverageWPM() + " WPM")}</AverageSpeed>
+      <ChordsMastered {...chordsMastered}>Chords Mastered: {(JSON.parse(localStorage.getItem("masteredChords")) == null ? 0 :  JSON.parse(localStorage.getItem("masteredChords")).length)}</ChordsMastered>
+
+
+      </div>
 
 
       <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }}>

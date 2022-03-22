@@ -36,7 +36,6 @@ const Dashboard = (): ReactElement => {
       <TopSectionContainer>
         <LaunchpadHeader />
         <Column>
-        <CardData/>
         <Graph/>
 
           <CardDataRowDisplay />
