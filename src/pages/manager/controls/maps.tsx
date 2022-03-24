@@ -278,7 +278,7 @@ const _actionMap =
     'LNS', //0x0112 274
     'RNS', //0x0113 275
     'SpurToggle', //0x0114 276
-    'Prev', //0x0115 277
+    'DUP', //0x0115 277
     'ImpulseToggle', //0x0116 278
     'GTM', //0x0117 279
     '0x0118', //0x0118 280
