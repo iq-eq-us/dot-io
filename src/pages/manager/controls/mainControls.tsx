@@ -416,7 +416,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     let bigNum = BigInt(0);
     //parse the pieces with _+_
     const humanStringParts = humanString.split(' + '); //assumes plus isn't being used; bc default is = for the +/= key
-    console.log(humanStringParts);
+    console.log("these are the parts "+humanStringParts);
     humanStringParts.forEach(async (part:any)=>{
       const actionId = _actionMap.indexOf(part);
       console.log('ActionID: '+actionId);
@@ -435,14 +435,15 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
       }else if(MainControls._chordmapId == 'CHARACHORDERLITE'){
         let keyId: number;
         if(actionId<0x0200){
-          keyId = (_keyMapDefaults[0]).indexOf(actionId);
+          console.log('I am here');
+          keyId = (_keyMapDefaults[1]).indexOf(_actionMap[actionId]);
           console.log(keyId);
         }else{
           keyId = actionId-0x0200; //using the physical key position
         }
         
         console.log(keyId);
-        bigNum+=BigInt(noteId_to_chord(keyId));
+        bigNum+=BigInt(2n ** BigInt(keyId));
         console.log(bigNum);
       }else{
         //use other keymap
@@ -544,7 +545,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
         console.log("Listening Hex Chord "+convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
         
         if(hexChord!=null){
-            
+            console.log(hexChord + " Original Hex Value")
           const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
           element.innerHTML = convertHexadecimalChordToHumanString(hexChord);
           const elementT: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement; //.innerHTML = "status: opened serial port";
