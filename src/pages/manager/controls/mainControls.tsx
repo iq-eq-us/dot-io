@@ -671,6 +671,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
             const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseInputIn.value);
             await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("SET "+hexChord+" "+hexPhrase);
+            await readGetOneAndToss();
             console.log('ChordNew In'+ chordNewIn.innerHTML);
             console.log('ChordNew In'+ phraseInputIn.value);
 
