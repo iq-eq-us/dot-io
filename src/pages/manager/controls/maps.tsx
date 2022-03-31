@@ -704,8 +704,8 @@ const  CHARACHORDER = [
     'LCtrl', //1
     'LAlt', //2
     'LSpace', //3
-    'Present', //4
-    'Plural', //5
+    'Function', //4
+    'Dup', //5
     'RSpace', //6
     'Dup', //7
     'Win', //8
@@ -727,7 +727,7 @@ const  CHARACHORDER = [
     'Up', //24
     'Del', //25
     'Spur', //26
-    '0x0061', //27
+    'a', //27
     's', //28
     'd', //29
     'f', //30
