@@ -1,0 +1,12 @@
+.snowpack
+build
+node_modules
+.DS_Store
+.vscode
+test.txt
+src/helpers/highlightConversion.js
+ci-cd/.env.js
+coverage
+ci-cd/.env
+.env
+test_run_output.txt

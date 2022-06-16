@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+
+trigger :
+  - master 
+  - variable
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.17.1'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install
+    displayName: 'npm install'
+
+  - script: |
+      npm run lint
+    displayName: 'npm run lint'
+
+  - script: |
+      npm run test -- --coverage 2>&1 | tee test_run_output.txt
+    displayName: 'npm test'
+
+  - task: AzureStaticWebApp@0
+    inputs:
+      app_location: ''
+      app_build_command: 'npm run build'
+      output_location: '/build'
+    env:
+      azure_static_web_apps_api_token: 20c4e1a22dda20636e2644a77c8a5d1daccdc2c07ad5d41f3787b212597652a91-9d88c969-6ed2-4dd6-b2d5-38032666208801081934
