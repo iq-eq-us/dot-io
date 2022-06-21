@@ -33,7 +33,7 @@ const AggregateStatRow = styled.div.attrs({
 const AggregateRow = ({ data } : { data: any }) => {
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
 
-  let isWordTestDone = useStoreState((store : any) => store.isTestDone);
+  const isWordTestDone = useStoreState((store : any) => store.isTestDone);
   const trainingSetting = useStoreState((store : any) => store.trainingStatistics);
   const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
   const setIsDisplaying = useStoreActions((store) => store.setIsDisplayingTestComplete,);
@@ -54,7 +54,7 @@ const AggregateRow = ({ data } : { data: any }) => {
   const [count, setCount] = useState(setVariable);
 
   function beginTestBasedOnTrainingSelection (val : number){
-    let payload = []
+    const payload = []
     payload.push('LEXICAL');
     payload.push(""+val+"");
     setCount(val);

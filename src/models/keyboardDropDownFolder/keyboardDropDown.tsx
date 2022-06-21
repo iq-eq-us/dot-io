@@ -35,7 +35,7 @@ export let pickerNone = false;
   );
   const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
-  let payload = [];
+  const payload = [];
   payload.push(currentTrainingScenario);
   payload.push(wordTestNumber);
 

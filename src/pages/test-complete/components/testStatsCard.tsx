@@ -24,7 +24,7 @@ export function TestStatsCard(): ReactElement {
 
     
 
-    let payload = []
+    const payload = []
     const stats = useStoreState(
         (state  : any) => state.trainingStatistics,
       ).statistics.sort((a  : any) => a.sumErrors);

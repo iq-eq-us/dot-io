@@ -47,7 +47,7 @@ export const generateChords = (
   parameters: ChordGenerationParameters,
 ): string[] => {
   if(parameters.wordTestNumberValue != undefined){
-    let wordTestValue = parseInt(parameters.wordTestNumberValue);
+    const wordTestValue = parseInt(parameters.wordTestNumberValue);
     pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
      
     sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
@@ -58,12 +58,12 @@ export const generateChords = (
   
     //console.log(internalWordCountState);
     
-    let newString : string[] = [];
+    const newString : string[] = [];
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
 
     while (newString.join('').length < parameters.lineLength) {
       if(0 == tempDeIncrementValue){
-        let valToEvaluate = (newString.length-1) + wordTestValue;
+        const valToEvaluate = (newString.length-1) + wordTestValue;
         const loopValue = valToEvaluate - wordTestValue;
         if(loopValue !< 0){
         for(let i =0; i<=loopValue; i++){

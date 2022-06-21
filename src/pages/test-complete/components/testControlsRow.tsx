@@ -14,7 +14,7 @@ export function TestControlRow(): ReactElement {
     const trainingSceneario = useStoreState((store) => store.currentTrainingScenario);
     const currentWordTestNumber = useStoreState((store) => store.wordTestNumber);
 
-    let payload = []
+    const payload = []
     payload.push(trainingSceneario);
     payload.push(currentWordTestNumber);
     return (

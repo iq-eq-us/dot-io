@@ -35,7 +35,7 @@ const needsBackButton3 = history.location.pathname.endsWith(
 const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
 
 
-  let payload : any [] = []
+  const payload : any [] = []
   payload.push('LEXICAL');
   payload.push('10');
 

@@ -1,19 +1,9 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useStoreState, useStoreActions } from '../../store/store';
-import { Redirect } from 'react-router-dom';
-import styled from 'styled-components';
 import { TestControlRow } from './components/testControlsRow';
-import {FaBars} from 'react-icons/fa'
 import { TestStatsCard } from './components/testStatsCard';
-import { useContrast } from '../../hooks/useContrast';
 
 import {
-    ManagerPageContainer,
-    Table,
-    ChordContainer,
-    PageContainer,
-    TopSectionContainer
-    
+    ManagerPageContainer    
     
   } from '../test-complete/testComplete.styled';
 /**
@@ -24,12 +14,7 @@ import {
 
 
 function TestCompletePage(): ReactElement {
-    const contrast = useContrast();
 
-
-  useEffect(() => {
-    
-  }, []); // <-- dependency array
   return (
     <React.Fragment>
     <ManagerPageContainer>
