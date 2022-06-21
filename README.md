@@ -1,6 +1,6 @@
 # Introduction
 
-Charachorder Launchpad is a training tool for Charachorder users. It allows these users to practing their typing, trigrams, and chording. It is a essentially a web port of the application found here: https://www.charachorder.com/.
+IQ-EQ Webpage is a testing/training tool for Keyboard users. It allows these users to practing their typing, trigrams, and chording.
 
 # Dependency Installation
 
@@ -32,7 +32,7 @@ As long as there are no error messages present, you can assume the previous step
 
 # Running Locally
 
-To run the project locally on your development machine, navigate back to the root directory of the project, and run the `npm start` command. This will execute the `start` script located in the [package.json](https://dev.azure.com/caitfs3/CharaChorder/_git/Launchpad?path=%2Fpackage.json) file in your root directory. This will in turn execute `snowpack dev`, snowpack being the frontend build tool that bundles and serves your project.
+To run the project locally on your development machine, navigate back to the root directory of the project, and run the `npm start` command. This will execute the `start` script located in the [package.json]file in your root directory. This will in turn execute `snowpack dev`, snowpack being the frontend build tool that bundles and serves your project.
 
 If successful, you should see something similar to the following output:
 
@@ -57,4 +57,4 @@ Anytime you update a file in your IDE or text editor, snowpack will pick up on y
 
 # Next Steps
 
-For more information, see the articles on architecture, testing, and deployment [on the Wiki](https://dev.azure.com/caitfs3/CharaChorder/_wiki/wikis/CharaChorder.wiki/790/CharaChorder-LaunchPad-Architecture-Documentation).
+For more information, see the articles on architecture, testing, and deployment 

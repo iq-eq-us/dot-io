@@ -68,6 +68,7 @@ useEffect(() => {
   if(sumOccurrences>=parseInt(count)){
     setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
     setPopUpDisplayValue(true);
+    //Method will send the test values to local storage
   }
   
 }, [sumOccurrences, isWordTestDone, setIsDisplaying]); // <-- dependency array

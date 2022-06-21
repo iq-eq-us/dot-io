@@ -11,7 +11,6 @@ export const useWordsPerMinute = (): number => {
 
   const trainingSceneario = useStoreState((store) => store.currentTrainingScenario);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
-    console.log("this is inside the useWordPerMinute file" + trainingSceneario); 
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
   );

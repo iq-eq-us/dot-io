@@ -39,9 +39,9 @@ export let pickerNone = false;
   payload.push(currentTrainingScenario);
   payload.push(wordTestNumber);
 
-  function startTrainingOver(val){
-    sessionStorage.removeItem("tempTestDeIncrement");
-    beginTraining(payload)
+  function startTrainingOver(val) {
+    sessionStorage.removeItem("tempTestDeIncrement");//remove session variable
+    beginTraining(payload);// restart training
 
   }
   function returnElement(val : any){

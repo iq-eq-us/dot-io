@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import CharachorderLogoImage from '../assets/cc_logo_transparent.png';
 import BackButton from '../pages/dashboard/components/BackButton';
 import { ROUTER_PATHS } from './router';
-import {FaBars} from 'react-icons/fa'
 
 
 
