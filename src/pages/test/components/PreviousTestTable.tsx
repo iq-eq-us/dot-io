@@ -68,14 +68,11 @@ const getStyle = (
   }
   return 'NORMAL';
 };
-
 const Row = ({ index, style, data }: RowData) => {
   // Minus one to account for title row
-  const nA = ['this', 'is', 'one', 'item']
-  // Minus one to account for title row
-  const item = nA?.[nA.length - LIST_LENGTH_OFFSET];
-  
+  const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
   if (index === 0) return <Header />;
+  //else if (index === 1) return <AggregateRow data={data} />;
 
   const headerStyle = getStyle(
     data.targetChords,
@@ -90,11 +87,11 @@ const Row = ({ index, style, data }: RowData) => {
       }}
       style={style}
     >
-    <NewStatisticsRow headerStyle={headerStyle}>
-        <RowItem>{truncateString(nA?.[0] || "", 12)}</RowItem>
-        <RowItem>{nA?.[1]}</RowItem>
-        <RowItem>{nA?.[2]}</RowItem>
-        <RowItem>{nA?.[3]}</RowItem>
+      <NewStatisticsRow headerStyle={headerStyle}>
+        <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
+        <RowItem>{item?.averageSpeed.toFixed()}</RowItem>
+        <RowItem>{item?.numberOfErrors}</RowItem>
+        <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>
     </div>
   );

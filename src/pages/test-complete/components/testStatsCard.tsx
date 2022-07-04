@@ -5,8 +5,6 @@ import type { ChordStatistics } from '../../../models/trainingStatistics';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
-import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
-import DropDown from '../../../models/keyboardDropDownFolder/keyboardDropDown';
 import { getAverageWPM } from '../../manager/components/chordGraphs';
 import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 import { TestControlRow } from './testControlsRow';
@@ -25,28 +23,47 @@ export function TestStatsCard(): ReactElement {
     
 
     const payload = []
-    const stats = useStoreState(
-        (state  : any) => state.trainingStatistics,
-      ).statistics.sort((a  : any) => a.sumErrors);
+    let thisVal = 0;
+    let sumOccurrences = 0;
+    const oo = [];
+    const stats = useStoreState((state  : any) => state.trainingStatistics);
     payload.push(trainingSceneario);
     payload.push(currentWordTestNumber);
-   // beginTraining(payload);
-        //numberOfErrors
+
+    currentTrainingSetting.statistics.forEach((d) => {
+      thisVal += d.numberOfErrors;
+      sumOccurrences += d.displayTitle.length * d.numberOfOccurrences ;
+      sumOccurrences += d.displayTitle.length * d.numberOfOccurrences ;
+      console.log(d.displayTitle.length * d.numberOfOccurrences);
+
+    });
+
     return (
-        <TestContainer>
-        <TextPromptContainer>
+      <React.Fragment>
         <TrainingStatsColumnContainer>
-          <h3>Stats</h3>
-          <h1>WPM: {useWordsPerMinute()}</h1>
-          <h1>Test: {testNumber}</h1>
+         <StatsCardContainer>
+          <div className='text-4xl'>{useWordsPerMinute().toFixed(0)}</div>
+          <h1 className='text-lg'>WPM</h1>
+          </StatsCardContainer>
+          <StatsCardContainer>
+          <div className='text-4xl'>{testNumber}</div>
+          <h1 className='text-lg'>Test Type</h1>
+          </StatsCardContainer>
+          <StatsCardContainer>
+          <div className='text-4xl'>{(((sumOccurrences -thisVal)/sumOccurrences)*100).toFixed(2) + '%'}</div>
+          <h1 className='text-lg'>Typing Accuracy</h1>
+          </StatsCardContainer>
         </TrainingStatsColumnContainer>
-        </TextPromptContainer>
-        </TestContainer>
+      
+      </React.Fragment>
     );
 }
 
 const TrainingStatsColumnContainer = styled.div.attrs({
-    className: 'flex flex-col text-center align-center w-full  ml-auto mr-auto  bg-[#181818]' ,
+    className: 'flex flex-row text-center align-center pl-36 bg-[#181818]' ,
+  })``;
+  const StatsCardContainer = styled.div.attrs({
+    className: 'flex flex-row text-center align-center w-full  ml-auto mr-auto  bg-[#181818]' ,
   })``;
 
 const TextPromptContainer = styled.div `

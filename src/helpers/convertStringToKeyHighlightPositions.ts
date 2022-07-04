@@ -33,7 +33,24 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
     chord = chordLibrary.chords[text];
   } else if(scenario == 'LEXICOGRAPHIC' && pickerLite){
     chord = chordLibrary.chordsLite[text];
-  } else {
+  } 
+  else if(scenario == 'LEXICAL-SENTENCES' && pickerV1){
+    if(chordLibrary.lexicalSentences.adverb[text] != undefined){
+      chord = chordLibrary.lexicalSentences.adverb[text];
+    }
+    else if(chordLibrary.lexicalSentences.verb[text]){
+      chord = chordLibrary.lexicalSentences.verb[text];
+    }
+    else if(chordLibrary.lexicalSentences.adjectives[text]){
+      chord = chordLibrary.lexicalSentences.adjectives[text];
+    }
+    else if(chordLibrary.lexicalSentences.prepositions[text]){
+      chord = chordLibrary.lexicalSentences.prepositions[text];
+    }
+    else if(chordLibrary.lexicalSentences.nouns[text]){
+      chord = chordLibrary.lexicalSentences.nouns[text];
+    }
+  }else {
     chord = chordLibrary?.all?.[text];
   }
   

@@ -414,10 +414,9 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       lineLength,
       speedGoal: state.trainingSettings.speedGoal,
       wordTestNumberValue: state.wordTestNumber,
-      
+      scenario: state.currentTrainingScenario,
     }),
   ];
-  console.log("This is tot chech wordTest state in action fule apart of getInput Text "+state.wordTestNumber);
 }
 
 
@@ -467,6 +466,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       lineLength,
       speedGoal: state.trainingSettings.speedGoal,
       wordTestNumberValue: state.wordTestNumber,
+      scenario: state.currentTrainingScenario,
     });
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
 

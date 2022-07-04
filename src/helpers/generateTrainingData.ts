@@ -2,7 +2,7 @@ import type { ChordLibraryRecord } from '../data/chordLibrary';
 import type { ChordStatistics } from '../models/trainingStatistics';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
 import { useEffect, useRef, useState } from 'react';
-
+import type { TrainingScenario } from '../models/trainingScenario'
 
 const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
@@ -16,6 +16,7 @@ interface ChordGenerationParameters {
   recursionIsEnabledGlobally: boolean;
   speedGoal: number;
   wordTestNumberValue?: WordTrainingValues;
+  scenario?: TrainingScenario;
 }
 
 //const [internalWordCountState, setinternalWordCountState] = useState<number | null>(null);
@@ -30,15 +31,16 @@ interface ChordGenerationParameters {
  * @see {@link ChordGenerationParameters}
  */
 
- let pageAccessedByReload = ( //This checks if the page has been reloaded this will be used to refresh the session variable
+//This checks if the page has been reloaded this will be used to refresh the session variable
+ let pageAccessedByReload = ( 
   (window.performance.navigation && window.performance.navigation.type === 1) ||
     window.performance
       .getEntriesByType('navigation')
       .map((nav) => nav.type)
       .includes('reload')
 );
-
-function removeSessionValueAndSettoFalse(){ //Method to remove session value and set refresh constant back to false
+//Method to remove session value and set refresh constant back to false
+function removeSessionValueAndSettoFalse(){ 
   sessionStorage.removeItem("tempTestDeIncrement");
   pageAccessedByReload = false;
 }
@@ -46,17 +48,15 @@ function removeSessionValueAndSettoFalse(){ //Method to remove session value and
 export const generateChords = (
   parameters: ChordGenerationParameters,
 ): string[] => {
-  if(parameters.wordTestNumberValue != undefined){
+  if((parameters.scenario == 'LEXICAL') && (parameters.wordTestNumberValue != undefined)){
+    console.log('training scenario '+ parameters.scenario);
+    console.log('Scenarios data '+ parameters.chordsToChooseFrom.adjectives )
     const wordTestValue = parseInt(parameters.wordTestNumberValue);
     pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
      
     sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
 
     let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
-
-   // internalWordCountState == null ? setinternalWordCountState(1) : '';
-  
-    //console.log(internalWordCountState);
     
     const newString : string[] = [];
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
@@ -76,15 +76,67 @@ export const generateChords = (
        tempDeIncrementValue = tempDeIncrementValue - 1;
       }
       sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
-      
     }
     return newString;
 
+  } else if ((parameters.scenario == 'LEXICAL-SENTENCES') && (parameters.wordTestNumberValue != undefined)){
 
+    const wordTestValue = parseInt(parameters.wordTestNumberValue);
+    pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
+     
+    sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
 
-  } else{
-    console.log(parameters.wordTestNumberValue);
-    console.log('I am in the old work');
+    let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
+    
+    const newString : string[] = [];
+    const chordLibraryCharactersAdjectives = Object.keys(parameters.chordsToChooseFrom.adjectives);
+    const chordLibraryCharactersVerb = Object.keys(parameters.chordsToChooseFrom.verb);
+    const chordLibraryCharactersAdverb = Object.keys(parameters.chordsToChooseFrom.adverb);
+    const chordLibraryCharactersPrepositions = Object.keys(parameters.chordsToChooseFrom.prepositions);
+    const chordLibraryCharactersNouns = Object.keys(parameters.chordsToChooseFrom.nouns);
+    getRandomElementFromArray(chordLibraryCharactersNouns)
+    const content = [];
+    for(let i=0; i < wordTestValue/20; i++){
+    content.push('The')
+    content.push(getRandomElementFromArray(chordLibraryCharactersAdjectives));
+    content.push(getRandomElementFromArray(chordLibraryCharactersNouns));
+    content.push(getRandomElementFromArray(chordLibraryCharactersAdverb));
+    content.push(getRandomElementFromArray(chordLibraryCharactersVerb));
+    content.push("because");
+    content.push("some");
+    content.push(getRandomElementFromArray(chordLibraryCharactersNouns));
+    content.push(getRandomElementFromArray(chordLibraryCharactersAdverb));
+    content.push(getRandomElementFromArray(chordLibraryCharactersVerb))
+    content.push(getRandomElementFromArray(chordLibraryCharactersPrepositions))
+    content.push("a");
+    content.push(getRandomElementFromArray(chordLibraryCharactersAdjectives));
+    content.push(getRandomElementFromArray(chordLibraryCharactersNouns));
+    content.push("which,");
+    content.push("became");
+    content.push("a");
+    content.push(getRandomElementFromArray(chordLibraryCharactersAdjectives));
+    content.push(getRandomElementFromArray(chordLibraryCharactersAdjectives));
+    content.push(getRandomElementFromArray(chordLibraryCharactersVerb));
+    content.push(getRandomElementFromArray(chordLibraryCharactersNouns)+".");
+    }
+    while (newString.join('').length < parameters.lineLength) {
+      if(0 == tempDeIncrementValue){
+        const valToEvaluate = (newString.length-1) + wordTestValue;
+        const loopValue = valToEvaluate - wordTestValue;
+        if(loopValue !< 0){
+        for(let i =0; i<=loopValue; i++){
+          newString.pop();
+        }
+      }
+        break;
+      } else{
+       newString.push(content[wordTestValue - tempDeIncrementValue]);
+       tempDeIncrementValue = tempDeIncrementValue - 1;
+      }
+      sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
+    }
+    return newString;
+  }else{
   // * Uncomment the next two lines to use just the alphabet to test with
   // const IS_TESTING = true;
   // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];

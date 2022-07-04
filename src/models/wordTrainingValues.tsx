@@ -4,4 +4,7 @@ export type WordTrainingValues =
   | '50'
   | '75'
   | '100'
-  | 'INF';
+  | 'INF'
+  | 'SHORT'
+  | 'MEDIUM'
+  | 'LONG';

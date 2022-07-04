@@ -4,4 +4,5 @@ export type TrainingScenario =
   | 'LEXICAL'
   | 'CHORDING'
   | 'LEXICOGRAPHIC'
-  | 'SUPERSONIC';
+  | 'SUPERSONIC'
+  | 'LEXICAL-SENTENCES';

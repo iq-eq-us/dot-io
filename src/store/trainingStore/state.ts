@@ -52,7 +52,8 @@ const trainingStoreState: TrainingStoreStateModel = {
     const highlightMode: CharacterEntryMode =
       state.currentTrainingScenario === 'ALPHABET' ||
       state.currentTrainingScenario === 'LEXICAL' ||
-      state.currentTrainingScenario === 'TRIGRAM'
+      state.currentTrainingScenario === 'TRIGRAM' ||
+      state.currentTrainingScenario === 'LEXICAL-SENTENCES'
         ? 'CHARACTER'
         : 'CHORD';
     return highlightMode;

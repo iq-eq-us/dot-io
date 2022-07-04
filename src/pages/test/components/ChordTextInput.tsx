@@ -21,7 +21,6 @@ function ChordTextInput(): ReactElement {
   );
   useEffect(() => {
     const field = document.getElementById("txt_Name");
-    console.log('listener')
     field.addEventListener('blur',() => 
    field.focus())    
   }, []); // <-- dependency array

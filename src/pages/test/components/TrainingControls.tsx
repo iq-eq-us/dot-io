@@ -32,13 +32,11 @@ const AggregateStatRow = styled.div.attrs({
 
 const AggregateRow = ({ data } : { data: any }) => {
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
-
-  const isWordTestDone = useStoreState((store : any) => store.isTestDone);
   const trainingSetting = useStoreState((store : any) => store.trainingStatistics);
   const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
   const setIsDisplaying = useStoreActions((store) => store.setIsDisplayingTestComplete,);
   const wordTestNumber = useStoreState((store) => store.wordTestNumber,);
-
+  const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario,);
 
   let sumErrors = 0;
   let sumOccurrences = 0;
@@ -53,14 +51,22 @@ const AggregateRow = ({ data } : { data: any }) => {
   const setVariable = wordTestNumber == undefined ? '10' : wordTestNumber;
   const [count, setCount] = useState(setVariable);
 
-  function beginTestBasedOnTrainingSelection (val : number){
+  function beginTestBasedOnTrainingSelection (tierValue : string, val : number){
+    if(val != 0){
     const payload = []
-    payload.push('LEXICAL');
+    payload.push(tierValue);
     payload.push(""+val+"");
     setCount(val);
     sessionStorage.removeItem("tempTestDeIncrement");
     beginTraining(payload); 
+    } else{
+    const payload = []
+    payload.push(tierValue);
+    sessionStorage.removeItem("tempTestDeIncrement");
+    beginTraining(payload); 
+    }
   }
+
 useEffect(() => {
   console.log(currentTrainingSetting);
   console.log(trainingSetting)
@@ -71,17 +77,30 @@ useEffect(() => {
     //Method will send the test values to local storage
   }
   
-}, [sumOccurrences, isWordTestDone, setIsDisplaying]); // <-- dependency array
+}, [sumOccurrences, setIsDisplaying]); // <-- dependency array
 
   return (
       <React.Fragment>
         <WordRowContainer> 
         <AggregateStatRow>
         <RowStatItemName >Words: </RowStatItemName>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection(10)} style={ (count ==10) ? {color: '#1e90ff'} :{} }>10</RowStatItem>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection(25)} style={ (count ==25) ? {color: '#1e90ff'} :{} }>25</RowStatItem>
-        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection(50)} style={ (count ==50) ? {color: '#1e90ff'} :{} }>50</RowStatItem>
-        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection(75)} style={ (count ==75) ? {color: '#1e90ff'} :{} }>75</RowStatItem>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 10)} style={ (count ==10 && (currentTrainingScenario == 'LEXICAL') ) ? {color: '#1e90ff'} :{} }>10</RowStatItem>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 25)} style={ (count ==25 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>25</RowStatItem>
+        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 50)} style={ (count ==50 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>50</RowStatItem>
+        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 75)} style={ (count ==75 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>75</RowStatItem>
+        </AggregateStatRow>
+        </WordRowContainer>
+        <WordRowContainer> 
+        <AggregateStatRow>
+        <RowStatItemName >Sentences: </RowStatItemName>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 20)} style={ (count ==20 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Short</RowStatItem>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 40)} style={ (count ==40 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Medium</RowStatItem>
+        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 60)} style={ (count ==60 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Long</RowStatItem>
+        </AggregateStatRow>
+        </WordRowContainer>
+        <WordRowContainer> 
+        <AggregateStatRow>
+        <RowStatItemName  onClick={() => beginTestBasedOnTrainingSelection('LEXICOGRAPHIC', 0)} style={ (count ==10 && (currentTrainingScenario == 'LEXICOGRAPHIC')) ? {color: '#1e90ff'} :{} }>Custom</RowStatItemName>
         </AggregateStatRow>
         </WordRowContainer>
     </React.Fragment>
@@ -93,23 +112,14 @@ const TrainingStatsColumnContainer = styled.div.attrs({
 })``;
 
 const WordRowContainer = styled.div `
-  margin-top: 30px;
+float-left
   max-width: 100%;
   max-height: 100%;
  `;
 
-const TextPromptContainer = styled.div `
-  width: 100%;
-  height: 105%;
-  background: #181818;
-  animation: blinker 1s cubic-bezier(0.5, 0, 1, 1) infinite alternate;
-`;
-
-
 const RowStatItem = styled.button.attrs({
   className: `
   hover:color-[#1e90ff]
-  
   whitespace-nowrap 
   text-sm w-1/4 
   font-semibold`,
@@ -117,6 +127,7 @@ const RowStatItem = styled.button.attrs({
 
 const RowStatItemName = styled.button.attrs({
   className: `
+  float-left
   whitespace-nowrap 
   text-sm w-1/4 
   font-semibold`,

@@ -1,10 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
 import { TestControlRow } from './components/testControlsRow';
 import { TestStatsCard } from './components/testStatsCard';
+import { TestCompleteGraph } from './components/testCompleteGraph';
 
 import {
-    ManagerPageContainer    
-    
+    ManagerPageContainer, 
+    HorizontalRule
   } from '../test-complete/testComplete.styled';
 /**
  * This is the main training page.
@@ -19,6 +20,8 @@ function TestCompletePage(): ReactElement {
     <React.Fragment>
     <ManagerPageContainer>
     <TestStatsCard/>
+    <HorizontalRule/>
+    <TestCompleteGraph/>
      <TestControlRow/>
      </ManagerPageContainer>
      </React.Fragment>

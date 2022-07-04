@@ -16,6 +16,8 @@ import { SettingsForm } from './SettingsForm';
 import { SettingsHeader } from './SettingsHeader';
 import { CustomTrainingSettingsBox } from './CustomTrainingSettingsBox';
 import TrainingControls from './TrainingControls';
+import styled from 'styled-components';
+import HelpCircleIcon from './HelpCircleIcon';
 
 const HIDDEN_BREAKPOINT = 1280;
 
@@ -91,6 +93,9 @@ function SettingsColumn(): ReactElement {
           trainingSettings={trainingSettings}
           setTrainingSettings={setTrainingSettings}
         />
+        <Label> SetTraining Mode
+        <HelpCircleIcon />
+        </Label>
         <TrainingControls/>
 
       </SettingsForm>
@@ -117,3 +122,7 @@ function SettingsColumn(): ReactElement {
 }
 
 export default SettingsColumn;
+
+const Label = styled.label.attrs({
+  className: `mt-6 block text-sm font-bold mb-2 inline-flex flex-row items-center gap-2`,
+})``;

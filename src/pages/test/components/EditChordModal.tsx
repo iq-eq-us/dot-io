@@ -11,6 +11,7 @@ import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
 import {pickerV1, pickerLite} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
+import { useEffect } from 'react';
 
 
 function EditChordsModal(): ReactElement {
@@ -128,7 +129,7 @@ function EditChordsModal(): ReactElement {
   const { parentProps, Popper } = usePopover(
     `You can enter multiple chords at once by separating them with a "${phraseSeparator}" character. Create multi-word chords by separating words with a "${spaceSeparator}"`,
   );
-
+  
   return (
     <div>
       {isShowingPortal && (
@@ -160,6 +161,7 @@ function EditChordsModal(): ReactElement {
               <Row>
                 <div className="relative w-full mt-2">
                   <ChordInput
+                    id="ChordModalInput"
                     type="text"
                     placeholder="New chord..."
                     ref={inputRef}
@@ -256,5 +258,7 @@ export const getChordLibraryForTrainingScenario = (
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
   else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
+  else if (scenario === 'LEXICAL-SENTENCES') return chordLibrary.lexicalSentences;
+
   return undefined;
 };

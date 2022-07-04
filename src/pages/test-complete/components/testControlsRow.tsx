@@ -42,8 +42,7 @@ export function TestControlRow(): ReactElement {
 background-color: #181818;
 height: 60px;
 min-width: 100%;
-display: flex;
-justify-content: center;
+
 
 `;
   const ItemsContainer = styled.div`
