@@ -98,7 +98,11 @@ useEffect(() => {
         <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 60)} style={ (count ==60 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Long</RowStatItem>
         </AggregateStatRow>
         </WordRowContainer>
-
+        <WordRowContainer> 
+        <AggregateStatRow>
+        <RowStatItemName  onClick={() => beginTestBasedOnTrainingSelection('LEXICOGRAPHIC', 0)} style={ (count ==10 && (currentTrainingScenario == 'LEXICOGRAPHIC')) ? {color: '#1e90ff'} :{} }>Custom</RowStatItemName>
+        </AggregateStatRow>
+        </WordRowContainer>
     </React.Fragment>
   );
 };

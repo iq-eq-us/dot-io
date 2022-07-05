@@ -152,9 +152,9 @@ export function TestCompleteGraph(): ReactElement {
 
   const currentTrainingSetting = useStoreState((store : any) => store.trainingStatistics);
 
-    let wordNames : any = [];
-    let wordOccurrences : any = [];
-    let wordPerMinute : any = [];
+    const wordNames : any = [];
+    const wordOccurrences : any = [];
+    const wordPerMinute : any = [];
 
     currentTrainingSetting.statistics.forEach((d : any) => {
 
