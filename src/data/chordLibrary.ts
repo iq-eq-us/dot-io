@@ -73,6 +73,12 @@ export const chordLibrary: ChordLibrary = {
     girl: ['187-180', '169-18', '223-56', '371-19'],
     man: ['207-121', '317-57', '377-44'],
     mother: ['207-121', '140-44', '324-82', '333-121', '223-56'],
+    Tom:[],
+    John:[],
+    Jay:[],
+    Jonah:[],
+    Allen:[],
+    Sarah:[],
   }
   },
   supersonic: {

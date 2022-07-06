@@ -84,23 +84,18 @@ useEffect(() => {
         <WordRowContainer> 
         <AggregateStatRow>
         <RowStatItemName >Words: </RowStatItemName>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 10)} style={ (count ==10 && (currentTrainingScenario == 'LEXICAL') ) ? {color: '#1e90ff'} :{} }>10</RowStatItem>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 25)} style={ (count ==25 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>25</RowStatItem>
-        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 50)} style={ (count ==50 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>50</RowStatItem>
-        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 75)} style={ (count ==75 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>75</RowStatItem>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 10)} style={ (count == 10 && (currentTrainingScenario == 'LEXICAL') ) ? {color: '#1e90ff'} :{} }>10</RowStatItem>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 25)} style={ (count == 25 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>25</RowStatItem>
+        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 50)} style={ (count == 50 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>50</RowStatItem>
+        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 75)} style={ (count == 75 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>75</RowStatItem>
         </AggregateStatRow>
         </WordRowContainer>
         <WordRowContainer> 
         <AggregateStatRow>
         <RowStatItemName >Sentences: </RowStatItemName>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 20)} style={ (count ==20 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Short</RowStatItem>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 40)} style={ (count ==40 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Medium</RowStatItem>
-        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 60)} style={ (count ==60 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Long</RowStatItem>
-        </AggregateStatRow>
-        </WordRowContainer>
-        <WordRowContainer> 
-        <AggregateStatRow>
-        <RowStatItemName  onClick={() => beginTestBasedOnTrainingSelection('LEXICOGRAPHIC', 0)} style={ (count ==10 && (currentTrainingScenario == 'LEXICOGRAPHIC')) ? {color: '#1e90ff'} :{} }>Custom</RowStatItemName>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 20)} style={ (count == 20 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Short</RowStatItem>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 40)} style={ (count == 40 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Medium</RowStatItem>
+        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 60)} style={ (count == 60 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Long</RowStatItem>
         </AggregateStatRow>
         </WordRowContainer>
     </React.Fragment>
