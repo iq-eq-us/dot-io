@@ -34,11 +34,9 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
     chord = chordLibrary.chords[text];
   }else if(scenario == 'LEXICOGRAPHIC' && pickerV1){
     chord = chordLibrary.chords[text];
-  } else if(scenario == 'CUSTOMTIER' && pickerLite){
+  } else if(scenario == 'CUSTOMTIER'){
     chord = chordLibrary.customtier[text];
-  } else if(scenario == 'CUSTOMTIER' && pickerV1){
-    chord = chordLibrary.customtier[text];
-  }else if(scenario == 'LEXICAL-SENTENCES' && pickerV1){
+  } else if(scenario == 'LEXICAL-SENTENCES' && pickerV1){
       chord = chordLibrary.lexicalSentences[text];
   }else {
     chord = chordLibrary?.all?.[text];
