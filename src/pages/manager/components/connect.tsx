@@ -117,9 +117,12 @@ export async function startSerialConnection() {
      await getId();
 
 
-
+     const manager: HTMLElement = document.getElementById("manager") as HTMLElement;
+     manager.classList.add("connected");
+  
 
   }
+
   export function ConnectButton(): ReactElement {
     return (
       <React.Fragment>
@@ -127,7 +130,7 @@ export async function startSerialConnection() {
       <div id="countDiv"/>
       <div id="device" ></div>
       <button
-      className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative"
+      className="connect sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative"
       color="pink"
       
       onClick={() => allFunc()}

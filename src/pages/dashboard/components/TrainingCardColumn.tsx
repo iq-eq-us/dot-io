@@ -15,15 +15,16 @@ export function TrainingCardColumn(): ReactElement {
 
   const getStatsFromIndex = (index: number): ChordStatistics[] | undefined => {
     // Don't return any stats for training modules 5 and 6
-    if (index > 3) return undefined;
+    if (index > 4) return undefined;
 
     const indexMap: Record<number, TrainingScenario> = {
       0: 'ALPHABET',
       1: 'TRIGRAM',
       2: 'LEXICAL',
       3: 'CHORDING',
-      4: 'LEXICOGRAPHIC',
-      5: 'SUPERSONIC',
+      4: 'CUSTOMTIER',
+      5: 'LEXICOGRAPHIC',
+      6: 'SUPERSONIC',
     };
 
     return stats.statistics.filter((stat) => stat.scenario === indexMap[index]);

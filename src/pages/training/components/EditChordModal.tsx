@@ -255,6 +255,7 @@ export const getChordLibraryForTrainingScenario = (
   else if (scenario === 'LEXICAL') return chordLibrary.lexical;
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
+  else if (scenario === 'CUSTOMTIER') return chordLibrary.customtier;
   else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
   return undefined;
 };

@@ -43,7 +43,7 @@ export function StatisticsColumn(): ReactElement {
   const currentTrainingMode = useCurrentTrainingScenario();
 
   const shouldDisplayEditChordsButton =
-    currentTrainingMode === 'LEXICAL' || currentTrainingMode === 'TRIGRAM' || currentTrainingMode === "SUPERSONIC" || currentTrainingMode === "LEXICOGRAPHIC";
+    currentTrainingMode === 'LEXICAL' || currentTrainingMode === 'TRIGRAM' || currentTrainingMode === "SUPERSONIC" || currentTrainingMode === "LEXICOGRAPHIC" || currentTrainingMode === "CUSTOMTIER";
 
   return (
     <StatisticsColumnContainer

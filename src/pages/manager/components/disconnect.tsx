@@ -19,6 +19,8 @@ import {resetDataTable} from '../../manager/components/resetDataTable'
       const element: HTMLElement = document.getElementById("statusDiv") as HTMLInputElement; //.innerHTML = "status: opened serial port";
       element.innerHTML = "status: closed serial port";
       resetDataTable();
+      const manager: HTMLElement = document.getElementById("manager") as HTMLElement;
+      manager.classList.remove("connected");
     }else{
       console.log('there is no serial connection open to close');
     }

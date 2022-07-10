@@ -32,8 +32,6 @@ function TrainingTestPage(): ReactElement {
 
   
 
-  //isTrainingTestDone = currentTrainingSetting.setIsDisplayingTestComplete;
-
 
   useEffect(() => {
     document.title = "IQ-EQ Test"
@@ -70,10 +68,8 @@ function TrainingTestPage(): ReactElement {
         <TestCompletePage/>
       </React.Fragment>
        )}
-      
       </PageContainer>
-     
-          </React.Fragment>
+      </React.Fragment>
 
   );
 }

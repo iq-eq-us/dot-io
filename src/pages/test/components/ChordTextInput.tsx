@@ -3,6 +3,8 @@ import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import RefreshIcon from './RefreshIcon';
+import { FocusModal } from './focusBreakModal';
+import ReactDOM from 'react-dom';
 
 function ChordTextInput(): ReactElement {
   const setStoreText = useStoreActions((store : any) => store.setTypedTrainingText);
@@ -14,16 +16,16 @@ function ChordTextInput(): ReactElement {
   const timeTakenToTypePreviousChord = useStoreState(
     (store : any) => store.timeTakenToTypePreviousChord,
   );
-  const displayHUD = useHUD();
-
+  const trainingScenario = useStoreState(
+    (store) => store.currentTrainingScenario);  const displayHUD = useHUD();
+    const isShowingPortal = useStoreState(
+      (store) => store.isDisplayingChordEditModal,
+    );
   const { parentProps, Popper } = usePopover(
     'Generate a new set of training text.',
   );
-  useEffect(() => {
-    const field = document.getElementById("txt_Name");
-    field.addEventListener('blur',() => 
-   field.focus())    
-  }, []); // <-- dependency array
+
+  
   return (
 
     <div className="w-full flex flex-row items-end mt-16 justify-center">
@@ -41,8 +43,10 @@ function ChordTextInput(): ReactElement {
         autoCapitalize="none"
         className="relative bg-transparent caret-transparent focus:outline-none w-0 text-4xl min-h-[40px] mb-2 text-white font-bold text-center max-w-[60vw] pb-4 border-b-2 border-solid border-transparent"
         ref={inputRef}
-        autoFocus
         id="txt_Name"
+        autoFocus
+        onBlurCapture={() => isShowingPortal == false ? document.getElementById('txt_Name')?.focus() : document.getElementById('ChordModalInput')?.focus()}
+        onFocus={() => isShowingPortal == true ? document.getElementById('txt_Name')?.focus() : document.getElementById('txt_Name')?.focus()}
         value={textTyped}
         onChange={(e) => {
           console.log(e.target.value);
@@ -50,6 +54,8 @@ function ChordTextInput(): ReactElement {
         }}
     
       />
+
+      
 
 
     </div>

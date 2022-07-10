@@ -73,6 +73,7 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
       CHORDING: 0,
       LEXICOGRAPHIC: 0,
       SUPERSONIC: 0,
+      CUSTOMTIER: 0,
     };
     localStorage.clear();
   }),

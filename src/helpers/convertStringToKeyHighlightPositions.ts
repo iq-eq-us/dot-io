@@ -23,6 +23,7 @@ export const ConvertStringToKeyHighlightPositions = (
   }
 };
 
+
 const getHighlightPositionForString = (text: string, scenario: TrainingScenario | undefined) => {
   let chord = chordLibrary?.all?.[text];
   if (scenario =='CHORDING' && pickerV1){
@@ -31,25 +32,14 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
     chord = chordLibrary.chordsLite[text];
   } else if(scenario == 'LEXICOGRAPHIC' && pickerV1){
     chord = chordLibrary.chords[text];
-  } else if(scenario == 'LEXICOGRAPHIC' && pickerLite){
-    chord = chordLibrary.chordsLite[text];
-  } 
-  else if(scenario == 'LEXICAL-SENTENCES' && pickerV1){
-    if(chordLibrary.lexicalSentences.adverb[text] != undefined){
-      chord = chordLibrary.lexicalSentences.adverb[text];
-    }
-    else if(chordLibrary.lexicalSentences.verb[text]){
-      chord = chordLibrary.lexicalSentences.verb[text];
-    }
-    else if(chordLibrary.lexicalSentences.adjectives[text]){
-      chord = chordLibrary.lexicalSentences.adjectives[text];
-    }
-    else if(chordLibrary.lexicalSentences.prepositions[text]){
-      chord = chordLibrary.lexicalSentences.prepositions[text];
-    }
-    else if(chordLibrary.lexicalSentences.nouns[text]){
-      chord = chordLibrary.lexicalSentences.nouns[text];
-    }
+  }else if(scenario == 'LEXICOGRAPHIC' && pickerV1){
+    chord = chordLibrary.chords[text];
+  } else if(scenario == 'CUSTOMTIER' && pickerLite){
+    chord = chordLibrary.customtier[text];
+  } else if(scenario == 'CUSTOMTIER' && pickerV1){
+    chord = chordLibrary.customtier[text];
+  }else if(scenario == 'LEXICAL-SENTENCES' && pickerV1){
+      chord = chordLibrary.lexicalSentences[text];
   }else {
     chord = chordLibrary?.all?.[text];
   }

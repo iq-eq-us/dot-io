@@ -54,6 +54,7 @@ const trainingStoreState: TrainingStoreStateModel = {
       state.currentTrainingScenario === 'LEXICAL' ||
       state.currentTrainingScenario === 'TRIGRAM' ||
       state.currentTrainingScenario === 'LEXICAL-SENTENCES'
+      state.currentTrainingScenario === 'CUSTOMTIER'
         ? 'CHARACTER'
         : 'CHORD';
     return highlightMode;

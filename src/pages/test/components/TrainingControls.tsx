@@ -66,12 +66,29 @@ const AggregateRow = ({ data } : { data: any }) => {
     beginTraining(payload); 
     }
   }
+  const [tempCounter, setTempCounter] = useState(-100);
 
 useEffect(() => {
   console.log(currentTrainingSetting);
   console.log(trainingSetting)
+  const temp = parseInt(sessionStorage.getItem("tempTestDeIncrement"))
+  if(tempCounter == -100){
+    setTempCounter(temp);
+    sessionStorage.getItem("CutomTierTestValue")
+  }
+  console.log('THis is trhe temp counter '+ tempCounter)
   // run something every time name changes
-  if(sumOccurrences>=parseInt(count)){
+  if(currentTrainingScenario == 'CUSTOMTIER'){
+    console.log('I am being fired in the if statement')
+    console.log(temp)
+    if((sumOccurrences>=parseInt(sessionStorage.getItem("CutomTierTestValue")))){
+      setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
+    setPopUpDisplayValue(true);
+    //Method will send the test values to local storage
+    }
+  }
+  else if((sumOccurrences>=parseInt(count))){
+    console.log('I am being fired in the else statement');
     setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
     setPopUpDisplayValue(true);
     //Method will send the test values to local storage
@@ -92,10 +109,7 @@ useEffect(() => {
         </WordRowContainer>
         <WordRowContainer> 
         <AggregateStatRow>
-        <RowStatItemName >Sentences: </RowStatItemName>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 20)} style={ (count == 20 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Short</RowStatItem>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 40)} style={ (count == 40 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Medium</RowStatItem>
-        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL-SENTENCES', 60)} style={ (count == 60 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Long</RowStatItem>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('CUSTOMTIER', 0)} style={ (count == 0 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Custom</RowStatItem>
         </AggregateStatRow>
         </WordRowContainer>
     </React.Fragment>

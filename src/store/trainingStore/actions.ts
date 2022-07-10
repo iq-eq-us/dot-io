@@ -33,6 +33,7 @@ let globalDictionaries: Record<
   LEXICOGRAPHIC: undefined,
   SUPERSONIC: undefined,
   TRIGRAM: undefined,
+  CUSTOMTIER: undefined,
 };
 export const getGlobalDictionaries = (): typeof globalDictionaries =>
   globalDictionaries;
@@ -99,8 +100,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.trainingStatistics.statistics.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
 
-    // Open the chord editing modal if the user is starting the fifth or sixth training module
-    if (payload[0] === 'LEXICOGRAPHIC' || payload[0] === 'SUPERSONIC')
+    // Open the chord editing modal if the user is starting the fourth, fifth, or sixth training module 
+    if (payload[0] === 'LEXICOGRAPHIC' || payload[0] === 'SUPERSONIC' || payload[0] === 'CUSTOMTIER')
       state.isDisplayingChordEditModal = true;
     else state.isDisplayingChordEditModal = false;
   }),

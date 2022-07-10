@@ -11,10 +11,16 @@ import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
 import {pickerV1, pickerLite} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
-import { useEffect } from 'react';
 
+export const triggerResizeForChordModal = () => {
+  // This is done to make sure that the popover elements are in the correct position
+  // The only time their position is recalculated is on scroll or resize
+  // So this needs to be triggered manually
+  window.dispatchEvent(new Event('resize'));
+};
 
 function EditChordsModal(): ReactElement {
+
   const isShowingPortal = useStoreState(
     (store) => store.isDisplayingChordEditModal,
   );
@@ -110,6 +116,7 @@ function EditChordsModal(): ReactElement {
     }
 
     togglePortal();
+    document.getElementById('txt_Name')?.focus()
   };
 
   const generateNewChordRecord = (chords: string[]): ChordLibraryRecord => {
@@ -129,7 +136,7 @@ function EditChordsModal(): ReactElement {
   const { parentProps, Popper } = usePopover(
     `You can enter multiple chords at once by separating them with a "${phraseSeparator}" character. Create multi-word chords by separating words with a "${spaceSeparator}"`,
   );
-  
+
   return (
     <div>
       {isShowingPortal && (
@@ -161,8 +168,8 @@ function EditChordsModal(): ReactElement {
               <Row>
                 <div className="relative w-full mt-2">
                   <ChordInput
-                    id="ChordModalInput"
                     type="text"
+                    id="ChordModalInput"
                     placeholder="New chord..."
                     ref={inputRef}
                     onKeyDown={(e) => {
@@ -254,6 +261,7 @@ export const getChordLibraryForTrainingScenario = (
   if (scenario === 'ALPHABET') return chordLibrary.letters;
   else if (scenario === 'CHORDING' && pickerV1) return chordLibrary.chords;
   else if (scenario === 'CHORDING' && pickerLite) return chordLibrary.chordsLite;
+  else if (scenario === 'CUSTOMTIER') return chordLibrary.customtier;
   else if (scenario === 'LEXICAL') return chordLibrary.lexical;
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;

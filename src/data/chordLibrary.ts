@@ -11,6 +11,7 @@ export interface ChordLibrary {
   supersonic: ChordLibraryRecord;
   chordsLite: ChordLibraryRecord;
   lexicalSentences: any;
+  customtier: ChordLibraryRecord;
 }
 
 
@@ -19,71 +20,31 @@ export interface ChordLibrary {
 // This chord library maps to the key positions in the keyPositions.ts file
 export const chordLibrary: ChordLibrary = {
   lexicalSentences: {
-    adverb:{
-      here: ['333-121', '194-82', '223-56', '353-179'],
-      then: ['324-82', '333-121', '194-82', '377-44'],
-      quickly: ['323-204', '71-60', '243-121', '371-19', '439-35'],
-      well: ['224-179', '194-82', '371-19'],
-      family: ['296-121', '317-57', '207-121'],
-    },
-    verb:{
-      eat: ['194-82', '317-57', '324-82'],
-      point: ['304-110', '140-44', '169-18', '377-44', '324-82'],
-      quickly: ['323-204', '71-60', '243-121', '371-19', '439-35'],
-      put: ['304-110', '71-60', '324-82'],
-      said: ['446-60', '317-57', '169-18', '303-146'],
-      see: ['446-60', '194-82', '353-179'],
-      take: ['324-82', '317-57', '243-121', '194-82'],
-      study: ['446-60', '324-82', '71-60', '303-146', '439-35'],
-      try: ['324-82', '223-56', '439-35'],
-  },
-    adjectives: {
-      big: ['316-180', '169-18', '187-180'],
-      small: ['446-60', '207-121', '317-57'],
-      large: ['371-19', '317-57', '223-56', '187-180', '194-82'],
-      little: ['371-19', '169-18', '324-82', '194-82'],
-      hard: ['333-121', '317-57', '223-56', '303-146'],
-      kind: ['243-121', '377-44', '303-146'],
+    one:['Will you get a headache if you think too hard?'],
+    two:['We will go home at the end of the day.'],
+    three:['I am too shy to speak to that many people.'],
+    four:['If I do the dishes will you clean the bathroom?'],
+    five:['There is no way I am going to do it.'],
+    six:["I tried to get the pictures, but they're not ready."],
+    seven:['Eat all of your dinner if you want some dessert.'],
+    eight:['I think we are going to have a good day.'],
+    nine:['A lot of families have both a mother and father.'],
+    ten:['That is the least amount of work you can do.'],
+    eleven:['A lot of trees died from the Ice Storm 1998'],
+    twelve:['I would like a small fraction of the pie, please.'],
+    thirteen:['I will do it whether you like it or not!'],
+    fourteen:['I suddenly had the urge to go for a walk.'],
 
-    },
-    prepositions:{
-      about: ['317-57', '316-180', '140-44', '71-60'],
-      at: ['317-57', '194-82'],
-      above: ['317-57', '316-180', '140-44', '215-110', '194-82'],
-      after: ['317-57', '296-121'],
-      along: ['317-57', '371-19', '140-44', '187-180'],
-      as: ['317-57', '446-60'],
-      around: ['317-57', '223-56', '140-44', '71-60'],
-      before: ['316-180', '194-82', '296-121'],
-      below: ['316-180', '194-82', '371-19', '140-44'],
-      for: ['296-121', '140-44', '223-56'],
-      from: ['296-121', '223-56', '140-44', '207-121'],
-      in: ['169-18', '377-44'],
-      like: ['371-19', '169-18', '243-121'],
-      near: ['377-44', '223-56'],
-      of: ['140-44', '296-121'],
-      off: ['140-44', '353-179'],
-      on: ['140-44', '377-44'],
-      until: ['71-60', '377-44', '324-82'],
-      up: ['71-60', '304-110'],
-      with: ['224-179', '169-18', '324-82', '333-121'],
-    },
-    nouns: {
-    father: ['296-121', '317-57', '324-82', '333-121', '194-82', '223-56'],
-    girl: ['187-180', '169-18', '223-56', '371-19'],
-    man: ['207-121', '317-57', '377-44'],
-    mother: ['207-121', '140-44', '324-82', '333-121', '223-56'],
-    Tom:[],
-    John:[],
-    Jay:[],
-    Jonah:[],
-    Allen:[],
-    Sarah:[],
-  }
   },
   supersonic: {
     word: [],
     test: [],
+  },
+  customtier: {
+    sample: [],
+    words: [],
+
+
   },
   lexicographic: {
     about: [],
@@ -1423,6 +1384,7 @@ export const chordLibrary: ChordLibrary = {
       ...this.chords,
       ...this.chordsLite,
       ...this.lexicalSentences,
+      ...this.customtier,
     };
   },
 };

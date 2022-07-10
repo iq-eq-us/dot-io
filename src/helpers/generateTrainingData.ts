@@ -88,55 +88,103 @@ export const generateChords = (
 
     let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
     
+
+
     const newString : string[] = [];
-    const chordLibraryCharactersAdjectives = Object.keys(parameters.chordsToChooseFrom.adjectives);
-    const chordLibraryCharactersVerb = Object.keys(parameters.chordsToChooseFrom.verb);
-    const chordLibraryCharactersAdverb = Object.keys(parameters.chordsToChooseFrom.adverb);
-    const chordLibraryCharactersPrepositions = Object.keys(parameters.chordsToChooseFrom.prepositions);
-    const chordLibraryCharactersNouns = Object.keys(parameters.chordsToChooseFrom.nouns);
-    getRandomElementFromArray(chordLibraryCharactersNouns)
-    const content = [];
-    for(let i=0; i < wordTestValue/20; i++){
-    content.push('The')
-    content.push(getRandomElementFromArray(chordLibraryCharactersAdjectives));
-    content.push(getRandomElementFromArray(chordLibraryCharactersNouns));
-    content.push(getRandomElementFromArray(chordLibraryCharactersAdverb));
-    content.push(getRandomElementFromArray(chordLibraryCharactersVerb));
-    content.push("because");
-    content.push("some");
-    content.push(getRandomElementFromArray(chordLibraryCharactersNouns));
-    content.push(getRandomElementFromArray(chordLibraryCharactersAdverb));
-    content.push(getRandomElementFromArray(chordLibraryCharactersVerb))
-    content.push(getRandomElementFromArray(chordLibraryCharactersPrepositions))
-    content.push("a");
-    content.push(getRandomElementFromArray(chordLibraryCharactersAdjectives));
-    content.push(getRandomElementFromArray(chordLibraryCharactersNouns));
-    content.push("which,");
-    content.push("became");
-    content.push("a");
-    content.push(getRandomElementFromArray(chordLibraryCharactersAdjectives));
-    content.push(getRandomElementFromArray(chordLibraryCharactersAdjectives));
-    content.push(getRandomElementFromArray(chordLibraryCharactersVerb));
-    content.push(getRandomElementFromArray(chordLibraryCharactersNouns)+".");
-    }
-    while (newString.join('').length < parameters.lineLength) {
+    const lexicalSentencesString = parameters.chordsToChooseFrom;
+    //console.log(lexicalSentencesString[one]);
+    //getRandomElementFromArray(content);
+    const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
+
+    const content = lexicalSentencesString;
+    console.log(content)
+    console.log(content.one)
+    const newConstent = content.one[0].split(" ");
+    console.log(newConstent)
+
+    console.log('Content'+lexicalSentencesString);
+    console.log('Content'+content[2]);
+    console.log('Content'+content[3]);
+    console.log('Content'+content[4]);
+    console.log('Content'+content[5]);
+    console.log('Content'+content[6]);
+    console.log('Content'+content[7]);
+
+    
+    while (newConstent.join('').length < parameters.lineLength) {
       if(0 == tempDeIncrementValue){
-        const valToEvaluate = (newString.length-1) + wordTestValue;
+        const valToEvaluate = (newConstent.length-1) + wordTestValue;
         const loopValue = valToEvaluate - wordTestValue;
         if(loopValue !< 0){
         for(let i =0; i<=loopValue; i++){
-          newString.pop();
+          newConstent.pop();
         }
       }
         break;
       } else{
-       newString.push(content[wordTestValue - tempDeIncrementValue]);
+        //newConstent.push(content[wordTestValue - tempDeIncrementValue]);
        tempDeIncrementValue = tempDeIncrementValue - 1;
       }
       sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
     }
-    return newString;
-  }else{
+    console.log
+    return newConstent;
+  } else if ((parameters.scenario == 'CUSTOMTIER') && (parameters.wordTestNumberValue == undefined)){
+
+// * Uncomment the next two lines to use just the alphabet to test with
+  // const IS_TESTING = true;
+  // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
+
+
+  let chordToFeed = '';
+
+
+  let allCharacters: string[] = [chordToFeed].filter((a) => !!a);
+  console.log('CHord to feed '+ chordToFeed);
+  console.log("All chahsahahshd "+allCharacters)
+
+  const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
+
+  const wordTestValue = chordLibraryCharacters.length;
+  pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
+   console.log('this is the state of the temp deincrement '+ sessionStorage.getItem("tempTestDeIncrement"))
+   const checkVal = sessionStorage.getItem("tempTestDeIncrement")
+   console.log(parseInt(checkVal) || parseInt(checkVal) == 0)
+   if( checkVal == null || checkVal == '0' ){
+    sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))
+   }
+   sessionStorage.setItem("CutomTierTestValue", JSON.stringify(wordTestValue))
+
+   console.log('this is the state of the temp deincrement '+ sessionStorage.getItem("tempTestDeIncrement"))
+
+  let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
+  console.log('Library charachters ' +chordLibraryCharacters)
+  console.log(tempDeIncrementValue)
+  console.log(chordLibraryCharacters)
+  console.log(wordTestValue)
+
+  
+
+  while (allCharacters.join('').length < parameters.lineLength) {
+    if(0 == tempDeIncrementValue){
+      const valToEvaluate = (allCharacters.length-1) + wordTestValue;
+      const loopValue = valToEvaluate - wordTestValue;
+      if(loopValue !< 0){
+      for(let i =0; i<=loopValue; i++){
+        allCharacters.pop();
+      }
+    }
+      break;
+    } else{
+     allCharacters.push(chordLibraryCharacters[chordLibraryCharacters.length -  tempDeIncrementValue]);
+     tempDeIncrementValue = tempDeIncrementValue - 1;
+     console.log(chordLibraryCharacters.length -  tempDeIncrementValue);
+     sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
+    }
+  }
+  return allCharacters;
+  
+} else{
   // * Uncomment the next two lines to use just the alphabet to test with
   // const IS_TESTING = true;
   // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
