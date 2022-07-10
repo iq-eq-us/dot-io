@@ -136,10 +136,10 @@ export const generateChords = (
   // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
 
 
-  let chordToFeed = '';
+  const chordToFeed = '';
 
 
-  let allCharacters: string[] = [chordToFeed].filter((a) => !!a);
+  const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
   console.log('CHord to feed '+ chordToFeed);
   console.log("All chahsahahshd "+allCharacters)
 
@@ -183,7 +183,7 @@ export const generateChords = (
     }
   }
   return allCharacters;
-  
+
 } else{
   // * Uncomment the next two lines to use just the alphabet to test with
   // const IS_TESTING = true;
