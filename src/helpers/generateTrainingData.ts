@@ -150,7 +150,7 @@ export const generateChords = (
    const checkVal = sessionStorage.getItem("tempTestDeIncrement")
    console.log(sessionStorage.getItem("tempTestDeIncrement") == undefined);
    sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
-
+   sessionStorage.setItem("CutomTierTestValue", JSON.stringify(wordTestValue))
    let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
 
   while (allCharacters.join('').length < parameters.lineLength) {
