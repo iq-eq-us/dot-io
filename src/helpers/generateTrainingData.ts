@@ -139,7 +139,7 @@ export const generateChords = (
   const chordToFeed = '';
 
 
-  let allCharacters: string[] = [chordToFeed].filter((a) => !!a);
+  const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
 
 
   const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
