@@ -139,9 +139,8 @@ export const generateChords = (
   const chordToFeed = '';
 
 
-  const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
-  console.log('CHord to feed '+ chordToFeed);
-  console.log("All chahsahahshd "+allCharacters)
+  let allCharacters: string[] = [chordToFeed].filter((a) => !!a);
+
 
   const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
@@ -149,36 +148,33 @@ export const generateChords = (
   pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
    console.log('this is the state of the temp deincrement '+ sessionStorage.getItem("tempTestDeIncrement"))
    const checkVal = sessionStorage.getItem("tempTestDeIncrement")
-   console.log(parseInt(checkVal) || parseInt(checkVal) == 0)
-   if( checkVal == null || checkVal == '0' ){
-    sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))
-   }
-   sessionStorage.setItem("CutomTierTestValue", JSON.stringify(wordTestValue))
+   console.log(sessionStorage.getItem("tempTestDeIncrement") == undefined);
+   sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
 
-   console.log('this is the state of the temp deincrement '+ sessionStorage.getItem("tempTestDeIncrement"))
-
-  let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
-  console.log('Library charachters ' +chordLibraryCharacters)
-  console.log(tempDeIncrementValue)
-  console.log(chordLibraryCharacters)
-  console.log(wordTestValue)
-
-  
+   let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
 
   while (allCharacters.join('').length < parameters.lineLength) {
+    console.log(allCharacters[0] == 'sample')
+    console.log(allCharacters[1] == 'words')
+    console.log(tempDeIncrementValue == 0);
+    if(allCharacters[0] == 'sample' && allCharacters[1] == 'words' && tempDeIncrementValue == 0) {
+      sessionStorage.removeItem("tempTestDeIncrement");
+      console.log('Here i am removing');
+    }
+
     if(0 == tempDeIncrementValue){
       const valToEvaluate = (allCharacters.length-1) + wordTestValue;
       const loopValue = valToEvaluate - wordTestValue;
       if(loopValue !< 0){
       for(let i =0; i<=loopValue; i++){
         allCharacters.pop();
+        
       }
     }
       break;
     } else{
      allCharacters.push(chordLibraryCharacters[chordLibraryCharacters.length -  tempDeIncrementValue]);
      tempDeIncrementValue = tempDeIncrementValue - 1;
-     console.log(chordLibraryCharacters.length -  tempDeIncrementValue);
      sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
     }
   }
