@@ -165,7 +165,8 @@ function EditChordsModal(): ReactElement {
                     ref={inputRef}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') addChords();
-                    }}
+                    }
+                  }
                   />
 
                   <div

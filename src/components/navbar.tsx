@@ -54,21 +54,14 @@ const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
           <FaBars/>
         </MobileIcon>
         <NavMenu>
-    
-    <NavMenuLink href='#/' aria-current="page">
-        <NavLinksImage src={ThemesImage} alt="" />
-        </NavMenuLink>
     <NavMenuLink href='#/manager' aria-current="page">
-      <NavLinksImage src={BooksImage} alt="" />
+        <NavLinksImage src={ThemesImage} alt="" />
         </NavMenuLink>
     <NavMenuLink aria-current="page">
         <NavLinksImage src={DumbellImage} alt="" onClick={()=>TrainingPageFunction()}/>
         </NavMenuLink>
-   <NavMenuLink href='#/dashboard' aria-current="page">
-        <NavLinksImage src={LeaderboardsImage} alt="" />
-        </NavMenuLink>
-   <NavMenuLink href='#/' aria-current="page">
-        <NavLinksImage src={profileImage} alt="" />
+            <NavMenuLink href='#/dashboard' aria-current="page">
+      <NavLinksImage src={BooksImage} alt="" />
         </NavMenuLink>
         </NavMenu>
         <NavBtn>
@@ -92,6 +85,7 @@ const Link = styled.a.attrs({
 const NavMenuLink = styled.a.attrs({
   className: `py-1 rounded-md hover:bg-[#333]`,
 })``;
+
 const NavI = styled.nav `
 background-color: #181818;
 height: 60px;
@@ -201,12 +195,12 @@ align-items: center;
 }
 `;
 
-const NavBtnLink = styled.a `
+const NavBtnLink = styled.div `
 border-radius: 50px;
-background: #01bf71;
+background: #181818;
 white-space: nowrap;
 padding: 10px 22px;
-color: #010606;
+color: #181818;
 font-size: 16px;
 outline: none;
 border: none;
@@ -214,11 +208,5 @@ cursor: pointer;
 transition: all 0.2s ease-in-out;
 text-decoration: none;
 
-&:hover {
-  transition: all 0.2s ease-in-out;
-  background: #fff;
-  color: #010606;
-
-}
 
 `
