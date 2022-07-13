@@ -86,6 +86,7 @@ useEffect(() => {
     if((sumOccurrences>=parseInt(sessionStorage.getItem("CutomTierTestValue")))){
       setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
     setPopUpDisplayValue(true);
+    setTempCounter(-100);
     //Method will send the test values to local storage
     }
   }
