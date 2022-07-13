@@ -8,7 +8,7 @@ import {
     HorizontalRule
   } from '../test-complete/testComplete.styled';
 /**
- * This is the main training page.
+ * This is the main Test Complete page.
  * It will adapt its content depending on which training scenario is currently active in the trainingStore.
  * Be sure to check out the contents of the trainingStore to understand the application logic.
  */

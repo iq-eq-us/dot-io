@@ -77,17 +77,16 @@ useEffect(() => {
     sessionStorage.getItem("CutomTierTestValue")
   }
   console.log('THis is trhe temp counter '+ tempCounter)
-  console.log(trainingSetting)
+    console.log(trainingSetting)
 
   // run something every time name changes
   if(currentTrainingScenario == 'CUSTOMTIER'){
     console.log('I am being fired in the if statement')
     console.log(temp)
-    console.log(parseInt(sessionStorage.getItem("CutomTierTestValue")))
     if((sumOccurrences>=parseInt(sessionStorage.getItem("CutomTierTestValue")))){
-      console.log('I shouldve fired here')
       setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
-      setPopUpDisplayValue(true);//Method will send the test values to local storage
+    setPopUpDisplayValue(true);
+    //Method will send the test values to local storage
     }
   }
   else if((sumOccurrences>=parseInt(count))){

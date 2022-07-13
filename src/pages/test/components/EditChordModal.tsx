@@ -93,6 +93,9 @@ function EditChordsModal(): ReactElement {
   };
 
   const confirmEditing = () => {
+    sessionStorage.removeItem("CutomTierTestValue");
+    sessionStorage.removeItem("tempTestDeIncrement");
+    console.log('Here is where this is being called');
     if (typeof trainingScenario === "string")
       setGlobalDictionaries({
         ...getGlobalDictionaries(),

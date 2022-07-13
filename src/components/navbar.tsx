@@ -40,14 +40,14 @@ const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   payload.push('10');
 
   function TrainingPageFunction (){ //Function will load and route back to the training page
-    beginTraining(payload)
+    beginTraining(payload);
     history.push(ROUTER_PATHS.home)
   }
 
   return (
     <NavI>
     <NavbarContainer>
-    <Link href='#/' aria-current="page">
+    <Link href='#/' aria-current="page" >
         <NavLogo src={IQEQLogoImage} alt="" />
         </Link>
     <MobileIcon>
