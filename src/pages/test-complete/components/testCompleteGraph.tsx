@@ -161,18 +161,14 @@ export function TestCompleteGraph(): ReactElement {
       if(d.displayTitle.length * d.numberOfOccurrences != 0) {
           wordNames.push(d.displayTitle);
           wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
-
-          let avgSpeedMilliseconds = d.averageSpeed.toFixed(0) * 10;
-          let millisecondsPerCharacter = avgSpeedMilliseconds;
-          let averageCharacterPerMin = 60000/millisecondsPerCharacter;
-          let wpm = averageCharacterPerMin; 
-          wordPerMinute.push(wpm.toFixed(0));
+          wordPerMinute.push(d.averageSpeed.toFixed(0));
       }
 
     });
 
     const handleEvent = () => {
         myGraph(wordNames, wordOccurrences, wordPerMinute)
+
       };
   
       React.useEffect(() => {
