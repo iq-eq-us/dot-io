@@ -24,6 +24,7 @@ export function TestControlRow(): ReactElement {
       console.log('Here I am removing in testControls Row')
 
       beginTraining(payload);
+      
 
     }
     return (

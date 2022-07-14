@@ -52,6 +52,9 @@ const AggregateRow = ({ data } : { data: any }) => {
   const [count, setCount] = useState(setVariable);
 
   function beginTestBasedOnTrainingSelection (tierValue : string, val : number){
+    sessionStorage.removeItem("tempTestDeIncrement");
+    sessionStorage.removeItem('Refresh');
+    sessionStorage.setItem("CustomNonRefresh", JSON.stringify(1))
     if(val != 0){
     const payload = []
     payload.push(tierValue);

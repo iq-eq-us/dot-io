@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useRef, useState, useEffect } from 'react';
 import { Portal } from 'react-portal';
 import styled from 'styled-components';
 import { chordLibrary, ChordLibraryRecord } from '../../../data/chordLibrary';
@@ -24,6 +24,10 @@ function EditChordsModal(): ReactElement {
   const isShowingPortal = useStoreState(
     (store) => store.isDisplayingChordEditModal,
   );
+  const isTestDoneValue = useStoreState(
+    (store) => store.isTestDone,
+  );
+
   const trainingMode = useStoreState((store) => store.currentTrainingScenario);
   const [chords, setChords] = useState(getDefaultChords(trainingMode));
   const [tempChords, setTempChords] = useState(chords);
@@ -92,14 +96,13 @@ function EditChordsModal(): ReactElement {
     }
   };
 
-  const confirmEditing = () => {
-    if(sessionStorage.getItem('Refresh')==undefined){
+   const confirmEditing = () => {
+     console.log('refresh '+isTestDoneValue);
     sessionStorage.removeItem("CutomTierTestValue");
     sessionStorage.removeItem("tempTestDeIncrement");
+    console.log('Check if in refresh')
     //console.log('Here is where this is being called');
-    } else{
-      sessionStorage.removeItem('Refresh');
-    }
+    
     if (typeof trainingScenario === "string")
       setGlobalDictionaries({
         ...getGlobalDictionaries(),
@@ -144,10 +147,13 @@ function EditChordsModal(): ReactElement {
     `You can enter multiple chords at once by separating them with a "${phraseSeparator}" character. Create multi-word chords by separating words with a "${spaceSeparator}"`,
   );
 
+
   return (
     <div>
+    
       {isShowingPortal && (
         <Portal>
+        {(isShowingPortal && (sessionStorage.getItem('Refresh')!=undefined)) ? confirmEditing : 
           <div
             onClick={cancelEditing}
             className="fixed inset-0 width-screen height-screen bg-opacity-70 bg-black flex items-center justify-center"
@@ -206,6 +212,7 @@ function EditChordsModal(): ReactElement {
               </BottomButtonRow>
             </div>
           </div>
+}
         </Portal>
       )}
     </div>   

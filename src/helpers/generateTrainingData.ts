@@ -96,7 +96,7 @@ export const generateChords = (
     sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
 
     let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
-    
+    sessionStorage.removeItem('Refresh')
 
 
     const newString : string[] = [];

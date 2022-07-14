@@ -47,7 +47,8 @@ export function TextPrompt(): ReactElement {
       <ChordRow>
         {(secondLineOfTargetText || [])?.map((chord : any) => (
           <Chord key={r()}>{chord}</Chord>
-        ))}
+        ))
+        }
       </ChordRow>
     </TextPromptContainer>
   );

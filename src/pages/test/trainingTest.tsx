@@ -37,6 +37,8 @@ function TrainingTestPage(): ReactElement {
     document.title = "IQ-EQ Test"
 
     sessionStorage.removeItem("tempTestDeIncrement");
+    sessionStorage.removeItem('Refresh');
+
     const payload : any [] = []
     payload.push('LEXICAL');
     if(wordTestNumber != undefined){

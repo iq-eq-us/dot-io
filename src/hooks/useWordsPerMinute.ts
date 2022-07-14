@@ -69,7 +69,7 @@ export const useWordsPerMinute = (): number => {
     (store) => store.currentTrainingScenario);
 
   if (trainingSettings.isAutoWrite) {
-    if(chordLength <= 5) {
+    if(chordLength <= 5 && (trainingScenario != 'CUSTOMTIER')) {
 
       wpm = Number.parseInt("calibrating...");
 
