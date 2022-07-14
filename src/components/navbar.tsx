@@ -40,15 +40,16 @@ const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   payload.push('10');
 
   function TrainingPageFunction (){ //Function will load and route back to the training page
+    sessionStorage.removeItem("tempTestDeIncrement")
     beginTraining(payload);
-    history.push(ROUTER_PATHS.home)
+    history.replace(ROUTER_PATHS.home)
   }
 
   return (
     <NavI>
     <NavbarContainer>
     <Link href='#/' aria-current="page" >
-        <NavLogo src={IQEQLogoImage} alt="" />
+        <NavLogo src={IQEQLogoImage} alt="" onClick={()=>TrainingPageFunction()}/>
         </Link>
     <MobileIcon>
           <FaBars/>

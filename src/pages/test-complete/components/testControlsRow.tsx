@@ -17,6 +17,15 @@ export function TestControlRow(): ReactElement {
     const payload = []
     payload.push(trainingSceneario);
     payload.push(currentWordTestNumber);
+    function letsGoAgain(){
+      sessionStorage.setItem("Refresh", JSON.stringify(1))
+      sessionStorage.removeItem("CutomTierTestValue");
+      sessionStorage.removeItem("tempTestDeIncrement");
+      console.log('Here I am removing in testControls Row')
+
+      beginTraining(payload);
+
+    }
     return (
         <React.Fragment>
         <RowContainer>
@@ -24,7 +33,7 @@ export function TestControlRow(): ReactElement {
         <div
         className="p-2 bg-[#333] flex items-center justify-center rounded mb-2 ml-2 cursor-pointer hover:bg-[#444] active:bg-[#222]"
         onClick={() => {
-          beginTraining(payload);
+          letsGoAgain()
         }}
       >
         <RefreshIcon />

@@ -3,6 +3,7 @@ import type { ChordStatistics } from '../models/trainingStatistics';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
 import { useEffect, useRef, useState } from 'react';
 import type { TrainingScenario } from '../models/trainingScenario'
+import { template } from 'lodash';
 
 const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
@@ -42,6 +43,8 @@ interface ChordGenerationParameters {
 //Method to remove session value and set refresh constant back to false
 function removeSessionValueAndSettoFalse(){ 
   sessionStorage.removeItem("tempTestDeIncrement");
+  console.log('Here I am removing in genTestData')
+
   pageAccessedByReload = false;
 }
 
@@ -57,12 +60,16 @@ export const generateChords = (
     sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
 
     let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
-    
+    console.log(tempDeIncrementValue)
     const newString : string[] = [];
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
+    console.log('parameters array '+parameters);
 
     while (newString.join('').length < parameters.lineLength) {
+      console.log('In while loop for lexical')
       if(0 == tempDeIncrementValue){
+        console.log('In if statement  for lexical')
+
         const valToEvaluate = (newString.length-1) + wordTestValue;
         const loopValue = valToEvaluate - wordTestValue;
         if(loopValue !< 0){
@@ -72,11 +79,13 @@ export const generateChords = (
       }
         break;
       } else{
+        console.log('In else  statement  for lexical')
        newString.push(getRandomElementFromArray(chordLibraryCharacters1));
        tempDeIncrementValue = tempDeIncrementValue - 1;
       }
       sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
     }
+    console.log('New string '+ newString);
     return newString;
 
   } else if ((parameters.scenario == 'LEXICAL-SENTENCES') && (parameters.wordTestNumberValue != undefined)){
@@ -149,26 +158,33 @@ export const generateChords = (
    console.log('this is the state of the temp deincrement '+ sessionStorage.getItem("tempTestDeIncrement"))
    const checkVal = sessionStorage.getItem("tempTestDeIncrement")
    console.log(sessionStorage.getItem("tempTestDeIncrement") == undefined);
-   sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
+   if(sessionStorage.getItem("tempTestDeIncrement") == undefined ||isNaN(parseInt(sessionStorage.getItem("tempTestDeIncrement")))){
+      //allCharacters = [];
+      console.log('Did this fire?');
+      console.log('Word test value in the set '+wordTestValue)
+    sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue));
+    }
    sessionStorage.setItem("CutomTierTestValue", JSON.stringify(wordTestValue))
    let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
 
   while (allCharacters.join('').length < parameters.lineLength) {
+    console.log(allCharacters)
     console.log(allCharacters[0] == 'sample')
     console.log(allCharacters[1] == 'words')
     console.log(tempDeIncrementValue == 0);
     if(allCharacters[0] == 'sample' && allCharacters[1] == 'words' && tempDeIncrementValue == 0) {
       sessionStorage.removeItem("tempTestDeIncrement");
-      console.log('Here i am removing');
+      console.log('Here i am removing in gen Test data 2');
     }
 
     if(0 == tempDeIncrementValue){
+      console.log('Did I ever enter the delete loop?')
       const valToEvaluate = (allCharacters.length-1) + wordTestValue;
       const loopValue = valToEvaluate - wordTestValue;
       if(loopValue !< 0){
       for(let i =0; i<=loopValue; i++){
         allCharacters.pop();
-        
+      
       }
     }
       break;

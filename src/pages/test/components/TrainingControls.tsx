@@ -58,11 +58,15 @@ const AggregateRow = ({ data } : { data: any }) => {
     payload.push(""+val+"");
     setCount(val);
     sessionStorage.removeItem("tempTestDeIncrement");
+    console.log('Here I am removing in testControls')
+
     beginTraining(payload); 
     } else{
     const payload = []
     payload.push(tierValue);
     sessionStorage.removeItem("tempTestDeIncrement");
+    console.log('Here I am removing in testControls')
+
     beginTraining(payload); 
     }
   }
@@ -72,9 +76,11 @@ useEffect(() => {
   console.log(currentTrainingSetting);
   console.log(trainingSetting)
   const temp = parseInt(sessionStorage.getItem("tempTestDeIncrement"))
+  console.log('State of Test Deincrement in Training controls '+ parseInt(sessionStorage.getItem("tempTestDeIncrement")));
   if(tempCounter == -100){
     setTempCounter(temp);
     sessionStorage.getItem("CutomTierTestValue")
+    console.log('Did I remove in training controls?')
   }
   console.log('THis is trhe temp counter '+ tempCounter)
     console.log(trainingSetting)

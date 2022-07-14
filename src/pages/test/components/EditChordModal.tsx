@@ -93,9 +93,13 @@ function EditChordsModal(): ReactElement {
   };
 
   const confirmEditing = () => {
+    if(sessionStorage.getItem('Refresh')==undefined){
     sessionStorage.removeItem("CutomTierTestValue");
     sessionStorage.removeItem("tempTestDeIncrement");
-    console.log('Here is where this is being called');
+    //console.log('Here is where this is being called');
+    } else{
+      sessionStorage.removeItem('Refresh');
+    }
     if (typeof trainingScenario === "string")
       setGlobalDictionaries({
         ...getGlobalDictionaries(),
@@ -193,10 +197,7 @@ function EditChordsModal(): ReactElement {
               </Row>
 
               <BottomButtonRow>
-                <ThirdButton
-                  title="Restore Defaults"
-                  onClick={restoreDefaults}
-                />
+
                 {canCloseModal && (
                   <ThirdButton title="Cancel" onClick={cancelEditing} />
                 )}
