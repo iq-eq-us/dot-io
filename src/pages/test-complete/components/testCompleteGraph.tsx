@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from '../../../store/store';
+import { getCumulativeAverageChordTypeTime } from '../../../../src/helpers/aggregation';
 
 
 
@@ -69,7 +70,7 @@ export function myGraph(wordNames, wordOccurrences, wordPerMinute){
   series: [
     {
       name: "Word Per Minute",
-      data: wordPerMinute
+      data: wpmDataCalculator(wordPerMinute)
     },
     {
       name: "Typing Errors",
@@ -148,27 +149,91 @@ const chart = new ApexCharts(document.getElementById("timeline-chart"), options)
 chart.render();
 }
 
+function wpmDataCalculator (wpmArray : any){
+
+  console.log('This is the very first array '+wpmArray);
+  let wpmTemp = 0;
+  let localTemp = 0;
+  for (let i =0; i<wpmArray.length; i++){
+    localTemp = 0;
+    wpmTemp = parseInt(wpmTemp) + parseInt(wpmArray[i]);
+    localTemp = wpmTemp / (i +1);
+
+    console.log('wpmTemp in the new function '+ wpmTemp);
+    console.log('localTemp in the new function '+ localTemp);
+    console.log('this is the first loop for wpmArray in the new function '+ wpmArray);
+
+    let avgSpeedMilliseconds = localTemp * 10;
+    let millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
+    let averageCharacterPerMin = 60000/millisecondsPerCharacter;
+    let wpm = averageCharacterPerMin/5;
+
+    wpmArray[i] = wpm.toFixed(0);
+    console.log('WPM in the new function '+ wpm.toFixed(0));
+
+  }
+  return wpmArray;
+
+}
 export function TestCompleteGraph(): ReactElement {
 
   const currentTrainingSetting = useStoreState((store : any) => store.trainingStatistics);
+  const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
 
-    const wordNames : any = [];
-    const wordOccurrences : any = [];
-    const wordPerMinute : any = [];
+    let wordNames : any = [];
+    let wordOccurrences : any = [];
+    let wordPerMinute : any = [];
 
+    let tempConst = 0;
+    const chordsToChooseFrom = JSON.parse(localStorage.getItem('chordsToChooseFrom'));
+    console.log('Choosey '+chordsToChooseFrom.length)
+    console.log('this is the stored ' +localStorage.getItem('SAVED_STATS_STORAGE_KEY'));
     currentTrainingSetting.statistics.forEach((d : any) => {
 
       if(d.displayTitle.length * d.numberOfOccurrences != 0) {
+        tempConst += d.averageSpeed;
           wordNames.push(d.displayTitle);
           wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
+         console.log('Display title '+d.displayTitle);
+
+
+          let avgSpeedMilliseconds = d.averageSpeed * 10;
+          let millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
+          let averageCharacterPerMin = 60000/millisecondsPerCharacter;
+          let wpm = averageCharacterPerMin/5;
+          console.log('This is the wpm in Graph '+wpm);
+
           wordPerMinute.push(d.averageSpeed.toFixed(0));
       }
 
     });
 
+    let finalErrorsArray =[];
+    let finalWPMArray =[]
+    console.log('Custom tier '+ currentTrainingScenario)
+
+    if(currentTrainingScenario == 'CUSTOMTIER'){
+      console.log('Only entered if this is custom tier ' + currentTrainingScenario);
+    for(let i =0; i<chordsToChooseFrom?.length; i++){
+      //console.log('Choosey '+chordsToChooseFrom.length);
+      console.log('Choosey ' + chordsToChooseFrom)
+      console.log('Choosey ' +wordNames.indexOf(chordsToChooseFrom[i]));
+
+      finalErrorsArray.push(wordOccurrences[wordNames.indexOf(chordsToChooseFrom[i])]);
+      finalWPMArray.push(wordPerMinute[wordNames.indexOf(chordsToChooseFrom[i])]);
+
+    }
+
+    wordOccurrences = finalErrorsArray;
+    wordPerMinute = finalWPMArray;
+    wordNames = chordsToChooseFrom;
+  }
+
     const handleEvent = () => {
         myGraph(wordNames, wordOccurrences, wordPerMinute)
-
+        console.log('event handled ' +wordNames)
+        console.log(wordOccurrences)
+        console.log(wordPerMinute)
       };
   
       React.useEffect(() => {

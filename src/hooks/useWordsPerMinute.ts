@@ -69,12 +69,8 @@ export const useWordsPerMinute = (): number => {
     (store) => store.currentTrainingScenario);
 
   if (trainingSettings.isAutoWrite) {
-    if(chordLength <= 5 && (trainingScenario != 'CUSTOMTIER')) {
-
-      wpm = Number.parseInt("calibrating...");
-
-    }
-    else if (typeof trainingScenario === 'string') {
+ 
+ if (typeof trainingScenario === 'string') {
 
       let averageSpeed = 0;
       let averageSpeedCount= 0;

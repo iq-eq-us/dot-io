@@ -13,6 +13,9 @@ function ChordTextInput(): ReactElement {
   const regenerateTrainingText = useStoreActions(
     (store : any) => store.resetTrainingText,
   );
+  const timeAtTrainingStart = useStoreState(
+    (store) => store.timeAtTrainingStart,
+  );
   const timeTakenToTypePreviousChord = useStoreState(
     (store : any) => store.timeTakenToTypePreviousChord,
   );
@@ -25,11 +28,13 @@ function ChordTextInput(): ReactElement {
     'Generate a new set of training text.',
   );
 
+
   
   return (
 
     <div className="w-full flex flex-row items-end mt-16 justify-center">
       {Popper}
+    {console.log('Time taken to type previosu chord '+timeTakenToTypePreviousChord)}
 
       <span
         className={`mb-2 mr-2 text-white font-semibold ${

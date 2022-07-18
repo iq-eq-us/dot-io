@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
+import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 
 
 const r = Math.random;
@@ -22,14 +23,13 @@ export function TextPrompt(): ReactElement {
   const characterEntryMode = useStoreState((store : any) => store.characterEntryMode);
 
 
+
   return (
 
     <TextPromptContainer>
       <ChordRow >
         {(firstLineOfTargetText || [])?.map((chord : any, i : any) => {
           if (characterEntryMode === "CHORD" || i !== indexOfTargetChord){
-              console.log(indexOfTargetChord)
-              console.log(firstLineOfTargetText)
 
             return <Chord
               key={r()}
@@ -64,10 +64,12 @@ export default function CharacterEntryChord({ word, index }: { word: string, ind
       {wordSplit.slice(0, index).map((char) =>
         <span className="text-green-500" key={Math.random()}>{char}</span>
       )}
-      <span className="text-blue-500">{wordSplit[index]}</span>
+      <span className="text-blue-500 animate-pulse">{wordSplit[index]}</span>
       {wordSplit.slice(index + 1).map((char) =>
         <span className="text-grey" key={Math.random()}>{char}</span>
       )}
+
+
     </div>
   )
 }

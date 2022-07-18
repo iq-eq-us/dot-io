@@ -3,7 +3,6 @@ import type { ChordStatistics } from '../models/trainingStatistics';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
 import { useEffect, useRef, useState } from 'react';
 import type { TrainingScenario } from '../models/trainingScenario'
-import { template } from 'lodash';
 
 const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
@@ -161,8 +160,12 @@ export const generateChords = (
    if(sessionStorage.getItem("tempTestDeIncrement") == undefined ||isNaN(parseInt(sessionStorage.getItem("tempTestDeIncrement")))){
       //allCharacters = [];
       console.log('Did this fire?');
-      console.log('Word test value in the set '+wordTestValue)
+      console.log('Word test value in the set '+wordTestValue);
+      console.log('These are allCharacters '+ chordLibraryCharacters);
+      console.log('These are allCharacters '+ chordLibraryCharacters.length);
+
     sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue));
+    localStorage.setItem('chordsToChooseFrom', JSON.stringify(chordLibraryCharacters));
     }
    sessionStorage.setItem("CutomTierTestValue", JSON.stringify(wordTestValue))
    let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
