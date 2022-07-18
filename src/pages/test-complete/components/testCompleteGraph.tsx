@@ -163,10 +163,10 @@ function wpmDataCalculator (wpmArray : any){
     console.log('localTemp in the new function '+ localTemp);
     console.log('this is the first loop for wpmArray in the new function '+ wpmArray);
 
-    let avgSpeedMilliseconds = localTemp * 10;
-    let millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
-    let averageCharacterPerMin = 60000/millisecondsPerCharacter;
-    let wpm = averageCharacterPerMin/5;
+    const avgSpeedMilliseconds = localTemp * 10;
+    const millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
+    const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+    const wpm = averageCharacterPerMin/5;
 
     wpmArray[i] = wpm.toFixed(0);
     console.log('WPM in the new function '+ wpm.toFixed(0));
@@ -197,10 +197,10 @@ export function TestCompleteGraph(): ReactElement {
          console.log('Display title '+d.displayTitle);
 
 
-          let avgSpeedMilliseconds = d.averageSpeed * 10;
-          let millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
-          let averageCharacterPerMin = 60000/millisecondsPerCharacter;
-          let wpm = averageCharacterPerMin/5;
+         const avgSpeedMilliseconds = d.averageSpeed * 10;
+          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
+          const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+          const wpm = averageCharacterPerMin/5;
           console.log('This is the wpm in Graph '+wpm);
 
           wordPerMinute.push(d.averageSpeed.toFixed(0));
@@ -208,8 +208,8 @@ export function TestCompleteGraph(): ReactElement {
 
     });
 
-    let finalErrorsArray =[];
-    let finalWPMArray =[]
+    const finalErrorsArray =[];
+    const finalWPMArray =[]
     console.log('Custom tier '+ currentTrainingScenario)
 
     if(currentTrainingScenario == 'CUSTOMTIER'){
