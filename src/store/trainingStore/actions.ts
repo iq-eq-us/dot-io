@@ -338,7 +338,7 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
   if (store.errorOccurredWhileAttemptingToTypeTargetChord)
     chordStats.numberOfErrors++;
 
-  let timeTakenToTypeChord =
+  const timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
 
   // Don't penalize the user if this is the first character they type
