@@ -344,9 +344,9 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
   // Don't penalize the user if this is the first character they type
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
   // So if this is their very first chord, we give them a very short time for it
- // const userIsTypingFirstChord =
-  //  store.currentLineOfTrainingText === 0 && 
-  //  store.currentSubindexInTrainingText === 0; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
+  //const userIsTypingFirstChord =
+    //store.currentLineOfTrainingText === 0 &&
+    //store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
   //if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
