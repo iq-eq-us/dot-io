@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useEffect } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
@@ -27,6 +27,7 @@ function ChordTextInput(): ReactElement {
   const { parentProps, Popper } = usePopover(
     'Generate a new set of training text.',
   );
+  const [firstTyped, setFirstTyped] = useState(true);
 
 
   
@@ -34,15 +35,13 @@ function ChordTextInput(): ReactElement {
 
     <div className="w-full flex flex-row items-end mt-16 justify-center">
       {Popper}
-    {console.log('Time taken to type previosu chord '+timeTakenToTypePreviousChord)}
-
       <span
         className={`mb-2 mr-2 text-white font-semibold ${
           !displayHUD && 'hidden'
         }`}
       >
       </span>
-
+        {firstTyped ? sessionStorage.setItem('timeThat', JSON.stringify(performance.now)) : ''}
       <input
         autoCorrect="off"
         autoCapitalize="none"
@@ -54,7 +53,7 @@ function ChordTextInput(): ReactElement {
         onFocus={() => isShowingPortal == true ? document.getElementById('txt_Name')?.focus() : document.getElementById('txt_Name')?.focus()}
         value={textTyped}
         onChange={(e) => {
-          console.log(e.target.value);
+          {firstTyped ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), setFirstTyped(false)] : ''}
           setStoreText(e.target.value);
         }}
     

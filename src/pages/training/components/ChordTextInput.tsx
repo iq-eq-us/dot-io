@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
@@ -19,6 +19,7 @@ function ChordTextInput(): ReactElement {
   const { parentProps, Popper } = usePopover(
     'Generate a new set of training text.',
   );
+  const [firstTyped, setFirstTyped] = useState(true);
 
   return (
     <div className="w-full flex flex-row items-end mt-16 justify-center">
@@ -40,6 +41,7 @@ function ChordTextInput(): ReactElement {
         autoFocus
         value={textTyped}
         onChange={(e) => {
+          {firstTyped ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), setFirstTyped(false)] : ''}
           setStoreText(e.target.value);
         }}
       />

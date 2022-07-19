@@ -163,7 +163,7 @@ function wpmDataCalculator (wpmArray : any){
     console.log('localTemp in the new function '+ localTemp);
     console.log('this is the first loop for wpmArray in the new function '+ wpmArray);
 
-    const avgSpeedMilliseconds = localTemp * 10;
+    const avgSpeedMilliseconds = localTemp.toFixed(0) * 10;
     const millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
     const averageCharacterPerMin = 60000/millisecondsPerCharacter;
     const wpm = averageCharacterPerMin/5;

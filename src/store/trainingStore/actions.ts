@@ -338,16 +338,30 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
   if (store.errorOccurredWhileAttemptingToTypeTargetChord)
     chordStats.numberOfErrors++;
 
-  const timeTakenToTypeChord =
+  let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
 
   // Don't penalize the user if this is the first character they type
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
   // So if this is their very first chord, we give them a very short time for it
-  //const userIsTypingFirstChord =
-    //store.currentLineOfTrainingText === 0 &&
-    //store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
-  //if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
+  const userIsTypingFirstChord =
+    store.currentLineOfTrainingText === 0 &&
+    store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
+ // if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
+
+ //This conditional takes the stored session value timeThat that is set in both ChordTextInput.tsx files. That
+ // set value contains the time that the user first typed. We take that value and the value of went the word was complete to determine
+ // The value for the first word
+  if (userIsTypingFirstChord ){
+
+    //console.log('oh yea '+ timeTakenToTypeChord);
+    //console.log('oh yea performance '+ performance.now())
+    timeTakenToTypeChord = (performance.now() - sessionStorage.getItem('timeThat'))/10;
+    //console.log('oh yea '+ timeTakenToTypeChord);
+    //console.log('oh yea '+ sessionStorage.getItem('timeThat')/10)
+    //console.log('oh yea '+store.timeOfLastChordStarted);
+  }
+
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
   chordStats.lastSpeed = Math.min(
