@@ -186,7 +186,7 @@ export function TestCompleteGraph(): ReactElement {
 
     let tempConst = 0;
     const chordsToChooseFrom = JSON.parse(localStorage.getItem('chordsToChooseFrom'));
-    console.log('Choosey '+chordsToChooseFrom.length)
+    //console.log('Choosey '+chordsToChooseFrom.length)
     console.log('this is the stored ' +localStorage.getItem('SAVED_STATS_STORAGE_KEY'));
     currentTrainingSetting.statistics.forEach((d : any) => {
 
@@ -216,7 +216,7 @@ export function TestCompleteGraph(): ReactElement {
       console.log('Only entered if this is custom tier ' + currentTrainingScenario);
     for(let i =0; i<chordsToChooseFrom?.length; i++){
       //console.log('Choosey '+chordsToChooseFrom.length);
-      console.log('Choosey ' + chordsToChooseFrom)
+      //console.log('Choosey ' + chordsToChooseFrom)
       console.log('Choosey ' +wordNames.indexOf(chordsToChooseFrom[i]));
 
       finalErrorsArray.push(wordOccurrences[wordNames.indexOf(chordsToChooseFrom[i])]);
