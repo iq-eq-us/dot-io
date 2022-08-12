@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { useStoreState } from '../../../store/store';
-import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
+import { useStoreState, useStoreActions } from '../../../store/store';
 
 
 const r = Math.random;
+
 
 export function TextPrompt(): ReactElement {
   const indexOfTargetChord = useStoreState(
@@ -19,10 +19,107 @@ export function TextPrompt(): ReactElement {
   const isError = useStoreState(
     (store : any) => store.errorOccurredWhileAttemptingToTypeTargetChord,
   );
+  const isEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
   const targetCharacterIndex = useStoreState((store : any) => store.targetCharacterIndex);
   const characterEntryMode = useStoreState((store : any) => store.characterEntryMode);
+  const setChordingEnabled = useStoreActions((store : any) => store.setIsUsingChordingEnabledDevice);
+
+  const [bestKeyTime, setBestKeyTime] = useState([]);
+  const [letterPressed, setLetterPressed] = useState([]);
+  const [keyDownTime, setKeyDownTime] = useState(performance.now());
+  const [currentWord, setCurrentWord] = useState(undefined);
 
 
+
+  const getCheckAlgo = (chordValue)  => {
+    
+    window.performance = window.performance || {};
+    performance.now = 
+    performance.now       ||
+    performance.mozNow     ||
+    performance.msNow      ||
+    performance.oNow       ||
+    performance.webkitNow  ||
+    Date.now * 1.0; /*none found - fallback to browser default */
+
+
+  let body = document.getElementById('txt_Name');
+  let isKeyDown = false;
+  if(sessionStorage.getItem('chordingEnabledDevice') == undefined || sessionStorage.getItem('chordingEnabledDevice') == 'false'){
+
+  if(currentWord != chordValue && currentWord != undefined) {
+    console.log('First if statement check')
+    let numberOfBestTimesUnderTen = 0;
+      if(letterPressed.includes('Backspace') && bestKeyTime.length>2){
+        console.log('Second if statement check')
+          for(let i =0; i<bestKeyTime.length-1; i++){
+            console.log('I have entered the for loop')
+            if(bestKeyTime[i] < 10) {
+              numberOfBestTimesUnderTen++;
+            }
+          }
+      }
+      if(numberOfBestTimesUnderTen >= 2){
+        console.log('Is enabled in the loop '+ isEnabled)
+        setChordingEnabled(true);
+        console.log('Is enabled in the loop after enabled change'+ isEnabled)
+
+      }
+      console.log('This is the value of the numberBesttimes '+ numberOfBestTimesUnderTen)//this works perfectly
+      setBestKeyTime([]);
+      console.log('This is the cleared best time array '+ bestKeyTime)
+      setLetterPressed([]);
+      console.log('This is the cleared best time array '+ letterPressed)
+      console.log('Is enabled in the loop after enabled change'+ isEnabled)
+      console.log('This is the session value that checks if the device is chording enabled '+sessionStorage.getItem('chordingEnabledDevice'));
+
+  }
+
+  currentWord != chordValue ? setCurrentWord(chordValue) : '';//This may need to run to set the value of the chord we're testing
+
+
+  body.onkeydown = function (e) {
+    if ( !e.metaKey ) {
+        e.stopPropagation();
+    }
+
+    if (!isKeyDown) {
+      isKeyDown = true;
+      console.log(keyDownTime);
+      setKeyDownTime(performance.now());
+
+    }
+    console.log(keyDownTime);
+  };
+
+  body.onkeyup = function (e) {
+    if ( !e.metaKey ) {
+      e.stopPropagation();
+    }
+    console.log('this is the key '+e.key);
+    isKeyDown = false;
+    let upTime = performance.now();
+    let heldTime = Math.ceil(upTime - keyDownTime);
+    console.log(keyDownTime);
+    console.log(keyDownTime);
+    console.log('Held time '+ heldTime);
+    console.log('Uptime '+ upTime);
+    const tempBestTime = Math.min(10000, heldTime);
+    bestKeyTime.push(tempBestTime);
+    letterPressed.push(e.key);
+    //let scanRate = Math.min(1000 / (bestKeyTime), 1000);
+    //console.log(keyDownTime.length);
+    console.log(e.key)
+    setBestKeyTime(bestKeyTime => [...bestKeyTime]);
+    setLetterPressed(letterPressed => [...letterPressed]);
+    console.log('This is the Best Time '+bestKeyTime);
+    console.log('This is the associated letter pressed '+ letterPressed);
+
+
+  };
+
+  }//End of the first if statement 
+  }
 
   return (
 
@@ -36,10 +133,13 @@ export function TextPrompt(): ReactElement {
               active={i === indexOfTargetChord}
               error={isError && i === indexOfTargetChord}
             >
-              {chord}
+            {chord}
+
             </Chord>
             }
           else
+          {console.log(getCheckAlgo(chord))}
+              {console.log('This the Chord '+ chord)}
             return <CharacterEntryChord word={chord} index={targetCharacterIndex} />
         })}
       </ChordRow>
@@ -68,9 +168,8 @@ export default function CharacterEntryChord({ word, index }: { word: string, ind
       {wordSplit.slice(index + 1).map((char) =>
         <span className="text-grey" key={Math.random()}>{char}</span>
       )}
-
-
     </div>
+    
   )
 }
 
@@ -91,7 +190,7 @@ const ChordRow = styled.div.attrs({
 
 const TextPromptContainer = styled.div.attrs({
   className: `
-    flex text-md font-bold mt-12 flex flex-col items-center w-5/6 justify-center text-gray-400
+    flex text-md font-bold mt-12 flex flex-col items-center w-11/12 justify-center text-gray-400
     sm:text-xl md:text-2xl xl:mt-29 bg-[#FFF] rounded-3xl p-10 h-40	m-auto
   `,
 })``;

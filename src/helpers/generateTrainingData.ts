@@ -17,6 +17,7 @@ interface ChordGenerationParameters {
   speedGoal: number;
   wordTestNumberValue?: WordTrainingValues;
   scenario?: TrainingScenario;
+  storedTestData?: string[];
 }
 
 //const [internalWordCountState, setinternalWordCountState] = useState<number | null>(null);
@@ -63,6 +64,14 @@ export const generateChords = (
     const newString : string[] = [];
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
     console.log('parameters array '+parameters);
+
+    const fullTestData = [];
+    for(let i=0;i<wordTestValue ;i++ ){
+      fullTestData.push(getRandomElementFromArray(chordLibraryCharacters1));
+      console.log('THis is the temp test set ' +fullTestData);
+      console.log('THis is the temp test set ' +fullTestData.length)
+      parameters.storedTestData?.push(getRandomElementFromArray(chordLibraryCharacters1));
+    }
 
     while (newString.join('').length < parameters.lineLength) {
       console.log('In while loop for lexical')

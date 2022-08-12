@@ -40,7 +40,6 @@ const Router = (): ReactElement => {
         <Route path={ROUTER_PATHS.home} exact>
           <Navbar />
           <TrainingTestPage />
-          <Footer/>
           </Route>
 
         {/* This is the route to the training page, which will adapt depending on which training scenario is active. */}

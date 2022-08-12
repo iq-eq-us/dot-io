@@ -135,7 +135,7 @@ const Header = () => {
       <HeaderItemRow helpText="They type of test associated with these metrics">
         Test
       </HeaderItemRow>
-      <HeaderItemRow helpText="The speed at which you typed the chord in hundreths of a second.">
+      <HeaderItemRow helpText="Your WPM for this test.">
         WPM
       </HeaderItemRow>
       <HeaderItemRow helpText="Your WPM for the this test.">

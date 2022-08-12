@@ -61,16 +61,14 @@ const AggregateRow = ({ data } : { data: any }) => {
     payload.push(""+val+"");
     setCount(val);
     sessionStorage.removeItem("tempTestDeIncrement");
-    console.log('Here I am removing in testControls')
-
     beginTraining(payload); 
+
     } else{
     const payload = []
     payload.push(tierValue);
     sessionStorage.removeItem("tempTestDeIncrement");
-    console.log('Here I am removing in testControls')
-
     beginTraining(payload); 
+    
     }
   }
   const [tempCounter, setTempCounter] = useState(-100);

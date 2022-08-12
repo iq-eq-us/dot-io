@@ -18,16 +18,13 @@ export const useWordsPerMinute = (): number => {
     (store) => store.fastestRecordedWordsPerMinute,
   );
   
-  const fastestRecordedWordsPerMinuteGraph = useStoreState(
-    (store) => store.fastestRecordedWordsPerMinuteGraph,
-  );
+
   const setFastestWPM = useStoreActions(
     (store) => store.setFastestRecordedWordsPerMinute,
   );
 
- const setGraphStats = useStoreActions(
-    (store) => store.setfastestRecordedWordsPerMinuteGraph
-);
+  const wordTestNumber = useStoreState((store) => store.wordTestNumber);
+  const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
 
 
 
@@ -99,13 +96,11 @@ export const useWordsPerMinute = (): number => {
   
           const currentDate = new Date();
 
-          storeAverageData( wpm, currentDate, currentChordSpeed, averageDailyCount);
+          wordTestNumber !=null||undefined ? storeAverageData( wpm, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
           if(currentChordSpeed>=100 && (currentChordSpeed != 6276)){//This checks if the WPM is equal to 100 wpm of higher
            // storeMasteredData(currentDate, currentChordSpeed);
             }
-            if(trainingSceneario == ('ALPHABET'||'LEXICAL'||'TRIGRAM')){
-            //  storeCharactersPerMinute(currentDate, averageCharacterPerMin, averageDailyCount);
-            }
+
       }
   
     } else{
@@ -129,7 +124,7 @@ export const useWordsPerMinute = (): number => {
           averageSpeedCount++; 
           const currentDate = new Date();
 
-          storeAverageData( averageSpeed, currentDate, currentChordSpeed, averageDailyCount);
+          wordTestNumber !=null||undefined ? storeAverageData( averageSpeed, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
           if(currentChordSpeed>=100 && (currentChordSpeed != 6276)){
           //storeMasteredData(currentDate, currentChordSpeed);
           
@@ -147,7 +142,7 @@ export const useWordsPerMinute = (): number => {
         const currentDate = new Date();
 
   
-         storeData(wpm, currentDate);
+        wordTestNumber !=null||undefined ? storeData(wpm, currentDate) : '';//This checks to make sure we are in a testing teir
         setFastestWPM({
           ...fastestRecordedWPM,
           [trainingScenario]: wpm,

@@ -12,6 +12,7 @@ import TrainingControls from './components/TrainingControls';
 import { PreviousTest } from './components/PreviousTests';
 import styled from 'styled-components';
 import TestCompletePage from '../test-complete/testComplete';
+import Footer from '../../../src/components/footer';
 
 /**
  * This is the main training page.
@@ -81,3 +82,85 @@ export default TrainingTestPage;
 const TestandStatsContainer = styled.div.attrs({
   className: 'grid ',
 })``;
+
+
+
+
+const FooterContainer = styled.footer `
+background-color: #181818;
+`
+
+const FooterWrap = styled.div `
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+max-width: 1100px;
+margin: 0 auto;
+`;
+
+const FooterLinksContainer = styled.div `
+display: flex;
+justify-content: center;
+
+@media screen and (max-width: 820px) {
+padding-top: 32px;
+}
+`
+
+const FooterLinksWrapper = styled.div `
+display: flex;
+
+@media screen and (max-width: 820px) {
+flex-direction: column;
+}
+`;
+
+const FooterLinkItems = styled.div `
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+width: 300px;
+box-sizing: border-box;
+color #fff
+
+@media screen and (max-width: 420px){
+margin 0;
+padding: 10px;
+width: 100%;
+}
+`;
+
+const FooterLinkTitle = styled.h1 `
+font-size: 14px;
+margin-bottom: 16px
+`
+
+const FooterLink = styled.a `
+color: #fff;
+text-decoration: none;
+margin-bottom: 0.5rem;
+font-size: 14px;
+
+&:hover {
+color: #01bf71;
+transition: 0.3s ease out;
+}
+`;
+
+const FooterLinkLogo = styled.img `
+color: #fff;
+text-decoration: none;
+margin-bottom: 0.5rem;
+font-size: 14px;
+height: 40px;
+display: block;
+margin-left: auto;
+margin-right: auto;
+&:hover {
+color: #01bf71;
+transition: 0.3s ease out;
+}
+`;

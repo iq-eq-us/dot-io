@@ -2,12 +2,9 @@ import React, { ReactElement, useRef, useState } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import RefreshIcon from './RefreshIcon';
-import { FocusModal } from './focusBreakModal';
-import ReactDOM from 'react-dom';
-
 function ChordTextInput(): ReactElement {
   const setStoreText = useStoreActions((store : any) => store.setTypedTrainingText);
+
   const textTyped = useStoreState((store : any) => store.typedTrainingText);
   const inputRef = useRef<HTMLInputElement>(null);
   const regenerateTrainingText = useStoreActions(
@@ -16,6 +13,7 @@ function ChordTextInput(): ReactElement {
   const timeAtTrainingStart = useStoreState(
     (store) => store.timeAtTrainingStart,
   );
+
   const timeTakenToTypePreviousChord = useStoreState(
     (store : any) => store.timeTakenToTypePreviousChord,
   );
@@ -27,8 +25,7 @@ function ChordTextInput(): ReactElement {
   const { parentProps, Popper } = usePopover(
     'Generate a new set of training text.',
   );
-  const [firstTyped, setFirstTyped] = useState(true);
-
+  const [firstTyped, setFirstTyped] = useState(true); //This is used to see if the first word has been typed
 
   
   return (
@@ -53,13 +50,11 @@ function ChordTextInput(): ReactElement {
         onFocus={() => isShowingPortal == true ? document.getElementById('txt_Name')?.focus() : document.getElementById('txt_Name')?.focus()}
         value={textTyped}
         onChange={(e) => {
-          {firstTyped ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), setFirstTyped(false)] : ''}
+          {firstTyped ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), setFirstTyped(false)] : ''}// This here logs the time that the first letter was pressed and sets the state variable to false
           setStoreText(e.target.value);
         }}
     
-      />
-
-      
+      />   
 
 
     </div>

@@ -129,7 +129,9 @@ export function myGraph(wordNames, wordOccurrences, wordPerMinute){
       right: 5
     }
   },
+  
   tooltip: {
+    theme:"dark",
     x: {
       format: 'dd MM yyyy'
     },
@@ -186,12 +188,13 @@ export function TestCompleteGraph(): ReactElement {
 
     let tempConst = 0;
     const chordsToChooseFrom = JSON.parse(localStorage.getItem('chordsToChooseFrom'));
-    console.log('Choosey '+chordsToChooseFrom.length)
     console.log('this is the stored ' +localStorage.getItem('SAVED_STATS_STORAGE_KEY'));
     currentTrainingSetting.statistics.forEach((d : any) => {
 
       if(d.displayTitle.length * d.numberOfOccurrences != 0) {
         tempConst += d.averageSpeed;
+        console.log('This is the average speed that we are seeing'+d.averageSpeed)
+        console.log('This is the wpm that we are seeingm '+tempConst);
           wordNames.push(d.displayTitle);
           wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
          console.log('Display title '+d.displayTitle);
@@ -215,7 +218,6 @@ export function TestCompleteGraph(): ReactElement {
     if(currentTrainingScenario == 'CUSTOMTIER'){
       console.log('Only entered if this is custom tier ' + currentTrainingScenario);
     for(let i =0; i<chordsToChooseFrom?.length; i++){
-      //console.log('Choosey '+chordsToChooseFrom.length);
       console.log('Choosey ' + chordsToChooseFrom)
       console.log('Choosey ' +wordNames.indexOf(chordsToChooseFrom[i]));
 

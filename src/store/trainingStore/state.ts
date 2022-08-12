@@ -96,6 +96,9 @@ const trainingStoreState: TrainingStoreStateModel = {
 
     return undefined;
   }),
+  storedTestTextData: computed((state) => {
+    return undefined;
+  }),
   previousTargetChord: computed((state) => {
     const trainingText = state.trainingText;
     const theTargetWordIsAtTheBeginningOfALine =

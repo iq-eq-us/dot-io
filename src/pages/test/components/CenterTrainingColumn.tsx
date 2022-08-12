@@ -1,29 +1,27 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import CharachorderOverlay from './CharachorderOverlay';
 import CharachorderOverlayLite from './CharachorderOverlayCharachorderLite';
 import { FullWidthFullHeightContainer } from './FullWidthFullHeightContainer';
-import { GearIcon } from './GearIcon';
-import { ProgressBar } from './ProgressBar';
-import { StatisticsIcon } from './StatisticsIcon';
 import { TextPrompt } from './TextPrompt';
 import ChordTextInput from './ChordTextInput';
-import TrainingControls from './TrainingControls';
 import DropDown from '../../../models/keyboardDropDownFolder/keyboardDropDown';
+import Footer from '../../../../src/components/footer';
+import NextTestButton from './NextTestButton';
 
 function CenterTrainingColumn(): ReactElement {
   return (
     <React.Fragment>
-    <CenterTrainingColumnContainer>
-      <SmallScreenButtons>
-      </SmallScreenButtons>
+      <CenterTrainingColumnContainer>
+      <SmallScreenButtons/>
       <ChordTextInput />
       <TextPrompt />
+      <NextTestButton/>
       <FullWidthFullHeightContainer>
-        <CharachorderOverlayLite />
+      <CharachorderOverlayLite />
       </FullWidthFullHeightContainer>
-    <DropDown/>
-    </CenterTrainingColumnContainer>
+      <DropDown/>
+      <Footer/>
+      </CenterTrainingColumnContainer>
     </React.Fragment>
   );
 }

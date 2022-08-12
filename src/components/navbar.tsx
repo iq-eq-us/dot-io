@@ -11,38 +11,31 @@ import SettingsImage from '../assets/settings.png';
 import StatsImage from '../assets/lineGraph.png';
 import LeaderboardsImage from '../assets/leaderBoard.png';
 import profileImage from '../assets/profile.png';
+import Sample_user_Icon from '../assets/UserProfile.png'
 
 import Weight from '../assets/weight_nav_icon_transparent.png';
-import BackButton from '../pages/dashboard/components/BackButton';
 import { ROUTER_PATHS } from './router';
 import {FaBars} from 'react-icons/fa'
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 
 
 const Navbar = (): ReactElement => {
   const history = useHistory();
-  const needsBackButton = history.location.pathname.endsWith(
-    ROUTER_PATHS.training,
-  );
-  const needsBackButton2 = history.location.pathname.endsWith(
-    ROUTER_PATHS.manager,
-);
-const needsBackButton3 = history.location.pathname.endsWith(
-  ROUTER_PATHS.piano,
-);
 
 const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
-
+const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordingEnabledDevice);
 
   const payload : any [] = []
   payload.push('LEXICAL');
   payload.push('10');
 
-  function TrainingPageFunction (){ //Function will load and route back to the training page
-    sessionStorage.removeItem("tempTestDeIncrement")
+  function TrainingPageFunction (){
+    sessionStorage.removeItem("tempTestDeIncrement");
     beginTraining(payload);
-    history.replace(ROUTER_PATHS.home)
+    if(!history.location.pathname.endsWith(ROUTER_PATHS.home)){
+      history.push(ROUTER_PATHS.home);
+    }
   }
 
   return (
@@ -56,17 +49,17 @@ const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
         </MobileIcon>
         <NavMenu>
     <NavMenuLink href='#/manager' aria-current="page">
-        <NavLinksImage src={ThemesImage} alt="" />
+        <NavLinksImage src={BooksImage} alt="" />
         </NavMenuLink>
-    <NavMenuLink aria-current="page">
+    <NavMenuLink href='#/' aria-current="page">
         <NavLinksImage src={DumbellImage} alt="" onClick={()=>TrainingPageFunction()}/>
         </NavMenuLink>
             <NavMenuLink href='#/dashboard' aria-current="page">
-      <NavLinksImage src={BooksImage} alt="" />
+      <NavLinksImage src={Sample_user_Icon} alt="" />
         </NavMenuLink>
         </NavMenu>
         <NavBtn>
-          <NavBtnLink> Connect Device</NavBtnLink>
+          <NavBtnLink style={{visibility: (isThisAnEnabledDevice == true ? '' : 'hidden'), disabled: (isThisAnEnabledDevice == true ? '' : 'true')}}> {isThisAnEnabledDevice == true ? console.log('Made it here in the navbar true '+ isThisAnEnabledDevice) : console.log('Made it here in the navbar false  '+ isThisAnEnabledDevice)}Connect</NavBtnLink>
         </NavBtn>
     </NavbarContainer>
     </NavI>
@@ -198,7 +191,7 @@ align-items: center;
 
 const NavBtnLink = styled.div `
 border-radius: 50px;
-background: #181818;
+background: rgb(34 197 94);
 white-space: nowrap;
 padding: 10px 22px;
 color: #181818;

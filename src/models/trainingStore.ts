@@ -28,6 +28,8 @@ export interface TrainingStoreActionsModel {
   clearTemporaryTrainingData: Action<TrainingStoreModel>;
   toggleTestCompletePage: Action<TrainingStoreModel>;
   setTestCompleteValue: Action<TrainingStoreModel, boolean>
+  setStoredTestTextData: Action<TrainingStoreModel, string[] | undefined>;
+
   /**
    * This action allows you to manually update the chords used in a particular training mode
    * For example, if you were in Lexical training, you can use the top right "View/Edit" chords box
@@ -78,6 +80,7 @@ export interface TrainingStoreStateModel {
   isShowingPlusIcon: boolean;
   targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
+  storedTestTextData: Computed<TrainingStoreModel, string[][] | undefined>;
   numberOfChordsForTrainingLevel: number;
   characterEntryMode: Computed<
     TrainingStoreModel,
