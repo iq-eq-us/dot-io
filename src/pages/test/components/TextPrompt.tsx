@@ -43,7 +43,7 @@ export function TextPrompt(): ReactElement {
     Date.now * 1.0; /*none found - fallback to browser default */
 
 
-  let body = document.getElementById('txt_Name');
+  const body = document.getElementById('txt_Name');
   let isKeyDown = false;
   if(sessionStorage.getItem('chordingEnabledDevice') == undefined || sessionStorage.getItem('chordingEnabledDevice') == 'false'){
 
@@ -98,8 +98,8 @@ export function TextPrompt(): ReactElement {
     }
     console.log('this is the key '+e.key);
     isKeyDown = false;
-    let upTime = performance.now();
-    let heldTime = Math.ceil(upTime - keyDownTime);
+    const upTime = performance.now();
+    const heldTime = Math.ceil(upTime - keyDownTime);
     console.log(keyDownTime);
     console.log(keyDownTime);
     console.log('Held time '+ heldTime);
