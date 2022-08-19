@@ -201,7 +201,7 @@ export function TestCompleteGraph(): ReactElement {
 
 
          const avgSpeedMilliseconds = d.averageSpeed * 10;
-          const millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
+          const millisecondsPerCharacter = avgSpeedMilliseconds/5;
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
           const wpm = averageCharacterPerMin/5;
           console.log('This is the wpm in Graph '+wpm);

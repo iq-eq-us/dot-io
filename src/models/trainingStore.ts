@@ -80,7 +80,7 @@ export interface TrainingStoreStateModel {
   isShowingPlusIcon: boolean;
   targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
-  storedTestTextData: Computed<TrainingStoreModel, string[][] | undefined>;
+  storedTestTextData: Computed<TrainingStoreModel, string[] | undefined>;
   numberOfChordsForTrainingLevel: number;
   characterEntryMode: Computed<
     TrainingStoreModel,

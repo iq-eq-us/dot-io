@@ -15,7 +15,7 @@ function NextTestButton(): ReactElement {
 
 return(
 <div
-className="p-2 bg-[#333] flex items-center justify-center content-center items-center w-10 rounded m-auto mt-4 cursor-pointer hover:bg-[#444] active:bg-[#222]"
+className="p-2 bg-[#333] flex items-center z-0 justify-center content-center items-center w-10 rounded m-auto mt-4 cursor-pointer hover:bg-[#444] active:bg-[#222]"
 onClick={() => {
     sessionStorage.removeItem("tempTestDeIncrement");
     beginTraining(payload);

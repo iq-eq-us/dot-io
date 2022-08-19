@@ -1,8 +1,9 @@
 import type { ChordLibraryRecord } from '../data/chordLibrary';
 import type { ChordStatistics } from '../models/trainingStatistics';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
-import { useEffect, useRef, useState } from 'react';
-import type { TrainingScenario } from '../models/trainingScenario'
+import { useEffect, useRef, useState  } from 'react';
+import type { TrainingScenario } from '../models/trainingScenario';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
@@ -17,7 +18,7 @@ interface ChordGenerationParameters {
   speedGoal: number;
   wordTestNumberValue?: WordTrainingValues;
   scenario?: TrainingScenario;
-  storedTestData?: string[];
+  storedTestData?: any[];
 }
 
 //const [internalWordCountState, setinternalWordCountState] = useState<number | null>(null);
@@ -52,26 +53,24 @@ export const generateChords = (
   parameters: ChordGenerationParameters,
 ): string[] => {
   if((parameters.scenario == 'LEXICAL') && (parameters.wordTestNumberValue != undefined)){
-    console.log('training scenario '+ parameters.scenario);
-    console.log('Scenarios data '+ parameters.chordsToChooseFrom.adjectives )
+
+    console.log('This is the stored text value for the test tier '+ parameters.storedTestData)
     const wordTestValue = parseInt(parameters.wordTestNumberValue);
     pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
-     
-    sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
-
-    let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
-    console.log(tempDeIncrementValue)
-    const newString : string[] = [];
+    
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
-    console.log('parameters array '+parameters);
 
     const fullTestData = [];
     for(let i=0;i<wordTestValue ;i++ ){
       fullTestData.push(getRandomElementFromArray(chordLibraryCharacters1));
-      console.log('THis is the temp test set ' +fullTestData);
-      console.log('THis is the temp test set ' +fullTestData.length)
-      parameters.storedTestData?.push(getRandomElementFromArray(chordLibraryCharacters1));
     }
+    sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
+
+
+    let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
+    console.log(tempDeIncrementValue)
+    const newString : string[] = [];
+    console.log('parameters array '+parameters);
 
     while (newString.join('').length < parameters.lineLength) {
       console.log('In while loop for lexical')
@@ -93,7 +92,8 @@ export const generateChords = (
       }
       sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
     }
-    console.log('New string '+ newString);
+    const m = parameters.storedTestData;
+     console.log('this is the count '+parameters.storedTestData);
     return newString;
 
   } else if ((parameters.scenario == 'LEXICAL-SENTENCES') && (parameters.wordTestNumberValue != undefined)){
@@ -234,8 +234,6 @@ export const generateChords = (
   }
 
   const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
-  console.log('CHord to feed '+ chordToFeed);
-  console.log("All chahsahahshd "+allCharacters)
 
   const slowestTypedChordsAccountingForDepth = chordsSortedByTypingSpeed
     .slice(0, parameters.numberOfTargetChords)
@@ -255,7 +253,8 @@ export const generateChords = (
       );
     else allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
   }
-  console.log("End "+allCharacters)
+  console.log('Did i make it to all characters '+ allCharacters)
   return allCharacters;
 }
 };
+

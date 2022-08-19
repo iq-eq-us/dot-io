@@ -5,7 +5,6 @@ import type { TrainingScenario } from '../../models/trainingScenario';
 import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
 import { _keyMapDefaults  } from "../../pages/manager/controls/maps";
 
-
 import {
   ChordStatistics,
   createEmptyChordStatistics,
@@ -84,8 +83,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         (state.currentTrainingScenario),
       ) as ChordLibraryRecord;
-
-        console.log('This is the state of chordstopull from '+state.chordsToPullFrom);
     }
 
 
@@ -94,7 +91,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       payload[0] as TrainingScenario,
     );
 
-
+      if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined){
+        state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
+        console.log('Inside the action')
+      }
+      console.log('Called this');
+      console.log('This is the stored value for the state of storedTestTextData ' +state.storedTestTextData);
 
     state.numberOfChordsForTrainingLevel =
       state.trainingStatistics.statistics.length;
@@ -411,6 +413,21 @@ function generateEmptyChordStatistics(
     }),
   };
 }
+const getRandomElementFromArray = <T>(list: T[]): T =>
+  list[Math.floor(Math.random() * list.length)];
+
+function generateTestTrainingData(
+  library: ChordLibraryRecord,
+  wordTestNumber?: number,
+) {
+  const fullTestData = [];
+  const chordLibraryToUse = Object.keys(library);
+  for(let i=0; i<wordTestNumber; i++ ){
+
+    fullTestData.push(getRandomElementFromArray(chordLibraryToUse));
+  }
+return fullTestData;
+}
 
 function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
   const lineLength =
@@ -418,6 +435,11 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       ? ALPHABET_LINE_LENGTH
       : CHORD_LINE_LENGTH;
 
+      //(parameters.scenario == 'LEXICAL') && (parameters.wordTestNumberValue != undefined)
+      if(state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined){
+
+
+      }
   state.trainingText = [
     ...state.trainingText,
     generateChords({
@@ -472,6 +494,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       : CHORD_LINE_LENGTH;
 
   const generateOneLineOfChords = () =>
+  
     generateChords({
       chordsToChooseFrom: state.chordsToPullFrom,
       numberOfTargetChords: state.trainingSettings.targetChords,
@@ -482,6 +505,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       speedGoal: state.trainingSettings.speedGoal,
       wordTestNumberValue: state.wordTestNumber,
       scenario: state.currentTrainingScenario,
+      storedTestData: state.storedTestTextData,  
     });
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
 
