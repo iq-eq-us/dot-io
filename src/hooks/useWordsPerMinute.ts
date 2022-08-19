@@ -87,7 +87,7 @@ export const useWordsPerMinute = (): number => {
 
           //This calculation calculates the current chords speed so that we can check if it is a mastered chord
           avgSpeedMilliseconds = currentChordSpeed * 10;
-          millisecondsPerCharacter = avgSpeedMilliseconds/5.23;//In the future 5.23 needs to be dynamic based on the practice set
+          millisecondsPerCharacter = avgSpeedMilliseconds/5;//In the future 5.23 needs to be dynamic based on the practice set
           averageCharacterPerMin = 60000/millisecondsPerCharacter;
           currentChordSpeed = averageCharacterPerMin/5;
 
