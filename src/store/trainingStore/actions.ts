@@ -434,12 +434,6 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
     state.currentTrainingScenario === 'ALPHABET'
       ? ALPHABET_LINE_LENGTH
       : CHORD_LINE_LENGTH;
-
-      //(parameters.scenario == 'LEXICAL') && (parameters.wordTestNumberValue != undefined)
-      if(state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined){
-
-
-      }
   state.trainingText = [
     ...state.trainingText,
     generateChords({
