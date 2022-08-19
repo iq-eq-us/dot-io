@@ -132,13 +132,13 @@ const Header = () => {
         e.stopPropagation();
       }}
     >
-      <HeaderItemRow helpText="They type of test associated with these metrics">
+      <HeaderItemRow helpText="They type of test associated with these metrics.">
         Test
       </HeaderItemRow>
       <HeaderItemRow helpText="Your WPM for this test.">
         WPM
       </HeaderItemRow>
-      <HeaderItemRow helpText="Your WPM for this test.">
+      <HeaderItemRow helpText="Your Average WPM for this test.">
         AWPM
       </HeaderItemRow>
       <HeaderItemRow helpText="Your highest WPM for a word typed during this test.">
