@@ -16,6 +16,22 @@ function ChordTextInput(): ReactElement {
   );
   const displayHUD = useHUD();
 
+  const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
+const currentTrainingScenario = useStoreState((store: any) => store.currentTrainingScenario);
+const setIsDisplaying = useStoreActions(
+  (store) => store.setIsDisplayingStatisticsModal,
+);
+const setTrainingSettings = useStoreActions((store: any) => store.setTrainingSettings);
+const trainingSettings = useStoreState((store) => store.trainingSettings);
+
+const updateTrainingSetting = (newProperty: Record<string, unknown>) =>
+setTrainingSettings({ ...trainingSettings, ...newProperty });
+
+
+
+  const payload : any [] = []
+  payload.push(currentTrainingScenario);
+
   const { parentProps, Popper } = usePopover(
     'Generate a new set of training text.',
   );
@@ -50,7 +66,10 @@ function ChordTextInput(): ReactElement {
         className="p-2 bg-[#333] flex items-center justify-center rounded mb-2 ml-2 cursor-pointer hover:bg-[#444] active:bg-[#222]"
         onClick={() => {
           setStoreText('');
-          regenerateTrainingText();
+          beginTraining(payload);
+          setIsDisplaying(true);
+          updateTrainingSetting({ isDisplayingSettingsModal: true });
+
           inputRef.current?.focus();
         }}
         {...parentProps}
