@@ -181,6 +181,9 @@ export function TestCompleteGraph(): ReactElement {
 
   const currentTrainingSetting = useStoreState((store : any) => store.trainingStatistics);
   const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
+  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
+
+
 
     let wordNames : any = [];
     let wordOccurrences : any = [];
@@ -193,18 +196,14 @@ export function TestCompleteGraph(): ReactElement {
 
       if(d.displayTitle.length * d.numberOfOccurrences != 0) {
         tempConst += d.averageSpeed;
-        console.log('This is the average speed that we are seeing'+d.averageSpeed)
-        console.log('This is the wpm that we are seeingm '+tempConst);
+        console.log('This is the stored test words '+storedTestTextData);
           wordNames.push(d.displayTitle);
           wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
-         console.log('Display title '+d.displayTitle);
-
 
          const avgSpeedMilliseconds = d.averageSpeed * 10;
           const millisecondsPerCharacter = avgSpeedMilliseconds/5;
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
           const wpm = averageCharacterPerMin/5;
-          console.log('This is the wpm in Graph '+wpm);
 
           wordPerMinute.push(d.averageSpeed.toFixed(0));
       }
@@ -213,7 +212,6 @@ export function TestCompleteGraph(): ReactElement {
 
     const finalErrorsArray =[];
     const finalWPMArray =[]
-    console.log('Custom tier '+ currentTrainingScenario)
 
     if(currentTrainingScenario == 'CUSTOMTIER'){
       console.log('Only entered if this is custom tier ' + currentTrainingScenario);
@@ -229,6 +227,16 @@ export function TestCompleteGraph(): ReactElement {
     wordOccurrences = finalErrorsArray;
     wordPerMinute = finalWPMArray;
     wordNames = chordsToChooseFrom;
+  } else{
+    for(let i =0; i<storedTestTextData?.length; i++){
+      finalErrorsArray.push(wordOccurrences[wordNames.indexOf(storedTestTextData[i])]);
+      finalWPMArray.push(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]);
+
+    }
+
+    wordOccurrences = finalErrorsArray;
+    wordPerMinute = finalWPMArray;
+    wordNames = storedTestTextData;
   }
 
     const handleEvent = () => {

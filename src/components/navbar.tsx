@@ -12,7 +12,7 @@ import StatsImage from '../assets/lineGraph.png';
 import LeaderboardsImage from '../assets/leaderBoard.png';
 import profileImage from '../assets/profile.png';
 import Sample_user_Icon from '../assets/UserProfile.png'
-
+import { FaTimes } from 'react-icons/fa';
 import Weight from '../assets/weight_nav_icon_transparent.png';
 import { ROUTER_PATHS } from './router';
 import {FaBars} from 'react-icons/fa'

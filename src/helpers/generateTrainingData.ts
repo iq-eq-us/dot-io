@@ -87,7 +87,7 @@ export const generateChords = (
         break;
       } else{
         console.log('In else  statement  for lexical')
-       newString.push(getRandomElementFromArray(chordLibraryCharacters1));
+       newString.push(parameters.storedTestData[parameters.storedTestData.length - tempDeIncrementValue]);
        tempDeIncrementValue = tempDeIncrementValue - 1;
       }
       sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))

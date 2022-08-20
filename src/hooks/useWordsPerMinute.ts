@@ -25,6 +25,7 @@ export const useWordsPerMinute = (): number => {
 
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
   const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
+  console.log('Word test number we have here '+ wordTestNumber)
 
 
 

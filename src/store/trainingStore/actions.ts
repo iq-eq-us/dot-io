@@ -93,11 +93,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
 
       if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined){
         state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
-        console.log('Inside the action')
       }
-      console.log('Called this');
-      console.log('This is the stored value for the state of storedTestTextData ' +state.storedTestTextData);
-
+      
     state.numberOfChordsForTrainingLevel =
       state.trainingStatistics.statistics.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
