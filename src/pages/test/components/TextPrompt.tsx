@@ -117,19 +117,21 @@ export function TextPrompt(): ReactElement {
       <ChordRow >
         {(firstLineOfTargetText || [])?.map((chord : any, i : any) => {
           if (characterEntryMode === "CHORD" || i !== indexOfTargetChord){
-
+            
             return <Chord
               key={r()}
               active={i === indexOfTargetChord}
               error={isError && i === indexOfTargetChord}
             >
             {chord}
-
             </Chord>
             }
           else{
+           // {getCheckAlgo(chord)} //This call checks to see if the a chorded device was used
+
             return <CharacterEntryChord word={chord} index={targetCharacterIndex} />
           }
+          
         })}
       </ChordRow>
 

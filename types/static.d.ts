@@ -59,3 +59,4 @@ declare module '*.png' {
 /* CUSTOM: ADD YOUR OWN HERE */
 declare module 'midi-note';
 declare module 'react-piano';
+declare module 'react-tabindex';

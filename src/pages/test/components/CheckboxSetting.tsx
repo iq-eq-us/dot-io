@@ -18,10 +18,10 @@ export function CheckboxSetting({
   const { parentProps, Popper } = usePopover(helpText || '');
 
   return (
-    <div className="mb-4">
+    <div className="mb-2">
       {Popper}
       <label
-        className="inline-flex text-sm font-bold mb-1 flex-row gap-2 items-center"
+        className="inline-flex text-sm font-bold mb-1 flex-row gap-1 items-center"
         {...parentProps}
       >
         {title}
