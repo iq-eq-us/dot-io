@@ -30,7 +30,7 @@ function ChordTextInput(): ReactElement {
   
   return (
 
-    <div className="w-full flex flex-row items-end mt-16 justify-center">
+    <div className="w-full flex flex-row items-end mt-6 justify-center">
       {Popper}
       <span
         className={`mb-2 mr-2 text-white font-semibold ${
