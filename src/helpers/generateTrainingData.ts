@@ -70,12 +70,9 @@ export const generateChords = (
     let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
     console.log(tempDeIncrementValue)
     const newString : string[] = [];
-    console.log('parameters array '+parameters);
 
     while (newString.join('').length < parameters.lineLength) {
-      console.log('In while loop for lexical')
       if(0 == tempDeIncrementValue){
-        console.log('In if statement  for lexical')
 
         const valToEvaluate = (newString.length-1) + wordTestValue;
         const loopValue = valToEvaluate - wordTestValue;
@@ -86,14 +83,12 @@ export const generateChords = (
       }
         break;
       } else{
-        console.log('In else  statement  for lexical')
-       newString.push(parameters.storedTestData[parameters.storedTestData.length - tempDeIncrementValue]);
+       newString.push(parameters?.storedTestData[parameters?.storedTestData.length - tempDeIncrementValue]);
        tempDeIncrementValue = tempDeIncrementValue - 1;
       }
       sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
     }
-    const m = parameters.storedTestData;
-     console.log('this is the count '+parameters.storedTestData);
+
     return newString;
 
   } else if ((parameters.scenario == 'LEXICAL-SENTENCES') && (parameters.wordTestNumberValue != undefined)){

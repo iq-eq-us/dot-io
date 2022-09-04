@@ -42,7 +42,7 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
     <NavI>
     <NavbarContainer>
     <Link href='#/' aria-current="page" >
-        <NavLogo src={IQEQLogoImage} alt="" onClick={()=>TrainingPageFunction()}/>
+        <NavLogo onClick={()=>TrainingPageFunction()}>dot i/o</NavLogo>
         </Link>
     <MobileIcon>
           <FaBars/>
@@ -73,7 +73,7 @@ const Logo = styled.img.attrs({
 })``;
 
 const Link = styled.a.attrs({
-  className: `px-3 py-2 rounded-md hover:bg-[#333]`,
+  className: ` py-2 rounded-md hover:bg-[#333]`,
 })``;
 
 const NavMenuLink = styled.a.attrs({
@@ -106,16 +106,15 @@ padding 0 24px;
 max-width: 1100px;
 `;
 
-const NavLogo = styled.img `
+const NavLogo = styled.div `
 color: #fff;
 height: 60px;
-width: 80px;
+width: 124px;
 justify-self: flex-start;
 cursor:pointer;
-font-size: 1.5rem;
+font-size: 2rem;
 display: flex;
-
-text-decoration: none;
+font-family: monospace;
 `;
 
 const MobileIcon = styled.div `
@@ -138,7 +137,6 @@ display: flex;
 align-items: center;
 list-style: none; 
 text-align: center;
-margin-right: -22px;
 
 @media screen and (max-width: 768px) {
   display: none;
@@ -170,7 +168,7 @@ padding: 0 1rem;
 cursor: pointer;
 color: #fff;
 height: 40px;
-width: 70px;
+width: 75px;
 justify-self: flex-start;
 font-size: 1.5rem;
 

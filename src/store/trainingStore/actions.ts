@@ -18,6 +18,7 @@ import type {
 } from '../../models/trainingStore';
 import { getChordLibraryForTrainingScenario } from '../../pages/test/components/EditChordModal';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
+import store from '../store';
 
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
@@ -61,11 +62,16 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingStatistics = { statistics: [] };
     state.trainingText = [];
   }),
+  setRestartTestMode: action((state, payload) => {
+    state.restartTestMode = payload;
+  }),
+
   /**
    * This must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
    */
   beginTrainingMode: action((state, payload) => {
     console.log(payload)
+    sessionStorage.removeItem('timeThat');
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.currentTrainingScenario = payload[0] as TrainingScenario;
     state.wordTestNumber = payload[1] as WordTrainingValues;
@@ -91,7 +97,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       payload[0] as TrainingScenario,
     );
 
-      if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined){
+      if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == false){
         state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
       }
       
@@ -415,7 +421,7 @@ const getRandomElementFromArray = <T>(list: T[]): T =>
 
 function generateTestTrainingData(
   library: ChordLibraryRecord,
-  wordTestNumber?: number,
+  wordTestNumber?: number | undefined,
 ) {
   const fullTestData = [];
   const chordLibraryToUse = Object.keys(library);
@@ -443,6 +449,8 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       speedGoal: state.trainingSettings.speedGoal,
       wordTestNumberValue: state.wordTestNumber,
       scenario: state.currentTrainingScenario,
+      storedTestData: state.storedTestTextData,  
+
     }),
   ];
 }

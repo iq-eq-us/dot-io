@@ -62,7 +62,11 @@ function SettingsColumn(): ReactElement {
           e.stopPropagation();
         }}
         transitionTransform={transitionTransform}
-      >        
+      >  
+       <Label> SetTraining Mode
+        <HelpCircleIcon />
+        </Label>
+        <TrainingControls/>      
         <HighlightCheckboxSetting
           trainingSettings={trainingSettings}
           updateTrainingSetting={updateTrainingSetting}
@@ -93,10 +97,7 @@ function SettingsColumn(): ReactElement {
           trainingSettings={trainingSettings}
           setTrainingSettings={setTrainingSettings}
         />
-        <Label> SetTraining Mode
-        <HelpCircleIcon />
-        </Label>
-        <TrainingControls/>
+      
 
       </SettingsForm>
       

@@ -14,6 +14,7 @@ export interface TrainingSettingsState {
   isDisplayingSettingsModal: boolean;
   isDisplayingStatisticsModal: boolean;
   isTestDone: boolean;
+  restartTestMode: boolean;
 }
 
 export const defaultTrainingSettings: TrainingSettingsState = {
@@ -30,4 +31,5 @@ export const defaultTrainingSettings: TrainingSettingsState = {
   isDisplayingSettingsModal: false,
   isDisplayingStatisticsModal: false,
   isTestDone: false,
+  restartTestMode: false,
 };

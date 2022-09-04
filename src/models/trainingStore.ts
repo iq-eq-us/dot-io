@@ -16,6 +16,7 @@ export interface TrainingStoreActionsModel {
   setIsDisplayingTestComplete: Action<TrainingStoreModel, boolean>;
   beginTrainingMode: Action<TrainingStoreModel, TrainingScenario>;
   proceedToNextWord: Action<TrainingStoreModel>;
+  setRestartTestMode: Action<TrainingStoreModel, boolean>;
   setErrorOccurredWhileAttemptingToTypeTargetChord: Action<
     TrainingStoreModel,
     boolean
@@ -27,7 +28,7 @@ export interface TrainingStoreActionsModel {
   toggleChordEditModal: Action<TrainingStoreModel>;
   clearTemporaryTrainingData: Action<TrainingStoreModel>;
   toggleTestCompletePage: Action<TrainingStoreModel>;
-  setTestCompleteValue: Action<TrainingStoreModel, boolean>
+  setTestCompleteValue: Action<TrainingStoreModel, boolean>;
   setStoredTestTextData: Action<TrainingStoreModel, string[] | undefined>;
 
   /**
@@ -76,11 +77,12 @@ export interface TrainingStoreStateModel {
   wordTestNumber: WordTrainingValues | undefined;
   isTestDone: boolean | undefined;
   isDisplayingChordEditModal: boolean;
+  restartTestMode: boolean,
   chordsToPullFrom: ChordLibraryRecord;
   isShowingPlusIcon: boolean;
   targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
-  storedTestTextData:  string[] | undefined;
+  storedTestTextData:  Computed<TrainingStoreModel, string[] | undefined>;
   numberOfChordsForTrainingLevel: number;
   characterEntryMode: Computed<
     TrainingStoreModel,

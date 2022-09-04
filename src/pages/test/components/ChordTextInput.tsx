@@ -14,8 +14,11 @@ function ChordTextInput(): ReactElement {
     (store) => store.timeAtTrainingStart,
   );
 
-  const timeTakenToTypePreviousChord = useStoreState(
-    (store : any) => store.timeTakenToTypePreviousChord,
+  const currentLine = useStoreState(
+    (store : any) => store.currentLineOfTrainingText,
+  );
+  const currentSubIndex = useStoreState(
+    (store : any) => store.currentSubindexInTrainingText,
   );
   const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario);  const displayHUD = useHUD();
@@ -27,6 +30,10 @@ function ChordTextInput(): ReactElement {
   );
   const [firstTyped, setFirstTyped] = useState(true); //This is used to see if the first word has been typed
 
+  const userIsTypingFirstChord =
+    currentLine == 0 &&
+    currentSubIndex == 1;
+  
   
   return (
 
@@ -39,6 +46,7 @@ function ChordTextInput(): ReactElement {
       >
       </span>
         {firstTyped ? sessionStorage.setItem('timeThat', JSON.stringify(performance.now)) : ''}
+        {console.log('first typed '+ userIsTypingFirstChord)}
       <input
         autoCorrect="off"
         autoCapitalize="none"

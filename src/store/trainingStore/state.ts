@@ -26,6 +26,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   timeOfLastChordStarted: 0,
   timeTakenToTypePreviousChord: 0,
   isTestDone: false,
+  restartTestMode: false,
   trainingStatistics: {
     statistics: [],
   },

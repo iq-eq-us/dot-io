@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import CharachorderLogoImage from '../assets/cc_logo_transparent.png';
 import BackButton from '../pages/dashboard/components/BackButton';
 import { ROUTER_PATHS } from './router';
+import IQEQLogoImage from '../assets/iq-eq_logo_copy.png'; 
+
 
 
 
@@ -27,11 +29,10 @@ const needsBackButton3 = history.location.pathname.endsWith(
                <FooterLinksWrapper>
                    <FooterLinkItems>
                        <FooterLinkTitle>
-                           <FooterLinkLogo src={CharachorderLogoImage}></FooterLinkLogo>
+                           <FooterLinkLogo src={IQEQLogoImage}></FooterLinkLogo>
                            <div/>
-                           <FooterLink>Sponsored by CharaChorder</FooterLink>
+                           <FooterLink>Brought to you by IQ-EQ</FooterLink>
                            <div/>
-                           <FooterLink>This text was typed at the speed of thought.</FooterLink>
                        </FooterLinkTitle>
                    </FooterLinkItems>
                </FooterLinksWrapper>

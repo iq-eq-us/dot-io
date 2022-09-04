@@ -127,7 +127,7 @@ export function TextPrompt(): ReactElement {
             </Chord>
             }
           else{
-           // {getCheckAlgo(chord)} //This call checks to see if the a chorded device was used
+           //{getCheckAlgo(chord)} //This call checks to see if the a chorded device was used
 
             return <CharacterEntryChord word={chord} index={targetCharacterIndex} />
           }
