@@ -10,6 +10,9 @@ function ChordTextInput(): ReactElement {
   const regenerateTrainingText = useStoreActions(
     (store : any) => store.resetTrainingText,
   );
+  const restartMode = useStoreState((store) => store.restartTestMode);
+  const setRestartTestMode = useStoreActions((store) => store.setRestartTestMode,);
+
   const timeAtTrainingStart = useStoreState(
     (store) => store.timeAtTrainingStart,
   );
@@ -33,10 +36,10 @@ function ChordTextInput(): ReactElement {
   const userIsTypingFirstChord =
     currentLine == 0 &&
     currentSubIndex == 1;
+  const yer = restartMode;
   
-  
-  return (
 
+  return (
     <div className="w-full flex flex-row items-end mt-6 justify-center">
       {Popper}
       <span
@@ -44,9 +47,11 @@ function ChordTextInput(): ReactElement {
           !displayHUD && 'hidden'
         }`}
       >
+        
       </span>
-        {firstTyped ? sessionStorage.setItem('timeThat', JSON.stringify(performance.now)) : ''}
-        {console.log('first typed '+ userIsTypingFirstChord)}
+
+      {firstTyped ? sessionStorage.setItem('timeThat', JSON.stringify(performance.now())) : ''}
+
       <input
         autoCorrect="off"
         autoCapitalize="none"
@@ -58,8 +63,10 @@ function ChordTextInput(): ReactElement {
         onFocus={() => isShowingPortal == true ? document.getElementById('txt_Name')?.focus() : document.getElementById('txt_Name')?.focus()}
         value={textTyped}
         onChange={(e) => {
-          {firstTyped ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), setFirstTyped(false)] : ''}// This here logs the time that the first letter was pressed and sets the state variable to false
+          {(yer==true) && (firstTyped == false) ? [setFirstTyped(true),setRestartTestMode(false)]: ''}//THis conditional resets the variables necessary if the refresh method is called
+          {firstTyped ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), setFirstTyped(false)] : console.log('first typed sexy')}// This here logs the time that the first letter was pressed and sets the state variable to false
           setStoreText(e.target.value);
+
         }}
     
       />   

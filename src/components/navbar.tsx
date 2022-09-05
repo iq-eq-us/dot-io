@@ -41,9 +41,9 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
   return (
     <NavI>
     <NavbarContainer>
-    <Link href='#/' aria-current="page" >
+    <LogoLink href='#/' aria-current="page" >
         <NavLogo onClick={()=>TrainingPageFunction()}>dot i/o</NavLogo>
-        </Link>
+        </LogoLink>
     <MobileIcon>
           <FaBars/>
         </MobileIcon>
@@ -74,6 +74,9 @@ const Logo = styled.img.attrs({
 
 const Link = styled.a.attrs({
   className: ` py-2 rounded-md hover:bg-[#333]`,
+})``;
+const LogoLink = styled.a.attrs({
+  className: ` py-2 rounded-md`,
 })``;
 
 const NavMenuLink = styled.a.attrs({
@@ -110,6 +113,7 @@ const NavLogo = styled.div `
 color: #fff;
 height: 60px;
 width: 124px;
+
 justify-self: flex-start;
 cursor:pointer;
 font-size: 2rem;

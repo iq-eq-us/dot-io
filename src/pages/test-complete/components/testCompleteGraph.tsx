@@ -9,7 +9,7 @@ import { getCumulativeAverageChordTypeTime } from '../../../../src/helpers/aggre
 
 //myGraph(wordNames, wordOccurrences, wordPerMinute)
 
-export function myGraph(wordNames, wordOccurrences, wordPerMinute){
+export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: any, rawSpeedOfCurrentWord: any){
 
  const options = {
   chart: {
@@ -75,7 +75,11 @@ export function myGraph(wordNames, wordOccurrences, wordPerMinute){
     {
       name: "Typing Errors",
       data: wordOccurrences
-    }
+    },
+    {
+      name: "Raw Speed",
+      data: rawSpeedOfCurrentWord
+    },
   ],
   xaxis: {
     categories: wordNames
@@ -188,6 +192,8 @@ export function TestCompleteGraph(): ReactElement {
     let wordNames : any = [];
     let wordOccurrences : any = [];
     let wordPerMinute : any = [];
+    let rawSpeedOfCurrentWord : any = [];
+
 
     let tempConst = 0;
     const chordsToChooseFrom = JSON.parse(localStorage.getItem('chordsToChooseFrom'));
@@ -205,13 +211,22 @@ export function TestCompleteGraph(): ReactElement {
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
           const wpm = averageCharacterPerMin/5;
 
+          const avgSpeedMilliseconds2 = d.lastSpeed * 10;
+          const millisecondsPerCharacter2 = avgSpeedMilliseconds2/5;
+          const averageCharacterPerMin2 = 60000/millisecondsPerCharacter2;
+          const wpm2 = averageCharacterPerMin2/5;
+
           wordPerMinute.push(d.averageSpeed.toFixed(0));
+         rawSpeedOfCurrentWord.push(wpm2.toFixed(0));
+         console.log('Like it raw '+ rawSpeedOfCurrentWord);
+        
       }
 
     });
 
     const finalErrorsArray =[];
-    const finalWPMArray =[]
+    const finalWPMArray = [];
+    const finalRawWPM = [];
 
     if(currentTrainingScenario == 'CUSTOMTIER'){
       console.log('Only entered if this is custom tier ' + currentTrainingScenario);
@@ -221,26 +236,32 @@ export function TestCompleteGraph(): ReactElement {
 
       finalErrorsArray.push(wordOccurrences[wordNames.indexOf(chordsToChooseFrom[i])]);
       finalWPMArray.push(wordPerMinute[wordNames.indexOf(chordsToChooseFrom[i])]);
+      finalRawWPM.push(rawSpeedOfCurrentWord[wordNames.indexOf(chordsToChooseFrom[i])]);
 
     }
 
     wordOccurrences = finalErrorsArray;
     wordPerMinute = finalWPMArray;
     wordNames = chordsToChooseFrom;
+    rawSpeedOfCurrentWord = finalRawWPM;
   } else{
     for(let i =0; i<storedTestTextData?.length; i++){
       finalErrorsArray.push(wordOccurrences[wordNames.indexOf(storedTestTextData[i])]);
       finalWPMArray.push(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]);
+      finalRawWPM.push(rawSpeedOfCurrentWord[wordNames.indexOf(storedTestTextData[i])])
 
     }
 
     wordOccurrences = finalErrorsArray;
     wordPerMinute = finalWPMArray;
     wordNames = storedTestTextData;
+    rawSpeedOfCurrentWord = finalRawWPM;
+    console.log('this is the raw speed '+rawSpeedOfCurrentWord);
+
   }
 
     const handleEvent = () => {
-        myGraph(wordNames, wordOccurrences, wordPerMinute)
+        myGraph(wordNames, wordOccurrences, wordPerMinute, rawSpeedOfCurrentWord)
         console.log('event handled ' +wordNames)
         console.log(wordOccurrences)
         console.log(wordPerMinute)

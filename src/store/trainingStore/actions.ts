@@ -71,7 +71,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
    */
   beginTrainingMode: action((state, payload) => {
     console.log(payload)
-    sessionStorage.removeItem('timeThat');
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.currentTrainingScenario = payload[0] as TrainingScenario;
     state.wordTestNumber = payload[1] as WordTrainingValues;
@@ -357,11 +356,18 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
  //This conditional takes the stored session value timeThat that is set in both ChordTextInput.tsx files. That
  // set value contains the time that the user first typed. We take that value and the value of went the word was complete to determine
  // The value for the first word
-  if (userIsTypingFirstChord ){
+ console.log('first typed '+ userIsTypingFirstChord)
+ console.log('first typed time that '+ sessionStorage.getItem('timeThat'))
+ console.log('first typed performance now '+ performance.now())
 
+  if (userIsTypingFirstChord ){
+    console.log('In here the check user first ty '+userIsTypingFirstChord)
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
     timeTakenToTypeChord = (performance.now() - sessionStorage.getItem('timeThat'))/10;
+    console.log('first typed time inside loop '+ timeTakenToTypeChord)
+    console.log('first typed get seession time '+sessionStorage.getItem('timeThat'));
+    console.log('first typed performance now '+ performance.now())
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea '+ sessionStorage.getItem('timeThat')/10)
     //console.log('oh yea '+store.timeOfLastChordStarted);
