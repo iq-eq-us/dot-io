@@ -8,12 +8,14 @@ import DropDown from '../../../models/keyboardDropDownFolder/keyboardDropDown';
 import Footer from '../../../../src/components/footer';
 import NextTestButton from './NextTestButton';
 import RefreshButton from './RefreshButton';
+import TrainingModeSelector from './TrainingModeSelector';
 
 function CenterTrainingColumn(): ReactElement {
   return (
     <React.Fragment>
       <CenterTrainingColumnContainer>
       <SmallScreenButtons/>
+      <TrainingModeSelector/>
       <ChordTextInput />
       <TextPrompt />
       <ItemsContainer>
@@ -43,7 +45,6 @@ padding: '1rem';
 justify-content: center; 
 align-items: center; 
 `
-//items-center justify-center content-center items-center
 const f = styled.div `
 
 display: flex;

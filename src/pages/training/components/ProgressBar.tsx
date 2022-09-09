@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
+import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 
 
 function clamp(number: number, min: number, max: number) {
@@ -55,7 +56,7 @@ export function ProgressBar(): ReactElement {
       <BottomDataRow>
         <WPMText>WPM: {(isNaN(wpm)) ? "Calibrating..." : wpm.toFixed(0)}</WPMText>
         <SpeedGoalText>
-          Speed Goal: {trainingSettings.speedGoal.toFixed()}
+        Speed Goal: {wpmMethodCalculator(parseInt(trainingSettings.speedGoal.toFixed())) + " WPM"}
         </SpeedGoalText>
       </BottomDataRow>
     </Container>

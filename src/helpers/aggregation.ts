@@ -32,6 +32,15 @@ export const getCumulativeOccurence = (
   );
   return String(occur);
 }
+export const wpmMethodCalculator = ( value : number) => {
+  
+    const avgSpeedMilliseconds = value * 10;
+    const millisecondsPerCharacter = avgSpeedMilliseconds/5;
+    const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+    const wpm = averageCharacterPerMin/5;
+ 
+     return wpm;
+}
 
 export const getCumulativeValueByPropertyName = <T>(
   object: T[],

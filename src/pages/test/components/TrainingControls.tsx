@@ -97,8 +97,9 @@ useEffect(() => {
     //Method will send the test values to local storage
     }
   }
-  else if((sumOccurrences>=parseInt(count))){
+  else if((sumOccurrences>=parseInt(count)) && wordTestNumber !=undefined){
     console.log('I am being fired in the else statement');
+    console.log('This is the test number '+ wordTestNumber)
     setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
     setPopUpDisplayValue(true);
     //Method will send the test values to local storage

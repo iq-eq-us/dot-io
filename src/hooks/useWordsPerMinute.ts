@@ -53,7 +53,7 @@ export const useWordsPerMinute = (): number => {
   const averageDailyCount = y.length;
 
 
-  const chordLength = totalNumberOfCharactersTyped/5.23;
+  const chordLength = totalNumberOfCharactersTyped/5;
 
   // According to Riley, the equation for WPM is equal to (characters per minute typed correctly / 5)
   // I believe the constant 5 is chosen to represent average word length
@@ -111,12 +111,12 @@ export const useWordsPerMinute = (): number => {
       } else {
 
           let avgSpeedMilliseconds = average * 10;
-          let millisecondsPerCharacter = avgSpeedMilliseconds/5.23;//In the future 5.23 needs to be dynamic based on the practice set
+          let millisecondsPerCharacter = avgSpeedMilliseconds/5;//In the future 5.23 needs to be dynamic based on the practice set
           let averageCharacterPerMin = 60000/millisecondsPerCharacter;
           wpm = averageCharacterPerMin/5;
   
           avgSpeedMilliseconds = currentChordSpeed * 10;
-          millisecondsPerCharacter = avgSpeedMilliseconds/5.23;//In the future 5.23 needs to be dynamic based on the practice set
+          millisecondsPerCharacter = avgSpeedMilliseconds/5;//In the future 5.23 needs to be dynamic based on the practice set
           averageCharacterPerMin = 60000/millisecondsPerCharacter;
           currentChordSpeed = averageCharacterPerMin/5;
         

@@ -8,6 +8,7 @@ import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation'
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
+import { wpmMethodCalculator } from '../../../helpers/aggregation';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences
@@ -88,9 +89,9 @@ const Row = ({ index, style, data }: RowData) => {
       }}
       style={style}
     >
-      <NewStatisticsRow headerStyle={headerStyle}>
+      <NewStatisticsRow headerStyle={headerStyle} index={index}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItem>{item?.averageSpeed.toFixed()}</RowItem>
+        <RowItem>{wpmMethodCalculator(parseInt(item?.averageSpeed)).toFixed() == 'Infinity' ? 0 : wpmMethodCalculator(parseInt(item?.averageSpeed)).toFixed()}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>
@@ -137,7 +138,7 @@ const Header = () => {
         Chord
       </HeaderItemRow>
       <HeaderItemRow helpText="The speed at which you typed the chord in hundreths of a second.">
-        Speed
+        WPM
       </HeaderItemRow>
       <HeaderItemRow helpText="The number of times you have made a mistake typing this chord.">
         Errors
@@ -150,7 +151,8 @@ const Header = () => {
 };
 
 const AggregateRow = ({ data }: { data: Data }) => {
-  const average = getCumulativeAverageChordTypeTime(data.stats);
+  const wpmCheck = wpmMethodCalculator(parseInt(getCumulativeAverageChordTypeTime(data.stats))).toFixed(0);
+  const average = wpmCheck != 'Infinity' ? wpmCheck : 0;
   let sumErrors = 0;
   let sumOccurrences = 0;
   data.stats.forEach((d) => {
@@ -172,9 +174,9 @@ const AggregateRow = ({ data }: { data: Data }) => {
   );
 };
 
-const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
+const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle, index: number }>(
   (props) => ({
-    className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] hover:bg-[#333] ${props.headerStyle === 'TARGET_CHORD_ACTIVE'
+    className: `text-gray-300 flex flex-row w-full text-white h-[36px]  ${(props.index % 2) == 0 ? 'bg-[#222]' :''  } hover:bg-[#333] ${props.headerStyle === 'TARGET_CHORD_ACTIVE'
       ? 'bg-yellow-400 text-black font-bold'
       : props.headerStyle === 'TARGET_CHORD_INACTIVE'
         ? 'bg-[#aaa] text-black font-bold'
@@ -183,9 +185,10 @@ const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
   }),
 ) <{ headerStyle: StatRowStyle }>``;
 
-const RowItem = styled.div.attrs({
-  className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,
-})``;
+const RowItem = styled.div.attrs(
+  (props) => ({
+  className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4 `,
+}))``;
 
 const RowStatItem = styled.div.attrs({
   className: `px-3 2xl:px-6 whitespace-nowrap text-sm w-1/4 font-semibold`,
