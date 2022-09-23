@@ -143,7 +143,7 @@ export function TextPrompt(): ReactElement {
   function whatTextToShow(targetTextLineOne : any, targetCharacterIndex: any){
 
     //target + length
-    let displayArray = []
+    const displayArray = []
     if(allTypedText.length>0 && storedTestTextData != undefined){
      
       (targetCharacterIndex == 0 && targetIndexForWhatErrorTextToShow != allTypedText.length)? setTargetIndexForWhatErrorTextToShow(allTypedText.length) : "do me baby ";
