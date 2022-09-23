@@ -74,6 +74,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.currentTrainingScenario = payload[0] as TrainingScenario;
     state.wordTestNumber = payload[1] as WordTrainingValues;
+    state.allTypedCharactersStore = [];
     console.log('Is this the current traing scenario '+ state.currentTrainingScenario)
    // Pull the chord library from memory if it's there, otherwise pull it from defaults
     if (
@@ -114,6 +115,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     moveIndiciesOfTargetChord(state);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     calculateStatisticsForTargetChord(state);
@@ -192,6 +195,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       }
     },
   ),
+  setCurrentSubindexInTrainingText: action((store, payload) => {
+    store.currentSubindexInTrainingText = payload;
+  }),
   resetTrainingText: action((store) => {
     store.trainingText = [];
     store.currentLineOfTrainingText = 0;
@@ -235,6 +241,10 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setTestCompleteValue: action((state, payload) => {
     state.isTestDone = payload as unknown as boolean;
   }),
+  setAllTypedCharactersStore: action((state, payload) =>
+  {
+    state.allTypedCharactersStore.push(payload);
+  }),
   updateChordsUsedForTraining: action((state, payload) => {
     state.timeOfLastChordStarted = performance.now();
     state.chordsToPullFrom = payload;
@@ -266,6 +276,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   UNSAFE_setTrainingText: action((state, payload) => {
     state.trainingText = payload;
   }),
+  setCompareText: action((state, payload) => {
+    state.compareText = payload;
+  }),
 };
 
 function checkIfShouldProceedToNextTargetChord(
@@ -278,10 +291,15 @@ function checkIfShouldProceedToNextTargetChord(
     : storeState.targetWord + ' ';
   const userHasEnteredChordCorrectly =
     wordToCompare === storeState.typedTrainingText;
-  if (userHasEnteredChordCorrectly) {
+    //Here we allow the user to go to the next work if the press the space
+  if (storeState.typedTrainingText.charAt(storeState.typedTrainingText.length-1) == ' ') {
+    actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');
+    console.log(' ksdf back'+ storeState.typedTrainingText)
+  
   }
+  
 }
 
 function checkIfErrorExistsInUserEnteredText(
@@ -298,6 +316,7 @@ function checkIfErrorExistsInUserEnteredText(
     );
     if (isError) actions.setErrorOccurredWhileAttemptingToTypeTargetChord(true);
   } else if (storeState.typedTrainingText.includes(' ')) {
+
     const isError = !String(storeState.targetWord + ' ')?.startsWith(
       storeState.typedTrainingText,
     );
@@ -356,18 +375,13 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
  //This conditional takes the stored session value timeThat that is set in both ChordTextInput.tsx files. That
  // set value contains the time that the user first typed. We take that value and the value of went the word was complete to determine
  // The value for the first word
- console.log('first typed '+ userIsTypingFirstChord)
- console.log('first typed time that '+ sessionStorage.getItem('timeThat'))
- console.log('first typed performance now '+ performance.now())
 
   if (userIsTypingFirstChord ){
     console.log('In here the check user first ty '+userIsTypingFirstChord)
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
     timeTakenToTypeChord = (performance.now() - sessionStorage.getItem('timeThat'))/10;
-    console.log('first typed time inside loop '+ timeTakenToTypeChord)
-    console.log('first typed get seession time '+sessionStorage.getItem('timeThat'));
-    console.log('first typed performance now '+ performance.now())
+
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea '+ sessionStorage.getItem('timeThat')/10)
     //console.log('oh yea '+store.timeOfLastChordStarted);
@@ -399,6 +413,7 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
 }
 
 function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
+
   const isReadyToAdvanceToNextLineOfTrainingText =
     state.currentSubindexInTrainingText + 1 >=
     state.trainingText[state.currentLineOfTrainingText].length;
@@ -410,6 +425,7 @@ function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
     state.currentSubindexInTrainingText += 1;
   }
 }
+
 
 function generateEmptyChordStatistics(
   library: ChordLibraryRecord,
@@ -439,6 +455,7 @@ return fullTestData;
 }
 
 function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
+
   const lineLength =
     state.currentTrainingScenario === 'ALPHABET'
       ? ALPHABET_LINE_LENGTH

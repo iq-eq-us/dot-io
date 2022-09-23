@@ -30,6 +30,13 @@ export interface TrainingStoreActionsModel {
   toggleTestCompletePage: Action<TrainingStoreModel>;
   setTestCompleteValue: Action<TrainingStoreModel, boolean>;
   setStoredTestTextData: Action<TrainingStoreModel, string[] | undefined>;
+  setCompareText: Action<TrainingStoreModel, string[] | undefined>;
+  setCurrentSubindexInTrainingText: Action<TrainingStoreModel, number>;
+  setAllTypedCharactersStore:  Action<TrainingStoreModel, string>;
+  setPopAllTypedCharactersStore: Action<TrainingStoreModel>;
+  setUserIsEditingPreviousWord: Action<TrainingStoreModel>;
+
+
 
   /**
    * This action allows you to manually update the chords used in a particular training mode
@@ -38,12 +45,14 @@ export interface TrainingStoreActionsModel {
    * occur when updating target chords.
    */
   updateChordsUsedForTraining: Action<TrainingStoreModel, ChordLibraryRecord>;
+
   /**
    * This should not be called directly, it is only used for testing purposes.
    * You should rely on the beginTrainingXYZMode actions to generate training data rather than set it directly with this action.
    * See: `beginTrainingAlphabetMode` || `beginTrainingTrigramMode` || `beginTrainingChordMode` || `beginTrainingLexicalMode`
    */
   UNSAFE_setTrainingText: Action<TrainingStoreModel, string[][]>;
+
 }
 
 export interface TrainingStoreStateModel {
@@ -77,6 +86,7 @@ export interface TrainingStoreStateModel {
   wordTestNumber: WordTrainingValues | undefined;
   isTestDone: boolean | undefined;
   isDisplayingChordEditModal: boolean;
+  compareText: string[] | undefined;
   restartTestMode: boolean,
   chordsToPullFrom: ChordLibraryRecord;
   isShowingPlusIcon: boolean;
@@ -89,6 +99,10 @@ export interface TrainingStoreStateModel {
     CharacterEntryMode | undefined
   >;
   targetCharacterIndex: Computed<TrainingStoreModel, number | undefined>;
+  allTypedCharactersStore: string[] | undefined;
+  userIsEditingPreviousWord: boolean;
+  
+
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

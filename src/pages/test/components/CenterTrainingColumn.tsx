@@ -15,7 +15,6 @@ function CenterTrainingColumn(): ReactElement {
     <React.Fragment>
       <CenterTrainingColumnContainer>
       <SmallScreenButtons/>
-      <TrainingModeSelector/>
       <ChordTextInput />
       <TextPrompt />
       <ItemsContainer>
