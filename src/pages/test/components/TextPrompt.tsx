@@ -190,8 +190,7 @@ export function TextPrompt(): ReactElement {
       }
       }
       if((allTypedText.length - i) == 1){
-        let ms = storedTestTextData.length - allTypedText;
-        let y  = allTypedText.length;
+        const y  = allTypedText.length;
         for(let d = y ; d < (targetTextLineOne.length + targetIndexForWhatErrorTextToShow); d++ ){
           let sd = ''
           for(let r =0; r<storedTestTextData[d].length; r++){
@@ -212,22 +211,22 @@ export function TextPrompt(): ReactElement {
  //compare.slice(0, -1)
  // if(compare.charAt(compare.length -1) 
       
-  let input = document.getElementById('txt_Name') as unknown as HTMLInputElement;
+  const input = document.getElementById('txt_Name') as unknown as HTMLInputElement;
   if(input!= null){
 
   input.onkeydown = (e) => {
     if ( !e.metaKey ) {
         e.stopPropagation();
     }
-    let key = e.keyCode || e.charCode;
-    let sub = indexOfTargetChord -1;
+    const key = e.keyCode || e.charCode;
+    const sub = indexOfTargetChord -1;
 
     if(( key == 8 || key == 46 ) && (targetCharacterIndex + targetIndexForWhatErrorTextToShow == allTypedText.length) && (input.value.length == 0)){
       if(allTypedText[indexOfTargetChord-1] != undefined){
         //if(allTypedText[indexOfTargetChord-1].slice(0, -1) != storedTestTextData[indexOfTargetChord-1]){
 
           input.innerHTML = allTypedText[indexOfTargetChord-1];
-        let tt = allTypedText[allTypedText.length-1];
+        const tt = allTypedText[allTypedText.length-1];
         //input.value = tt;
         allTypedText.pop();
         
@@ -253,7 +252,6 @@ export function TextPrompt(): ReactElement {
     if(word == null || word == undefined || setS == undefined || targetIndex == undefined || index ==undefined)
     return;
   
-    let t = true;
     const conditionalValue = allTypedText.length-targetIndex;
     
 

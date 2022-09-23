@@ -45,15 +45,14 @@ function ChordTextInput(): ReactElement {
   
   function moveIndiciesOfTargetChordBack(state): void {
     const userIsTypingFirstChord = state.currentSubindexInTrainingText === 1;
-    let input = document.getElementById('txt_Name');
-    let bool = false;
+    const input = document.getElementById('txt_Name');
     let tryIt =  indexOfTargetChord;
     console.log('Cum touch')
     input.onkeyup = (e) => {
       if ( !e.metaKey ) {
           e.stopPropagation();
       }
-      let key = e.keyCode || e.charCode;
+      const key = e.keyCode || e.charCode;
   
       if( key == 8 || key == 46 ){
         if(!userIsTypingFirstChord){
