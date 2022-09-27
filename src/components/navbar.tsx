@@ -65,7 +65,7 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
         <div className='text-white'>CPM</div>
         <NavLinksImage src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction()}/>
         </NavMenuLink>
-        <NavMenuLink href='#/manager' aria-current="page">
+        <NavMenuLink href='#/' aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>
@@ -75,7 +75,7 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
-        <NavLinksImage src={DumbellImage} alt="" onClick={()=>TrainingPageFunction()}/>
+        <NavLinksImage src={DumbellImage} alt=""/>
         </NavMenuLink>
         <NavMenuLink href='#/' aria-current="page">
         <LockIconStyle>
