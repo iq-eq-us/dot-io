@@ -63,9 +63,7 @@ function SettingsColumn(): ReactElement {
         }}
         transitionTransform={transitionTransform}
       >  
-       <Label> SetTraining Mode
-        <HelpCircleIcon />
-        </Label>
+
         <TrainingControls/>      
         <HighlightCheckboxSetting
           trainingSettings={trainingSettings}

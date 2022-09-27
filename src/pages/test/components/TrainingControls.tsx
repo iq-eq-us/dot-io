@@ -48,7 +48,7 @@ const AggregateRow = ({ data } : { data: any }) => {
 
 
   const [popUpDisplayValue, setPopUpDisplayValue] = useState(false);
-  const setVariable = wordTestNumber == undefined ? '10' : wordTestNumber;
+  const setVariable = wordTestNumber == undefined ? 25 : wordTestNumber;
   const [count, setCount] = useState(setVariable);
 
   function beginTestBasedOnTrainingSelection (tierValue : string, val : number){

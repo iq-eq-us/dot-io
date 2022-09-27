@@ -18,8 +18,9 @@ function RefreshButton(): ReactElement {
   
   const payload = [];
   payload.push(trainingSceneario);
+  console.log('ajsndjn word test '+currentWordTestNumber)
   payload.push(currentWordTestNumber);
-  function letsGoAgain(){
+  function letsGoAgain() {
     sessionStorage.setItem("Refresh", JSON.stringify(1))
     sessionStorage.removeItem("CutomTierTestValue");
     sessionStorage.removeItem("tempTestDeIncrement");

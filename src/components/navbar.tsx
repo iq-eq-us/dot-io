@@ -17,6 +17,19 @@ import Weight from '../assets/weight_nav_icon_transparent.png';
 import { ROUTER_PATHS } from './router';
 import {FaBars} from 'react-icons/fa'
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import aWPM_Icon from '../assets/aWPM_icon.png';
+import ChM_Icon from '../assets/ChM_icon.png';
+import CM_Icon from '../assets/CM_icon.png';
+import CPM_Icon from '../assets/CPM_icon.png';
+import Crown_Icon from '../assets/Crown_icon.png';
+import StM_Icon from '../assets/StM.png';
+import tWPM_Icon from '../assets/tWPM.png';
+import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
+import { ConnectButton } from '../../src/pages/manager/components/connect';
+
+
+
+
 
 
 
@@ -28,7 +41,7 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
 
   const payload : any [] = []
   payload.push('LEXICAL');
-  payload.push('10');
+  payload.push(25);
 
   function TrainingPageFunction (){
     sessionStorage.removeItem("tempTestDeIncrement");
@@ -48,19 +61,48 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
           <FaBars/>
         </MobileIcon>
         <NavMenu>
-    <NavMenuLink href='#/manager' aria-current="page">
+        <NavMenuLink href='#/' aria-current="page">
+        <div className='text-white'>CPM</div>
+        <NavLinksImage src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction()}/>
+        </NavMenuLink>
+        <NavMenuLink href='#/manager' aria-current="page">
+        <LockIconStyle>
+        <LockIconWhite/>        
+        </LockIconStyle>
         <NavLinksImage src={BooksImage} alt="" />
         </NavMenuLink>
-    <NavMenuLink href='#/' aria-current="page">
+        <NavMenuLink href='#/' aria-current="page">
+        <LockIconStyle>
+        <LockIconWhite/>        
+        </LockIconStyle>        
         <NavLinksImage src={DumbellImage} alt="" onClick={()=>TrainingPageFunction()}/>
         </NavMenuLink>
-            <NavMenuLink href='#/dashboard' aria-current="page">
-      <NavLinksImage src={Sample_user_Icon} alt="" />
+        <NavMenuLink href='#/' aria-current="page">
+        <LockIconStyle>
+        <LockIconWhite/>        
+        </LockIconStyle>        
+        <NavLinksImage src={StM_Icon} alt="" />
+        </NavMenuLink>
+        <NavMenuLink href='#/' aria-current="page">
+        <LockIconStyle>
+        <LockIconWhite/>        
+        </LockIconStyle>        
+        <NavLinksImage src={tWPM_Icon} alt="" />
+        </NavMenuLink>
+        <NavMenuLink href='#/' aria-current="page">
+        <LockIconStyle>
+        <LockIconWhite/>        
+        </LockIconStyle>
+        <NavLinksImage src={CM_Icon} alt="" />
         </NavMenuLink>
         </NavMenu>
         <NavBtn>
-          <NavBtnLink style={{visibility: (isThisAnEnabledDevice == true ? '' : 'hidden'), disabled: (isThisAnEnabledDevice == true ? '' : 'true')}}> {isThisAnEnabledDevice == true ? console.log('Made it here in the navbar true '+ isThisAnEnabledDevice) : console.log('Made it here in the navbar false  '+ isThisAnEnabledDevice)}Connect</NavBtnLink>
+          <NavBtnLink>Connect</NavBtnLink>
+          <NavMenuLink href='#/' aria-current="page">
+        <NavLinksImage src={profileImage} alt="" />
+        </NavMenuLink>
         </NavBtn>
+        
     </NavbarContainer>
     </NavI>
   );
@@ -68,13 +110,10 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
 
 export default Navbar;
 
-const Logo = styled.img.attrs({
-  className: `h-8 w-8 rounded-full`,
+const LockIconStyle = styled.div.attrs({
+  className: `items-center justify-center pl-6`,
 })``;
 
-const Link = styled.a.attrs({
-  className: ` py-2 rounded-md hover:bg-[#333]`,
-})``;
 const LogoLink = styled.a.attrs({
   className: ` py-2 rounded-md`,
 })``;
@@ -113,6 +152,7 @@ const NavLogo = styled.div `
 color: #fff;
 height: 60px;
 width: 124px;
+margin-left: 40px;
 
 justify-self: flex-start;
 cursor:pointer;
@@ -147,22 +187,6 @@ text-align: center;
 }
 `;
 
-const NavItem = styled.li `
-height: 60px;
-`
-const NavLinks = styled.a `
-color: #fff;
-display: flex;
-align-items: center;
-text-decoration: none;
-padding: 0 1rem;
-height: 100%;
-cursor: pointer;
-
-&.active{
-  border-bottom: 3px solid #01bf71;
-}
-`;
 const NavLinksImage = styled.img `
 color: #fff;
 display: flex;
@@ -185,7 +209,6 @@ font-size: 1.5rem;
 const NavBtn = styled.nav `
 display: flex;
 align-items: center;
-
 @media screen and (max-width: 768px) {
   display: none;
 }
@@ -203,6 +226,5 @@ border: none;
 cursor: pointer;
 transition: all 0.2s ease-in-out;
 text-decoration: none;
-
 
 `

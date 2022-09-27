@@ -40,25 +40,11 @@ export function ProgressBar(): ReactElement {
       {Popper}
       {RemainingPopover}
 
-      <TopDataRow>
-        <DataText {...parentProps}>Complete: {chordsConquered}</DataText>
-        <DataText>
-          Level: {currentLevel}
-          {isShowingPlusIcon && <PlusIcon />}
-        </DataText>
-        <DataText {...remainingProps}>Remaining: {chordsRemaining}</DataText>
-      </TopDataRow>
       <BottomProgressBar>
         <ProgressBarOuter>
-          <ProgressBarInner progress={progress} />
+          <ProgressBarInner progress={wpm.toFixed(0)} />
         </ProgressBarOuter>
       </BottomProgressBar>
-      <BottomDataRow>
-        <WPMText>WPM: {(isNaN(wpm)) ? "Calibrating..." : wpm.toFixed(0)}</WPMText>
-        <SpeedGoalText>
-          Speed Goal: {wpmMethodCalculator(parseInt(trainingSettings.speedGoal.toFixed()))}
-        </SpeedGoalText>
-      </BottomDataRow>
     </Container>
   );
 }

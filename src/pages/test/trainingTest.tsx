@@ -13,6 +13,7 @@ import { PreviousTest } from './components/PreviousTests';
 import styled from 'styled-components';
 import TestCompletePage from '../test-complete/testComplete';
 import Footer from '../../../src/components/footer';
+import Intro from '../../../../assets/PromptPages/intro1.png';
 
 /**
  * This is the main training page.
@@ -36,17 +37,14 @@ function TrainingTestPage(): ReactElement {
 
   useEffect(() => {
     document.title = "IQ-EQ Test"
-
     sessionStorage.removeItem("tempTestDeIncrement");
     sessionStorage.removeItem('Refresh');
 
     const payload : any [] = []
-    payload.push('LEXICAL');
+    payload.push('ALPHABET');
     if(wordTestNumber != undefined){
       payload.push(wordTestNumber);
-    } else{
-    payload.push('10');
-    }
+    } 
     beginTraining(payload);    
     
     

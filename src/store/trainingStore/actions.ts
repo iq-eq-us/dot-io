@@ -58,6 +58,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setIsDisplayingTestComplete: action((state, payload) => {
     state.trainingSettings.isTestDone = payload;
   }),
+  setUserIsEditingPreviousWord: action((state, payload) => {
+    state.userIsEditingPreviousWord = payload as unknown as boolean;
+  }),
   clearTemporaryTrainingData: action((state) => {
     state.trainingStatistics = { statistics: [] };
     state.trainingText = [];
@@ -65,6 +68,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setRestartTestMode: action((state, payload) => {
     state.restartTestMode = payload;
   }),
+
+
 
   /**
    * This must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
@@ -96,11 +101,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.chordsToPullFrom,
       payload[0] as TrainingScenario,
     );
-
       if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == false){
         state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
+      } else {
+        state.storedTestTextData =state.storedTestTextData;
       }
-      
+
     state.numberOfChordsForTrainingLevel =
       state.trainingStatistics.statistics.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
@@ -235,9 +241,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   toggleChordEditModal: action((state) => {
     state.isDisplayingChordEditModal = !state.isDisplayingChordEditModal;
   }),
-  toggleTestCompletePage: action((state) => {
-    state.isTestDone = !state.isTestDone;
-  }),
+
   setTestCompleteValue: action((state, payload) => {
     state.isTestDone = payload as unknown as boolean;
   }),
@@ -295,8 +299,7 @@ function checkIfShouldProceedToNextTargetChord(
   if (storeState.typedTrainingText.charAt(storeState.typedTrainingText.length-1) == ' ') {
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
-    actions.setTypedTrainingText('');
-    console.log(' ksdf back'+ storeState.typedTrainingText)
+    actions.setTypedTrainingText('');    
   
   }
   
@@ -343,7 +346,7 @@ function resetTargetChordMetaInformation(state: TrainingStoreModel) {
   state.timeOfLastChordStarted = performance.now();
 }
 
-function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
+export function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
   const id = store.targetWord as unknown as string;
   if (!id) {
     console.error('Could not find chord by id: ' + id);
@@ -398,7 +401,7 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
     (chordStats.averageSpeed * chordStats.numberOfOccurrences +
       chordStats.lastSpeed) /
     (chordStats.numberOfOccurrences + 1);
-  chordStats.numberOfOccurrences++;
+  store.userIsEditingPreviousWord ===false ? chordStats.numberOfOccurrences++ : '';
 
   if (couldFindChordInLibrary) {
     // Replace chord stats object in chord stats list
@@ -410,6 +413,7 @@ function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
   } else {
     store.trainingStatistics.statistics.push(chordStats);
   }
+  store.userIsEditingPreviousWord = false;
 }
 
 function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {

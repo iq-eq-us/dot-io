@@ -68,6 +68,7 @@ export const generateChords = (
 
 
     let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
+    
     console.log(tempDeIncrementValue)
     const newString : string[] = [];
 
@@ -91,56 +92,6 @@ export const generateChords = (
 
     return newString;
 
-  } else if ((parameters.scenario == 'LEXICAL-SENTENCES') && (parameters.wordTestNumberValue != undefined)){
-
-    const wordTestValue = parseInt(parameters.wordTestNumberValue);
-    pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
-     
-    sessionStorage.getItem("tempTestDeIncrement") == undefined ? (sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue))) : '';
-
-    let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
-    sessionStorage.removeItem('Refresh')
-
-
-    const newString : string[] = [];
-    const lexicalSentencesString = parameters.chordsToChooseFrom;
-    //console.log(lexicalSentencesString[one]);
-    //getRandomElementFromArray(content);
-    const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
-
-    const content = lexicalSentencesString;
-    console.log(content)
-    console.log(content.one)
-    const newConstent = content.one[0].split(" ");
-    console.log(newConstent)
-
-    console.log('Content'+lexicalSentencesString);
-    console.log('Content'+content[2]);
-    console.log('Content'+content[3]);
-    console.log('Content'+content[4]);
-    console.log('Content'+content[5]);
-    console.log('Content'+content[6]);
-    console.log('Content'+content[7]);
-
-    
-    while (newConstent.join('').length < parameters.lineLength) {
-      if(0 == tempDeIncrementValue){
-        const valToEvaluate = (newConstent.length-1) + wordTestValue;
-        const loopValue = valToEvaluate - wordTestValue;
-        if(loopValue !< 0){
-        for(let i =0; i<=loopValue; i++){
-          newConstent.pop();
-        }
-      }
-        break;
-      } else{
-        //newConstent.push(content[wordTestValue - tempDeIncrementValue]);
-       tempDeIncrementValue = tempDeIncrementValue - 1;
-      }
-      sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(tempDeIncrementValue))
-    }
-    console.log
-    return newConstent;
   } else if ((parameters.scenario == 'CUSTOMTIER') && (parameters.wordTestNumberValue == undefined)){
 
 // * Uncomment the next two lines to use just the alphabet to test with
@@ -242,13 +193,22 @@ export const generateChords = (
       shouldChooseBasedOnSpeed &&
       parameters.numberOfTargetChords > 0 &&
       parameters.recursionIsEnabledGlobally
-    )
+    ){
       allCharacters.push(
         getRandomElementFromArray(slowestTypedChordsAccountingForDepth),
       );
-    else allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
+ 
+
+    }
+    else{ 
+      allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
+      
+
+    }
   }
-  console.log('Did i make it to all characters '+ allCharacters)
+  for(let i=0; i<allCharacters.length;i++){
+    parameters.storedTestData?.push(allCharacters[i]);
+  }
   return allCharacters;
 }
 };

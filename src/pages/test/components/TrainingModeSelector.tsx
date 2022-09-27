@@ -24,14 +24,6 @@ function TrainingModeSelector(): ReactElement {
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   
 
-  function TrainingPageFunction (){
-    const payload : any [] = []
-  payload.push('LEXICAL');
-  payload.push('10');
-    sessionStorage.removeItem("tempTestDeIncrement");
-    beginTraining(payload);
- 
-  }
   function LearnPageFunction (value: string){
     const payload : any [] = []
     payload.push(value);
@@ -39,14 +31,27 @@ function TrainingModeSelector(): ReactElement {
     beginTraining(payload);
  
   }
+  function TestPageFunction (value: string, testLength : any){
+    const payload : any [] = [];
+    payload.push(value);
+    payload.push(testLength);
+        sessionStorage.removeItem("tempTestDeIncrement");
+    sessionStorage.removeItem('Refresh');
+    sessionStorage.setItem("CustomNonRefresh", JSON.stringify(1))
+    sessionStorage.removeItem("tempTestDeIncrement");
+    beginTraining(payload);
+ 
+  }
     return (
       <React.Fragment>
-      <p>Learn/Test</p> 
       <ItemsContainer>
-      <button className="m-2" onClick={() => LearnPageFunction('ALPHABET')}>Alphabetic</button>
-      <button className="m-2" onClick={() => LearnPageFunction('TRIGRAM')}>Amalgamate</button>
-      <button className="m-2" onClick={() => LearnPageFunction('LEXICAL')}>Lexical</button>
-      <button className="m-2" onClick={() => LearnPageFunction('SUPERSONIC')}>SuperSonic</button>
+      <button className="m-2" onClick={() => LearnPageFunction('ALPHABET')}>Letters</button>
+      <div>/</div>
+      <button className="m-2" onClick={() => LearnPageFunction('TRIGRAM')}>Trigrams</button>
+      <div>/</div>
+      <button className="m-2" onClick={() => LearnPageFunction('LEXICAL')}>Words</button>
+      <div>/</div>
+      <button className="m-2" onClick={() => TestPageFunction('LEXICAL', 25)}>Test</button>
       </ItemsContainer>
       </React.Fragment>
   );
@@ -58,6 +63,7 @@ export default TrainingModeSelector;
 const ItemsContainer = styled.div `
 height: 50px;
 display: flex;
+color: white;
 position: relative;
 flex-direction: row;
 padding: '1rem';  
