@@ -105,7 +105,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
       } else {
         const tempStoredValue = state.storedTestTextData;
-        state.storedTestTextData = tempStoredValue;
+        state.storedTestTextData = [];
       }
 
     state.numberOfChordsForTrainingLevel =
