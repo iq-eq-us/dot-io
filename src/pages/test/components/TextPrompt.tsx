@@ -82,8 +82,8 @@ export function TextPrompt(): ReactElement {
      console.log('fuck me bitvh y '+ targetChordIndex + " hererere "+ targetCharacterIndex + ' '+ targetIndexForWhatErrorTextToShow + " "+ allTypedText.length + displayArray)
       if(targetChordIndex ==0 && targetTextLineOne!=undefined && targetCharacterIndex == 0 && allTypedText.length >=0){
         
-        let tempArray =[];
-        let tempValue = '';
+        const tempArray =[];
+        const tempValue = '';
         tempArray.push(<div className='text-red-500'>{arr}</div>);
         for(let f =1; f<targetTextLineOne.length;f++){
           tempValue = targetTextLineOne[f]+" ";
@@ -164,7 +164,7 @@ export function TextPrompt(): ReactElement {
         }
         //This peice of code handles the expereince while your typing in real time
         if(arr.length != 0 ){
-          let tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow].length - arr.length;
+          const tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow].length - arr.length;
           let tempBufferValues = '';
           let y=  0;
           targetCharacterIndex == 0 ? y =1 : y =0;

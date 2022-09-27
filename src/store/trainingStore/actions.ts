@@ -104,7 +104,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == false){
         state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
       } else {
-        state.storedTestTextData =state.storedTestTextData;
+        const tempStoredValue = state.storedTestTextData;
+        state.storedTestTextData = tempStoredValue;
       }
 
     state.numberOfChordsForTrainingLevel =
