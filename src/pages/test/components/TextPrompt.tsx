@@ -83,7 +83,7 @@ export function TextPrompt(): ReactElement {
       if(targetChordIndex ==0 && targetTextLineOne!=undefined && targetCharacterIndex == 0 && allTypedText.length >=0){
         
         const tempArray =[];
-        const tempValue = '';
+        let tempValue = '';
         tempArray.push(<div className='text-red-500'>{arr}</div>);
         for(let f =1; f<targetTextLineOne.length;f++){
           tempValue = targetTextLineOne[f]+" ";
@@ -130,7 +130,7 @@ export function TextPrompt(): ReactElement {
             displayArray.push(<div className ="text-red-500">{periodsIfLengthOfTypedErrorIsLongerThanChordsLength}</div>)
 
           } else if(targetChordIndex !=0) {
-            let tempValue = storedTestTextData[i].length - allTypedText[i].length;
+            const tempValue = storedTestTextData[i].length - allTypedText[i].length;
             let tempBufferValues = '';
             
             for(let y= 0; y<tempValue; y++) { 
