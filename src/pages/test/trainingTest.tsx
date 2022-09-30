@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import SettingsColumn from './components/SettingsColumn';
 import CenterTrainingColumn from './components/CenterTrainingColumn';
 import { StatisticsColumn } from './components/StatisticsColumn';
@@ -14,6 +14,9 @@ import styled from 'styled-components';
 import TestCompletePage from '../test-complete/testComplete';
 import Footer from '../../../src/components/footer';
 import Intro from '../../../../assets/PromptPages/intro1.png';
+import Images from './components/images';
+import ImageSlider from './components/imageSlider';
+import { SliderData } from './components/SliderData';
 
 /**
  * This is the main training page.
@@ -33,6 +36,7 @@ function TrainingTestPage(): ReactElement {
   const wordTestNumber = useStoreState((store : any) => store.wordTestNumber);
 
   
+  const [toggleValue, setToggleValue] = useState(true);
 
 
   useEffect(() => {
@@ -62,6 +66,19 @@ function TrainingTestPage(): ReactElement {
       <SettingsColumn/>
       <CenterTrainingColumn />
       <PreviousTest/>
+      <div {...(localStorage.getItem("FirstTimeViewingModal") == undefined) ? '' : {className: 'hidden'}}>
+      { toggleValue ? 
+      <div style={modal}> 
+      <div style={modal_content}>
+      <button className="close absolute ml-96 text-5xl text-white" onClick={() => [setToggleValue(!toggleValue), localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true))]}>
+            &times;
+          </button>
+      <ImageSlider slides={SliderData} />
+      </div>
+      </div>
+      : null
+}
+</div>
       </React.Fragment>
        )}
        {(isTrainingTestDone == true) && (
@@ -77,88 +94,21 @@ function TrainingTestPage(): ReactElement {
 
 export default TrainingTestPage;
 
-const TestandStatsContainer = styled.div.attrs({
-  className: 'grid ',
-})``;
+const modal = {
+  position: "absolute" as const, 
+  zIndex: "1" as const, 
+  left: "5%" as const,
+  width: "75%" as const,
+  textAlign: "center" as const,
+  backgroundColor: "rgba(0, 0, 0, 0.25)" as const
+};
 
 
-
-
-const FooterContainer = styled.footer `
-background-color: #181818;
-`
-
-const FooterWrap = styled.div `
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-max-width: 1100px;
-margin: 0 auto;
-`;
-
-const FooterLinksContainer = styled.div `
-display: flex;
-justify-content: center;
-
-@media screen and (max-width: 820px) {
-padding-top: 32px;
-}
-`
-
-const FooterLinksWrapper = styled.div `
-display: flex;
-
-@media screen and (max-width: 820px) {
-flex-direction: column;
-}
-`;
-
-const FooterLinkItems = styled.div `
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-text-align: center;
-width: 300px;
-box-sizing: border-box;
-color #fff
-
-@media screen and (max-width: 420px){
-margin 0;
-padding: 10px;
-width: 100%;
-}
-`;
-
-const FooterLinkTitle = styled.h1 `
-font-size: 14px;
-margin-bottom: 16px
-`
-
-const FooterLink = styled.a `
-color: #fff;
-text-decoration: none;
-margin-bottom: 0.5rem;
-font-size: 14px;
-
-&:hover {
-color: #01bf71;
-transition: 0.3s ease out;
-}
-`;
-
-const FooterLinkLogo = styled.img `
-color: #fff;
-text-decoration: none;
-margin-bottom: 0.5rem;
-font-size: 14px;
-height: 40px;
-display: block;
-margin-left: auto;
-margin-right: auto;
-&:hover {
-color: #01bf71;
-transition: 0.3s ease out;
-}
-`;
+const modal_content = {
+  backgroundColor: "#181818" as const,
+   position: "absolute" as const,
+   top: "20%" as const, 
+   left: "20%" as const, 
+   borderRadius: "5px" as const, 
+   border: "2px solid black" as const
+  }

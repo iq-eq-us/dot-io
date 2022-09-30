@@ -124,7 +124,7 @@ const NavMenuLink = styled.a.attrs({
 
 const NavI = styled.nav `
 background-color: #181818;
-height: 60px;
+height: 63px;
 display: flex;
 justify-content: center;
 align-items: center;
