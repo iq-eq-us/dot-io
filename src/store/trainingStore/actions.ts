@@ -58,6 +58,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setIsDisplayingTestComplete: action((state, payload) => {
     state.trainingSettings.isTestDone = payload;
   }),
+  setTextPromptUnFocused: action((state, payload) => {
+    state.textPromptUnFocused = payload;
+  }),
   setUserIsEditingPreviousWord: action((state, payload) => {
     state.userIsEditingPreviousWord = payload as unknown as boolean;
   }),

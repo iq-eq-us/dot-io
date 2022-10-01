@@ -15,8 +15,8 @@ function ChordTextInput(): ReactElement {
   const restartMode = useStoreState((store) => store.restartTestMode);
   const setRestartTestMode = useStoreActions((store) => store.setRestartTestMode,);
 
-  const trainingStats = useStoreState(
-    (store) => store.trainingStatistics,
+  const setTextPromptUnFocused = useStoreActions(
+    (store) => store.setTextPromptUnFocused,
   );
 
  
@@ -65,7 +65,7 @@ function ChordTextInput(): ReactElement {
         ref={inputRef}
         id="txt_Name"
         autoFocus
-        onBlurCapture={() => isShowingPortal == false ? document.getElementById('txt_Name')?.focus() : document.getElementById('ChordModalInput')?.focus()}
+        onBlurCapture={() => setTextPromptUnFocused(true)}
         onFocus={() => isShowingPortal == true ? document.getElementById('txt_Name')?.focus() : document.getElementById('txt_Name')?.focus()}
         value={textTyped}
         onChange={(e) => {

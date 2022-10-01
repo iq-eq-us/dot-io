@@ -34,7 +34,10 @@ export interface TrainingStoreActionsModel {
   setCurrentSubindexInTrainingText: Action<TrainingStoreModel, number>;
   setAllTypedCharactersStore:  Action<TrainingStoreModel, string>;
   setPopAllTypedCharactersStore: Action<TrainingStoreModel>;
-  setUserIsEditingPreviousWord: Action<TrainingStoreModel>;
+  setUserIsEditingPreviousWord: Action<TrainingStoreModel, boolean>;
+  setTextPromptUnFocused: Action<TrainingStoreModel, boolean>;
+
+
 
 
 
@@ -101,7 +104,7 @@ export interface TrainingStoreStateModel {
   targetCharacterIndex: Computed<TrainingStoreModel, number | undefined>;
   allTypedCharactersStore: string[] | undefined;
   userIsEditingPreviousWord: boolean;
-  
+  textPromptUnFocused: boolean;
 
 }
 

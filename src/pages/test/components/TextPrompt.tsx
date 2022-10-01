@@ -7,12 +7,22 @@ import { indexOf } from 'lodash';
 
 const r = Math.random;
 
+export function TextBluredScreen(){
+
+  const setTextPromptUnFocused = useStoreActions(
+    (store) => store.setTextPromptUnFocused,
+  );
+
+  return <div className="wi bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black" onClick= {()=> [document.getElementById('txt_Name')?.focus(), setTextPromptUnFocused(false)]}>Press Prompt to Re-Focus</div>
+}
 
 export function TextPrompt(): ReactElement {
   const indexOfTargetChord = useStoreState(
     (store : any) => store.currentSubindexInTrainingText,
   );
   
+ 
+
   const firstLineOfTargetText = useStoreState(
     (store : any) => store.targetTextLineOne,
   );
@@ -21,6 +31,10 @@ export function TextPrompt(): ReactElement {
   );
   const isError = useStoreState(
     (store : any) => store.errorOccurredWhileAttemptingToTypeTargetChord,
+  );
+
+  const textPromptUnFocused = useStoreState(
+    (store) => store.textPromptUnFocused,
   );
   const isEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
   const targetCharacterIndex = useStoreState((store : any) => store.targetCharacterIndex);
@@ -268,6 +282,7 @@ export function TextPrompt(): ReactElement {
     </div>
 
     <TextPromptContainer>
+    {textPromptUnFocused ? TextBluredScreen(): ''}
       <ChordRow >
         {(firstLineOfTargetText || [])?.map((chord : any, i : any) => {
           if (characterEntryMode === "CHORD" || i !== indexOfTargetChord){
