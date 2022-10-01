@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { SliderData } from './SliderData';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
-import Model from './TutorialPopUpMenu';
+import PropTypes from 'prop-types';
 
 
-const ImageSlider = ({ slides }) => {
+const ImageSlider = ({ slides } : any) => {
+
+    
   const [current, setCurrent] = useState(0);
   const length = slides.length;
 
