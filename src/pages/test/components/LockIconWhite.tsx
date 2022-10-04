@@ -8,7 +8,7 @@ function LockIconWhite(): JSX.Element {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="white"
+      stroke="grey"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

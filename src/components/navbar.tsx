@@ -69,31 +69,31 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>
-        <NavLinksImage src={BooksImage} alt="" />
+        <NavLinksImageTransparant src={BooksImage} alt="" />
         </NavMenuLink>
         <NavMenuLink href='#/' aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
-        <NavLinksImage src={DumbellImage} alt=""/>
+        <NavLinksImageTransparant src={DumbellImage} alt=""/>
         </NavMenuLink>
         <NavMenuLink href='#/' aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
-        <NavLinksImage src={StM_Icon} alt="" />
+        <NavLinksImageTransparant src={StM_Icon} alt="" />
         </NavMenuLink>
         <NavMenuLink href='#/' aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
-        <NavLinksImage src={tWPM_Icon} alt="" />
+        <NavLinksImageTransparant src={tWPM_Icon} alt="" />
         </NavMenuLink>
         <NavMenuLink href='#/' aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>
-        <NavLinksImage src={CM_Icon} alt="" />
+        <NavLinksImageTransparant src={CM_Icon} alt="" />
         </NavMenuLink>
         </NavMenu>
         <NavBtn>
@@ -190,6 +190,25 @@ text-align: center;
 const NavLinksImage = styled.img `
 color: #fff;
 display: flex;
+align-items: center;
+text-decoration: none;
+padding: 0 1rem;
+cursor: pointer;
+color: #fff;
+height: 40px;
+width: 75px;
+justify-self: flex-start;
+font-size: 1.5rem;
+
+&.active{
+  border-bottom: 3px solid #01bf71;
+}
+`
+
+const NavLinksImageTransparant = styled.img `
+color: #fff;
+display: flex;
+opacity: .5;
 align-items: center;
 text-decoration: none;
 padding: 0 1rem;

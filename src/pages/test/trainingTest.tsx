@@ -70,7 +70,7 @@ function TrainingTestPage(): ReactElement {
       { toggleValue ? 
       <div style={modal}> 
       <div style={modal_content}>
-      <button className="close absolute ml-96 text-5xl text-white" onClick={() => [setToggleValue(!toggleValue), localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true))]}>
+      <button className="close absolute ml-96 text-5xl text-white" onClick={() => [setToggleValue(!toggleValue), localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true)), document.getElementById('txt_Name')?.focus()]}>
             &times;
           </button>
       <ImageSlider slides={SliderData} />

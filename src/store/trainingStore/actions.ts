@@ -108,7 +108,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
       } else {
         const tempStoredValue = state.storedTestTextData;
-        state.storedTestTextData = [];
+        state.storedTestTextData = tempStoredValue;
       }
 
     state.numberOfChordsForTrainingLevel =
@@ -119,6 +119,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     if (payload[0] === 'LEXICOGRAPHIC' || payload[0] === 'SUPERSONIC' || payload[0] === 'CUSTOMTIER')
       state.isDisplayingChordEditModal = true;
     else state.isDisplayingChordEditModal = false;
+
+    document.getElementById('txt_Name')?.focus()
   }),
   proceedToNextWord: action((state) => {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining

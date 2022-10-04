@@ -40,7 +40,7 @@ const ImageSlider = ({ slides } : any) => {
       } 
       )}
       <button className='left-arrow text-white rounded inline-block p-2 ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ' onClick={prevSlide}> {current === 0 ? '' : <>&laquo;</>} </button>
-      <button className='right-arrow text-white rounded inline-block p-2 ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ' onClick={nextSlide}> {current == slides.length-1 ? ['Start Training', localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true))] : <>&raquo;</>} </button>
+      <button className='right-arrow text-white rounded inline-block p-2 ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ' onClick={nextSlide}> {current == slides.length-1 ? ['Start Training', localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true)), document.getElementById('txt_Name')?.focus()] : <>&raquo;</>} </button>
     </section>
   );
 };
