@@ -106,9 +106,11 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     );
       if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == false){
         state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
-      } else {
-        const tempStoredValue = state.storedTestTextData;
-        state.storedTestTextData = tempStoredValue;
+      } else if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == true){
+        state.storedTestTextData = state.storedTestTextData;
+      }else {
+        //const tempStoredValue = state.storedTestTextData;
+        state.storedTestTextData = [];
       }
 
     state.numberOfChordsForTrainingLevel =
