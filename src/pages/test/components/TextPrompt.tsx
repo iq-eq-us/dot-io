@@ -93,7 +93,6 @@ export function TextPrompt(): ReactElement {
 
       let spacesBetweenWords = 0;
       let characterLengthOfTheEntireLine = 0;
-     console.log('fuck me bitvh y '+ targetChordIndex + " hererere "+ targetCharacterIndex + ' '+ targetIndexForWhatErrorTextToShow + " "+ allTypedText.length + displayArray)
       if(targetChordIndex ==0 && targetTextLineOne!=undefined && targetCharacterIndex == 0 && allTypedText.length >=0){
         
         const tempArray =[];

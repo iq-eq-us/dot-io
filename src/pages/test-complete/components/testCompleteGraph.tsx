@@ -69,15 +69,15 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
   },
   series: [
     {
-      name: "Word Per Minute",
+      name: "Cumulative WPM",
       data: wpmDataCalculator(wordPerMinute)
     },
     {
-      name: "Typing Errors",
+      name: "Errors",
       data: wordOccurrences
     },
     {
-      name: "Raw Speed",
+      name: "Individual WPM",
       data: rawSpeedOfCurrentWord
     },
   ],
