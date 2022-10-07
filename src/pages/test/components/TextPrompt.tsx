@@ -175,16 +175,21 @@ export function TextPrompt(): ReactElement {
           displayArray.push(<div className ="text-white">{sd}</div>);
          // displayArray.push(" ");
         }
-        //This peice of code handles the expereince while your typing in real time
+        //This peice of code handles the experience while your typing in real time
         if(arr.length != 0 ){
           const tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow].length - arr.length;
           let tempBufferValues = '';
+          let frontBufferValues = '';
+
           let y=  0;
           targetCharacterIndex == 0 ? y =1 : y =0;
-            for(y; y<tempVal; y++) { 
+            for(y; y<(tempVal- targetCharacterIndex); y++) { 
               tempBufferValues += "."
             }
-         displayArray[indexOfTargetChord]=(<React.Fragment><div className ="text-red-500 flex m-0">{arr}</div>{tempBufferValues.indexOf('.') != -1 ? <div className="text-white m-0">{tempBufferValues}</div>: ''}</React.Fragment>)
+            for(let g = 0; g<targetCharacterIndex; g++) { 
+              frontBufferValues += "."
+            }
+         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-red-500 flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex" >{tempBufferValues}</span>: ''}</div>)
        }
         
       }
@@ -270,7 +275,6 @@ export function TextPrompt(): ReactElement {
     if(setS[setS.length-1] == " "){
       arr =[];
     }
-    console.log('sdjfnsjfjsdfjs111111111111111111')
    return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
     //return arr;
   }
@@ -295,8 +299,7 @@ export function TextPrompt(): ReactElement {
             }
           else{
            //{getCheckAlgo(chord)} //This call checks to see if the a chorded device was used
-
-            return <CharacterEntryChord word={chord} index={targetCharacterIndex} />
+            return <CharacterEntryChord word={chord} index={targetCharacterIndex} wordArray={firstLineOfTargetText} indexOfWord={indexOfTargetChord}/>
           }
           
         })}
@@ -319,15 +322,19 @@ export function TextPrompt(): ReactElement {
   );
 }
 
-export default function CharacterEntryChord({ word, index }: { word: string, index: number | undefined }): ReactElement {
+export default function CharacterEntryChord({ word, index, wordArray, indexOfWord }: { word: string, index: number | undefined, wordArray : string[], indexOfWord : number | undefined }): ReactElement {
   if (index === undefined || index === null)
     return <span className="text-green-500" key={Math.random()}>{word}</span>
 
   const wordSplit = word.split("");  
-  {          console.log('Baby im always here')}
+  const newWordArray = wordArray;
+  let increment;
+  indexOfWord == undefined ? increment = 0 : increment =(wordArray.length - indexOfWord);
+  console.log('Im not undefined im incrememnting' + increment + wordArray.length)
+
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', color: "gray" }}>
+    <div style={{ display: 'flex', flexDirection: 'row', color: "black" }}>
       {wordSplit.slice(0, index).map((char) =>
         <span className="text-green-500" key={Math.random()}>{char}</span>
       )}
@@ -335,6 +342,10 @@ export default function CharacterEntryChord({ word, index }: { word: string, ind
       {wordSplit.slice(index + 1).map((char) =>
         <span className="text-grey" key={Math.random()}>{char}</span>
       )}
+      {//newWordArray.slice(0, indexOfWord).map((char) =>
+        //<span className="text-black" key={Math.random()}>{char}</span>
+     // )
+    }
     </div>
     
   )
