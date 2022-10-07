@@ -107,7 +107,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == false){
         state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
       } else if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == true){
-        state.storedTestTextData = state.storedTestTextData;
+        const tempStoredState = state.storedTestTextData
+        state.storedTestTextData = tempStoredState;
       }else {
         //const tempStoredValue = state.storedTestTextData;
         state.storedTestTextData = [];
