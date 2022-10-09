@@ -17,6 +17,8 @@ const sessionChordingState = sessionStorage.getItem('chordingEnabledDevice');
 
 const globalStoreState: GlobalStoreState = {
   isUsingChordingEnabledDevice: false,
+  isDisplayingSettingsModal: false,
+  isDisplayingStatisticsModal: false,
   
 };
 {console.log('THis is the state of the session in the file '+ sessionChordingState)};

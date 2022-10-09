@@ -5,12 +5,12 @@ export function GearIcon(): ReactElement {
   const setTrainingSettings = useStoreActions(
     (store) => store.setTrainingSettings,
   );
+  const setIsDisplayingSettingsModal = useStoreActions((store: any) => store.setIsDisplayingSettingsModal);
+  const isDisplayingSettingsModal = useStoreState((store: any) => store.isDisplayingSettingsModal);
+
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const onClick = () =>
-    setTrainingSettings({
-      ...trainingSettings,
-      isDisplayingSettingsModal: !trainingSettings.isDisplayingSettingsModal,
-    });
+  setIsDisplayingSettingsModal(!isDisplayingSettingsModal)
 
   return (
     <svg

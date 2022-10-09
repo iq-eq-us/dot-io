@@ -13,12 +13,14 @@ const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
 
 const globalStorageStoreActions: GlobalStoreActions = {
     setIsUsingChordingEnabledDevice: action((state, payload) => {
-        {console.log('Boolean payload value when this is called '+ payload)};
     state.isUsingChordingEnabledDevice = payload as boolean;
-    console.log('Payload asa boolean '+ (payload as boolean));
-    console.log('Payload asa boolean '+ (state.isUsingChordingEnabledDevice));
-
     updateIsChordingEnabledInSessionStorage(payload as boolean);
+  }),
+  setIsDisplayingSettingsModal: action((state, payload) => {
+  state.isDisplayingSettingsModal = payload;
+  }),
+  setIsDisplayingStatisticsModal: action((state, payload) => {
+  state.isDisplayingStatisticsModal = payload;
   }),
 
 }

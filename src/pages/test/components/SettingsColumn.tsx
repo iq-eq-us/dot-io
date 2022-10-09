@@ -27,22 +27,27 @@ function SettingsColumn(): ReactElement {
     (store : any) => store.setTrainingSettings,
   );
 
+  const setIsDisplayingSettingsModal = useStoreActions((store: any) => store.setIsDisplayingSettingsModal);
+  const isDisplayingSettingsModal = useStoreState((store: any) => store.isDisplayingSettingsModal);
+
   const updateTrainingSetting = (newProperty: Record<string, unknown>) =>
     setTrainingSettings({ ...trainingSettings, ...newProperty });
 
   // If the screen size changes from a small size to a large size, show this column
   // If the screen size changes from a large size to a small size, make sure this column is hidden (until the user presses the button to open it again)
  
-  const transitionTransform = `transform -translate-x-full transition-transform ${trainingSettings.isDisplayingSettingsModal && '-translate-x-0'}`;
+  const transitionTransform = `transform -translate-x-full transition-transform ${isDisplayingSettingsModal && '-translate-x-0'}`;
 
   const windowSize = useWindowSize();
   const onClickOutside = () => {
     if (windowSize.width < HIDDEN_BREAKPOINT)
-      updateTrainingSetting({ isDisplayingSettingsModal: false });
+    setIsDisplayingSettingsModal(false);
   };
 
   const handleSettingsTabClick = () => { //This method is used to handle if someone click the settings button
-    updateTrainingSetting({ isDisplayingSettingsModal: !trainingSettings.isDisplayingSettingsModal });
+    const settingsVal = !isDisplayingSettingsModal;
+    setIsDisplayingSettingsModal(settingsVal);
+
 
   };
 
@@ -50,7 +55,7 @@ function SettingsColumn(): ReactElement {
   return (
     <React.Fragment>
     <SettingsColumnContainer
-      isDisplayingModal={trainingSettings.isDisplayingSettingsModal}
+      isDisplayingModal={isDisplayingSettingsModal}
       onClick={onClickOutside}
     >
       <SettingsHeader transitionTransform={transitionTransform} />

@@ -101,7 +101,7 @@ export function TextPrompt(): ReactElement {
         for(let f =1; f<targetTextLineOne.length;f++){
           tempValue = targetTextLineOne[f]+" ";
         
-          tempArray.push(<div className='text-white'>{tempValue}</div>);
+          tempArray.push(<div className='text-pink'>{tempValue}</div>);
         }
         displayArray = tempArray;
         console.log('asjdnjsnfsf '+tempValue +targetTextLineOne+ arr);
@@ -126,7 +126,7 @@ export function TextPrompt(): ReactElement {
             placeholder += "+";
           }
           placeholder += " ";
-          displayArray.push(<div className ="text-white">{placeholder}</div>)
+          displayArray.push(<div className ="text-pink">{placeholder}</div>)
 
           spacesBetweenWords = 0;
 
@@ -150,7 +150,7 @@ export function TextPrompt(): ReactElement {
               tempBufferValues += "."
             }
             
-            displayArray.push(<React.Fragment><div className ="text-red-500">{allTypedText[i].slice(0, -1)}</div>{tempBufferValues.indexOf('.') != -1 ? <div className ="text-white">{tempBufferValues}</div> : ''}</React.Fragment>)
+            displayArray.push(<React.Fragment><div className ="text-red-500" style={{ display: 'flex', flexDirection: 'row'}}>{allTypedText[i].slice(0, -1)}</div>{tempBufferValues.indexOf('.') != -1 ? <div className ="text-pink">{tempBufferValues}</div> : ''}</React.Fragment>)
             
           }
 
@@ -172,7 +172,7 @@ export function TextPrompt(): ReactElement {
           }
           sd += ' ';
            d == y ? sd == sd.slice(1) : sd; 
-          displayArray.push(<div className ="text-white">{sd}</div>);
+          displayArray.push(<div className ="text-red">{sd}</div>);
          // displayArray.push(" ");
         }
         //This peice of code handles the experience while your typing in real time
@@ -182,14 +182,13 @@ export function TextPrompt(): ReactElement {
           let frontBufferValues = '';
 
           let y=  0;
-          targetCharacterIndex == 0 ? y =1 : y =0;
             for(y; y<(tempVal- targetCharacterIndex); y++) { 
               tempBufferValues += "."
             }
             for(let g = 0; g<targetCharacterIndex; g++) { 
               frontBufferValues += "."
             }
-         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-red-500 flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex" >{tempBufferValues}</span>: ''}</div>)
+         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-red m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-red-500 flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-red m-0 flex" >{tempBufferValues}</span>: ''}</div>)
        }
         
       }
@@ -240,7 +239,7 @@ export function TextPrompt(): ReactElement {
   }  
 
 
-   displayArray = displayArray.length == 0 ? <div className='text-white'>[</div>: displayArray;
+   displayArray = displayArray.length == 0 ? <div className='text-pink'>[</div>: displayArray;
 
 }  return displayArray;
   }
@@ -249,11 +248,16 @@ export function TextPrompt(): ReactElement {
 
 
    function letsFix(word, indexOfCharacterInTargetChord, indexOfTargetChord, setS){
-    let arr = [];
+    let arr : string [] = [] ;
     
   
     const conditionalValue = allTypedText.length-indexOfTargetChord;
     
+    if(allTypedText.length == 0 && setS.length !=0){
+      return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
+
+    }
+    console.log('Checking to fix rthe refresh issue '+ allTypedText.length + " yer = "+ setS)
 
     if(setS[setS.length-1] == " " && indexOfTargetChord != allTypedText.length && conditionalValue < 1){
       storeAllTypedText(setS);
@@ -299,7 +303,7 @@ export function TextPrompt(): ReactElement {
             }
           else{
            //{getCheckAlgo(chord)} //This call checks to see if the a chorded device was used
-            return <CharacterEntryChord word={chord} index={targetCharacterIndex} wordArray={firstLineOfTargetText} indexOfWord={indexOfTargetChord}/>
+            return <CharacterEntryChord word={chord} index={targetCharacterIndex} wordArray={firstLineOfTargetText} indexOfWord={indexOfTargetChord} allTypedTextInput={allTypedText}/>
           }
           
         })}
@@ -322,11 +326,13 @@ export function TextPrompt(): ReactElement {
   );
 }
 
-export default function CharacterEntryChord({ word, index, wordArray, indexOfWord }: { word: string, index: number | undefined, wordArray : string[], indexOfWord : number | undefined }): ReactElement {
+export default function CharacterEntryChord({ word, index, wordArray, indexOfWord, allTypedTextInput }: { word: string, index: number | undefined, wordArray : string[], indexOfWord : number | undefined, allTypedTextInput : string[] }): ReactElement {
   if (index === undefined || index === null)
     return <span className="text-green-500" key={Math.random()}>{word}</span>
 
   const wordSplit = word.split("");  
+  const typedTextSplit = allTypedTextInput[0]?.split("");
+  console.log("Split typed tect "+ typedTextSplit + " and the target characer index is "+ index)
   const newWordArray = wordArray;
   let increment;
   indexOfWord == undefined ? increment = 0 : increment =(wordArray.length - indexOfWord);
@@ -338,6 +344,8 @@ export default function CharacterEntryChord({ word, index, wordArray, indexOfWor
       {wordSplit.slice(0, index).map((char) =>
         <span className="text-green-500" key={Math.random()}>{char}</span>
       )}
+      {//for each 
+      }
       <span className="text-blue-500 animate-pulse">{wordSplit[index]}</span>
       {wordSplit.slice(index + 1).map((char) =>
         <span className="text-grey" key={Math.random()}>{char}</span>

@@ -214,6 +214,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     store.currentSubindexInTrainingText = payload;
   }),
   resetTrainingText: action((store) => {
+    store.allTypedCharactersStore = [];
     store.trainingText = [];
     store.currentLineOfTrainingText = 0;
     store.currentSubindexInTrainingText = 0;

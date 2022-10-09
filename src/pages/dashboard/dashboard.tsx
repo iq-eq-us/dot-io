@@ -38,7 +38,6 @@ const Dashboard = (): ReactElement => {
         <Graph/>
           <CardDataRowDisplay />
           {/* This is the most important component in the dashboard. It includes the entire list of training module cards. */}
-          <TrainingCardColumn />
         </Column>
       </TopSectionContainer>
     </DashboardPageContainer>

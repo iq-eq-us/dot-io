@@ -7,9 +7,9 @@ export function SettingsHeader({
 }): ReactElement {
   return (
     <span
-      className={`text-white text-2xl mb-2 font-semibold ${transitionTransform}`}
+      className={`pl-2 text-white text-2xl mb-2 font-semibold ${transitionTransform}`}
     >
-      Settings
+  Settings
     </span>
   );
 }

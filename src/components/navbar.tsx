@@ -61,44 +61,44 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
           <FaBars/>
         </MobileIcon>
         <NavMenu>
-        <NavMenuLink href='#/' aria-current="page">
+        <NavMenuLink aria-current="page">
         <div className='text-white'>CPM</div>
         <NavLinksImage src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction()}/>
         </NavMenuLink>
-        <NavMenuLink href='#/' aria-current="page">
+        <NavMenuLink aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>
         <NavLinksImageTransparant src={BooksImage} alt="" />
         </NavMenuLink>
-        <NavMenuLink href='#/' aria-current="page">
+        <NavMenuLink aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
         <NavLinksImageTransparant src={DumbellImage} alt=""/>
         </NavMenuLink>
-        <NavMenuLink href='#/' aria-current="page">
+        <NavMenuLink aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
         <NavLinksImageTransparant src={StM_Icon} alt="" />
         </NavMenuLink>
-        <NavMenuLink href='#/' aria-current="page">
+        <NavMenuLink  aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
         <NavLinksImageTransparant src={tWPM_Icon} alt="" />
         </NavMenuLink>
-        <NavMenuLink href='#/' aria-current="page">
+        <NavMenuLink aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>
         <NavLinksImageTransparant src={CM_Icon} alt="" />
         </NavMenuLink>
         </NavMenu>
-        <NavBtn>
+        <NavBtn href='#/manager'>
           <NavBtnLink>Connect</NavBtnLink>
-          <NavMenuLink href='#/' aria-current="page">
+          <NavMenuLink href='#/dashboard' aria-current="page">
         <NavLinksImage src={profileImage} alt="" />
         </NavMenuLink>
         </NavBtn>
@@ -130,6 +130,7 @@ justify-content: center;
 align-items: center;
 font-size: 1rem;
 position: sticky;
+padding-top: 10px;
 top: 0;
 z-index: 10;
 
@@ -225,7 +226,7 @@ font-size: 1.5rem;
 `
 
 
-const NavBtn = styled.nav `
+const NavBtn = styled.a `
 display: flex;
 align-items: center;
 @media screen and (max-width: 768px) {

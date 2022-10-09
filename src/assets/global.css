@@ -6,10 +6,3 @@
   box-sizing: border-box;
 }
 
-.manager:not(.connected) button:not(.connect) {
-  visibility: hidden;
-}
-
-.manager.connected button {
-  visibility: visible;
-}

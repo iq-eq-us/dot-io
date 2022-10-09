@@ -6,7 +6,7 @@ export const Column = styled.div.attrs({
   })``;
   
   export const TopSectionContainer = styled.div.attrs({
-    className: `container px-5 py-24 mx-auto `,
+    className: `container px-5 py-12 mx-auto `,
   })``;
   
   export const HorizontalRule = styled.hr.attrs({
