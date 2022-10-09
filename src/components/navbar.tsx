@@ -25,7 +25,7 @@ import Crown_Icon from '../assets/Crown_icon.png';
 import StM_Icon from '../assets/StM.png';
 import tWPM_Icon from '../assets/tWPM.png';
 import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
-import { ConnectButton } from '../../src/pages/manager/components/connect';
+import { ScoresComponent } from './scoresComponent';
 
 
 
@@ -96,8 +96,12 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
         <NavLinksImageTransparant src={CM_Icon} alt="" />
         </NavMenuLink>
         </NavMenu>
-        <NavBtn href='#/manager'>
-          <NavBtnLink>Connect</NavBtnLink>
+        <ScoresComponent/>
+        <NavBtn>
+        <NavMenuLink aria-current="page">
+        <NavLinksImage src={Crown_Icon} alt="" />
+        </NavMenuLink>
+          <NavBtnLink href='#/manager'>Connect</NavBtnLink>
           <NavMenuLink href='#/dashboard' aria-current="page">
         <NavLinksImage src={profileImage} alt="" />
         </NavMenuLink>
@@ -115,7 +119,7 @@ const LockIconStyle = styled.div.attrs({
 })``;
 
 const LogoLink = styled.a.attrs({
-  className: ` py-2 rounded-md`,
+  className: ` py-2 rounded-md ml-36 mr-36`,
 })``;
 
 const NavMenuLink = styled.a.attrs({
@@ -126,7 +130,6 @@ const NavI = styled.nav `
 background-color: #181818;
 height: 63px;
 display: flex;
-justify-content: center;
 align-items: center;
 font-size: 1rem;
 position: sticky;
@@ -146,14 +149,12 @@ height: 60px;
 z-index: 1;
 width: 100%;
 padding 0 24px;
-max-width: 1100px;
 `;
 
 const NavLogo = styled.div `
 color: #fff;
 height: 60px;
 width: 124px;
-margin-left: 40px;
 
 justify-self: flex-start;
 cursor:pointer;
@@ -234,7 +235,7 @@ align-items: center;
 }
 `;
 
-const NavBtnLink = styled.div `
+const NavBtnLink = styled.a `
 border-radius: 50px;
 background: rgb(34 197 94);
 white-space: nowrap;
