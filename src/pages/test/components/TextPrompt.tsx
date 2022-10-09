@@ -101,7 +101,7 @@ export function TextPrompt(): ReactElement {
         for(let f =1; f<targetTextLineOne.length;f++){
           tempValue = targetTextLineOne[f]+" ";
         
-          tempArray.push(<div className='text-pink'>{tempValue}</div>);
+          tempArray.push(<div className='text-white'>{tempValue}</div>);
         }
         displayArray = tempArray;
         console.log('asjdnjsnfsf '+tempValue +targetTextLineOne+ arr);
@@ -126,7 +126,7 @@ export function TextPrompt(): ReactElement {
             placeholder += "+";
           }
           placeholder += " ";
-          displayArray.push(<div className ="text-pink">{placeholder}</div>)
+          displayArray.push(<div className ="text-white">{placeholder}</div>)
 
           spacesBetweenWords = 0;
 
@@ -150,7 +150,7 @@ export function TextPrompt(): ReactElement {
               tempBufferValues += "."
             }
             
-            displayArray.push(<React.Fragment><div className ="text-red-500" style={{ display: 'flex', flexDirection: 'row'}}>{allTypedText[i].slice(0, -1)}</div>{tempBufferValues.indexOf('.') != -1 ? <div className ="text-pink">{tempBufferValues}</div> : ''}</React.Fragment>)
+            displayArray.push(<React.Fragment><div className ="text-red-500" style={{ display: 'flex', flexDirection: 'row'}}>{allTypedText[i].slice(0, -1)}</div>{tempBufferValues.indexOf('.') != -1 ? <div className ="text-white">{tempBufferValues}</div> : ''}</React.Fragment>)
             
           }
 
@@ -172,7 +172,7 @@ export function TextPrompt(): ReactElement {
           }
           sd += ' ';
            d == y ? sd == sd.slice(1) : sd; 
-          displayArray.push(<div className ="text-red">{sd}</div>);
+          displayArray.push(<div className ="text-white">{sd}</div>);
          // displayArray.push(" ");
         }
         //This peice of code handles the experience while your typing in real time
@@ -188,7 +188,7 @@ export function TextPrompt(): ReactElement {
             for(let g = 0; g<targetCharacterIndex; g++) { 
               frontBufferValues += "."
             }
-         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-red m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-red-500 flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-red m-0 flex" >{tempBufferValues}</span>: ''}</div>)
+         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-red-500 flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex" >{tempBufferValues}</span>: ''}</div>)
        }
         
       }
@@ -239,7 +239,7 @@ export function TextPrompt(): ReactElement {
   }  
 
 
-   displayArray = displayArray.length == 0 ? <div className='text-pink'>[</div>: displayArray;
+   displayArray = displayArray.length == 0 ? <div className='text-white'>[</div>: displayArray;
 
 }  return displayArray;
   }
