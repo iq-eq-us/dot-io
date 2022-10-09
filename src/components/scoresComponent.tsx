@@ -1,14 +1,20 @@
 import React, { ReactElement } from 'react';
 import { getHighestWPM } from '../../src/pages/manager/components/chordGraphs';
 import { getAverageWPM } from '../../src/pages/manager/components/chordGraphs';
-
+import styled from 'styled-components';
 
 
 
 export function ScoresComponent(): ReactElement {
+    const HideWhenScreenGetSmallEnough = styled.div `
+    @media screen and (max-width: 1000px) {
+      display: none;
+    }
+    `;
     return (
       <React.Fragment>
-          <div className="h-2 text-white font-mono" style={{fontSize:"11px"}}>
+          <HideWhenScreenGetSmallEnough>
+          <div className="h-2 text-white font-mono" style={{fontSize:"11px" }}>
       <div className="text-center">Hunt &#38; Pecker</div>
       <table>
       <tr>
@@ -40,6 +46,8 @@ export function ScoresComponent(): ReactElement {
 
       </table>
       </div>
+      </HideWhenScreenGetSmallEnough>
       </React.Fragment>
     );
   }
+

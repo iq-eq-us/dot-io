@@ -119,7 +119,7 @@ const LockIconStyle = styled.div.attrs({
 })``;
 
 const LogoLink = styled.a.attrs({
-  className: ` py-2 rounded-md ml-36 mr-36`,
+  className: ` py-2 rounded-md`,
 })``;
 
 const NavMenuLink = styled.a.attrs({
@@ -130,6 +130,7 @@ const NavI = styled.nav `
 background-color: #181818;
 height: 63px;
 display: flex;
+justify-content: center;
 align-items: center;
 font-size: 1rem;
 position: sticky;
@@ -137,7 +138,7 @@ padding-top: 10px;
 top: 0;
 z-index: 10;
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1000px) {
   transition: 0.8s all ease;
 }
 `;
@@ -149,13 +150,13 @@ height: 60px;
 z-index: 1;
 width: 100%;
 padding 0 24px;
+max-width: 1100px;
 `;
 
 const NavLogo = styled.div `
 color: #fff;
 height: 60px;
 width: 124px;
-
 justify-self: flex-start;
 cursor:pointer;
 font-size: 2rem;
@@ -166,7 +167,7 @@ font-family: monospace;
 const MobileIcon = styled.div `
 display: none;
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   display: block;
   position: absolute;
   top: 0;
@@ -183,8 +184,9 @@ display: flex;
 align-items: center;
 list-style: none; 
 text-align: center;
+margin-left: 150px;
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   display: none;
 }
 `;
@@ -230,7 +232,7 @@ font-size: 1.5rem;
 const NavBtn = styled.a `
 display: flex;
 align-items: center;
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   display: none;
 }
 `;

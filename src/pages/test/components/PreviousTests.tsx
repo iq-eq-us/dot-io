@@ -56,10 +56,8 @@ export function PreviousTest(): ReactElement {
     >
       <PreviousTestTableContainer transitionTransform={transitionTransform}>
         <Row>
-         
           <PreviousTestTableTitle />
         </Row>
-
         <PreviousTestTable />
       </PreviousTestTableContainer>
     </StatisticsColumnContainer>
@@ -74,7 +72,7 @@ stroke="currentColor"
 strokeWidth="2"
 strokeLinecap="round"
 strokeLinejoin="round"
-className={`feather feather-bar-chart-2 feather mr-8 feather-settings hover:text-gray-400 text-white cursor-pointer active:text-gray-700 ${trainingSettings.isDisplayingStatisticsModal == true ? 'relative' : 'relative'}`}
+className={`feather feather-bar-chart-2 feather mr-8 feather-settings hover:text-gray-400 text-white cursor-pointer isDisplayingSettingsModal active:text-gray-700 ${trainingSettings.isDisplayingStatisticsModal == true ? 'relative' : 'relative'}`}
 >
 <line x1="18" y1="20" x2="18" y2="10" />
 <line x1="12" y1="20" x2="12" y2="4" />
