@@ -284,16 +284,35 @@ export function TextPrompt(): ReactElement {
 
     console.log('--First line of target text sexy '+newTargetLine )
 
-    for(let i =0; i<firstLineValue?.length; i++){
-      if(i<indexOfTargetChord){
-      let you;
 
-      newTargetLine.splice(i, 1, <div className="text-black">{firstLineOfTargetText[i]}</div>)
-      }
-      else{
+
+    for(let i =0; i<firstLineValue?.length; i++){
+      const temporaryValue ='';
+      let coloredWordToPush = [];
+
+      if(i<indexOfTargetChord){
+        for(let t =0; t<allTypedText[i]?.length; t++){
+
+          let tempCompareValue = allTypedText[i];
+          let tempTargetWord = firstLineOfTargetText[i]
+          tempCompareValue[t] == tempTargetWord[t] ? coloredWordToPush.push( <span className= "text-black m-0 flex" >{tempTargetWord[t]}</span> ): coloredWordToPush.push( <span className="text-gray m-0 flex" >{tempTargetWord[t]}</span>);
+          //console.log('Colored word value 1 '+ allTypedText[i])
+
+        }
+        newTargetLine.splice(i, 1, <React.Fragment><div className="m-0 flex">{coloredWordToPush}</div></React.Fragment>)
+       //console.log('Colored word value 2 '+ firstLineOfTargetText[i] + " " + storedTestTextData[i].splice(0, -1).length)
+      } else{
         newTargetLine.push(firstLineValue[i]);
       }
+
+
     }
+
+
+
+
+
+
     console.log('First line of target text sexy did I eneter if statement' )
 
     console.log('First line of target text sexy'+ targetCharacterIndex )
