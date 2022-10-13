@@ -55,9 +55,6 @@ export function TextPrompt(): ReactElement {
     (store : any) => store.currentSubindexInTrainingText,
   );
 
-  const userIsTypingFirstChord =
-  currentLine == 0 &&
-  currentSubIndex == 1;
 
 
   const set = useStoreActions((store : any) => store.setCompareText);
@@ -281,14 +278,27 @@ export function TextPrompt(): ReactElement {
 
   function colorTargetLine(firstLineValue : any[]){
 
-    const newTargetLine = firstLineValue;
+    const newTargetLine = [];
 
-    for(let i =0; i<indexOfTargetChord; i++){
+    console.log('++First line of target text sexy '+firstLineOfTargetText )
+
+    console.log('--First line of target text sexy '+newTargetLine )
+
+    for(let i =0; i<firstLineValue?.length; i++){
+      if(i<indexOfTargetChord){
       let you;
 
-      you = firstLineOfTargetText[i]
-      newTargetLine.splice(i, 1, <div className="text-black">{you}</div>)
+      newTargetLine.splice(i, 1, <div className="text-black">{firstLineOfTargetText[i]}</div>)
+      }
+      else{
+        newTargetLine.push(firstLineValue[i]);
+      }
     }
+    console.log('First line of target text sexy did I eneter if statement' )
+
+    console.log('First line of target text sexy'+ targetCharacterIndex )
+    console.log('First line of target text sexy '+firstLineOfTargetText )
+    console.log('First line of target text sexy '+newTargetLine )
 
     return newTargetLine;
   }
@@ -354,8 +364,6 @@ export default function CharacterEntryChord({ word, index, wordArray, indexOfWor
       {wordSplit.slice(0, index).map((char) =>
         <span className="text-green-500" key={Math.random()}>{char}</span>
       )}
-      {//for each 
-      }
       <span className="text-blue-500 animate-pulse">{wordSplit[index]}</span>
       {wordSplit.slice(index + 1).map((char) =>
         <span className="text-grey" key={Math.random()}>{char}</span>
