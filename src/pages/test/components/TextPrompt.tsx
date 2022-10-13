@@ -137,7 +137,7 @@ export function TextPrompt(): ReactElement {
             for(let y= 0; y<storedTestTextData[i].length; y++) { 
               periodsIfLengthOfTypedErrorIsLongerThanChordsLength += "."
             }
-            displayArray.push(<div className ="text-red-500">{periodsIfLengthOfTypedErrorIsLongerThanChordsLength}</div>)
+            displayArray.push(<div className ="text-gray">{periodsIfLengthOfTypedErrorIsLongerThanChordsLength}</div>)
 
           } else if(targetChordIndex !=0) {
             const tempValue = storedTestTextData[i].length - allTypedText[i].length;
@@ -147,7 +147,7 @@ export function TextPrompt(): ReactElement {
               tempBufferValues += "."
             }
             
-            displayArray.push(<React.Fragment><div className ="text-red-500" style={{ display: 'flex', flexDirection: 'row'}}>{allTypedText[i].slice(0, -1)}</div>{tempBufferValues.indexOf('.') != -1 ? <div className ="text-white">{tempBufferValues}</div> : ''}</React.Fragment>)
+            displayArray.push(<React.Fragment><div className ="text-gray" style={{ display: 'flex', flexDirection: 'row'}}>{allTypedText[i].slice(0, -1)}</div>{tempBufferValues.indexOf('.') != -1 ? <div className ="text-white">{tempBufferValues}</div> : ''}</React.Fragment>)
             
           }
 
@@ -181,7 +181,7 @@ export function TextPrompt(): ReactElement {
             for(let g = 0; g<targetCharacterIndex; g++) { 
               frontBufferValues += "."
             }
-         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-red-500 flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex" >{tempBufferValues}</span>: ''}</div>)
+         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-gray flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex" >{tempBufferValues}</span>: ''}</div>)
        }
         
       }
@@ -285,11 +285,11 @@ export function TextPrompt(): ReactElement {
       const coloredWordToPush = [];
 
       if(i<indexOfTargetChord){
-        for(let t =0; t<allTypedText[i + targetIndexForWhatErrorTextToShow]?.length; t++){
+        for(let t =0; t<firstLineOfTargetText[targetIndexForWhatErrorTextToShow]?.length; t++){
 
           const tempCompareValue = allTypedText[i + targetIndexForWhatErrorTextToShow];
           const tempTargetWord = firstLineOfTargetText[i]
-          tempCompareValue[t] == tempTargetWord[t] ? coloredWordToPush.push( <span className= "text-black m-0 flex" >{tempTargetWord[t]}</span> ): coloredWordToPush.push( <span className="text-gray m-0 flex" >{tempTargetWord[t]}</span>);
+          tempCompareValue[t] == tempTargetWord[t] ? coloredWordToPush.push( <span className= "text-black m-0 flex" >{tempTargetWord[t]}</span> ): coloredWordToPush.push( <span className="text-red-500 m-0 flex" >{tempTargetWord[t]}</span>);
           //console.log('Colored word value 1 '+ allTypedText[i])
 
         }
@@ -349,7 +349,7 @@ export function TextPrompt(): ReactElement {
 
 export default function CharacterEntryChord({ word, index, wordArray, indexOfWord, allTypedTextInput }: { word: string, index: number | undefined, wordArray : string[], indexOfWord : number | undefined, allTypedTextInput : string[] }): ReactElement {
   if (index === undefined || index === null)
-    return <span className="text-green-500" key={Math.random()}>{word}</span>
+    return <span className="text-black" key={Math.random()}>{word}</span>
 
   const wordSplit = word.split("");  
   const typedTextSplit = allTypedTextInput[0]?.split("");
@@ -363,16 +363,12 @@ export default function CharacterEntryChord({ word, index, wordArray, indexOfWor
   return (
     <div style={{ display: 'flex', flexDirection: 'row', color: "gray" }}>
       {wordSplit.slice(0, index).map((char) =>
-        <span className="text-green-500" key={Math.random()}>{char}</span>
+        <span className="text-black" key={Math.random()}>{char}</span>
       )}
       <span className="text-blue-500 animate-pulse">{wordSplit[index]}</span>
       {wordSplit.slice(index + 1).map((char) =>
         <span className="text-grey" key={Math.random()}>{char}</span>
       )}
-      {//newWordArray.slice(0, indexOfWord).map((char) =>
-        //<span className="text-black" key={Math.random()}>{char}</span>
-     // )
-    }
     </div>
     
   )

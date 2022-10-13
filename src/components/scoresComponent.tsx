@@ -15,7 +15,9 @@ export function ScoresComponent(): ReactElement {
       <React.Fragment>
           <HideWhenScreenGetSmallEnough>
           <div className="h-2 text-white font-mono" style={{fontSize:"11px" }}>
-      <div className="text-center">Hunt &#38; Pecker</div>
+      {
+      //<div className="text-center">Hunt &#38; Pecker</div>
+      }
       <table>
       <tr>
     <td>{getHighestWPM()}</td>

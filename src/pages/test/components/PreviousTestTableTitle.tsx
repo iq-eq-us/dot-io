@@ -6,7 +6,7 @@ export function PreviousTestTableTitle(): ReactElement {
 
   return (
     <span className="text-white text-2xl font-semibold">
-      Previous Test History
+      Statistics
     </span>
   );
 }

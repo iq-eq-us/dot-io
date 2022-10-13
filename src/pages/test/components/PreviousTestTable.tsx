@@ -139,7 +139,7 @@ const Header = () => {
         WPM
       </HeaderItemRow>
       <HeaderItemRow helpText="Your Average WPM for this test.">
-        AWPM
+        Errors
       </HeaderItemRow>
       <HeaderItemRow helpText="Your highest WPM for a word typed during this test.">
         Times
