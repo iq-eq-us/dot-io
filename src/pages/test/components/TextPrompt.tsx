@@ -285,7 +285,7 @@ export function TextPrompt(): ReactElement {
       const coloredWordToPush = [];
 
       if(i<indexOfTargetChord){
-        for(let t =0; t<firstLineOfTargetText[targetIndexForWhatErrorTextToShow]?.length; t++){
+        for(let t =0; t<firstLineOfTargetText[i]?.length; t++){
 
           const tempCompareValue = allTypedText[i + targetIndexForWhatErrorTextToShow];
           const tempTargetWord = firstLineOfTargetText[i]
