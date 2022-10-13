@@ -13,7 +13,7 @@ export function TextBluredScreen(){
     (store) => store.setTextPromptUnFocused,
   );
 
-  return <div className="wi bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black" onClick= {()=> [document.getElementById('txt_Name')?.focus(), setTextPromptUnFocused(false)]}>Press Prompt to Re-Focus</div>
+  return <div className="wi from-green-800	 bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black" onClick= {()=> [document.getElementById('txt_Name')?.focus(), setTextPromptUnFocused(false)]}>Press Prompt to Re-Focus</div>
 }
 
 export function TextPrompt(): ReactElement {
@@ -158,15 +158,11 @@ export function TextPrompt(): ReactElement {
       }
       }
       if((allTypedText.length - i) == 1){
-       // console.log('porn entered the if')
-       // console.log('porn target'+ targetIndexForWhatErrorTextToShow + " linelength "+ targetTextLineOne.length)
         const y  = allTypedText.length;
         for(let d = y ; d < (targetTextLineOne.length + targetIndexForWhatErrorTextToShow); d++ ){
-        //  console.log('porn entered the first for loop if')
 
           let sd = ''
           for(let r =0; r<storedTestTextData[d]?.length; r++){
-         //   console.log('porn entered the second for loop if')
 
           sd += "+";
           }
@@ -283,6 +279,20 @@ export function TextPrompt(): ReactElement {
     //return arr;
   }
 
+  function colorTargetLine(firstLineValue : any[]){
+
+    const newTargetLine = firstLineValue;
+
+    for(let i =0; i<indexOfTargetChord; i++){
+      let you;
+
+      you = firstLineOfTargetText[i]
+      newTargetLine.splice(i, 1, <div className="text-black">{you}</div>)
+    }
+
+    return newTargetLine;
+  }
+
   return (
 <React.Fragment>
   <div className ="text-red-500">
@@ -291,7 +301,7 @@ export function TextPrompt(): ReactElement {
     <TextPromptContainer>
     {textPromptUnFocused ? TextBluredScreen(): ''}
       <ChordRow >
-        {(firstLineOfTargetText || [])?.map((chord : any, i : any) => {
+        {(colorTargetLine(firstLineOfTargetText) || [])?.map((chord : any, i : any) => {
           if (characterEntryMode === "CHORD" || i !== indexOfTargetChord){
             return <Chord
               key={r()}
@@ -340,7 +350,7 @@ export default function CharacterEntryChord({ word, index, wordArray, indexOfWor
 
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', color: "black" }}>
+    <div style={{ display: 'flex', flexDirection: 'row', color: "gray" }}>
       {wordSplit.slice(0, index).map((char) =>
         <span className="text-green-500" key={Math.random()}>{char}</span>
       )}

@@ -46,7 +46,7 @@ const Manager = (): ReactElement => {
     <div className="font-mono text-xl ml-2">Layout</div>
     <ImportChords/>
     <Export/>
-    <div className="h-1 w-6/12 bg-green-500 rounded mb-10" />
+    <div className="h-1 w-6/12 mt-6 bg-green-500 rounded mb-10" />
     <div className="font-mono text-xl ml-2">Library</div>
     <ImportChords/>
     <Download/>
