@@ -68,7 +68,7 @@ export function TextPrompt(): ReactElement {
   const [letterPressed, setLetterPressed] = useState([]);
   const [keyDownTime, setKeyDownTime] = useState(performance.now());
   const [currentWord, setCurrentWord] = useState(undefined);
-  let [targetIndexForWhatErrorTextToShow, setTargetIndexForWhatErrorTextToShow] = useState(0);
+  const [targetIndexForWhatErrorTextToShow, setTargetIndexForWhatErrorTextToShow] = useState(0);
 
 
 
