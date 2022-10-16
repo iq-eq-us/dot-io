@@ -97,12 +97,12 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
         </NavMenuLink>
         </NavMenu>
         <ScoresComponent/>
-        <NavBtn className="animate-pulse">
+        <NavBtn>
         <NavMenuLink aria-current="page">
         <NavLinksImage src={Crown_Icon} alt="" />
         </NavMenuLink>
           <NavBtnLink href='#/manager'>Connect</NavBtnLink>
-          <NavMenuLink href='#/dashboard' aria-current="page">
+          <NavMenuLink aria-current="page">
         <NavLinksImage src={profileImage} alt="" />
         </NavMenuLink>
         </NavBtn>

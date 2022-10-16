@@ -29,7 +29,6 @@ function TrainingModeSelector(): ReactElement {
     payload.push(value);
     sessionStorage.removeItem("tempTestDeIncrement");
     beginTraining(payload);
- 
   }
   function TestPageFunction (value: string, testLength : any){
     const payload : any [] = [];
@@ -40,13 +39,12 @@ function TrainingModeSelector(): ReactElement {
     sessionStorage.setItem("CustomNonRefresh", JSON.stringify(1))
     sessionStorage.removeItem("tempTestDeIncrement");
     beginTraining(payload);
-    document.getElementById('txt_Name')?.focus()
  
   }
     return (
       <React.Fragment>
       <ItemsContainer>
-      <button className="m-2" onClick={() => [LearnPageFunction('ALPHABET'), document.getElementById('txt_Name')?.focus()]}>Letters</button>
+      <button className="m-2" onClick={() => [LearnPageFunction('ALPHABET')]}>Letters</button>
       <div>/</div>
       <button className="m-2" onClick={() => [LearnPageFunction('TRIGRAM'), document.getElementById('txt_Name')?.focus()]}>Trigrams</button>
       <div>/</div>

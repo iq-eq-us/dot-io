@@ -20,10 +20,10 @@ export function ScoresComponent(): ReactElement {
       }
       <table>
       <tr>
-    <td>{getHighestWPM()}</td>
+    <td>-</td>
     <td>tWPM</td>
     <td/>
-    <td>{getAverageWPM()}</td>
+    <td>-</td>
     <td>aWPM</td>
 
   </tr>

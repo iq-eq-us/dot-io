@@ -293,6 +293,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setCompareText: action((state, payload) => {
     state.compareText = payload;
   }),
+  
 };
 
 function checkIfShouldProceedToNextTargetChord(
@@ -544,7 +545,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       storedTestData: state.storedTestTextData,  
     });
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
-
+  document.getElementById('txt_Name')?.focus()
 
 };
 

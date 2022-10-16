@@ -13,7 +13,7 @@ export function TextBluredScreen(){
     (store) => store.setTextPromptUnFocused,
   );
 
-  return <div className="wi from-green-800	 bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black" onClick= {()=> [document.getElementById('txt_Name')?.focus(), setTextPromptUnFocused(false)]}>Press Prompt to Re-Focus</div>
+  return <div className="wi from-green-800	 bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black" onClick= {()=> [document.getElementById('txt_Name')?.focus(), setTextPromptUnFocused(false)]}>Click to Re-Focus</div>
 }
 
 export function TextPrompt(): ReactElement {
@@ -68,7 +68,7 @@ export function TextPrompt(): ReactElement {
   const [letterPressed, setLetterPressed] = useState([]);
   const [keyDownTime, setKeyDownTime] = useState(performance.now());
   const [currentWord, setCurrentWord] = useState(undefined);
-  const [targetIndexForWhatErrorTextToShow, setTargetIndexForWhatErrorTextToShow] = useState(0);
+  let [targetIndexForWhatErrorTextToShow, setTargetIndexForWhatErrorTextToShow] = useState(0);
 
 
 
@@ -90,8 +90,9 @@ export function TextPrompt(): ReactElement {
 
       let spacesBetweenWords = 0;
       let characterLengthOfTheEntireLine = 0;
-      if(targetChordIndex ==0 && targetTextLineOne!=undefined && targetCharacterIndex == 0 && allTypedText.length >=0){
-        
+
+      if(targetChordIndex ==0 && targetTextLineOne!=undefined && allTypedText.length >=0){
+
         const tempArray =[];
         let tempValue = '';
         tempArray.push(<div className='text-red-500'>{arr}</div>);
@@ -106,7 +107,6 @@ export function TextPrompt(): ReactElement {
       } 
 
      
-
     for(let i = targetIndexForWhatErrorTextToShow; i<allTypedText.length; i++){
 
 
@@ -146,8 +146,22 @@ export function TextPrompt(): ReactElement {
             for(let y= 0; y<tempValue; y++) { 
               tempBufferValues += "."
             }
-            
-            displayArray.push(<React.Fragment><div className ="text-gray" style={{ display: 'flex', flexDirection: 'row'}}>{allTypedText[i].slice(0, -1)}</div>{tempBufferValues.indexOf('.') != -1 ? <div className ="text-white">{tempBufferValues}</div> : ''}</React.Fragment>)
+            const thisNewArray = []
+
+            //This for loop returns after a word is complete. It checks if word the user typed is inccorect and if it is shows the incorrect words at the bottom of the word
+            console.log('This thu porn ')
+            for(let t =0; t<storedTestTextData[i]?.length; t++){
+
+              const tempCompareValue = allTypedText[i];
+              const tempTargetWord = storedTestTextData[i];
+              if(tempCompareValue != undefined){
+              tempCompareValue[t] == (tempTargetWord[t] == undefined ? '' : tempTargetWord[t]) ? thisNewArray.push( <span className= "text-white m-0 flex" >{tempTargetWord[t]}</span> ): thisNewArray.push( <span className=" m-0 flex" >{tempCompareValue[t]}</span>);
+              }
+              else{
+                thisNewArray.push( <span className= "text-white m-0 flex" >{tempTargetWord[t]}</span>);
+              }
+            }
+            displayArray.push(<span className= "m-0 flex" >{thisNewArray}</span>);
             
           }
 
@@ -246,11 +260,10 @@ export function TextPrompt(): ReactElement {
   
     const conditionalValue = allTypedText.length-indexOfTargetChord;
     
-    if(allTypedText.length == 0 && setS.length !=0){
-      return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
+    //if(allTypedText.length == 0 && setS.length !=0){
+    //  return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
 
-    }
-    console.log('Checking to fix rthe refresh issue '+ allTypedText.length + " yer = "+ setS)
+   // }
 
     if(setS[setS.length-1] == " " && indexOfTargetChord != allTypedText.length && conditionalValue < 1){
       storeAllTypedText(setS);
@@ -258,6 +271,7 @@ export function TextPrompt(): ReactElement {
       arr = [];
       return;
    }
+
    console.log('Tough '+ indexOfTargetChord + "Length of alltypedArry "+ allTypedText.length+ " "+ allTypedText + ' '+ setS)
   
   //Add if the target index of the second array that houses content .length is greater than 1 we read that in
@@ -272,6 +286,7 @@ export function TextPrompt(): ReactElement {
     if(setS[setS.length-1] == " "){
       arr =[];
     }
+    console.log('This thu arrauhy '+arr)
    return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
     //return arr;
   }
@@ -280,18 +295,21 @@ export function TextPrompt(): ReactElement {
 
     const newTargetLine = [];
 
-
     for(let i =0; i<firstLineValue?.length; i++){
       const coloredWordToPush = [];
-
       if(i<indexOfTargetChord){
         for(let t =0; t<firstLineOfTargetText[i]?.length; t++){
 
           const tempCompareValue = allTypedText[i + targetIndexForWhatErrorTextToShow];
-          const tempTargetWord = firstLineOfTargetText[i]
-          tempCompareValue[t] == tempTargetWord[t] ? coloredWordToPush.push( <span className= "text-black m-0 flex" >{tempTargetWord[t]}</span> ): coloredWordToPush.push( <span className="text-red-500 m-0 flex" >{tempTargetWord[t]}</span>);
-          //console.log('Colored word value 1 '+ allTypedText[i])
-
+          const tempTargetWord = firstLineOfTargetText[i];
+          //console.log('Colored word value '+ allTypedText[i + targetIndexForWhatErrorTextToShow] + tempCompareValue.length);
+          // bevause the length og the gitdy line is larger than second we run into issues
+          if(tempCompareValue != undefined){
+          tempCompareValue[t] == (tempTargetWord[t] == undefined ? '' : tempTargetWord[t]) ? coloredWordToPush.push( <span className= "text-black m-0 flex" >{tempTargetWord[t]}</span> ): coloredWordToPush.push( <span className="text-red-500 m-0 flex" >{tempTargetWord[t]}</span>);
+          }
+          else{
+            coloredWordToPush.push( <span className= "text-red m-0 flex" >{tempTargetWord[t]}</span>);
+          }
         }
         newTargetLine.splice(i, 1, <React.Fragment><div className="m-0 flex">{coloredWordToPush}</div></React.Fragment>)
       } else{
@@ -353,11 +371,9 @@ export default function CharacterEntryChord({ word, index, wordArray, indexOfWor
 
   const wordSplit = word.split("");  
   const typedTextSplit = allTypedTextInput[0]?.split("");
-  console.log("Split typed tect "+ typedTextSplit + " and the target characer index is "+ index)
   const newWordArray = wordArray;
   let increment;
   indexOfWord == undefined ? increment = 0 : increment =(wordArray.length - indexOfWord);
-  console.log('Im not undefined im incrememnting' + increment + wordArray.length)
 
 
   return (
