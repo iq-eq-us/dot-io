@@ -400,7 +400,7 @@ export function TextPrompt(): ReactElement {
   }
   function isFocused (){
     const inputValue = document.getElementById('txt_Name') as HTMLInputElement;
-    var isFocused = (document.activeElement === inputValue);
+    const isFocused = (document.activeElement === inputValue);
     if(!isFocused){
       console.log('Is focused 234'+ isFocused)
       return TextBluredScreen();
