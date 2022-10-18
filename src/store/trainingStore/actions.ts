@@ -257,7 +257,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   }),
   setAllTypedCharactersStore: action((state, payload) =>
   {
-    state.allTypedCharactersStore.push(payload);
+    state.allTypedCharactersStore?.push(payload);
   }),
   updateChordsUsedForTraining: action((state, payload) => {
     state.timeOfLastChordStarted = performance.now();

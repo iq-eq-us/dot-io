@@ -1,4 +1,20 @@
-  const getCheckAlgo = (chordValue)  => {
+import React, { ReactElement, useState } from 'react';
+import { FaBorderStyle } from 'react-icons/fa';
+import styled from 'styled-components';
+import { useStoreState, useStoreActions } from '../../../store/store';
+import { TrainingStoreModel } from '../../../../src/models/trainingStore';
+import { indexOf } from 'lodash';
+  
+  
+const [bestKeyTime, setBestKeyTime] = useState([]);
+const [letterPressed, setLetterPressed] = useState([]);
+const [keyDownTime, setKeyDownTime] = useState(performance.now());
+const [currentWord, setCurrentWord] = useState(undefined);
+
+const setChordingEnabled = useStoreActions((store : any) => store.setIsUsingChordingEnabledDevice);
+const isEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
+
+  export const ChordingEnabledAlgorithm = (chordValue)  => {
     
     window.performance = window.performance || {};
     performance.now = 
@@ -76,4 +92,5 @@
   };
 
   }//End of the first if statement 
+  //console.log('Baby youre enabled');
   }

@@ -2,8 +2,6 @@ import React, { ReactElement, useState } from 'react';
 import { FaBorderStyle } from 'react-icons/fa';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
-import { TrainingStoreModel } from '../../../../src/models/trainingStore';
-import { indexOf } from 'lodash';
 
 const r = Math.random;
 
@@ -21,7 +19,9 @@ export function TextPrompt(): ReactElement {
     (store : any) => store.currentSubindexInTrainingText,
   );
   
- 
+  const setTextPromptUnFocused = useStoreActions(
+    (store) => store.setTextPromptUnFocused,
+  );
 
   const firstLineOfTargetText = useStoreState(
     (store : any) => store.targetTextLineOne,
@@ -36,28 +36,15 @@ export function TextPrompt(): ReactElement {
   const textPromptUnFocused = useStoreState(
     (store) => store.textPromptUnFocused,
   );
-  const isEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
+
   const targetCharacterIndex = useStoreState((store : any) => store.targetCharacterIndex);
   const characterEntryMode = useStoreState((store : any) => store.characterEntryMode);
-  const setChordingEnabled = useStoreActions((store : any) => store.setIsUsingChordingEnabledDevice);
   const storeAllTypedText = useStoreActions((store : any) => store.setAllTypedCharactersStore);
   const allTypedText = useStoreState((store : any) => store.allTypedCharactersStore);
   const userIsEditingPreviousWord = useStoreState((store : any) => store.userIsEditingPreviousWord);
   const setTypedTrainingText = useStoreActions((store : any) => store.setTypedTrainingText);
   const storedTestTextData = useStoreState((store : any) => store.storedTestTextData);
 
-
-
-  const currentLine = useStoreState(
-    (store : any) => store.currentLineOfTrainingText,
-  );
-  const currentSubIndex = useStoreState(
-    (store : any) => store.currentSubindexInTrainingText,
-  );
-
-
-
-  const set = useStoreActions((store : any) => store.setCompareText);
   const setS = useStoreState((store : any) => store.compareText);
   const setCurrentSubindexInTrainingText = useStoreActions((store : any) => store.setCurrentSubindexInTrainingText);
   const setEditingPreviousWord = useStoreActions((store) => store.setUserIsEditingPreviousWord,);
@@ -70,12 +57,90 @@ export function TextPrompt(): ReactElement {
   const [currentWord, setCurrentWord] = useState(undefined);
   const [targetIndexForWhatErrorTextToShow, setTargetIndexForWhatErrorTextToShow] = useState(0);
 
+  const setChordingEnabled = useStoreActions((store : any) => store.setIsUsingChordingEnabledDevice);
+
+  const isChordingEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
+
+  const ChordingEnabledAlgorithm = (chordValue)  => {
+    
+    window.performance = window.performance || {};
+    performance.now = 
+    performance.now       ||
+    performance.mozNow     ||
+    performance.msNow      ||
+    performance.oNow       ||
+    performance.webkitNow  ||
+    Date.now * 1.0; /*none found - fallback to browser default */
 
 
-  //return whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
+  const body = document.getElementById('txt_Name');
+  let isKeyDown = false;
+  if(sessionStorage.getItem('chordingEnabledDevice') == undefined || sessionStorage.getItem('chordingEnabledDevice') == 'false'){
+
+  if(currentWord != chordValue && currentWord != undefined) {
+    let numberOfBestTimesUnderTen = 0;
+      if(letterPressed.includes('Backspace') && bestKeyTime.length>2){
+          for(let i =0; i<bestKeyTime.length-1; i++){
+            if(bestKeyTime[i] < 15) {
+              numberOfBestTimesUnderTen++;
+            }
+          }
+      }
+      if(numberOfBestTimesUnderTen >= 2){
+        setChordingEnabled(true);
+      }
+      setBestKeyTime([]);
+      setLetterPressed([]);
+   
+  }
+
+  currentWord != chordValue ? setCurrentWord(chordValue) : '';//This may need to run to set the value of the chord we're testing
+
+
+  body.onkeydown = function (e) {
+    if ( !e.metaKey ) {
+        e.stopPropagation();
+    }
+
+    if (!isKeyDown) {
+      isKeyDown = true;
+      console.log(keyDownTime);
+      setKeyDownTime(performance.now());
+    }
+    console.log(keyDownTime);
+  };
+
+  body.onkeyup = function (e) {
+    if ( !e.metaKey ) {
+      e.stopPropagation();
+    }
+    isKeyDown = false;
+    const upTime = performance.now();
+    const heldTime = Math.ceil(upTime - keyDownTime);
+    console.log(keyDownTime);
+    console.log(keyDownTime);
+    console.log('Uptime '+ upTime);
+    const tempBestTime = Math.min(10000, heldTime);
+    bestKeyTime.push(tempBestTime);
+    letterPressed.push(e.key);
+    //let scanRate = Math.min(1000 / (bestKeyTime), 1000);
+    //console.log(keyDownTime.length);
+    console.log('Just e '+e.type)
+    console.log('Just e 2 '+e.key)
+
+    setBestKeyTime(bestKeyTime => [...bestKeyTime]);
+    setLetterPressed(letterPressed => [...letterPressed]);
+    console.log('This is the Best Time '+bestKeyTime);
+    console.log('This is the associated letter pressed '+ letterPressed);
+
+
+  };
+
+  }//End of the first if statement 
+  //console.log('Baby youre enabled');
+  }
 
   function whatTextToShow(targetTextLineOne : any, targetChordIndex: any, indexOfCharacterInTargetChord: any, arr: any){
-//     && indexOfTargetChord == 0 
 
 
     let displayArray = [];
@@ -93,16 +158,29 @@ export function TextPrompt(): ReactElement {
 
       if(targetChordIndex ==0 && targetTextLineOne!=undefined && allTypedText.length >=0){
 
-        const tempArray =[];
+        const tempArray = [];
         let tempValue = '';
-        tempArray.push(<div className='text-red-500'>{arr}</div>);
+        let tempBufferInThefront = '';
+        let tempBufferInTheBack = '';
+
+        const tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow].length - arr.length;
+
+        let y=  0;
+          for(y; y<(tempVal- targetCharacterIndex); y++) { 
+            tempBufferInTheBack += "."
+          }
+          for(let g = 0; g<targetCharacterIndex; g++) { 
+            tempBufferInThefront += "."
+          }
+        tempArray.push(<React.Fragment><span className="text-white m-0 flex">{tempBufferInThefront}</span><div className='text-red-500'>{arr}</div><span className="text-white m-0 flex">{tempBufferInTheBack}</span></React.Fragment>)
+
         for(let f =1; f<targetTextLineOne.length;f++){
           tempValue = targetTextLineOne[f]+" ";
         
           tempArray.push(<div className='text-white'>{tempValue}</div>);
         }
+        
         displayArray = tempArray;
-        console.log('asjdnjsnfsf '+tempValue +targetTextLineOne+ arr);
         return displayArray;
       } 
 
@@ -149,7 +227,6 @@ export function TextPrompt(): ReactElement {
             const thisNewArray = []
 
             //This for loop returns after a word is complete. It checks if word the user typed is inccorect and if it is shows the incorrect words at the bottom of the word
-            console.log('This thu porn ')
             for(let t =0; t<storedTestTextData[i]?.length; t++){
 
               const tempCompareValue = allTypedText[i];
@@ -216,6 +293,8 @@ export function TextPrompt(): ReactElement {
     if ( !e.metaKey ) {
         e.stopPropagation();
     }
+    setKeyDownTime(performance.now());
+
     const key = e.keyCode || e.charCode;
     const sub = indexOfTargetChord -1;
 
@@ -228,7 +307,6 @@ export function TextPrompt(): ReactElement {
         //input.value = tt;
         const compare = storeAllTypedText[indexOfTargetChord-1+targetIndexForWhatErrorTextToShow];
         //compare.slice(0, -1) == storedTestTextData[indexOfTargetChord+targetIndexForWhatErrorTextToShow]
-        //console.log('porn +='+ allTypedText[(indexOfTargetChord-1)+targetIndexForWhatErrorTextToShow].slice(0, -1) +" storedTestData"+ storedTestTextData[(indexOfTargetChord-1)+targetIndexForWhatErrorTextToShow])
        if(allTypedText[(indexOfTargetChord-1)+targetIndexForWhatErrorTextToShow].slice(0, -1) != storedTestTextData[(indexOfTargetChord-1)+targetIndexForWhatErrorTextToShow] && (indexOfTargetChord !=0)){
         setEditingPreviousWord(true);
         setCurrentSubindexInTrainingText(sub);
@@ -251,7 +329,6 @@ export function TextPrompt(): ReactElement {
 }  return displayArray;
   }
 
-  
 
 
    function letsFix(word, indexOfCharacterInTargetChord, indexOfTargetChord, setS){
@@ -321,6 +398,17 @@ export function TextPrompt(): ReactElement {
 
     return newTargetLine;
   }
+  function isFocused (){
+    const inputValue = document.getElementById('txt_Name') as HTMLInputElement;
+    var isFocused = (document.activeElement === inputValue);
+    if(!isFocused){
+      console.log('Is focused 234'+ isFocused)
+      return TextBluredScreen();
+    } else{
+      setTextPromptUnFocused(false)
+      console.log('Is focused '+ isFocused)
+    }
+  }
 
   return (
 <React.Fragment>
@@ -328,7 +416,7 @@ export function TextPrompt(): ReactElement {
     </div>
 
     <TextPromptContainer>
-    {textPromptUnFocused ? TextBluredScreen(): ''}
+    {textPromptUnFocused ? isFocused() : isFocused()}
       <ChordRow >
         {(colorTargetLine(firstLineOfTargetText) || [])?.map((chord : any, i : any) => {
           if (characterEntryMode === "CHORD" || i !== indexOfTargetChord){
@@ -341,7 +429,7 @@ export function TextPrompt(): ReactElement {
             </Chord>
             }
           else{
-           //{getCheckAlgo(chord)} //This call checks to see if the a chorded device was used
+           {ChordingEnabledAlgorithm(chord)} //This call checks to see if the a chorded device was used
             return <CharacterEntryChord word={chord} index={targetCharacterIndex} wordArray={firstLineOfTargetText} indexOfWord={indexOfTargetChord} allTypedTextInput={allTypedText}/>
           }
           

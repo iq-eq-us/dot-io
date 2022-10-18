@@ -69,7 +69,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
   },
   series: [
     {
-      name: "Cumulative WPM",
+      name: "Cumulative CPM",
       data: wpmDataCalculator(wordPerMinute)
     },
     {
@@ -77,7 +77,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
       data: wordOccurrences
     },
     {
-      name: "Individual WPM",
+      name: "Individual CPM",
       data: rawSpeedOfCurrentWord
     },
   ],
@@ -197,7 +197,6 @@ export function TestCompleteGraph(): ReactElement {
 
     let tempConst = 0;
     const chordsToChooseFrom = JSON.parse(localStorage.getItem('chordsToChooseFrom'));
-    console.log('this is the stored ' +localStorage.getItem('SAVED_STATS_STORAGE_KEY'));
     currentTrainingSetting.statistics.forEach((d : any) => {
 
       if(d.displayTitle.length * d.numberOfOccurrences != 0) {
@@ -214,11 +213,10 @@ export function TestCompleteGraph(): ReactElement {
           const avgSpeedMilliseconds2 = d.lastSpeed * 10;
           const millisecondsPerCharacter2 = avgSpeedMilliseconds2/5;
           const averageCharacterPerMin2 = 60000/millisecondsPerCharacter2;
-          const wpm2 = averageCharacterPerMin2/5;
+          const wpm2 = averageCharacterPerMin2;
 
-          wordPerMinute.push(d.averageSpeed.toFixed(0));
+        wordPerMinute.push(d.averageSpeed.toFixed(0)/5);
          rawSpeedOfCurrentWord.push(wpm2.toFixed(0));
-         console.log('Like it raw '+ rawSpeedOfCurrentWord);
         
       }
 
