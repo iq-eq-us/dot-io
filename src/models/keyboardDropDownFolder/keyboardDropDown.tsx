@@ -60,7 +60,7 @@ export let pickerNone = false;
     pickerV1 = false;
     pickerLite = false;
    }
-   ((currentTrainingScenario !=null) ? startTrainingOver(payload): console.log(''));
+   ((currentTrainingScenario !=null) ? startTrainingOver(payload): '');
    triggerResize();
 }
 
@@ -69,14 +69,14 @@ export let pickerNone = false;
       setSelectedOption(value);
       returnElement(value);
       setIsOpen(false);
-      ((currentTrainingScenario !=null) ? startTrainingOver(payload): console.log(''));
+      ((currentTrainingScenario !=null) ? startTrainingOver(payload): '');
       triggerResize();
     };
     
     React.useEffect(() => {
       pickerLite = false;
       pickerV1 = true;
-     ((currentTrainingScenario !=null) ? startTrainingOver(payload): console.log(''));
+     ((currentTrainingScenario !=null) ? startTrainingOver(payload): '');
      triggerResize();
      const checkIfClickedOutside = (e :any) => {
       // If the menu is open and the clicked target is not within the menu,

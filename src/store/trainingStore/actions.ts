@@ -97,7 +97,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         (state.currentTrainingScenario),
       ) as ChordLibraryRecord;
-    }
+    } 
 
     state.trainingSettings = generateTrainingSettings(state as unknown as TrainingStoreStateModel);
 

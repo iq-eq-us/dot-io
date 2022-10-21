@@ -24,10 +24,6 @@ function EditChordsModal(): ReactElement {
   const isShowingPortal = useStoreState(
     (store) => store.isDisplayingChordEditModal,
   );
-  const isTestDoneValue = useStoreState(
-    (store) => store.isTestDone,
-  );
-
   const trainingMode = useStoreState((store) => store.currentTrainingScenario);
   const [chords, setChords] = useState(getDefaultChords(trainingMode));
   const [tempChords, setTempChords] = useState(chords);
@@ -97,10 +93,8 @@ function EditChordsModal(): ReactElement {
   };
 
    const confirmEditing = () => {
-     console.log('refresh '+isTestDoneValue);
     sessionStorage.removeItem("CutomTierTestValue");
     sessionStorage.removeItem("tempTestDeIncrement");
-    console.log('Check if in refresh')
     //console.log('Here is where this is being called');
     
     if (typeof trainingScenario === "string")
