@@ -40,7 +40,7 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
 
   const payload : any [] = []
   payload.push('LEXICAL');
-  payload.push(25);
+  payload.push(26);
 
   function TrainingPageFunction (){
     sessionStorage.removeItem("tempTestDeIncrement");

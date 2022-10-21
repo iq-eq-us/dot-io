@@ -50,7 +50,7 @@ function TrainingModeSelector(): ReactElement {
       <div>/</div>
       <button className="m-2" onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus()]}>Words</button>
       <div>/</div>
-      <button className="m-2" onClick={() => [TestPageFunction('LEXICAL', 25), document.getElementById('txt_Name')?.focus()]}>Test</button>
+      <button className="m-2" onClick={() => [TestPageFunction('LEXICAL', 26), document.getElementById('txt_Name')?.focus()]}>Test</button>
       </ItemsContainer>
       </React.Fragment>
   );

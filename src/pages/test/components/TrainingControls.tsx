@@ -48,7 +48,7 @@ const AggregateRow = ({ data } : { data: any }) => {
 
 
   const [popUpDisplayValue, setPopUpDisplayValue] = useState(false);
-  const setVariable = wordTestNumber == undefined ? 25 : wordTestNumber;
+  const setVariable = wordTestNumber == undefined ? 26 : wordTestNumber;
   const [count, setCount] = useState(setVariable);
 
   function beginTestBasedOnTrainingSelection (tierValue : string, val : number){
@@ -113,7 +113,7 @@ useEffect(() => {
         <AggregateStatRow>
         <RowStatItemName >Words: </RowStatItemName>
         <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 10)} style={ (count == 10 && (currentTrainingScenario == 'LEXICAL') ) ? {color: '#1e90ff'} :{} }>10</RowStatItem>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 25)} style={ (count == 25 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>25</RowStatItem>
+        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 26)} style={ (count == 26 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>25</RowStatItem>
         <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 50)} style={ (count == 50 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>50</RowStatItem>
         <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 75)} style={ (count == 75 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>75</RowStatItem>
         </AggregateStatRow>
