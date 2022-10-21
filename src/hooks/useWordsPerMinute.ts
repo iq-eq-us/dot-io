@@ -125,7 +125,7 @@ export const useWordsPerMinute = (): number => {
           averageSpeedCount++; 
           const currentDate = new Date();
 
-          wordTestNumber !=null||undefined ? [storeAverageData( averageSpeed, currentDate, currentChordSpeed, averageDailyCount), storeCharactersPerMinute(currentDate, averageSpeed, averageDailyCount)] : '';//This checks to make sure we are in a testing teir
+          wordTestNumber !=null||undefined ? [storeAverageData( averageSpeed, currentDate, currentChordSpeed, averageDailyCount)] : '';//This checks to make sure we are in a testing teir
           if(currentChordSpeed>=100 && (currentChordSpeed != 6276)){
           //storeMasteredData(currentDate, currentChordSpeed);
           

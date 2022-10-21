@@ -33,3 +33,37 @@ export const defaultTrainingSettings: TrainingSettingsState = {
   isTestDone: false,
   restartTestMode: false,
 };
+
+export const defaultTrigramsTestTraining: TrainingSettingsState = {
+  isHighlightingKeys: true,
+  isUsingRecursion: true,
+  autoOrCustom: 'AUTO',
+  targetChords: 8,
+  speedGoal: 20,
+  recursionRate: 95,
+  isErrorBurst: false,
+  isDisplayingHUD: true,
+  contrastPercentage: 100,
+  isAutoWrite: true,
+  isDisplayingSettingsModal: false,
+  isDisplayingStatisticsModal: false,
+  isTestDone: false,
+  restartTestMode: false,
+};
+
+export const defaultAlphabeticTestTraining: TrainingSettingsState = {
+  isHighlightingKeys: true,
+  isUsingRecursion: true,
+  autoOrCustom: 'AUTO',
+  targetChords: 8,
+  speedGoal: 40,
+  recursionRate: 95,
+  isErrorBurst: false,
+  isDisplayingHUD: true,
+  contrastPercentage: 100,
+  isAutoWrite: true,
+  isDisplayingSettingsModal: false,
+  isDisplayingStatisticsModal: false,
+  isTestDone: false,
+  restartTestMode: false,
+};

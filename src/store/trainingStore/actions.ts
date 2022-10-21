@@ -2,7 +2,7 @@ import { action, actionOn, Actions, thunkOn } from 'easy-peasy';
 import type { ChordLibraryRecord } from '../../data/chordLibrary';
 import { generateChords } from '../../helpers/generateTrainingData';
 import type { TrainingScenario } from '../../models/trainingScenario';
-import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
+import { defaultTrainingSettings, defaultAlphabeticTestTraining, defaultTrigramsTestTraining } from '../../models/trainingSettingsStateModel';
 import { _keyMapDefaults  } from "../../pages/manager/controls/maps";
 
 import {
@@ -99,6 +99,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       ) as ChordLibraryRecord;
     }
 
+    state.trainingSettings = generateTrainingSettings(state as unknown as TrainingStoreStateModel);
 
     state.trainingStatistics = generateEmptyChordStatistics(
       state.chordsToPullFrom,
@@ -272,10 +273,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     const oldDisplay = {
       settings: state.trainingSettings.isDisplayingSettingsModal,
       stats: state.trainingSettings.isDisplayingStatisticsModal,
-    };
-    state.trainingSettings = JSON.parse(
-      JSON.stringify(defaultTrainingSettings),
-    );
+    };    
     state.trainingSettings.isDisplayingStatisticsModal = oldDisplay.stats;
     state.trainingSettings.isDisplayingSettingsModal = oldDisplay.settings;
     state.timeTakenToTypePreviousChord = 0;
@@ -316,6 +314,28 @@ function checkIfShouldProceedToNextTargetChord(
   
 }
 
+function generateTrainingSettings(storeState: TrainingStoreStateModel){
+
+  if(storeState.currentTrainingScenario == 'ALPHABET'){
+    console.log('Porn on me baby 1'+storeState.currentTrainingScenario)
+
+   return JSON.parse(JSON.stringify(defaultAlphabeticTestTraining))
+  } 
+  else if(storeState.currentTrainingScenario == 'TRIGRAM'){
+    console.log('Porn on me baby 2'+storeState.currentTrainingScenario)
+    return JSON.parse(JSON.stringify(defaultTrigramsTestTraining),)
+  } 
+  else if(storeState.currentTrainingScenario == undefined) {
+    console.log('Porn on me baby 3'+storeState.currentTrainingScenario)
+    return JSON.parse(JSON.stringify(defaultAlphabeticTestTraining),)
+  }
+  else {
+    console.log('Porn on me baby 4 '+storeState.currentTrainingScenario)
+    return JSON.parse(JSON.stringify(defaultTrainingSettings),)
+  }
+  
+}
+
 function checkIfErrorExistsInUserEnteredText(
   storeState: TrainingStoreStateModel,
   isInAlphabetMode: boolean,
@@ -344,7 +364,7 @@ function resetTrainingStore(state: TrainingStoreStateModel) {
   state.timeOfLastChordStarted = performance.now();
   state.timeTakenToTypePreviousChord = 0;
   state.timeAtTrainingStart = performance.now();
-  state.trainingSettings = JSON.parse(JSON.stringify(defaultTrainingSettings));
+  state.trainingSettings = generateTrainingSettings(state);
   state.typedTrainingText = '';
   state.currentLevel = 0;
   state.isTestDone = false;

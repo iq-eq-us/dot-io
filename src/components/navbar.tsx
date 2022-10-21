@@ -32,7 +32,6 @@ import { ScoresComponent } from './scoresComponent';
 
 
 
-
 const Navbar = (): ReactElement => {
   const history = useHistory();
 

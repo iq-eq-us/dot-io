@@ -12,7 +12,6 @@ const [keyDownTime, setKeyDownTime] = useState(performance.now());
 const [currentWord, setCurrentWord] = useState(undefined);
 
 const setChordingEnabled = useStoreActions((store : any) => store.setIsUsingChordingEnabledDevice);
-const isEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
 
   export const ChordingEnabledAlgorithm = (chordValue)  => {
     

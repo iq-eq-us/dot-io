@@ -6,7 +6,7 @@ import {
 import {
   ConvertStringToKeyHighlightPositionsLite,
 } from '../../helpers/convertStringToKeyHighlightPositionsCharachorderLite';
-import { defaultTrainingSettings } from '../../models/trainingSettingsStateModel';
+import { defaultTrainingSettings, defaultAlphabeticTestTraining } from '../../models/trainingSettingsStateModel';
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
 
 /**
@@ -22,7 +22,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   compareText: [],
   currentLineOfTrainingText: 0,
   currentSubindexInTrainingText: 0,
-  trainingSettings: JSON.parse(JSON.stringify(defaultTrainingSettings)),
+  trainingSettings: JSON.parse(JSON.stringify(defaultAlphabeticTestTraining)),
   errorOccurredWhileAttemptingToTypeTargetChord: false,
   timeOfLastChordStarted: 0,
   timeTakenToTypePreviousChord: 0,

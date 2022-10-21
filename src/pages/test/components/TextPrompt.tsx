@@ -96,7 +96,7 @@ export function TextPrompt(): ReactElement {
 
   currentWord != chordValue ? setCurrentWord(chordValue) : '';//This may need to run to set the value of the chord we're testing
 
-
+  if(body!= null){
   body.onkeydown = function (e) {
     if ( !e.metaKey ) {
         e.stopPropagation();
@@ -109,6 +109,7 @@ export function TextPrompt(): ReactElement {
     }
     console.log(keyDownTime);
   };
+
 
   body.onkeyup = function (e) {
     if ( !e.metaKey ) {
@@ -135,6 +136,7 @@ export function TextPrompt(): ReactElement {
 
 
   };
+}
 
   }//End of the first if statement 
   //console.log('Baby youre enabled');
