@@ -18,11 +18,14 @@ import { CustomTrainingSettingsBox } from './CustomTrainingSettingsBox';
 import TrainingControls from './TrainingControls';
 import styled from 'styled-components';
 import HelpCircleIcon from './HelpCircleIcon';
+import { isNumber } from 'lodash';
 
 function TrainingModeSelector(): ReactElement {
 
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
-  
+  const trainingScenario = useStoreState((store: any) => store.currentTrainingScenario);
+  const testValue = useStoreState((store: any) => store.wordTestNumber);
+
 
   function LearnPageFunction (value: string){
     const payload : any [] = []
@@ -44,13 +47,13 @@ function TrainingModeSelector(): ReactElement {
     return (
       <React.Fragment>
       <ItemsContainer>
-      <button className="m-2" onClick={() => [LearnPageFunction('ALPHABET')]}>Letters</button>
+      <button {...trainingScenario == 'ALPHABET' ? {className:" text-white m-2"}: {className:" text-neutral-400 m-2"} } onClick={() => [LearnPageFunction('ALPHABET')]}>Letters</button>
       <div>/</div>
-      <button className="m-2" onClick={() => [LearnPageFunction('TRIGRAM'), document.getElementById('txt_Name')?.focus()]}>Trigrams</button>
+      <button  {...trainingScenario == 'TRIGRAM' ? {className:" text-white m-2"}: {className:" text-neutral-400 m-2"} } onClick={() => [LearnPageFunction('TRIGRAM'), document.getElementById('txt_Name')?.focus()]}>Trigrams</button>
       <div>/</div>
-      <button className="m-2" onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus()]}>Words</button>
+      <button {...trainingScenario == 'LEXICAL'&& isNumber(testValue) !=true ? {className:" text-white m-2"}: {className:" text-neutral-400 m-2"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus()]}>Words</button>
       <div>/</div>
-      <button className="m-2" onClick={() => [TestPageFunction('LEXICAL', 26), document.getElementById('txt_Name')?.focus()]}>Test</button>
+      <button {...trainingScenario == 'LEXICAL' && isNumber(testValue) ? {className:" text-white m-2"}: {className:" text-neutral-400 m-2"} } onClick={() => [TestPageFunction('LEXICAL', 26), document.getElementById('txt_Name')?.focus()]}>Test</button>
       </ItemsContainer>
       </React.Fragment>
   );

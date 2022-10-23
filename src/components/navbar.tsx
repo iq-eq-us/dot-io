@@ -26,6 +26,7 @@ import StM_Icon from '../assets/StM.png';
 import tWPM_Icon from '../assets/tWPM.png';
 import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
 import { ScoresComponent } from './scoresComponent';
+import InfoIcon from '../../src/pages/test/components/InfoIcon';
 
 
 
@@ -104,6 +105,7 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
           <NavMenuLink aria-current="page">
         <NavLinksImage src={profileImage} alt="" />
         </NavMenuLink>
+        <InfoIcon/>
         </NavBtn>
         
     </NavbarContainer>

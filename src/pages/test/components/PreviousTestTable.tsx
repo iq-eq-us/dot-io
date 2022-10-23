@@ -89,7 +89,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItem>{item?.averageSpeed.toFixed()}</RowItem>
+        <RowItem>{(item?.averageSpeed.toFixed()*5)+ '/' +item?.averageSpeed.toFixed()}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>
@@ -133,10 +133,10 @@ const Header = () => {
       }}
     >
       <HeaderItemRow helpText="The type of test associated with these metrics.">
-        Test
+        Word
       </HeaderItemRow>
       <HeaderItemRow helpText="Your WPM for this test.">
-        WPM
+        CPM/WPM
       </HeaderItemRow>
       <HeaderItemRow helpText="Your Average WPM for this test.">
         Errors
