@@ -27,7 +27,8 @@ import tWPM_Icon from '../assets/tWPM.png';
 import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
 import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
-
+import ImageSlider from '../../src/pages/test/components/imageSlider';
+import { SliderData } from '../../src/pages/test/components/SliderData';
 
 
 
@@ -37,7 +38,9 @@ const Navbar = (): ReactElement => {
   const history = useHistory();
 
 const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
-const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordingEnabledDevice);
+const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
+const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
+
 
   const payload : any [] = []
   payload.push('LEXICAL');
@@ -51,18 +54,19 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
     }
   }
 
+
   return (
     <NavI>
     <NavbarContainer>
     <LogoLink href='#/' aria-current="page" >
         <NavLogo onClick={()=>TrainingPageFunction()}>dot i/o</NavLogo>
         </LogoLink>
-    <MobileIcon>
+         <MobileIcon>
           <FaBars/>
         </MobileIcon>
         <NavMenu>
         <NavMenuLink aria-current="page">
-        <div className='text-white'>CPM</div>
+        <div className='text-white font-mono'>CPM</div>
         <NavLinksImage src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction()}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">
@@ -105,8 +109,10 @@ const isThisAnEnabledDevice = useStoreState((store: any) => store.isUsingChordin
           <NavMenuLink aria-current="page">
         <NavLinksImage src={profileImage} alt="" />
         </NavMenuLink>
-        <InfoIcon/>
         </NavBtn>
+        <button onClick={() => setIsDisplayingIntroductionModal(true)}>
+        <InfoIcon/>
+        </button>
         
     </NavbarContainer>
     </NavI>

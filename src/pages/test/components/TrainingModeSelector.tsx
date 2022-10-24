@@ -47,13 +47,13 @@ function TrainingModeSelector(): ReactElement {
     return (
       <React.Fragment>
       <ItemsContainer>
-      <button {...trainingScenario == 'ALPHABET' ? {className:" text-white m-2"}: {className:" text-neutral-400 m-2"} } onClick={() => [LearnPageFunction('ALPHABET')]}>Letters</button>
+      <button {...trainingScenario == 'ALPHABET' ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('ALPHABET')]}>Letters</button>
       <div>/</div>
-      <button  {...trainingScenario == 'TRIGRAM' ? {className:" text-white m-2"}: {className:" text-neutral-400 m-2"} } onClick={() => [LearnPageFunction('TRIGRAM'), document.getElementById('txt_Name')?.focus()]}>Trigrams</button>
+      <button  {...trainingScenario == 'TRIGRAM' ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('TRIGRAM'), document.getElementById('txt_Name')?.focus()]}>Trigrams</button>
       <div>/</div>
-      <button {...trainingScenario == 'LEXICAL'&& isNumber(testValue) !=true ? {className:" text-white m-2"}: {className:" text-neutral-400 m-2"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus()]}>Words</button>
+      <button {...trainingScenario == 'LEXICAL'&& isNumber(testValue) !=true ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus()]}>Words</button>
       <div>/</div>
-      <button {...trainingScenario == 'LEXICAL' && isNumber(testValue) ? {className:" text-white m-2"}: {className:" text-neutral-400 m-2"} } onClick={() => [TestPageFunction('LEXICAL', 26), document.getElementById('txt_Name')?.focus()]}>Test</button>
+      <button {...trainingScenario == 'LEXICAL' && isNumber(testValue) ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [TestPageFunction('LEXICAL', 26), document.getElementById('txt_Name')?.focus()]}>Test</button>
       </ItemsContainer>
       </React.Fragment>
   );

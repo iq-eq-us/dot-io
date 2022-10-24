@@ -41,15 +41,15 @@ export function TextPrompt(): ReactElement {
   const characterEntryMode = useStoreState((store : any) => store.characterEntryMode);
   const storeAllTypedText = useStoreActions((store : any) => store.setAllTypedCharactersStore);
   const allTypedText = useStoreState((store : any) => store.allTypedCharactersStore);
-  const userIsEditingPreviousWord = useStoreState((store : any) => store.userIsEditingPreviousWord);
+  const currentTrainingScenario = useStoreState((store : any) => store.currentTrainingScenario);
   const setTypedTrainingText = useStoreActions((store : any) => store.setTypedTrainingText);
   const storedTestTextData = useStoreState((store : any) => store.storedTestTextData);
-
   const setS = useStoreState((store : any) => store.compareText);
   const setCurrentSubindexInTrainingText = useStoreActions((store : any) => store.setCurrentSubindexInTrainingText);
   const setEditingPreviousWord = useStoreActions((store) => store.setUserIsEditingPreviousWord,);
   const isEditingPreviousWord = useStoreState((store : any) => store.userIsEditingPreviousWord,);
-
+  const setChordingEnabled = useStoreActions((store : any) => store.setIsUsingChordingEnabledDevice);
+  const isChordingEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
 
   const [bestKeyTime, setBestKeyTime] = useState([]);
   const [letterPressed, setLetterPressed] = useState([]);
@@ -57,9 +57,7 @@ export function TextPrompt(): ReactElement {
   const [currentWord, setCurrentWord] = useState(undefined);
   const [targetIndexForWhatErrorTextToShow, setTargetIndexForWhatErrorTextToShow] = useState(0);
 
-  const setChordingEnabled = useStoreActions((store : any) => store.setIsUsingChordingEnabledDevice);
 
-  const isChordingEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
 
   const ChordingEnabledAlgorithm = (chordValue)  => {
     
@@ -146,28 +144,24 @@ export function TextPrompt(): ReactElement {
 
 
     let displayArray = [];
-    //console.log('Target character index '+targetCharacterIndex + " alltyped "+ allTypedText.length);
     if(allTypedText.length>=0 && storedTestTextData != undefined){
-      //console.log('Target character index '+targetCharacterIndex + " alltyped "+ allTypedText.length);
 
-      ((indexOfTargetChord-1 == 0 ) && targetIndexForWhatErrorTextToShow != allTypedText.length-1)? setTargetIndexForWhatErrorTextToShow(allTypedText.length-1) : "do me baby ";
+      ((indexOfTargetChord-1 == 0 ) && targetIndexForWhatErrorTextToShow != allTypedText.length-1)? setTargetIndexForWhatErrorTextToShow(allTypedText.length-1) : "";
      if (targetIndexForWhatErrorTextToShow > allTypedText.length){
       setTargetIndexForWhatErrorTextToShow(0);
      }
-
       let spacesBetweenWords = 0;
       let characterLengthOfTheEntireLine = 0;
 
       if(targetChordIndex ==0 && targetTextLineOne!=undefined && allTypedText.length >=0){
-
         const tempArray = [];
         let tempValue = '';
         let tempBufferInThefront = '';
         let tempBufferInTheBack = '';
+        let y=  0;
+
 
         const tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow].length - arr.length;
-
-        let y=  0;
           for(y; y<(tempVal- targetCharacterIndex); y++) { 
             tempBufferInTheBack += "."
           }
@@ -193,9 +187,10 @@ export function TextPrompt(): ReactElement {
       const compare = allTypedText[i];
       characterLengthOfTheEntireLine +=storedTestTextData[i].length;;
 
-      if(compare.charAt(compare.length -1) == ' '){ 
+      if(compare.charAt(compare.length -1) == ' ' || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1])){ 
 
-        if(compare.slice(0, -1) == storedTestTextData[i]){
+        if(compare.slice(0, -1) == storedTestTextData[i] || (currentTrainingScenario && compare == storedTestTextData[i] )){
+          console.log('current training '+ currentTrainingScenario)
 
           spacesBetweenWords += storedTestTextData[i].length;
           let placeholder = '';
@@ -274,7 +269,7 @@ export function TextPrompt(): ReactElement {
             for(let g = 0; g<targetCharacterIndex; g++) { 
               frontBufferValues += "."
             }
-         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-gray flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex" >{tempBufferValues}</span>: ''}</div>)
+         displayArray[indexOfTargetChord]=(<div style={{ display: 'flex', flexDirection: 'row'}}>{frontBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex">{frontBufferValues}</span>: ''}<span className ="text-gray flex m-0">{arr}</span>{tempBufferValues.indexOf('.') != -1 ? <span className="text-white m-0 flex" >{tempBufferValues}</span>: ''}</div>);
        }
         
       }
@@ -282,10 +277,7 @@ export function TextPrompt(): ReactElement {
 
     }
   }
- // const compare = allTypedText[indexOfTargetChord-1];
- //compare.slice(0, -1)
- // if(compare.charAt(compare.length -1) 
-      
+    
 
  //This  code here handles the logic in the case the user back spaces to edit an errored word
   const input = document.getElementById('txt_Name') as unknown as HTMLInputElement;
@@ -296,38 +288,27 @@ export function TextPrompt(): ReactElement {
         e.stopPropagation();
     }
     setKeyDownTime(performance.now());
-
     const key = e.keyCode || e.charCode;
     const sub = indexOfTargetChord -1;
 
     if(( key == 8 || key == 46 ) && (indexOfTargetChord + targetIndexForWhatErrorTextToShow == allTypedText.length) && (input.value.length == 0)){
       if(allTypedText[indexOfTargetChord-1] != undefined){
-        //if(allTypedText[indexOfTargetChord-1].slice(0, -1) != storedTestTextData[indexOfTargetChord-1]){
-
-          input.innerHTML = allTypedText[indexOfTargetChord-1];
+        input.innerHTML = allTypedText[indexOfTargetChord-1];
         const tt = allTypedText[allTypedText.length-1];
-        //input.value = tt;
-        const compare = storeAllTypedText[indexOfTargetChord-1+targetIndexForWhatErrorTextToShow];
-        //compare.slice(0, -1) == storedTestTextData[indexOfTargetChord+targetIndexForWhatErrorTextToShow]
-       if(allTypedText[(indexOfTargetChord-1)+targetIndexForWhatErrorTextToShow].slice(0, -1) != storedTestTextData[(indexOfTargetChord-1)+targetIndexForWhatErrorTextToShow] && (indexOfTargetChord !=0)){
-        setEditingPreviousWord(true);
-        setCurrentSubindexInTrainingText(sub);
-        input.value = tt;
-        allTypedText.pop();
-
-      }
-       // }
-
-
-      //input.setSelectionRange(allTypedText[indexOfTargetChord-1].length,allTypedText[indexOfTargetChord-1].length) as unknown as HTMLInputElement;
-    }
-  }
+           if(allTypedText[(indexOfTargetChord-1)+targetIndexForWhatErrorTextToShow].slice(0, -1) != storedTestTextData[(indexOfTargetChord-1)+targetIndexForWhatErrorTextToShow] && (indexOfTargetChord !=0) && (currentTrainingScenario == 'ALPHABET' && allTypedText[allTypedText?.length-1] != firstLineOfTargetText[indexOfTargetChord-1])){
+            //console.log('this is the stored alltyepd '+ allTypedText)
+              setEditingPreviousWord(true);
+              setCurrentSubindexInTrainingText(sub);
+              input.value = tt;
+              allTypedText.pop();
+           }
+          }
+       }
 
   }  
 
 
    displayArray = displayArray.length == 0 ? <div className='text-white'>[</div>: displayArray;
-
 }  return displayArray;
   }
 
@@ -335,14 +316,7 @@ export function TextPrompt(): ReactElement {
 
    function letsFix(word, indexOfCharacterInTargetChord, indexOfTargetChord, setS){
     let arr : string [] = [] ;
-    
-  
     const conditionalValue = allTypedText.length-indexOfTargetChord;
-    
-    //if(allTypedText.length == 0 && setS.length !=0){
-    //  return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
-
-   // }
 
     if(setS[setS.length-1] == " " && indexOfTargetChord != allTypedText.length && conditionalValue < 1){
       storeAllTypedText(setS);
@@ -351,7 +325,6 @@ export function TextPrompt(): ReactElement {
       return;
    }
 
-   console.log('Tough '+ indexOfTargetChord + "Length of alltypedArry "+ allTypedText.length+ " "+ allTypedText + ' '+ setS)
   
   //Add if the target index of the second array that houses content .length is greater than 1 we read that in
     const wordSplit = word != undefined && indexOfTargetChord != undefined && indexOfCharacterInTargetChord != undefined ? word[indexOfTargetChord]: '';
@@ -362,14 +335,14 @@ export function TextPrompt(): ReactElement {
         }       
       }
     }
-    if(setS[setS.length-1] == " "){
+    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1])){
       arr =[];
     }
     console.log('This thu arrauhy '+arr)
    return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
-    //return arr;
   }
 
+  
   function colorTargetLine(firstLineValue : any[]){
 
     const newTargetLine = [];

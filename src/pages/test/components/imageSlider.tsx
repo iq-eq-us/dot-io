@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { SliderData } from './SliderData';
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
-import PropTypes from 'prop-types';
+import { useStoreState, useStoreActions } from '../../../store/store';
 
 
 const ImageSlider = ({ slides } : any) => {
@@ -12,6 +11,10 @@ const ImageSlider = ({ slides } : any) => {
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
+    if(current == length-1)
+    {
+      setIsDisplayingIntroductionModal(false);
+    }
   };
 
   const prevSlide = () => {
@@ -20,6 +23,12 @@ const ImageSlider = ({ slides } : any) => {
 
   if (!Array.isArray(slides) || slides.length <= 0) {
     return null;
+  }
+  
+  const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
+  const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
+  function setIsDisplaying(){
+    setIsDisplayingIntroductionModal(false);
   }
 
   return (
@@ -39,8 +48,8 @@ const ImageSlider = ({ slides } : any) => {
         );
       } 
       )}
-      <button className='left-arrow text-white rounded inline-block p-2 ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ' onClick={prevSlide}> {current === 0 ? '' : <>&laquo;</>} </button>
-      <button className='right-arrow text-white rounded inline-block p-2 ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ' onClick={nextSlide}> {current == slides.length-1 ? ['Start Training', localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true)), document.getElementById('txt_Name')?.focus()] : <>&raquo;</>} </button>
+      <button className={`right-arrow text-white rounded inline-block p-2 ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ${ current === 0 || current == slides.length-1 ? 'hidden' : ''}`} onClick={prevSlide}> {current === 0 ? '' : <>&laquo;</>} </button>
+      <button className='right-arrow text-white rounded inline-block p-2 ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]' onClick={nextSlide}> {current == slides.length-1 ? ['Start Training', localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true))] : <>&raquo;</>} </button>
     </section>
   );
 };

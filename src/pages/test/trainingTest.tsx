@@ -8,13 +8,9 @@ import { PageContainer } from './trainingTest.styled';
 import useTrainingScenarioAsDocumentTitle from '../../hooks/useTrainingScenarioAsDocumentTitle';
 import { useStoreState, useStoreActions } from '../../store/store';
 import { Redirect } from 'react-router-dom';
-import TrainingControls from './components/TrainingControls';
 import { PreviousTest } from './components/PreviousTests';
 import styled from 'styled-components';
 import TestCompletePage from '../test-complete/testComplete';
-import Footer from '../../../src/components/footer';
-import Intro from '../../../../assets/PromptPages/intro1.png';
-import Images from './components/images';
 import ImageSlider from './components/imageSlider';
 import { SliderData } from './components/SliderData';
 
@@ -34,7 +30,11 @@ function TrainingTestPage(): ReactElement {
   const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
   const isTrainingTestDone = currentTrainingSetting.isTestDone;
   const wordTestNumber = useStoreState((store : any) => store.wordTestNumber);
+  const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
+  const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
 
+
+  //setIsDisplayingIntroductionModal
   
   const [toggleValue, setToggleValue] = useState(true);
 
@@ -66,11 +66,12 @@ function TrainingTestPage(): ReactElement {
       <SettingsColumn/>
       <CenterTrainingColumn />
       <PreviousTest/>
-      <div {...(localStorage.getItem("FirstTimeViewingModal") == undefined) ? '' : {className: 'hidden'}}>
-      { toggleValue ? 
+      {console.log('This is the inside test'+ isDisplayingIntroductionModal)}
+      <div {...isDisplayingIntroductionModal == true || localStorage.getItem("FirstTimeViewingModal") == undefined ? '' : {className: 'hidden'}}>
+      { isDisplayingIntroductionModal ? 
       <div style={modal}> 
       <div style={modal_content}>
-      <button className="close absolute ml-96 text-5xl text-white" onClick={() => [setToggleValue(!toggleValue), localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true)), document.getElementById('txt_Name')?.focus()]}>
+      <button className="close absolute ml-96 text-5xl text-white" onClick={() => [setToggleValue(!toggleValue), localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true)), setIsDisplayingIntroductionModal(false as boolean)]}>
             &times;
           </button>
       <ImageSlider slides={SliderData} />

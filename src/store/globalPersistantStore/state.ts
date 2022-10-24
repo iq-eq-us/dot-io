@@ -19,6 +19,8 @@ const globalStoreState: GlobalStoreState = {
   isUsingChordingEnabledDevice: false,
   isDisplayingSettingsModal: false,
   isDisplayingStatisticsModal: false,
+  isDisplayingIntroductionModal: false,
+
   
 };
 {console.log('THis is the state of the session in the file '+ sessionChordingState)};

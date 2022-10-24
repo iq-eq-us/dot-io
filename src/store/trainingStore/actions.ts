@@ -124,7 +124,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.isDisplayingChordEditModal = true;
     else state.isDisplayingChordEditModal = false;
 
-    document.getElementById('txt_Name')?.focus()
   }),
   proceedToNextWord: action((state) => {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining
@@ -305,11 +304,15 @@ function checkIfShouldProceedToNextTargetChord(
   const userHasEnteredChordCorrectly =
     wordToCompare === storeState.typedTrainingText;
     //Here we allow the user to go to the next work if the press the space
-  if (storeState.typedTrainingText.charAt(storeState.typedTrainingText.length-1) == ' ') {
-    actions.setAllTypedCharactersStore(storeState.typedTrainingText);
+    if(isInAlphabetMode && userHasEnteredChordCorrectly){
+      actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');    
-  
+    } else if (storeState.typedTrainingText.charAt(storeState.typedTrainingText.length-1) == ' ') {
+    actions.setAllTypedCharactersStore(storeState.typedTrainingText);
+    actions.proceedToNextWord();
+    actions.setTypedTrainingText('');   
+   
   }
   
 }
