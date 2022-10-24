@@ -178,8 +178,8 @@ export const generateChords = (
     // If there is no chord with zero speed, then we move onto the highest
     else chordToFeed = chordsSortedByTypingSpeed[0].displayTitle;
   }
-
   const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
+  allCharacters.shift(); // This removes the first letter in the array
 
   const slowestTypedChordsAccountingForDepth = chordsSortedByTypingSpeed
     .slice(0, parameters.numberOfTargetChords)
