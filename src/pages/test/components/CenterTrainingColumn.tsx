@@ -10,9 +10,13 @@ import NextTestButton from './NextTestButton';
 import RefreshButton from './RefreshButton';
 import TrainingModeSelector from './TrainingModeSelector';
 import { ProgressBar } from './ProgressBar';
+import { useStoreState, useStoreActions } from '../../../store/store';
+
 
 
 function CenterTrainingColumn(): ReactElement {
+  const currentTrainingScenario = useStoreState((store : any) => store.currentTrainingScenario);
+  const wordTestNumber = useStoreState((store : any) => store.wordTestNumber);
   return (
     <React.Fragment>
       <CenterTrainingColumnContainer>
@@ -23,7 +27,7 @@ function CenterTrainingColumn(): ReactElement {
 
       <TextPrompt />
       <ItemsContainer>
-      <RefreshButton/>
+        {(currentTrainingScenario == 'LEXICAL' && wordTestNumber != null || undefined) ?'' : <RefreshButton/>}
       <NextTestButton/>
       </ItemsContainer>
       <FullWidthFullHeightContainer>

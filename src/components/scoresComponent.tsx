@@ -37,7 +37,7 @@ export function ScoresComponent(): ReactElement {
 
   </tr>
   <tr>
-    <td>-</td>
+    <td>{getHighestWPM() *5}</td>
     <td>CPM</td>
     <td/>
     <td>-</td>

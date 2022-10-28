@@ -47,7 +47,7 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
-  
+  console.log('sjdnfjsnjfs '+ y);
   let currentChordSpeed = y[y?.length-1]?.lastSpeed;
   const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
   const averageDailyCount = y.length;

@@ -31,7 +31,7 @@ const needsBackButton3 = history.location.pathname.endsWith(
                        <FooterLinkTitle>
                            <FooterLinkLogo src={IQEQLogoImage}></FooterLinkLogo>
                            <div/>
-                           <FooterLink>Brought to you by IQ-EQ</FooterLink>
+                           <FooterLink>Brought to you by iq-eq</FooterLink>
                            <div/>
                        </FooterLinkTitle>
                    </FooterLinkItems>

@@ -1,6 +1,6 @@
 # Introduction
 
-IQ-EQ Webpage is a testing/training tool for Keyboard users. It allows these users to practing their typing, trigrams, and chording.
+iq-eq Webpage is a testing/training tool for Keyboard users. It allows these users to practing their typing, trigrams, and chording.
 
 # Dependency Installation
 

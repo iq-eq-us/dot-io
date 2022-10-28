@@ -16,7 +16,6 @@ export function TestControlRow(): ReactElement {
         <React.Fragment>
         <RowContainer>
             <ItemsContainer>
-      <RefreshButton/>
       <NextTestButton/>
          </ItemsContainer>
       </RowContainer>    

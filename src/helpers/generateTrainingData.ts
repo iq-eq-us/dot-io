@@ -179,7 +179,7 @@ export const generateChords = (
     else chordToFeed = chordsSortedByTypingSpeed[0].displayTitle;
   }
   const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
-  allCharacters.shift(); // This removes the first letter in the array
+  allCharacters.shift(); // This removes the first letter in the array so that in the alphabetic tier we only show the first 8 letters on the intial data set load
 
   const slowestTypedChordsAccountingForDepth = chordsSortedByTypingSpeed
     .slice(0, parameters.numberOfTargetChords)

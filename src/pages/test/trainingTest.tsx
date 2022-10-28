@@ -24,12 +24,12 @@ import { SliderData } from './components/SliderData';
 function TrainingTestPage(): ReactElement {
   const contrast = useContrast();
   const currentTrainingScenario = useStoreState((store : any) => store.currentTriningScenario);
+  const wordTestNumber = useStoreState((store : any) => store.wordTestNumber);
   const currentTrainingVal = useStoreState((store : any) => store.WordTrainingValues);
   useTrainingScenarioAsDocumentTitle();
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
   const isTrainingTestDone = currentTrainingSetting.isTestDone;
-  const wordTestNumber = useStoreState((store : any) => store.wordTestNumber);
   const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
   const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
 
@@ -40,7 +40,7 @@ function TrainingTestPage(): ReactElement {
 
 
   useEffect(() => {
-    document.title = "IQ-EQ Test"
+    document.title = "iq-eq Test"
     sessionStorage.removeItem("tempTestDeIncrement");
     sessionStorage.removeItem('Refresh');
 

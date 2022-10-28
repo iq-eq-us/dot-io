@@ -27,7 +27,7 @@ const SHOULD_DISPLAY_BRANDING_MATERIAL = true;
  */
 const Dashboard = (): ReactElement => {
   React.useEffect(() => {
-    document.title = "IQ-EQ Learn"
+    document.title = "iq-eq Learn"
     
   }, []);
 

@@ -185,7 +185,7 @@ export function TextPrompt(): ReactElement {
 
 
       const compare = allTypedText[i];
-      characterLengthOfTheEntireLine +=storedTestTextData[i].length;;
+      characterLengthOfTheEntireLine +=storedTestTextData[i].length;
 
       if(compare.charAt(compare.length -1) == ' ' || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1])){ 
 
@@ -195,7 +195,7 @@ export function TextPrompt(): ReactElement {
           spacesBetweenWords += storedTestTextData[i].length;
           let placeholder = '';
           for(let k =0; k<spacesBetweenWords; k++){
-            placeholder += "+";
+            placeholder += "1";
           }
           placeholder += " ";
           displayArray.push(<div className ="text-white">{placeholder}</div>)
@@ -243,27 +243,40 @@ export function TextPrompt(): ReactElement {
       }
       }
       if((allTypedText.length - i) == 1){
-        const y  = allTypedText.length;
+        let y  = allTypedText.length;
+        if(currentTrainingScenario != 'ALPHABET'){
         for(let d = y ; d < (targetTextLineOne.length + targetIndexForWhatErrorTextToShow); d++ ){
 
           let sd = ''
           for(let r =0; r<storedTestTextData[d]?.length; r++){
 
-          sd += "+";
+          sd += "2";
           }
           sd += ' ';
            d == y ? sd == sd.slice(1) : sd; 
           displayArray.push(<div className ="text-white">{sd}</div>);
          // displayArray.push(" ");
         }
+      } else{
+        for(let d = y ; d < (targetTextLineOne.length); d++ ){
+
+          let endFillerValues = ''
+          for(let r =0; r<storedTestTextData[d]?.length; r++){
+
+            endFillerValues += "9";
+          }
+          endFillerValues += ' ';
+          displayArray.push(<div className ="text-white">{endFillerValues}</div>);
+         // displayArray.push(" ");
+        }
+      }
         //This peice of code handles the experience while your typing in real time
         if(arr.length != 0 ){
           const tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow].length - arr.length;
           let tempBufferValues = '';
           let frontBufferValues = '';
 
-          let y=  0;
-            for(y; y<(tempVal- targetCharacterIndex); y++) { 
+            for(let y =0; y<(tempVal- targetCharacterIndex); y++) { 
               tempBufferValues += "."
             }
             for(let g = 0; g<targetCharacterIndex; g++) { 
