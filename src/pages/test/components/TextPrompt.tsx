@@ -243,7 +243,7 @@ export function TextPrompt(): ReactElement {
       }
       }
       if((allTypedText.length - i) == 1){
-        let y  = allTypedText.length;
+        const y  = allTypedText.length;
         if(currentTrainingScenario != 'ALPHABET'){
         for(let d = y ; d < (targetTextLineOne.length + targetIndexForWhatErrorTextToShow); d++ ){
 
