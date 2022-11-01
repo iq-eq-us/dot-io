@@ -414,10 +414,11 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
  // The value for the first word
 
   if (userIsTypingFirstChord ){
-    console.log('In here the check user first ty '+userIsTypingFirstChord)
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
     timeTakenToTypeChord = (performance.now() - sessionStorage.getItem('timeThat'))/10;
+    console.log('In here the check user first ty '+userIsTypingFirstChord + ' '+ timeTakenToTypeChord);
+
 
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea '+ sessionStorage.getItem('timeThat')/10)

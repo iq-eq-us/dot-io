@@ -1,6 +1,7 @@
 import { useStoreState, useStoreActions } from '../store/store';
 import { getCumulativeAverageChordTypeTime } from '../helpers/aggregation';
-import { storeAverageData, storeData, storeMasteredData, storeCharactersPerMinute } from '../pages/manager/components/chordGraphs'
+import { storeAverageData, storeData, storeMasteredData, storeCharactersPerMinute } from '../pages/manager/components/chordGraphs';
+
 
 export const useWordsPerMinute = (): number => {
   const timeAtTrainingStart = useStoreState(
@@ -11,6 +12,8 @@ export const useWordsPerMinute = (): number => {
 
   const trainingSceneario = useStoreState((store) => store.currentTrainingScenario);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
+  //const ChordingEnabled = useStoreState((store) => store.isUsingChordingEnabledDevice);
+
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
   );
@@ -144,6 +147,7 @@ export const useWordsPerMinute = (): number => {
 
   
         wordTestNumber !=null||undefined ? storeData(wpm, currentDate) : '';//This checks to make sure we are in a testing teir
+       // if(ChordingEnabled!==true)
         setFastestWPM({
           ...fastestRecordedWPM,
           [trainingScenario]: wpm,

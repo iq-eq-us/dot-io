@@ -5,6 +5,7 @@ import usePopover from '../../../hooks/usePopover';
 import type { TrainingSettingsState } from '../../../models/trainingSettingsStateModel';
 import { useStoreState } from '../../../store/store';
 import HelpCircleIcon from './HelpCircleIcon';
+import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 
 export interface SettingsProps {
   trainingSettings: TrainingSettingsState;
@@ -40,6 +41,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
     setTargetChords(trainingSettings.targetChords);
     setSpeedGoal(trainingSettings.speedGoal);
     setRate(trainingSettings.recursionRate);
+    console.log('sjdnfjnsdf '+ wpmMethodCalculator(13))
   }, [trainingSettings]);
 
   const { parentProps: targetChordsProps, Popper: TargetChordPopover } =

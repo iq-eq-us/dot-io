@@ -91,7 +91,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle} index={index}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItem>{wpmMethodCalculator(parseInt(item?.averageSpeed)).toFixed() == 'Infinity' ? 0 : wpmMethodCalculator(parseInt(item?.averageSpeed)).toFixed()}</RowItem>
+        <RowItem>{item?.averageSpeed}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>

@@ -1,5 +1,4 @@
 import type { GlobalStoreState } from 'src/models/globalStorage';
-import { computed } from 'easy-peasy';
 
 
 /**
@@ -19,12 +18,8 @@ const globalStoreState: GlobalStoreState = {
   isUsingChordingEnabledDevice: false,
   isDisplayingSettingsModal: false,
   isDisplayingStatisticsModal: false,
-  isDisplayingIntroductionModal: false,
-
-  
-};
-{console.log('THis is the state of the session in the file '+ sessionChordingState)};
-
+  isDisplayingIntroductionModal: false,  
+}
 
 
 export default globalStoreState;

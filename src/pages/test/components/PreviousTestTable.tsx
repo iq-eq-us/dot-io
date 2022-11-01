@@ -4,7 +4,7 @@ import type { ChordStatistics } from '../../../models/trainingStatistics';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
-import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+import { getCumulativeAverageChordTypeTime, wpmMethodCalculator } from '../../../helpers/aggregation';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
@@ -18,6 +18,11 @@ function PreviousTestTable(): ReactElement {
     (state) => state.trainingStatistics,
   ).statistics.sort((a, b) => b.averageSpeed - a.averageSpeed);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
+  const statsOfTargetWord = useStoreState(
+    (state) => state.trainingStatistics,
+  ).statistics.sort((a) => a.averageSpeed);
+  const speedGoal = useStoreState(
+    (state) => state.trainingSettings.speedGoal);
 
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
 
@@ -33,6 +38,7 @@ function PreviousTestTable(): ReactElement {
           targetChords: trainingSettings.targetChords,
           isRecursionEnabled: trainingSettings.autoOrCustom === 'AUTO',
           displayHUD: true,
+          speedGoal: speedGoal,
         }}
         style={{ borderRadius: 8 }}
       >
@@ -47,6 +53,7 @@ interface Data {
   targetChords: number;
   isRecursionEnabled: boolean;
   displayHUD: boolean;
+  speedGoal: number;
 }
 
 interface RowData {
@@ -61,12 +68,19 @@ const getStyle = (
   targetChords: number,
   isRecursionEnabled: boolean,
   index: number,
+  speedGoal: number,
+  stats: ChordStatistics[],
 ): StatRowStyle => {
-  if (index < targetChords) {
-    if (isRecursionEnabled) return 'TARGET_CHORD_ACTIVE';
-    return 'TARGET_CHORD_INACTIVE';
+  const rowItem = stats?.[index - LIST_LENGTH_OFFSET+1];
+  console.log('jsndfnsdjfdjf '+ rowItem?.averageSpeed)
+  if ( rowItem != undefined && speedGoal > wpmMethodCalculator(rowItem.averageSpeed) && rowItem.averageSpeed != 0 ) {
+    if (isRecursionEnabled){ 
+      return 'TARGET_CHORD_ACTIVE';
   }
-  return 'NORMAL';
+    return 'TARGET_CHORD_INACTIVE';
+  }else{
+  return 'NORMAL'
+  }
 };
 const Row = ({ index, style, data }: RowData) => {
   // Minus one to account for title row
@@ -78,6 +92,8 @@ const Row = ({ index, style, data }: RowData) => {
     data.targetChords,
     data.isRecursionEnabled,
     index - LIST_LENGTH_OFFSET,
+    data.speedGoal,
+    data.stats,
   );
 
   return (
@@ -89,7 +105,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItem>{(item?.averageSpeed.toFixed()*5)+ '/' +item?.averageSpeed.toFixed()}</RowItem>
+        <RowItemCPMWPM>{(wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() == 'Infinity' ? '0 / 0' : (wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() + '/' + wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed())).toFixed() }</RowItemCPMWPM>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>
@@ -171,6 +187,9 @@ const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
 ) <{ headerStyle: StatRowStyle }>``;
 
 const RowItem = styled.div.attrs({
+  className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/3`,
+})``;
+const RowItemCPMWPM = styled.div.attrs({
   className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,
 })``;
 

@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { FaBorderStyle } from 'react-icons/fa';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
+import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 
 const r = Math.random;
 
@@ -50,6 +51,7 @@ export function TextPrompt(): ReactElement {
   const isEditingPreviousWord = useStoreState((store : any) => store.userIsEditingPreviousWord,);
   const setChordingEnabled = useStoreActions((store : any) => store.setIsUsingChordingEnabledDevice);
   const isChordingEnabled = useStoreState((store : any) => store.isUsingChordingEnabledDevice);
+  const averageSpeed = useStoreState((store : any) => store.trainingSettings.averageSpeed);
 
   const [bestKeyTime, setBestKeyTime] = useState([]);
   const [letterPressed, setLetterPressed] = useState([]);
@@ -130,7 +132,7 @@ export function TextPrompt(): ReactElement {
     setBestKeyTime(bestKeyTime => [...bestKeyTime]);
     setLetterPressed(letterPressed => [...letterPressed]);
     console.log('This is the Best Time '+bestKeyTime);
-    console.log('This is the associated letter pressed '+ letterPressed);
+    console.log('This is the associated letter pressed '+ wpmMethodCalculator(13));
 
 
   };
@@ -161,14 +163,14 @@ export function TextPrompt(): ReactElement {
         let y=  0;
 
 
-        const tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow].length - arr.length;
+        const tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow]?.length - arr.length;
           for(y; y<(tempVal- targetCharacterIndex); y++) { 
             tempBufferInTheBack += "."
           }
           for(let g = 0; g<targetCharacterIndex; g++) { 
             tempBufferInThefront += "."
           }
-        tempArray.push(<React.Fragment><span className="text-white m-0 flex">{tempBufferInThefront}</span><div className='text-red-500'>{arr}</div><span className="text-white m-0 flex">{tempBufferInTheBack}</span></React.Fragment>)
+        tempArray.push(<React.Fragment><span className="text-white m-0 flex">{tempBufferInThefront}</span><div className='text-gray-500'>{arr}</div><span className="text-white m-0 flex">{tempBufferInTheBack}</span></React.Fragment>)
 
         for(let f =1; f<targetTextLineOne.length;f++){
           tempValue = targetTextLineOne[f]+" ";

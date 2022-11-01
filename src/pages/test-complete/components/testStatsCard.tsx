@@ -46,6 +46,10 @@ export function TestStatsCard(): ReactElement {
           <h1 className='text-lg'>CPM</h1>
           </StatsCardContainer>
           <StatsCardContainer>
+          <div className='text-4xl'>{useWordsPerMinute().toFixed(0)}</div>
+          <h1 className='text-lg'>WPM</h1>
+          </StatsCardContainer>
+          <StatsCardContainer>
           <div className='text-4xl'>{testNumber}</div>
           <h1 className='text-lg'>Test Type</h1>
           </StatsCardContainer>

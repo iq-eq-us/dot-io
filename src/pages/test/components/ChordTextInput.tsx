@@ -29,13 +29,16 @@ function ChordTextInput(): ReactElement {
 
     const set = useStoreActions((store : any) => store.setCompareText);
     const setS = useStoreState((store : any) => store.compareText);
-    const indexOfTargetChord = useStoreState(
+
+
+    const currentLineOfTrainingText = useStoreState(
+      (store : any) => store.currentLineOfTrainingText,
+    );
+    const currentSubindexInTrainingText = useStoreState(
       (store : any) => store.currentSubindexInTrainingText,
     );
-    const setCurrentSubindexInTrainingText = useStoreActions((store : any) => store.setCurrentSubindexInTrainingText);
-
-
  
+    const targetCharacterIndex = useStoreState((store : any) => store.targetCharacterIndex);
 
   const { parentProps, Popper } = usePopover(
     'Generate a new set of training text.',
@@ -43,7 +46,10 @@ function ChordTextInput(): ReactElement {
   const [firstTyped, setFirstTyped] = useState(true); //This is used to see if the first word has been typed
   const yer = restartMode;
   
- 
+  const userIsTypingFirstChord =
+  currentLineOfTrainingText === 0 &&
+  currentSubindexInTrainingText === 0 &&
+  targetCharacterIndex ===0;
 
   return (
     <div className="w-full flex flex-row items-end mt-6 justify-center">
@@ -56,7 +62,6 @@ function ChordTextInput(): ReactElement {
         
       </span>
 
-      {firstTyped ? sessionStorage.setItem('timeThat', JSON.stringify(performance.now())) : ''}
 
       <input
         autoCorrect="off"
@@ -69,8 +74,7 @@ function ChordTextInput(): ReactElement {
         onFocus={() => isShowingPortal == true ? document.getElementById('txt_Name')?.focus() : document.getElementById('txt_Name')?.focus()}
         value={textTyped}
         onChange={(e) => {
-          {(yer==true) && (firstTyped == false) ? [setFirstTyped(true),setRestartTestMode(false)]: ''}//THis conditional resets the variables necessary if the refresh method is called
-          {firstTyped ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), setFirstTyped(false)] : console.log('first typed sexy')}// This here logs the time that the first letter was pressed and sets the state variable to false
+          {userIsTypingFirstChord ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), console.log('first typed sexy '+ userIsTypingFirstChord)] : ''}// This here logs the time that the first letter was pressed and sets the state variable to false
           setStoreText(e.target.value);
           {set(e.target.value)}
           {console.log("ghj " +setS + " " + e.target.value + ' '+ textTyped)}
