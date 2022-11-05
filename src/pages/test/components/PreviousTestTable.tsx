@@ -49,14 +49,15 @@ function PreviousTestTable(): ReactElement {
   );
 }
 
-function alphabetWpmCalculator(average : any){
+function wpmCalculator(average : any){
 
-    let avgSpeedMilliseconds = average * 10;
-    let millisecondsPerCharacter = avgSpeedMilliseconds;
-    let averageCharacterPerMin = 60000/millisecondsPerCharacter;
+
+    const avgSpeedMilliseconds = average * 10;
+    const millisecondsPerCharacter = avgSpeedMilliseconds;
+    const averageCharacterPerMin = 60000/millisecondsPerCharacter;
     const wpm = averageCharacterPerMin/5;
-      
-  return wpm;
+    
+    return wpm;
 
 }
 
@@ -117,7 +118,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItemCPMWPM>{(alphabetWpmCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() == 'Infinity' ? '0 / 0' : (alphabetWpmCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() + '/' + wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed())).toFixed() }</RowItemCPMWPM>
+        <RowItemCPMWPM>{(wpmCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() == 'Infinity' ? '0 / 0' : (wpmCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() + '/' + wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed())).toFixed() }</RowItemCPMWPM>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>

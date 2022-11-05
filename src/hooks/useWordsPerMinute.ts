@@ -117,7 +117,6 @@ export const useWordsPerMinute = (): number => {
           let millisecondsPerCharacter = avgSpeedMilliseconds/5;//In the future 5.23 needs to be dynamic based on the practice set
           let averageCharacterPerMin = 60000/millisecondsPerCharacter;
           wpm = averageCharacterPerMin/5;
-          
   
           avgSpeedMilliseconds = currentChordSpeed * 10;
           millisecondsPerCharacter = avgSpeedMilliseconds/5;//In the future 5.23 needs to be dynamic based on the practice set
