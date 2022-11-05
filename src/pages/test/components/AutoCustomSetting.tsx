@@ -55,7 +55,7 @@ export function AutoCustomSetting(): ReactElement {
             onChange={setAuto}
           />
           <span className="ml-2 select-none" onClick={setAuto}>
-            Auto
+            Dynamic
           </span>
         </div>
 
@@ -68,7 +68,7 @@ export function AutoCustomSetting(): ReactElement {
             onChange={setCustom}
           />
           <span className="ml-2 select-none" onClick={setCustom}>
-            Custom
+            Static
           </span>
         </div>
       </div>

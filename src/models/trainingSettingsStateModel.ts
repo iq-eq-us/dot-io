@@ -20,7 +20,7 @@ export interface TrainingSettingsState {
 export const defaultTrainingSettings: TrainingSettingsState = {
   isHighlightingKeys: true,
   isUsingRecursion: true,
-  autoOrCustom: 'AUTO',
+  autoOrCustom: 'CUSTOM',
   targetChords: 8,
   speedGoal: 40,
   recursionRate: 95,
@@ -37,7 +37,7 @@ export const defaultTrainingSettings: TrainingSettingsState = {
 export const defaultTrigramsTestTraining: TrainingSettingsState = {
   isHighlightingKeys: true,
   isUsingRecursion: true,
-  autoOrCustom: 'AUTO',
+  autoOrCustom: 'CUSTOM',
   targetChords: 8,
   speedGoal: 20,
   recursionRate: 95,
@@ -54,7 +54,7 @@ export const defaultTrigramsTestTraining: TrainingSettingsState = {
 export const defaultAlphabeticTestTraining: TrainingSettingsState = {
   isHighlightingKeys: true,
   isUsingRecursion: true,
-  autoOrCustom: 'AUTO',
+  autoOrCustom: 'CUSTOM',
   targetChords: 6,
   speedGoal: 13,
   recursionRate: 100,

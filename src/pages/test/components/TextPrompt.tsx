@@ -155,7 +155,7 @@ export function TextPrompt(): ReactElement {
       let spacesBetweenWords = 0;
       let characterLengthOfTheEntireLine = 0;
 
-      if(targetChordIndex ==0 && targetTextLineOne!=undefined && allTypedText.length >=0){
+      if(targetChordIndex == 0 && targetTextLineOne != undefined && allTypedText.length >=0){
         const tempArray = [];
         let tempValue = '';
         let tempBufferInThefront = '';
@@ -187,19 +187,22 @@ export function TextPrompt(): ReactElement {
 
 
       const compare = allTypedText[i];
+      const alphabetCompare = setS[setS.length-1];
       characterLengthOfTheEntireLine +=storedTestTextData[i].length;
 
-      if(compare.charAt(compare.length -1) == ' ' || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1])){ 
+      //allTypedText
+
+      if(compare.charAt(compare.length -1) == ' ' || (currentTrainingScenario == 'ALPHABET')){ 
 
         if(compare.slice(0, -1) == storedTestTextData[i] || (currentTrainingScenario && compare == storedTestTextData[i] )){
-          console.log('current training '+ currentTrainingScenario)
-
           spacesBetweenWords += storedTestTextData[i].length;
+
           let placeholder = '';
           for(let k =0; k<spacesBetweenWords; k++){
-            placeholder += "1";
+            placeholder += "*";
           }
-          placeholder += " ";
+          console.log('current training '+ currentTrainingScenario + " "+ spacesBetweenWords + placeholder + i + ' '+allTypedText.length + compare + " " + alphabetCompare)
+
           displayArray.push(<div className ="text-white">{placeholder}</div>)
 
           spacesBetweenWords = 0;
@@ -246,7 +249,6 @@ export function TextPrompt(): ReactElement {
       }
       if((allTypedText.length - i) == 1){
         const y  = allTypedText.length;
-        if(currentTrainingScenario != 'ALPHABET'){
         for(let d = y ; d < (targetTextLineOne.length + targetIndexForWhatErrorTextToShow); d++ ){
 
           let sd = ''
@@ -257,21 +259,8 @@ export function TextPrompt(): ReactElement {
           sd += ' ';
            d == y ? sd == sd.slice(1) : sd; 
           displayArray.push(<div className ="text-white">{sd}</div>);
-         // displayArray.push(" ");
         }
-      } else{
-        for(let d = y ; d < (targetTextLineOne.length); d++ ){
-
-          let endFillerValues = ''
-          for(let r =0; r<storedTestTextData[d]?.length; r++){
-
-            endFillerValues += "9";
-          }
-          endFillerValues += ' ';
-          displayArray.push(<div className ="text-white">{endFillerValues}</div>);
-         // displayArray.push(" ");
-        }
-      }
+      
         //This peice of code handles the experience while your typing in real time
         if(arr.length != 0 ){
           const tempVal = storedTestTextData[indexOfTargetChord + targetIndexForWhatErrorTextToShow].length - arr.length;
@@ -324,6 +313,7 @@ export function TextPrompt(): ReactElement {
 
 
    displayArray = displayArray.length == 0 ? <div className='text-white'>[</div>: displayArray;
+   console.log('Da display '+ displayArray)
 }  return displayArray;
   }
 
@@ -353,7 +343,6 @@ export function TextPrompt(): ReactElement {
     if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1])){
       arr =[];
     }
-    console.log('This thu arrauhy '+arr)
    return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
   }
 
@@ -388,15 +377,14 @@ export function TextPrompt(): ReactElement {
 
     return newTargetLine;
   }
+  //This function Handles the focus panel
   function isFocused (){
     const inputValue = document.getElementById('txt_Name') as HTMLInputElement;
     const isFocused = (document.activeElement === inputValue);
     if(!isFocused){
-      console.log('Is focused 234'+ isFocused)
       return TextBluredScreen();
     } else{
       setTextPromptUnFocused(false)
-      console.log('Is focused '+ isFocused)
     }
   }
 

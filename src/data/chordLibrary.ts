@@ -983,7 +983,6 @@ export const chordLibrary: ChordLibrary = {
     est: [],
     hes: [],
     oth: [],
-    tth: [],
     wit: [],
     res: [],
     rth: [],

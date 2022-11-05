@@ -8,6 +8,7 @@ import { getCumulativeAverageChordTypeTime, wpmMethodCalculator } from '../../..
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
+import { useWordsPerMinute } from '../../../../src/hooks/useWordsPerMinute';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences
@@ -46,6 +47,17 @@ function PreviousTestTable(): ReactElement {
       </FixedSizeList>
     </TableContainer>
   );
+}
+
+function alphabetWpmCalculator(average : any){
+
+    let avgSpeedMilliseconds = average * 10;
+    let millisecondsPerCharacter = avgSpeedMilliseconds;
+    let averageCharacterPerMin = 60000/millisecondsPerCharacter;
+    const wpm = averageCharacterPerMin/5;
+      
+  return wpm;
+
 }
 
 interface Data {
@@ -105,7 +117,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItemCPMWPM>{(wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() == 'Infinity' ? '0 / 0' : (wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() + '/' + wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed())).toFixed() }</RowItemCPMWPM>
+        <RowItemCPMWPM>{(alphabetWpmCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() == 'Infinity' ? '0 / 0' : (alphabetWpmCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() + '/' + wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed())).toFixed() }</RowItemCPMWPM>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>
@@ -187,7 +199,7 @@ const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
 ) <{ headerStyle: StatRowStyle }>``;
 
 const RowItem = styled.div.attrs({
-  className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/3`,
+  className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,
 })``;
 const RowItemCPMWPM = styled.div.attrs({
   className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,
