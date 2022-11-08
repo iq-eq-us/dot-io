@@ -143,7 +143,7 @@ export const generateChords = (
   // const IS_TESTING = true;
   // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
 
-  let chordsSortedByTypingSpeed = parameters.stats.sort(
+  const chordsSortedByTypingSpeed = parameters.stats.sort(
     (a, b) => b.averageSpeed - a.averageSpeed,
   );
 
@@ -178,7 +178,6 @@ export const generateChords = (
       
       theCondensedChordStat.push(theCondensedChordStat.splice(theCondensedChordStat.indexOf(theCondensedChordStat[i]), 1)[0]);
       
-      console.log('sndjfnjsdf FUCK ME '+ theCondensedChordStat[i]);
     }
 
   }
@@ -189,7 +188,6 @@ export const generateChords = (
     .map((s) => s.id);
   const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
-  console.log('sndjfnjsdf FUCK ME '+ slowestTypedChordsAccountingForDepth);
 
 
   while (allCharacters.join('').length < parameters.lineLength) {
