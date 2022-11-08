@@ -44,7 +44,6 @@ interface ChordGenerationParameters {
 //Method to remove session value and set refresh constant back to false
 function removeSessionValueAndSettoFalse(){ 
   sessionStorage.removeItem("tempTestDeIncrement");
-  console.log('Here I am removing in genTestData')
 
   pageAccessedByReload = false;
 }
@@ -54,7 +53,6 @@ export const generateChords = (
 ): string[] => {
   if((parameters.scenario == 'LEXICAL') && (parameters.wordTestNumberValue != undefined)){
 
-    console.log('This is the stored text value for the test tier '+ parameters.storedTestData)
     const wordTestValue = parseInt(parameters.wordTestNumberValue);
     pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
     
@@ -69,7 +67,6 @@ export const generateChords = (
 
     let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
     
-    console.log(tempDeIncrementValue)
     const newString : string[] = [];
 
     while (newString.join('').length < parameters.lineLength) {
@@ -109,15 +106,8 @@ export const generateChords = (
 
   const wordTestValue = chordLibraryCharacters.length;
   pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
-   console.log('this is the state of the temp deincrement '+ sessionStorage.getItem("tempTestDeIncrement"))
    const checkVal = sessionStorage.getItem("tempTestDeIncrement")
-   console.log(sessionStorage.getItem("tempTestDeIncrement") == undefined);
    if(sessionStorage.getItem("tempTestDeIncrement") == undefined ||isNaN(parseInt(sessionStorage.getItem("tempTestDeIncrement")))){
-      //allCharacters = [];
-      console.log('Did this fire?');
-      console.log('Word test value in the set '+wordTestValue);
-      console.log('These are allCharacters '+ chordLibraryCharacters);
-      console.log('These are allCharacters '+ chordLibraryCharacters.length);
 
     sessionStorage.setItem("tempTestDeIncrement", JSON.stringify(wordTestValue));
     localStorage.setItem('chordsToChooseFrom', JSON.stringify(chordLibraryCharacters));
@@ -126,17 +116,11 @@ export const generateChords = (
    let tempDeIncrementValue = parseInt(sessionStorage.getItem("tempTestDeIncrement"));
 
   while (allCharacters.join('').length < parameters.lineLength) {
-    console.log(allCharacters)
-    console.log(allCharacters[0] == 'sample')
-    console.log(allCharacters[1] == 'words')
-    console.log(tempDeIncrementValue == 0);
     if(allCharacters[0] == 'sample' && allCharacters[1] == 'words' && tempDeIncrementValue == 0) {
       sessionStorage.removeItem("tempTestDeIncrement");
-      console.log('Here i am removing in gen Test data 2');
     }
 
     if(0 == tempDeIncrementValue){
-      console.log('Did I ever enter the delete loop?')
       const valToEvaluate = (allCharacters.length-1) + wordTestValue;
       const loopValue = valToEvaluate - wordTestValue;
       if(loopValue !< 0){
@@ -159,13 +143,16 @@ export const generateChords = (
   // const IS_TESTING = true;
   // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
 
-  const chordsSortedByTypingSpeed = parameters.stats.sort(
+  let chordsSortedByTypingSpeed = parameters.stats.sort(
     (a, b) => b.averageSpeed - a.averageSpeed,
   );
 
+ 
+
   let chordToFeed = '';
   const numberOfChordsNotConquered = parameters.stats.filter(
-    (s) => s.averageSpeed > parameters.speedGoal || s.averageSpeed === 0,
+    (s) => (parameters.speedGoal > s.averageSpeed && 10 >= s.numberOfOccurrences) || s.averageSpeed === 0,
+
   ).length;
   if (numberOfChordsNotConquered > 0) {
     // Check for one remaining chord with zero speed
@@ -178,13 +165,32 @@ export const generateChords = (
     // If there is no chord with zero speed, then we move onto the highest
     else chordToFeed = chordsSortedByTypingSpeed[0].displayTitle;
   }
+  const theCondensedChordStat = parameters.stats.sort(
+    (a, b) => b.averageSpeed - a.averageSpeed,
+  );
   const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
   allCharacters.shift(); // This removes the first letter in the array so that in the alphabetic tier we only show the first 8 letters on the intial data set load
 
-  const slowestTypedChordsAccountingForDepth = chordsSortedByTypingSpeed
+  for(let i=0; i < theCondensedChordStat.length; i++ ){
+    //(s) => (parameters.speedGoal > s.averageSpeed && 10 >= s.numberOfOccurrences) || s.averageSpeed === 0,
+
+    if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
+      
+      theCondensedChordStat.push(theCondensedChordStat.splice(theCondensedChordStat.indexOf(theCondensedChordStat[i]), 1)[0]);
+      
+      console.log('sndjfnjsdf FUCK ME '+ theCondensedChordStat[i]);
+    }
+
+  }
+  
+
+  const slowestTypedChordsAccountingForDepth = theCondensedChordStat
     .slice(0, parameters.numberOfTargetChords)
     .map((s) => s.id);
   const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
+
+  console.log('sndjfnjsdf FUCK ME '+ slowestTypedChordsAccountingForDepth);
+
 
   while (allCharacters.join('').length < parameters.lineLength) {
     const shouldChooseBasedOnSpeed =
@@ -194,17 +200,14 @@ export const generateChords = (
       parameters.numberOfTargetChords > 0 &&
       parameters.recursionIsEnabledGlobally
     ){
+
       allCharacters.push(
         getRandomElementFromArray(slowestTypedChordsAccountingForDepth),
       );
- 
+      console.log('sndjfnjsdf '+ slowestTypedChordsAccountingForDepth +" "+ parameters.numberOfTargetChords);
 
     }
-    else{ 
-      allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
-      
-
-    }
+    else allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
   }
   for(let i=0; i<allCharacters.length;i++){
     parameters.storedTestData?.push(allCharacters[i]);

@@ -108,7 +108,7 @@ const Row = ({ index, style, data }: RowData) => {
     data.speedGoal,
     data.stats,
   );
-
+    const wpmValue = wpmCalculator(parseInt(item?.averageSpeed.toFixed()));
   return (
     <div
       onClick={(e) => {
@@ -118,7 +118,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItemCPMWPM>{(wpmCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() == 'Infinity' ? '0 / 0' : (wpmCalculator(parseInt(item?.averageSpeed.toFixed()))*5).toFixed() + '/' + wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed())).toFixed() }</RowItemCPMWPM>
+        <RowItemCPMWPM>{(wpmCalculator(parseInt(item?.averageSpeed.toFixed()))).toFixed() == 'Infinity' ? '0 / 0' : (wpmValue.toFixed() *5 + '/' + wpmValue.toFixed())}</RowItemCPMWPM>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>
