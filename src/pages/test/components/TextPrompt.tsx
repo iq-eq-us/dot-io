@@ -179,7 +179,7 @@ export function TextPrompt(): ReactElement {
         }
         
         displayArray = tempArray;
-        return displayArray;
+        return [displayArray, console.log('Syd true')];
       } 
 
      
@@ -312,7 +312,7 @@ export function TextPrompt(): ReactElement {
   }  
 
 
-   displayArray = displayArray.length == 0 ? <div className='text-white'>[</div>: displayArray;
+  // displayArray = firstWordOrCharacter ? <div className='text-white'>[</div>: displayArray;
 }  return displayArray;
   }
 
@@ -339,8 +339,11 @@ export function TextPrompt(): ReactElement {
         }       
       }
     }
-    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1])){
+    const sd = indexOfTargetChord == 0 &&
+      allTypedText[allTypedText?.length-1]?.length;
+    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1]) || (currentTrainingScenario == 'ALPHABET' && sd)){
       arr =[];
+
     }
    return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
   }
