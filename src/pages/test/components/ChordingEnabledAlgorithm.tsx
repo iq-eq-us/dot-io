@@ -3,7 +3,6 @@ import { FaBorderStyle } from 'react-icons/fa';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import { TrainingStoreModel } from '../../../../src/models/trainingStore';
-import { indexOf } from 'lodash';
   
   
 const [bestKeyTime, setBestKeyTime] = useState([]);
