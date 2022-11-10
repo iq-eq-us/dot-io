@@ -407,7 +407,7 @@ export function TextPrompt(): ReactElement {
             }
           else{
            {ChordingEnabledAlgorithm(chord)} //This call checks to see if the a chorded device was used
-            return <CharacterEntryChord word={chord} index={targetCharacterIndex}/>
+           return <CharacterEntryChord word={chord} index={targetCharacterIndex} />
           }
           
         })}
@@ -417,7 +417,7 @@ export function TextPrompt(): ReactElement {
       </ChordRow>
 
       <ChordRow>
-        {(secondLineOfTargetText || [])?.map((chord : any) => (
+        {(secondLineOfTargetText || [])?.map((chord) => (
           <Chord key={r()}>{chord}</Chord>
         ))
         }
