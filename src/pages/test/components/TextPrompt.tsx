@@ -407,7 +407,9 @@ export function TextPrompt(): ReactElement {
             }
           else{
            {ChordingEnabledAlgorithm(chord)} //This call checks to see if the a chorded device was used
+            /* eslint-disable */ 
            return <CharacterEntryChord word={chord} index={targetCharacterIndex} />
+            /* eslint-disable */ 
           }
           
         })}
