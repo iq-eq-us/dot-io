@@ -61,7 +61,7 @@ export function TextPrompt(): ReactElement {
 
 
 
-  const ChordingEnabledAlgorithm = (chordValue)  => {
+  const ChordingEnabledAlgorithm = (chordValue : any)  => {
     
     window.performance = window.performance || {};
     performance.now = 
@@ -313,7 +313,6 @@ export function TextPrompt(): ReactElement {
 
 
    displayArray = displayArray.length == 0 ? <div className='text-white'>[</div>: displayArray;
-   console.log('Da display '+ displayArray)
 }  return displayArray;
   }
 
@@ -417,8 +416,6 @@ export function TextPrompt(): ReactElement {
         {letsFix(firstLineOfTargetText, targetCharacterIndex, indexOfTargetChord, setS )}
       </ChordRow>
 
-
-
       <ChordRow>
         {(secondLineOfTargetText || [])?.map((chord : any) => (
           <Chord key={r()}>{chord}</Chord>
@@ -431,16 +428,11 @@ export function TextPrompt(): ReactElement {
   );
 }
 
-export default function CharacterEntryChord({ word, index, wordArray, indexOfWord, allTypedTextInput }: { word: string, index: number | undefined, wordArray : string[], indexOfWord : number | undefined, allTypedTextInput : string[] }): ReactElement {
+export default function CharacterEntryChord({ word, index }: { word: string, index: number | undefined }): ReactElement {
   if (index === undefined || index === null)
     return <span className="text-black" key={Math.random()}>{word}</span>
 
   const wordSplit = word.split("");  
-  const typedTextSplit = allTypedTextInput[0]?.split("");
-  const newWordArray = wordArray;
-  let increment;
-  indexOfWord == undefined ? increment = 0 : increment =(wordArray.length - indexOfWord);
-
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', color: "gray" }}>

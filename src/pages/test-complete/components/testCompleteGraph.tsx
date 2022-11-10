@@ -277,7 +277,7 @@ export function TestCompleteGraph(): ReactElement {
 
       <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px", borderWidth: '80%'}}>
       <div id="chart" >
-     <div id="timeline-chart" onLoad={handleEvent}/>
+     <div id="timeline-chart">{handleEvent}</div>
       </div>
       </div>
     </React.Fragment>

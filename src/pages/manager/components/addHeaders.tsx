@@ -70,7 +70,7 @@ export function addHeadersToDataTable(){
     return (
       <React.Fragment>
      
-      <div id="terminal" margin-left="center" margin-right="center">
+      <div id="terminal" className="ml-center mr-center">
           <ul id="list"/>
           <table id="dataTable"/>
         </div>
