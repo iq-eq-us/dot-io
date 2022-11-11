@@ -340,8 +340,9 @@ export function TextPrompt(): ReactElement {
       }
     }
     const sd = indexOfTargetChord == 0 &&
-      allTypedText[allTypedText?.length-1]?.length;
-    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1]) || (currentTrainingScenario == 'ALPHABET' && sd)){
+      allTypedText[allTypedText?.length-1]?.length == 0;
+      console.log('Syd SYd '+ firstLineOfTargetText?.length + ' '+indexOfTargetChord)
+    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1]) || (currentTrainingScenario == 'ALPHABET' && firstLineOfTargetText.length-1 == indexOfTargetChord && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord])){
       arr =[];
 
     }

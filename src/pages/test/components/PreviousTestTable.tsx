@@ -4,26 +4,20 @@ import type { ChordStatistics } from '../../../models/trainingStatistics';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
-import { getCumulativeAverageChordTypeTime, wpmMethodCalculator } from '../../../helpers/aggregation';
+import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
-import { useWordsPerMinute } from '../../../../src/hooks/useWordsPerMinute';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences
-const LIST_LENGTH_OFFSET = 1;
+const LIST_LENGTH_OFFSET = 2;
 
-function PreviousTestTable(): ReactElement {
+function StatisticsTable(): ReactElement {
   const stats = useStoreState(
     (state) => state.trainingStatistics,
   ).statistics.sort((a, b) => b.averageSpeed - a.averageSpeed);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
-  const statsOfTargetWord = useStoreState(
-    (state) => state.trainingStatistics,
-  ).statistics.sort((a) => a.averageSpeed);
-  const speedGoal = useStoreState(
-    (state) => state.trainingSettings.speedGoal);
 
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
 
@@ -32,14 +26,13 @@ function PreviousTestTable(): ReactElement {
       <FixedSizeList
         height={dimensions.height || 0}
         itemCount={stats.length + LIST_LENGTH_OFFSET}
-        itemSize={25}
+        itemSize={36}
         width={300}
         itemData={{
           stats,
           targetChords: trainingSettings.targetChords,
           isRecursionEnabled: trainingSettings.autoOrCustom === 'AUTO',
           displayHUD: true,
-          speedGoal: speedGoal,
         }}
         style={{ borderRadius: 8 }}
       >
@@ -49,24 +42,11 @@ function PreviousTestTable(): ReactElement {
   );
 }
 
-function wpmCalculator(average : any){
-
-
-    const avgSpeedMilliseconds = average * 10;
-    const millisecondsPerCharacter = avgSpeedMilliseconds;
-    const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-    const wpm = averageCharacterPerMin/5;
-    
-    return wpm;
-
-}
-
 interface Data {
   stats: ChordStatistics[];
   targetChords: number;
   isRecursionEnabled: boolean;
   displayHUD: boolean;
-  speedGoal: number;
 }
 
 interface RowData {
@@ -81,34 +61,26 @@ const getStyle = (
   targetChords: number,
   isRecursionEnabled: boolean,
   index: number,
-  speedGoal: number,
-  stats: ChordStatistics[],
 ): StatRowStyle => {
-  const rowItem = stats?.[index - LIST_LENGTH_OFFSET+1];
-  console.log('jsndfnsdjfdjf '+ rowItem?.averageSpeed)
-  if ( rowItem != undefined && speedGoal > wpmMethodCalculator(rowItem.averageSpeed) && rowItem.averageSpeed != 0 ) {
-    if (isRecursionEnabled){ 
-      return 'TARGET_CHORD_ACTIVE';
-  }
+  if (index < targetChords) {
+    if (isRecursionEnabled) return 'TARGET_CHORD_ACTIVE';
     return 'TARGET_CHORD_INACTIVE';
-  }else{
-  return 'NORMAL'
   }
+  return 'NORMAL';
 };
+
 const Row = ({ index, style, data }: RowData) => {
   // Minus one to account for title row
   const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
   if (index === 0) return <Header />;
-  //else if (index === 1) return <AggregateRow data={data} />;
+  else if (index === 1) return <AggregateRow data={data} />;
 
   const headerStyle = getStyle(
     data.targetChords,
     data.isRecursionEnabled,
     index - LIST_LENGTH_OFFSET,
-    data.speedGoal,
-    data.stats,
   );
-    const wpmValue = wpmCalculator(parseInt(item?.averageSpeed.toFixed()));
+
   return (
     <div
       onClick={(e) => {
@@ -118,7 +90,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItemCPMWPM>{(wpmCalculator(parseInt(item?.averageSpeed.toFixed()))).toFixed() == 'Infinity' ? '0 / 0' : (wpmValue.toFixed() *5 + '/' + wpmValue.toFixed())}</RowItemCPMWPM>
+        <RowItem>{item?.averageSpeed.toFixed()}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>
@@ -161,16 +133,16 @@ const Header = () => {
         e.stopPropagation();
       }}
     >
-      <HeaderItemRow helpText="The type of test associated with these metrics.">
-        Word
+      <HeaderItemRow helpText="The name of the target chord or character you typed.">
+        Chord
       </HeaderItemRow>
-      <HeaderItemRow helpText="Your WPM for this test.">
-        CPM/WPM
+      <HeaderItemRow helpText="The speed at which you typed the chord in hundreths of a second.">
+        Speed
       </HeaderItemRow>
-      <HeaderItemRow helpText="Your Average WPM for this test.">
+      <HeaderItemRow helpText="The number of times you have made a mistake typing this chord.">
         Errors
       </HeaderItemRow>
-      <HeaderItemRow helpText="Your highest WPM for a word typed during this test.">
+      <HeaderItemRow helpText="The total number of times you have typed this chord.">
         Times
       </HeaderItemRow>
     </HeaderRow>
@@ -186,6 +158,18 @@ const AggregateRow = ({ data }: { data: Data }) => {
     sumOccurrences += d.numberOfOccurrences;
   });
 
+  return (
+    <AggregateStatRow
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <RowStatItem>SUM</RowStatItem>
+      <RowStatItem>{data.displayHUD ? average : ''}</RowStatItem>
+      <RowStatItem>{sumErrors}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? sumOccurrences : ''}</RowStatItem>
+    </AggregateStatRow>
+  );
 };
 
 const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
@@ -202,9 +186,6 @@ const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
 const RowItem = styled.div.attrs({
   className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,
 })``;
-const RowItemCPMWPM = styled.div.attrs({
-  className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,
-})``;
 
 const RowStatItem = styled.div.attrs({
   className: `px-3 2xl:px-6 whitespace-nowrap text-sm w-1/4 font-semibold`,
@@ -214,4 +195,4 @@ const TableContainer = styled.div.attrs({
   className: `h-full w-full flex flex-col items-end rounded-lg`,
 })``;
 
-export default PreviousTestTable;
+export default StatisticsTable;

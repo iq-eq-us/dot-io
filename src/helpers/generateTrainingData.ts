@@ -188,8 +188,26 @@ export const generateChords = (
     .map((s) => s.id);
   const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
+  for(let i=0; i < theCondensedChordStat.length; i++ ){
+    //(s) => (parameters.speedGoal > s.averageSpeed && 10 >= s.numberOfOccurrences) || s.averageSpeed === 0,
 
+    if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
+      
+      theCondensedChordStat.push(theCondensedChordStat.splice(theCondensedChordStat.indexOf(theCondensedChordStat[i]), 1)[0]);
+      
+    }
 
+  }
+const sel = []
+let i =0;
+  while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length){
+    if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
+      
+    } else{
+      sel.push(theCondensedChordStat[i].displayTitle)
+    }
+    i++;
+    }
   while (allCharacters.join('').length < parameters.lineLength) {
     const shouldChooseBasedOnSpeed =
       parameters.recursionRate > Math.random() * 100;
@@ -200,7 +218,7 @@ export const generateChords = (
     ){
 
       allCharacters.push(
-        getRandomElementFromArray(slowestTypedChordsAccountingForDepth),
+        getRandomElementFromArray(sel),
       );
       console.log('sndjfnjsdf '+ slowestTypedChordsAccountingForDepth +" "+ parameters.numberOfTargetChords);
 
