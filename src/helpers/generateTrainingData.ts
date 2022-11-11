@@ -202,7 +202,7 @@ const sel = []
 let i =0;
   while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length){
     if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
-      
+      //do nothing
     } else{
       sel.push(theCondensedChordStat[i].displayTitle)
     }
