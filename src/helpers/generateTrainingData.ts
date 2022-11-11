@@ -151,9 +151,15 @@ export const generateChords = (
 
   let chordToFeed = '';
   const numberOfChordsNotConquered = parameters.stats.filter(
-    (s) => (parameters.speedGoal > s.averageSpeed && 10 >= s.numberOfOccurrences) || s.averageSpeed === 0,
+    (s) => (parameters.speedGoal > s.averageSpeed && 10 >= 10) || s.averageSpeed === 0,
 
   ).length;
+
+  const numberOfChordsConquered = parameters.stats.filter(
+    (s) => (s.averageSpeed > parameters.speedGoal  && s.numberOfOccurrences >= 10 ),
+
+  ).length;
+
   if (numberOfChordsNotConquered > 0) {
     // Check for one remaining chord with zero speed
     // This happens on the first pass through the chord library
@@ -198,16 +204,25 @@ export const generateChords = (
     }
 
   }
-const sel = []
+
+let sel = [];
 let i =0;
-  while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length){
+console.log('not conqured '+numberOfChordsConquered)
+  while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length && numberOfChordsConquered < parameters.stats.length-1){
     if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
       //do nothing
-    } else{
+    }else{
       sel.push(theCondensedChordStat[i].displayTitle)
     }
     i++;
     }
+    if(numberOfChordsConquered >= parameters.stats.length-1){
+      console.log('I got a couple dolalrs i can spen on her')
+      sel = theCondensedChordStat
+      .slice(0, parameters.numberOfTargetChords)
+      .map((s) => s.id);
+    }
+
   while (allCharacters.join('').length < parameters.lineLength) {
     const shouldChooseBasedOnSpeed =
       parameters.recursionRate > Math.random() * 100;
@@ -220,7 +235,7 @@ let i =0;
       allCharacters.push(
         getRandomElementFromArray(sel),
       );
-      console.log('sndjfnjsdf '+ slowestTypedChordsAccountingForDepth +" "+ parameters.numberOfTargetChords);
+     // console.log('sndjfnjsdf '+ slowestTypedChordsAccountingForDepth +" "+ parameters.numberOfTargetChords);
 
     }
     else allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
