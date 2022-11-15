@@ -12,7 +12,8 @@ export const useWordsPerMinute = (): number => {
 
   const trainingSceneario = useStoreState((store) => store.currentTrainingScenario);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
-  //const ChordingEnabled = useStoreState((store) => store.isUsingChordingEnabledDevice);
+  const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
+  const isTrainingTestDone = currentTrainingSetting.isTestDone;
 
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
@@ -157,7 +158,7 @@ export const useWordsPerMinute = (): number => {
     }
   }
 
-  
+  console.log('Test is done '+ isTrainingTestDone)
   return wpm;
 
 };

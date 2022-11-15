@@ -400,6 +400,8 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
 
   let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
+  let numberOfOccurences = 1;
+
 
   // Don't penalize the user if this is the first character they type
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
@@ -416,7 +418,8 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   if (userIsTypingFirstChord ){
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
-    timeTakenToTypeChord = (performance.now() - sessionStorage.getItem('timeThat'))/10;
+    timeTakenToTypeChord = 0;
+    numberOfOccurences =0;
     console.log('In here the check user first ty '+userIsTypingFirstChord + ' '+ timeTakenToTypeChord);
 
 
@@ -435,7 +438,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   chordStats.averageSpeed =
     (chordStats.averageSpeed * chordStats.numberOfOccurrences +
       chordStats.lastSpeed) /
-    (chordStats.numberOfOccurrences + 1);
+    (chordStats.numberOfOccurrences + numberOfOccurences);
   store.userIsEditingPreviousWord ===false ? chordStats.numberOfOccurrences++ : '';
 
   if (couldFindChordInLibrary) {

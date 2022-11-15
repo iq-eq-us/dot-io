@@ -10,14 +10,16 @@ const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
 
  const sessionChordingState = sessionStorage.getItem('chordingEnabledDevice');
 
-
 const globalStorageStoreActions: GlobalStoreActions = {
   setIsUsingChordingEnabledDevice: action((state, payload) => {
   state.isUsingChordingEnabledDevice = payload as boolean;
   updateIsChordingEnabledInSessionStorage(payload as boolean);
   }),
   setIsDisplayingSettingsModal: action((state, payload) => {
-  state.isDisplayingSettingsModal = payload;
+    state.isDisplayingSettingsModal = payload;
+    }),
+    setNumberOfWordsChorded: action((state, payload) => {
+  state.numberOfWordsChorded = state.numberOfWordsChorded +1 as number;
   }),
   setIsDisplayingStatisticsModal: action((state, payload) => {
   state.isDisplayingStatisticsModal = payload;

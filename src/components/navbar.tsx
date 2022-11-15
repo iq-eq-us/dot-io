@@ -106,7 +106,7 @@ const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDis
         <NavLinksImage src={Crown_Icon} alt="" />
         </NavMenuLink>
           <NavBtnLink href='#/manager'>Connect</NavBtnLink>
-          <NavMenuLink aria-current="page">
+          <NavMenuLink aria-current="page" href='#/dashboard'>
         <NavLinksImage src={profileImage} alt="" />
         </NavMenuLink>
         </NavBtn>

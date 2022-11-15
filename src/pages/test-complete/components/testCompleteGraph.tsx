@@ -160,7 +160,7 @@ function wpmDataCalculator (wpmArray : any){
   console.log('This is the very first array '+wpmArray);
   let wpmTemp = 0;
   let localTemp = 0;
-  for (let i =0; i<wpmArray.length; i++){
+  for (let i =1; i<wpmArray.length; i++){
     localTemp = 0;
     wpmTemp = parseInt(wpmTemp) + parseInt(wpmArray[i]);
     localTemp = wpmTemp / (i +1);
@@ -201,7 +201,7 @@ export function TestCompleteGraph(): ReactElement {
 
       if(d.displayTitle.length * d.numberOfOccurrences != 0) {
         tempConst += d.averageSpeed;
-        console.log('This is the stored test words '+storedTestTextData);
+        //console.log('This is the stored test words '+storedTestTextData);
           wordNames.push(d.displayTitle);
           wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
 
@@ -243,11 +243,21 @@ export function TestCompleteGraph(): ReactElement {
     wordNames = chordsToChooseFrom;
     rawSpeedOfCurrentWord = finalRawWPM;
   } else{
+    let firstWordIndex;
     for(let i =0; i<storedTestTextData?.length; i++){
+      if(isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false){
       finalErrorsArray.push(wordOccurrences[wordNames.indexOf(storedTestTextData[i])]);
       finalWPMArray.push(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]);
       finalRawWPM.push(rawSpeedOfCurrentWord[wordNames.indexOf(storedTestTextData[i])])
+      } else {
+        firstWordIndex = i;
+      }
 
+      if(i== storedTestTextData.length-1){
+        finalErrorsArray.splice(0,0, 0);
+      finalWPMArray.splice(0,0, 0);
+      finalRawWPM.splice(0,0, 0);
+      }
     }
 
     wordOccurrences = finalErrorsArray;

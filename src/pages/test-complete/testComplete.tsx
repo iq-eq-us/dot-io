@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { TestControlRow } from './components/testControlsRow';
 import { TestStatsCard } from './components/testStatsCard';
 import { TestCompleteGraph } from './components/testCompleteGraph';
+import TrainingModeSelector from '../test/components/TrainingModeSelector';
 
 import {
     ManagerPageContainer, 
@@ -21,6 +22,7 @@ function TestCompletePage(): ReactElement {
     <ManagerPageContainer>
     <TestStatsCard/>
     <HorizontalRule/>
+    <TrainingModeSelector/>
     <TestCompleteGraph/>
      <TestControlRow/>
      </ManagerPageContainer>

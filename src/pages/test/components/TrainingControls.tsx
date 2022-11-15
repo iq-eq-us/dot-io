@@ -109,20 +109,7 @@ useEffect(() => {
 
   return (
       <React.Fragment>
-        <WordRowContainer> 
-        <AggregateStatRow>
-        <RowStatItemName >Words: </RowStatItemName>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 10)} style={ (count == 10 && (currentTrainingScenario == 'LEXICAL') ) ? {color: '#1e90ff'} :{} }>10</RowStatItem>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('LEXICAL', 26)} style={ (count == 26 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>25</RowStatItem>
-        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 50)} style={ (count == 50 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>50</RowStatItem>
-        <RowStatItem onClick={() =>beginTestBasedOnTrainingSelection('LEXICAL', 75)} style={ (count == 75 && (currentTrainingScenario == 'LEXICAL')) ? {color: '#1e90ff'} :{} }>75</RowStatItem>
-        </AggregateStatRow>
-        </WordRowContainer>
-        <WordRowContainer> 
-        <AggregateStatRow>
-        <RowStatItem onClick={() => beginTestBasedOnTrainingSelection('CUSTOMTIER', 0)} style={ (count == 0 && (currentTrainingScenario == 'LEXICAL-SENTENCES')) ? {color: '#1e90ff'} :{} }>Custom</RowStatItem>
-        </AggregateStatRow>
-        </WordRowContainer>
+        
     </React.Fragment>
   );
 };
