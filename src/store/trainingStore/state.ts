@@ -30,6 +30,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   restartTestMode: false,
   userIsEditingPreviousWord: false,
   allTypedCharactersStore: [],
+  numberOfWordsChorded: 0,
   trainingStatistics: {
     statistics: [],
   },

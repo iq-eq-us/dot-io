@@ -36,7 +36,7 @@ export interface TrainingStoreActionsModel {
   setPopAllTypedCharactersStore: Action<TrainingStoreModel>;
   setUserIsEditingPreviousWord: Action<TrainingStoreModel, boolean>;
   setTextPromptUnFocused: Action<TrainingStoreModel, boolean>;
-
+  setNumberOfWordsChorded: Action<TrainingStoreModel, number>;
 
 
 
@@ -105,6 +105,7 @@ export interface TrainingStoreStateModel {
   allTypedCharactersStore: string[] | undefined;
   userIsEditingPreviousWord: boolean;
   textPromptUnFocused: boolean;
+  setNumberOfWordsChorded:  number;
 
 }
 
