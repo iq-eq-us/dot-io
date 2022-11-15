@@ -105,7 +105,7 @@ export interface TrainingStoreStateModel {
   allTypedCharactersStore: string[] | undefined;
   userIsEditingPreviousWord: boolean;
   textPromptUnFocused: boolean;
-  setNumberOfWordsChorded:  number;
+  numberOfWordsChorded:  number;
 
 }
 

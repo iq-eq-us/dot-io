@@ -20,6 +20,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   typedTrainingText: '',
   trainingText: [],
   compareText: [],
+  numberOfWordsChorded: 0,
   currentLineOfTrainingText: 0,
   currentSubindexInTrainingText: 0,
   trainingSettings: JSON.parse(JSON.stringify(defaultAlphabeticTestTraining)),
@@ -30,7 +31,6 @@ const trainingStoreState: TrainingStoreStateModel = {
   restartTestMode: false,
   userIsEditingPreviousWord: false,
   allTypedCharactersStore: [],
-  numberOfWordsChorded: 0,
   trainingStatistics: {
     statistics: [],
   },
