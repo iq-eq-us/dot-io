@@ -71,6 +71,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setRestartTestMode: action((state, payload) => {
     state.restartTestMode = payload;
   }),
+  setNumberOfWordsChorded: action((state, payload) => {
+state.numberOfWordsChorded = state.numberOfWordsChorded +1 as number;
+}),
 
 
 
