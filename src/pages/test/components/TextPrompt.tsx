@@ -320,12 +320,12 @@ export function TextPrompt(): ReactElement {
 
 
 
-   function letsFix(word, indexOfCharacterInTargetChord, indexOfTargetChord){
+   function letsFix(word, indexOfCharacterInTargetChord, indexOfTargetChord, setS){
     let arr : string [] = [] ;
     const conditionalValue = allTypedText.length-indexOfTargetChord;
     const input = document.getElementById('txt_Name') as unknown as HTMLInputElement;
 
-
+    
     if(setS[setS.length-1] == " " && indexOfTargetChord != allTypedText.length && conditionalValue < 1){
       storeAllTypedText(setS);
       setTypedTrainingText('');
@@ -346,8 +346,7 @@ export function TextPrompt(): ReactElement {
     const sd = indexOfTargetChord == 0 &&
       allTypedText[allTypedText?.length-1]?.length == 0;
       //console.log('Syd SYd '+ firstLineOfTargetText?.length + ' '+indexOfTargetChord)
-    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1]) || (currentTrainingScenario == 'ALPHABET' && firstLineOfTargetText.length-1 == indexOfTargetChord && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord]) || input?.value.length-1 == 0 && indexOfTargetChord == 0){
-      console.log(' as unknown as HTMLInputElement '+ setS + ' '+input.value)
+    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1]) || (currentTrainingScenario == 'ALPHABET' && firstLineOfTargetText.length-1 == indexOfTargetChord && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord])){
       arr =[];
     }
     
@@ -424,7 +423,7 @@ export function TextPrompt(): ReactElement {
         })}
       </ChordRow>
       <ChordRow>        
-        {letsFix(firstLineOfTargetText, targetCharacterIndex, indexOfTargetChord )}
+        {letsFix(firstLineOfTargetText, targetCharacterIndex, indexOfTargetChord, setS )}
       </ChordRow>
 
       <ChordRow>
