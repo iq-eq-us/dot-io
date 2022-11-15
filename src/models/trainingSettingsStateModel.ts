@@ -40,7 +40,7 @@ export const defaultTrigramsTestTraining: TrainingSettingsState = {
   autoOrCustom: 'CUSTOM',
   targetChords: 8,
   speedGoal: 20,
-  recursionRate: 95,
+  recursionRate: 100,
   isErrorBurst: false,
   isDisplayingHUD: true,
   contrastPercentage: 100,
