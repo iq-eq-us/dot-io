@@ -82,7 +82,7 @@ export function TextPrompt(): ReactElement {
     let numberOfBestTimesUnderTen = 0;
       if(letterPressed.includes('Backspace') && bestKeyTime.length>2){
           for(let i =0; i<bestKeyTime.length-1; i++){
-            if(bestKeyTime[i] <= 8) {
+            if(bestKeyTime[i] <= 10) {
               numberOfBestTimesUnderTen++;
             }
           }
