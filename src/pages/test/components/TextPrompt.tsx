@@ -82,7 +82,7 @@ export function TextPrompt(): ReactElement {
     let numberOfBestTimesUnderTen = 0;
       if(letterPressed.includes('Backspace') && bestKeyTime.length>2){
           for(let i =0; i<bestKeyTime.length-1; i++){
-            if(bestKeyTime[i] <= 13) {
+            if(bestKeyTime[i] <= 10) {
               numberOfBestTimesUnderTen++;
             }
           }
@@ -91,7 +91,6 @@ export function TextPrompt(): ReactElement {
         setChordingEnabled(true);
         setnumberOfWordsChorded();
         console.log("setChordingEnabled "+ numberOfWordsChorded)
-
       }
       setBestKeyTime([]);
       setLetterPressed([]);
@@ -346,7 +345,9 @@ export function TextPrompt(): ReactElement {
     const sd = indexOfTargetChord == 0 &&
       allTypedText[allTypedText?.length-1]?.length == 0;
       //console.log('Syd SYd '+ firstLineOfTargetText?.length + ' '+indexOfTargetChord)
-    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1]) || (currentTrainingScenario == 'ALPHABET' && firstLineOfTargetText.length-1 == indexOfTargetChord && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord])){
+      console.log('ijsjdnjwdnws'+ (storedTestTextData) + " "+ setS);
+      
+    if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1]) || (currentTrainingScenario == 'ALPHABET' && firstLineOfTargetText.length-1 == indexOfTargetChord && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord])|| indexOfTargetChord == 1 && input?.value.length-1 == 0 || (indexOfTargetChord == 0 && input?.value.length == 0)){
       arr =[];
     }
     

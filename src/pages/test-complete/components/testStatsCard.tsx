@@ -62,11 +62,12 @@ export function TestStatsCard(): ReactElement {
           <h1 className='text-lg'>Test Type</h1>
           </StatsCardContainer>
           <StatsCardContainer>
-          <div className='text-4xl'>{((wordsCorrectCount/testNumber)*100).toFixed(2) + '%'}</div>
+          <div className='text-4xl'>{((wordsCorrectCount/parseInt(testNumber))*100).toFixed(2) + '%'}</div>
           <h1 className='text-lg'>Typing Accuracy</h1>
           </StatsCardContainer>
           <StatsCardContainer>
           <div className='text-4xl'>{((numberOfWordsChorded).toFixed(0)/25)*100 + '%'}</div>
+          {console.log('Number of words chorded '+ numberOfWordsChorded)}
           <h1 className='text-lg'>Percent Chorded</h1>
           </StatsCardContainer>
         </TrainingStatsColumnContainer>
