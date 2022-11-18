@@ -157,7 +157,6 @@ const AggregateRow = ({ data }: { data: Data }) => {
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
   });
-  const isInfinity = parseInt(average).toFixed() == 0
 
   return (
     <AggregateStatRow
@@ -166,7 +165,7 @@ const AggregateRow = ({ data }: { data: Data }) => {
       }}
     >
       <RowStatItem>SUM</RowStatItem>
-      <RowStatItem>{data.displayHUD ? (parseInt(average) == 0 ? '0 / 0' :  wpmCalculator(parseInt(average).toFixed())*5 + '/' + wpmCalculator(parseInt(average).toFixed()) ): ''}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? (parseInt(average) == 0 ? '0 / 0' :  (wpmCalculator(parseInt(average).toFixed())*5).toFixed() + '/' + (wpmCalculator(parseInt(average))).toFixed()): ''}</RowStatItem>
       <RowStatItem>{sumErrors}</RowStatItem>
       <RowStatItem>{data.displayHUD ? sumOccurrences : ''}</RowStatItem>
     </AggregateStatRow>

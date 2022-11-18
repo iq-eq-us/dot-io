@@ -83,6 +83,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.currentTrainingScenario = payload[0] as TrainingScenario;
     state.wordTestNumber = payload[1] as WordTrainingValues;
     state.allTypedCharactersStore = [];
+    state.  numberOfWordsChorded = 0,
     console.log('Is this the current traing scenario '+ state.currentTrainingScenario)
    // Pull the chord library from memory if it's there, otherwise pull it from defaults
     if (
