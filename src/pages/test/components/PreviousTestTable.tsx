@@ -81,6 +81,7 @@ const Row = ({ index, style, data }: RowData) => {
     index - LIST_LENGTH_OFFSET,
   );
 
+  const wpmValue = wpmCalculator(parseInt(item?.averageSpeed.toFixed()));
   return (
     <div
       onClick={(e) => {
@@ -90,7 +91,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItem>{isNaN(parseInt(item?.averageSpeed.toFixed()))?'Omitted':item?.averageSpeed.toFixed()}</RowItem>
+        <RowItem>{(wpmCalculator(parseInt(item?.averageSpeed.toFixed()))).toFixed() == 'Infinity' ? '0 / 0' : (wpmValue.toFixed() *5 + '/' + wpmValue.toFixed())}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>
@@ -133,22 +134,21 @@ const Header = () => {
         e.stopPropagation();
       }}
     >
-      <HeaderItemRow helpText="The name of the target chord or character you typed.">
-        Chord
+<HeaderItemRow helpText="The type of test associated with these metrics.">
+        Word
       </HeaderItemRow>
-      <HeaderItemRow helpText="The speed at which you typed the chord in hundreths of a second.">
-        Speed
+      <HeaderItemRow helpText="Your WPM for this test.">
+        CPM/WPM
       </HeaderItemRow>
-      <HeaderItemRow helpText="The number of times you have made a mistake typing this chord.">
+      <HeaderItemRow helpText="Your Average WPM for this test.">
         Errors
       </HeaderItemRow>
-      <HeaderItemRow helpText="The total number of times you have typed this chord.">
+      <HeaderItemRow helpText="Your highest WPM for a word typed during this test.">
         Times
       </HeaderItemRow>
     </HeaderRow>
   );
 };
-
 const AggregateRow = ({ data }: { data: Data }) => {
   const average = getCumulativeAverageChordTypeTime(data.stats);
   let sumErrors = 0;
@@ -157,6 +157,7 @@ const AggregateRow = ({ data }: { data: Data }) => {
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
   });
+  const isInfinity = parseInt(average).toFixed() == 0
 
   return (
     <AggregateStatRow
@@ -165,13 +166,24 @@ const AggregateRow = ({ data }: { data: Data }) => {
       }}
     >
       <RowStatItem>SUM</RowStatItem>
-      <RowStatItem>{data.displayHUD ? average : ''}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? (parseInt(average) == 0 ? '0 / 0' :  wpmCalculator(parseInt(average).toFixed())*5 + '/' + wpmCalculator(parseInt(average).toFixed()) ): ''}</RowStatItem>
       <RowStatItem>{sumErrors}</RowStatItem>
       <RowStatItem>{data.displayHUD ? sumOccurrences : ''}</RowStatItem>
     </AggregateStatRow>
   );
 };
 
+function wpmCalculator(average : any){
+
+
+  const avgSpeedMilliseconds = average * 10;
+  const millisecondsPerCharacter = avgSpeedMilliseconds;
+  const averageCharacterPerMin = 60000/millisecondsPerCharacter;
+  const wpm = averageCharacterPerMin/5;
+  
+  return wpm;
+
+}
 const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
   (props) => ({
     className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] hover:bg-[#333] ${props.headerStyle === 'TARGET_CHORD_ACTIVE'
@@ -196,3 +208,4 @@ const TableContainer = styled.div.attrs({
 })``;
 
 export default StatisticsTable;
+
