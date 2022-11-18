@@ -90,7 +90,7 @@ const Row = ({ index, style, data }: RowData) => {
     >
       <NewStatisticsRow headerStyle={headerStyle}>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItem>{item?.averageSpeed.toFixed()}</RowItem>
+        <RowItem>{isNaN(parseInt(item?.averageSpeed.toFixed()))?'Omitted':item?.averageSpeed.toFixed()}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
       </NewStatisticsRow>

@@ -108,6 +108,8 @@ export const handleStatsMerge = (
     ]),
   ];
 
+  //I need to build lloginc in that will read in the first word that has NAN and
+
   // Loop through all possible keys and construct a merged chord stat for that key
   const newStats: ChordStatistics[] = [];
   allChordKeys.map((key: string) => {

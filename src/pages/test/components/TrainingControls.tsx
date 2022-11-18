@@ -74,32 +74,24 @@ const AggregateRow = ({ data } : { data: any }) => {
   const [tempCounter, setTempCounter] = useState(-100);
 
 useEffect(() => {
-  console.log(currentTrainingSetting);
-  console.log(trainingSetting)
+
   const temp = parseInt(sessionStorage.getItem("tempTestDeIncrement"))
-  console.log('State of Test Deincrement in Training controls '+ parseInt(sessionStorage.getItem("tempTestDeIncrement")));
   if(tempCounter == -100){
     setTempCounter(temp);
     sessionStorage.getItem("CutomTierTestValue")
-    console.log('Did I remove in training controls?')
   }
-  console.log('THis is trhe temp counter '+ tempCounter)
-    console.log(trainingSetting)
 
-  // run something every time name changes
   if(currentTrainingScenario == 'CUSTOMTIER'){
-    console.log('I am being fired in the if statement')
-    console.log(temp)
-    if((sumOccurrences>=parseInt(sessionStorage.getItem("CutomTierTestValue")))){
+
+    if((sumOccurrences+1>=parseInt(sessionStorage.getItem("CutomTierTestValue")))){
       setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
     setPopUpDisplayValue(true);
     setTempCounter(-100);
     //Method will send the test values to local storage
     }
   }
-  else if((sumOccurrences>=parseInt(count)) && wordTestNumber !=undefined){
-    console.log('I am being fired in the else statement');
-    console.log('This is the test number '+ wordTestNumber)
+  else if((sumOccurrences+1>=parseInt(count)) && wordTestNumber !=undefined){
+
     setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
     setPopUpDisplayValue(true);
     //Method will send the test values to local storage

@@ -71,9 +71,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setRestartTestMode: action((state, payload) => {
     state.restartTestMode = payload;
   }),
-  setNumberOfWordsChorded: action((state, payload) => {
-state.numberOfWordsChorded = state.numberOfWordsChorded +1 as number;
-}),
 
 
 
@@ -403,7 +400,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
 
   let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
-  let numberOfOccurences = 1;
+  let numberOfOccurences = 0;
 
 
   // Don't penalize the user if this is the first character they type
@@ -422,10 +419,9 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
     timeTakenToTypeChord = 0;
-    numberOfOccurences =0;
-    console.log('In here the check user first ty '+userIsTypingFirstChord + ' '+ timeTakenToTypeChord);
-
-
+    numberOfOccurences =-1;
+    
+    //console.log('In here the check user first ty '+userIsTypingFirstChord + ' '+ timeTakenToTypeChord);
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea '+ sessionStorage.getItem('timeThat')/10)
     //console.log('oh yea '+store.timeOfLastChordStarted);
@@ -441,7 +437,8 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   chordStats.averageSpeed =
     (chordStats.averageSpeed * chordStats.numberOfOccurrences +
       chordStats.lastSpeed) /
-    (chordStats.numberOfOccurrences + numberOfOccurences);
+    (chordStats.numberOfOccurrences + 1);
+    chordStats.numberOfOccurrences = chordStats.numberOfOccurrences + numberOfOccurences;
   store.userIsEditingPreviousWord ===false ? chordStats.numberOfOccurrences++ : '';
 
   if (couldFindChordInLibrary) {
