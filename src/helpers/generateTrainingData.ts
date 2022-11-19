@@ -201,14 +201,14 @@ let i =0;
     }
     i++;
     }
-    if(numberOfChordsConquered >= parameters.stats.length-1){
+    if(numberOfChordsConquered == parameters.stats.length-1){
       chordsSortedByTypingSpeed.sort(
         (a, b) => b.averageSpeed - a.averageSpeed,
       );
       sel = chordsSortedByTypingSpeed
       .slice(0, parameters.numberOfTargetChords)
       .map((s) => s.id);
-      console.log('I got a couple dolalrs i can spen on her ' + parameters.stats.length + sel)
+      //console.log('I got a couple dolalrs i can spen on her ' + numberOfChordsConquered + sel)
 
     }
 
