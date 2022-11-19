@@ -14,10 +14,38 @@ import { truncateString } from '../../../helpers/truncateString';
 const LIST_LENGTH_OFFSET = 2;
 
 function StatisticsTable(): ReactElement {
-  const stats = useStoreState(
+  
+  let stats = useStoreState(
     (state) => state.trainingStatistics,
-  ).statistics.sort((a, b) => b.averageSpeed - a.averageSpeed);
+  ).statistics.sort((a, b) => b.numberOfOccurrences - a.numberOfOccurrences);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
+
+  const numberOfChordsConquered = stats.filter(
+    (s) => (s.averageSpeed > trainingSettings.speedGoal  && s.numberOfOccurrences >= 10 ),
+
+  ).length;
+
+
+  const numberOfWordsTyped = stats.filter(
+    (s) => (s.numberOfOccurrences !=0)).length;
+
+    const totalNumberOfWordsTyped = stats.filter(
+      (s) => (s.numberOfOccurrences >=0),).length;
+
+
+  const sortBetween = (arr = [], start, end) => {
+    if(numberOfChordsConquered > totalNumberOfWordsTyped-1){
+      console.log(';lkjhbjk;' + totalNumberOfWordsTyped + ' ' + numberOfChordsConquered)
+      stats.sort((a, b) => b.averageSpeed - a.averageSpeed);
+    
+    } else {
+      const part = arr.splice(start, end - start);
+      part.sort();
+      part.reverse();
+      arr.splice(start, 0, ...part);
+    }
+ }
+ sortBetween(stats, 0, numberOfWordsTyped);
 
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
 

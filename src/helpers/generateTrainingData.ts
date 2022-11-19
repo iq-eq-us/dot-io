@@ -147,8 +147,6 @@ export const generateChords = (
     (a, b) => b.averageSpeed - a.averageSpeed,
   );
 
- 
-
   let chordToFeed = '';
   const numberOfChordsNotConquered = parameters.stats.filter(
     (s) => (parameters.speedGoal > s.averageSpeed && 10 >= 10) || s.averageSpeed === 0,
@@ -171,43 +169,30 @@ export const generateChords = (
     // If there is no chord with zero speed, then we move onto the highest
     else chordToFeed = chordsSortedByTypingSpeed[0].displayTitle;
   }
-  const theCondensedChordStat = parameters.stats.sort(
+  let theCondensedChordStat = parameters.stats.sort(
     (a, b) => b.averageSpeed - a.averageSpeed,
   );
   const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
   allCharacters.shift(); // This removes the first letter in the array so that in the alphabetic tier we only show the first 8 letters on the intial data set load
 
   for(let i=0; i < theCondensedChordStat.length; i++ ){
-    //(s) => (parameters.speedGoal > s.averageSpeed && 10 >= s.numberOfOccurrences) || s.averageSpeed === 0,
-
     if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
-      
       theCondensedChordStat.push(theCondensedChordStat.splice(theCondensedChordStat.indexOf(theCondensedChordStat[i]), 1)[0]);
-      
     }
-
   }
   
-
+  theCondensedChordStat = theCondensedChordStat.sort(
+    (a, b) => b.numberOfOccurrences - a.numberOfOccurrences,
+  );
+  //console.log('The condensed chord stat '+ theCondensedChordStat)
   const slowestTypedChordsAccountingForDepth = theCondensedChordStat
     .slice(0, parameters.numberOfTargetChords)
     .map((s) => s.id);
   const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
-  for(let i=0; i < theCondensedChordStat.length; i++ ){
-    //(s) => (parameters.speedGoal > s.averageSpeed && 10 >= s.numberOfOccurrences) || s.averageSpeed === 0,
-
-    if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
-      
-      theCondensedChordStat.push(theCondensedChordStat.splice(theCondensedChordStat.indexOf(theCondensedChordStat[i]), 1)[0]);
-      
-    }
-
-  }
 
 let sel = [];
 let i =0;
-console.log('not conqured '+numberOfChordsConquered)
   while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length && numberOfChordsConquered < parameters.stats.length-1){
     if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
       //do nothing
@@ -217,10 +202,14 @@ console.log('not conqured '+numberOfChordsConquered)
     i++;
     }
     if(numberOfChordsConquered >= parameters.stats.length-1){
-      console.log('I got a couple dolalrs i can spen on her')
-      sel = theCondensedChordStat
+      chordsSortedByTypingSpeed.sort(
+        (a, b) => b.averageSpeed - a.averageSpeed,
+      );
+      sel = chordsSortedByTypingSpeed
       .slice(0, parameters.numberOfTargetChords)
       .map((s) => s.id);
+      console.log('I got a couple dolalrs i can spen on her ' + parameters.stats.length + sel)
+
     }
 
   while (allCharacters.join('').length < parameters.lineLength) {
