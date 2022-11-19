@@ -201,7 +201,7 @@ let i =0;
     }
     i++;
     }
-    if(numberOfChordsConquered == parameters.stats.length-1){
+    if(numberOfChordsConquered > parameters.stats.length-1){
       chordsSortedByTypingSpeed.sort(
         (a, b) => b.averageSpeed - a.averageSpeed,
       );
