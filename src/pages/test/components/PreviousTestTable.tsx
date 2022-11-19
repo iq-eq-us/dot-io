@@ -15,7 +15,7 @@ const LIST_LENGTH_OFFSET = 2;
 
 function StatisticsTable(): ReactElement {
   
-  let stats = useStoreState(
+  const stats = useStoreState(
     (state) => state.trainingStatistics,
   ).statistics.sort((a, b) => b.numberOfOccurrences - a.numberOfOccurrences);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
