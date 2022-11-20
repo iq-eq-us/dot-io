@@ -5,8 +5,9 @@ import styled from 'styled-components';
 import { useStoreState } from 'easy-peasy';
 
 
-
 export function ScoresComponent(): ReactElement {
+  const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
+
     const HideWhenScreenGetSmallEnough = styled.div `
     @media screen and (max-width: 1000px) {
       display: none;
@@ -39,7 +40,7 @@ export function ScoresComponent(): ReactElement {
 
   </tr>
   <tr>
-    <td>{getHighestWPM() *5}</td>
+    <td>{parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed()) * 5}</td>
     <td>CPM</td>
     <td/>
     <td>-</td>

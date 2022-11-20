@@ -41,6 +41,11 @@ const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
 const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
 const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
 
+const fastestRecordedWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute,);
+const fastestCounter = useStoreState(
+  (store) => store.fastestRecordedWordsPerMinute,
+);
+
 
   const payload : any [] = []
   payload.push('LEXICAL');

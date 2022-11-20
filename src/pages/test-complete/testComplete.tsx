@@ -22,9 +22,10 @@ function TestCompletePage(): ReactElement {
     <ManagerPageContainer>
     <TestStatsCard/>
     <HorizontalRule/>
-    <TrainingModeSelector/>
     <TestCompleteGraph/>
      <TestControlRow/>
+     <TrainingModeSelector/>
+
      </ManagerPageContainer>
      </React.Fragment>
 

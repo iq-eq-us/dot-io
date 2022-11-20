@@ -1,9 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingScenario';
-import { useStoreState, useStoreActions } from '../../../store/store';
-import RefreshIcon from './RefreshIcon';
 import styled from 'styled-components';
-import GrCaretNext from 'react-icons';
 import TrainingControls from '../../test/components/TrainingControls';
 import NextTestButton from '../../../../src/pages/test/components/NextTestButton';
 import RefreshButton from '../../../../src/pages/test/components/RefreshButton';
@@ -16,7 +12,7 @@ export function TestControlRow(): ReactElement {
         <React.Fragment>
         <RowContainer>
             <ItemsContainer>
-      <NextTestButton/>
+      <NextTestButton />
          </ItemsContainer>
       </RowContainer>    
        <TeirSelector>
