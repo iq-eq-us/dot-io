@@ -14,6 +14,7 @@ export const useWordsPerMinute = (): number => {
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
   const isTrainingTestDone = currentTrainingSetting.isTestDone;
+  //const setIsDisplaying = useStoreActions((store) => store.isDisplayingTestComplete,);
 
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
@@ -22,15 +23,16 @@ export const useWordsPerMinute = (): number => {
     (store) => store.fastestRecordedWordsPerMinute,
   );
   
+  const testNumber = useStoreState((store) => store.wordTestNumber);
 
   const setFastestWPM = useStoreActions(
     (store) => store.setFastestRecordedWordsPerMinute,
   );
 
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
-  const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
-  console.log('Word test number we have here '+ wordTestNumber)
-
+  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
+  const alltypedText= useStoreState((store) => store.allTypedCharactersStore);
+  const numberOfWordsChorded = useStoreState((state  : any) => state.numberOfWordsChorded);
 
 
   let totalNumberOfCharactersTyped = 0;
@@ -38,7 +40,12 @@ export const useWordsPerMinute = (): number => {
   
   const timeAtTrainingStartInSeconds = timeAtTrainingStart * 0.001;
   
-  
+  let wordsCorrectCount = 0;
+  for(let i=0; i<storedTestTextData.length; i++){
+    if(storedTestTextData[i] == alltypedText[i].slice(0, -1)){
+      wordsCorrectCount++;
+    }
+  }
   const timeNowInSeconds = performance.now() * 0.001;
   const timeNowInMilli = timeNowInSeconds * 1000;
   const timeDifferenceInSeconds =
@@ -101,7 +108,6 @@ export const useWordsPerMinute = (): number => {
   
           const currentDate = new Date();
 
-          wordTestNumber !=null||undefined ? storeAverageData( wpm, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
           if(currentChordSpeed>=100 && (currentChordSpeed != 6276)){//This checks if the WPM is equal to 100 wpm of higher
            // storeMasteredData(currentDate, currentChordSpeed);
             }
@@ -129,7 +135,6 @@ export const useWordsPerMinute = (): number => {
           averageSpeedCount++; 
           const currentDate = new Date();
 
-          wordTestNumber !=null||undefined ? [storeAverageData( averageSpeed, currentDate, currentChordSpeed, averageDailyCount)] : '';//This checks to make sure we are in a testing teir
           if(currentChordSpeed>=100 && (currentChordSpeed != 6276)){
           //storeMasteredData(currentDate, currentChordSpeed);
           
@@ -142,19 +147,25 @@ export const useWordsPerMinute = (): number => {
   
     }
     
-
-      if (wpm > fastestRecordedWPM[trainingScenario]) {
+    if(isTrainingTestDone){
+      console.log('New WPM did fire ')
+      //((wordsCorrectCount/parseInt(testNumber))*100)
+      if (wpm > fastestRecordedWPM[trainingScenario] && 6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/parseInt(testNumber))*100) >=95) {
         const currentDate = new Date();
 
+        console.log('New WPM did fire inside the conditional and it was teuew ')
   
         wordTestNumber !=null||undefined ? storeData(wpm, currentDate) : '';//This checks to make sure we are in a testing teir
-       // if(ChordingEnabled!==true)
-        setFastestWPM({
+        wordTestNumber !=null||undefined ? storeAverageData( wpm, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
+
+          setFastestWPM({
           ...fastestRecordedWPM,
           [trainingScenario]: wpm,
         });
+      
 
       }
+    }
     }
   }
 

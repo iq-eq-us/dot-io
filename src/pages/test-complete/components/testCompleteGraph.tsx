@@ -254,7 +254,7 @@ export function TestCompleteGraph(): ReactElement {
       }
 
       if(i== storedTestTextData.length-1){
-        finalErrorsArray.splice(0,0, 0);
+      finalErrorsArray.splice(0,0, 0);
       finalWPMArray.splice(0,0, 0);
       finalRawWPM.splice(0,0, 0);
       }
