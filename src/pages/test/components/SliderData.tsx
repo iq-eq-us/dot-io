@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import Intro1 from '../../../assets/PromptPages/intro1.png';
-import Intro2 from '../../../assets/PromptPages/intro2.png';
-import Intro3 from '../../../assets/PromptPages/intro3.png';
-import Intro4 from '../../../assets/PromptPages/intro4.png';
-import Intro5 from '../../../assets/PromptPages/intro5.png';
-import Intro6 from '../../../assets/PromptPages/intro6.png';
+import Intro1 from '../../../assets/IntroductionPages/Welcome1.png';
+import Intro2 from '../../../assets/IntroductionPages/Welcome2.png';
+import Intro3 from '../../../assets/IntroductionPages/Welcome3.png';
+import CPMPage1 from '../../../assets/CPMPages/CPM1.png';
+import CPMPage2 from '../../../assets/CPMPages/CPM2.png';
+import CPMPage3 from '../../../assets/CPMPages/CPM3.png';
+
 
 
 export const SliderData = [
@@ -22,14 +23,14 @@ export const SliderData = [
         },
     {
       image:
-      Intro4
+      CPMPage1
         },
     {
       image:
-      Intro5
+      CPMPage2
     },
     {
         image:
-        Intro6
+        CPMPage3
       }
   ];
