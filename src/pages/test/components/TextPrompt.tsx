@@ -291,10 +291,11 @@ export function TextPrompt(): ReactElement {
         e.stopPropagation();
     }
     setKeyDownTime(performance.now());
-    const key = e.keyCode || e.charCode;
+    const key = e.key ;
     const sub = indexOfTargetChord -1;
+    //const key = event.key; // const {key} = event; ES6+
 
-    if(( key == 8 || key == 46 ) && (indexOfTargetChord + targetIndexForWhatErrorTextToShow == allTypedText.length) && (input.value.length == 0)){
+    if((key === "Backspace" || key === "Delete") && (indexOfTargetChord + targetIndexForWhatErrorTextToShow == allTypedText.length) && (input.value.length == 0)){
       if(allTypedText[indexOfTargetChord-1] != undefined){
         input.innerHTML = allTypedText[indexOfTargetChord-1];
         const tt = allTypedText[allTypedText.length-1];
