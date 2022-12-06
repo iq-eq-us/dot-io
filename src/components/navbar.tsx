@@ -41,10 +41,6 @@ const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
 const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
 const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
 
-const fastestRecordedWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute,);
-const fastestCounter = useStoreState(
-  (store) => store.fastestRecordedWordsPerMinute,
-);
 
 
   const payload : any [] = []
@@ -74,11 +70,9 @@ const fastestCounter = useStoreState(
         <div className='text-white font-mono'>CPM</div>
         <NavLinksImage src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction()}/>
         </NavMenuLink>
-        <NavMenuLink aria-current="page">
-        <LockIconStyle>
-        <LockIconWhite/>        
-        </LockIconStyle>
-        <NavLinksImageTransparant src={BooksImage} alt="" />
+        <NavMenuLink aria-current="page">        
+        <div className='text-white font-mono'>ChM</div>
+        <NavLinksImage src={BooksImage} alt="" />
         </NavMenuLink>
         <NavMenuLink aria-current="page">
         <LockIconStyle>

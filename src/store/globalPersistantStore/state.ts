@@ -16,7 +16,6 @@ const sessionChordingState = sessionStorage.getItem('chordingEnabledDevice');
 
 const globalStoreState: GlobalStoreState = {
   isUsingChordingEnabledDevice: false,
-  numberOfWordsChorded: 0,
   isDisplayingSettingsModal: false,
   isDisplayingStatisticsModal: false,
   isDisplayingIntroductionModal: false,  

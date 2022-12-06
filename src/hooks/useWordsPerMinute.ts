@@ -148,7 +148,7 @@ export const useWordsPerMinute = (): number => {
     }
     
     if(isTrainingTestDone){
-      console.log('New WPM did fire ')
+      console.log('New WPM did fire '+ {...fastestRecordedWPM})
       //((wordsCorrectCount/parseInt(testNumber))*100)
       if (wpm > fastestRecordedWPM[trainingScenario] && 6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/parseInt(testNumber))*100) >=95) {
         const currentDate = new Date();

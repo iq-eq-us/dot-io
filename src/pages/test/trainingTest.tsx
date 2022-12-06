@@ -66,9 +66,7 @@ function TrainingTestPage(): ReactElement {
       <SettingsColumn/>
       <CenterTrainingColumn />
       <PreviousTest/>
-      {console.log('This is the inside test'+ isDisplayingIntroductionModal)}
-      <div {...isDisplayingIntroductionModal == true || localStorage.getItem("FirstTimeViewingModal") == undefined ? '' : {className: 'hidden'}}>
-      { isDisplayingIntroductionModal ? 
+      { (isDisplayingIntroductionModal || localStorage.getItem("FirstTimeViewingModal") == undefined) ? 
       <div style={modal}> 
       <div style={modal_content}>
       <button className="close absolute ml-96 text-5xl text-white" onClick={() => [setToggleValue(!toggleValue), localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true)), setIsDisplayingIntroductionModal(false as boolean)]}>
@@ -79,7 +77,6 @@ function TrainingTestPage(): ReactElement {
       </div>
       : null
 }
-</div>
       </React.Fragment>
        )}
        {(isTrainingTestDone == true) && (

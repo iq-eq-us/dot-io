@@ -9,7 +9,7 @@ export let pickerLite = false;
 export let pickerV1 = false;
 export let pickerNone = false;
 
- const options = ["Show Device","CharaChorder Lite", "CharaChorder One"];
+ const options = ["None","CharaChorder Lite", "CharaChorder One"];
 
  const triggerResize = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -55,7 +55,7 @@ export let pickerNone = false;
        pickerNone = true;
 
    } 
-   else if(val == 'Show Device'){
+   else if(val == 'None'){
     pickerNone = false;
     pickerV1 = false;
     pickerLite = false;

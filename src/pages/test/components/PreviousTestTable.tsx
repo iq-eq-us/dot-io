@@ -35,7 +35,6 @@ function StatisticsTable(): ReactElement {
 
   const sortBetween = (arr = [], start, end) => {
     if(numberOfChordsConquered > totalNumberOfWordsTyped-1){
-      console.log(';lkjhbjk;' + totalNumberOfWordsTyped + ' ' + numberOfChordsConquered)
       stats.sort((a, b) => b.averageSpeed - a.averageSpeed);
     
     } else {
@@ -135,8 +134,8 @@ const AggregateStatRow = styled.div.attrs({
   className: `bg-[#262626] text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] items-center`,
 })``;
 
-const HeaderItem = styled.span.attrs({
-  className: ``,
+const HeaderItem = styled.div.attrs({
+  className: `text-white`,
 })``;
 
 interface HeaderItemRowProps {
@@ -162,7 +161,7 @@ const Header = () => {
         e.stopPropagation();
       }}
     >
-<HeaderItemRow helpText="The type of test associated with these metrics.">
+  <HeaderItemRow helpText="The type of test associated with these metrics.">
         Word
       </HeaderItemRow>
       <HeaderItemRow helpText="Your WPM for this test.">

@@ -19,7 +19,9 @@ export function CheckboxSetting({
 
   return (
     <div className="mb-2">
+      <div className='absolute'>
       {Popper}
+      </div>
       <label
         className="inline-flex text-sm font-bold mb-1 flex-row gap-1 items-center"
         {...parentProps}
