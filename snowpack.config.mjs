@@ -17,6 +17,7 @@ export default {
     '@snowpack/plugin-postcss',
     './reload-global-css-after-file-changes.js',
   ],
+  entrypoints: ["react-is"],
   routes: [
     /* Enable an SPA Fallback in development: */
     // {"match": "routes", "src": ".*", "dest": "/index.html"},
