@@ -8,6 +8,7 @@ import type { TrainingScenario } from './trainingScenario';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
 import type { TrainingStatistics } from './trainingStatistics';
 import type { WordTrainingValues } from './wordTrainingValues';
+import type { TrainingLevels } from './trainingLevels';
 
 
 export interface TrainingStoreActionsModel {
@@ -37,8 +38,9 @@ export interface TrainingStoreActionsModel {
   setUserIsEditingPreviousWord: Action<TrainingStoreModel, boolean>;
   setTextPromptUnFocused: Action<TrainingStoreModel, boolean>;
   setNumberOfWordsChorded: Action<TrainingStoreModel, number>;
-
-
+  setTrainingLevel: Action<TrainingStoreModel, TrainingLevels>;
+  setModuleCompleteModalToggle: Action<TrainingStoreModel, boolean>;
+  setModuleNumber: Action<TrainingStoreModel, number>;
 
 
   /**
@@ -85,6 +87,7 @@ export interface TrainingStoreStateModel {
   currentLevel: number;
   timeAtTrainingStart: number;
   typedTrainingText: string;
+  trainingLevel: TrainingLevels | undefined;
   currentTrainingScenario: TrainingScenario | undefined;
   wordTestNumber: WordTrainingValues | undefined;
   isTestDone: boolean | undefined;
@@ -106,6 +109,9 @@ export interface TrainingStoreStateModel {
   userIsEditingPreviousWord: boolean;
   textPromptUnFocused: boolean;
   numberOfWordsChorded:  number;
+  moduleCompleteModalToggle: boolean;
+  wasModuleShown: boolean;
+  moduleNumber: number;
 
 }
 

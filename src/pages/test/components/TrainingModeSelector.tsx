@@ -1,30 +1,21 @@
-import React, { ReactElement, useEffect } from 'react';
-import useScreenSizeBoundary from '../../../hooks/useScreenSizeBoundary';
-import useWindowSize from '../../../hooks/useWindowSize';
+import React, { ReactElement, useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import { AutoCustomSetting } from './AutoCustomSetting';
-import {
-  HighlightCheckboxSetting,
-  RecursionCheckboxSetting,
-  HUDCheckboxSetting,
-  AutosaveSetting,
-} from './CheckboxSettings';
-import DropDown from '../../../models/keyboardDropDownFolder/keyboardDropDown';
-import { ContrastInputSetting } from './ContrastInputSetting';
-import { SettingsColumnContainer } from './SettingsColumnContainer';
-import { SettingsForm } from './SettingsForm';
-import { SettingsHeader } from './SettingsHeader';
-import { CustomTrainingSettingsBox } from './CustomTrainingSettingsBox';
-import TrainingControls from './TrainingControls';
 import styled from 'styled-components';
-import HelpCircleIcon from './HelpCircleIcon';
 import { isNumber } from 'lodash';
+import type { TrainingLevels } from 'src/models/trainingLevels';
 
-function TrainingModeSelector(): ReactElement {
+export function TrainingModeSelector(): ReactElement {
 
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   const trainingScenario = useStoreState((store: any) => store.currentTrainingScenario);
   const testValue = useStoreState((store: any) => store.wordTestNumber);
+  const trainingLevel = useStoreState((store: any) => store.trainingLevel);
+  const moduleNumber = useStoreState((store: any) => store.moduleNumber);
+  const setModuleNumber = useStoreActions((store: any) => store.setModuleNumber);
+
+
+  const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState('CPM' as TrainingLevels); 
+
 
 
   function LearnPageFunction (value: string){
@@ -37,29 +28,77 @@ function TrainingModeSelector(): ReactElement {
     const payload : any [] = [];
     payload.push(value);
     payload.push(testLength);
-        sessionStorage.removeItem("tempTestDeIncrement");
+    sessionStorage.removeItem("tempTestDeIncrement");
     sessionStorage.removeItem('Refresh');
     sessionStorage.setItem("CustomNonRefresh", JSON.stringify(1))
     sessionStorage.removeItem("tempTestDeIncrement");
     beginTraining(payload);
  
   }
+  function whatModuleSelectionToShow(){
+    if(checkIfUserChangedLevels != trainingLevel){
+      setCheckIfUserChangedLevels(trainingLevel)
+      setModuleNumber(1);
+    }
+    if(trainingLevel == 'CPM'){
+      return(
+        <React.Fragment>
+        <button {...moduleNumber == 1? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('ALPHABET'), setModuleNumber(1)]}>Letters</button>
+        <div>/</div>
+        <button  {...moduleNumber == 2 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('TRIGRAM'), document.getElementById('txt_Name')?.focus(), setModuleNumber(2)]}>Trigrams</button>
+        <div>/</div>
+        <button {...moduleNumber == 3 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus(), setModuleNumber(3)]}>Words</button>
+        <div>/</div>
+        <button {...moduleNumber == 4 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [TestPageFunction('LEXICAL', 26), document.getElementById('txt_Name')?.focus(), setModuleNumber(4)]}>Test</button>
+        </React.Fragment>
+      )
+    } else if (trainingLevel == 'CHM'){
+      return(
+        <React.Fragment>
+        <button {...moduleNumber == 1 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), setModuleNumber(1)]}>English 200</button>
+        <div>/</div>
+        <button  {...moduleNumber == 2 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus(), setModuleNumber(2)]}>All Chords</button>
+        <div>/</div>
+        <button {...moduleNumber == 3 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus(), setModuleNumber(3)]}>Custom</button>
+        </React.Fragment>
+      )
+    }
+  }
     return (
       <React.Fragment>
       <ItemsContainer>
-      <button {...trainingScenario == 'ALPHABET' ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('ALPHABET')]}>Letters</button>
-      <div>/</div>
-      <button  {...trainingScenario == 'TRIGRAM' ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('TRIGRAM'), document.getElementById('txt_Name')?.focus()]}>Trigrams</button>
-      <div>/</div>
-      <button {...trainingScenario == 'LEXICAL'&& isNumber(testValue) !=true ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus()]}>Words</button>
-      <div>/</div>
-      <button {...trainingScenario == 'LEXICAL' && isNumber(testValue) ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [TestPageFunction('LEXICAL', 26), document.getElementById('txt_Name')?.focus()]}>Test</button>
+      {whatModuleSelectionToShow()}
       </ItemsContainer>
       </React.Fragment>
   );
 }
 
-export default TrainingModeSelector;
+export function nextModule(level : TrainingLevels, moduleNumber: number){
+  if(level == 'CPM'){
+    if(moduleNumber < 4){
+        if(moduleNumber+1 == 2){
+
+        } else if(moduleNumber+1 == 3){
+
+        } else if(moduleNumber+1 == 4){
+          
+        }
+    }
+
+
+  } else if (level == 'CHM'){
+    if(moduleNumber < 3){
+      if(moduleNumber+1 == 2){
+
+      } else if(moduleNumber+1 == 3){
+
+      }
+      
+    }
+
+  }
+};
+
 
 
 const ItemsContainer = styled.div `

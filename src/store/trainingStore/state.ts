@@ -8,6 +8,7 @@ import {
 } from '../../helpers/convertStringToKeyHighlightPositionsCharachorderLite';
 import { defaultTrainingSettings, defaultAlphabeticTestTraining } from '../../models/trainingSettingsStateModel';
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
+import type { TrainingLevels } from '../..//models/trainingLevels';
 
 /**
  * Here is the training store state, which contains the majority of the application state
@@ -31,6 +32,10 @@ const trainingStoreState: TrainingStoreStateModel = {
   restartTestMode: false,
   userIsEditingPreviousWord: false,
   allTypedCharactersStore: [],
+  trainingLevel: 'CPM' as TrainingLevels,
+  moduleCompleteModalToggle: false,
+  wasModuleShown: false,
+  moduleNumber: 1,
   trainingStatistics: {
     statistics: [],
   },

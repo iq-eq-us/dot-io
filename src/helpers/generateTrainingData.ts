@@ -184,7 +184,6 @@ export const generateChords = (
   theCondensedChordStat = theCondensedChordStat.sort(
     (a, b) => b.numberOfOccurrences - a.numberOfOccurrences,
   );
-  //console.log('The condensed chord stat '+ theCondensedChordStat)
   const slowestTypedChordsAccountingForDepth = theCondensedChordStat
     .slice(0, parameters.numberOfTargetChords)
     .map((s) => s.id);
@@ -193,22 +192,26 @@ export const generateChords = (
 
 let sel = [];
 let i =0;
-  while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length && numberOfChordsConquered < parameters.stats.length-1){
+  while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length && numberOfChordsConquered < parameters.stats.length){
+    console.log('Checking the bug where site craches entered first while loop')
     if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
-      //do nothing
+      console.log('Checking the bug where site craches entered first if statement that does nothing')
     }else{
+      console.log('Checking the bug where site craches entered else statement' + theCondensedChordStat[i].displayTitle)
+
       sel.push(theCondensedChordStat[i].displayTitle)
     }
     i++;
     }
     if(numberOfChordsConquered > parameters.stats.length-1){
+      console.log('Checking the bug where site craches entered if statement that switches the algorithem were using')
+
       chordsSortedByTypingSpeed.sort(
         (a, b) => b.averageSpeed - a.averageSpeed,
       );
       sel = chordsSortedByTypingSpeed
       .slice(0, parameters.numberOfTargetChords)
       .map((s) => s.id);
-      //console.log('I got a couple dolalrs i can spen on her ' + numberOfChordsConquered + sel)
 
     }
 
@@ -224,7 +227,6 @@ let i =0;
       allCharacters.push(
         getRandomElementFromArray(sel),
       );
-     // console.log('sndjfnjsdf '+ slowestTypedChordsAccountingForDepth +" "+ parameters.numberOfTargetChords);
 
     }
     else allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));

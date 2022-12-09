@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import TestCompletePage from '../test-complete/testComplete';
 import ImageSlider from './components/imageSlider';
 import { SliderData } from './components/SliderData';
-
+import ModuleCompleteModal from './components/ModuleCompleteModal';
 /**
  * This is the main training page.
  * It will adapt its content depending on which training scenario is currently active in the trainingStore.
@@ -77,6 +77,7 @@ function TrainingTestPage(): ReactElement {
       </div>
       : null
 }
+<ModuleCompleteModal/>
       </React.Fragment>
        )}
        {(isTrainingTestDone == true) && (

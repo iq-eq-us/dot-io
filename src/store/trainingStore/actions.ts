@@ -18,6 +18,7 @@ import type {
 } from '../../models/trainingStore';
 import { getChordLibraryForTrainingScenario } from '../../pages/test/components/EditChordModal';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
+import type { TrainingLevels } from 'src/models/trainingLevels';
 import store from '../store';
 
 const CHORD_LINE_LENGTH = 30;
@@ -34,6 +35,7 @@ let globalDictionaries: Record<
   SUPERSONIC: undefined,
   TRIGRAM: undefined,
   CUSTOMTIER: undefined,
+  'LEXICAL-SENTENCES': undefined
 };
 export const getGlobalDictionaries = (): typeof globalDictionaries =>
   globalDictionaries;
@@ -70,52 +72,56 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   }),
   setRestartTestMode: action((state, payload) => {
     state.restartTestMode = payload;
-  }),
+  }), 
+  setTrainingLevel: action((state, payload) => {
+    state.trainingLevel = payload as TrainingLevels;
 
+  }),
+  setModuleCompleteModalToggle: action((state, payload) => {
+    state.moduleCompleteModalToggle = payload as boolean;
+  }),
+  setModuleNumber: action((state, payload) => {
+    state.moduleNumber = payload as number;
+  }),
 
 
   /**
    * This must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
    */
   beginTrainingMode: action((state, payload) => {
-    console.log(payload)
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.currentTrainingScenario = payload[0] as TrainingScenario;
     state.wordTestNumber = payload[1] as WordTrainingValues;
     state.allTypedCharactersStore = [];
     state.compareText = [];
     state.numberOfWordsChorded = 0,
-    console.log('Is this the current traing scenario '+ state.currentTrainingScenario)
-   // Pull the chord library from memory if it's there, otherwise pull it from defaults
-    if (
-      typeof state.currentTrainingScenario === 'string' &&
-      globalDictionaries[state.currentTrainingScenario] !== undefined
-    ) {
-      state.chordsToPullFrom = globalDictionaries[
-        state.currentTrainingScenario
-      ] as ChordLibraryRecord;
+      console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
+    // Pull the chord library from memory if it's there, otherwise pull it from defaults
+    if (typeof state.currentTrainingScenario === 'string' &&
+      globalDictionaries[state.currentTrainingScenario] !== undefined) {
+      state.chordsToPullFrom = globalDictionaries[state.currentTrainingScenario] as ChordLibraryRecord;
     } else {
       console.log(payload[0]);
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
-        (state.currentTrainingScenario),
+        (state.currentTrainingScenario)
       ) as ChordLibraryRecord;
-    } 
+    }
 
     state.trainingSettings = generateTrainingSettings(state as unknown as TrainingStoreStateModel);
 
     state.trainingStatistics = generateEmptyChordStatistics(
       state.chordsToPullFrom,
-      payload[0] as TrainingScenario,
+      payload[0] as TrainingScenario
     );
-      if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == false){
-        state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
-      } else if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == true){
-        const tempStoredState = state.storedTestTextData
-        state.storedTestTextData = tempStoredState;
-      }else {
-        //const tempStoredValue = state.storedTestTextData;
-        state.storedTestTextData = [];
-      }
+    if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == false) {
+      state.storedTestTextData = generateTestTrainingData(state.chordsToPullFrom, parseInt(state.wordTestNumber));
+    } else if (state.currentTrainingScenario == 'LEXICAL' && state.wordTestNumber != undefined && state.restartTestMode == true) {
+      const tempStoredState = state.storedTestTextData;
+      state.storedTestTextData = tempStoredState;
+    } else {
+      //const tempStoredValue = state.storedTestTextData;
+      state.storedTestTextData = [];
+    }
 
     state.numberOfChordsForTrainingLevel =
       state.trainingStatistics.statistics.length;
@@ -124,7 +130,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // Open the chord editing modal if the user is starting the fourth, fifth, or sixth training module 
     if (payload[0] === 'LEXICOGRAPHIC' || payload[0] === 'SUPERSONIC' || payload[0] === 'CUSTOMTIER')
       state.isDisplayingChordEditModal = true;
-    else state.isDisplayingChordEditModal = false;
+    else
+      state.isDisplayingChordEditModal = false;
 
   }),
   proceedToNextWord: action((state) => {
@@ -158,36 +165,33 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       // If the user is in "Auto" or "Goal Driven" mode, then the following properties are updated automatically on level change
       //    Speed goal is set to (1 - slowestChord.averageSpeed)
       //    Number of target chords is set to the number of existing chords whose average speed is greater than the new speed goal
-
       const speedThesholdToCompleteLevel = state.trainingSettings.speedGoal;
-      const hasCompletedLevel =
-        state.trainingStatistics.statistics.filter(
-          (s) =>
-            s.averageSpeed === 0 ||
-            s.averageSpeed > speedThesholdToCompleteLevel,
-        ).length === 0;
-      const isSettingsSetToAuto =
-        state.trainingSettings.autoOrCustom === 'AUTO';
+      const hasCompletedLevel = state.trainingStatistics.statistics.filter(
+        (s) => s.averageSpeed === 0 ||
+          s.averageSpeed > speedThesholdToCompleteLevel
+      ).length === 0;
+      const isSettingsSetToAuto = state.trainingSettings.autoOrCustom === 'AUTO';
 
-      if (!hasCompletedLevel) state.isShowingPlusIcon = false;
+      if (!hasCompletedLevel)
+        state.isShowingPlusIcon = false;
 
       if (hasCompletedLevel) {
         // const targetChord = state.previousTargetChord;
         const targetChordStatistics = state.trainingStatistics.statistics.sort(
-          (a, b) => b.averageSpeed - a.averageSpeed,
+          (a, b) => b.averageSpeed - a.averageSpeed
         )[0];
 
         if (targetChordStatistics) {
           const newSpeedGoal = Math.floor(
-            targetChordStatistics?.averageSpeed - 1,
+            targetChordStatistics?.averageSpeed - 1
           );
-          const newNumberOfTargetChords =
-            state.trainingStatistics.statistics.filter(
-              (s) => s.averageSpeed > newSpeedGoal,
-            )?.length;
+          const newNumberOfTargetChords = state.trainingStatistics.statistics.filter(
+            (s) => s.averageSpeed > newSpeedGoal
+          )?.length;
 
           const newLevel = Math.max(0, 200 - newSpeedGoal); // So that the level never goes negative
-          if (newLevel <= state.currentLevel) return;
+          if (newLevel <= state.currentLevel)
+            return;
 
           state.currentLevel = newLevel;
           state.numberOfChordsForTrainingLevel = newNumberOfTargetChords;
@@ -199,18 +203,17 @@ const trainingStoreActions: TrainingStoreActionsModel = {
           }
         } else {
           console.error(
-            'Could not find the correct chord statistic to update the level.',
+            'Could not find the correct chord statistic to update the level.'
           );
         }
       } else if (isSettingsSetToAuto) {
-        const newNumberOfTargetChords =
-          state.trainingStatistics.statistics.filter(
-            (s) => s.averageSpeed > state.trainingSettings.speedGoal,
-          )?.length;
+        const newNumberOfTargetChords = state.trainingStatistics.statistics.filter(
+          (s) => s.averageSpeed > state.trainingSettings.speedGoal
+        )?.length;
 
         state.trainingSettings.targetChords = newNumberOfTargetChords;
       }
-    },
+    }
   ),
   setCurrentSubindexInTrainingText: action((store, payload) => {
     store.currentSubindexInTrainingText = payload;
@@ -240,15 +243,15 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       checkIfErrorExistsInUserEnteredText(
         storeState as unknown as TrainingStoreStateModel,
         isInAlphabetMode,
-        actions,
+        actions
       );
 
       checkIfShouldProceedToNextTargetChord(
         isInAlphabetMode,
         storeState as unknown as TrainingStoreStateModel,
-        actions,
+        actions
       );
-    },
+    }
   ),
   toggleChordEditModal: action((state) => {
     state.isDisplayingChordEditModal = !state.isDisplayingChordEditModal;
@@ -257,8 +260,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setTestCompleteValue: action((state, payload) => {
     state.isTestDone = payload as unknown as boolean;
   }),
-  setAllTypedCharactersStore: action((state, payload) =>
-  {
+  setAllTypedCharactersStore: action((state, payload) => {
     state.allTypedCharactersStore?.push(payload);
   }),
   updateChordsUsedForTraining: action((state, payload) => {
@@ -266,7 +268,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.chordsToPullFrom = payload;
     state.trainingStatistics = generateEmptyChordStatistics(
       state.chordsToPullFrom,
-      state.currentTrainingScenario,
+      state.currentTrainingScenario
     );
     state.trainingText = [];
     state.currentLineOfTrainingText = 0;
@@ -274,7 +276,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     const oldDisplay = {
       settings: state.trainingSettings.isDisplayingSettingsModal,
       stats: state.trainingSettings.isDisplayingStatisticsModal,
-    };    
+    };
     state.trainingSettings.isDisplayingStatisticsModal = oldDisplay.stats;
     state.trainingSettings.isDisplayingSettingsModal = oldDisplay.settings;
     state.timeTakenToTypePreviousChord = 0;
@@ -292,7 +294,26 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setCompareText: action((state, payload) => {
     state.compareText = payload;
   }),
-  
+  toggleTestCompletePage: {
+    type: 'action',
+    payload: undefined,
+    result: undefined
+  },
+  setStoredTestTextData: {
+    type: 'action',
+    payload: undefined,
+    result: undefined
+  },
+  setPopAllTypedCharactersStore: {
+    type: 'action',
+    payload: undefined,
+    result: undefined
+  },
+  setNumberOfWordsChorded: {
+    type: 'action',
+    payload: undefined,
+    result: undefined
+  },
 };
 
 function checkIfShouldProceedToNextTargetChord(
@@ -322,20 +343,16 @@ function checkIfShouldProceedToNextTargetChord(
 function generateTrainingSettings(storeState: TrainingStoreStateModel){
 
   if(storeState.currentTrainingScenario == 'ALPHABET'){
-    console.log('Porn on me baby 1'+storeState.currentTrainingScenario)
 
    return JSON.parse(JSON.stringify(defaultAlphabeticTestTraining))
   } 
   else if(storeState.currentTrainingScenario == 'TRIGRAM'){
-    console.log('Porn on me baby 2'+storeState.currentTrainingScenario)
     return JSON.parse(JSON.stringify(defaultTrigramsTestTraining),)
   } 
   else if(storeState.currentTrainingScenario == undefined) {
-    console.log('Porn on me baby 3'+storeState.currentTrainingScenario)
     return JSON.parse(JSON.stringify(defaultAlphabeticTestTraining),)
   }
   else {
-    console.log('Porn on me baby 4 '+storeState.currentTrainingScenario)
     return JSON.parse(JSON.stringify(defaultTrainingSettings),)
   }
   
@@ -385,7 +402,6 @@ function resetTargetChordMetaInformation(state: TrainingStoreModel) {
 export function calculateStatisticsForTargetChord(store: TrainingStoreModel): void {
   const id = store.targetWord as unknown as string;
   if (!id) {
-    console.error('Could not find chord by id: ' + id);
     return;
   }
 
@@ -404,6 +420,16 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     (performance.now() - store.timeOfLastChordStarted) / 10;
   let numberOfOccurences = 0;
 
+  const numberOfChordsConquered = store.trainingStatistics.statistics.filter(
+    (s) => (s.averageSpeed > store.trainingSettings.speedGoal  && s.numberOfOccurrences >= 10 ),
+  
+  ).length;
+  
+  //This piece of the code triggers the Call to show the modal if the user completes that module.
+   if(numberOfChordsConquered > store.trainingStatistics.statistics.length-1 && store.wasModuleShown == false) {
+    store.moduleCompleteModalToggle = true as boolean;
+    store.wasModuleShown = true as boolean;
+   }
 
   // Don't penalize the user if this is the first character they type
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
@@ -477,7 +503,6 @@ function generateEmptyChordStatistics(
 ): TrainingStatistics {
   return {
     statistics: Object.keys(library).map((key) => {
-      console.log("Scenario in genEmptyStatss "+scenario);
       return createEmptyChordStatistics(key, scenario);
     }),
   };

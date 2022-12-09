@@ -8,7 +8,7 @@ import DropDown from '../../../models/keyboardDropDownFolder/keyboardDropDown';
 import Footer from '../../../../src/components/footer';
 import NextTestButton from './NextTestButton';
 import RefreshButton from './RefreshButton';
-import TrainingModeSelector from './TrainingModeSelector';
+import { TrainingModeSelector } from './TrainingModeSelector';
 import { ProgressBar } from './ProgressBar';
 import { useStoreState, useStoreActions } from '../../../store/store';
 

@@ -1,24 +1,12 @@
 import React, { ReactElement } from 'react';
-import { Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import CharachorderLogoImage from '../assets/cc_logo_transparent.png';
-import IQEQLogoImage from '../assets/iq-eq_logo_copy.png'; 
 import DumbellImage from '../assets/Dumbell.png';
 import BooksImage from '../assets/Books.png';
-import ThemesImage from '../assets/themes.png';
-import SettingsImage from '../assets/settings.png';
-import StatsImage from '../assets/lineGraph.png';
-import LeaderboardsImage from '../assets/leaderBoard.png';
 import profileImage from '../assets/profile.png';
-import Sample_user_Icon from '../assets/UserProfile.png'
-import { FaTimes } from 'react-icons/fa';
-import Weight from '../assets/weight_nav_icon_transparent.png';
 import { ROUTER_PATHS } from './router';
 import {FaBars} from 'react-icons/fa'
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import aWPM_Icon from '../assets/aWPM_icon.png';
-import ChM_Icon from '../assets/ChM_icon.png';
 import CM_Icon from '../assets/CM_icon.png';
 import CPM_Icon from '../assets/CPM_icon.png';
 import Crown_Icon from '../assets/Crown_icon.png';
@@ -27,8 +15,8 @@ import tWPM_Icon from '../assets/tWPM.png';
 import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
 import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
-import ImageSlider from '../../src/pages/test/components/imageSlider';
-import { SliderData } from '../../src/pages/test/components/SliderData';
+import type { TrainingLevels } from '../../src/models/trainingLevels';
+
 
 
 
@@ -39,20 +27,33 @@ const Navbar = (): ReactElement => {
 
 const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
 const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
-const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
+const setTrainingLevel = useStoreActions((store : any) => store.setTrainingLevel);
+const trainingLevels = useStoreState((store : any) => store.trainingLevel);
 
 
 
-  const payload : any [] = []
-  payload.push('LEXICAL');
-  payload.push(26);
-
-  function TrainingPageFunction (){
+  function TrainingPageFunction (level : TrainingLevels){
+    if(level == 'CPM'){
+      const payload : any [] = []
+      payload.push('ALPHABET');
     sessionStorage.removeItem("tempTestDeIncrement");
+    setTrainingLevel('CPM')
     beginTraining(payload);
     if(!history.location.pathname.endsWith(ROUTER_PATHS.home)){
       history.push(ROUTER_PATHS.home);
     }
+  }
+  else if(level == 'CHM'  ){
+    const payload : any [] = []
+    payload.push('LEXICAL');
+    sessionStorage.removeItem("tempTestDeIncrement");
+    setTrainingLevel('CHM')
+    beginTraining(payload);
+    if(!history.location.pathname.endsWith(ROUTER_PATHS.home)){
+      history.push(ROUTER_PATHS.home);
+    }
+  }
+
   }
 
 
@@ -60,7 +61,7 @@ const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDis
     <NavI>
     <NavbarContainer>
     <LogoLink href='#/' aria-current="page" >
-        <NavLogo onClick={()=>TrainingPageFunction()}>dot i/o</NavLogo>
+        <NavLogo onClick={()=>TrainingPageFunction('CPM')}>dot i/o</NavLogo>
         </LogoLink>
          <MobileIcon>
           <FaBars/>
@@ -68,11 +69,11 @@ const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDis
         <NavMenu>
         <NavMenuLink aria-current="page">
         <div className='text-white font-mono'>CPM</div>
-        <NavLinksImage src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction()}/>
+        <NavLinksImage src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction('CPM')}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">        
         <div className='text-white font-mono'>ChM</div>
-        <NavLinksImage src={BooksImage} alt="" />
+        <NavLinksImage src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM')}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">
         <LockIconStyle>

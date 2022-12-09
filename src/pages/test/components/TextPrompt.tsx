@@ -347,12 +347,11 @@ export function TextPrompt(): ReactElement {
     }
     const sd = indexOfTargetChord == 0 &&
       allTypedText[allTypedText?.length-1]?.length == 0;
-      console.log('Check if the array is empty 2' + indexOfCharacterInTargetChord +' '+ indexOfTargetChord + (input?.value.length) + ' '+ setS[setS.length-1])
+      if(firstLineOfTargetText != undefined){
     if(setS[setS.length-1] == " " || (currentTrainingScenario == 'ALPHABET' && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord-1]) || (currentTrainingScenario == 'ALPHABET' && firstLineOfTargetText.length-1 == indexOfTargetChord && setS[setS.length-1] == firstLineOfTargetText[indexOfTargetChord])|| indexOfTargetChord == 1 && input?.value.length == 0 || (indexOfTargetChord == 0 && input?.value.length == 0)){
       arr =[];
     }
-    console.log('Check if the array is empty 2' + arr)
-
+      }
    return  whatTextToShow(firstLineOfTargetText, indexOfTargetChord,indexOfCharacterInTargetChord, arr)
   }
 
