@@ -73,31 +73,6 @@ export function TrainingModeSelector(): ReactElement {
   );
 }
 
-export function nextModule(level : TrainingLevels, moduleNumber: number){
-  if(level == 'CPM'){
-    if(moduleNumber < 4){
-        if(moduleNumber+1 == 2){
-
-        } else if(moduleNumber+1 == 3){
-
-        } else if(moduleNumber+1 == 4){
-          
-        }
-    }
-
-
-  } else if (level == 'CHM'){
-    if(moduleNumber < 3){
-      if(moduleNumber+1 == 2){
-
-      } else if(moduleNumber+1 == 3){
-
-      }
-      
-    }
-
-  }
-};
 
 
 
