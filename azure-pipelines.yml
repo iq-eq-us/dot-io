@@ -26,8 +26,9 @@ steps:
 
   - task: Bash@3
     inputs:
-      targetType: 'inline'
-      script: 'sudo npm cache clean -f'
+      filePath: '/root/.npm/_cacache/tmp'
+      arguments: 'sudo chown -R 1001:123'
+
   - task: AzureStaticWebApp@0
     inputs:
       app_location: ''
