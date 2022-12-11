@@ -26,7 +26,11 @@ steps:
 
   - task: Bash@3
     inputs:
-      filePath: '/root/.npm/_cacache/tmp'
+      filePath: '/root'
+      arguments: 'sudo chown -R 1001:123'
+  - task: Bash@3
+    inputs:
+      filePath: '/root/.npm'
       arguments: 'sudo chown -R 1001:123'
 
   - task: AzureStaticWebApp@0
