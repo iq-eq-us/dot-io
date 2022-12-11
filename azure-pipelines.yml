@@ -9,7 +9,7 @@ trigger :
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '19.2.0'
+      versionSpec: '14.17.1'
     displayName: 'Install Node.js'
 
   - script: |
