@@ -24,6 +24,11 @@ steps:
       npm run test -- --coverage 2>&1 | tee test_run_output.txt
     displayName: 'npm test'
 
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'sudo chown -R 1001:123 "/root/.npm/"'
+      
   - task: AzureStaticWebApp@0
     inputs:
       app_location: ''
