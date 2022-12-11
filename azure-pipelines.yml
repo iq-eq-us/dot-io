@@ -28,6 +28,10 @@ steps:
     inputs:
       targetType: 'inline'
       script: 'sudo chown -R 1001:123 "/root/.npm"'
+  - task: Bash@3
+    inputs:
+        filePath: '"/root/.npm"'
+        arguments: 'sudo chown -R 1001:123'
 
   - task: AzureStaticWebApp@0
     inputs:
