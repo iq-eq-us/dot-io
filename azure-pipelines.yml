@@ -1,10 +1,13 @@
 # Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 
-trigger :
-  - master 
-  - variable
+trigger:
+  - develop
+
+pool:
+  vmImage: ubuntu-latest
 
 steps:
   - task: NodeTool@0
@@ -24,10 +27,15 @@ steps:
       npm run test -- --coverage 2>&1 | tee test_run_output.txt
     displayName: 'npm test'
 
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'sudo chown -R 1001:123 "/root/Local/npm-cache"'
+
   - task: AzureStaticWebApp@0
     inputs:
       app_location: ''
       app_build_command: 'npm run build'
       output_location: '/build'
     env:
-      azure_static_web_apps_api_token: 20c4e1a22dda20636e2644a77c8a5d1daccdc2c07ad5d41f3787b212597652a91-9d88c969-6ed2-4dd6-b2d5-38032666208801081934
+      azure_static_web_apps_api_token: 6b5c8f9f52e050bfebdab581f844ab8c73e85647c027bcea1c2241e7ef86cafb0-6a27ab81-96a5-41a9-a2b2-cebb5539028c01035027
