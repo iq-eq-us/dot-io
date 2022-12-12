@@ -13,7 +13,7 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
-      npm install
+      npm install --no-optional
     displayName: 'npm install'
 
   - script: |
