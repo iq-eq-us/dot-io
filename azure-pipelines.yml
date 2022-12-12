@@ -29,8 +29,8 @@ steps:
 
   - task: Bash@3
     inputs:
-      filePath: '/root/npm-cache/_cacache'
-      arguments: 'sudo chown -R 1001:123'
+      targetType: 'inline'
+      script: 'sudo chown -R 1001:123 "/root/npm-cache"'
 
   - task: AzureStaticWebApp@0
     inputs:
