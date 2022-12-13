@@ -55,11 +55,10 @@ export function TrainingModeSelector(): ReactElement {
     } else if (trainingLevel == 'CHM'){
       return(
         <React.Fragment>
-        <button {...moduleNumber == 1 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), setModuleNumber(1)]}>English 200</button>
+       
+        <button  {...moduleNumber == 1 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus(), setModuleNumber(1)]}>All Chords</button>
         <div>/</div>
-        <button  {...moduleNumber == 2 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus(), setModuleNumber(2)]}>All Chords</button>
-        <div>/</div>
-        <button {...moduleNumber == 3 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus(), setModuleNumber(3)]}>Custom</button>
+        <button {...moduleNumber == 2 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('SUPERSONIC'), document.getElementById('txt_Name')?.focus(), setModuleNumber(2)]}>Custom</button>
         </React.Fragment>
       )
     }
