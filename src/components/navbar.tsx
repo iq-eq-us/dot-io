@@ -28,7 +28,9 @@ const Navbar = (): ReactElement => {
 const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
 const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
 const setTrainingLevel = useStoreActions((store : any) => store.setTrainingLevel);
-const maxWPM = useStoreState((store) => (parseInt(Math.max.apply(Math, Object.values(store.fastestRecordedWordsPerMinute))?.toFixed()) * 5) > 200); // eslint-disable-line no-use-before-define
+/* eslint-disable */
+const maxWPM = useStoreState((store) => (parseInt(Math.max.apply(Math, Object.values(store.fastestRecordedWordsPerMinute))?.toFixed()) * 5) > 200); 
+/* eslint-enable */
 
 
 
