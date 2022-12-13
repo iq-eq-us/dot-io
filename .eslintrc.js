@@ -26,6 +26,9 @@ module.exports = {
         html: true,
       },
     ],
+    'rules': {
+      'prefer-spread': ['off']
+    }
   },
   settings: {
     react: {
