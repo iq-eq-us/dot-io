@@ -28,11 +28,11 @@ const Navbar = (): ReactElement => {
 const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
 const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
 const setTrainingLevel = useStoreActions((store : any) => store.setTrainingLevel);
-const trainingLevels = useStoreState((store : any) => store.trainingLevel);
+const maxWPM = useStoreState((store) => (parseInt(Math.max.apply(Math, Object.values(store.fastestRecordedWordsPerMinute))?.toFixed()) * 5) > 200);
 
 
-
-  function TrainingPageFunction (level : TrainingLevels){
+  function TrainingPageFunction (level : TrainingLevels, allowOnClick : boolean){
+    if(allowOnClick){
     if(level == 'CPM'){
       const payload : any [] = []
       payload.push('ALPHABET');
@@ -53,7 +53,7 @@ const trainingLevels = useStoreState((store : any) => store.trainingLevel);
       history.push(ROUTER_PATHS.home);
     }
   }
-
+    }
   }
 
 
@@ -61,7 +61,7 @@ const trainingLevels = useStoreState((store : any) => store.trainingLevel);
     <NavI>
     <NavbarContainer>
     <LogoLink href='#/' aria-current="page" >
-        <NavLogo onClick={()=>TrainingPageFunction('CPM')}>dot i/o</NavLogo>
+        <NavLogo onClick={()=>TrainingPageFunction('CPM', true)}>dot i/o</NavLogo>
         </LogoLink>
          <MobileIcon>
           <FaBars/>
@@ -69,45 +69,45 @@ const trainingLevels = useStoreState((store : any) => store.trainingLevel);
         <NavMenu>
         <NavMenuLink aria-current="page">
         <div className='text-white font-mono'>CPM</div>
-        <NavLinksImage src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction('CPM')}/>
+        <NavLinksImage open = {true} src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction('CPM', true)}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">        
-        <div className='text-white font-mono'>ChM</div>
-        <NavLinksImage src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM')}/>
+        <div className='text-white font-mono'>{maxWPM ? 'ChM' : <LockIconStyle><LockIconWhite/></LockIconStyle>}</div>
+        <NavLinksImage open = {maxWPM} src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM', maxWPM)}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
-        <NavLinksImageTransparant src={DumbellImage} alt=""/>
+        <NavLinksImage open = {false} src={DumbellImage} alt=""/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
-        <NavLinksImageTransparant src={StM_Icon} alt="" />
+        <NavLinksImage open = {false} src={StM_Icon} alt="" />
         </NavMenuLink>
         <NavMenuLink  aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>        
-        <NavLinksImageTransparant src={tWPM_Icon} alt="" />
+        <NavLinksImage open = {false} src={tWPM_Icon} alt="" />
         </NavMenuLink>
         <NavMenuLink aria-current="page">
         <LockIconStyle>
         <LockIconWhite/>        
         </LockIconStyle>
-        <NavLinksImageTransparant src={CM_Icon} alt="" />
+        <NavLinksImage open = {false} src={CM_Icon} alt="" />
         </NavMenuLink>
         </NavMenu>
         <ScoresComponent/>
         <NavBtn>
         <NavMenuLink aria-current="page">
-        <NavLinksImage src={Crown_Icon} alt="" />
+        <NavLinksImage open = {false} src={Crown_Icon} alt="" />
         </NavMenuLink>
           <NavBtnLink href='#/manager'>Connect</NavBtnLink>
           <NavMenuLink aria-current="page" href='#/dashboard'>
-        <NavLinksImage src={profileImage} alt="" />
+        <NavLinksImage open = {true} src={profileImage} alt="" />
         </NavMenuLink>
         </NavBtn>
         <button onClick={() => setIsDisplayingIntroductionModal(true)}>
@@ -160,6 +160,7 @@ padding 0 24px;
 max-width: 1100px;
 `;
 
+
 const NavLogo = styled.div `
 color: #fff;
 height: 60px;
@@ -198,10 +199,11 @@ margin-left: 150px;
 }
 `;
 
-const NavLinksImage = styled.img `
+const NavLinksImage = styled.img <{ open: boolean }> ` 
 color: #fff;
 display: flex;
 align-items: center;
+${p => (p.open == false ? [{opacity: .5}, {cursor: 'none'}] : '')}
 text-decoration: none;
 padding: 0 1rem;
 cursor: pointer;
