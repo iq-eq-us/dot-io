@@ -19,6 +19,13 @@ steps:
 - script: |
     npm install
     displayName: 'npm install'
+- script: |
+    npm audit fix --force
+    displayName: 'Npm Audit fix'
+
+- script: |
+    npm cache clean --force
+    displayName: 'Clean Cache'
 
 - script: |
     npm run lint
