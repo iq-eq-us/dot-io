@@ -23,7 +23,7 @@ steps:
   - task: Npm@1
     inputs:
       command: custom
-      customCommand: 'npm cache clean --force'
+      customCommand: 'cache clean --force'
     displayName: 'Cache Clear'
 
 
