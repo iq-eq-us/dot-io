@@ -36,7 +36,7 @@ steps:
     displayName: 'Change Owners'
 
   - script: |
-      sudo chown -R 1001:123 "~/.npm"
+      sudo chown -R 1001:123 ~/.npm
     displayName: 'Change Owners'
     
 
