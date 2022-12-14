@@ -15,6 +15,12 @@ steps:
       versionSpec: '14.17.1'
     displayName: 'Install Node.js'
 
+  - task: Npm@1
+    inputs:
+      command: custom
+      customCommand: 'install -g npm@latest'
+    displayName: 'Upgrade npm to latest version'
+
   - script: |
       npm install
     displayName: 'npm install'
