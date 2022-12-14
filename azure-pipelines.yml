@@ -20,6 +20,12 @@ steps:
       command: custom
       customCommand: 'install -g npm@latest'
     displayName: 'Upgrade npm to latest version'
+  - task: Npm@1
+    inputs:
+      command: custom
+      customCommand: 'npm cache clean --force'
+    displayName: 'Cache Clear'
+
 
   - script: |
       npm install
