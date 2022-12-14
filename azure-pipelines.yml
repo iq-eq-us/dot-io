@@ -36,12 +36,9 @@ steps:
     displayName: 'Change Owners'
 
   - script: |
-      sudo chown -R 1001:123 "/root/npm-cache"
+      sudo chown -R 1001:123 "~/.npm"
     displayName: 'Change Owners'
     
-  - script: |
-      sudo chown -R $(whoami) ~/npm-cache
-    displayName: 'Change Owners'
 
   - task: AzureStaticWebApp@0
     inputs:
