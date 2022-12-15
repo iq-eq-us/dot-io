@@ -11,9 +11,14 @@ const ImageSlider = ({ slides } : any) => {
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
-    if(current == length-1)
-    {
-      setIsDisplayingIntroductionModal(false);
+
+    if(current == length-1) {
+      setIsDisplaying();
+      setIsDisplayingIntroductionModal(true as boolean);
+      setIsDisplayingIntroductionModal(false as boolean);
+
+      localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true));
+      console.log('jsdns '+ isDisplayingIntroductionModal)
     }
   };
 
@@ -28,7 +33,7 @@ const ImageSlider = ({ slides } : any) => {
   const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
   const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
   function setIsDisplaying(){
-    setIsDisplayingIntroductionModal(false);
+    setIsDisplayingIntroductionModal(isDisplayingIntroductionModal as boolean);
   }
 
   return (

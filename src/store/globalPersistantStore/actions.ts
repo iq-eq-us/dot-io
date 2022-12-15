@@ -16,16 +16,16 @@ const globalStorageStoreActions: GlobalStoreActions = {
   updateIsChordingEnabledInSessionStorage(payload as boolean);
   }),
   setIsDisplayingSettingsModal: action((state, payload) => {
-    state.isDisplayingSettingsModal = payload;
-    }),
-    setNumberOfWordsChorded: action((state, payload) => {
+  state.isDisplayingSettingsModal = payload;
+  }),
+  setNumberOfWordsChorded: action((state, payload) => {
   state.numberOfWordsChorded = state.numberOfWordsChorded +1 as number;
   }),
   setIsDisplayingStatisticsModal: action((state, payload) => {
   state.isDisplayingStatisticsModal = payload;
   }),
   setIsDisplayingIntroductionModal: action((state, payload) => {
-  state.isDisplayingIntroductionModal = payload;
+  state.isDisplayingIntroductionModal = payload as boolean;
   }),
 
 }

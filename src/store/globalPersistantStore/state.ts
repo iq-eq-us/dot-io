@@ -19,6 +19,7 @@ const globalStoreState: GlobalStoreState = {
   isDisplayingSettingsModal: false,
   isDisplayingStatisticsModal: false,
   isDisplayingIntroductionModal: false,  
+  numberOfWordsChorded: 0,
 }
 
 
