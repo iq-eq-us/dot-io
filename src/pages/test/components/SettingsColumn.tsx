@@ -76,6 +76,7 @@ function SettingsColumn(): ReactElement {
           trainingSettings={trainingSettings}
           updateTrainingSetting={updateTrainingSetting}
         />
+        
         <HUDCheckboxSetting
           trainingSettings={trainingSettings}
           updateTrainingSetting={updateTrainingSetting}
@@ -87,16 +88,16 @@ function SettingsColumn(): ReactElement {
         />
 
         <AutoCustomSetting />
-
+        <ContrastInputSetting
+          trainingSettings={trainingSettings}
+          setTrainingSettings={setTrainingSettings}
+        />
         <CustomTrainingSettingsBox
           trainingSettings={trainingSettings}
           setTrainingSettings={setTrainingSettings}
         />
 
-        <ContrastInputSetting
-          trainingSettings={trainingSettings}
-          setTrainingSettings={setTrainingSettings}
-        />
+        
       
 
       </SettingsForm>

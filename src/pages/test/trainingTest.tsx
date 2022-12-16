@@ -25,13 +25,14 @@ function TrainingTestPage(): ReactElement {
   const contrast = useContrast();
   const currentTrainingScenario = useStoreState((store : any) => store.currentTriningScenario);
   const wordTestNumber = useStoreState((store : any) => store.wordTestNumber);
-  const currentTrainingVal = useStoreState((store : any) => store.WordTrainingValues);
   useTrainingScenarioAsDocumentTitle();
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
   const isTrainingTestDone = currentTrainingSetting.isTestDone;
   const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
   const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
+  const trainingLevel = useStoreState((store : any) => store.trainingLevel);
+
 
 
   //setIsDisplayingIntroductionModal
@@ -40,15 +41,22 @@ function TrainingTestPage(): ReactElement {
 
 
   useEffect(() => {
-    document.title = "iq-eq Test"
+    document.title = "dot i/o"
     sessionStorage.removeItem("tempTestDeIncrement");
     sessionStorage.removeItem('Refresh');
-
     const payload : any [] = []
+
+    if(trainingLevel == 'CPM'){
     payload.push('ALPHABET');
     if(wordTestNumber != undefined){
       payload.push(wordTestNumber);
     } 
+  } else if(trainingLevel == 'CHM'){
+    payload.push('LEXICAL');
+    if(wordTestNumber != undefined){
+      payload.push(wordTestNumber);
+    } 
+  }
     beginTraining(payload);    
     
     

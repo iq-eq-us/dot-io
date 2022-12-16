@@ -26,7 +26,7 @@ import {
 
 const Manager = (): ReactElement => {
   React.useEffect(() => {
-    document.title = "iq-eq Chord Manager"
+    document.title = "dot i/o Device Manager"
   }, []);
 
   return (

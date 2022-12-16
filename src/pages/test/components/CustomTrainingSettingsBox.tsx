@@ -156,7 +156,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
 }
 
 const Label = styled.label.attrs({
-  className: `block text-sm font-bold mb-2 inline-flex flex-row items-center gap-2`,
+  className: `relative block text-sm font-bold mb-2 inline-flex flex-row items-center gap-2`,
 })``;
 
 const Input = styled.input.attrs({

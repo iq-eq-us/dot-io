@@ -2,6 +2,7 @@ import  ApexCharts from 'apexcharts';
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
+import { HorizontalRule } from '../manager.styled';
 
 
 
@@ -579,6 +580,127 @@ export function getChordsPerMinute(){
 }
 
 export function myGraph(){
+  const optionsEmpty = {
+    chart: {
+      type: "area",
+      height: 350,
+      foreColor: "#FFFFFF",
+      stacked: false,
+      dropShadow: {
+        enabled: false,
+        enabledSeries: [0],
+        top: -2,
+        left: 2,
+        blur: 5,
+        opacity: 1
+      }
+      
+  
+    },
+    colors: ['#22C55E', '#0090FF', 'pink', 'yellow'],
+    stroke: {
+      curve: "smooth",
+      width: 3
+    },
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: '14px',
+        fontFamily: 'Helvetica, Arial, sans-serif',
+        fontWeight: 'bold',
+        colors: undefined
+    },
+    background: {
+      enabled: true,
+      foreColor: '#fff',
+      padding: 4,
+      borderRadius: 2,
+      borderWidth: 1,
+      borderColor: '#fff',
+      opacity: 0.9,
+      dropShadow: {
+        enabled: false,
+        top: 1,
+        left: 1,
+        blur: 1,
+        color: '#000',
+        opacity: 0.45
+      }
+    },
+    dropShadow: {
+        enabled: false,
+        top: 1,
+        left: 1,
+        blur: 1,
+        color: '#000',
+        opacity: 0.45
+    }
+    },
+    series: [ {
+      name: '',
+      data: ''
+    },
+    {
+      name: '',
+      data: ''
+    },
+
+  ],
+    markers: {
+      size: 0,
+      colors: ["#000524"],
+      strokeColor: "#00BAEC",
+      strokeWidth: 3,
+      strokeOpacity: 1,
+      fillOpacity: 1,
+      onClick: undefined,
+      hover: {
+        size: 6
+      }
+    },
+    xaxis: {
+      type: "datetime",
+      axisBorder: {
+        show: true
+      },
+      axisTicks: {
+        show: false
+      }
+    },
+    yaxis: {
+      labels: {
+        offsetX: 0,
+        offsetY: -5
+      },
+      tooltip: {
+        theme:"dark"
+      }
+    },
+    grid: {
+      padding: {
+        left: -5,
+        right: 5
+      }
+    },
+    tooltip: {
+      x: {
+        format: 'dd MM yyyy'
+      },
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'left',
+      onItemClick: {
+        toggleDataSeries: false
+    },
+    },
+    fill: {
+      type: "solid",
+      fillOpacity: 0.7
+    },
+    
+  };
+
 
  const options = {
   chart: {
@@ -709,8 +831,19 @@ export function myGraph(){
 };
 
 const chart = new ApexCharts(document.getElementById("timeline-chart"), options);
+const chart2 = new ApexCharts(document.getElementById("timeline-chart2"), optionsEmpty);
+const chart3 = new ApexCharts(document.getElementById("timeline-chart3"), optionsEmpty);
+const chart4 = new ApexCharts(document.getElementById("timeline-chart4"), optionsEmpty);
+const chart5 = new ApexCharts(document.getElementById("timeline-chart5"), optionsEmpty);
+const chart6 = new ApexCharts(document.getElementById("timeline-chart6"), optionsEmpty);
+
 
 chart.render();
+chart2.render();
+chart3.render();
+chart4.render();
+chart5.render();
+chart6.render();
 }
 
 function generateDayWiseTimeSeries1() {
@@ -883,21 +1016,36 @@ export function Graph(): ReactElement {
           {avgPopper}
           {SpeedPopper}
 
-
-          <div className='sc-ikJyIC w-full  lg:mx-auto flex flex-row '>
-      <PracticeStreak {...practiceStreak}>Practice Streak: {(localStorage.getItem("streak") == null ? 0 : localStorage.getItem("streak")) + ((parseInt(localStorage.getItem("streak")) != 1) ? " days": " day")}</PracticeStreak>
-      <TopSpeed {...topSpeed}> Top Speed: {(getHighestWPM() + " WPM")}</TopSpeed>
-      <AverageSpeed {...avgSpeed}>Average Speed: {(getAverageWPM() + " WPM")}</AverageSpeed>
-      <ChordsMastered {...chordsMastered}>Chords Mastered: {(JSON.parse(localStorage.getItem("masteredChords")) == null ? 0 :  JSON.parse(localStorage.getItem("masteredChords")).length)}</ChordsMastered>
-
-
-      </div>
-
-
-      <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }}>
-      <div id="chart" >
-     <div id="timeline-chart"/>
-      </div>
+      <div className='text-2xl font-bold text-white text-center'>Your Progress</div>
+       <HorizontalRule/>
+      <div className='flow-root ml-2'>
+        <div className='float-left w-5/12'>
+          <div className='text-center text-white font-mono'>CPM</div>
+     <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart"  />
+     </div>
+     <div className='float-right w-5/12'>
+          <p className='text-center text-white font-mono'>ChM</p>
+     <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart2"  />
+     </div>
+     <div className='float-left w-5/12'>
+          <p className='text-center text-white font-mono'>CPM</p>
+     <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart3"  />
+     </div>
+     <div className='float-right w-5/12'>
+          <p className='text-center text-white font-mono'>CPM</p>
+     <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart4"  />
+     </div>
+     <div className='float-left w-5/12'>
+          <p className='text-center text-white font-mono'>CPM</p>
+     <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart5"  />
+     </div>
+     <div className='float-right w-5/12'>
+          <p className='text-center text-white font-mono'>CPM</p>
+     <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart6"  />
+     </div>
+     <div className='float-left w-5/12'>
+     <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart"  />
+     </div>
       </div>
     </React.Fragment>
   );

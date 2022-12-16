@@ -47,7 +47,7 @@ export function ContrastInputSetting(props: SettingsProps): ReactElement {
 }
 
 const Label = styled.label.attrs({
-  className: `text-sm font-bold mb-2 inline-flex flex-row gap-2 items-center`,
+  className: `relative text-sm font-bold mb-2 inline-flex flex-row gap-2 items-center`,
 })``;
 
 const ContrastInput = styled.input.attrs({

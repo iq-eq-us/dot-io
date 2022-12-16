@@ -21,6 +21,8 @@ function TestCompletePage(): ReactElement {
     <React.Fragment>
     <ManagerPageContainer>
     <TestStatsCard/>
+    <div className='items-center text-center text-red-500'>*Only tests with a minimum accuracy of 95% and less than 5% words chorded are counted towards your progress.</div>
+
     <HorizontalRule/>
     <TestCompleteGraph/>
      <TestControlRow/>

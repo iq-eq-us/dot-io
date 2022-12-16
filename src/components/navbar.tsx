@@ -51,6 +51,7 @@ const maxWPM = useStoreState((store) => (parseInt(Math.max.apply(Math, Object.va
     payload.push('LEXICAL');
     sessionStorage.removeItem("tempTestDeIncrement");
     setTrainingLevel('CHM')
+    console.log('Begin Training Payload '+ payload)
     beginTraining(payload);
     if(!history.location.pathname.endsWith(ROUTER_PATHS.home)){
       history.push(ROUTER_PATHS.home);
