@@ -1028,19 +1028,19 @@ export function Graph(): ReactElement {
      <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart2"  />
      </div>
      <div className='float-left w-5/12'>
-          <p className='text-center text-white font-mono'>CPM</p>
+          <p className='text-center text-white font-mono'>CM</p>
      <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart3"  />
      </div>
      <div className='float-right w-5/12'>
-          <p className='text-center text-white font-mono'>CPM</p>
+          <p className='text-center text-white font-mono'>StM</p>
      <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart4"  />
      </div>
      <div className='float-left w-5/12'>
-          <p className='text-center text-white font-mono'>CPM</p>
+          <p className='text-center text-white font-mono'>aWPM</p>
      <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart5"  />
      </div>
      <div className='float-right w-5/12'>
-          <p className='text-center text-white font-mono'>CPM</p>
+          <p className='text-center text-white font-mono'>tWPM</p>
      <div style={{ backgroundColor:"#333", border: "1px solid #000", borderRadius: "5px" }} id="timeline-chart6"  />
      </div>
      <div className='float-left w-5/12'>
