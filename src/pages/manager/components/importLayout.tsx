@@ -21,7 +21,7 @@ const checkElement = async selector => {
 
 
 
-function importChordMapLibrary(e : any){
+async function importChordMapLibrary(e : any){
   resetDataTable();
     console.log(e);
     const file = e.target.files[0];
@@ -55,10 +55,13 @@ function importChordMapLibrary(e : any){
        // _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
     
         appendLayoutToRow(strValues, true);
-        console.log('This is the one '+ "VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]+" "+strAllValues[3])
-        await sendCommandString("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
+        //console.log('This is the one '+ "VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]+" "+strAllValues[3])
+        await sendCommandString("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2] + " ");
       });
+      
     }
+     await sendCommandString("VAR B0");
+
     //console.log(_chordMaps);
     //open file dialog box with only csv allowed
     //parse
