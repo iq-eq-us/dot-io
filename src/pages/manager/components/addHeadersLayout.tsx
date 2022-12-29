@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 
 
-export function addHeadersToDataTable(){
+export function addHeadersToLayoutDataTable(){
     console.log("addHeadersToDataTable()");
     const dataTable: HTMLTableElement = document.getElementById("layoutDataTable") as  HTMLTableElement;
     dataTable.setAttribute('style', 'margin-left: auto; margin-right: auto;');
@@ -22,10 +22,10 @@ export function addHeadersToDataTable(){
     cells[3].innerHTML = "KeyMap Position";
     cells[3].setAttribute('style','border: 1px solid white; padding:10px;')
     cells.push(row.insertCell(-1)); //4 chord string new (locked)
-    cells[4].innerHTML = "Keymap Count";
+    cells[4].innerHTML = "Keymap Value";
     cells[4].setAttribute('style','border: 1px solid white; padding:10px; text-align: center;')
     cells.push(row.insertCell(-1)); //5 phrase new (open)
-    cells[5].innerHTML = "Key Value";
+    cells[5].innerHTML = " ";
     cells[5].setAttribute('style','border: 1px solid white; padding:10px;')
     //cells[9].innerHTML = "Chord Hexadecimal (debug)";
     //cells[9].setAttribute('style','border: 1px solid white;padding:10px;')
