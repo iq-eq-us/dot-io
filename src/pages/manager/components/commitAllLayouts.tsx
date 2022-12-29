@@ -1,16 +1,32 @@
 import React, { ReactElement } from 'react';
 import {
   MainControls,
-    pressCommitButton
+    pressCommitButton,
+    sendCommandString,
+    readGetOneChordLayout
 
 } from '../controls/mainControls'
 
 
-export function commitAll(){
+export async function commitAll(){
     console.log("commitAll()");
     const dataTable = document.getElementById("layoutDataTable");
     //iterate through table from bottom to top to see if there's a commit enabled
     //TODO check if we need to skip the header row
+    for(let i =1; i<4; i++){
+        for(let t =0; t<90; t++){
+    
+          await sendCommandString("VAR B4 A"+i +" "+t);
+          readGetOneChordLayout();
+    
+          //readGetOneAndToss();
+          //readGetNone();
+          
+         // console.log('what ever respisne from sending command string '+ tt);
+        }
+      }
+
+
     for (let i = dataTable.rows.length-1; i>=1; i--) {
       //iterate through rows
       const row = dataTable.rows[i];

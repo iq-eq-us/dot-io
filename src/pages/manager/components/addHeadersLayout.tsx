@@ -16,7 +16,7 @@ export function addHeadersToLayoutDataTable(){
     cells[1].innerHTML = "Empty";
     cells[1].setAttribute('style','border: 1px solid white; padding:10px;')
     cells.push(row.insertCell(-1)); //2 chord string (locked)
-    cells[2].innerHTML = "Method Type";
+    cells[2].innerHTML = "Keymap";
     cells[2].setAttribute('style','border: 1px solid white; padding:10px;')
     cells.push(row.insertCell(-1)); //3 phrase (locked)
     cells[3].innerHTML = "KeyMap Position";
@@ -39,7 +39,7 @@ export function addHeadersToLayoutDataTable(){
 
   export function AddLayoutHeaders(): ReactElement {
     React.useEffect(() => {
-      addHeadersToDataTable()
+      addHeadersToLayoutDataTable()
     }, []);
     return (
       <React.Fragment>
