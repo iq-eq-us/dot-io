@@ -9,7 +9,6 @@ import useTrainingScenarioAsDocumentTitle from '../../hooks/useTrainingScenarioA
 import { useStoreState, useStoreActions } from '../../store/store';
 import { Redirect } from 'react-router-dom';
 import { PreviousTest } from './components/PreviousTests';
-import styled from 'styled-components';
 import TestCompletePage from '../test-complete/testComplete';
 import ImageSlider from './components/imageSlider';
 import { SliderData } from './components/SliderData';
@@ -85,6 +84,7 @@ function TrainingTestPage(): ReactElement {
       </div>
       : null
 }
+
 <ModuleCompleteModal/>
       </React.Fragment>
        )}

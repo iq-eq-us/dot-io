@@ -34,6 +34,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   allTypedCharactersStore: [],
   trainingLevel: 'CPM' as TrainingLevels,
   moduleCompleteModalToggle: false,
+  downloadModulModalToggle: false,
   wasModuleShown: false,
   moduleNumber: 1,
   trainingStatistics: {
@@ -63,7 +64,7 @@ const trainingStoreState: TrainingStoreStateModel = {
       state.currentTrainingScenario === 'ALPHABET' ||
       state.currentTrainingScenario === 'LEXICAL' ||
       state.currentTrainingScenario === 'TRIGRAM' ||
-      state.currentTrainingScenario === 'LEXICAL-SENTENCES'||
+      state.currentTrainingScenario === 'LEXICALSENTENCES'||
       state.currentTrainingScenario === 'CUSTOMTIER'
         ? 'CHARACTER'
         : 'CHORD';

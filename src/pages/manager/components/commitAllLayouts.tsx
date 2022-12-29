@@ -8,7 +8,7 @@ import {
 
 export function commitAll(){
     console.log("commitAll()");
-    const dataTable = document.getElementById("dataTable");
+    const dataTable = document.getElementById("layoutDataTable");
     //iterate through table from bottom to top to see if there's a commit enabled
     //TODO check if we need to skip the header row
     for (let i = dataTable.rows.length-1; i>=1; i--) {

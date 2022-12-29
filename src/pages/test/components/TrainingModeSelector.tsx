@@ -3,6 +3,8 @@ import { useStoreActions, useStoreState } from '../../../store/store';
 import styled from 'styled-components';
 import { isNumber } from 'lodash';
 import type { TrainingLevels } from 'src/models/trainingLevels';
+import {connectDeviceAndPopUp} from '../../../../src/pages/manager/components/connect';
+import { getId } from '../../../../src/pages/manager/components/getID';
 
 export function TrainingModeSelector(): ReactElement {
 
@@ -12,6 +14,8 @@ export function TrainingModeSelector(): ReactElement {
   const trainingLevel = useStoreState((store: any) => store.trainingLevel);
   const moduleNumber = useStoreState((store: any) => store.moduleNumber);
   const setModuleNumber = useStoreActions((store: any) => store.setModuleNumber);
+  const setModuleCompleteModalToggle = useStoreActions((store : any) => store.setModuleCompleteModalToggle);
+  const setDownloadModulModalToggle = useStoreActions((store : any) => store.setDownloadModulModalToggle);
 
 
   const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState('CPM' as TrainingLevels); 
@@ -23,6 +27,13 @@ export function TrainingModeSelector(): ReactElement {
     payload.push(value);
     sessionStorage.removeItem("tempTestDeIncrement");
     beginTraining(payload);
+  }
+  function allChords(){
+    const id = getId()
+    if (id !=null){
+      setDownloadModulModalToggle(true as boolean)
+    }
+
   }
   function TestPageFunction (value: string, testLength : any){
     const payload : any [] = [];
@@ -55,10 +66,11 @@ export function TrainingModeSelector(): ReactElement {
     } else if (trainingLevel == 'CHM'){
       return(
         <React.Fragment>
-       
-        <button  {...moduleNumber == 1 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus(), setModuleNumber(1)]}>All Chords</button>
+       <button  {...moduleNumber == 1 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICAL'), document.getElementById('txt_Name')?.focus(), setModuleNumber(1)]}>English 200</button>
         <div>/</div>
-        <button {...moduleNumber == 2 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('SUPERSONIC'), document.getElementById('txt_Name')?.focus(), setModuleNumber(2)]}>Custom</button>
+        <button  {...moduleNumber == 2 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [connectDeviceAndPopUp(), allChords(), document.getElementById('txt_Name')?.focus(), setModuleNumber(2)]}>All Chords</button>
+        <div>/</div>
+        <button {...moduleNumber == 3 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('SUPERSONIC'), document.getElementById('txt_Name')?.focus(), setModuleNumber(3)]}>Custom</button>
         </React.Fragment>
       )
     }

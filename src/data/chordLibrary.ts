@@ -12,6 +12,7 @@ export interface ChordLibrary {
   chordsLite: ChordLibraryRecord;
   lexicalSentences: any;
   customtier: ChordLibraryRecord;
+  allChords: ChordLibraryRecord;
 }
 
 
@@ -35,6 +36,9 @@ export const chordLibrary: ChordLibrary = {
     thirteen:['I will do it whether you like it or not!'],
     fourteen:['I suddenly had the urge to go for a walk.'],
 
+  },
+  allChords: {
+   hi:  [],
   },
   supersonic: {
     word: [],
@@ -1385,6 +1389,7 @@ export const chordLibrary: ChordLibrary = {
       ...this.chordsLite,
       ...this.lexicalSentences,
       ...this.customtier,
+      ...this.allChords,
     };
   },
 };

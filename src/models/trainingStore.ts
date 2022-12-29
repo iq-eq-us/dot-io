@@ -41,7 +41,7 @@ export interface TrainingStoreActionsModel {
   setTrainingLevel: Action<TrainingStoreModel, TrainingLevels>;
   setModuleCompleteModalToggle: Action<TrainingStoreModel, boolean>;
   setModuleNumber: Action<TrainingStoreModel, number>;
-
+  setDownloadModulModalToggle: Action<TrainingStoreModel, boolean>;
 
   /**
    * This action allows you to manually update the chords used in a particular training mode
@@ -110,6 +110,7 @@ export interface TrainingStoreStateModel {
   textPromptUnFocused: boolean;
   numberOfWordsChorded:  number;
   moduleCompleteModalToggle: boolean;
+  downloadModulModalToggle: boolean;
   wasModuleShown: boolean;
   moduleNumber: number;
 

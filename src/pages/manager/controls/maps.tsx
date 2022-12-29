@@ -843,9 +843,10 @@ const  CHARACHORDER = [
     ];
     
     const _chordMaps: any[][] = [];
+    const _chordLayout: any[][] = []
 
 
-export { _actionMap, _keyMapDefaults, _keyMap, _chordMaps };
+export { _actionMap, _keyMapDefaults, _keyMap, _chordMaps, _chordLayout };
 
   
     

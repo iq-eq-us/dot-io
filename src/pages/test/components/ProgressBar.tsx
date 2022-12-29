@@ -62,13 +62,13 @@ const SpeedGoalText = styled.span.attrs({
 })``;
 
 const ProgressBarInner = styled.div.attrs<ProgressBarProgress>({
-  className: `relative rounded-r-xl bg-green-500 h-full rounded-l`,
+  className: `relative rounded-r-xl bg-green-500 h-full rounded-full`,
 }) <ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
 
 const ProgressBarOuter = styled.div.attrs({
-  className: `rounded bg-red-500 w-full h-full`,
+  className: `rounded-full bg-red-500 w-full h-full`,
 })``;
 
 const WPMText = styled.div.attrs({

@@ -1,13 +1,20 @@
 import React, { useState, ReactElement } from 'react';
 import { useStoreState, useStoreActions } from '../../../store/store';
+import { _chordMaps } from '../../../../src/pages/manager/controls/maps';
+import { getGetAll } from '../../../../src/pages/manager/components/download';
+import { MainControls } from '../../.././../src/pages/manager/controls/mainControls';
+import { ProgressBar } from './ProgressBar';
 
 
 function ModuleCompleteModal () : ReactElement {
 
   const moduleNumber = useStoreState((store : any) => store.moduleNumber);
-  const trainingLevel = useStoreState((store : any) => store.trainingLevel);
-  const moduleCompleteModalToggle = useStoreState((store : any) => store.moduleCompleteModalToggle);
+  const trainingLevel = useStoreState((store : any) => store.trainingLevel); 
+  const downloadModulModalToggle = useStoreState((store : any) => store.downloadModulModalToggle);
+  const moduleCompleteModalToggle = useStoreState((store : any) => store.moduleCompleteModalToggle); 
   const setModuleCompleteModalToggle = useStoreActions((store : any) => store.setModuleCompleteModalToggle);
+  const setDownloadModulModalToggle = useStoreActions((store : any) => store.setDownloadModulModalToggle);
+
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   const setModuleNumber = useStoreActions((store: any) => store.setModuleNumber);
 
@@ -67,6 +74,21 @@ function ModuleCompleteModal () : ReactElement {
     <p className=' ml-10 mr-10 '>Press &lsquo;Continue&rsquo; below to move on to the next Module,</p>
     <p className=' ml-10 mr-10 mb-10'>Or press &lsquo;X&rsquo; to continue practicing.</p>
     <button className='drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-36 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]' onClick={() => [selectTheTrainingMode(), setModuleCompleteModalToggle(!moduleCompleteModalToggle)]}> Move To Next Module</button>
+    </div> 
+    : null
+    }
+
+    {downloadModulModalToggle ? 
+    <div className='flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white'>
+      <button className="close absolute ml-96 text-5xl pt-4 text-[#181818]" onClick={() => [setDownloadModulModalToggle(!downloadModulModalToggle)]}>
+            &times;
+          </button>
+    <p className='pt-4 m-10 font-bold '>DownLoad All Chords!</p>
+    <p className=' ml-10 mr-10' id='statusDiv'></p>
+    <p className=' ml-10 mr-10 ' id='countDiv'>{MainControls._chordMapIdCounter/MainControls._chordmapCountOnDevice}</p>
+    <ProgressBar/>
+    <p className=' ml-10 mr-10 mb-10 text-white'>Or press &lsquo;X&rsquo; to continue practicing. Or press &lsquo;X&rsquo; to conti. + {console.log('dis da mapss '+_chordMaps)} </p>
+    <button className='drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-36 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]' onClick={() => [getGetAll()]}>Download</button> 
     </div> 
     : null
     }

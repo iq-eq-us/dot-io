@@ -8,7 +8,7 @@ import {
 
   const Piano = (): ReactElement => {
     React.useEffect(() => {
-      document.title = "CharaChorder Launchpad"
+      document.title = "dot i/o"
     }, []);
   
     return (

@@ -1,4 +1,4 @@
-import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
+import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "./maps";
 
 
   export class MainControls{
@@ -489,6 +489,163 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     }
   }
 
+  export async function commitChordLayout(){
+    console.log('readGetOneChordMapLayout()');
+    const { value } = await MainControls.lineReader.read();
+    console.log('Chord layout array '+ value);
+
+    if (value) {
+      const arrValue = [...value];
+      //ascii_to_hexa(arrValue);
+      const strValue = String(arrValue.join(''));
+      console.log(strValue);
+      let hexChordString = "";
+      hexChordString = strValue.substr(0, 16);
+      let hexAsciiString = "";
+      hexAsciiString = strValue.substr(17, strValue.length);
+      const strValues = ["","","",""];
+      const myArray = value.split(' ');
+
+      strValues[0] = myArray[1];
+      strValues[1] = myArray[2];
+      strValues[2] = myArray[3];
+      strValues[3] = myArray[4];
+      strValues[4] = myArray[5];
+      strValues[5] = myArray[6];
+
+
+
+      console.log('HEHEHEHEHEHHEEH '+ myArray)
+  
+      //appendToList(strValues);
+      // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
+      _chordLayout.push(value); //this ultimately isn't used
+  
+      appendLayoutToRow(strValues);
+    }
+  }
+
+  export async function readGetOneChordLayout(){
+    console.log('readGetOneChordMapLayout()');
+    const { value } = await MainControls.lineReader.read();
+    console.log('Chord layout array '+ value);
+
+    if (value) {
+      const arrValue = [...value];
+      //ascii_to_hexa(arrValue);
+      const strValue = String(arrValue.join(''));
+      console.log(strValue);
+      let hexChordString = "";
+      hexChordString = strValue.substr(0, 16);
+      let hexAsciiString = "";
+      hexAsciiString = strValue.substr(17, strValue.length);
+      const strValues = ["","","",""];
+      const myArray = value.split(' ');
+
+      strValues[0] = myArray[1];
+      strValues[1] = myArray[2];
+      strValues[2] = myArray[3];
+      strValues[3] = myArray[4];
+      strValues[4] = myArray[5];
+      strValues[5] = myArray[6];
+
+
+
+      console.log('HEHEHEHEHEHHEEH '+ myArray)
+  
+      //appendToList(strValues);
+      // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
+      _chordLayout.push(value); //this ultimately isn't used
+  
+      appendLayoutToRow(strValues);
+    }
+  }
+  
+  export function appendLayoutToRow(data: string[], isFromFile=false) : any{
+    if(data[4] != '2' ){
+    const dataTable = document.getElementById("layoutDataTable") as HTMLTableElement;
+    const row = dataTable.insertRow(-1); //insert row at end of table
+  
+    const cells :any = [];
+    cells.push(row.insertCell(-1)); //0 virtual id
+    cells.push(row.insertCell(-1)); //1 chord edit button
+    cells.push(row.insertCell(-1)); //2 chord string (locked)
+    cells.push(row.insertCell(-1)); //3 phrase (locked)
+    cells.push(row.insertCell(-1)); //4 chord string new (locked)
+    cells.push(row.insertCell(-1)); //5 phrase new (open)
+    cells.push(row.insertCell(-1)); //6 delete - flags chord for deletion
+    cells.push(row.insertCell(-1)); //7 revert
+    cells.push(row.insertCell(-1)); //8 commit
+    cells.push(row.insertCell(-1)); //9 orig hex chord
+    cells.push(row.insertCell(-1)); //10 orig hex phrase
+   // cells[9].innerHTML = data[2];
+   // cells[10].innerHTML = data[3];
+  
+    const btnEdit = document.createElement('div');
+    const chordTextOrig = document.createElement('div');
+    const phraseTextOrig = document.createElement('div');
+    const chordTextNew = document.createElement('div');
+    const phraseTextInput = document.createElement('div');
+    const btnDelete = document.createElement('input');
+    const btnRevert = document.createElement('input');
+    const btnCommit = document.createElement('input');
+    
+  
+    const virtualId = MainControls._chordMapIdCounter;
+    console.log("ChordMap Counter: "+virtualId);
+    cells[0].innerHTML = virtualId; //local id number
+    cells[0].setAttribute('style','border: 1px solid #D3D3D3;');
+    MainControls._chordMapIdCounter++;
+  
+    btnEdit.id = virtualId.toString()+"-edit";
+    btnEdit.className = "buttonEdit";
+    btnEdit.setAttribute('style', 'background-color: #4CAF50;border: 1px solid white; color: white;padding: 1px 15px;text-align: center;text-decoration: none;display: inline-block; font-size: 16px;');
+
+    cells[1].appendChild(btnEdit);
+    cells[1].setAttribute('style','border: 1px solid #D3D3D3;')
+
+
+  
+    chordTextOrig.id = virtualId.toString()+"-chordorig";
+    chordTextOrig.innerHTML = data[1];
+    cells[2].appendChild(chordTextOrig);
+    cells[2].setAttribute('style','border: 1px solid #D3D3D3;')
+
+    phraseTextOrig.id = virtualId.toString()+"-phraseorig";
+    phraseTextOrig.innerHTML = data[2];
+    cells[3].appendChild(phraseTextOrig);
+    cells[3].setAttribute('style','border: 1px solid #D3D3D3;')
+
+    chordTextNew.id = virtualId.toString()+"-chordnew";
+    chordTextNew.innerHTML = data[3];
+    cells[4].appendChild(chordTextNew);
+    cells[4].setAttribute('style','border: 1px solid #D3D3D3; ')
+
+    phraseTextInput.id = virtualId.toString()+"-phraseinput";
+    phraseTextInput.innerHTML = '';
+    cells[4].appendChild(phraseTextInput);
+    cells[4].setAttribute('style','border: 1px solid #D3D3D3; ')
+
+  
+    
+    phraseTextInput.value = "";
+    cells[5].setAttribute('style', 'color: white; border: 1px solid white;border-right: 1px solid #D3D3D3;');
+    cells[5].appendChild(phraseTextInput);
+    cells[5].setAttribute('style','border: 1px solid #D3D3D3;')
+
+    phraseTextInput.onchange = function(){
+      const element: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+      element.disabled = false;
+    }
+
+        
+      
+    
+    if(isFromFile){
+      phraseTextInput.value = data[1];
+    }
+  }
+  }
 
   export function appendToRow(data: string[], isFromFile=false) : any{
     const dataTable = document.getElementById("dataTable") as HTMLTableElement;
@@ -647,7 +804,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
     btnCommit.setAttribute('style', 'border: 1px solid white;color: white;padding: 1px 15px;text-align: center;display: inline-block;font-size: 16px;hover: background: #00ff00;');
     cells[8].appendChild(btnCommit);
 
-    btnCommit.onclick = async function(){
+    btnCommit.onclick = async function(distinguisher){
       const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
       if(check.disabled){
         //delete the chord from the device, and then also delete from this list
@@ -695,6 +852,11 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps } from "./maps";
             const hexPhrase = convertHumanStringToHexadecimalPhrase(elementPhase.innerHTML);
             await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("SET "+hexChord+" "+hexPhrase);
+            const s = elementPhase.innerHTML.split(",");
+            await sendCommandString('');
+            
+            await sendCommandString('VAR '+'B4 '+'A'+element.innerHTML+" "+ s[0] + ' '+ s[1]);
+            await readGetOneAndToss();
             //then delete the old chordmap
             const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
             const hexChordOrigToDelete = convertHumanStringToHexadecimalChord(chordorig.innerHTML);

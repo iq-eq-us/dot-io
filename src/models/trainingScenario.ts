@@ -6,4 +6,5 @@ export type TrainingScenario =
   | 'LEXICOGRAPHIC'
   | 'SUPERSONIC'
   | 'CUSTOMTIER'
-  | 'LEXICAL-SENTENCES';
+  | 'ALLCHORDS'
+  | 'LEXICALSENTENCES';

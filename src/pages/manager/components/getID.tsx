@@ -10,7 +10,9 @@ export async function getId(){
     await sendCommandString("VERSION");
     await readVersion();
     const element: HTMLElement = document.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+    if(element !=null){
     element.innerHTML = "Device: "+MainControls._chordmapId+", firmware: "+MainControls._firmwareVersion;
+    }
   }
 
   async function readVersion(){

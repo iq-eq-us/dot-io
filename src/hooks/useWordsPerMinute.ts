@@ -42,7 +42,7 @@ export const useWordsPerMinute = (): number => {
   
   let wordsCorrectCount = 0;
   for(let i=0; i<storedTestTextData.length; i++){
-    if(storedTestTextData[i] == alltypedText[i].slice(0, -1)){
+    if(storedTestTextData[i] == alltypedText[i]?.slice(0, -1)){
       wordsCorrectCount++;
     }
   }

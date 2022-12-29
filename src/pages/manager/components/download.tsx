@@ -7,12 +7,14 @@ import {
     } from '../controls/mainControls'
     import {resetDataTable} from '../../manager/components/resetDataTable'
 
-async function getGetAll(){
+export async function getGetAll(){
   resetDataTable();
     await selectBase(); //select BASE
     for(let i=0;i<MainControls._chordmapCountOnDevice;i++){
       console.log(MainControls._chordmapCountOnDevice);
       await sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
+      //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
+
         console.log("MapID");
     console.log(MainControls._chordmapId);
       await readGetOneChordmap();

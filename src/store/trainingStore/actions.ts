@@ -35,7 +35,8 @@ let globalDictionaries: Record<
   SUPERSONIC: undefined,
   TRIGRAM: undefined,
   CUSTOMTIER: undefined,
-  'LEXICAL-SENTENCES': undefined
+  LEXICALSENTENCES: undefined,
+  ALLCHORDS: undefined,
 };
 export const getGlobalDictionaries = (): typeof globalDictionaries =>
   globalDictionaries;
@@ -79,6 +80,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   }),
   setModuleCompleteModalToggle: action((state, payload) => {
     state.moduleCompleteModalToggle = payload as boolean;
+  }),
+  setDownloadModulModalToggle: action((state, payload) => {
+    state.downloadModulModalToggle = payload as boolean;
   }),
   setModuleNumber: action((state, payload) => {
     state.moduleNumber = payload as number;

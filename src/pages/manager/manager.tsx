@@ -11,6 +11,9 @@ import { Clear } from '../manager/components/resetDataTable'
 import { Export } from '../manager/components/exportLibrary'
 import { AddChordMap } from '../manager/components/addChordMap'
 import { PressCommit } from '../manager/components/commitAll'
+import { ImportChordLayout } from './components/importLayout';
+import { ExportChordLayout } from './components/exportLayout';
+import { AddLayoutHeaders } from './components/addHeadersLayout';
 
 
 
@@ -44,8 +47,9 @@ const Manager = (): ReactElement => {
     <RebootButton/>
     <div className="h-1 w-6/12 bg-green-500 rounded mb-10 mt-10" />
     <div className="font-mono text-xl ml-2">Layout</div>
-    <ImportChords/>
-    <Export/>
+    <ImportChordLayout/>
+    <ExportChordLayout/>
+    <AddLayoutHeaders/>
     <div className="h-1 w-6/12 mt-6 bg-green-500 rounded mb-10" />
     <div className="font-mono text-xl ml-2">Library</div>
     <ImportChords/>

@@ -7,7 +7,10 @@ export async function getCount(){
     await sendCommandString("SELECT BASE");
     await readGetChordmapCount();
     const element: HTMLElement = document.getElementById("countDiv") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+    if(element !=null){
+
       element.innerHTML = "Count: "+ MainControls._chordmapCountOnDevice;
+    }
   }
 
   export function GetCountButton(): ReactElement {

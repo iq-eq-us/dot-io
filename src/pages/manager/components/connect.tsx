@@ -7,12 +7,14 @@ import {
 } from '../controls/mainControls'
 import {getId} from '../components/getID'
 import {getCount} from '../../manager/components/countChords'
+
+
 export async function startSerialConnection() {
     console.log("startSerialConnection()");
     try {
       // Prompt user to select any serial port.
       
-      MainControls.serialPort = await navigator.serial.requestPort();
+      MainControls.serialPort = await navigator?.serial?.requestPort();
       console.log("requestPort()");
       // Wait for the serial port to open.
       await openSerialPort();
@@ -22,8 +24,10 @@ export async function startSerialConnection() {
     } catch(error) {
       console.log(error);
 
-      const element: HTMLInputElement = document.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+      const element: HTMLInputElement = document?.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+      if(element !=null){
       element.innerHTML = "status: failed to open serial port; may already be open elsewhere";
+      }
 
      
     }
@@ -36,9 +40,11 @@ export async function startSerialConnection() {
     console.log("connected to serial port");
 
 
-    const element: HTMLInputElement = document.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+    const element: HTMLInputElement = document?.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
     //element.value = "Device: ";
+    if(element !=null){
     element.innerHTML = "status: opened serial port";
+    }
 
     console.log(MainControls.serialPort.getInfo());
   }
@@ -64,7 +70,9 @@ export async function startSerialConnection() {
       console.log('setup line reader');
 
       const element: HTMLElement = document.getElementById("statusDiv") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+      if(element !=null){
       element.innerHTML = "status: opened serial port and listening";
+      }
       
     }else{
       console.log('serial port is not open yet');
@@ -99,19 +107,19 @@ export async function startSerialConnection() {
     console.log('setCharaChorderToTypicalFunctionality()');
     await selectConfig();
     //turn off all logging so the serial output is clean
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_LOG+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_RAW+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_KEYBOARD+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_MOUSE+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_DEBUG+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_HEADER+" 00");
+    await sendCommandString("SELECT BASE "+MainControls.CONFIG_ID_ENABLE_SERIAL_LOG+" 00");
+    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_RAW+" 00");
+    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
+    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_KEYBOARD+" 00");
+    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_MOUSE+" 00");
+    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_DEBUG+" 00");
+    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_HEADER+" 00");
     //make sure the hid functionalities are enabled in case the webserial messes up in the middle of reading a chord
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_MOUSE+" 01");
+    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
+    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_MOUSE+" 01");
     await selectBase();
   }
-  async function allFunc(){
+  export async function allFunc(){
      await startSerialConnection();
      await getCount();
      await getId();
@@ -123,6 +131,20 @@ export async function startSerialConnection() {
 
   }
 
+  export async function connectDeviceAndPopUp(){
+    <div id='statusDiv' className='flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white'/>
+
+    await startSerialConnection();
+    await getCount();
+    await getId();
+
+
+
+    const manager: HTMLElement = document.getElementById("manager") as HTMLElement;
+    manager.classList.add("connected");
+ 
+
+ }
   export function ConnectButton(): ReactElement {
     return (
       <React.Fragment>

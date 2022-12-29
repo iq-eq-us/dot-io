@@ -4,12 +4,19 @@ import {MainControls} from '../controls/mainControls'
 import {addHeadersToDataTable} from '../components/addHeaders'
 
 
-
 export function resetDataTable(){
     const dataTable = document.getElementById("dataTable") as HTMLTableElement;
     dataTable.innerHTML = "";
     const _chordMaps = [];
     addHeadersToDataTable();
+    MainControls._chordMapIdCounter = 0;
+  }
+
+  export function resetLayoutDataTable(){
+    const dataTable = document.getElementById("layoutDataTable") as HTMLTableElement;
+    dataTable.innerHTML = "";
+    const _chordMaps = [];
+    //addHeadersToLayoutDataTable();
     MainControls._chordMapIdCounter = 0;
   }
 
