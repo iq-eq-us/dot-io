@@ -56,7 +56,7 @@ function importChordMapLibrary(e : any){
     
         appendLayoutToRow(strValues, true);
         console.log('This is the one '+ "VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]+" "+strAllValues[3])
-        await sendCommandString("VAR B4 "+strAllValues[1] +" "+strAllValues[2]+" "+strAllValues[3]);
+        await sendCommandString("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
       });
     }
     //console.log(_chordMaps);
