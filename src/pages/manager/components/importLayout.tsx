@@ -6,7 +6,7 @@ import {
   sendCommandString,
   readGetOneAndToss
 } from '../controls/mainControls'
-import {resetDataTable} from '../../manager/components/resetDataTable'
+import {resetLayoutDataTable} from '../../manager/components/resetDataTable'
 
 
 const checkElement = async selector => {
@@ -22,7 +22,7 @@ const checkElement = async selector => {
 
 
 async function importChordMapLibrary(e : any){
-  resetDataTable();
+  resetLayoutDataTable();
     console.log(e);
     const file = e.target.files[0];
       console.log('im here')
@@ -56,7 +56,7 @@ async function importChordMapLibrary(e : any){
     
         appendLayoutToRow(strValues, true);
         //console.log('This is the one '+ "VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]+" "+strAllValues[3])
-        await sendCommandString("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2] + " ");
+        await sendCommandString("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
       });
       
     }
