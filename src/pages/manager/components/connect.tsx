@@ -108,9 +108,9 @@ export async function startSerialConnection() {
     await selectConfig();
     //turn off all logging so the serial output is clean
     await sendCommandString("SELECT BASE "+MainControls.CONFIG_ID_ENABLE_SERIAL_LOG+" 00");
-    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_RAW+" 00");
-    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
-    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_KEYBOARD+" 00");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_RAW+" 00");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_KEYBOARD+" 00");
     //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_MOUSE+" 00");
     //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_DEBUG+" 00");
     //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_HEADER+" 00");
