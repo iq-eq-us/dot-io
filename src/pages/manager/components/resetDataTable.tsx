@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import {_chordMaps} from '../controls/maps'
 import {MainControls} from '../controls/mainControls'
 import {addHeadersToDataTable} from '../components/addHeaders'
+import { addHeadersToLayoutDataTable } from './addHeadersLayout';
 
 
 export function resetDataTable(){
@@ -16,7 +17,7 @@ export function resetDataTable(){
     const dataTable = document.getElementById("layoutDataTable") as HTMLTableElement;
     dataTable.innerHTML = "";
     const _chordMaps = [];
-    //addHeadersToLayoutDataTable();
+    addHeadersToLayoutDataTable();
     MainControls._chordMapIdCounter = 0;
   }
 

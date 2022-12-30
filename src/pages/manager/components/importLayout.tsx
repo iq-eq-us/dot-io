@@ -18,28 +18,26 @@ const checkElement = async selector => {
 
 
 
+let thisArray = [];
 
 
-
-async function importChordMapLibrary(e : any){
+async function importLayoutLibrary(e : any){
+  thisArray = [];
   resetLayoutDataTable();
     console.log(e);
     const file = e.target.files[0];
-      console.log('im here')
     const fileReader = new FileReader();
     fileReader.readAsText(file,'UTF-8');  
-
-    fileReader.onload = readerEvent =>{
+    const strValues = ["","","",""];
+    fileReader.onload = async readerEvent =>{
       const content = readerEvent.target.result;
       console.log(content);
       //add here asdf
       const lines = content.split('\n');
-      lines.forEach(async(line)=> {
+      await lines.forEach(async(line)=> {
         const strAllValues = line.split(',');
+            
         
-        console.log('the response for IDS '+ MainControls._chordmapId + ' ' + MainControls._firmwareVersion)
-        
-        const strValues = ["","","",""];
         //console.log('dur '+ strAllValues)
         //const myArray = value.split(' ');
 
@@ -52,24 +50,31 @@ async function importChordMapLibrary(e : any){
         strValues[4] = strAllValues[3];
   
     
-       // _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
+        //_chordLayout.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
     
-        appendLayoutToRow(strValues, true);
-        //console.log('This is the one '+ "VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]+" "+strAllValues[3])
-        await sendCommandString("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
-      });
-      
-    }
-     await sendCommandString("VAR B0");
+       await appendLayoutToRow(strValues, true);
+        thisArray.push("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
 
-    //console.log(_chordMaps);
-    //open file dialog box with only csv allowed
-    //parse
+        //console.log('This is the one '+ "VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]+" "+strAllValues[3])
+      });
+
+    }
+
+    
   }
+  export async function storeAllChanges(){
+    //console.log(thisArray.replace(/(\r\n|\n|\r)/gm, ""))
+    for(let i=0; i<thisArray.length; i++){
+      await sendCommandString(thisArray[i].replace(/(\r\n|\n|\r)/gm, ""));
+    }
+    await sendCommandString("VAR B0");
+
+  }
+
   function click(){
 
       const element: HTMLElement = document.getElementById("file-input") as HTMLInputElement; //.innerHTML = "status: opened serial port";
-      element.addEventListener('input', importChordMapLibrary);
+      element.addEventListener('input', importLayoutLibrary);
        console.log('Clicked')
 }
 
@@ -80,7 +85,7 @@ async function importChordMapLibrary(e : any){
           <input id="file-input" type="file" name="name" style = {{display:'none'}}/>
 
 <button
-      id="importChordMapLibrary"
+      id="importLayoutLibrary"
       className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
       onClick={() => {document.getElementById('file-input').click(); click()}}
       >Import Layout</button>

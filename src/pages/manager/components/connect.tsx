@@ -107,16 +107,16 @@ export async function startSerialConnection() {
     console.log('setCharaChorderToTypicalFunctionality()');
     await selectConfig();
     //turn off all logging so the serial output is clean
-    await sendCommandString("SELECT BASE "+MainControls.CONFIG_ID_ENABLE_SERIAL_LOG+" 00");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_LOG+" 00");
     await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_RAW+" 00");
     await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
     await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_KEYBOARD+" 00");
-    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_MOUSE+" 00");
-    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_DEBUG+" 00");
-    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_HEADER+" 00");
+   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_MOUSE+" 00");
+   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_DEBUG+" 00");
+   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_HEADER+" 00");
     //make sure the hid functionalities are enabled in case the webserial messes up in the middle of reading a chord
-    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
-    //await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_MOUSE+" 01");
+   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
+   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_MOUSE+" 01");
     await selectBase();
   }
   export async function allFunc(){

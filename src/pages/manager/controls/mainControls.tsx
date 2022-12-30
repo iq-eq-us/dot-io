@@ -92,6 +92,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
     }else{
       console.log('serial port is not open yet');
     }
+
   }
   
   export async function readGetOneAndToss(){
@@ -563,6 +564,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
   
   export function appendLayoutToRow(data: string[], isFromFile=false) : any{
     if(data[4] != '2' ){
+      
     const dataTable = document.getElementById("layoutDataTable") as HTMLTableElement;
     const row = dataTable.insertRow(-1); //insert row at end of table
   

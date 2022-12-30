@@ -7,6 +7,8 @@ import {
 
 } from '../controls/mainControls'
 
+import { storeAllChanges } from './importLayout';
+
 
 export async function commitAll(){
     await sendCommandString("VAR B0");
@@ -20,7 +22,7 @@ export async function commitAll(){
       <button
       className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
       color="pink"
-      onClick={() => commitAll()}
+      onClick={() => storeAllChanges()}
       >Save Changes </button>
       </React.Fragment>
     );
