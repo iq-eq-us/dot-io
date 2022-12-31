@@ -30,7 +30,7 @@ export async function getGetAll(){
       className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-absolute"
       color="pink"
       onClick={() => getGetAll()}
-      >Populate Table With Devices Chords</button>
+      >Populate Table</button>
       </React.Fragment>
     );
   }
