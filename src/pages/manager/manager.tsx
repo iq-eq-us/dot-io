@@ -15,6 +15,7 @@ import { ImportChordLayout } from './components/importLayout';
 import { ExportChordLayout } from './components/exportLayout';
 import { AddLayoutHeaders } from './components/addHeadersLayout';
 import { CommitAllLayoutChanges } from './components/commitAllLayouts';
+import { UpgradeFunction } from './components/upgradeFunction';
 
 
 import {
@@ -58,6 +59,7 @@ const Manager = (): ReactElement => {
     <Export/>
     <PressCommit/>
     <Clear/>
+    <UpgradeFunction/>
     
     </Table>
     <PageContainer>
