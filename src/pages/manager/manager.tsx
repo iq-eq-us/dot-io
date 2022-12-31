@@ -58,9 +58,8 @@ const Manager = (): ReactElement => {
     <Export/>
     <Download/>
     <PressCommit/>
-    <Clear/>
     <UpgradeFunction/>
-    
+    <Clear/>    
     </Table>
     <PageContainer>
     <AddHeaders/>
