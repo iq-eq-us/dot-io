@@ -15,7 +15,7 @@ export async function getGetAll(){
       await sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
       //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
 
-        console.log("MapID");
+        //console.log("MapID");
     console.log(MainControls._chordmapId);
       await readGetOneChordmap();
     }
@@ -30,7 +30,7 @@ export async function getGetAll(){
       className="text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-absolute"
       color="pink"
       onClick={() => getGetAll()}
-      >Download Chords </button>
+      >Populate Table With Devices Chords</button>
       </React.Fragment>
     );
   }
