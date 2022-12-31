@@ -13,8 +13,7 @@ export function addHeadersToLayoutDataTable(){
     cells[0].innerHTML = "Count" ;
     cells.push(row.insertCell(-1)); //1 chord edit button
     cells[0].setAttribute('style','border: 1px solid white; padding:10px;')
-    cells[1].innerHTML = "Empty";
-    cells[1].setAttribute('style','border: 1px solid white; padding:10px;')
+
     cells.push(row.insertCell(-1)); //2 chord string (locked)
     cells[2].innerHTML = "Keymap";
     cells[2].setAttribute('style','border: 1px solid white; padding:10px;')

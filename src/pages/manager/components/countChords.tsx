@@ -5,7 +5,7 @@ import {sendCommandString, readGetChordmapCount, MainControls} from '../controls
 
 export async function getCount(){
     await sendCommandString("SELECT BASE");
-    await readGetChordmapCount();
+    //await readGetChordmapCount();
     const element: HTMLElement = document.getElementById("countDiv") as HTMLInputElement; //.innerHTML = "status: opened serial port";
     if(element !=null){
 

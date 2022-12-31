@@ -603,10 +603,6 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
     btnEdit.className = "buttonEdit";
     btnEdit.setAttribute('style', 'background-color: #4CAF50;border: 1px solid white; color: white;padding: 1px 15px;text-align: center;text-decoration: none;display: inline-block; font-size: 16px;');
 
-    cells[1].appendChild(btnEdit);
-    cells[1].setAttribute('style','border: 1px solid #D3D3D3;')
-
-
   
     chordTextOrig.id = virtualId.toString()+"-chordorig";
     chordTextOrig.innerHTML = data[1];
