@@ -10,6 +10,8 @@ async function bootLoader(){
     //Sends the bootloader command to the charachorder via the serial API
     await sendCommandString("BOOTLOADER");
     await readGetNone();
+    await sendCommandString("RST BOOTLOADER");
+    await readGetNone();
   }  
   
   export function BootLoaderButton(): ReactElement {
