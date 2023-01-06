@@ -19,8 +19,7 @@ export async function startSerialConnection() {
       // Wait for the serial port to open.
       await openSerialPort();
       await setupLineReader();
-      await setCharaChorderToTypicalFunctionality();
-      await getId();
+      //await setCharaChorderToTypicalFunctionality();
     } catch(error) {
       console.log(error);
 
@@ -111,19 +110,18 @@ export async function startSerialConnection() {
     await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_RAW+" 00");
     await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
     await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_KEYBOARD+" 00");
-   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_MOUSE+" 00");
-   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_DEBUG+" 00");
-   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_HEADER+" 00");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_MOUSE+" 00");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_DEBUG+" 00");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_HEADER+" 00");
     //make sure the hid functionalities are enabled in case the webserial messes up in the middle of reading a chord
-   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
-   // await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_MOUSE+" 01");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
+    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_MOUSE+" 01");
     await selectBase();
   }
   export async function allFunc(){
      await startSerialConnection();
-     await getCount();
      await getId();
-
+     await getCount();
 
      const manager: HTMLElement = document.getElementById("manager") as HTMLElement;
      manager.classList.add("connected");
@@ -135,9 +133,9 @@ export async function startSerialConnection() {
     <div id='statusDiv' className='flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white'/>
 
     await startSerialConnection();
-    await getCount();
-    await getId();
 
+    await getId();
+    await getCount();
 
 
     const manager: HTMLElement = document.getElementById("manager") as HTMLElement;

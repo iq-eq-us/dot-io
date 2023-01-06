@@ -4,14 +4,20 @@ import {MainControls, sendCommandString, readGetOneAndToss} from '../controls/ma
 
 
 export async function getId(){
-    await sendCommandString("ID");
-    await readDeviceId();
-    //document.getElementById("deviceDiv").innerHTML = "device: "+_chordmapId;
-    await sendCommandString("VERSION");
-    await readVersion();
+ 
+  await sendCommandString("VERSION")
+  const { value1 } = await MainControls.lineReader.read();
+  const chordVersionSplit = value1.split(" ")
+  const chordVersionParsedValue = parseInt(chordVersionSplit[chordVersionSplit.length-1])
+
+  await sendCommandString("ID")
+  const { value2 } = await MainControls.lineReader.read();
+  const chordIdSplit = value2.split(" ")
+  const chordIdParsedValue = parseInt(chordIdSplit[chordIdSplit.length-1])
+
     const element: HTMLElement = document.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
     if(element !=null){
-    element.innerHTML = "Device: "+MainControls._chordmapId+", firmware: "+MainControls._firmwareVersion;
+    element.innerHTML = "Device: "+chordIdParsedValue+", firmware: "+chordVersionParsedValue;
     }
   }
 

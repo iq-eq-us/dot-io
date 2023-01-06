@@ -1,4 +1,6 @@
 import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "./maps";
+import hex2Bin from 'hex-to-bin';
+
 
 
   export class MainControls{
@@ -92,7 +94,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
     }else{
       console.log('serial port is not open yet');
     }
-
+    
   }
   
   export async function readGetOneAndToss(){
@@ -177,10 +179,10 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
         const strValue = String(arrValue.join(''));
         console.log(strValue);
    
-        const hexChordString = strValue.substr(0, 16);
+        const hexChordString = strValue[2]; // Should return 32 characters at all times
         const hexAsciiString = strValue.substr(17, strValue.length);
         const strValues = ["","","",""];
-        strValues[0] = convertHexadecimalChordToHumanString(hexChordString);
+        strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
         strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
         strValues[2] = hexChordString;
         strValues[3] = hexAsciiString;
@@ -301,9 +303,9 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
           }
         }
         //This checks if the Chord has the sequence e + e inside if it does this changes it to the correct e + r diagonal press representation 
-    if(humanString.indexOf('e + e')!=-1 || humanString.indexOf('e + e') != 0) {
-      humanString = humanString.replace("e + e", "r + e");
-          }
+   // if(humanString.indexOf('e + e')!=-1 || humanString.indexOf('e + e') != 0) {
+     // humanString = humanString.replace("e + e", "r + e");
+         // }
         //This checks if the Chord has the sequence m + k inside if it does this changes it to the correct m + c diagonal press representation 
 
           if(humanString.indexOf('m + k')!=-1 || humanString.indexOf('m + k') != 0) {
@@ -330,13 +332,82 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
       }
     }
     else{
-      //nothing for now
-    }
+      console.log('ChordLite '+ bigNum);
+      const binString = bigNum.toString(2); //no left zeros; that's ok
+      console.log(binString);
+      for(let i=0;i<binString.length;i++){
+        if(binString[i]=="1"){
+          if(humanString.length>0){
+            humanString += " + "
+          }
+          humanString+=_keyMap[64-binString.length+i];
+        //console.log(i);
+        //humanString+=_keyMap[(64-binString.length+i)];
+        if(_keyMap[64-binString.length+i] == 'GTM' || _keyMap[64-binString.length+i] == '0x0061'){
+          console.log('The two values ' + _keyMapDefaults[64-binString.length+i] );
 
+        }
+        }
+      }
+    }
   
     console.log(humanString);
     return humanString;
   }
+
+
+  function checkBin(n){return/^[01]{1,64}$/.test(n)}
+  function checkDec(n){return/^[0-9]{1,64}$/.test(n)}
+  function checkHex(n){return/^[0-9A-Fa-f]{1,64}$/.test(n)}
+  function pad(s,z){s=""+s;return s.length<z?pad("0"+s,z):s}
+  function unpad(s){s=""+s;return s.replace(/^0+/,'')}
+  function backpad(s,z){s=""+s;return s.length<z?backpad(s+"0",z):s}
+  
+  //Decimal operations
+  function Dec2Bin(n){if(!checkDec(n)||n<0)return 0;return n.toString(2)}
+  function Dec2Hex(n){if(!checkDec(n)||n<0)return 0;return n.toString(16)}
+  
+  //Binary Operations
+  function Bin2Dec(n ){
+    if(!checkBin(n))
+    return 0;
+    return parseInt(n,2).toString(10)
+  }
+  function Bin2Hex(n){if(!checkBin(n))return 0;return parseInt(n,2).toString(16)}
+  
+  //Hexadecimal Operations
+  function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)}
+  function Hex2Dec(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(10)}
+  
+  
+  
+      export function convertHexadecimalChordToHumanChord(hexChord){
+        console.log("convertHexadecimalChordToHumanChord()");
+        console.log(hexChord);
+        let humanChord = "";
+        let binChord = pad(hex2Bin(hexChord),128);
+        console.log(hexChord);
+        console.log(binChord);
+        let chainIndex = binChord.substring(0,8); //unused right now; this is used for phrases that have more than 192 bytes
+    
+        for(let i=0; i<12; i++){
+            const binAction = binChord.substring(8+i*10,8+(i+1)*10); //take 10 bits at a time
+            let actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
+            console.log('This is the action code '+ actionCode)
+            if(actionCode!=0){
+
+                if(humanChord.length>0){
+                    humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
+                }
+                humanChord += String.fromCharCode(actionCode as number);
+                console.log('Code inside thedoe loop '+ humanChord)
+            }else{
+                break; //we can exit the for loop early
+            }
+        }
+        console.log(humanChord);
+        return humanChord;
+    }
 
   export function chord_to_noteId(chord: number){
     const part1 = 5*Math.floor(Math.log10(chord));
@@ -466,17 +537,19 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
   export async function readGetOneChordmap(){
     console.log('readGetOneChordmap()');
     const { value } = await MainControls.lineReader.read();
+    const spliter = value.split(' ');
+    console.log(spliter)
     if (value) {
-      const arrValue = [...value];
+      const arrValue = [...spliter];
       //ascii_to_hexa(arrValue);
-      const strValue = String(arrValue.join(''));
+      const strValue = arrValue;
       console.log(strValue);
       let hexChordString = "";
-      hexChordString = strValue.substr(0, 16);
+      hexChordString = strValue[3]; //Should be 32 chacters at all times
       let hexAsciiString = "";
-      hexAsciiString = strValue.substr(17, strValue.length);
+      hexAsciiString = strValue[4];
       const strValues = ["","","",""];
-      strValues[0] = convertHexadecimalChordToHumanString(hexChordString);
+      strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
       strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
       strValues[2] = hexChordString;
       strValues[3] = hexAsciiString;
@@ -484,7 +557,7 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
   
       //appendToList(strValues);
       // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
-      _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
+      _chordMaps.push([convertHexadecimalChordToHumanChord(hexChordString),strValues[1]]); //this ultimately isn't used
   
       appendToRow(strValues);
     }
@@ -602,6 +675,10 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
     btnEdit.id = virtualId.toString()+"-edit";
     btnEdit.className = "buttonEdit";
     btnEdit.setAttribute('style', 'background-color: #4CAF50;border: 1px solid white; color: white;padding: 1px 15px;text-align: center;text-decoration: none;display: inline-block; font-size: 16px;');
+
+    cells[1].appendChild(btnEdit);
+    cells[1].setAttribute('style','border: 1px solid #D3D3D3;')
+
 
   
     chordTextOrig.id = virtualId.toString()+"-chordorig";
@@ -822,10 +899,11 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
             //if phrase was changed, then just set the new chordmap with the new chord and the new phrase
             const chordNewIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
             const phraseInputIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
-            const hexChord = convertHumanStringToHexadecimalChord(chordNewIn.innerHTML);
-            const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseInputIn.value);
-            await selectBase(); //make sure we're in the BASE dictionary
-            await sendCommandString("SET "+hexChord+" "+hexPhrase);
+            const hexChord = convertHumanChordToHexadecimalChord(chordNewIn.innerHTML);
+            const hexPhrase = convertHumanPhraseToHexadecimalPhrase(phraseInputIn.value);
+
+            //await selectBase(); //make sure we're in the BASE dictionary
+            await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
             await readGetOneAndToss();
             console.log('ChordNew In'+ chordNewIn.innerHTML);
             console.log('ChordNew In'+ phraseInputIn.value);
@@ -846,12 +924,15 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
             //if phrase was not changed, then just add/set new chordmap with the new chord and the original phrase
             const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLElement;; //.innerHTML = "status: opened serial port";
             const elementPhase: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
-            const hexChord = convertHumanStringToHexadecimalChord(element.innerHTML);
-            const hexPhrase = convertHumanStringToHexadecimalPhrase(elementPhase.innerHTML);
-            await selectBase(); //make sure we're in the BASE dictionary
-            await sendCommandString("SET "+hexChord+" "+hexPhrase);
+            const hexChord = convertHumanChordToHexadecimalChord(element.innerHTML);
+            const hexPhrase = convertHumanPhraseToHexadecimalPhrase(elementPhase.innerHTML);
+
+            //await selectBase(); //make sure we're in the BASE dictionary
+            await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
+            await readGetOneAndToss();
+
             const s = elementPhase.innerHTML.split(",");
-            await sendCommandString('');
+           // await sendCommandString('');
             
             await sendCommandString('VAR '+'B4 '+'A'+element.innerHTML+" "+ s[0] + ' '+ s[1]);
             await readGetOneAndToss();
@@ -880,10 +961,13 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
             //if just the phrase was changed, then update the chordmap with the original chord and new phrase
             const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement; //.innerHTML = "status: opened serial port"; 
             const phraseinput5: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
-            const hexChord = convertHumanStringToHexadecimalChord(chordorig.innerHTML);
-            const hexPhrase = convertHumanStringToHexadecimalPhrase(phraseinput5.value);
-            await selectBase(); //make sure we're in the BASE dictionary
-            await sendCommandString("SET "+hexChord+" "+hexPhrase);
+            const hexChord = convertHumanChordToHexadecimalChord(chordorig.innerHTML);
+            const hexPhrase = convertHumanPhraseToHexadecimalPhrase(phraseinput5.value);
+            
+            //await selectBase(); //make sure we're in the BASE dictionary
+            await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
+            await readGetOneAndToss();
+
             //then move the new phrase into the original phrase text location in the table, and clear the new phrase input
             const phraseorig3: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
             const phraseinput3: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
@@ -914,8 +998,54 @@ import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "
     }
   }
 
+  function convertHumanChordToHexadecimalChord(humanChord){
+    console.log("convertHumanChordToHexadecimalChord()");
+    console.log(humanChord);
+    let hexChord = "";
+    
+    const humanChordParts = humanChord.split(' + '); //somewhat assumes plus isn't being used; bc default is = for the +/= key
+    const decChordParts=[]
+    humanChordParts.forEach( (part)=>{
+        let actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
+        decChordParts.push(actionCode);
+    });
+    decChordParts.sort(); //default sort from smallest to largest
+    decChordParts.reverse(); //reverse so it is from largest to smallest
 
- 
+    let chainIndex = 0; //to be developed later
+    let binChord = pad(Dec2Bin(chainIndex),8); //convert the chain index to binary and zero fill up to 8-bits
+    for(let i=0; i<decChordParts.length; i++){
+        if(i<12){ //only support up to 12 keys
+            binChord += pad(Dec2Bin(decChordParts[i]),10); //convert the action id to binary and zero fill up to 10-bits
+        }
+    }
+    binChord = backpad(binChord,128); //zero backfill up to 128 bits
+    console.log(binChord);
+
+    for(let i=0; i<16; i++){ //this also limits the output to 12 keys (plus the first 8-bits reserved for the chain index)
+        hexChord += pad(Bin2Hex(binChord.substring(i*8,(i+1)*8)),2);
+    }
+    hexChord = hexChord.toUpperCase(); //convert to all uppercase characters for hexadecimal representation
+    console.log('This is the hexChord '+hexChord);
+    return hexChord;
+}
+
+  function convertHumanPhraseToHexadecimalPhrase(humanPhrase){
+    console.log("convertHumanPhraseToHexadecimalPhrase()");
+    console.log(humanPhrase);
+    let hexPhrase = "";
+    
+    //TODO split by ' + ' and detect if it is ascii or not
+    for (let i=0; i<humanPhrase.length; i ++) 
+    {
+        let actionCode = humanPhrase.charCodeAt(i); //TODO look up in actionCodeMap
+        let hexPhrasePart = pad(Dec2Hex(actionCode),2); //convert the actionCode to a hex string and pad with zeros
+        hexPhrase+=hexPhrasePart; //append to final hexadecimal string
+    }
+    hexPhrase = hexPhrase.toUpperCase(); //conver to uppercase
+    console.log('This is the hex human phrase '+hexPhrase);
+    return hexPhrase;
+}
 
  export async function readGetNone(){
    console.log(' ');

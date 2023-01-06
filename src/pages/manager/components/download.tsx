@@ -9,17 +9,23 @@ import {
 
 export async function getGetAll(){
   resetDataTable();
-    await selectBase(); //select BASE
-    for(let i=0;i<MainControls._chordmapCountOnDevice;i++){
+    //await selectBase(); //select BASE
+    await sendCommandString("CML C0")
+    const { value } = await MainControls.lineReader.read();
+    const chordCountSplit = value.split(" ")
+    const chordCountParsedValue = parseInt(chordCountSplit[chordCountSplit.length-1])
+
+    for(let i=0;i<chordCountParsedValue;i++){
       console.log(MainControls._chordmapCountOnDevice);
-      await sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
+      //wait sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
+      await sendCommandString("CML C1 "+ i)
       //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
 
         //console.log("MapID");
     console.log(MainControls._chordmapId);
       await readGetOneChordmap();
     }
-    
+  
   }
   export function Download(): ReactElement {
     return (

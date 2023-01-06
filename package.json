@@ -16,6 +16,8 @@
     "bootstrap": "^5.1.3",
     "chart.js": "^3.7.0",
     "easy-peasy": "^5.0.4",
+    "hex-to-bin": "^1.0.1",
+    "hex-to-binary": "^1.0.1",
     "midi-note": "^1.0.0",
     "react": "^17.0.2",
     "react-accordion-with-header": "^0.1.3",

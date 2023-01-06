@@ -4,12 +4,15 @@ import {sendCommandString, readGetChordmapCount, MainControls} from '../controls
 
 
 export async function getCount(){
-    await sendCommandString("SELECT BASE");
-    await readGetChordmapCount();
+  await sendCommandString("CML C0")
+  const { value } = await MainControls.lineReader.read();
+  const chordCountSplit = value.split(" ")
+  const chordCountParsedValue = parseInt(chordCountSplit[chordCountSplit.length-1])
+
     const element: HTMLElement = document.getElementById("countDiv") as HTMLInputElement; //.innerHTML = "status: opened serial port";
     if(element !=null){
 
-      element.innerHTML = "Count: "+ MainControls._chordmapCountOnDevice;
+      element.innerHTML = "Count: "+ chordCountParsedValue;
     }
   }
 
