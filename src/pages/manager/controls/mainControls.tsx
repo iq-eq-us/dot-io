@@ -376,7 +376,7 @@ import hex2Bin from 'hex-to-bin';
   function Bin2Hex(n){if(!checkBin(n))return 0;return parseInt(n,2).toString(16)}
   
   //Hexadecimal Operations
-  function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)}
+  //function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)}
   function Hex2Dec(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(10)}
   
   
@@ -1006,7 +1006,7 @@ import hex2Bin from 'hex-to-bin';
     const humanChordParts = humanChord.split(' + '); //somewhat assumes plus isn't being used; bc default is = for the +/= key
     const decChordParts=[]
     humanChordParts.forEach( (part)=>{
-        let actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
+        const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
         decChordParts.push(actionCode);
     });
     decChordParts.sort(); //default sort from smallest to largest
