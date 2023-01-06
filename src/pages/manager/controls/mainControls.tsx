@@ -384,7 +384,7 @@ import hex2Bin from 'hex-to-bin';
       export function convertHexadecimalChordToHumanChord(hexChord){
         console.log("convertHexadecimalChordToHumanChord()");
         console.log(hexChord);
-        const humanChord = "";
+        let humanChord = "";
         const binChord = pad(hex2Bin(hexChord),128);
         console.log(hexChord);
         console.log(binChord);
