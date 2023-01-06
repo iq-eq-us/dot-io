@@ -384,15 +384,15 @@ import hex2Bin from 'hex-to-bin';
       export function convertHexadecimalChordToHumanChord(hexChord){
         console.log("convertHexadecimalChordToHumanChord()");
         console.log(hexChord);
-        let humanChord = "";
-        let binChord = pad(hex2Bin(hexChord),128);
+        const humanChord = "";
+        const binChord = pad(hex2Bin(hexChord),128);
         console.log(hexChord);
         console.log(binChord);
-        let chainIndex = binChord.substring(0,8); //unused right now; this is used for phrases that have more than 192 bytes
+        const chainIndex = binChord.substring(0,8); //unused right now; this is used for phrases that have more than 192 bytes
     
         for(let i=0; i<12; i++){
             const binAction = binChord.substring(8+i*10,8+(i+1)*10); //take 10 bits at a time
-            let actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
+            const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
             console.log('This is the action code '+ actionCode)
             if(actionCode!=0){
 
@@ -1012,7 +1012,7 @@ import hex2Bin from 'hex-to-bin';
     decChordParts.sort(); //default sort from smallest to largest
     decChordParts.reverse(); //reverse so it is from largest to smallest
 
-    let chainIndex = 0; //to be developed later
+    const chainIndex = 0; //to be developed later
     let binChord = pad(Dec2Bin(chainIndex),8); //convert the chain index to binary and zero fill up to 8-bits
     for(let i=0; i<decChordParts.length; i++){
         if(i<12){ //only support up to 12 keys
@@ -1038,8 +1038,8 @@ import hex2Bin from 'hex-to-bin';
     //TODO split by ' + ' and detect if it is ascii or not
     for (let i=0; i<humanPhrase.length; i ++) 
     {
-        let actionCode = humanPhrase.charCodeAt(i); //TODO look up in actionCodeMap
-        let hexPhrasePart = pad(Dec2Hex(actionCode),2); //convert the actionCode to a hex string and pad with zeros
+        const actionCode = humanPhrase.charCodeAt(i); //TODO look up in actionCodeMap
+        const hexPhrasePart = pad(Dec2Hex(actionCode),2); //convert the actionCode to a hex string and pad with zeros
         hexPhrase+=hexPhrasePart; //append to final hexadecimal string
     }
     hexPhrase = hexPhrase.toUpperCase(); //conver to uppercase
