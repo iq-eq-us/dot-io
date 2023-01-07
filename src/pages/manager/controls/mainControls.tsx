@@ -1007,12 +1007,120 @@ import hex2Bin from 'hex-to-bin';
 
   }
   
+  async function clickCommit(virtualId){
+    const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
+    if(check.disabled){
+      //delete the chord from the device, and then also delete from this list
+      document.getElementById(virtualId.toString()+"-")
+      await sendCommandString("DEL "+data[2]);
+      await readGetOneAndToss();
+      //then remove the row from the table
+      const i = this.parentNode.parentNode.rowIndex;
+      console.log('deleting row '+i.toString());
+      dataTable.deleteRow(i);
+    }else{
+      const chordNew: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+      if(chordNew.innerHTML.length>0){
+        //if chord was changed, then we need to delete the chord from the device first
+        const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+        if(phraseinput.value.length>0){
+          //if phrase was changed, then just set the new chordmap with the new chord and the new phrase
+          const chordNewIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+          const phraseInputIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+          const hexChord = await convertHumanChordToHexadecimalChord(chordNewIn.innerHTML);
+          const hexPhrase = await convertHumanPhraseToHexadecimalPhrase(phraseInputIn.value);
+
+          //await selectBase(); //make sure we're in the BASE dictionary
+          await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
+          await readGetOneAndToss();
+
+          console.log('ChordNew In'+ chordNewIn.innerHTML);
+          console.log('ChordNew In'+ phraseInputIn.value);
+
+
+          //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
+          const chordorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+         
+          const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+          await sendCommandString("DEL "+hexChordOrigToDelete);
+          await readGetOneAndToss();
+
+          const phraseorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+
+          const phraseinput2: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+          phraseorig.innerHTML = phraseinput2.value;
+        }else{
+          //if phrase was not changed, then just add/set new chordmap with the new chord and the original phrase
+          const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLElement;; //.innerHTML = "status: opened serial port";
+          const elementPhase: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
+          const hexChord = await convertHumanChordToHexadecimalChord(element.innerHTML);
+          const hexPhrase = await convertHumanPhraseToHexadecimalPhrase(elementPhase.innerHTML);
+
+          //await selectBase(); //make sure we're in the BASE dictionary
+          await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
+          await readGetOneAndToss();
+
+          const s = elementPhase.innerHTML.split(",");
+         // await sendCommandString('');
+          
+          await sendCommandString('VAR '+'B4 '+'A'+element.innerHTML+" "+ s[0] + ' '+ s[1]);
+          await readGetOneAndToss();
+          //then delete the old chordmap
+          const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
+          const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+          await sendCommandString("DEL "+hexChordOrigToDelete);
+          // document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
+        }
+        const phraseinput3: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+        const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
+        const chordnew: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLElement;; //.innerHTML = "status: opened serial port";
+        const delete2: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+        const commit2: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+
+        phraseinput3.value = "";
+        chordorig.innerHTML = chordnew.innerHTML;
+        chordnew.innerHTML = "";
+        delete2.disabled = false;
+        commit2.disabled = true;
+      }else{
+        const check2: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+
+        if(check2.value.length>0){
+          //if just the phrase was changed, then update the chordmap with the original chord and new phrase
+          const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement; //.innerHTML = "status: opened serial port"; 
+          const phraseinput5: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+          const hexChord = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
+          const hexPhrase = await convertHumanPhraseToHexadecimalPhrase(phraseinput5.value);
+          
+          //await selectBase(); //make sure we're in the BASE dictionary
+          await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
+          await readGetOneAndToss();
+
+          //then move the new phrase into the original phrase text location in the table, and clear the new phrase input
+          const phraseorig3: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
+          const phraseinput3: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+          const chordnew: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLElement;; //.innerHTML = "status: opened serial port";
+          const delete3: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+          const commit3: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+
+          phraseorig3.innerHTML = phraseinput3.innerHTML;
+          phraseinput3.value = "";
+          chordnew.innerHTML = "";
+          delete3.disabled = false;
+          commit3.disabled = true;
+        }else{
+          //somehow there isn't anything to commit bc there is no change detected
+        }
+      }
+    }
+  }
+
+
   export async function pressCommitButton(virtualId: { toString: () => string; }){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     if(commitButton.disabled==false){
-      commitButton.click();
+      await clickCommit(virtualId);
     }
-    await readGetOneAndToss();
   }
 
   export async function commitTo(virtualId){
