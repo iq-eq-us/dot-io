@@ -1012,7 +1012,7 @@ import hex2Bin from 'hex-to-bin';
     if(check.disabled){
       //delete the chord from the device, and then also delete from this list
       document.getElementById(virtualId.toString()+"-")
-      await sendCommandString("DEL "+data[2]);
+      await sendCommandString("CML C4 "+data[2]);
       await readGetOneAndToss();
       //then remove the row from the table
       const i = this.parentNode.parentNode.rowIndex;
@@ -1032,7 +1032,7 @@ import hex2Bin from 'hex-to-bin';
 
           //await selectBase(); //make sure we're in the BASE dictionary
           await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-          await readGetOneAndToss();
+          //await readGetOneAndToss();
 
           console.log('ChordNew In'+ chordNewIn.innerHTML);
           console.log('ChordNew In'+ phraseInputIn.value);
@@ -1042,8 +1042,8 @@ import hex2Bin from 'hex-to-bin';
           const chordorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
          
           const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
-          await sendCommandString("DEL "+hexChordOrigToDelete);
-          await readGetOneAndToss();
+          await sendCommandString("CML C4 "+hexChordOrigToDelete);
+          //await readGetOneAndToss();
 
           const phraseorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
 
@@ -1058,17 +1058,17 @@ import hex2Bin from 'hex-to-bin';
 
           //await selectBase(); //make sure we're in the BASE dictionary
           await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-          await readGetOneAndToss();
+          //await readGetOneAndToss();
 
           const s = elementPhase.innerHTML.split(",");
          // await sendCommandString('');
           
           await sendCommandString('VAR '+'B4 '+'A'+element.innerHTML+" "+ s[0] + ' '+ s[1]);
-          await readGetOneAndToss();
+          //await readGetOneAndToss();
           //then delete the old chordmap
           const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
           const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
-          await sendCommandString("DEL "+hexChordOrigToDelete);
+          await sendCommandString("CML C4 "+hexChordOrigToDelete);
           // document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
         }
         const phraseinput3: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
@@ -1094,7 +1094,7 @@ import hex2Bin from 'hex-to-bin';
           
           //await selectBase(); //make sure we're in the BASE dictionary
           await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-          await readGetOneAndToss();
+          //await readGetOneAndToss();
 
           //then move the new phrase into the original phrase text location in the table, and clear the new phrase input
           const phraseorig3: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
@@ -1113,6 +1113,7 @@ import hex2Bin from 'hex-to-bin';
         }
       }
     }
+    await readGetOneAndToss();
   }
 
 
