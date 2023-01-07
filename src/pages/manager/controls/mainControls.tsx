@@ -792,12 +792,12 @@ import hex2Bin from 'hex-to-bin';
         await enableSerialChordOutput(true); //TODO include code to enable raw inputs and detect chord or else timeout
         
         const hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
-        console.log("Listening Hex Chord "+convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
+        //console.log("Listening Hex Chord "+convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
         
         if(hexChord!=null){
             console.log(hexChord + " Original Hex Value")
           const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
-          element.innerHTML = convertHexadecimalChordToHumanString(hexChord);
+          element.innerHTML = await convertHexadecimalChordToHumanString(hexChord);
           const elementT: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement; //.innerHTML = "status: opened serial port";
           elementT.disabled = false;
           console.log('hexChord is '+hexChord);
@@ -923,8 +923,8 @@ import hex2Bin from 'hex-to-bin';
             //await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
             await readGetOneAndToss();
-            console.log('ChordNew In'+ chordNewIn.innerHTML);
-            console.log('ChordNew In'+ phraseInputIn.value);
+            //console.log('ChordNew In'+ chordNewIn.innerHTML);
+            //console.log('ChordNew In'+ phraseInputIn.value);
 
 
             //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
@@ -1008,13 +1008,16 @@ import hex2Bin from 'hex-to-bin';
       phraseTextInput.value = data[1];
       btnCommit.disabled = false;
     }
+
   }
-  export function pressCommitButton(virtualId: { toString: () => string; }){
+  export async function pressCommitButton(virtualId: { toString: () => string; }){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     if(commitButton.disabled==false){
       commitButton.click();
     }
   }
+
+
 
   function convertHumanChordToHexadecimalChord(humanChord){
     console.log("convertHumanChordToHexadecimalChord()");
