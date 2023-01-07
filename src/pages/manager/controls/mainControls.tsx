@@ -162,12 +162,14 @@ import hex2Bin from 'hex-to-bin';
   function convertHexadecimalPhraseToAsciiString(hexString: string){
     let asciiString = "";
     console.log("convertHexadecimalPhraseToAsciiString()");
-  
+    //let actionId = actionMap.indexOf(part); //returns the position of the first occurrence of a value in a string.; returns -1 if not found
+
+    //let humanStringPart = actionMap[actionId]; //returns the ASCII string output from the actionMap 
     //assume 2x size
     //get every 2 characters
     //TODO covert to byte array and account for non-ascii inputs like mouse moves
     for (let i = 0; i < hexString.length; i += 2){
-      asciiString += String.fromCharCode(parseInt(hexString.substr(i, 2), 16));
+      asciiString += actionMap[parseInt(hexString.substr(i, 2), 16)];
       //console.log("0x"+hexString.substr(i, 2));
       //asciiString += String.fromCharCode("0x"+hexString.substr(i, 2));
     }
@@ -291,7 +293,7 @@ import hex2Bin from 'hex-to-bin';
             if(actionId == 0){
               actionId = 0x0200+noteId;
             }
-            humanString+=_actionMap[actionId];
+            humanString+=actionMap[actionId];
           }else{ //value is even, odd plus a 1
             noteId = chord_to_noteId((decString[i]-1)*10**(decString.length-i-1));
             //Charachorder = 0
@@ -299,7 +301,7 @@ import hex2Bin from 'hex-to-bin';
             if(actionId == 0){
               actionId = 0x0200+noteId;
             }
-            humanString+=_actionMap[actionId];
+            humanString+=actionMap[actionId];
             
             humanString += " + ";
   
@@ -308,7 +310,7 @@ import hex2Bin from 'hex-to-bin';
             if(actionId == 0){
               actionId = 0x0200+noteId;
             }
-            humanString+=_actionMap[actionId];
+            humanString+=actionMap[actionId];
           }
         }
         //This checks if the Chord has the sequence e + e inside if it does this changes it to the correct e + r diagonal press representation 
@@ -408,16 +410,16 @@ import hex2Bin from 'hex-to-bin';
                 if(humanChord.length>0){
                     humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
                 }
-                
+  
+                let humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
 
 
-                humanChord += String.fromCharCode(actionCode as number); //Replace when new action codes arrive
+                humanChord += humanStringPart; //Replace when new action codes arrive
                 console.log('Code inside thedoe loop '+ humanChord)
             }else{
                 break; //we can exit the for loop early
             }
-            console.log('binAction '+ binAction);
-            console.log('actionCode '+ actionCode);
+
 
         }
         console.log('final humanChord '+ humanChord)
