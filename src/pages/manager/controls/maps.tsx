@@ -845,7 +845,7 @@ const  CHARACHORDER = [
     const _chordMaps: any[][] = [];
     const _chordLayout: any[][] = []
 
-    let actionMap = [
+    const actionMap = [
       '', //0, 10-bit Action Codes 0x00
       '', //1, 10-bit Action Codes 0x01
       '', //2, 10-bit Action Codes 0x02

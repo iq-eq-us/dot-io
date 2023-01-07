@@ -411,7 +411,7 @@ import hex2Bin from 'hex-to-bin';
                     humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
                 }
   
-                let humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
+                const humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
 
 
                 humanChord += humanStringPart; //Replace when new action codes arrive
