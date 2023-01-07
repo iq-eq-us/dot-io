@@ -87,9 +87,9 @@ import hex2Bin from 'hex-to-bin';
     console.log(commandString);
     if(MainControls.serialPort){
       const encoder = new TextEncoder();
-      const writer = MainControls.serialPort.writable.getWriter();
+      const writer = await MainControls.serialPort.writable.getWriter();
       await writer.write(encoder.encode(commandString+"\r\n"));
-      writer.releaseLock();
+      await writer.releaseLock();
       console.log("writing "+commandString+"\r\n");
     }else{
       console.log('serial port is not open yet');
@@ -921,8 +921,7 @@ import hex2Bin from 'hex-to-bin';
             const hexPhrase = convertHumanPhraseToHexadecimalPhrase(phraseInputIn.value);
 
             //await selectBase(); //make sure we're in the BASE dictionary
-            await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-            await readGetOneAndToss();
+
             //console.log('ChordNew In'+ chordNewIn.innerHTML);
             //console.log('ChordNew In'+ phraseInputIn.value);
 
@@ -946,8 +945,7 @@ import hex2Bin from 'hex-to-bin';
             const hexPhrase = convertHumanPhraseToHexadecimalPhrase(elementPhase.innerHTML);
 
             //await selectBase(); //make sure we're in the BASE dictionary
-            await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-            await readGetOneAndToss();
+  
 
             const s = elementPhase.innerHTML.split(",");
            // await sendCommandString('');
@@ -983,8 +981,7 @@ import hex2Bin from 'hex-to-bin';
             const hexPhrase = convertHumanPhraseToHexadecimalPhrase(phraseinput5.value);
             
             //await selectBase(); //make sure we're in the BASE dictionary
-            await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-            await readGetOneAndToss();
+
 
             //then move the new phrase into the original phrase text location in the table, and clear the new phrase input
             const phraseorig3: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
@@ -1010,11 +1007,24 @@ import hex2Bin from 'hex-to-bin';
     }
 
   }
-  export async function pressCommitButton(virtualId: { toString: () => string; }){
+  export async function commitTo(virtualId){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     if(commitButton.disabled==false){
       commitButton.click();
     }
+    const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement; //.innerHTML = "status: opened serial port"; 
+    const phraseinput5: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+    const hexChord = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
+    const hexPhrase = await convertHumanPhraseToHexadecimalPhrase(phraseinput5.value);
+    await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
+    console.log('Done sending command');
+  }
+  export async function pressCommitButton(virtualId: { toString: () => string; }){
+    const commitButton = document.getElementById(virtualId.toString()+"-commit");
+
+    //if(commitButton.disabled==false){
+      await commitTo(virtualId);
+    
   }
 
 

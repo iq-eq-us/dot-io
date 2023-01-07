@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import {
+  commitTo,
   MainControls,
     pressCommitButton
 
@@ -22,23 +23,15 @@ export async function commitAll(){
 
       console.log('table row '+i+' has virtualId of '+virtualId);
       // document.getElementById(virtualId.toString()+"-commit")ghh
-      if(MainControls._chordmapId=="CHARACHORDER"){
-        await setTimeout(await pressCommitButton,i*200,virtualId);//Fiddle with this
-      } else if (MainControls._chordmapId=="ID CHARACHORDER LITE M0"){
-        await setTimeout(await pressCommitButton,i*300,virtualId);//Fiddle with this
 
-      } else if (MainControls._chordmapId=="ID CHARACHORDER ONE M0"){
-        await setTimeout(await pressCommitButton,i*300,virtualId);//Fiddle with this
-
-      }
-      else{
-        await setTimeout(await pressCommitButton,i*50,virtualId);//Fiddle with this
-      }
+       await commitTo(virtualId);//Fiddle with this
+      
       //rows would be accessed using the "row" variable assigned in the for loop
    }
   }
 
 
+  
   export function PressCommit(): ReactElement {
     return (
       <React.Fragment>
@@ -46,7 +39,7 @@ export async function commitAll(){
       <button
       className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
       color="pink"
-      onClick={() => commitAll()}
+      onClick={async () => commitAll()}
       >Commit All </button>
       </React.Fragment>
     );
