@@ -1,24 +1,27 @@
 import React, { ReactElement } from 'react';
 import {_actionMap, _keyMapDefaults} from '../controls/maps'
-import {MainControls, sendCommandString, readGetOneAndToss} from '../controls/mainControls'
+import {MainControls, sendCommandString, readGetOneAndToss, readGetOneAndReturnOne} from '../controls/mainControls'
 
 
 export async function getId(){
- 
-  await sendCommandString("VERSION")
-  const { value1 } = await MainControls.lineReader.read();
-  const chordVersionSplit = value1.split(" ")
-  const chordVersionParsedValue = parseInt(chordVersionSplit[chordVersionSplit.length-1])
+  await sendCommandString("CML C0")
+  const { value } = await MainControls.lineReader.read().catch( console.error );;
+  const chordCountSplit = await value.split(" ")
+  const chordCountParsedValue = parseInt(chordCountSplit[chordCountSplit.length-1])
 
   await sendCommandString("ID")
-  const { value2 } = await MainControls.lineReader.read();
-  const chordIdSplit = value2.split(" ")
-  const chordIdParsedValue = parseInt(chordIdSplit[chordIdSplit.length-1])
+  MainControls._chordmapId = await readGetOneAndReturnOne();
 
-    const element: HTMLElement = document.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
-    if(element !=null){
-    element.innerHTML = "Device: "+chordIdParsedValue+", firmware: "+chordVersionParsedValue;
-    }
+
+
+  await sendCommandString("VERSION")
+  MainControls._firmwareVersion = await readGetOneAndReturnOne();;
+
+  
+
+  console.log('Just got here '+ MainControls._chordmapId + ' '+MainControls._firmwareVersion )
+  const element: HTMLElement = document.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+  element.innerHTML = "Device: "+MainControls._chordmapId+", Firmware: "+MainControls._firmwareVersion;
   }
 
   async function readVersion(){

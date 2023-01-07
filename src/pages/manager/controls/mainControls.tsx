@@ -1,4 +1,4 @@
-import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout } from "./maps";
+import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout, actionMap } from "./maps";
 import hex2Bin from 'hex-to-bin';
 
 
@@ -102,6 +102,15 @@ import hex2Bin from 'hex-to-bin';
     //throw away the value
     if(value){
       console.log('toss value of: '+value);
+    }else{
+      console.log('value is null');
+    }
+  }
+  export async function readGetOneAndReturnOne(){
+    const { value, done } = await MainControls.lineReader.read().catch( console.error );
+    //throw away the value
+    if(value){
+      return value;
     }else{
       console.log('value is null');
     }
@@ -376,7 +385,7 @@ import hex2Bin from 'hex-to-bin';
   function Bin2Hex(n){if(!checkBin(n))return 0;return parseInt(n,2).toString(16)}
   
   //Hexadecimal Operations
-  //function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)}
+  //function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)} do not use
   function Hex2Dec(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(10)}
   
   
@@ -399,13 +408,20 @@ import hex2Bin from 'hex-to-bin';
                 if(humanChord.length>0){
                     humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
                 }
-                humanChord += String.fromCharCode(actionCode as number);
+                
+
+
+                humanChord += String.fromCharCode(actionCode as number); //Replace when new action codes arrive
                 console.log('Code inside thedoe loop '+ humanChord)
             }else{
                 break; //we can exit the for loop early
             }
+            console.log('binAction '+ binAction);
+            console.log('actionCode '+ actionCode);
+
         }
-        console.log(humanChord);
+        console.log('final humanChord '+ humanChord)
+        //console.log(humanChord);
         return humanChord;
     }
 

@@ -19,10 +19,13 @@ export async function startSerialConnection() {
       // Wait for the serial port to open.
       await openSerialPort();
       await setupLineReader();
-      //await setCharaChorderToTypicalFunctionality();
+      await setCharaChorderToTypicalFunctionality();
+      await getId();
+    await getCount();
     } catch(error) {
       console.log(error);
 
+      
       const element: HTMLInputElement = document?.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
       if(element !=null){
       element.innerHTML = "status: failed to open serial port; may already be open elsewhere";
@@ -104,24 +107,14 @@ export async function startSerialConnection() {
 
   async function setCharaChorderToTypicalFunctionality(){
     console.log('setCharaChorderToTypicalFunctionality()');
-    await selectConfig();
-    //turn off all logging so the serial output is clean
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_LOG+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_RAW+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_CHORD+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_KEYBOARD+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_MOUSE+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_DEBUG+" 00");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_SERIAL_HEADER+" 00");
-    //make sure the hid functionalities are enabled in case the webserial messes up in the middle of reading a chord
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_KEYBOARD+" 01");
-    await sendCommandString("SET "+MainControls.CONFIG_ID_ENABLE_HID_MOUSE+" 01");
-    await selectBase();
+
   }
   export async function allFunc(){
      await startSerialConnection();
-     await getId();
      await getCount();
+     await getId();
+     window.dispatchEvent(new Event('resize'));
+
 
      const manager: HTMLElement = document.getElementById("manager") as HTMLElement;
      manager.classList.add("connected");
@@ -136,6 +129,7 @@ export async function startSerialConnection() {
 
     await getId();
     await getCount();
+    window.dispatchEvent(new Event('resize'));
 
 
     const manager: HTMLElement = document.getElementById("manager") as HTMLElement;

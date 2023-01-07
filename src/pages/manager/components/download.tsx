@@ -15,7 +15,7 @@ export async function getGetAll(){
     const chordCountSplit = value.split(" ")
     const chordCountParsedValue = parseInt(chordCountSplit[chordCountSplit.length-1])
 
-    for(let i=0;i<10;i++){
+    for(let i=0;i<chordCountParsedValue;i++){
       console.log(MainControls._chordmapCountOnDevice);
       //wait sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
       await sendCommandString("CML C1 "+ i)
