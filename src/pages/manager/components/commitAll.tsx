@@ -25,7 +25,7 @@ export function commitAll(){
       if(MainControls._chordmapId=="CHARACHORDER"){
         setTimeout(pressCommitButton,i*200,virtualId);//Fiddle with this
       } else{
-        setTimeout(pressCommitButton,i*200,virtualId);//Fiddle with this
+        setTimeout(pressCommitButton,i*50,virtualId);//Fiddle with this
       }
       //rows would be accessed using the "row" variable assigned in the for loop
    }
