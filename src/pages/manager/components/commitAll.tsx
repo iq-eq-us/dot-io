@@ -24,7 +24,14 @@ export function commitAll(){
       // document.getElementById(virtualId.toString()+"-commit")ghh
       if(MainControls._chordmapId=="CHARACHORDER"){
         setTimeout(pressCommitButton,i*200,virtualId);//Fiddle with this
-      } else{
+      } else if (MainControls._chordmapId=="ID CHARACHORDER LITE M0"){
+        setTimeout(pressCommitButton,i*300,virtualId);//Fiddle with this
+
+      } else if (MainControls._chordmapId=="ID CHARACHORDER ONE M0"){
+        setTimeout(pressCommitButton,i*300,virtualId);//Fiddle with this
+
+      }
+      else{
         setTimeout(pressCommitButton,i*50,virtualId);//Fiddle with this
       }
       //rows would be accessed using the "row" variable assigned in the for loop
