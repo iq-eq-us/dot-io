@@ -404,18 +404,17 @@ import hex2Bin from 'hex-to-bin';
         for(let i=0; i<12; i++){
             const binAction = binChord.substring(8+i*10,8+(i+1)*10); //take 10 bits at a time
             const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
-            console.log('This is the action code '+ actionCode)
             if(actionCode!=0){
 
                 if(humanChord.length>0){
                     humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
                 }
   
-                const humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
-
+                let humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
+                humanStringPart == ' ' ? humanStringPart ='SPACE' : '';
 
                 humanChord += humanStringPart; //Replace when new action codes arrive
-                console.log('Code inside thedoe loop '+ humanChord)
+
             }else{
                 break; //we can exit the for loop early
             }
@@ -561,17 +560,16 @@ import hex2Bin from 'hex-to-bin';
       const arrValue = [...spliter];
       //ascii_to_hexa(arrValue);
       const strValue = arrValue;
-      console.log(strValue);
       let hexChordString = "";
       hexChordString = strValue[3]; //Should be 32 chacters at all times
       let hexAsciiString = "";
       hexAsciiString = strValue[4];
       const strValues = ["","","",""];
+      console.log('StrValue '+convertHexadecimalChordToHumanChord(hexChordString));
       strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
       strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
       strValues[2] = hexChordString;
       strValues[3] = hexAsciiString;
-      console.log(strValues);
   
       //appendToList(strValues);
       // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
@@ -824,6 +822,7 @@ import hex2Bin from 'hex-to-bin';
   
     chordTextOrig.id = virtualId.toString()+"-chordorig";
     chordTextOrig.innerHTML = data[0];
+    console.log('Output of current chord '+ data)
     cells[2].appendChild(chordTextOrig);
     cells[2].setAttribute('style','border: 1px solid #D3D3D3;')
 
@@ -1147,8 +1146,9 @@ import hex2Bin from 'hex-to-bin';
     const humanChordParts = humanChord.split(' + '); //somewhat assumes plus isn't being used; bc default is = for the +/= key
     const decChordParts=[]
     humanChordParts.forEach( (part)=>{
-        const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
-        decChordParts.push(actionCode);
+      const actionCode = actionMap.indexOf(part);
+        //const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
+        actionCode == -1 ? console.log('ActionCode does not exisit') : decChordParts.push(actionCode);
     });
 
     decChordParts.sort(function(a, b){return b - a}); // This sorts the parts of the chod in decensing order
