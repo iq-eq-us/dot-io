@@ -929,7 +929,7 @@ import hex2Bin from 'hex-to-bin';
             //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
             const chordorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
            
-            const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+            const hexChordOrigToDelete = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
             await sendCommandString("DEL "+hexChordOrigToDelete);
             await readGetOneAndToss();
 
@@ -954,7 +954,7 @@ import hex2Bin from 'hex-to-bin';
             await readGetOneAndToss();
             //then delete the old chordmap
             const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
-            const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+            const hexChordOrigToDelete = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
             await sendCommandString("DEL "+hexChordOrigToDelete);
             // document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
           }
@@ -1041,7 +1041,7 @@ import hex2Bin from 'hex-to-bin';
           //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
           const chordorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
          
-          const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+          const hexChordOrigToDelete = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
           await sendCommandString("CML C4 "+hexChordOrigToDelete);
           //await readGetOneAndToss();
 
@@ -1067,7 +1067,7 @@ import hex2Bin from 'hex-to-bin';
           //await readGetOneAndToss();
           //then delete the old chordmap
           const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
-          const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+          const hexChordOrigToDelete = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
           await sendCommandString("CML C4 "+hexChordOrigToDelete);
           // document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
         }
@@ -1093,6 +1093,7 @@ import hex2Bin from 'hex-to-bin';
           const hexPhrase = await convertHumanPhraseToHexadecimalPhrase(phraseinput5.value);
           
           //await selectBase(); //make sure we're in the BASE dictionary
+          console.log('Chord Original '+ chordorig);
           await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
           //await readGetOneAndToss();
 
@@ -1149,8 +1150,9 @@ import hex2Bin from 'hex-to-bin';
         const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
         decChordParts.push(actionCode);
     });
-    decChordParts.sort(); //default sort from smallest to largest
-    decChordParts.reverse(); //reverse so it is from largest to smallest
+
+    decChordParts.sort(function(a, b){return b - a}); // This sorts the parts of the chod in decensing order
+
 
     const chainIndex = 0; //to be developed later
     let binChord = pad(Dec2Bin(chainIndex),8); //convert the chain index to binary and zero fill up to 8-bits
