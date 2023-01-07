@@ -24,7 +24,7 @@ export async function commitAll(){
       console.log('table row '+i+' has virtualId of '+virtualId);
       // document.getElementById(virtualId.toString()+"-commit")ghh
 
-       await commitTo(virtualId);//Fiddle with this
+       await pressCommitButton(virtualId);//Fiddle with this
       
       //rows would be accessed using the "row" variable assigned in the for loop
    }

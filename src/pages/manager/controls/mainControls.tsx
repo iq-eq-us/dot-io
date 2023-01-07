@@ -917,12 +917,11 @@ import hex2Bin from 'hex-to-bin';
             //if phrase was changed, then just set the new chordmap with the new chord and the new phrase
             const chordNewIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";
             const phraseInputIn: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement; //.innerHTML = "status: opened serial port";
-            const hexChord = convertHumanChordToHexadecimalChord(chordNewIn.innerHTML);
-            const hexPhrase = convertHumanPhraseToHexadecimalPhrase(phraseInputIn.value);
+            const hexChord = await convertHumanChordToHexadecimalChord(chordNewIn.innerHTML);
+            const hexPhrase = await convertHumanPhraseToHexadecimalPhrase(phraseInputIn.value);
 
             //await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-            await readGetOneAndToss();
             console.log('ChordNew In'+ chordNewIn.innerHTML);
             console.log('ChordNew In'+ phraseInputIn.value);
 
@@ -930,7 +929,7 @@ import hex2Bin from 'hex-to-bin';
             //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
             const chordorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
            
-            const hexChordOrigToDelete = convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+            const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
             await sendCommandString("DEL "+hexChordOrigToDelete);
             await readGetOneAndToss();
 
@@ -942,12 +941,11 @@ import hex2Bin from 'hex-to-bin';
             //if phrase was not changed, then just add/set new chordmap with the new chord and the original phrase
             const element: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLElement;; //.innerHTML = "status: opened serial port";
             const elementPhase: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
-            const hexChord = convertHumanChordToHexadecimalChord(element.innerHTML);
-            const hexPhrase = convertHumanPhraseToHexadecimalPhrase(elementPhase.innerHTML);
+            const hexChord = await convertHumanChordToHexadecimalChord(element.innerHTML);
+            const hexPhrase = await convertHumanPhraseToHexadecimalPhrase(elementPhase.innerHTML);
 
             //await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-            await readGetOneAndToss();
 
             const s = elementPhase.innerHTML.split(",");
            // await sendCommandString('');
@@ -956,9 +954,8 @@ import hex2Bin from 'hex-to-bin';
             await readGetOneAndToss();
             //then delete the old chordmap
             const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
-            const hexChordOrigToDelete = convertHumanStringToHexadecimalChord(chordorig.innerHTML);
+            const hexChordOrigToDelete = await convertHumanStringToHexadecimalChord(chordorig.innerHTML);
             await sendCommandString("DEL "+hexChordOrigToDelete);
-            await readGetOneAndToss();
             // document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
           }
           const phraseinput3: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
@@ -979,12 +976,11 @@ import hex2Bin from 'hex-to-bin';
             //if just the phrase was changed, then update the chordmap with the original chord and new phrase
             const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement; //.innerHTML = "status: opened serial port"; 
             const phraseinput5: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
-            const hexChord = convertHumanChordToHexadecimalChord(chordorig.innerHTML);
-            const hexPhrase = convertHumanPhraseToHexadecimalPhrase(phraseinput5.value);
+            const hexChord = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
+            const hexPhrase = await convertHumanPhraseToHexadecimalPhrase(phraseinput5.value);
             
             //await selectBase(); //make sure we're in the BASE dictionary
             await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
-            await readGetOneAndToss();
 
             //then move the new phrase into the original phrase text location in the table, and clear the new phrase input
             const phraseorig3: HTMLElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
@@ -1010,11 +1006,13 @@ import hex2Bin from 'hex-to-bin';
     }
 
   }
+  
   export async function pressCommitButton(virtualId: { toString: () => string; }){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     if(commitButton.disabled==false){
       commitButton.click();
     }
+    await readGetOneAndToss();
   }
 
   export async function commitTo(virtualId){
