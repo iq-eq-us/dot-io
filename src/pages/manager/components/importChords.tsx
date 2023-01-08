@@ -40,6 +40,7 @@ function importChordMapLibrary(e : any){
         const humanChord = strAllValues.shift();
         const humanPhrase = strAllValues.join(','); //handles if there's a comma in the phrase
         const hexChordString = convertHumanStringToHexadecimalChord(humanChord);
+        //console.log('Hex chord string '+ hexChordString)
         const hexPhraseString = convertHumanStringToHexadecimalPhrase(humanPhrase);
         
         

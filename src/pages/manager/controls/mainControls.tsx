@@ -1,5 +1,6 @@
-import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout, actionMap } from "./maps";
+import { _keyMapDefaults, _actionMap, _keyMap, _chordMaps, _chordLayout, actionMap, oldAsciiKeyReplacementDictionary } from "./maps";
 import hex2Bin from 'hex-to-bin';
+import { replace } from "lodash";
 
 
 
@@ -393,8 +394,8 @@ import hex2Bin from 'hex-to-bin';
   
   
       export function convertHexadecimalChordToHumanChord(hexChord){
-        console.log("convertHexadecimalChordToHumanChord()");
-        console.log(hexChord);
+        //console.log("convertHexadecimalChordToHumanChord()");
+        //console.log(hexChord);
         let humanChord = "";
         const binChord = pad(hex2Bin(hexChord),128);
         console.log(hexChord);
@@ -411,7 +412,8 @@ import hex2Bin from 'hex-to-bin';
                 }
   
                 let humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
-
+                humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
+                console.log('Old Ascii '+ humanStringPart)
                 humanChord += humanStringPart; //Replace when new action codes arrive
 
             }else{
@@ -497,6 +499,26 @@ import hex2Bin from 'hex-to-bin';
     return hexString;
   }
 
+  function replaceOldAsciiKeys(inputKey){
+    inputKey =  inputKey.split(" + ");
+    let finishedInputKey = '';
+    //console.log('Why am I stopping')
+    for(let i =0; i< inputKey.length; i++){
+     if(oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])){
+     // console.log('output fuck')
+
+      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]];
+    } else{
+      finishedInputKey += inputKey[i];
+    }
+    if(inputKey.length-1>0 && i != inputKey.length-1){
+      finishedInputKey += " + "
+      //console.log('Why am I not adding the plus')
+    }
+  }
+    return finishedInputKey;  
+  }
+
   export function convertHumanStringToHexadecimalChord(humanString: string) : string{
   
     console.log(humanString);
@@ -506,7 +528,11 @@ import hex2Bin from 'hex-to-bin';
     const humanStringParts = humanString.split(' + '); //assumes plus isn't being used; bc default is = for the +/= key
     console.log("these are the parts "+humanStringParts);
     humanStringParts.forEach(async (part:any)=>{
+      //console.log('this is the part in the convert '+part + ' '+ replaceOldAsciiKeys(part));
+      part = replaceOldAsciiKeys(part)
+      console.log('This is the part '+ part)
       const actionId = _actionMap.indexOf(part);
+      
       console.log('ActionID: '+actionId);
       if(MainControls._chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
         let keyId: number;
@@ -818,9 +844,9 @@ import hex2Bin from 'hex-to-bin';
       // await enableSerialChordOutput(false); //don't need to call this down here
       btn.value = "edit chord";
     }
-  
+    
     chordTextOrig.id = virtualId.toString()+"-chordorig";
-    chordTextOrig.innerHTML = data[0];
+    chordTextOrig.innerHTML = replaceOldAsciiKeys(data[0]);
     console.log('Output of current chord '+ data)
     cells[2].appendChild(chordTextOrig);
     cells[2].setAttribute('style','border: 1px solid #D3D3D3;')
@@ -1145,6 +1171,7 @@ import hex2Bin from 'hex-to-bin';
     const decChordParts=[]
     humanChordParts.forEach( (part)=>{
       const actionCode = actionMap.indexOf(part);
+
         //const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
         actionCode == -1 ? console.log('ActionCode does not exisit') : decChordParts.push(actionCode);
     });
