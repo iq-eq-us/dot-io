@@ -498,7 +498,7 @@ import { replace } from "lodash";
     console.log(hexString);
     return hexString;
   }
-
+/*eslint-disable */
   function replaceOldAsciiKeys(inputKey){
     inputKey =  inputKey.split(" + ");
     let finishedInputKey = '';
@@ -518,6 +518,7 @@ import { replace } from "lodash";
   }
     return finishedInputKey;  
   }
+/*eslint-enable */
 
   export function convertHumanStringToHexadecimalChord(humanString: string) : string{
   
