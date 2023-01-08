@@ -404,17 +404,15 @@ import hex2Bin from 'hex-to-bin';
         for(let i=0; i<12; i++){
             const binAction = binChord.substring(8+i*10,8+(i+1)*10); //take 10 bits at a time
             const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
-            if(actionCode !=0 && chainIndex != 0){
+            if(actionCode!=0 && chainIndex !=0){
 
                 if(humanChord.length>0){
                     humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
                 }
   
                 let humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
-                actionCode as number == 33 ? humanStringPart ='SPACE' : '';
 
                 humanChord += humanStringPart; //Replace when new action codes arrive
-                console.log('This is the current Action Code '+ actionCode + " This is the current humanLetter "+ humanStringPart);
 
             }else{
                 break; //we can exit the for loop early
@@ -525,13 +523,11 @@ import hex2Bin from 'hex-to-bin';
       }else if(MainControls._chordmapId == 'CHARACHORDERLITE'){
         let keyId: number;
         if(actionId<0x0200){
-          //console.log('I am here');
+          console.log('I am here');
           keyId = (_keyMapDefaults[1]).indexOf(_actionMap[actionId]);
-          console.log('This is the keyID '+keyId);
+          console.log(keyId);
         }else{
-          keyId = (_keyMapDefaults[1]).indexOf(_actionMap[actionId]);
-          console.log('This is the keyID '+keyId);
-
+          keyId = actionId-0x0200; //using the physical key position
         }
         
         console.log(keyId);
