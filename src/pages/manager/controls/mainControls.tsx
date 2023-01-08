@@ -1141,8 +1141,7 @@ import { replace } from "lodash";
 
   export async function pressCommitButton(virtualId: { toString: () => string; }){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
-    if(commitButton.disabled==false){
-    }
+
     await clickCommit(virtualId);
 
   }
