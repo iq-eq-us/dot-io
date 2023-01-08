@@ -992,8 +992,6 @@ import hex2Bin from 'hex-to-bin';
             chordnew.innerHTML = "";
             delete3.disabled = false;
             commit3.disabled = true;
-          }else{
-            //somehow there isn't anything to commit bc there is no change detected
           }
         }
       }
