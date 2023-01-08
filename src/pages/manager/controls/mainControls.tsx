@@ -504,10 +504,10 @@ import { replace } from "lodash";
     let finishedInputKey = '';
     //console.log('Why am I stopping')
     for(let i =0; i< inputKey.length; i++){
-     if(oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])){
+     if(oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])){// eslint-disable-line no-use-before-define
      // console.log('output fuck')
 
-      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]];
+      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]];// eslint-disable-line no-use-before-define
     } else{
       finishedInputKey += inputKey[i];
     }
@@ -1131,8 +1131,6 @@ import { replace } from "lodash";
           chordnew.innerHTML = "";
           delete3.disabled = false;
           commit3.disabled = true;
-        }else{
-          //somehow there isn't anything to commit bc there is no change detected
         }
       }
     }
