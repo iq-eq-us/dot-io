@@ -15,17 +15,17 @@ export function addHeadersToLayoutDataTable(){
     cells[0].setAttribute('style','border: 1px solid white; padding:10px;')
 
     cells.push(row.insertCell(-1)); //2 chord string (locked)
-    cells[2].innerHTML = "Keymap";
+    cells[2].innerHTML = "KeyMap";
     cells[2].setAttribute('style','border: 1px solid white; padding:10px;')
     cells.push(row.insertCell(-1)); //3 phrase (locked)
     cells[3].innerHTML = "KeyMap Position";
     cells[3].setAttribute('style','border: 1px solid white; padding:10px;')
     cells.push(row.insertCell(-1)); //4 chord string new (locked)
-    cells[4].innerHTML = "Keymap Value";
+    cells[4].innerHTML = "KeyMap Value";
     cells[4].setAttribute('style','border: 1px solid white; padding:10px; text-align: center;')
     cells.push(row.insertCell(-1)); //5 phrase new (open)
-    cells[5].innerHTML = " ";
-    cells[5].setAttribute('style','border: 1px solid white; padding:10px;')
+    //cells[5].innerHTML = " ";
+    //cells[5].setAttribute('style','border: 1px solid white; padding:10px;')
     //cells[9].innerHTML = "Chord Hexadecimal (debug)";
     //cells[9].setAttribute('style','border: 1px solid white;padding:10px;')
     //cells.push(row.insertCell(-1)); //10 orig hex phrase

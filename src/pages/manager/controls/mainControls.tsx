@@ -715,12 +715,12 @@ import { replace } from "lodash";
     cells[0].setAttribute('style','border: 1px solid #D3D3D3;');
     MainControls._chordMapIdCounter++;
   
-    btnEdit.id = virtualId.toString()+"-edit";
-    btnEdit.className = "buttonEdit";
-    btnEdit.setAttribute('style', 'background-color: #4CAF50;border: 1px solid white; color: white;padding: 1px 15px;text-align: center;text-decoration: none;display: inline-block; font-size: 16px;');
+    //btnEdit.id = virtualId.toString()+"-edit";
+    //btnEdit.className = "buttonEdit";
+    //btnEdit.setAttribute('style', 'background-color: #4CAF50;border: 1px solid white; color: white;padding: 1px 15px;text-align: center;text-decoration: none;display: inline-block; font-size: 16px;');
 
-    cells[1].appendChild(btnEdit);
-    cells[1].setAttribute('style','border: 1px solid #D3D3D3;')
+    //cells[1].appendChild(btnEdit);
+    //cells[1].setAttribute('style','border: 1px solid #D3D3D3;')
 
 
   
@@ -739,17 +739,17 @@ import { replace } from "lodash";
     cells[4].appendChild(chordTextNew);
     cells[4].setAttribute('style','border: 1px solid #D3D3D3; ')
 
-    phraseTextInput.id = virtualId.toString()+"-phraseinput";
-    phraseTextInput.innerHTML = '';
-    cells[4].appendChild(phraseTextInput);
-    cells[4].setAttribute('style','border: 1px solid #D3D3D3; ')
+   // phraseTextInput.id = virtualId.toString()+"-phraseinput";
+   // phraseTextInput.innerHTML = '';
+   // cells[4].appendChild(phraseTextInput);
+   // cells[4].setAttribute('style','border: 1px solid #D3D3D3; ')
 
   
     
-    phraseTextInput.value = "";
-    cells[5].setAttribute('style', 'color: white; border: 1px solid white;border-right: 1px solid #D3D3D3;');
-    cells[5].appendChild(phraseTextInput);
-    cells[5].setAttribute('style','border: 1px solid #D3D3D3;')
+    //phraseTextInput.value = "";
+    //cells[5].setAttribute('style', 'color: white; border: 1px solid white;border-right: 1px solid #D3D3D3;');
+    //cells[5].appendChild(phraseTextInput);
+    //cells[5].setAttribute('style','border: 1px solid #D3D3D3;')
 
     phraseTextInput.onchange = function(){
       const element: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit") as HTMLInputElement; //.innerHTML = "status: opened serial port";
