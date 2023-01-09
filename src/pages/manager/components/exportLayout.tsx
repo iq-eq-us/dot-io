@@ -9,7 +9,7 @@ async function exportChordMapLayout(){
     for(let t =0; t<90; t++){
 
       await sendCommandString("VAR B3 A"+i +" "+t);
-       readGetOneChordLayout();
+       await readGetOneChordLayout();
 
       //readGetOneAndToss();
       //readGetNone();
@@ -46,7 +46,7 @@ async function exportChordMapLayout(){
     const a = document.createElement('a');
     a.setAttribute('hidden','');
     a.setAttribute('href',url)
-    a.setAttribute('download','CharaChorderChordLayoutMaps.csv');
+    a.setAttribute('download','CharaChorder_ChordLayout.csv');
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

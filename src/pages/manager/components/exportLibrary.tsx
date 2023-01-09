@@ -31,7 +31,7 @@ function exportChordMapLibrary(){
     const a = document.createElement('a');
     a.setAttribute('hidden','');
     a.setAttribute('href',url)
-    a.setAttribute('download','CharaChorderChordMaps.csv');
+    a.setAttribute('download','CharaChorder_ChordLibrary.csv');
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

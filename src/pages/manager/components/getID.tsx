@@ -21,7 +21,9 @@ export async function getId(){
 
   console.log('Just got here '+ MainControls._chordmapId + ' '+MainControls._firmwareVersion )
   const element: HTMLElement = document.getElementById("statusDiv") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
-  element.innerHTML = "Device: "+MainControls._chordmapId+", Firmware: "+MainControls._firmwareVersion;
+  const splitVersion = MainControls._firmwareVersion.split(' ');
+  const splitFirmware = MainControls._chordmapId.split(' ');
+  element.innerHTML = "Device "+MainControls._chordmapId+" --- CCOS "+MainControls._firmwareVersion;
   }
 
   async function readVersion(){

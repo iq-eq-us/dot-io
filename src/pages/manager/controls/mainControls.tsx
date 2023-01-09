@@ -405,16 +405,17 @@ import { replace } from "lodash";
         for(let i=0; i<12; i++){
             const binAction = binChord.substring(8+i*10,8+(i+1)*10); //take 10 bits at a time
             const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
-            if(actionCode!=0 && chainIndex !=0){
+            if(actionCode!=0){
 
                 if(humanChord.length>0){
                     humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
                 }
   
                 let humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
-                humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
-                console.log('Old Ascii '+ humanStringPart)
+                //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
+                //console.log('Old Ascii '+ humanStringPart)
                 humanChord += humanStringPart; //Replace when new action codes arrive
+                console.log('Human string part in the loop '+ humanChord)
 
             }else{
                 break; //we can exit the for loop early

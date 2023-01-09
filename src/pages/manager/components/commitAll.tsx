@@ -12,7 +12,7 @@ export async function commitAll(){
     const dataTable = document.getElementById("dataTable");
     //iterate through table from bottom to top to see if there's a commit enabled
     //TODO check if we need to skip the header row
-    for (let i = dataTable.rows.length-1; i>=1; i--) {
+    for (let i =0; i< dataTable.rows.length-1;  i++) {
       //iterate through rows
       const row = dataTable.rows[i];
       // console.log(row);
@@ -24,7 +24,7 @@ export async function commitAll(){
       console.log('table row '+i+' has virtualId of '+virtualId);
       // document.getElementById(virtualId.toString()+"-commit")ghh
 
-       await pressCommitButton(virtualId);//Fiddle with this
+       await pressCommitButton(i);//Fiddle with this
       
       //rows would be accessed using the "row" variable assigned in the for loop
    }

@@ -22,7 +22,7 @@ export async function getGetAll(){
       //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
 
         //console.log("MapID");
-    console.log(MainControls._chordmapId);
+    //console.log(MainControls._chordmapId);
       await readGetOneChordmap();
     }
   
