@@ -5,7 +5,7 @@ import {resetDataTable} from '../../manager/components/resetDataTable'
 
   export async function disconnectSerialConnection(){
     console.log('disconnectSerialConnection()');
-    await MainControls.serialPort.open({ baudRate: 1200 });
+    //await MainControls.serialPort.open({ baudRate: 1200 });
 
     if(MainControls.serialPort){
       console.log('closing serial port');

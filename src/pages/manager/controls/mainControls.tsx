@@ -1057,8 +1057,8 @@ import { replace } from "lodash";
           await sendCommandString("CML C3 "+hexChord+" "+hexPhrase);
           //await readGetOneAndToss();
 
-          console.log('ChordNew In'+ chordNewIn.innerHTML);
-          console.log('ChordNew In'+ phraseInputIn.value);
+          //console.log('ChordNew In'+ chordNewIn.innerHTML);
+          //console.log('ChordNew In'+ phraseInputIn.value);
 
 
           //then delete the old chordmap          const phraseinput: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLElement; //.innerHTML = "status: opened serial port";
