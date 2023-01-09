@@ -23,7 +23,7 @@ export async function commitAll(){
 
       console.log('table row '+i+' has virtualId of '+virtualId);
       // document.getElementById(virtualId.toString()+"-commit")ghh
-      const myTimeout = setTimeout(pressCommitButton,i*20000,virtualId);//Fiddle with this
+      const myTimeout = setTimeout(pressCommitButton,i*20000,i);//Fiddle with this
        await pressCommitButton(i);//Fiddle with this
        clearTimeout(myTimeout);
 
