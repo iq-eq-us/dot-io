@@ -411,7 +411,7 @@ import { replace } from "lodash";
                     humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
                 }
   
-                let humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
+                const humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
                 //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
                 //console.log('Old Ascii '+ humanStringPart)
                 humanChord += humanStringPart; //Replace when new action codes arrive
