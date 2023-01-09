@@ -415,7 +415,7 @@ import { replace } from "lodash";
                 //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
                 //console.log('Old Ascii '+ humanStringPart)
                 humanChord += humanStringPart; //Replace when new action codes arrive
-                console.log('Human string part in the loop '+ humanChord)
+                //console.log('Human string part in the loop '+ humanChord)
 
             }else{
                 break; //we can exit the for loop early

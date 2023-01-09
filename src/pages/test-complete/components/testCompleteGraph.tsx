@@ -160,7 +160,10 @@ function wpmDataCalculator (wpmArray : any){
   console.log('This is the very first array '+wpmArray);
   let wpmTemp = 0;
   let localTemp = 0;
-  for (let i =1; i<wpmArray.length; i++){
+  console.log('WPM ARRAY HSDF NJSK FJKSFEKN' + wpmArray + " lENGTH " + wpmArray.length)
+  //console.log(wpmArray)
+  for (let i =0; i<wpmArray.length; i++){
+    if(wpmArray[i] != 0){
     localTemp = 0;
     wpmTemp = parseInt(wpmTemp) + parseInt(wpmArray[i]);
     localTemp = wpmTemp / (i +1);
@@ -176,6 +179,9 @@ function wpmDataCalculator (wpmArray : any){
 
     wpmArray[i] = wpm.toFixed(0);
     console.log('WPM in the new function '+ wpm.toFixed(0));
+    } else{
+      console.log('I skipped over a 0')
+    }
 
   }
   return wpmArray;
@@ -242,6 +248,7 @@ export function TestCompleteGraph(): ReactElement {
     wordPerMinute = finalWPMArray;
     wordNames = chordsToChooseFrom;
     rawSpeedOfCurrentWord = finalRawWPM;
+
   } else{
     let firstWordIndex;
     for(let i =0; i<storedTestTextData?.length; i++){
@@ -259,13 +266,22 @@ export function TestCompleteGraph(): ReactElement {
       finalRawWPM.splice(0,0, 0);
       }
     }
-
+    finalErrorsArray.shift();
     wordOccurrences = finalErrorsArray;
+    finalWPMArray.shift();
     wordPerMinute = finalWPMArray;
+    console.log('Before Word Names');
+    console.log(wordNames);
+    //storedTestTextData.shift(); TStored test text data does not need to be shifted
     wordNames = storedTestTextData;
+    console.log(wordNames);
+    finalRawWPM.shift()
     rawSpeedOfCurrentWord = finalRawWPM;
-    console.log('this is the raw speed '+rawSpeedOfCurrentWord);
+    //console.log('this is the raw speed '+rawSpeedOfCurrentWord);
 
+    console.log(wordPerMinute)
+    console.log(wordNames)
+    console.log(rawSpeedOfCurrentWord)
   }
 
     const handleEvent = () => {

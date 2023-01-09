@@ -41,7 +41,7 @@ export function TestStatsCard(): ReactElement {
     });
     let wordsCorrectCount = 0;
     for(let i=0; i<storedTestTextData.length; i++){
-      if(storedTestTextData[i] == alltypedText[i].slice(0, -1)){
+      if(storedTestTextData[i] == alltypedText[i]?.slice(0, -1)){
         wordsCorrectCount++;
       }
     }
@@ -50,16 +50,12 @@ export function TestStatsCard(): ReactElement {
       <React.Fragment>
         <TrainingStatsColumnContainer>
          <StatsCardContainer>
-          <div className='text-4xl'>{useWordsPerMinute().toFixed(0)*5}</div>
-          <h1 className='text-lg'>CPM</h1>
+          <div className='text-6xl'>{useWordsPerMinute().toFixed(0)*5}</div>
+          <h1 className='text-2xl'>CPM</h1>
           </StatsCardContainer>
           <StatsCardContainer>
           <div className='text-4xl'>{useWordsPerMinute().toFixed(0)}</div>
           <h1 className='text-lg'>WPM</h1>
-          </StatsCardContainer>
-          <StatsCardContainer>
-          <div className='text-4xl'>{testNumber}</div>
-          <h1 className='text-lg'>Test Type</h1>
           </StatsCardContainer>
           <StatsCardContainer>
           <div className='text-4xl'>{((wordsCorrectCount/parseInt(testNumber))*100).toFixed(2) + '%'}</div>
@@ -70,8 +66,10 @@ export function TestStatsCard(): ReactElement {
           {console.log('Number of words chorded '+ numberOfWordsChorded)}
           <h1 className='text-lg'>Percent Chorded</h1>
           </StatsCardContainer>
+
         </TrainingStatsColumnContainer>
-      
+        <div className='items-center absolute text-lg text-red-500 ml-16 mt-2'   style={parseInt(((wordsCorrectCount/parseInt(testNumber))*100).toFixed(2)) < 95 || ((numberOfWordsChorded).toFixed(0)/25)*100 > 5 ? {display:""}:{display:"none"}}>*Only tests with a minimum accuracy of 95% and less than 5% words chorded are counted towards your progress.</div>
+
       </React.Fragment>
     );
 }
