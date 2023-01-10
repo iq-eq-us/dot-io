@@ -1052,10 +1052,10 @@ import { replace } from "lodash";
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     const timeoutPromise = new Promise((_resolve, reject) => {
         timeoutHandle = setTimeout(
-            () => _resolve(clickCommit(virtualId)),
+            () => _resolve(commitButton.click()),
             timeLimit
         );
-        console.log('I have entered the timer')
+        console.log('I have entered the timer');
     });
 
     return Promise.race([asyncPromise, timeoutPromise]).then(result => {
@@ -1067,7 +1067,14 @@ import { replace } from "lodash";
   export async function clickCommit(virtualId){
     
     const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
-    //const myTimeout = setTimeout(clickCommit,virtualId*20000,virtualId);//Fiddle with this
+    const commitButton = document.getElementById(virtualId.toString()+"-commit");
+    const myTimeout = setTimeout(() => commitButton?.click() ,virtualId*12000,virtualId);//Fiddle with this
+    if(commitButton.disabled==false){
+      //commitButton.click();
+      const myTimeout = setTimeout(() => commitButton?.click() ,virtualId*20000,virtualId);//Fiddle with this
+
+    }
+
     if(check.disabled){
       //delete the chord from the device, and then also delete from this list
       document.getElementById(virtualId.toString()+"-")
@@ -1171,7 +1178,7 @@ import { replace } from "lodash";
         }
       }
     }
-    //await clearTimeout(myTimeout)
+    await clearTimeout(myTimeout);
     await readGetOneAndTossCommitAll(virtualId);
   }
 
