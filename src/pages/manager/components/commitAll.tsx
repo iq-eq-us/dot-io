@@ -29,9 +29,9 @@ export async function commitAll(){
       //const myTimeout = await setTimeout(pressCommitButton,i*500,i+1);//Fiddle with this
        await clickCommit(i);//Fiddle with this
        //myTimeout.
-       //clearTimeout(myTimeout);
+       //clearTimeout(myTimeout)
       
-       element.innerHTML = "Download Progress: "+ (((i/dataValue)*100).toFixed(0))+'%';
+       element.innerHTML = "Commit to Device: "+ (((i/dataValue)*100).toFixed(0))+'% Please do not touch your device until completion.';
       
       //rows would be accessed using the "row" variable assigned in the for loop
    }
@@ -42,7 +42,6 @@ export async function commitAll(){
   export function PressCommit(): ReactElement {
     return (
       <React.Fragment>
-      <div id="commitAllProgress"/>
       <button
       className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
       color="pink"

@@ -1033,7 +1033,7 @@ import { replace } from "lodash";
   
   export async function clickCommit(virtualId){
     const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
-    const myTimeout = await setTimeout(pressCommitButton,virtualId*10000,virtualId+1);//Fiddle with this
+    const myTimeout = await setTimeout(clickCommit,virtualId*20000,virtualId+1);//Fiddle with this
     if(check.disabled){
       //delete the chord from the device, and then also delete from this list
       document.getElementById(virtualId.toString()+"-")

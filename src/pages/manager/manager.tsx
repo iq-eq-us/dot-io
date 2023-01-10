@@ -54,6 +54,7 @@ const Manager = (): ReactElement => {
     <AddLayoutHeaders/>
     <div className="h-1 w-6/12 mt-6 bg-green-500 rounded mb-10" />
     <div className="font-mono text-xl ml-2">Library</div>
+    <div id="commitAllProgress"/>
     <ImportChords/>
     <Export/>
     <Download/>
