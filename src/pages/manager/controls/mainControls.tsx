@@ -109,9 +109,9 @@ import { replace } from "lodash";
   }
 
   export async function readGetOneAndTossCommitAll(virtualId){
-    const myTimeout = setTimeout(pressCommitButton,10000,virtualId);//Fiddle with this
-    console.log('readGetOneAndTossCommitAll()');
-    console.log('Starting timer')
+    const myTimeout = await setTimeout(pressCommitButton,10000,virtualId);//Fiddle with this
+    //console.log('readGetOneAndTossCommitAll()');
+    //console.log('Starting timer')
 
     const { value, done } = await MainControls.lineReader.read().catch( console.error );
     //throw away the value
@@ -1049,7 +1049,7 @@ import { replace } from "lodash";
   
   export async function clickCommit(virtualId){
     const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
-    const myTimeout = setTimeout(clickCommit,virtualId*20000,virtualId);//Fiddle with this
+    //const myTimeout = setTimeout(clickCommit,virtualId*20000,virtualId);//Fiddle with this
     if(check.disabled){
       //delete the chord from the device, and then also delete from this list
       document.getElementById(virtualId.toString()+"-")
