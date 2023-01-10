@@ -1047,14 +1047,15 @@ import { replace } from "lodash";
 
   }
 
-  export const asyncCallWithTimeout = async (asyncPromise, timeLimit) => {
+  export const asyncCallWithTimeout = async (asyncPromise, timeLimit, virtualId) => {
     let timeoutHandle;
-
+    const commitButton = document.getElementById(virtualId.toString()+"-commit");
     const timeoutPromise = new Promise((_resolve, reject) => {
         timeoutHandle = setTimeout(
-            () => _resolve(asyncPromise),
+            () => _resolve(commitButton.click()),
             timeLimit
         );
+        console.log('I have entered the timer')
     });
 
     return Promise.race([asyncPromise, timeoutPromise]).then(result => {
