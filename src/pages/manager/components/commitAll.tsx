@@ -2,7 +2,8 @@ import React, { ReactElement } from 'react';
 import {
   commitTo,
   MainControls,
-    pressCommitButton
+    pressCommitButton,
+    clickCommit
 
 } from '../controls/mainControls'
 
@@ -12,6 +13,8 @@ export async function commitAll(){
     const dataTable = document.getElementById("dataTable");
     //iterate through table from bottom to top to see if there's a commit enabled
     //TODO check if we need to skip the header row
+    const element: HTMLElement = document.getElementById("commitAllProgress") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+    const dataValue = dataTable.rows.length-1
     for (let i =0; i< dataTable.rows.length-1;  i++) {
       //iterate through rows
       const row = dataTable.rows[i];
@@ -22,11 +25,13 @@ export async function commitAll(){
       const virtualId = parseInt(row.cells[0].innerHTML);
 
       console.log('table row '+i+' has virtualId of '+virtualId);
-      // document.getElementById(virtualId.toString()+"-commit")ghh
-      const myTimeout = setTimeout(pressCommitButton,i*20000,i);//Fiddle with this
-       await pressCommitButton(i);//Fiddle with this
-       clearTimeout(myTimeout);
-
+      //document.getElementById(virtualId.toString()+"-commit");
+      //const myTimeout = await setTimeout(pressCommitButton,i*500,i+1);//Fiddle with this
+       await clickCommit(i);//Fiddle with this
+       //myTimeout.
+       //clearTimeout(myTimeout);
+      
+       element.innerHTML = "Download Progress: "+ (((i/dataValue)*100).toFixed(0))+'%';
       
       //rows would be accessed using the "row" variable assigned in the for loop
    }
@@ -37,7 +42,7 @@ export async function commitAll(){
   export function PressCommit(): ReactElement {
     return (
       <React.Fragment>
-
+      <div id="commitAllProgress"/>
       <button
       className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
       color="pink"

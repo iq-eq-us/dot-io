@@ -1031,8 +1031,9 @@ import { replace } from "lodash";
 
   }
   
-  async function clickCommit(virtualId){
+  export async function clickCommit(virtualId){
     const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
+    const myTimeout = await setTimeout(pressCommitButton,virtualId*10000,virtualId+1);//Fiddle with this
     if(check.disabled){
       //delete the chord from the device, and then also delete from this list
       document.getElementById(virtualId.toString()+"-")
@@ -1136,14 +1137,17 @@ import { replace } from "lodash";
         }
       }
     }
+    await clearTimeout(myTimeout)
     await readGetOneAndToss();
   }
 
 
   export async function pressCommitButton(virtualId: { toString: () => string; }){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
-
+    //onst myTimeout = await setTimeout(pressCommitButton,virtualId*10000,virtualId);//Fiddle with this
+    //myTimeout.
     await clickCommit(virtualId);
+    //clearTimeout(myTimeout);
 
   }
 
