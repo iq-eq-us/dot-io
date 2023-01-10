@@ -8,6 +8,15 @@ import {
 
 } from '../controls/mainControls'
 
+const wontTimeout = async (i) => {
+  try {
+      const { data } = await asyncCallWithTimeout(clickCommit(i), 10000, i);
+      console.log(data);
+  }
+  catch (err) {
+      console.error(err);
+  }
+}
 
 export async function commitAll(){
     console.log("commitAll()");
@@ -28,7 +37,9 @@ export async function commitAll(){
       console.log('table row '+i+' has virtualId of '+virtualId);
       //document.getElementById(virtualId.toString()+"-commit");
       //const myTimeout = await setTimeout(pressCommitButton,i*500,i+1);//Fiddle with this
-      await asyncCallWithTimeout(clickCommit(i), 10000, i);//Fiddle with this
+      await asyncCallWithTimeout(clickCommit(i), 6000, i);//Fiddle with this
+
+      
        //myTimeout.
        //clearTimeout(myTimeout)
       

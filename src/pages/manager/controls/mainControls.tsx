@@ -1052,7 +1052,7 @@ import { replace } from "lodash";
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     const timeoutPromise = new Promise((_resolve, reject) => {
         timeoutHandle = setTimeout(
-            () => reject(commitButton.click()),
+            () => _resolve(commitButton.click()),
             timeLimit
         );
         console.log('I have entered the timer')
