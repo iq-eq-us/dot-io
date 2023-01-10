@@ -97,7 +97,7 @@ import { replace } from "lodash";
     }
     
   }
-  
+
   export async function readGetOneAndToss(){
     const { value, done } = await MainControls.lineReader.read().catch( console.error );
     //throw away the value
@@ -107,6 +107,22 @@ import { replace } from "lodash";
       console.log('value is null');
     }
   }
+
+  export async function readGetOneAndTossCommitAll(virtualId){
+    const myTimeout = setTimeout(pressCommitButton,10000,virtualId);//Fiddle with this
+    console.log('readGetOneAndTossCommitAll()');
+    console.log('Starting timer')
+
+    const { value, done } = await MainControls.lineReader.read().catch( console.error );
+    //throw away the value
+    if(value){
+      console.log('toss value of: '+value);
+    }else{
+      console.log('value is null');
+    }
+    clearTimeout(myTimeout);
+  }
+
   export async function readGetOneAndReturnOne(){
     const { value, done } = await MainControls.lineReader.read().catch( console.error );
     //throw away the value
@@ -1033,7 +1049,7 @@ import { replace } from "lodash";
   
   export async function clickCommit(virtualId){
     const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
-    const myTimeout = await setTimeout(clickCommit,virtualId*20000,virtualId+1);//Fiddle with this
+    const myTimeout = setTimeout(clickCommit,virtualId*20000,virtualId);//Fiddle with this
     if(check.disabled){
       //delete the chord from the device, and then also delete from this list
       document.getElementById(virtualId.toString()+"-")
@@ -1137,16 +1153,16 @@ import { replace } from "lodash";
         }
       }
     }
-    await clearTimeout(myTimeout)
-    await readGetOneAndToss();
+    //await clearTimeout(myTimeout)
+    await readGetOneAndTossCommitAll(virtualId);
   }
 
 
-  export async function pressCommitButton(virtualId: { toString: () => string; }){
+  export function pressCommitButton(virtualId: { toString: () => string; }){
     const commitButton = document.getElementById(virtualId.toString()+"-commit");
     //onst myTimeout = await setTimeout(pressCommitButton,virtualId*10000,virtualId);//Fiddle with this
     //myTimeout.
-    await clickCommit(virtualId);
+    clickCommit(virtualId);
     //clearTimeout(myTimeout);
 
   }

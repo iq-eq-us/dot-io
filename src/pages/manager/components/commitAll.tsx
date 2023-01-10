@@ -31,7 +31,7 @@ export async function commitAll(){
        //myTimeout.
        //clearTimeout(myTimeout)
       
-       element.innerHTML = "Commit to Device: "+ (((i/dataValue)*100).toFixed(0))+'% Please do not touch your device until completion.';
+       element.innerHTML = "Commit Progress: "+ (((i/dataValue)*100).toFixed(0))+'% Please do not touch your device until completion.';
       
       //rows would be accessed using the "row" variable assigned in the for loop
    }
