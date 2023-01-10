@@ -1046,8 +1046,25 @@ import { replace } from "lodash";
     }
 
   }
+
+  export const asyncCallWithTimeout = async (asyncPromise, timeLimit) => {
+    let timeoutHandle;
+
+    const timeoutPromise = new Promise((_resolve, reject) => {
+        timeoutHandle = setTimeout(
+            () => _resolve(asyncPromise),
+            timeLimit
+        );
+    });
+
+    return Promise.race([asyncPromise, timeoutPromise]).then(result => {
+        clearTimeout(timeoutHandle);
+        return result;
+    })
+}
   
   export async function clickCommit(virtualId){
+    
     const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
     //const myTimeout = setTimeout(clickCommit,virtualId*20000,virtualId);//Fiddle with this
     if(check.disabled){
