@@ -14,14 +14,12 @@ export const useWordsPerMinute = (): number => {
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
   const isTrainingTestDone = currentTrainingSetting.isTestDone;
-  //const setIsDisplaying = useStoreActions((store) => store.isDisplayingTestComplete,);
+  const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM); 
 
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
   );
-  const fastestCounter = useStoreState(
-    (store) => store.fastestRecordedWordsPerMinute,
-  );
+ 
   
   const testNumber = useStoreState((store) => store.wordTestNumber);
 
@@ -150,17 +148,17 @@ export const useWordsPerMinute = (): number => {
     if(isTrainingTestDone){
       console.log('New WPM did fire '+ {...fastestRecordedWPM})
       //((wordsCorrectCount/parseInt(testNumber))*100)
-      if (wpm > fastestRecordedWPM[trainingScenario] && 6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/parseInt(testNumber))*100) >=95) {
+      if (testTeirHighestWPM > fastestRecordedWPM[trainingScenario] && 6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/parseInt(testNumber))*100) >=95) {
         const currentDate = new Date();
 
         console.log('New WPM did fire inside the conditional and it was teuew ')
   
-        wordTestNumber !=null||undefined ? storeData(wpm, currentDate) : '';//This checks to make sure we are in a testing teir
-        wordTestNumber !=null||undefined ? storeAverageData( wpm, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
+        wordTestNumber !=null||undefined ? storeData(testTeirHighestWPM, currentDate) : '';//This checks to make sure we are in a testing teir
+        wordTestNumber !=null||undefined ? storeAverageData( testTeirHighestWPM, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
 
           setFastestWPM({
           ...fastestRecordedWPM,
-          [trainingScenario]: wpm,
+          [trainingScenario]: testTeirHighestWPM,
         });
       
 

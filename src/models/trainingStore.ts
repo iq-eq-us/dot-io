@@ -42,6 +42,8 @@ export interface TrainingStoreActionsModel {
   setModuleCompleteModalToggle: Action<TrainingStoreModel, boolean>;
   setModuleNumber: Action<TrainingStoreModel, number>;
   setDownloadModulModalToggle: Action<TrainingStoreModel, boolean>;
+  setTestTeirHighestWPM: Action<TrainingStoreModel, number>;
+
 
   /**
    * This action allows you to manually update the chords used in a particular training mode
@@ -113,6 +115,7 @@ export interface TrainingStoreStateModel {
   downloadModulModalToggle: boolean;
   wasModuleShown: boolean;
   moduleNumber: number;
+  testTeirHighestWPM: number;
 
 }
 

@@ -20,7 +20,8 @@ export function TestStatsCard(): ReactElement {
     const trainingSettings = useStoreState((store) => store.trainingSettings);
     const testNumber = useStoreState((store) => store.wordTestNumber);
     const storedTestTextData = useStoreState((store) => store.storedTestTextData);
-    const alltypedText= useStoreState((store) => store.allTypedCharactersStore);
+    const alltypedText= useStoreState((store) => store.allTypedCharactersStore); 
+    const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM); 
 
 
     
@@ -50,11 +51,11 @@ export function TestStatsCard(): ReactElement {
       <React.Fragment>
         <TrainingStatsColumnContainer>
          <StatsCardContainer>
-          <div className='text-6xl'>{useWordsPerMinute().toFixed(0)*5}</div>
+          <div className='text-6xl'>{testTeirHighestWPM}</div>
           <h1 className='text-2xl'>CPM</h1>
           </StatsCardContainer>
           <StatsCardContainer>
-          <div className='text-4xl'>{useWordsPerMinute().toFixed(0)}</div>
+          <div className='text-4xl'>{(testTeirHighestWPM/5).toFixed(0)}</div>
           <h1 className='text-lg'>WPM</h1>
           </StatsCardContainer>
           <StatsCardContainer>

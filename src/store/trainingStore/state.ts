@@ -43,6 +43,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   currentLevel: 0,
   timeAtTrainingStart: 0,
   numberOfChordsForTrainingLevel: 0,
+  testTeirHighestWPM: 0,
   // * Computed State
   currentlyHighlightedKeys: computed((state) => {
     const highlightMode = state.characterEntryMode;

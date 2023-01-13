@@ -70,7 +70,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
   series: [
     {
       name: "Cumulative CPM",
-      data: wpmDataCalculator(wordPerMinute)
+      data: wordPerMinute
     },
     {
       name: "Errors",
@@ -192,6 +192,7 @@ export function TestCompleteGraph(): ReactElement {
   const currentTrainingSetting = useStoreState((store : any) => store.trainingStatistics);
   const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
   const storedTestTextData = useStoreState((store) => store.storedTestTextData);
+  const testTeirHighestWPM= useStoreActions((store) => store.setTestTeirHighestWPM); 
 
 
 
@@ -203,6 +204,8 @@ export function TestCompleteGraph(): ReactElement {
 
     let tempConst = 0;
     const chordsToChooseFrom = JSON.parse(localStorage.getItem('chordsToChooseFrom'));
+    let iterator = 1;
+    let cummulativeWPM = 0;
     currentTrainingSetting.statistics.forEach((d : any) => {
 
       if(d.displayTitle.length * d.numberOfOccurrences != 0) {
@@ -221,10 +224,13 @@ export function TestCompleteGraph(): ReactElement {
           const averageCharacterPerMin2 = 60000/millisecondsPerCharacter2;
           const wpm2 = averageCharacterPerMin2;
 
-        wordPerMinute.push(d.averageSpeed.toFixed(0)/5);
-         rawSpeedOfCurrentWord.push(wpm2.toFixed(0));
+          cummulativeWPM += wpm;
+          
+          wordPerMinute.push(d.averageSpeed.toFixed(0)/5);
+          rawSpeedOfCurrentWord.push(wpm2.toFixed(0));
         
-      }
+       }
+      iterator ++;
 
     });
 
@@ -269,7 +275,7 @@ export function TestCompleteGraph(): ReactElement {
     finalErrorsArray.shift();
     wordOccurrences = finalErrorsArray;
     finalWPMArray.shift();
-    wordPerMinute = finalWPMArray;
+    wordPerMinute = wpmDataCalculator(finalWPMArray);
     console.log('Before Word Names');
     console.log(wordNames);
     //storedTestTextData.shift(); TStored test text data does not need to be shifted
@@ -285,6 +291,7 @@ export function TestCompleteGraph(): ReactElement {
   }
 
     const handleEvent = () => {
+      testTeirHighestWPM(wordPerMinute[wordPerMinute.length-1]);
         myGraph(wordNames, wordOccurrences, wordPerMinute, rawSpeedOfCurrentWord)
         console.log('event handled ' +wordNames)
         console.log(wordOccurrences)

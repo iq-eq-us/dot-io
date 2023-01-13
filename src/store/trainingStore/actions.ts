@@ -233,6 +233,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setTypedTrainingText: action((state, payload) => {
     state.typedTrainingText = payload;
   }),
+  setTestTeirHighestWPM: action((state, payload) => {
+    state.testTeirHighestWPM = payload as number;
+  }),
   // This needs to be a thunkOn so that we can dispatch multiple actions
   // when the target word matches the word the user has entered
   onChangeTypedTrainingText: thunkOn(
@@ -450,7 +453,6 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   if (userIsTypingFirstChord ){
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
-    timeTakenToTypeChord = 0;
     numberOfOccurences =-1;
     
     //console.log('In here the check user first ty '+userIsTypingFirstChord + ' '+ timeTakenToTypeChord);
