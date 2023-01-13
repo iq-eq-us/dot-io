@@ -453,6 +453,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   if (userIsTypingFirstChord ){
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
+    timeTakenToTypeChord = 0;
     numberOfOccurences =-1;
     
     //console.log('In here the check user first ty '+userIsTypingFirstChord + ' '+ timeTakenToTypeChord);

@@ -224,7 +224,7 @@ export function TestCompleteGraph(): ReactElement {
           const averageCharacterPerMin2 = 60000/millisecondsPerCharacter2;
           const wpm2 = averageCharacterPerMin2;
 
-          cummulativeWPM += wpm;
+          cummulativeWPM += wpm2;
           
           wordPerMinute.push(d.averageSpeed.toFixed(0)/5);
           rawSpeedOfCurrentWord.push(wpm2.toFixed(0));
