@@ -8,14 +8,26 @@ import {
 
 } from '../controls/mainControls'
 
-const wontTimeout = async (i) => {
-  try {
-      const { data } = await asyncCallWithTimeout(clickCommit(i), 10000, i);
-      console.log(data);
-  }
-  catch (err) {
-      console.error(err);
-  }
+
+export async function commitAllWithStart(inVrtualId){
+  console.log("commitAll()");
+  const dataTable = document.getElementById("dataTable");
+  //iterate through table from bottom to top to see if there's a commit enabled
+  //TODO check if we need to skip the header row
+  const element: HTMLElement = document.getElementById("commitAllProgress") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
+  const dataValue = dataTable.rows.length-1
+  for (let i =inVrtualId+1; i< dataTable.rows.length-1;  i++) {
+    //iterate through rows
+    const row = dataTable.rows[i];
+
+    const virtualId = parseInt(row.cells[0].innerHTML);
+
+    console.log('table row '+i+' has virtualId of '+virtualId);
+
+    await asyncCallWithTimeout(clickCommit(i), 10000, i);
+    
+     element.innerHTML = "Commit Progress: "+ (((i/dataValue)*100).toFixed(0))+'% Please do not touch your device until completion.';
+     }
 }
 
 export async function commitAll(){
@@ -38,10 +50,11 @@ export async function commitAll(){
       //document.getElementById(virtualId.toString()+"-commit");
       //const myTimeout = await setTimeout(pressCommitButton,i*500,i+1);//Fiddle with this
       //await asyncCallWithTimeout(clickCommit(i), 6000, i);//Fiddle with this
-      await clickCommit(i);
+      //await clickCommit(i);
       
        //myTimeout.
        //clearTimeout(myTimeout)
+       await wontTimeout(clickCommit(i), 6000, i);
       
        element.innerHTML = "Commit Progress: "+ (((i/dataValue)*100).toFixed(0))+'% Please do not touch your device until completion.';
       
@@ -49,7 +62,15 @@ export async function commitAll(){
    }
   }
 
-
+  const wontTimeout = async (func, timer, virtualId) => {
+    try {
+        const { data } = await asyncCallWithTimeout(func, 10000, virtualId);
+        console.log(data);
+    }
+    catch (err) {
+      await asyncCallWithTimeout(func, 10000, virtualId);
+    }
+}
   
   export function PressCommit(): ReactElement {
     return (

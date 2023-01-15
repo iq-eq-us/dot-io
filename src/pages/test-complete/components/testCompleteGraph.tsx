@@ -157,16 +157,15 @@ chart.render();
 
 function wpmDataCalculator (wpmArray : any){
 
-  console.log('This is the very first array '+wpmArray);
   let wpmTemp = 0;
   let localTemp = 0;
-  console.log('WPM ARRAY HSDF NJSK FJKSFEKN' + wpmArray + " lENGTH " + wpmArray.length)
+  let iterator = 1;
   //console.log(wpmArray)
   for (let i =0; i<wpmArray.length; i++){
     if(wpmArray[i] != 0){
     localTemp = 0;
     wpmTemp = parseInt(wpmTemp) + parseInt(wpmArray[i]);
-    localTemp = wpmTemp / (i +1);
+    localTemp = wpmTemp / iterator;
 
     console.log('wpmTemp in the new function '+ wpmTemp);
     console.log('localTemp in the new function '+ localTemp);
@@ -182,7 +181,7 @@ function wpmDataCalculator (wpmArray : any){
     } else{
       console.log('I skipped over a 0')
     }
-
+    iterator++;
   }
   return wpmArray;
 
@@ -219,13 +218,14 @@ export function TestCompleteGraph(): ReactElement {
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
           const wpm = averageCharacterPerMin/5;
 
-          const avgSpeedMilliseconds2 = d.lastSpeed * 10;
+          const avgSpeedMilliseconds2 = d.averageSpeed * 10;
           const millisecondsPerCharacter2 = avgSpeedMilliseconds2/5;
           const averageCharacterPerMin2 = 60000/millisecondsPerCharacter2;
           const wpm2 = averageCharacterPerMin2;
 
           cummulativeWPM += wpm2;
           
+          console.log('This is the averageSpeed value '+ d.averageSpeed.toFixed(0));
           wordPerMinute.push(d.averageSpeed.toFixed(0)/5);
           rawSpeedOfCurrentWord.push(wpm2.toFixed(0));
         
