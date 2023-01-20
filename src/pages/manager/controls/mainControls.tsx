@@ -945,7 +945,7 @@ import { commitAllWithStart } from "../components/commitAll";
       if(check.disabled){
         //delete the chord from the device, and then also delete from this list
         document.getElementById(virtualId.toString()+"-")
-        await sendCommandString("DEL "+data[2]);
+        await sendCommandString("CML C4 "+data[2]);
         await readGetOneAndToss();
         //then remove the row from the table
         const i = this.parentNode.parentNode.rowIndex;
@@ -973,7 +973,7 @@ import { commitAllWithStart } from "../components/commitAll";
             const chordorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
            
             const hexChordOrigToDelete = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
-            await sendCommandString("DEL "+hexChordOrigToDelete);
+            await sendCommandString("CML C4 "+hexChordOrigToDelete);
             await readGetOneAndToss();
 
             const phraseorig: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseorig") as HTMLInputElement; //.innerHTML = "status: opened serial port";
@@ -998,7 +998,7 @@ import { commitAllWithStart } from "../components/commitAll";
             //then delete the old chordmap
             const chordorig: HTMLElement = document.getElementById(virtualId.toString()+"-chordorig") as HTMLElement;; //.innerHTML = "status: opened serial port";
             const hexChordOrigToDelete = await convertHumanChordToHexadecimalChord(chordorig.innerHTML);
-            await sendCommandString("DEL "+hexChordOrigToDelete);
+            await sendCommandString("CML C4 "+hexChordOrigToDelete);
             // document.getElementById(virtualId.toString()+"-phraseorig").innerHTML = document.getElementById(virtualId.toString()+"-phraseinput").value;
           }
           const phraseinput3: HTMLInputElement = document.getElementById(virtualId.toString()+"-phraseinput") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
