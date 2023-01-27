@@ -31,7 +31,7 @@ const setTrainingLevel = useStoreActions((store : any) => store.setTrainingLevel
 /* eslint-disable */
 //const maxWPM = useStoreState((store) => (parseInt(Math.max.apply(Math, Object.values(store.fastestRecordedWordsPerMinute))?.toFixed()) * 5) > 200); 
 /* eslint-enable */
-const stable = false;
+//const stable = false;
 
 
   function TrainingPageFunction (level : TrainingLevels, allowOnClick : boolean){
