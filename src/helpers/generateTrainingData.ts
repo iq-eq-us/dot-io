@@ -194,6 +194,7 @@ let sel = [];
 let i =0;
   while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length && numberOfChordsConquered < parameters.stats.length){
     if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
+      //This is an empty block statement
     }else{
 
       sel.push(theCondensedChordStat[i].displayTitle)
