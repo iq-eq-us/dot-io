@@ -942,14 +942,16 @@ import { commitAllWithStart } from "../components/commitAll";
 
     btnCommit.onclick = async function(distinguisher){
       const check: HTMLInputElement = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
+      const checkELementOriginalChord = document.getElementById(virtualId.toString()+"-delete") as HTMLInputElement;
       if(check.disabled){
         //delete the chord from the device, and then also delete from this list
+        //const element: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit")
         document.getElementById(virtualId.toString()+"-")
         await sendCommandString("CML C4 "+data[2]);
         await readGetOneAndToss();
         //then remove the row from the table
         const i = this.parentNode.parentNode.rowIndex;
-        console.log('deleting row '+i.toString());
+        console.log('deleting row '+virtualId);
         dataTable.deleteRow(i);
       }else{
         const chordNew: HTMLElement = document.getElementById(virtualId.toString()+"-chordnew") as HTMLInputElement; //.innerHTML = "status: opened serial port";

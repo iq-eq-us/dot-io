@@ -2,7 +2,7 @@ import { action, actionOn, Actions, thunkOn } from 'easy-peasy';
 import type { ChordLibraryRecord } from '../../data/chordLibrary';
 import { generateChords } from '../../helpers/generateTrainingData';
 import type { TrainingScenario } from '../../models/trainingScenario';
-import { defaultTrainingSettings, defaultAlphabeticTestTraining, defaultTrigramsTestTraining } from '../../models/trainingSettingsStateModel';
+import { defaultTrainingSettings, defaultAlphabeticTestTraining, defaultTrigramsTestTraining, defaultTrainingSettingsState } from '../../models/trainingSettingsStateModel';
 import { _keyMapDefaults  } from "../../pages/manager/controls/maps";
 
 import {
@@ -98,14 +98,13 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.wordTestNumber = payload[1] as WordTrainingValues;
     state.allTypedCharactersStore = [];
     state.compareText = [];
-    state.numberOfWordsChorded = 0,
-      console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
+    state.numberOfWordsChorded = 0;
+    //  console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
     // Pull the chord library from memory if it's there, otherwise pull it from defaults
     if (typeof state.currentTrainingScenario === 'string' &&
       globalDictionaries[state.currentTrainingScenario] !== undefined) {
       state.chordsToPullFrom = globalDictionaries[state.currentTrainingScenario] as ChordLibraryRecord;
     } else {
-      console.log(payload[0]);
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         (state.currentTrainingScenario)
       ) as ChordLibraryRecord;
@@ -356,6 +355,9 @@ function generateTrainingSettings(storeState: TrainingStoreStateModel){
   else if(storeState.currentTrainingScenario == 'TRIGRAM'){
     return JSON.parse(JSON.stringify(defaultTrigramsTestTraining),)
   } 
+  else if(storeState.currentTrainingScenario == 'ALLCHORDS') {
+    return JSON.parse(JSON.stringify(defaultTrainingSettingsState),)
+  }
   else if(storeState.currentTrainingScenario == undefined) {
     return JSON.parse(JSON.stringify(defaultAlphabeticTestTraining),)
   }

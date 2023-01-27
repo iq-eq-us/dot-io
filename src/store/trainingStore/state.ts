@@ -66,6 +66,7 @@ const trainingStoreState: TrainingStoreStateModel = {
       state.currentTrainingScenario === 'LEXICAL' ||
       state.currentTrainingScenario === 'TRIGRAM' ||
       state.currentTrainingScenario === 'LEXICALSENTENCES'||
+      state.currentTrainingScenario === 'ALLCHORDS'||
       state.currentTrainingScenario === 'CUSTOMTIER'
         ? 'CHARACTER'
         : 'CHORD';

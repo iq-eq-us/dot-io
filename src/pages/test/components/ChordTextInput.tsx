@@ -77,7 +77,6 @@ function ChordTextInput(): ReactElement {
           {userIsTypingFirstChord ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), console.log('first typed sexy '+ userIsTypingFirstChord)] : ''}// This here logs the time that the first letter was pressed and sets the state variable to false
           setStoreText(e.target.value);
           {set(e.target.value)}
-          {console.log("ghj " +setS + " " + e.target.value + ' '+ textTyped)}
 
         }}
     

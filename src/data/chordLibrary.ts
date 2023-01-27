@@ -38,7 +38,7 @@ export const chordLibrary: ChordLibrary = {
 
   },
   allChords: {
-   hi:  [],
+   CharaChorder:  [],
   },
   supersonic: {
     word: [],

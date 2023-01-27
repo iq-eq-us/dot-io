@@ -90,7 +90,7 @@ export function TextPrompt(): ReactElement {
       if(numberOfBestTimesUnderTen >= 2){
         setChordingEnabled(true);
         setnumberOfWordsChorded();
-        console.log("setChordingEnabled "+ numberOfWordsChorded)
+       // console.log("setChordingEnabled "+ numberOfWordsChorded)
       }
       setBestKeyTime([]);
       setLetterPressed([]);
@@ -121,21 +121,19 @@ export function TextPrompt(): ReactElement {
     isKeyDown = false;
     const upTime = performance.now();
     const heldTime = Math.ceil(upTime - keyDownTime);
-    console.log(keyDownTime);
-    console.log(keyDownTime);
-    console.log('Uptime '+ upTime);
+    
+    //console.log('Uptime '+ upTime);
     const tempBestTime = Math.min(10000, heldTime);
     bestKeyTime.push(tempBestTime);
     letterPressed.push(e.key);
     //let scanRate = Math.min(1000 / (bestKeyTime), 1000);
     //console.log(keyDownTime.length);
-    console.log('Just e '+e.type)
-    console.log('Just e 2 '+e.key)
+   
 
     setBestKeyTime(bestKeyTime => [...bestKeyTime]);
     setLetterPressed(letterPressed => [...letterPressed]);
-    console.log('This is the Best Time '+bestKeyTime);
-    console.log('This is the associated letter pressed '+ wpmMethodCalculator(13));
+    //console.log('This is the Best Time '+bestKeyTime);
+    //console.log('This is the associated letter pressed '+ wpmMethodCalculator(13));
 
 
   };
@@ -183,7 +181,7 @@ export function TextPrompt(): ReactElement {
         }
         
         displayArray = tempArray;
-        return [displayArray, console.log('Syd true')];
+        return [displayArray];
       } 
 
      
@@ -205,7 +203,6 @@ export function TextPrompt(): ReactElement {
           for(let k =0; k<spacesBetweenWords; k++){
             placeholder += "*";
           }
-          console.log('current training '+ currentTrainingScenario + " "+ spacesBetweenWords + placeholder + i + ' '+allTypedText.length + compare + " " + alphabetCompare)
 
           displayArray.push(<div className ="text-white">{placeholder}</div>)
 

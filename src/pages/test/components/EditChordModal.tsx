@@ -110,7 +110,7 @@ function EditChordsModal(): ReactElement {
 
     const hasChangeBeenMade =
       JSON.stringify(tempChords) !== JSON.stringify(chords) ||
-      trainingScenario === 'SUPERSONIC';
+      trainingScenario === 'SUPERSONIC' || trainingScenario == 'ALLCHORDS';
 
     if (hasChangeBeenMade) {
       const newChordLibraryRecord = generateNewChordRecord(chordsToUse);
@@ -132,6 +132,7 @@ function EditChordsModal(): ReactElement {
     });
     return newChordLibraryRecord;
   };
+
 
   const addChords = () => {
     if (inputRef.current?.value) addChord(inputRef.current?.value);
@@ -260,9 +261,20 @@ const ChordGrid = styled.div.attrs({
   className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start  overflow-scroll`,
 })``;
 
+export const generateNewChordRecordForAllChordsModule = (chords: string[]): ChordLibraryRecord => {
+  const newChordLibraryRecord: ChordLibraryRecord = {};
+  for(let i =0; i<chords.length; i++) {
+    if (chordLibrary.all[chords[i][1]])
+      newChordLibraryRecord[chords[i][1]] = chordLibrary.all[chords[i][1]];
+    else newChordLibraryRecord[chords[i][1]] = [];
+  };
+  return newChordLibraryRecord;
+};
+
 export const getChordLibraryForTrainingScenario = (
   scenario?: TrainingScenario | undefined,
 ): Record<string, string[]> | undefined => {
+  const allChord = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
   if (scenario === 'ALPHABET') return chordLibrary.letters;
   else if (scenario === 'CHORDING' && pickerV1) return chordLibrary.chords;
   else if (scenario === 'CHORDING' && pickerLite) return chordLibrary.chordsLite;
@@ -272,6 +284,7 @@ export const getChordLibraryForTrainingScenario = (
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
   else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
   else if (scenario === 'LEXICALSENTENCES') return chordLibrary.lexicalSentences;
+  else if (scenario === 'ALLCHORDS') return generateNewChordRecordForAllChordsModule(allChord);
 
   return undefined;
 };

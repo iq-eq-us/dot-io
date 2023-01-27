@@ -129,18 +129,18 @@ export async function startSerialConnection() {
 
     await getId();
     await getCount();
-    window.dispatchEvent(new Event('resize'));
+    //window.dispatchEvent(new Event('resize'));
 
 
-    const manager: HTMLElement = document.getElementById("manager") as HTMLElement;
-    manager.classList.add("connected");
+    //const manager: HTMLElement = document.getElementById("manager") as HTMLElement;
+    //manager.classList.add("connected");
  
 
  }
   export function ConnectButton(): ReactElement {
     return (
       <React.Fragment>
-        <div id="statusDiv"/>
+      <div id="statusDiv"/>
       <div id="countDiv"/>
       <div id="device" ></div>
       <button

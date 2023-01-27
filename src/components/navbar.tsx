@@ -76,8 +76,8 @@ const stable = false;
         <NavLinksImage open = {true} src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction('CPM', true)}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">        
-        <div className='text-white font-mono'>{stable ? 'ChM' : <LockIconStyle><LockIconWhite/></LockIconStyle>}</div>
-        <NavLinksImage open = {stable} src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM', stable)}/>
+        <div className='text-white font-mono'>{maxWPM ? 'ChM' : <LockIconStyle><LockIconWhite/></LockIconStyle>}</div>
+        <NavLinksImage open = {maxWPM} src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM', maxWPM)}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">
         <LockIconStyle>

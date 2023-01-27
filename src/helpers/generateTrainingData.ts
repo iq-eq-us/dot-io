@@ -174,7 +174,6 @@ export const generateChords = (
   );
   const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
   allCharacters.shift(); // This removes the first letter in the array so that in the alphabetic tier we only show the first 8 letters on the intial data set load
-
   for(let i=0; i < theCondensedChordStat.length; i++ ){
     if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
       theCondensedChordStat.push(theCondensedChordStat.splice(theCondensedChordStat.indexOf(theCondensedChordStat[i]), 1)[0]);
@@ -189,22 +188,19 @@ export const generateChords = (
     .map((s) => s.id);
   const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
+  console.log(chordLibraryCharacters)
 
 let sel = [];
 let i =0;
   while(sel.length < parameters.numberOfTargetChords && i<parameters.stats.length && numberOfChordsConquered < parameters.stats.length){
-    console.log('Checking the bug where site craches entered first while loop')
     if((theCondensedChordStat[i].averageSpeed > parameters.speedGoal) && (theCondensedChordStat[i].numberOfOccurrences >= 10)){
-      console.log('Checking the bug where site craches entered first if statement that does nothing')
     }else{
-      console.log('Checking the bug where site craches entered else statement' + theCondensedChordStat[i].displayTitle)
 
       sel.push(theCondensedChordStat[i].displayTitle)
     }
     i++;
     }
     if(numberOfChordsConquered > parameters.stats.length-1){
-      console.log('Checking the bug where site craches entered if statement that switches the algorithem were using')
 
       chordsSortedByTypingSpeed.sort(
         (a, b) => b.averageSpeed - a.averageSpeed,

@@ -1,7 +1,7 @@
 import React, { useState, ReactElement } from 'react';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import { _chordMaps } from '../../../../src/pages/manager/controls/maps';
-import { getGetAll } from '../../../../src/pages/manager/components/download';
+import { downloadChordsForAllChordsModule } from '../../../../src/pages/manager/components/download';
 import { MainControls } from '../../.././../src/pages/manager/controls/mainControls';
 import { ProgressBar } from './ProgressBar';
 
@@ -85,10 +85,11 @@ function ModuleCompleteModal () : ReactElement {
           </button>
     <p className='pt-4 m-10 font-bold '>DownLoad All Chords!</p>
     <p className=' ml-10 mr-10' id='statusDiv'></p>
-    <p className=' ml-10 mr-10 ' id='countDiv'>{MainControls._chordMapIdCounter/MainControls._chordmapCountOnDevice}</p>
-    <ProgressBar/>
-    <p className=' ml-10 mr-10 mb-10 text-white'>Or press &lsquo;X&rsquo; to continue practicing. Or press &lsquo;X&rsquo; to conti. + {console.log('dis da mapss '+_chordMaps)} </p>
-    <button className='drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-36 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]' onClick={() => [getGetAll()]}>Download</button> 
+    <p className=' ml-10 mr-10' id='downloadCompletionPercentage'></p>
+    <p className=' ml-10 mr-10 mb-10 text-white'>Or press &lsquo;X&rsquo; to continue practicing. Or press &lsquo;X&rsquo; to conti.</p>
+    <button className='drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-36 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]' onClick={() => [downloadChordsForAllChordsModule()]}>Download</button> 
+    <button className='drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-6 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]' onClick={() => [LearnPageFunction('ALLCHORDS')]}>Start Training</button> 
+
     </div> 
     : null
     }

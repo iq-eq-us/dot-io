@@ -1,0 +1,30 @@
+
+trigger:
+  - develop
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.17.1'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install
+      npm run build
+    displayName: 'npm install and npm build'
+
+  - script: |
+      npm run lint
+    displayName: 'npm run lint'
+
+  - script: |
+      npm run test -- --coverage 2>&1 | tee test_run_output.txt
+    displayName: 'npm test'
+
+  - task: AzureStaticWebApp@0
+    inputs:
+      app_location: '/build'
+      azure_static_web_apps_api_token: 'e61bbab670f537dcb4f1f8afdd2fecce7618ffa47ef2c1bf55146235dab006132-4a3cfb49-ea51-4407-902b-169668e28b4e010167018'
