@@ -25,10 +25,8 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
       blur: 5,
       opacity: 1
     }
-    
-
   },
-  colors: ['#22C55E', '#0090FF', 'pink', 'yellow'],
+  colors: ['#22C55E', '#FF0000', '#0090FF', 'yellow'],
   stroke: {
     curve: "smooth",
     width: 3
@@ -69,6 +67,10 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
   },
   series: [
     {
+      name: "Individual CPM",
+      data: rawSpeedOfCurrentWord
+    },
+    {
       name: "Cumulative CPM",
       data: wordPerMinute
     },
@@ -76,10 +78,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
       name: "Errors",
       data: wordOccurrences
     },
-    {
-      name: "Individual CPM",
-      data: rawSpeedOfCurrentWord
-    },
+    
   ],
   xaxis: {
     categories: wordNames
@@ -99,7 +98,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
         }
       },
       title: {
-        text: "Words Per Minute",
+        text: "Raw CPM",
         style: {
           color: "#FF1654"
         }
@@ -120,12 +119,26 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
         }
       },
       title: {
-        text: "Typing Errors",
+        text: "Cumulative CPM",
         style: {
           color: "#247BA0"
         }
       }
-    }
+    },
+      {
+        floating: true,
+        axisTicks: {
+          show: false
+        },
+        axisBorder: {
+          show: false
+        },
+        labels: {
+          show: false
+        },
+      }
+     
+    
   ],
   grid: {
     padding: {
@@ -144,7 +157,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
     position: 'top',
     horizontalAlign: 'left',
     onItemClick: {
-      toggleDataSeries: false
+    toggleDataSeries: false
   },
   },
   
@@ -162,25 +175,24 @@ function wpmDataCalculator (wpmArray : any){
   let iterator = 1;
   //console.log(wpmArray)
   for (let i =0; i<wpmArray.length; i++){
-    if(wpmArray[i] != 0){
     localTemp = 0;
-    wpmTemp = parseInt(wpmTemp) + parseInt(wpmArray[i]);
-    localTemp = wpmTemp / iterator;
+    wpmTemp = wpmTemp + wpmArray[i];
+    
+    i == 0 ?localTemp = wpmTemp : localTemp = wpmTemp / iterator;
 
     console.log('wpmTemp in the new function '+ wpmTemp);
     console.log('localTemp in the new function '+ localTemp);
     console.log('this is the first loop for wpmArray in the new function '+ wpmArray);
 
-    const avgSpeedMilliseconds = localTemp.toFixed(0) * 10;
-    const millisecondsPerCharacter = avgSpeedMilliseconds/5.23;
+    const avgSpeedMilliseconds = localTemp * 10;
+    const millisecondsPerCharacter = avgSpeedMilliseconds/5;
     const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-    const wpm = averageCharacterPerMin/5;
+    const wpm = averageCharacterPerMin;
+
 
     wpmArray[i] = wpm.toFixed(0);
-    console.log('WPM in the new function '+ wpm.toFixed(0));
-    } else{
-      console.log('I skipped over a 0')
-    }
+    //console.log('WPM in the new function '+ wpm.toFixed(0));
+  
     iterator++;
   }
   return wpmArray;
@@ -201,36 +213,25 @@ export function TestCompleteGraph(): ReactElement {
     let rawSpeedOfCurrentWord : any = [];
 
 
-    let tempConst = 0;
     const chordsToChooseFrom = JSON.parse(localStorage.getItem('chordsToChooseFrom'));
-    let iterator = 1;
-    let cummulativeWPM = 0;
     currentTrainingSetting.statistics.forEach((d : any) => {
 
       if(d.displayTitle.length * d.numberOfOccurrences != 0) {
-        tempConst += d.averageSpeed;
+        //tempConst += d.averageSpeed;
         //console.log('This is the stored test words '+storedTestTextData);
           wordNames.push(d.displayTitle);
           wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
 
-         const avgSpeedMilliseconds = d.averageSpeed * 10;
+          const avgSpeedMilliseconds = d.averageSpeed * 10;
           const millisecondsPerCharacter = avgSpeedMilliseconds/5;
           const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-          const wpm = averageCharacterPerMin/5;
+          const wpm = averageCharacterPerMin;
 
-          const avgSpeedMilliseconds2 = d.averageSpeed * 10;
-          const millisecondsPerCharacter2 = avgSpeedMilliseconds2/5;
-          const averageCharacterPerMin2 = 60000/millisecondsPerCharacter2;
-          const wpm2 = averageCharacterPerMin2;
+          wordPerMinute.push(d.averageSpeed);
+          rawSpeedOfCurrentWord.push(wpm.toFixed(0));
+          //console.log('This is the averageSpeed WPM '+ wpm);
 
-          cummulativeWPM += wpm2;
-          
-          console.log('This is the averageSpeed value '+ d.averageSpeed.toFixed(0));
-          wordPerMinute.push(d.averageSpeed.toFixed(0)/5);
-          rawSpeedOfCurrentWord.push(wpm2.toFixed(0));
-        
        }
-      iterator ++;
 
     });
 

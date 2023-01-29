@@ -27,7 +27,7 @@ export function ScoresComponent(): ReactElement {
     <td>tWPM</td>
     <td/>
     <td>-</td>
-    <td>aWPM</td>
+    <td>sWPM</td>
 
   </tr>
   <tr>
