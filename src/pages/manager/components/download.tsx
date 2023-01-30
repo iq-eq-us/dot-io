@@ -73,9 +73,11 @@ export async function getGetAll(){
 
     }
 
-    localStorage.setItem("chordsReadFromDevice", JSON.stringify(strValues));
+    localStorage.setItem("chordsReadFromDevice", JSON.stringify(strValues)); //Store downloaded chords in local storage
+    return true
 
     }
+
   export function Download(): ReactElement {
     return (
       <React.Fragment>

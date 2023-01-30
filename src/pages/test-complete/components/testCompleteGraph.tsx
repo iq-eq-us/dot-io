@@ -26,7 +26,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
       opacity: 1
     }
   },
-  colors: ['#22C55E', '#FF0000', '#0090FF', 'yellow'],
+  colors: ['#0090FF','#22C55E','#FF0000'],
   stroke: {
     curve: "smooth",
     width: 3
@@ -67,13 +67,14 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
   },
   series: [
     {
+      name: "Average CPM",
+      data: wordPerMinute
+    },
+    {
       name: "Individual CPM",
       data: rawSpeedOfCurrentWord
     },
-    {
-      name: "Cumulative CPM",
-      data: wordPerMinute
-    },
+    
     {
       name: "Errors",
       data: wordOccurrences
@@ -100,7 +101,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
       title: {
         text: "Raw CPM",
         style: {
-          color: "#FF1654"
+          color: "#0090FF"
         }
       }
     },
@@ -115,13 +116,13 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
       },
       labels: {
         style: {
-          colors: "#247BA0"
+          colors: "#22C55E"
         }
       },
       title: {
-        text: "Cumulative CPM",
+        text: "Raw CPM",
         style: {
-          color: "#247BA0"
+          color: "#22C55E"
         }
       }
     },
@@ -157,7 +158,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
     position: 'top',
     horizontalAlign: 'left',
     onItemClick: {
-    toggleDataSeries: false
+    toggleDataSeries: true
   },
   },
   
