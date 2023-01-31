@@ -411,7 +411,7 @@ import { commitAllWithStart } from "../components/commitAll";
   export function convertHexadecimalChordToHumanChordForAllChordsTeir(hexChord){
     //console.log("convertHexadecimalChordToHumanChord()");
     //console.log(hexChord);
-    let humanChord = [];
+    const humanChord = [];
     const binChord = pad(hex2Bin(hexChord),128);
     console.log(hexChord);
     console.log(binChord);
