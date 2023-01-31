@@ -31,7 +31,7 @@ const setTrainingLevel = useStoreActions((store : any) => store.setTrainingLevel
 /* eslint-disable */
 //const maxWPM = useStoreState((store) => (parseInt(Math.max.apply(Math, Object.values(store.fastestRecordedWordsPerMinute))?.toFixed()) * 5) > 200); 
 /* eslint-enable */
-const stable = true;
+const stable = false;
 
 
   function TrainingPageFunction (level : TrainingLevels, allowOnClick : boolean){
@@ -77,7 +77,7 @@ const stable = true;
         </NavMenuLink>
         <NavMenuLink aria-current="page">        
         <div className='text-white font-mono'>{stable ? 'ChM' : <LockIconStyle><LockIconWhite/></LockIconStyle>}</div>
-        <NavLinksImage open = {true} src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM', true)}/>
+        <NavLinksImage open = {stable} src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM', stable)}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">
         <LockIconStyle>

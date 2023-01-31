@@ -4,7 +4,7 @@ import {
      sendCommandString, 
      selectBase,
      readGetOneChordmap,
-     convertHexadecimalChordToHumanChord,
+     convertHexadecimalChordToHumanChordForAllChordsTeir,
      convertHexadecimalPhraseToAsciiString,
 
     } from '../controls/mainControls'
@@ -65,7 +65,7 @@ export async function getGetAll(){
           let hexAsciiString = "";
           hexAsciiString = strValue[4];
           //console.log('StrValue '+convertHexadecimalChordToHumanChord(hexChordString));
-          tempCurrentChord[0] = convertHexadecimalChordToHumanChord(hexChordString);
+          tempCurrentChord[0] = convertHexadecimalChordToHumanChordForAllChordsTeir(hexChordString);
           tempCurrentChord[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
       }
       strValues.push(tempCurrentChord);

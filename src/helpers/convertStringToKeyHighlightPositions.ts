@@ -25,6 +25,7 @@ export const ConvertStringToKeyHighlightPositions = (
 
 
 const getHighlightPositionForString = (text: string, scenario: TrainingScenario | undefined) => {
+  //console.log('Is this all chords' + scenario)
   let chord = chordLibrary?.all?.[text];
   if (scenario =='CHORDING' && pickerV1){
       chord = chordLibrary.chords[text];
