@@ -27,12 +27,12 @@ export const ConvertStringToKeyHighlightPositionsLite = (
 };
 
 function newFunc(text){
-for(let i =0; storedLibrary.length; i++){
+for(let i =0; storedLibrary?.length; i++){
   console.log('inLoop');
   if(text == storedLibrary[i][1]){
     const chord= [];
     const tempChord = storedLibrary[i][0];
-    for(let p =0; p < tempChord.length; p++){
+    for(let p =0; p < tempChord?.length; p++){
       console.log(tempChord[p]);
       chord.push(chordLibrary?.all?.[tempChord[p]])
     }

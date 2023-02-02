@@ -29,12 +29,12 @@ export const ConvertStringToKeyHighlightPositions = (
 };
 
 function newFunc(text){
-  for(let i =0; storedLibrary.length; i++){
+  for(let i =0; storedLibrary?.length; i++){
     console.log('inLoop');
     if(text == storedLibrary[i][1]){
       const chord= [];
       const tempChord = storedLibrary[i][0];
-      for(let p =0; p < tempChord.length; p++){
+      for(let p =0; p < tempChord?.length; p++){
         console.log(tempChord[p]);
         chord.push(chordLibrary?.all?.[tempChord[p]])
       }
@@ -51,10 +51,7 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
   } else if (scenario == 'CHORDING' && pickerLite){
     chord = chordLibrary.chordsLite[text];
   }  else if (scenario == 'ALLCHORDS'){
-    //const filteredList = storedLibrary.filter( (e: any) => (e.find(text)));
     chord = newFunc(text);  
-    //console.log('Is this all chords' + newFunc(text))
-
   }else if(scenario == 'LEXICOGRAPHIC' && pickerV1){
     chord = chordLibrary.chords[text];
   } else if(scenario == 'LEXICOGRAPHIC' && pickerLite){
