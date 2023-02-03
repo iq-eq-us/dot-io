@@ -29,7 +29,7 @@ export const ConvertStringToKeyHighlightPositionsLite = (
 
 
 function parseChord(text){
-  let chordStats = storedLibrary?.statistics?.find(
+  const chordStats = storedLibrary?.statistics?.find(
     (c: ChordStatisticsFromDevice) => c.id === text,
   ) as ChordStatisticsFromDevice;
     console.log('inLoop');

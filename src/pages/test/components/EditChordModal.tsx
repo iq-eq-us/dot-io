@@ -263,7 +263,7 @@ const ChordGrid = styled.div.attrs({
 })``;
 
 export const generateNewChordRecordForAllChordsModule = (chords): ChordLibraryRecord => {
-  let chordStats = chords?.statistics;
+  const chordStats = chords?.statistics;
   console.log(chordStats.length);
   const newChordLibraryRecord: ChordLibraryRecord = {};
   for(let i =0; i<chordStats?.length; i++) {

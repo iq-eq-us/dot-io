@@ -429,7 +429,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     (c: ChordStatistics) => c.id === id,
   ) as ChordStatistics;
 
-  let chordStatsFromDevice = store.storedChordsFromDevice.statistics.find(
+  const chordStatsFromDevice = store.storedChordsFromDevice.statistics.find(
     (c: ChordStatisticsFromDevice) => c.id === id,
   ) as ChordStatisticsFromDevice;
 

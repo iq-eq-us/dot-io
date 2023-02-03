@@ -83,7 +83,7 @@ export async function getGetAll(){
           chord = convertHexadecimalChordToHumanChordForAllChordsTeir(hexChordString);
           phrase = convertHexadecimalPhraseToAsciiString(hexAsciiString);
       }
-      let newStat: ChordStatisticsFromDevice = createEmptyChordStatisticsFromDevice(phrase, "ALLCHORDS", [], chord);
+      const newStat: ChordStatisticsFromDevice = createEmptyChordStatisticsFromDevice(phrase, "ALLCHORDS", [], chord);
       
       statisticsFromDevice.push(newStat);
       //strValues.push(tempCurrentChord);
