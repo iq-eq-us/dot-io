@@ -8,6 +8,7 @@ import { _keyMapDefaults  } from "../../pages/manager/controls/maps";
 import {
   ChordStatistics,
   createEmptyChordStatistics,
+  createEmptyChordStatisticsFromDevice,
   MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   TrainingStatistics,
 } from '../../models/trainingStatistics';
@@ -20,6 +21,7 @@ import { getChordLibraryForTrainingScenario } from '../../pages/test/components/
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
 import type { TrainingLevels } from 'src/models/trainingLevels';
 import store from '../store';
+import type { ChordStatisticsFromDevice } from 'src/models/trainingStatisticsFromDevice';
 
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
@@ -76,7 +78,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   }), 
   setTrainingLevel: action((state, payload) => {
     state.trainingLevel = payload as TrainingLevels;
-
+  }),
+  setStoredChordsFromDevice: action((state) => {
+    state.storedChordsFromDevice = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
   }),
   setModuleCompleteModalToggle: action((state, payload) => {
     state.moduleCompleteModalToggle = payload as boolean;
@@ -99,12 +103,16 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.allTypedCharactersStore = [];
     state.compareText = [];
     state.numberOfWordsChorded = 0;
+    state.storedChordsFromDevice = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
     //  console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
     // Pull the chord library from memory if it's there, otherwise pull it from defaults
     if (typeof state.currentTrainingScenario === 'string' &&
       globalDictionaries[state.currentTrainingScenario] !== undefined) {
       state.chordsToPullFrom = globalDictionaries[state.currentTrainingScenario] as ChordLibraryRecord;
-    } else {
+    }// else if(state.currentTrainingScenario == 'ALLCHORDS' ){
+     // state.storedChordsFromDevice = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
+    //} 
+    else {
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         (state.currentTrainingScenario)
       ) as ChordLibraryRecord;
@@ -414,16 +422,24 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     return;
   }
 
+  //Here is where I need to find the chord in the live chords stats array and pull the storedChordStats
   const emptyChordStats = createEmptyChordStatistics(id);
   // eslint-disable-next-line no-var
   let chordStats = store.trainingStatistics.statistics.find(
     (c: ChordStatistics) => c.id === id,
   ) as ChordStatistics;
+
+  let chordStatsFromDevice = store.storedChordsFromDevice.statistics.find(
+    (c: ChordStatisticsFromDevice) => c.id === id,
+  ) as ChordStatisticsFromDevice;
+
   const couldFindChordInLibrary = !!chordStats;
   if (!couldFindChordInLibrary) chordStats = emptyChordStats;
 
-  if (store.errorOccurredWhileAttemptingToTypeTargetChord)
+  if (store.errorOccurredWhileAttemptingToTypeTargetChord){
     chordStats.numberOfErrors++;
+    chordStatsFromDevice.numberOfErrors++;
+  }
 
   let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
@@ -431,7 +447,6 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
 
   const numberOfChordsConquered = store.trainingStatistics.statistics.filter(
     (s) => (s.averageSpeed > store.trainingSettings.speedGoal  && s.numberOfOccurrences >= 10 ),
-  
   ).length;
   
   //This piece of the code triggers the Call to show the modal if the user completes that module.
@@ -466,15 +481,29 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
 
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
+  chordStatsFromDevice.lastSpeed = Math.min(
+    timeTakenToTypeChord,
+    MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
+  );
+
   chordStats.lastSpeed = Math.min(
     timeTakenToTypeChord,
     MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   );
   store.timeTakenToTypePreviousChord = chordStats?.lastSpeed;
+
+  chordStatsFromDevice.averageSpeed =
+  (chordStats.averageSpeed * chordStats.numberOfOccurrences +
+    chordStats.lastSpeed) /
+  (chordStats.numberOfOccurrences + 1);
+  
   chordStats.averageSpeed =
     (chordStats.averageSpeed * chordStats.numberOfOccurrences +
       chordStats.lastSpeed) /
     (chordStats.numberOfOccurrences + 1);
+
+    chordStatsFromDevice.numberOfOccurrences = chordStats.numberOfOccurrences + numberOfOccurences;
+
     chordStats.numberOfOccurrences = chordStats.numberOfOccurrences + numberOfOccurences;
   store.userIsEditingPreviousWord ===false ? chordStats.numberOfOccurrences++ : '';
 
@@ -489,6 +518,22 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     store.trainingStatistics.statistics.push(chordStats);
   }
   store.userIsEditingPreviousWord = false;
+
+  if(chordStatsFromDevice.chordsMastered?.length == 10){
+    chordStatsFromDevice.chordsMastered?.push(chordStatsFromDevice.averageSpeed)
+    chordStatsFromDevice.chordsMastered?.shift();
+  }else {
+  chordStatsFromDevice.chordsMastered?.push(chordStatsFromDevice.averageSpeed);
+  }
+
+  store.storedChordsFromDevice = {
+    statistics: store.storedChordsFromDevice.statistics.map(
+      (e: ChordStatisticsFromDevice) => (e.id === chordStatsFromDevice.id ? chordStatsFromDevice : e),
+    ),
+  };
+
+  store.currentTrainingScenario == 'ALLCHORDS' ? localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)) :''; //Store downloaded chords in local storage
+
 }
 
 function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
@@ -510,12 +555,16 @@ function generateEmptyChordStatistics(
   library: ChordLibraryRecord,
   scenario?: TrainingScenario,
 ): TrainingStatistics {
+  const allChord = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
   return {
     statistics: Object.keys(library).map((key) => {
-      return createEmptyChordStatistics(key, scenario);
+      if(scenario == 'ALLCHORDS') return createEmptyChordStatisticsFromDevice(key, scenario, [] , []);
+      else return createEmptyChordStatistics(key, scenario);
+      
     }),
   };
 }
+
 const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
 
@@ -551,6 +600,8 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       wordTestNumberValue: state.wordTestNumber,
       scenario: state.currentTrainingScenario,
       storedTestData: state.storedTestTextData,  
+      storedChordsFromDevice: state.storedChordsFromDevice.statistics,
+
 
     }),
   ];
@@ -606,6 +657,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       wordTestNumberValue: state.wordTestNumber,
       scenario: state.currentTrainingScenario,
       storedTestData: state.storedTestTextData,  
+      storedChordsFromDevice: state.storedChordsFromDevice.statistics,
     });
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
   document.getElementById('txt_Name')?.focus()

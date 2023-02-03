@@ -8,7 +8,16 @@ import {
      convertHexadecimalPhraseToAsciiString,
 
     } from '../controls/mainControls'
-    import {resetDataTable} from '../../manager/components/resetDataTable'
+    import {resetDataTable} from '../../manager/components/resetDataTable';
+
+    import {
+      ChordStatistics,
+      ChordStatisticsFromDevice,
+      createEmptyChordStatistics,
+      createEmptyChordStatisticsFromDevice,
+      MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
+      TrainingStatistics,
+    } from '../../../models/trainingStatistics';
 
 export async function getGetAll(){
   resetDataTable();
@@ -38,7 +47,9 @@ export async function getGetAll(){
       const { value } = await MainControls.lineReader.read();
       const chordCountSplit = value.split(" ")
       const chordCountParsedValue = parseInt(chordCountSplit[chordCountSplit.length-1])
-      const strValues = [];      
+      const strValues = []; 
+      const statisticsFromDevice = [];
+     
       const element: HTMLElement = document.getElementById("downloadCompletionPercentage") as HTMLInputElement;; //.innerHTML = "status: opened serial port";
 
       for(let i=0;i<chordCountParsedValue;i++){
@@ -55,6 +66,8 @@ export async function getGetAll(){
         const { value } = await MainControls.lineReader.read();
         const spliter = value.split(' ');
         const tempCurrentChord=[];
+        let phrase ='';
+        let chord : string[]= [];
         console.log(spliter)
         if (value) {
           const arrValue = [...spliter];
@@ -67,13 +80,18 @@ export async function getGetAll(){
           //console.log('StrValue '+convertHexadecimalChordToHumanChord(hexChordString));
           tempCurrentChord[0] = convertHexadecimalChordToHumanChordForAllChordsTeir(hexChordString);
           tempCurrentChord[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
+          chord = convertHexadecimalChordToHumanChordForAllChordsTeir(hexChordString);
+          phrase = convertHexadecimalPhraseToAsciiString(hexAsciiString);
       }
-      strValues.push(tempCurrentChord);
+      let newStat: ChordStatisticsFromDevice = createEmptyChordStatisticsFromDevice(phrase, "ALLCHORDS", [], chord);
+      
+      statisticsFromDevice.push(newStat);
+      //strValues.push(tempCurrentChord);
       element.innerHTML = "Chord Download Progress: "+ (((i/chordCountParsedValue)*100).toFixed(0))+'%';
 
     }
 
-    localStorage.setItem("chordsReadFromDevice", JSON.stringify(strValues)); //Store downloaded chords in local storage
+    localStorage.setItem("chordsReadFromDevice", JSON.stringify({"statistics":statisticsFromDevice})); //Store downloaded chords in local storage
     return true
 
     }

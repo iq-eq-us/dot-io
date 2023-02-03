@@ -74,7 +74,7 @@ export function TrainingModeSelector(): ReactElement {
         <div>/</div>
         <button  {...moduleNumber == 2 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [ allChords(), document.getElementById('txt_Name')?.focus(), setModuleNumber(2)]}>All Chords</button>
         <div>/</div>
-        <button {...moduleNumber == 3 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('SUPERSONIC'), document.getElementById('txt_Name')?.focus(), setModuleNumber(3)]}>Custom</button>
+        <button {...moduleNumber == 3 ? {className:" text-white m-2 font-mono"}: {className:" text-neutral-400 m-2 font-mono"} } onClick={() => [LearnPageFunction('LEXICOGRAPHIC'), document.getElementById('txt_Name')?.focus(), setModuleNumber(3)]}>Custom</button>
         </React.Fragment>
       )
     }

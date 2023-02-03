@@ -3,6 +3,7 @@ import { chordLibrary } from '../data/chordLibrary';
 import { keyPositions, keyPositionsByLetter } from '../data/keyPositionsCharachorderLite';
 import type { TrainingScenario } from '../models/trainingScenario';
 import {pickerV1, pickerLite} from '../models/keyboardDropDownFolder/keyboardDropDown';
+import type { ChordStatisticsFromDevice } from '../../src/models/trainingStatistics';
 
 export type CharacterEntryModeLite = 'CHARACTER' | 'CHORD';
 
@@ -26,20 +27,21 @@ export const ConvertStringToKeyHighlightPositionsLite = (
   }
 };
 
-function newFunc(text){
-for(let i =0; storedLibrary?.length; i++){
-  console.log('inLoop');
-  if(text == storedLibrary[i][1]){
-    const chord= [];
-    const tempChord = storedLibrary[i][0];
-    for(let p =0; p < tempChord?.length; p++){
-      console.log(tempChord[p]);
-      chord.push(chordLibrary?.all?.[tempChord[p]])
-    }
-    return chord;
+
+function parseChord(text){
+  let chordStats = storedLibrary?.statistics?.find(
+    (c: ChordStatisticsFromDevice) => c.id === text,
+  ) as ChordStatisticsFromDevice;
+    console.log('inLoop');
+      const chord= [];
+     // const tempChord = storedLibrary[i][0];
+      for(let p =0; p < chordStats?.chord?.length; p++){
+        //console.log(tempChord[p]);
+        chord.push(chordLibrary?.all?.[chordStats?.chord[p]])
+      }
+      return chord;
+  
   }
-}
-}
 
 const getHighlightPositionForString = (text: string, scenario: TrainingScenario | undefined) => {
     //console.log('Is this all chords' + scenario)
@@ -51,7 +53,7 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
     chord = chordLibrary.chordsLite[text];
   } else if (scenario == 'ALLCHORDS'){
     //const filteredList = storedLibrary.filter( (e: any) => (e.find(text)));
-    chord = newFunc(text);  
+    chord = parseChord(text);  
     //console.log('Is this all chords' + newFunc(text))
 
   }

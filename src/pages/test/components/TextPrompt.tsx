@@ -190,14 +190,14 @@ export function TextPrompt(): ReactElement {
 
       const compare = allTypedText[i];
       const alphabetCompare = setS[setS.length-1];
-      characterLengthOfTheEntireLine +=storedTestTextData[i].length;
+      characterLengthOfTheEntireLine +=storedTestTextData[i]?.length;
 
       //allTypedText
 
       if(compare.charAt(compare.length -1) == ' ' || (currentTrainingScenario == 'ALPHABET')){ 
 
         if(compare.slice(0, -1) == storedTestTextData[i] || (currentTrainingScenario && compare == storedTestTextData[i] )){
-          spacesBetweenWords += storedTestTextData[i].length;
+          spacesBetweenWords += storedTestTextData[i]?.length;
 
           let placeholder = '';
           for(let k =0; k<spacesBetweenWords; k++){
@@ -211,17 +211,17 @@ export function TextPrompt(): ReactElement {
        }
         else {
           //Here we're checking if the typed word is greater than the stored value we are subtracting by 1 to account for the space bar
-          if(allTypedText[i].length-1 > storedTestTextData[i].length){
+          if(allTypedText[i]?.length-1 > storedTestTextData[i]?.length){
 
             let periodsIfLengthOfTypedErrorIsLongerThanChordsLength ='';
             //Here we are looping through to get the length of the word thats being tested so that we can return '...' that are the length of the word
-            for(let y= 0; y<storedTestTextData[i].length; y++) { 
+            for(let y= 0; y<storedTestTextData[i]?.length; y++) { 
               periodsIfLengthOfTypedErrorIsLongerThanChordsLength += "."
             }
             displayArray.push(<div className ="text-gray">{periodsIfLengthOfTypedErrorIsLongerThanChordsLength}</div>)
 
           } else if(targetChordIndex !=0) {
-            const tempValue = storedTestTextData[i].length - allTypedText[i].length;
+            const tempValue = storedTestTextData[i]?.length - allTypedText[i]?.length;
             let tempBufferValues = '';
             
             for(let y= 0; y<tempValue; y++) { 

@@ -3,6 +3,7 @@ import { chordLibrary } from '../data/chordLibrary';
 import { keyPositions } from '../data/keyPositions';
 import type { TrainingScenario } from '../models/trainingScenario';
 import {pickerV1, pickerLite} from '../models/keyboardDropDownFolder/keyboardDropDown';
+import type { ChordStatisticsFromDevice } from '../../src/models/trainingStatistics';
 
 
 const storedLibrary = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
@@ -28,19 +29,19 @@ export const ConvertStringToKeyHighlightPositions = (
   }
 };
 
-function newFunc(text){
-  for(let i =0; storedLibrary?.length; i++){
+function parseChord(text){
+  let chordStats = storedLibrary?.statistics?.find(
+    (c: ChordStatisticsFromDevice) => c.id === text,
+  ) as ChordStatisticsFromDevice;
     console.log('inLoop');
-    if(text == storedLibrary[i][1]){
       const chord= [];
-      const tempChord = storedLibrary[i][0];
-      for(let p =0; p < tempChord?.length; p++){
-        console.log(tempChord[p]);
-        chord.push(chordLibrary?.all?.[tempChord[p]])
+     // const tempChord = storedLibrary[i][0];
+      for(let p =0; p < chordStats?.chord?.length; p++){
+        //console.log(tempChord[p]);
+        chord.push(chordLibrary?.all?.[chordStats?.chord[p]])
       }
       return chord;
-    }
-  }
+  
   }
 
 const getHighlightPositionForString = (text: string, scenario: TrainingScenario | undefined) => {
@@ -51,7 +52,7 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
   } else if (scenario == 'CHORDING' && pickerLite){
     chord = chordLibrary.chordsLite[text];
   }  else if (scenario == 'ALLCHORDS'){
-    chord = newFunc(text);  
+    chord = parseChord(text);  
   }else if(scenario == 'LEXICOGRAPHIC' && pickerV1){
     chord = chordLibrary.chords[text];
   } else if(scenario == 'LEXICOGRAPHIC' && pickerLite){

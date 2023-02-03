@@ -1,9 +1,10 @@
 import type { ChordLibraryRecord } from '../data/chordLibrary';
-import type { ChordStatistics } from '../models/trainingStatistics';
+import type { ChordStatistics, ChordStatisticsFromDevice } from '../models/trainingStatistics';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
 import { useEffect, useRef, useState  } from 'react';
 import type { TrainingScenario } from '../models/trainingScenario';
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import { wpmMethodCalculatorForStoredChords } from './aggregation';
 
 const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
@@ -19,6 +20,8 @@ interface ChordGenerationParameters {
   wordTestNumberValue?: WordTrainingValues;
   scenario?: TrainingScenario;
   storedTestData?: any[];
+  storedChordsFromDevice: ChordStatisticsFromDevice[] | undefined;
+
 }
 
 //const [internalWordCountState, setinternalWordCountState] = useState<number | null>(null);
@@ -138,7 +141,57 @@ export const generateChords = (
   }
   return allCharacters;
 
-} else{
+} else if ((parameters.scenario == 'ALLCHORDS')){
+
+  // * Uncomment the next two lines to use just the alphabet to test with
+    // const IS_TESTING = true;
+    // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
+  
+  
+    const chordToFeed = '';
+  
+  
+    const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
+  
+  
+    const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
+
+
+    const numberOfChordsNotMastered = parameters.storedChordsFromDevice.filter(
+      (s) => (.1 >= wpmMethodCalculatorForStoredChords(s.chordsMastered)/100) && s.chordsMastered.length >=10|| s.chordsMastered === undefined,
+    ).length;
+
+    const chordsSortedByMastered = parameters.storedChordsFromDevice.sort(
+      (a, b) => wpmMethodCalculatorForStoredChords(a.chordsMastered) - wpmMethodCalculatorForStoredChords(b.chordsMastered),
+    );
+
+    console.log('Should be based on speed is showen' + numberOfChordsNotMastered);
+
+    let chordsToUse = chordsSortedByMastered
+    .slice(-numberOfChordsNotMastered, parameters.numberOfTargetChords)
+    .map((s) => s.id);
+
+     while (allCharacters.join('').length < parameters.lineLength) {
+      const shouldChooseBasedOnSpeed =
+        parameters.recursionRate > Math.random() * 100;
+      if (
+        shouldChooseBasedOnSpeed &&
+        parameters.numberOfTargetChords > 0 &&
+        parameters.recursionIsEnabledGlobally
+      ){
+        allCharacters.push(
+          getRandomElementFromArray(chordsToUse),
+        );
+  
+      }
+      else allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
+    }
+    for(let i=0; i<allCharacters.length;i++){
+      parameters.storedTestData?.push(allCharacters[i]);
+    }
+    return allCharacters;
+  
+  } else {
   // * Uncomment the next two lines to use just the alphabet to test with
   // const IS_TESTING = true;
   // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];

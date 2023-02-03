@@ -43,6 +43,7 @@ export interface TrainingStoreActionsModel {
   setModuleNumber: Action<TrainingStoreModel, number>;
   setDownloadModulModalToggle: Action<TrainingStoreModel, boolean>;
   setTestTeirHighestWPM: Action<TrainingStoreModel, number>;
+  setStoredChordsFromDevice: Action<TrainingStoreModel, number>;;
 
 
   /**
@@ -116,6 +117,7 @@ export interface TrainingStoreStateModel {
   wasModuleShown: boolean;
   moduleNumber: number;
   testTeirHighestWPM: number;
+  storedChordsFromDevice: string[];
 
 }
 

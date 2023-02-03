@@ -11,6 +11,7 @@ import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
 import {pickerV1, pickerLite} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
+import type { ChordStatisticsFromDevice } from '../../../models/trainingStatistics';
 
 export const triggerResizeForChordModal = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -261,13 +262,18 @@ const ChordGrid = styled.div.attrs({
   className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start  overflow-scroll`,
 })``;
 
-export const generateNewChordRecordForAllChordsModule = (chords: string[]): ChordLibraryRecord => {
+export const generateNewChordRecordForAllChordsModule = (chords): ChordLibraryRecord => {
+  let chordStats = chords?.statistics;
+  console.log(chordStats.length);
   const newChordLibraryRecord: ChordLibraryRecord = {};
-  for(let i =0; i<chords.length; i++) {
-    if (chordLibrary.all[chords[i][1]])
-      newChordLibraryRecord[chords[i][1]] = chordLibrary.all[chords[i][1]];
-    else newChordLibraryRecord[chords[i][1]] = [];
+  for(let i =0; i<chordStats?.length; i++) {
+    if (chordLibrary?.all[chordStats[i]?.id]) newChordLibraryRecord[chordStats[i]?.id] = chordLibrary?.all[chordStats[i].id];
+    else newChordLibraryRecord[chordStats[i]?.id] = [];
+
+    //console.log(chordStats[i]?.id);
+
   };
+  //console.log(newChordLibraryRecord);
   return newChordLibraryRecord;
 };
 
