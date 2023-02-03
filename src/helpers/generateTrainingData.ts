@@ -20,7 +20,7 @@ interface ChordGenerationParameters {
   wordTestNumberValue?: WordTrainingValues;
   scenario?: TrainingScenario;
   storedTestData?: any[];
-  storedChordsFromDevice: ChordStatisticsFromDevice[] | undefined;
+  storedChordsFromDevice?: ChordStatisticsFromDevice[] | undefined;
 
 }
 

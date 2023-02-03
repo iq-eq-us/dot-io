@@ -32,7 +32,6 @@ function parseChord(text){
   const chordStats = storedLibrary?.statistics?.find(
     (c: ChordStatisticsFromDevice) => c.id === text,
   ) as ChordStatisticsFromDevice;
-    console.log('inLoop');
       const chord= [];
      // const tempChord = storedLibrary[i][0];
       for(let p =0; p < chordStats?.chord?.length; p++){
