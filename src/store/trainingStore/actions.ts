@@ -600,7 +600,7 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       wordTestNumberValue: state.wordTestNumber,
       scenario: state.currentTrainingScenario,
       storedTestData: state.storedTestTextData,  
-      storedChordsFromDevice: state.storedChordsFromDevice.statistics,
+      storedChordsFromDevice: state.storedChordsFromDevice?.statistics,
 
 
     }),
@@ -657,7 +657,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       wordTestNumberValue: state.wordTestNumber,
       scenario: state.currentTrainingScenario,
       storedTestData: state.storedTestTextData,  
-      storedChordsFromDevice: state.storedChordsFromDevice.statistics,
+      storedChordsFromDevice: state.storedChordsFromDevice?.statistics,
     });
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
   document.getElementById('txt_Name')?.focus()
