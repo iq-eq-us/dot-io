@@ -429,9 +429,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     (c: ChordStatistics) => c.id === id,
   ) as ChordStatistics;
 
-  const chordStatsFromDevice = store.storedChordsFromDevice.statistics.find(
-    (c: ChordStatisticsFromDevice) => c.id === id,
-  ) as ChordStatisticsFromDevice;
+
 
   const couldFindChordInLibrary = !!chordStats;
   if (!couldFindChordInLibrary) chordStats = emptyChordStats;
@@ -481,10 +479,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
 
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
-  chordStatsFromDevice.lastSpeed = Math.min(
-    timeTakenToTypeChord,
-    MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
-  );
+
 
   chordStats.lastSpeed = Math.min(
     timeTakenToTypeChord,
@@ -492,17 +487,13 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   );
   store.timeTakenToTypePreviousChord = chordStats?.lastSpeed;
 
-  chordStatsFromDevice.averageSpeed =
-  (chordStats.averageSpeed * chordStats.numberOfOccurrences +
-    chordStats.lastSpeed) /
-  (chordStats.numberOfOccurrences + 1);
+
   
   chordStats.averageSpeed =
     (chordStats.averageSpeed * chordStats.numberOfOccurrences +
       chordStats.lastSpeed) /
     (chordStats.numberOfOccurrences + 1);
 
-    chordStatsFromDevice.numberOfOccurrences = chordStats.numberOfOccurrences + numberOfOccurences;
 
     chordStats.numberOfOccurrences = chordStats.numberOfOccurrences + numberOfOccurences;
   store.userIsEditingPreviousWord ===false ? chordStats.numberOfOccurrences++ : '';
@@ -519,6 +510,29 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   }
   store.userIsEditingPreviousWord = false;
 
+  const chordStatsFromDevice = store.storedChordsFromDevice.statistics.find(
+    (c: ChordStatisticsFromDevice) => c.id === id,
+  ) as ChordStatisticsFromDevice;
+
+  if(store.currentTrainingScenario == 'ALLCHORDS'){
+  if (store.errorOccurredWhileAttemptingToTypeTargetChord){
+    chordStatsFromDevice.numberOfErrors++;
+  }
+
+  chordStatsFromDevice.lastSpeed = Math.min(
+    timeTakenToTypeChord,
+    MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
+  );
+
+
+  chordStatsFromDevice.averageSpeed =
+  (chordStatsFromDevice.averageSpeed * chordStatsFromDevice.numberOfOccurrences +
+    chordStatsFromDevice.lastSpeed) /
+  (chordStatsFromDevice.numberOfOccurrences + 1);
+
+  chordStatsFromDevice.numberOfOccurrences = chordStats.numberOfOccurrences + numberOfOccurences;
+
+
   if(chordStatsFromDevice.chordsMastered?.length == 10){
     chordStatsFromDevice.chordsMastered?.push(chordStatsFromDevice.averageSpeed)
     chordStatsFromDevice.chordsMastered?.shift();
@@ -531,8 +545,9 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
       (e: ChordStatisticsFromDevice) => (e.id === chordStatsFromDevice.id ? chordStatsFromDevice : e),
     ),
   };
+ localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage
 
-  store.currentTrainingScenario == 'ALLCHORDS' ? localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)) :''; //Store downloaded chords in local storage
+}
 
 }
 
