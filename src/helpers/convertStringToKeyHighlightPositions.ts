@@ -40,8 +40,6 @@ function parseChord(text){
         //console.log(tempChord[p]);
         chord.push(chordLibrary?.all?.[chordStats?.chord[p]])
       }
-      console.log('parseChord function '+chord);
-
       return chord;
   
   }

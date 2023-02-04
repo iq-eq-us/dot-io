@@ -436,7 +436,6 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
 
   if (store.errorOccurredWhileAttemptingToTypeTargetChord){
     chordStats.numberOfErrors++;
-    chordStatsFromDevice.numberOfErrors++;
   }
 
   let timeTakenToTypeChord =

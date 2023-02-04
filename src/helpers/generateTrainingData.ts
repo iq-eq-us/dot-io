@@ -168,7 +168,7 @@ export const generateChords = (
     console.log('Should be based on speed is showen' + numberOfChordsNotMastered);
 
     const chordsToUse = chordsSortedByMastered
-    .slice(-numberOfChordsNotMastered, parameters.numberOfTargetChords)
+    .slice(numberOfChordsNotMastered, parameters.numberOfTargetChords)
     .map((s) => s.id);
 
      while (allCharacters.join('').length < parameters.lineLength) {

@@ -51,7 +51,6 @@ export const wpmMethodCalculatorForStoredChords = ( value : number[]) => {
   const millisecondsPerCharacter = avgSpeedMilliseconds/5;
   const averageCharacterPerMin = 60000/millisecondsPerCharacter;
   const wpm = averageCharacterPerMin/5;
-  console.log('reading this now '+wpm)
 
    return wpm;
 }

@@ -58,8 +58,6 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
   }
   //console.log('this is the chord '+ chord)
   if (chord) {
-
-    console.log('this is the chord '+ chord)
     const keyHighlightPositionsBeforeTransformation = chord.map(
       (nonTransformedKeyPosition) => keyPositions?.[nonTransformedKeyPosition],
     );
