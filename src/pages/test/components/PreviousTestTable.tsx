@@ -4,7 +4,7 @@ import type { ChordStatistics, ChordStatisticsFromDevice } from '../../../models
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
-import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+import { getCumulativeAverageChordTypeTime, getCumulativeAverageChordTypeTimeFromDevice } from '../../../helpers/aggregation';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
@@ -139,7 +139,6 @@ const Row = ({ index, style, data }: RowData) => {
 };
 
 
-
 function returnStatisticsColumnContent(data : Data, index: number){
   const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
   const wpmValue = wpmCalculator(parseInt(item?.averageSpeed.toFixed()));
@@ -152,9 +151,9 @@ function returnStatisticsColumnContent(data : Data, index: number){
   if(tier == 'CHM'){
     return(
     <React.Fragment>
-        <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
+        <RowItem>{truncateString(itemFromStoredChords?.displayTitle || "", 12)}</RowItem>
         <RowItem>{cpmValue?.toFixed(0) == 'Infinity' ? 0 : cpmValue?.toFixed(0)}</RowItem>
-        <RowItem>{item?.numberOfOccurrences}</RowItem>
+        <RowItem>{itemFromStoredChords?.numberOfOccurrences}</RowItem>
         <RowItem>{((cpmValue)).toFixed(0) == 'Infinity' ? 0 : ((cpmValue)).toFixed(0)/100}</RowItem>
     </React.Fragment>
     )
@@ -272,6 +271,9 @@ function returnStatisticsColumnHeader(data : Data){
   //const cpmValue = wpmMethodCalculatorForStoredChords(itemFromStoredChords?.chordsMastered);
   
   const average = getCumulativeAverageChordTypeTime(data.stats);
+  const averageChordsFromDevice = getCumulativeAverageChordTypeTimeFromDevice(data.storedChordsFromDevice?.statistics);
+
+
   let sumErrors = 0;
   let sumOccurrences = 0;
   data.stats.forEach((d) => {
@@ -293,8 +295,8 @@ function returnStatisticsColumnHeader(data : Data){
     return(
     <React.Fragment>
       <RowStatItem>Total</RowStatItem>
-      <RowStatItem>{data.displayHUD ? (parseInt(average) == 0 ? '0' :  (wpmCalculator(parseInt(average).toFixed())*5).toFixed() + '/' + (wpmCalculator(parseInt(average))).toFixed()): ''}</RowStatItem>
-      <RowStatItem>{sumErrorsForChordsStoredOnDevice}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? (parseInt(averageChordsFromDevice) == 0 ? '0' :  (wpmCalculator(averageChordsFromDevice)*5).toFixed(0)): ''}</RowStatItem>
+      <RowStatItem>{sumOccurrencesForChordsStoredOnDevice}</RowStatItem>
       <RowStatItem>{data.displayHUD ? sumOccurrencesForChordsStoredOnDevice : ''}</RowStatItem>
     </React.Fragment>
     )

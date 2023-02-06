@@ -20,7 +20,7 @@ interface ChordGenerationParameters {
   wordTestNumberValue?: WordTrainingValues;
   scenario?: TrainingScenario;
   storedTestData?: any[];
-  storedChordsFromDevice?: ChordStatisticsFromDevice[] | undefined;
+  storedChordsFromDevice?: ChordStatisticsFromDevice[];
 
 }
 
@@ -156,16 +156,15 @@ export const generateChords = (
   
     const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
-
     const numberOfChordsNotMastered = parameters.storedChordsFromDevice.filter(
-      (s) => (.1 >= wpmMethodCalculatorForStoredChords(s.chordsMastered)/100) && s.chordsMastered.length >=10|| s.chordsMastered === undefined,
+      (s) => ( wpmMethodCalculatorForStoredChords(s.chordsMastered).toFixed(0)/100 >= .1 && s.chordsMastered.length >=10)|| s.chordsMastered === undefined,
     ).length;
 
     const chordsSortedByMastered = parameters.storedChordsFromDevice.sort(
       (a, b) => wpmMethodCalculatorForStoredChords(a.chordsMastered) - wpmMethodCalculatorForStoredChords(b.chordsMastered),
     );
 
-    console.log('Should be based on speed is showen' + numberOfChordsNotMastered);
+    console.log('Should be based on speed is shown ' + numberOfChordsNotMastered);
 
 
     const finalChordsToUse = chordsSortedByMastered.slice(0+numberOfChordsNotMastered, parameters.numberOfTargetChords+numberOfChordsNotMastered)

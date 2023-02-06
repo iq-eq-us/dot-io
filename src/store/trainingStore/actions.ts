@@ -4,6 +4,7 @@ import { generateChords } from '../../helpers/generateTrainingData';
 import type { TrainingScenario } from '../../models/trainingScenario';
 import { defaultTrainingSettings, defaultAlphabeticTestTraining, defaultTrigramsTestTraining, defaultTrainingSettingsState } from '../../models/trainingSettingsStateModel';
 import { _keyMapDefaults  } from "../../pages/manager/controls/maps";
+import { wpmMethodCalculatorForStoredChords } from '../../helpers/aggregation';
 
 import {
   ChordStatistics,
@@ -468,7 +469,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
     timeTakenToTypeChord = 0;
-    numberOfOccurences =-1;
+    numberOfOccurences =0;
     
     //console.log('In here the check user first ty '+userIsTypingFirstChord + ' '+ timeTakenToTypeChord);
     //console.log('oh yea '+ timeTakenToTypeChord);
@@ -522,7 +523,10 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     timeTakenToTypeChord,
     MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   );
+ 
+  //const sum = chordStatsFromDevice.chordsMastered?.reduce((a, b) => a + b, 0);
 
+  //chordStatsFromDevice.averageSpeed = (sum / chordStatsFromDevice.chordsMastered?.length) || 0;
 
   chordStatsFromDevice.averageSpeed =
   (chordStatsFromDevice.averageSpeed * chordStatsFromDevice.numberOfOccurrences +
@@ -538,6 +542,10 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   }else {
   chordStatsFromDevice.chordsMastered?.push(chordStatsFromDevice.averageSpeed);
   }
+
+  const sum = chordStatsFromDevice?.chordsMastered?.reduce((a, b) => a + b, 0);
+  chordStatsFromDevice.averageSpeed = (sum / chordStatsFromDevice.chordsMastered?.length) || 0;
+
   store.trainingStatistics = {
     statistics: store.trainingStatistics.statistics.map(
       (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
@@ -546,7 +554,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
 
   store.storedChordsFromDevice = {
     statistics: store.storedChordsFromDevice.statistics.map(
-      (e: ChordStatisticsFromDevice) => (e.id === chordStatsFromDevice.id ? chordStatsFromDevice : e),
+      (e: ChordStatisticsFromDevice) => (e.id === chordStatsFromDevice.id && e.chord === chordStatsFromDevice.chord ? chordStatsFromDevice : e),
     ),
   };
  localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage

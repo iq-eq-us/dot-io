@@ -1,4 +1,4 @@
-import type { ChordStatistics } from '../models/trainingStatistics';
+import type { ChordStatistics, ChordStatisticsFromDevice } from '../models/trainingStatistics';
 
 export const getCumulativeAverageChordTypeTime = (
   stats: ChordStatistics[],
@@ -22,6 +22,30 @@ export const getCumulativeAverageChordTypeTime = (
 
   return (isNaN(average) ? '0' : average?.toFixed()) || '0';
 };
+
+export const getCumulativeAverageChordTypeTimeFromDevice = (
+  stats: ChordStatisticsFromDevice[],
+): string => {
+  const statsWithUntypedChordsRemoved = stats?.filter(
+    (stat) => stat.averageSpeed != 0,
+    
+  );
+
+  
+ 
+  const average =
+    statsWithUntypedChordsRemoved?.reduce(
+      (a, b) => ({
+        averageSpeed: a.averageSpeed + b.averageSpeed,
+        // ? Could also be done this way to account for the number of occurrences of the given chord typed
+        // averageSpeed: a.averageSpeed + b.averageSpeed * b.numberOfOccurrences,
+      }),
+      { averageSpeed: 0 },
+    ).averageSpeed / statsWithUntypedChordsRemoved?.length;
+
+  return (isNaN(average) ? '0' : average?.toFixed()) || '0';
+};
+
 
 export const getCumulativeOccurence = (
   stats: ChordStatistics[],
