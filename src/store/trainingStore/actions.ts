@@ -538,6 +538,11 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   }else {
   chordStatsFromDevice.chordsMastered?.push(chordStatsFromDevice.averageSpeed);
   }
+  store.trainingStatistics = {
+    statistics: store.trainingStatistics.statistics.map(
+      (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
+    ),
+  };
 
   store.storedChordsFromDevice = {
     statistics: store.storedChordsFromDevice.statistics.map(

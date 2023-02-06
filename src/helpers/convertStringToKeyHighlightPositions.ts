@@ -29,7 +29,7 @@ export const ConvertStringToKeyHighlightPositions = (
   }
 };
 
-function parseChord(text){
+function parseChord(text : string){
   const chordStats = storedLibrary?.statistics?.find(
     (c: ChordStatisticsFromDevice) => c.id === text,
   ) as ChordStatisticsFromDevice;
@@ -48,15 +48,15 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
   //console.log('Is this all chords' + scenario)
   let chord = chordLibrary?.all?.[text];
   if (scenario =='CHORDING' && pickerV1){
-      chord = chordLibrary.chords[text];
+    chord = parseChord(text);
   } else if (scenario == 'CHORDING' && pickerLite){
-    chord = chordLibrary.chordsLite[text];
+    chord = parseChord(text);
   }  else if (scenario == 'ALLCHORDS'){
     chord = parseChord(text);  
   }else if(scenario == 'LEXICOGRAPHIC' && pickerV1){
-    chord = chordLibrary.chords[text];
+    chord = parseChord(text);
   } else if(scenario == 'LEXICOGRAPHIC' && pickerLite){
-    chord = chordLibrary.chordsLite[text];
+    chord = parseChord(text);
   } else if(scenario == 'LEXICALSENTENCES' && pickerV1){
       chord = chordLibrary.lexicalSentences[text];
   }else {

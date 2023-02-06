@@ -167,9 +167,10 @@ export const generateChords = (
 
     console.log('Should be based on speed is showen' + numberOfChordsNotMastered);
 
-    const chordsToUse = chordsSortedByMastered
-    .slice(numberOfChordsNotMastered, parameters.numberOfTargetChords)
+
+    const finalChordsToUse = chordsSortedByMastered.slice(0+numberOfChordsNotMastered, parameters.numberOfTargetChords+numberOfChordsNotMastered)
     .map((s) => s.id);
+    console.log('Should be based on speed is showen' + finalChordsToUse);
 
      while (allCharacters.join('').length < parameters.lineLength) {
       const shouldChooseBasedOnSpeed =
@@ -180,7 +181,7 @@ export const generateChords = (
         parameters.recursionIsEnabledGlobally
       ){
         allCharacters.push(
-          getRandomElementFromArray(chordsToUse),
+          getRandomElementFromArray(finalChordsToUse),
         );
   
       }
