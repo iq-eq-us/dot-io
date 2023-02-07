@@ -22,6 +22,8 @@ function StatisticsTable(): ReactElement {
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const inTrainingLevel = useStoreState((store : any) => store.trainingLevel);
   const inStoredChordsFromDevice = useStoreState((store : any) => store.storedChordsFromDevice);
+  const inTrainingScenario = useStoreState((store : any) => store.currentTrainingScenario);
+
 
 
 
@@ -72,6 +74,7 @@ function StatisticsTable(): ReactElement {
           displayHUD: true,
           trainingLevel: inTrainingLevel,
           storedChordsFromDevice: inStoredChordsFromDevice,
+          trainingScenario: inTrainingScenario,
         }}
         style={{ borderRadius: 8 }}
       >
@@ -88,7 +91,7 @@ interface Data {
   displayHUD: boolean;
   trainingLevel: string;
   storedChordsFromDevice: ChordStatisticsFromDevice[];
-
+  trainingScenario: string; 
 }
 
 interface RowData {
@@ -147,16 +150,26 @@ function returnStatisticsColumnContent(data : Data, index: number){
   const cpmValue = wpmMethodCalculatorForStoredChords(itemFromStoredChords?.chordsMastered);
   const tier = data.trainingLevel;
   console.log('Previous table chord stats '+ data?.storedChordsFromDevice?.statstics?.[index - LIST_LENGTH_OFFSET])
-
-  if(tier == 'CHM'){
+  const percentageTypedCorrctley = (((itemFromStoredChords?.numberOfOccurrences - itemFromStoredChords?.numberOfErrors)/itemFromStoredChords?.numberOfOccurrences)*100).toFixed(0)
+  if(tier == 'CHM' && data.trainingScenario != 'LEXICOGRAPHIC'){
     return(
     <React.Fragment>
         <RowItem>{truncateString(itemFromStoredChords?.displayTitle || "", 12)}</RowItem>
         <RowItem>{cpmValue?.toFixed(0) == 'Infinity' ? 0 : cpmValue?.toFixed(0)}</RowItem>
-        <RowItem>{itemFromStoredChords?.numberOfOccurrences}</RowItem>
+        <RowItem>{isNaN(percentageTypedCorrctley) ? 0 : percentageTypedCorrctley}</RowItem>
         <RowItem>{((cpmValue)).toFixed(0) == 'Infinity' ? 0 : ((cpmValue)).toFixed(0)/100}</RowItem>
     </React.Fragment>
     )
+  } else if(tier == 'CHM' && data.trainingScenario == 'LEXICOGRAPHIC'){
+    return(
+      <React.Fragment>
+          <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
+          <RowItem>{cpmValue?.toFixed(0) == 'Infinity' ? 0 : cpmValue?.toFixed(0)}</RowItem>
+          <RowItem>{isNaN(percentageTypedCorrctley) ? 0 : percentageTypedCorrctley}</RowItem>
+          <RowItem>{((cpmValue)).toFixed(0) == 'Infinity' ? 0 : ((cpmValue)).toFixed(0)/100}</RowItem>
+      </React.Fragment>
+      )
+
   } else {
     return(
     <React.Fragment>

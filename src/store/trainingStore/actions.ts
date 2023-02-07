@@ -278,6 +278,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setAllTypedCharactersStore: action((state, payload) => {
     state.allTypedCharactersStore?.push(payload);
   }),
+  setStoredTestTextData: action((state, payload) => {
+    state.storedTestTextData = payload;
+  }),
   updateChordsUsedForTraining: action((state, payload) => {
     state.timeOfLastChordStarted = performance.now();
     state.chordsToPullFrom = payload;
@@ -310,11 +313,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.compareText = payload;
   }),
   toggleTestCompletePage: {
-    type: 'action',
-    payload: undefined,
-    result: undefined
-  },
-  setStoredTestTextData: {
     type: 'action',
     payload: undefined,
     result: undefined

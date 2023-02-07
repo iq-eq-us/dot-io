@@ -26,6 +26,10 @@ function EditChordsModal(): ReactElement {
     (store) => store.isDisplayingChordEditModal,
   );
   const trainingMode = useStoreState((store) => store.currentTrainingScenario);
+  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
+  const setStoredTestTextData = useStoreActions(
+    (store) => store.setStoredTestTextData,
+  );
   const [chords, setChords] = useState(getDefaultChords(trainingMode));
   const [tempChords, setTempChords] = useState(chords);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -96,6 +100,7 @@ function EditChordsModal(): ReactElement {
    const confirmEditing = () => {
     sessionStorage.removeItem("CutomTierTestValue");
     sessionStorage.removeItem("tempTestDeIncrement");
+    setStoredTestTextData([]);
     //console.log('Here is where this is being called');
     
     if (typeof trainingScenario === "string")

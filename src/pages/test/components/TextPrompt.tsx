@@ -231,12 +231,15 @@ export function TextPrompt(): ReactElement {
 
             //This for loop returns after a word is complete. It checks if word the user typed is inccorect and if it is shows the incorrect words at the bottom of the word
             for(let t =0; t<storedTestTextData[i]?.length; t++){
-
               const tempCompareValue = allTypedText[i];
               const tempTargetWord = storedTestTextData[i];
+
+              console.log('Compare T value '+ tempCompareValue[t]);
+              console.log('Temporary target value '+ tempTargetWord[t]);
+              console.log(storedTestTextData)
               if(tempCompareValue != undefined){
               tempCompareValue[t] == (tempTargetWord[t] == undefined ? '' : tempTargetWord[t]) ? thisNewArray.push( <span className= "text-white m-0 flex" >{tempTargetWord[t]}</span> ): thisNewArray.push( <span className=" m-0 flex" >{tempCompareValue[t]}</span>);
-              }
+            }
               else{
                 thisNewArray.push( <span className= "text-white m-0 flex" >{tempTargetWord[t]}</span>);
               }
