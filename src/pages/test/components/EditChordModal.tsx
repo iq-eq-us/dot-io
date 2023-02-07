@@ -29,7 +29,9 @@ function EditChordsModal(): ReactElement {
   const setStoredTestTextData = useStoreActions(
     (store) => store.setStoredTestTextData,
   );
-  const [chords, setChords] = useState(getDefaultChords(trainingMode));
+
+  const storedChordsRepresentation = useStoreState((store) => store.storedChordsRepresentation);
+  const [chords, setChords] = useState(getDefaultChords(trainingMode, storedChordsRepresentation));
   const [tempChords, setTempChords] = useState(chords);
   const inputRef = useRef<HTMLInputElement>(null);
   const trainingScenario = useCurrentTrainingScenario();
@@ -220,10 +222,14 @@ function EditChordsModal(): ReactElement {
     );
 }
 
-export const getDefaultChords = (trainingMode?: TrainingScenario) => {
+export const getDefaultChords = (trainingMode?: TrainingScenario, storedChordsRepresentation?: ChordLibraryRecord) => {
   const globalDictionaries = getGlobalDictionaries();
   if (trainingMode && globalDictionaries[trainingMode]) {
     return Object.keys(globalDictionaries[trainingMode] as ChordLibraryRecord);
+  } else if(trainingMode == 'ALLCHORDS'){
+    console.log
+    return Object.keys(getChordLibraryForTrainingScenario(trainingMode , storedChordsRepresentation ) || {});
+
   } else {
     return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
   }
@@ -269,25 +275,19 @@ const ChordGrid = styled.div.attrs({
 
 export const generateNewChordRecordForAllChordsModule = (chords): ChordLibraryRecord => {
   const chordStats = chords?.statistics;
-  console.log(chordStats.length);
+  console.log(chordStats?.length);
   const newChordLibraryRecord: ChordLibraryRecord = {};
   const allChord = localStorage?.getItem('chordsReadFromDevice');
-  if(allChord == null || undefined){
   for(let i =0; i<chordStats?.length; i++) {
     if (chordLibrary?.all[chordStats[i]?.id]) newChordLibraryRecord[chordStats[i]?.id] = chordLibrary?.all[chordStats[i].id];
     else newChordLibraryRecord[chordStats[i]?.id] = [];
-
-    //console.log(chordStats[i]?.id);
-
   };
   return newChordLibraryRecord;
-
-}
- return newChordLibraryRecord;
 };
 
 export const getChordLibraryForTrainingScenario = (
   scenario?: TrainingScenario | undefined,
+  chordRepresention?: ChordLibraryRecord | undefined,
 ): Record<string, string[]> | undefined => {
   const allChord = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
   if (scenario === 'ALPHABET') return chordLibrary.letters;
@@ -299,7 +299,10 @@ export const getChordLibraryForTrainingScenario = (
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
   else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
   else if (scenario === 'LEXICALSENTENCES') return chordLibrary.lexicalSentences;
-  else if (scenario === 'ALLCHORDS') return generateNewChordRecordForAllChordsModule(allChord);
+  else if (scenario === 'ALLCHORDS'){ 
+    console.log(chordRepresention)
+    return chordRepresention
+  };
 
   return undefined;
 };

@@ -6,6 +6,7 @@ import type { TrainingLevels } from 'src/models/trainingLevels';
 import {connectDeviceAndPopUp} from '../../../../src/pages/manager/components/connect';
 import { getId } from '../../../../src/pages/manager/components/getID';
 
+
 export function TrainingModeSelector(): ReactElement {
 
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
@@ -14,9 +15,7 @@ export function TrainingModeSelector(): ReactElement {
   const trainingLevel = useStoreState((store: any) => store.trainingLevel);
   const moduleNumber = useStoreState((store: any) => store.moduleNumber);
   const setModuleNumber = useStoreActions((store: any) => store.setModuleNumber);
-  const setModuleCompleteModalToggle = useStoreActions((store : any) => store.setModuleCompleteModalToggle);
   const setDownloadModulModalToggle = useStoreActions((store : any) => store.setDownloadModulModalToggle);
-
 
   const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState('CPM' as TrainingLevels); 
 
@@ -33,7 +32,7 @@ export function TrainingModeSelector(): ReactElement {
     const id = getId()
     if (id !=null && doesLibrayExist == undefined || null){
       connectDeviceAndPopUp()
-      setDownloadModulModalToggle(true as boolean)
+      setDownloadModulModalToggle(true as boolean);
     } else{
       LearnPageFunction('ALLCHORDS')
     }

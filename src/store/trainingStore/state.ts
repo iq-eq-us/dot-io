@@ -9,6 +9,7 @@ import {
 import { defaultTrainingSettings, defaultAlphabeticTestTraining } from '../../models/trainingSettingsStateModel';
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
 import type { TrainingLevels } from '../..//models/trainingLevels';
+import { generateNewChordRecordForAllChordsModule } from '../../pages/test/components/EditChordModal';
 
 /**
  * Here is the training store state, which contains the majority of the application state
@@ -44,6 +45,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   timeAtTrainingStart: 0,
   numberOfChordsForTrainingLevel: 0,
   testTeirHighestWPM: 0,
+  storedChordsRepresentation: generateNewChordRecordForAllChordsModule(JSON?.parse(localStorage?.getItem('chordsReadFromDevice'))),
   // * Computed State
   currentlyHighlightedKeys: computed((state) => {
     const highlightMode = state.characterEntryMode;

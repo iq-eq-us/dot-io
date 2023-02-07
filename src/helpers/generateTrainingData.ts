@@ -155,6 +155,7 @@ export const generateChords = (
   
   
     const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
+    //console.log(chordLibraryCharacters)
 
     const numberOfChordsNotMastered = parameters.storedChordsFromDevice.filter(
       (s) => (wpmMethodCalculatorForStoredChords(s.chordsMastered).toFixed(0)/100 >= 1 && s.chordsMastered.length >=10)|| s.chordsMastered === undefined,
@@ -240,7 +241,7 @@ export const generateChords = (
     .map((s) => s.id);
   const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
-  console.log(chordLibraryCharacters)
+  //console.log(chordLibraryCharacters)
 
 let sel = [];
 let i =0;

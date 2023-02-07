@@ -54,9 +54,12 @@ export const setGlobalDictionaries = (
  * Any change made to state here will automatically be reflected in any component that consumes this state.
  * The majority of the application logic exists here.
  */
-const trainingStoreActions: TrainingStoreActionsModel = {
+const trainingStoreActions: TrainingStoreActionsModel = { 
   setTrainingSettings: action((state, payload) => {
     state.trainingSettings = payload;
+  }),
+  setStoredChordsRepresentation: action((state, payload) => {
+    state.storedChordsRepresentation = payload;
   }),
   setIsDisplayingStatisticsModal: action((state, payload) => {
     state.trainingSettings.isDisplayingStatisticsModal = payload;
@@ -107,11 +110,20 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.storedChordsFromDevice = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
     //  console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
     // Pull the chord library from memory if it's there, otherwise pull it from defaults
-    if (typeof state.currentTrainingScenario === 'string' &&
+    if(state.currentTrainingScenario === 'ALLCHORDS'){ 
+
+      //console.log('stored chord rep '+ state.storedChordsRepresentation)
+      state.chordsToPullFrom = getChordLibraryForTrainingScenario(
+        (state.currentTrainingScenario), state.storedChordsRepresentation
+      ) as ChordLibraryRecord;
+    }
+    else if (typeof state.currentTrainingScenario === 'string' &&
       globalDictionaries[state.currentTrainingScenario] !== undefined) {
       state.chordsToPullFrom = globalDictionaries[state.currentTrainingScenario] as ChordLibraryRecord;
+      console.log('stored chord rep '+ state.storedChordsRepresentation)
+
     }
-    else {
+     else {
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         (state.currentTrainingScenario)
       ) as ChordLibraryRecord;
@@ -133,8 +145,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     }
 
     state.numberOfChordsForTrainingLevel =
-      state.trainingStatistics.statistics.length;
+    state.trainingStatistics.statistics.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
+
 
     // Open the chord editing modal if the user is starting the fourth, fifth, or sixth training module 
     if (payload[0] === 'LEXICOGRAPHIC' || payload[0] === 'SUPERSONIC' || payload[0] === 'CUSTOMTIER')
@@ -296,7 +309,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingSettings.isDisplayingSettingsModal = oldDisplay.settings;
     state.timeTakenToTypePreviousChord = 0;
     state.numberOfChordsForTrainingLevel =
-      state.trainingStatistics.statistics.length;
+    state.trainingStatistics.statistics.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
   }),
   /**
@@ -371,6 +384,7 @@ function generateTrainingSettings(storeState: TrainingStoreStateModel){
   }
   
 }
+
 
 function checkIfErrorExistsInUserEnteredText(
   storeState: TrainingStoreStateModel,

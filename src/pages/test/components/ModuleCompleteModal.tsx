@@ -5,7 +5,7 @@ import { downloadChordsForAllChordsModule } from '../../../../src/pages/manager/
 import { MainControls } from '../../.././../src/pages/manager/controls/mainControls';
 import { ProgressBar } from './ProgressBar';
 import IQEQLogoImage from './assets/iqeq.png'; 
-
+import { generateNewChordRecordForAllChordsModule } from './EditChordModal';
 
 
 
@@ -18,6 +18,7 @@ function ModuleCompleteModal () : ReactElement {
   const moduleCompleteModalToggle = useStoreState((store : any) => store.moduleCompleteModalToggle); 
   const setModuleCompleteModalToggle = useStoreActions((store : any) => store.setModuleCompleteModalToggle);
   const setDownloadModulModalToggle = useStoreActions((store : any) => store.setDownloadModulModalToggle);
+  const setStoredChordsRepresentation = useStoreActions((store : any) => store.setStoredChordsRepresentation); 
 
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   const setModuleNumber = useStoreActions((store: any) => store.setModuleNumber);
@@ -71,6 +72,7 @@ function ModuleCompleteModal () : ReactElement {
   async function downloadChords(){
     const done = await downloadChordsForAllChordsModule();
     console.log('THis is done in downloadCHords '+ done)
+    setStoredChordsRepresentation(generateNewChordRecordForAllChordsModule(JSON?.parse(localStorage.getItem('chordsReadFromDevice'))))
     done == true ? [LearnPageFunction('ALLCHORDS'),setDownloadModulModalToggle(!downloadModulModalToggle)] : ''
 
   }
