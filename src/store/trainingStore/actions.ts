@@ -131,6 +131,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       const tempStoredState = state.storedTestTextData;
       state.storedTestTextData = tempStoredState;
     } else {
+      console.log('I am not generating any stored training data')
       //const tempStoredValue = state.storedTestTextData;
       state.storedTestTextData = [];
     }

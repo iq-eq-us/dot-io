@@ -144,6 +144,7 @@ export function TextPrompt(): ReactElement {
   }
 
   function whatTextToShow(targetTextLineOne : any, targetChordIndex: any, indexOfCharacterInTargetChord: any, arr: any){
+    console.log(storedTestTextData)
 
 
     let displayArray = [];
@@ -236,7 +237,6 @@ export function TextPrompt(): ReactElement {
 
               console.log('Compare T value '+ tempCompareValue[t]);
               console.log('Temporary target value '+ tempTargetWord[t]);
-              console.log(storedTestTextData)
               if(tempCompareValue != undefined){
               tempCompareValue[t] == (tempTargetWord[t] == undefined ? '' : tempTargetWord[t]) ? thisNewArray.push( <span className= "text-white m-0 flex" >{tempTargetWord[t]}</span> ): thisNewArray.push( <span className=" m-0 flex" >{tempCompareValue[t]}</span>);
             }
@@ -245,7 +245,7 @@ export function TextPrompt(): ReactElement {
               }
             }
             displayArray.push(<span className= "m-0 flex" >{thisNewArray}</span>);
-            
+
           }
 
         

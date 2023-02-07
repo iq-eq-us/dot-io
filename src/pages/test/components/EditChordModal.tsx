@@ -26,7 +26,6 @@ function EditChordsModal(): ReactElement {
     (store) => store.isDisplayingChordEditModal,
   );
   const trainingMode = useStoreState((store) => store.currentTrainingScenario);
-  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
   const setStoredTestTextData = useStoreActions(
     (store) => store.setStoredTestTextData,
   );
@@ -97,10 +96,10 @@ function EditChordsModal(): ReactElement {
     }
   };
 
-   const confirmEditing = () => {
+
+   const confirmEditing = async () => {
     sessionStorage.removeItem("CutomTierTestValue");
     sessionStorage.removeItem("tempTestDeIncrement");
-    setStoredTestTextData([]);
     //console.log('Here is where this is being called');
     
     if (typeof trainingScenario === "string")
@@ -119,6 +118,7 @@ function EditChordsModal(): ReactElement {
       trainingScenario === 'SUPERSONIC' || trainingScenario == 'ALLCHORDS';
 
     if (hasChangeBeenMade) {
+      setStoredTestTextData([]);
       const newChordLibraryRecord = generateNewChordRecord(chordsToUse);
       updateChordsUsedInStore(newChordLibraryRecord);
       setChords(tempChords);
@@ -154,7 +154,7 @@ function EditChordsModal(): ReactElement {
     
       {isShowingPortal && (
         <Portal>
-        {(isShowingPortal && (sessionStorage.getItem('Refresh')!=undefined)) ? confirmEditing : 
+        {(isShowingPortal && (sessionStorage.getItem('Refresh')!=undefined)) ? [confirmEditing] : 
           <div
             onClick={cancelEditing}
             className="fixed inset-0 width-screen height-screen bg-opacity-70 bg-black flex items-center justify-center"
