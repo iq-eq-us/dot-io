@@ -271,6 +271,8 @@ export const generateNewChordRecordForAllChordsModule = (chords): ChordLibraryRe
   const chordStats = chords?.statistics;
   console.log(chordStats.length);
   const newChordLibraryRecord: ChordLibraryRecord = {};
+  const allChord = localStorage?.getItem('chordsReadFromDevice');
+  if(allChord == null || undefined){
   for(let i =0; i<chordStats?.length; i++) {
     if (chordLibrary?.all[chordStats[i]?.id]) newChordLibraryRecord[chordStats[i]?.id] = chordLibrary?.all[chordStats[i].id];
     else newChordLibraryRecord[chordStats[i]?.id] = [];
@@ -278,8 +280,10 @@ export const generateNewChordRecordForAllChordsModule = (chords): ChordLibraryRe
     //console.log(chordStats[i]?.id);
 
   };
-  //console.log(newChordLibraryRecord);
   return newChordLibraryRecord;
+
+}
+ return newChordLibraryRecord;
 };
 
 export const getChordLibraryForTrainingScenario = (

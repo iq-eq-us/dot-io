@@ -43,7 +43,6 @@ function parseChord(text){
   }
 
 const getHighlightPositionForString = (text: string, scenario: TrainingScenario | undefined) => {
-    //console.log('Is this all chords' + scenario)
 
   let chord = chordLibrary?.all?.[text];
   if (scenario =='CHORDING' && pickerV1){
@@ -51,10 +50,7 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
   } else if (scenario == 'CHORDING' && pickerLite){
     chord = parseChord(text);
   } else if (scenario == 'ALLCHORDS'){
-    //const filteredList = storedLibrary.filter( (e: any) => (e.find(text)));
     chord = parseChord(text);  
-    //console.log('Is this all chords' + newFunc(text))
-
   }
   //console.log('this is the chord '+ chord)
   if (chord) {

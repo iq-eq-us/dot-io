@@ -234,7 +234,7 @@ export function TextPrompt(): ReactElement {
             for(let t =0; t<storedTestTextData[i]?.length; t++){
               const tempCompareValue = allTypedText[i];
               const tempTargetWord = storedTestTextData[i];
-
+              console.log(allTypedText)
               console.log('Compare T value '+ tempCompareValue[t]);
               console.log('Temporary target value '+ tempTargetWord[t]);
               if(tempCompareValue != undefined){
@@ -329,6 +329,7 @@ export function TextPrompt(): ReactElement {
 
     
     if(setS[setS.length-1] == " " && indexOfTargetChord != allTypedText.length && conditionalValue < 1){
+      console.log('This is exactly what Im stoing ' + setS)
       storeAllTypedText(setS);
       setTypedTrainingText('');
       arr = [];

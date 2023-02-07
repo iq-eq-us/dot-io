@@ -110,9 +110,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     if (typeof state.currentTrainingScenario === 'string' &&
       globalDictionaries[state.currentTrainingScenario] !== undefined) {
       state.chordsToPullFrom = globalDictionaries[state.currentTrainingScenario] as ChordLibraryRecord;
-    }// else if(state.currentTrainingScenario == 'ALLCHORDS' ){
-     // state.storedChordsFromDevice = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
-    //} 
+    }
     else {
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         (state.currentTrainingScenario)
@@ -131,8 +129,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       const tempStoredState = state.storedTestTextData;
       state.storedTestTextData = tempStoredState;
     } else {
-      console.log('I am not generating any stored training data')
-      //const tempStoredValue = state.storedTestTextData;
       state.storedTestTextData = [];
     }
 
@@ -345,7 +341,8 @@ function checkIfShouldProceedToNextTargetChord(
       actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');    
-    } else if (storeState.typedTrainingText.charAt(storeState.typedTrainingText.length-1) == ' ') {
+    } else if (wordToCompare === storeState.typedTrainingText) {
+      console.log('This is exactly what Im stoing ' + storeState.typedTrainingText)
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');   
@@ -581,7 +578,6 @@ function generateEmptyChordStatistics(
   library: ChordLibraryRecord,
   scenario?: TrainingScenario,
 ): TrainingStatistics {
-  const allChord = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
   return {
     statistics: Object.keys(library).map((key) => {
       if(scenario == 'ALLCHORDS') return createEmptyChordStatisticsFromDevice(key, scenario, [] , []);
