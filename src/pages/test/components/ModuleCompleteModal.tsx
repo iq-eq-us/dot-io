@@ -103,7 +103,7 @@ function ModuleCompleteModal () : ReactElement {
     <p className=' ml-10 mr-10 text-white'>Or press &lsquo;X&rsquo; to continue practicing. Or press &lsquo;X&rsquo; to conti.</p>
     <img src={IQEQLogoImage} className={`h-28 w-28 animate-bounce  ml-48 ${value == false? `hidden` :``}`} />
     <p className=' ml-10 mr-10 ml-36' id='downloadCompletionPercentage'></p>
-    <button className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ${value == true? `hidden` :``}`} onClick={() => [setValue(true), downloadChords()]}>Download</button> 
+    <button className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] `} onClick={() => [setValue(true), downloadChords()]}>Download</button> 
 
     </div> 
     : null
