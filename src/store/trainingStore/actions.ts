@@ -520,7 +520,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   }
   store.userIsEditingPreviousWord = false;
 
-  const chordStatsFromDevice = store.storedChordsFromDevice.statistics.find(
+  const chordStatsFromDevice = store.storedChordsFromDevice?.statistics.find(
     (c: ChordStatisticsFromDevice) => c.id === id,
   ) as ChordStatisticsFromDevice;
 

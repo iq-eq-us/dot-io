@@ -151,7 +151,7 @@ function returnStatisticsColumnContent(data : Data, index: number){
   const tier = data.trainingLevel;
   console.log('Previous table chord stats '+ data?.storedChordsFromDevice?.statstics?.[index - LIST_LENGTH_OFFSET])
   const percentageTypedCorrctley = (((itemFromStoredChords?.numberOfOccurrences - itemFromStoredChords?.numberOfErrors)/itemFromStoredChords?.numberOfOccurrences)*100).toFixed(0)
-  if(tier == 'CHM' && data.trainingScenario != 'LEXICOGRAPHIC'){
+  if(tier == 'CHM' && data.trainingScenario != 'LEXICOGRAPHIC' && localStorage.getItem('chordsReadFromDevice') != (null || undefined)){
     return(
     <React.Fragment>
         <RowItem>{truncateString(itemFromStoredChords?.displayTitle || "", 12)}</RowItem>
