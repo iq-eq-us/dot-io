@@ -26,7 +26,7 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
       opacity: 1
     }
   },
-  colors: ['#0090FF','#22C55E','#FF0000'],
+  colors: ['#0090FF', '#22C55E','#FF0000'],
   stroke: {
     curve: "smooth",
     width: 3
@@ -87,15 +87,16 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
   yaxis: [
     {
       axisTicks: {
-        show: true
+        show: true,
+
       },
       axisBorder: {
         show: true,
-        color: "#FF1654"
+        color: "#0090FF"
       },
       labels: {
         style: {
-          colors: "#FF1654"
+          colors: ["#0090FF", '#0090FF']
         }
       },
       title: {
@@ -129,13 +130,19 @@ export function myGraph(wordNames : any, wordOccurrences : any , wordPerMinute: 
       {
         floating: true,
         axisTicks: {
-          show: false
+          show: false,
+          color: "#22C55E"
+
         },
         axisBorder: {
-          show: false
+          show: false,
+          color: "#22C55E"
+
         },
         labels: {
-          show: false
+          show: false,
+          color: "#22C55E"
+
         },
       }
      
@@ -243,9 +250,7 @@ export function TestCompleteGraph(): ReactElement {
     if(currentTrainingScenario == 'CUSTOMTIER'){
       console.log('Only entered if this is custom tier ' + currentTrainingScenario);
     for(let i =0; i<chordsToChooseFrom?.length; i++){
-      console.log('Choosey ' + chordsToChooseFrom)
-      console.log('Choosey ' +wordNames.indexOf(chordsToChooseFrom[i]));
-
+    
       finalErrorsArray.push(wordOccurrences[wordNames.indexOf(chordsToChooseFrom[i])]);
       finalWPMArray.push(wordPerMinute[wordNames.indexOf(chordsToChooseFrom[i])]);
       finalRawWPM.push(rawSpeedOfCurrentWord[wordNames.indexOf(chordsToChooseFrom[i])]);
@@ -259,7 +264,7 @@ export function TestCompleteGraph(): ReactElement {
 
   } else{
     let firstWordIndex;
-    for(let i =0; i<storedTestTextData?.length; i++){
+    for(let i =1; i<storedTestTextData?.length; i++){
       if(isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false){
       finalErrorsArray.push(wordOccurrences[wordNames.indexOf(storedTestTextData[i])]);
       finalWPMArray.push(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]);
@@ -278,8 +283,7 @@ export function TestCompleteGraph(): ReactElement {
     wordOccurrences = finalErrorsArray;
     finalWPMArray.shift();
     wordPerMinute = wpmDataCalculator(finalWPMArray);
-    console.log('Before Word Names');
-    console.log(wordNames);
+
     //storedTestTextData.shift(); TStored test text data does not need to be shifted
     wordNames = storedTestTextData;
     console.log(wordNames);

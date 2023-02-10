@@ -107,10 +107,10 @@ export function TextPrompt(): ReactElement {
 
     if (!isKeyDown) {
       isKeyDown = true;
-      console.log(keyDownTime);
+      //console.log(keyDownTime);
       setKeyDownTime(performance.now());
     }
-    console.log(keyDownTime);
+    //console.log(keyDownTime);
   };
 
 
@@ -144,7 +144,7 @@ export function TextPrompt(): ReactElement {
   }
 
   function whatTextToShow(targetTextLineOne : any, targetChordIndex: any, indexOfCharacterInTargetChord: any, arr: any){
-    console.log(storedTestTextData)
+   // console.log(storedTestTextData)
 
 
     let displayArray = [];
@@ -234,9 +234,9 @@ export function TextPrompt(): ReactElement {
             for(let t =0; t<storedTestTextData[i]?.length; t++){
               const tempCompareValue = allTypedText[i];
               const tempTargetWord = storedTestTextData[i];
-              console.log(allTypedText)
-              console.log('Compare T value '+ tempCompareValue[t]);
-              console.log('Temporary target value '+ tempTargetWord[t]);
+              //console.log(allTypedText)
+              //console.log('Compare T value '+ tempCompareValue[t]);
+              //console.log('Temporary target value '+ tempTargetWord[t]);
               if(tempCompareValue != undefined){
               tempCompareValue[t] == (tempTargetWord[t] == undefined ? '' : tempTargetWord[t]) ? thisNewArray.push( <span className= "text-white m-0 flex" >{tempTargetWord[t]}</span> ): thisNewArray.push( <span className=" m-0 flex" >{tempCompareValue[t]}</span>);
             }
@@ -329,7 +329,7 @@ export function TextPrompt(): ReactElement {
 
     
     if(setS[setS.length-1] == " " && indexOfTargetChord != allTypedText.length && conditionalValue < 1){
-      console.log('This is exactly what Im stoing ' + setS)
+      //console.log('This is exactly what Im stoing ' + setS)
       storeAllTypedText(setS);
       setTypedTrainingText('');
       arr = [];
@@ -448,14 +448,18 @@ export default function CharacterEntryChord({ word, index }: { word: string, ind
   const wordSplit = word.split("");  
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', color: "gray" }}>
-      {wordSplit.slice(0, index).map((char) =>
-        <span className="text-black" key={Math.random()}>{char}</span>
-      )}
-      <span className="text-blue-500 animate-pulse">{wordSplit[index]}</span>
-      {wordSplit.slice(index + 1).map((char) =>
-        <span className="text-grey" key={Math.random()}>{char}</span>
-      )}
+    <div style={{ display: 'flex', flexDirection: 'row', color: 'gray' }}>
+      {wordSplit.slice(0, index).map((char) => (
+        <span className="text-black" key={Math.random()}>
+          {char}
+        </span>
+      ))}
+      <span className="text-white bg-black">{wordSplit[index]}</span>
+      {wordSplit.slice(index + 1).map((char) => (
+        <span className="text-grey" key={Math.random()}>
+          {char}
+        </span>
+      ))}
     </div>
     
   )

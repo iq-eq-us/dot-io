@@ -147,16 +147,17 @@ function returnStatisticsColumnContent(data : Data, index: number){
   const wpmValue = wpmCalculator(parseInt(item?.averageSpeed.toFixed()));
   const itemFromStoredChords = data?.storedChordsFromDevice?.statistics?.[index - LIST_LENGTH_OFFSET];
 
+
   const cpmValue = wpmMethodCalculatorForStoredChords(itemFromStoredChords?.chordsMastered);
   const tier = data.trainingLevel;
   console.log('Previous table chord stats '+ data?.storedChordsFromDevice?.statstics?.[index - LIST_LENGTH_OFFSET])
-  const percentageTypedCorrctley = (((itemFromStoredChords?.numberOfOccurrences - itemFromStoredChords?.numberOfErrors)/itemFromStoredChords?.numberOfOccurrences)*100).toFixed(0)
+  const lastTypedSpeed = wpmCalculator(itemFromStoredChords?.lastSpeed);
   if(tier == 'CHM' && data.trainingScenario != 'LEXICOGRAPHIC' && localStorage.getItem('chordsReadFromDevice') != (null || undefined)){
     return(
     <React.Fragment>
         <RowItem>{truncateString(itemFromStoredChords?.displayTitle || "", 12)}</RowItem>
+        <RowItem>{lastTypedSpeed?.toFixed(0) == 'Infinity' ? 0 : lastTypedSpeed?.toFixed(0)}</RowItem>
         <RowItem>{cpmValue?.toFixed(0) == 'Infinity' ? 0 : cpmValue?.toFixed(0)}</RowItem>
-        <RowItem>{isNaN(percentageTypedCorrctley) ? 0 : percentageTypedCorrctley}</RowItem>
         <RowItem>{((cpmValue)).toFixed(0) == 'Infinity' ? 0 : ((cpmValue)).toFixed(0)/100}</RowItem>
     </React.Fragment>
     )
@@ -164,8 +165,8 @@ function returnStatisticsColumnContent(data : Data, index: number){
     return(
       <React.Fragment>
           <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
+          <RowItem>{lastTypedSpeed?.toFixed(0) == 'Infinity' ? 0 : lastTypedSpeed?.toFixed(0)}</RowItem>
           <RowItem>{cpmValue?.toFixed(0) == 'Infinity' ? 0 : cpmValue?.toFixed(0)}</RowItem>
-          <RowItem>{isNaN(percentageTypedCorrctley) ? 0 : percentageTypedCorrctley}</RowItem>
           <RowItem>{((cpmValue)).toFixed(0) == 'Infinity' ? 0 : ((cpmValue)).toFixed(0)/100}</RowItem>
       </React.Fragment>
       )
@@ -233,10 +234,10 @@ console.log('this is the tier '+ tier)
         
       </HeaderItemRow>
       <HeaderItemRow helpText="Your WPM for this test.">
-        Speed
+        lWPM
       </HeaderItemRow>
       <HeaderItemRow helpText="Your Average WPM for this test.">
-        %
+        aWPM
       </HeaderItemRow>
       <HeaderItemRow helpText="Your highest WPM for a word typed during this test.">
         ChM
@@ -294,12 +295,20 @@ function returnStatisticsColumnHeader(data : Data){
     sumOccurrences += d.numberOfOccurrences;
   });
 
-  let sumErrorsForChordsStoredOnDevice = 0;
-  let sumOccurrencesForChordsStoredOnDevice = 0;
+  let sumOfLWPM = 0;
+  let sumOfAWPM = 0;
   data.storedChordsFromDevice?.statistics?.forEach((d) => {
-    sumErrorsForChordsStoredOnDevice += d.numberOfErrors;
-    sumOccurrencesForChordsStoredOnDevice += d.numberOfOccurrences;
+    sumOfAWPM += d.chordsMastered[d?.chordsMastered.length-1] == null || d?.chordsMastered.length == 0 || (d.chordsMastered.length ==1 && d.chordsMastered[0] == 0)? 0 : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
+    sumOfLWPM += (d.lastSpeed == 0)? 0 : wpmCalculator(d?.lastSpeed);
+
   });
+  const numberOfChordsConquered = data.storedChordsFromDevice?.statistics?.filter(
+    (d) => (d.numberOfOccurrences >= 1),
+  ).length;
+
+  const numberOfChord = data.storedChordsFromDevice?.statistics?.filter(
+    (d) =>   (d.chordsMastered.length ==1 && d.chordsMastered[0] == 0) 
+    , ).length;
 
   const tier = data.trainingLevel;
   //console.log('Previous table chord stats '+ data?.storedChordsFromDevice?.statstics?.[index - LIST_LENGTH_OFFSET])
@@ -308,9 +317,9 @@ function returnStatisticsColumnHeader(data : Data){
     return(
     <React.Fragment>
       <RowStatItem>Total</RowStatItem>
-      <RowStatItem>{data.displayHUD ? (parseInt(averageChordsFromDevice) == 0 ? '0' :  (wpmCalculator(averageChordsFromDevice)*5).toFixed(0)): ''}</RowStatItem>
-      <RowStatItem>{sumOccurrencesForChordsStoredOnDevice}</RowStatItem>
-      <RowStatItem>{data.displayHUD ? sumOccurrencesForChordsStoredOnDevice : ''}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? ((sumOfLWPM) == 0 ? '0' :  ((sumOfLWPM)).toFixed(1)): ''}</RowStatItem>
+      <RowStatItem>{(sumOfAWPM/(numberOfChordsConquered - numberOfChord)).toFixed(0)}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? (sumOfAWPM/100).toFixed(2) : ''}</RowStatItem>
     </React.Fragment>
     )
   } else {

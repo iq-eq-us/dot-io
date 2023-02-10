@@ -350,19 +350,16 @@ function checkIfShouldProceedToNextTargetChord(
   const userHasEnteredChordCorrectly =
     wordToCompare === storeState.typedTrainingText;
     //Here we allow the user to go to the next work if the press the space
-    if(isInAlphabetMode && userHasEnteredChordCorrectly){
+    if (isInAlphabetMode && userHasEnteredChordCorrectly) {
       actions.setAllTypedCharactersStore(storeState.typedTrainingText);
-    actions.proceedToNextWord();
-    actions.setTypedTrainingText('');    
-    } else if (wordToCompare === storeState.typedTrainingText) {
-      console.log('This is exactly what Im stoing ' + storeState.typedTrainingText)
-    actions.setAllTypedCharactersStore(storeState.typedTrainingText);
-    actions.proceedToNextWord();
-    actions.setTypedTrainingText('');   
-   
+      actions.proceedToNextWord();
+      actions.setTypedTrainingText("");
+    } else if (storeState.typedTrainingText.charAt(storeState.typedTrainingText.length - 1) == " ") {
+      actions.setAllTypedCharactersStore(storeState.typedTrainingText);
+      actions.proceedToNextWord();
+      actions.setTypedTrainingText("");
+    }
   }
-  
-}
 
 function generateTrainingSettings(storeState: TrainingStoreStateModel){
 
@@ -479,7 +476,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     //console.log('oh yea '+ timeTakenToTypeChord);
     //console.log('oh yea performance '+ performance.now())
     timeTakenToTypeChord = 0;
-    numberOfOccurences =0;
+    numberOfOccurences =-1;
     
     //console.log('In here the check user first ty '+userIsTypingFirstChord + ' '+ timeTakenToTypeChord);
     //console.log('oh yea '+ timeTakenToTypeChord);
@@ -520,7 +517,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
   }
   store.userIsEditingPreviousWord = false;
 
-  const chordStatsFromDevice = store.storedChordsFromDevice?.statistics.find(
+  const chordStatsFromDevice = store?.storedChordsFromDevice?.statistics.find(
     (c: ChordStatisticsFromDevice) => c.id === id,
   ) as ChordStatisticsFromDevice;
 
