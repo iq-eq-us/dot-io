@@ -72,7 +72,6 @@ function TrainingTestPage(): ReactElement {
         <EditChordsModal />
       <SettingsColumn/>
       <CenterTrainingColumn />
-      <PreviousTest/>
       { (isDisplayingIntroductionModal || localStorage.getItem("FirstTimeViewingModal") == undefined) ? 
       <div style={modal}> 
       <div style={modal_content}>
