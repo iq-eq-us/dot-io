@@ -564,7 +564,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
       (e: ChordStatisticsFromDevice) => (e.id === chordStatsFromDevice.id && e.chord === chordStatsFromDevice.chord ? chordStatsFromDevice : e),
     ),
   };
- localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage
+ //localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage
 
 }
 
