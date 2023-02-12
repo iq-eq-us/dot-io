@@ -57,6 +57,7 @@ const trainingStoreState: TrainingStoreStateModel = {
           state.targetWord || '',
           highlightMode,
           state.targetCharacterIndex ?? -1,
+          state.trainingLevel,
         )
       : [];
   }),
@@ -84,6 +85,8 @@ const trainingStoreState: TrainingStoreStateModel = {
           state.targetWord || '',
           highlightMode,
           state.targetCharacterIndex ?? -1,
+          state.trainingLevel,
+
         )
       : [];
   }),

@@ -564,7 +564,21 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
       (e: ChordStatisticsFromDevice) => (e.id === chordStatsFromDevice.id && e.chord === chordStatsFromDevice.chord ? chordStatsFromDevice : e),
     ),
   };
- //localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage
+
+
+  window.addEventListener('beforeunload', function() {
+    // number of miliseconds to hold before unloading page
+    var x = 500;
+    var a = (new Date()).getTime() + x;
+
+     localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage
+
+
+    // browser will hold with unloading your page for X miliseconds, letting
+    // your ajax call to finish
+    while ((new Date()).getTime() < a) {}
+}, false)
+
 
 }
 

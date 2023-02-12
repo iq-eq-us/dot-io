@@ -48,7 +48,7 @@ const stable = true;
   }
   else if(level == 'CHM'  ){
     const payload : any [] = []
-    payload.push('CHORDING');
+    payload.push('LEXICAL');
     sessionStorage.removeItem("tempTestDeIncrement");
     setTrainingLevel('CHM')
     console.log('Begin Training Payload '+ payload)

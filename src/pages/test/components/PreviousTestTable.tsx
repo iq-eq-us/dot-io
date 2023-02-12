@@ -310,6 +310,10 @@ function returnStatisticsColumnHeader(data : Data){
     (d) =>   (d.chordsMastered.length ==1 && d.chordsMastered[0] == 0) 
     , ).length;
 
+    const totalChordsPracticed = data.storedChordsFromDevice?.statistics?.filter(
+      (d) =>   (d.numberOfOccurrences >=1 ) 
+      , ).length;
+
   const tier = data.trainingLevel;
   //console.log('Previous table chord stats '+ data?.storedChordsFromDevice?.statstics?.[index - LIST_LENGTH_OFFSET])
 
@@ -317,7 +321,7 @@ function returnStatisticsColumnHeader(data : Data){
     return(
     <React.Fragment>
       <RowStatItem>Total</RowStatItem>
-      <RowStatItem>{data.displayHUD ? ((sumOfLWPM) == 0 ? '0' :  ((sumOfLWPM)).toFixed(1)): ''}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? ((sumOfLWPM) == 0 ? '0' :  ((sumOfLWPM/totalChordsPracticed)).toFixed(2)): ''}</RowStatItem>
       <RowStatItem>{(sumOfAWPM/(numberOfChordsConquered - numberOfChord)).toFixed(0)}</RowStatItem>
       <RowStatItem>{data.displayHUD ? (sumOfAWPM/100).toFixed(2) : ''}</RowStatItem>
     </React.Fragment>

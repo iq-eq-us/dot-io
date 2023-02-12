@@ -4,6 +4,7 @@ import { keyPositions, keyPositionsByLetter } from '../data/keyPositionsCharacho
 import type { TrainingScenario } from '../models/trainingScenario';
 import {pickerV1, pickerLite} from '../models/keyboardDropDownFolder/keyboardDropDown';
 import type { ChordStatisticsFromDevice } from '../../src/models/trainingStatistics';
+import type { TrainingLevels } from '../../src/models/trainingLevels';
 
 export type CharacterEntryModeLite = 'CHARACTER' | 'CHORD';
 
@@ -16,14 +17,17 @@ export const ConvertStringToKeyHighlightPositionsLite = (
   text: string,
   highlightMode: CharacterEntryModeLite,
   characterIndex: number,
+  trainingLevel: TrainingLevels,
+
 ): KeyHighlightPositionLite[] => {
+
   if (highlightMode === 'CHORD') {
-    return getHighlightPositionForString(text, scenario);
-  } else if(scenario == 'ALLCHORDS'){
-    return getHighlightPositionForString(text, scenario);
+    return getHighlightPositionForString(text, scenario, trainingLevel);
+  } else if(trainingLevel == 'CHM'){
+    return getHighlightPositionForString(text, scenario, trainingLevel);
   } else {
     if (characterIndex === -1) return [SPACE_KEY_LOCATION];
-    return getHighlightPositionForString(text[characterIndex], scenario);
+    return getHighlightPositionForString(text[characterIndex], scenario, trainingLevel);
   }
 };
 
@@ -42,11 +46,13 @@ function parseChord(text){
   
   }
 
-const getHighlightPositionForString = (text: string, scenario: TrainingScenario | undefined) => {
+const getHighlightPositionForString = (text: string, scenario: TrainingScenario | undefined, trainingLevel: TrainingLevels) => {
     //console.log('Is this all chords' + scenario)
 
   let chord = chordLibrary?.all?.[text];
-  if (scenario =='CHORDING' && pickerV1){
+  if(trainingLevel == 'CHM') {
+    chord = parseChord(text);  
+  } else if (scenario =='CHORDING' && pickerV1){
     chord = parseChord(text);
   } else if (scenario == 'CHORDING' && pickerLite){
     chord = parseChord(text);

@@ -19,6 +19,7 @@ export interface ChordStatisticsFromDevice {
   numberOfOccurrences: number;
   scenario?: TrainingScenario;
   chordsMastered?: Array<number>;
+  dateAdded: Date;
   chord?: Array<string>;
 }
 
@@ -40,6 +41,7 @@ export const createEmptyChordStatistics = (
     numberOfErrors: 0,
     numberOfOccurrences: 0,
     scenario,
+    
   };
 };
 
@@ -51,6 +53,7 @@ export const createEmptyChordStatisticsFromDevice = (
 ): ChordStatisticsFromDevice => {
   return {
     id,
+    dateAdded: new Date(),
     displayTitle: id,
     averageSpeed: 0,
     lastSpeed: 0,
