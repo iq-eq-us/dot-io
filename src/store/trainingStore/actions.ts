@@ -568,15 +568,17 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
 
   window.addEventListener('beforeunload', function() {
     // number of miliseconds to hold before unloading page
-    var x = 500;
-    var a = (new Date()).getTime() + x;
+    const x = 500;
+    const a = (new Date()).getTime() + x;
 
      localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage
 
 
     // browser will hold with unloading your page for X miliseconds, letting
-    // your ajax call to finish
-    while ((new Date()).getTime() < a) {}
+    // your localStorage call to finish
+    while ((new Date()).getTime() < a) {
+      //Not an Empty block statement en-list
+    }
 }, false)
 
 
