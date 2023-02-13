@@ -13,6 +13,7 @@ export interface ChordLibrary {
   lexicalSentences: any;
   customtier: ChordLibraryRecord;
   allChords: ChordLibraryRecord;
+  specialCharacters: ChordLibraryRecord;
 }
 
 
@@ -351,8 +352,29 @@ export const chordLibrary: ChordLibrary = {
     young: [],
     your: [],
   },
-  letters: {
+  specialCharacters: {
+    '?': ['407-204'],
+    '/': ['407-204'],
+    '.': ['169-19'],
+    ',': [],
+    ';': [],
+    "'":[],
+    '[': [],
+    ']': [],
+    "\"": [],
+    0: [],
+    1: [], 
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: [],
 
+  },
+  letters: {
     e: ['194-82'],
     t: ['324-82'],
     o: ['140-44'],
@@ -1390,6 +1412,7 @@ export const chordLibrary: ChordLibrary = {
       ...this.lexicalSentences,
       ...this.customtier,
       ...this.allChords,
+      ...this.specialCharacters,
     };
   },
 };

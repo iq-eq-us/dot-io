@@ -66,20 +66,20 @@ function CharachorderOverlayLite({ overrideBottom }: OverlayProps): ReactElement
     <div className="body" style={keyboardBodyStyle}>
     <div className ="keyboard" style={keyboardStyle}>
    <div className="row" style={rowStyle}>
-     <div style={buttonStyle}>esc</div>
-     <div style={buttonStyle}>1 !</div>
-     <div style={buttonStyle}>2 @</div>
-     <div style={buttonStyle}>3 #</div>
-     <div style={buttonStyle}>4 $</div>
-     <div style={buttonStyle}>5 %</div>
-     <div style={buttonStyle}>6 ^</div>
-     <div style={buttonStyle}>7 &amp;</div>
-     <div style={buttonStyle}>8 *</div>
-     <div style={buttonStyle}>9 (</div>
-     <div style={buttonStyle}>0 )</div>
-     <div style={buttonStyle}>- _</div>
-     <div style={buttonStyle}>= +</div>
-     <div style={shiftButtonStyle}>Backspace</div>
+     <div style={ compare2(1,1) ?  highlightedButtonStyle : buttonStyle}>esc</div>
+     <div style={ compare2(1,2) ?  highlightedButtonStyle : buttonStyle}>1 !</div>
+     <div style={ compare2(1,3) ?  highlightedButtonStyle : buttonStyle}>2 @</div>
+     <div style={ compare2(1,4) ?  highlightedButtonStyle : buttonStyle}>3 #</div>
+     <div style={ compare2(1,5) ?  highlightedButtonStyle : buttonStyle}>4 $</div>
+     <div style={ compare2(1,6) ?  highlightedButtonStyle : buttonStyle}>5 %</div>
+     <div style={ compare2(1,7) ?  highlightedButtonStyle : buttonStyle}>6 ^</div>
+     <div style={ compare2(1,8) ?  highlightedButtonStyle : buttonStyle}>7 &amp;</div>
+     <div style={ compare2(1,9) ?  highlightedButtonStyle : buttonStyle}>8 *</div>
+     <div style={ compare2(1,10) ?  highlightedButtonStyle : buttonStyle}>9 (</div>
+     <div style={ compare2(1,11) ?  highlightedButtonStyle : buttonStyle}>0 )</div>
+     <div style={ compare2(1,12) ?  highlightedButtonStyle : buttonStyle}>- _</div>
+     <div style={ compare2(1,13) ?  highlightedButtonStyle : buttonStyle}>= +</div>
+     <div style={ compare2(1,14) ?  highlightedButtonStyle : shiftButtonStyle}>Backspace</div>
  
    </div>
    <div className="row" style={rowStyle}>
@@ -122,12 +122,12 @@ function CharachorderOverlayLite({ overrideBottom }: OverlayProps): ReactElement
      <div style={ compare2(4,6) ?  highlightedButtonStyle : buttonStyle}>B</div>
      <div style={ compare2(4,7) ?  highlightedButtonStyle : buttonStyle}>N</div>
      <div style={ compare2(4,8) ?  highlightedButtonStyle : buttonStyle}>M </div>
-     <div style={buttonStyle}>, &lt;</div>
-     <div style={buttonStyle}>. &gt;</div>
-     <div style={buttonStyle}>/ ?</div>
+     <div style={ compare2(4,9) ?  highlightedButtonStyle : buttonStyle}>, &lt;</div>
+     <div style={ compare2(4,10) ?  highlightedButtonStyle : buttonStyle}>. &gt;</div>
+     <div style={ compare2(4,11) ?  highlightedButtonStyle : buttonStyle}>/ ?</div>
      <div style={ compare2(4,12) ? highlightedButtonStyle : buttonStyle}>⇧</div>
-     <div style={buttonStyle}>↑</div>
-     <div style={buttonStyle}>Del</div>
+     <div style={ compare2(4,13) ?  highlightedButtonStyle : buttonStyle}>↑</div>
+     <div style={ compare2(4,14) ?  highlightedButtonStyle : buttonStyle}>Del</div>
    </div>
    <div className="row" style={rowStyle}>
      <div style={buttonStyle}>⊞</div>

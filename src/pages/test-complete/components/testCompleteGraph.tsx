@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import { getCumulativeAverageChordTypeTime } from '../../../../src/helpers/aggregation';
+import { useWordsPerMinute } from '../../../../src/hooks/useWordsPerMinute';
+
 
 
 
@@ -212,6 +214,7 @@ export function TestCompleteGraph(): ReactElement {
   const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
   const storedTestTextData = useStoreState((store) => store.storedTestTextData);
   const testTeirHighestWPM= useStoreActions((store) => store.setTestTeirHighestWPM); 
+  const wpm = useWordsPerMinute();
 
 
 

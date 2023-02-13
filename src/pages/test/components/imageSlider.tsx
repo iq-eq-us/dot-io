@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { SliderData } from './SliderData';
+import { SliderData, SliderDataForCHMTier } from './SliderData';
 import { useStoreState, useStoreActions } from '../../../store/store';
 
 
-const ImageSlider = ({ slides } : any) => {
+const ImageSlider = () => {
 
+  let slides : any = [];
+  const trainingLevel = useStoreState((store : any) => store.trainingLevel);
+
+  if(trainingLevel == 'CHM') {
+    slides = SliderDataForCHMTier;
+  } else if(trainingLevel == 'CPM') {
+    slides = SliderData;
+  }
     
   const [current, setCurrent] = useState(0);
   const length = slides.length;
@@ -32,14 +40,17 @@ const ImageSlider = ({ slides } : any) => {
   
   const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
   const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
+
+  
   function setIsDisplaying(){
     setIsDisplayingIntroductionModal(isDisplayingIntroductionModal as boolean);
   }
+  
 
   return (
     
     <section className='slider'>
-      {SliderData.map((slide, index) => {
+      {slides.map((slide, index) => {
         return (
           <div
             className={index === current ? 'slide active' : 'slide'}

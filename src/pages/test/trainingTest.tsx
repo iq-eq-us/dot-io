@@ -11,8 +11,9 @@ import { Redirect } from 'react-router-dom';
 import { PreviousTest } from './components/PreviousTests';
 import TestCompletePage from '../test-complete/testComplete';
 import ImageSlider from './components/imageSlider';
-import { SliderData } from './components/SliderData';
 import ModuleCompleteModal from './components/ModuleCompleteModal';
+import { ProgressBar } from '../test/components/ProgressBar';
+
 /**
  * This is the main training page.
  * It will adapt its content depending on which training scenario is currently active in the trainingStore.
@@ -79,7 +80,7 @@ function TrainingTestPage(): ReactElement {
       <button className="close absolute ml-96 text-5xl text-white" onClick={() => [setToggleValue(!toggleValue), localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true)), setIsDisplayingIntroductionModal(false as boolean)]}>
             &times;
           </button>
-      <ImageSlider slides={SliderData} />
+      <ImageSlider/>
       </div>
       </div>
       : null

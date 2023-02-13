@@ -139,12 +139,15 @@ export const useWordsPerMinute = (): number => {
           }
           if(trainingScenario == ('LEXICAL'||'TRIGRAM')){
           //  storeCharactersPerMinute(currentDate, averageCharacterPerMin, averageDailyCount);
-            console.log('am i even here')
           }
+          console.log('am i even here')
+
         }
+        console.log('am i even here')
+
   
     }
-    
+    console.log('New WPM did fire ' +isTrainingTestDone)
     if(isTrainingTestDone){
       console.log('New WPM did fire '+ {...fastestRecordedWPM})
       //((wordsCorrectCount/parseInt(testNumber))*100)
@@ -167,7 +170,7 @@ export const useWordsPerMinute = (): number => {
     }
   }
 
-  console.log('Test is done '+ isTrainingTestDone)
+  console.log('Test is done '+ wpm)
   return wpm;
 
 };

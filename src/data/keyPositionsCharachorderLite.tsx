@@ -41,6 +41,10 @@ export const keyPositions: Record<string, KeyHighlightPositionLite> = {
     rowGroup: 2,
     position: 9,
   },
+  '169-19': {//.
+    rowGroup: 4,
+    position: 10,
+  },
   '377-44': {//N
     rowGroup: 4,
     position: 7,
@@ -153,6 +157,10 @@ export const keyPositions: Record<string, KeyHighlightPositionLite> = {
     rowGroup: 2,
     position: 2,
   },
-  
+  '407-204': {// This is ? and /
+    rowGroup: 4,
+    position: 11,
+  },
+
 
 };

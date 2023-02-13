@@ -521,7 +521,7 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     (c: ChordStatisticsFromDevice) => c.id === id,
   ) as ChordStatisticsFromDevice;
 
-  if(store.currentTrainingScenario == 'ALLCHORDS'){
+  if(store.currentTrainingScenario == 'ALLCHORDS' && !userIsTypingFirstChord){
   if (store.errorOccurredWhileAttemptingToTypeTargetChord){
     chordStatsFromDevice.numberOfErrors++;
   }
@@ -559,20 +559,22 @@ export function calculateStatisticsForTargetChord(store: TrainingStoreModel): vo
     ),
   };
 
+
+
   store.storedChordsFromDevice = {
     statistics: store.storedChordsFromDevice.statistics.map(
-      (e: ChordStatisticsFromDevice) => (e.id === chordStatsFromDevice.id && e.chord === chordStatsFromDevice.chord ? chordStatsFromDevice : e),
+      (e: ChordStatisticsFromDevice) => ((e.id === chordStatsFromDevice.id && e.chord === chordStatsFromDevice.chord) ? chordStatsFromDevice : e),
     ),
   };
 
-
+ const val = store.storedChordsFromDevice;
   window.addEventListener('beforeunload', function() {
     // number of miliseconds to hold before unloading page
     const x = 500;
     const a = (new Date()).getTime() + x;
 
-     localStorage.setItem("chordsReadFromDevice", JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage
-
+     localStorage.setItem("chordsReadFromDevice", JSON.stringify(val)); //Store downloaded chords in local storage
+    
 
     // browser will hold with unloading your page for X miliseconds, letting
     // your localStorage call to finish

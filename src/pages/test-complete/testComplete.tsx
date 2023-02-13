@@ -3,7 +3,6 @@ import { TestControlRow } from './components/testControlsRow';
 import { TestStatsCard } from './components/testStatsCard';
 import { TestCompleteGraph } from './components/testCompleteGraph';
 import {TrainingModeSelector} from '../test/components/TrainingModeSelector';
-
 import {
     ManagerPageContainer, 
     HorizontalRule
@@ -26,7 +25,6 @@ function TestCompletePage(): ReactElement {
     <TestCompleteGraph/>
      <TestControlRow/>
      <TrainingModeSelector/>
-
      </ManagerPageContainer>
      </React.Fragment>
 

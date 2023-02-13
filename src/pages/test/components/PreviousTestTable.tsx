@@ -9,13 +9,16 @@ import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
 import { wpmMethodCalculatorForStoredChords } from '../../../helpers/aggregation';
+import { useWordsPerMinute } from '../../../../src/hooks/useWordsPerMinute';
+
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences
 const LIST_LENGTH_OFFSET = 2;
 
 function StatisticsTable(): ReactElement {
-  
+  const wpm = useWordsPerMinute();
+
   const stats = useStoreState(
     (state) => state.trainingStatistics,
   ).statistics.sort((a, b) => b.numberOfOccurrences - a.numberOfOccurrences);
@@ -302,6 +305,7 @@ function returnStatisticsColumnHeader(data : Data){
     sumOfLWPM += (d.lastSpeed == 0)? 0 : wpmCalculator(d?.lastSpeed);
 
   });
+  
   const numberOfChordsConquered = data.storedChordsFromDevice?.statistics?.filter(
     (d) => (d.numberOfOccurrences >= 1),
   ).length;
@@ -322,7 +326,7 @@ function returnStatisticsColumnHeader(data : Data){
     <React.Fragment>
       <RowStatItem>Total</RowStatItem>
       <RowStatItem>{data.displayHUD ? ((sumOfLWPM) == 0 ? '0' :  ((sumOfLWPM/totalChordsPracticed)).toFixed(2)): ''}</RowStatItem>
-      <RowStatItem>{(sumOfAWPM/(numberOfChordsConquered - numberOfChord)).toFixed(0)}</RowStatItem>
+      <RowStatItem>{(isNaN(sumOfAWPM/(numberOfChordsConquered - numberOfChord))) ? '0' : (sumOfAWPM/(numberOfChordsConquered - numberOfChord)).toFixed(0)}</RowStatItem>
       <RowStatItem>{data.displayHUD ? (sumOfAWPM/100).toFixed(2) : ''}</RowStatItem>
     </React.Fragment>
     )
