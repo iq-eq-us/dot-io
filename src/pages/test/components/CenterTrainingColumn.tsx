@@ -27,7 +27,7 @@ function CenterTrainingColumn(): ReactElement {
 
       <TextPrompt />
       <ItemsContainer>
-        {(currentTrainingScenario == 'LEXICAL' && wordTestNumber != null || undefined) ?'' : <RefreshButton/>}
+      {(currentTrainingScenario == 'LEXICAL' && wordTestNumber != null || undefined) ?'' : <RefreshButton/>}
       <NextTestButton/>
       </ItemsContainer>
       <FullWidthFullHeightContainer>

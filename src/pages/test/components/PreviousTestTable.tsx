@@ -9,7 +9,6 @@ import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
 import { wpmMethodCalculatorForStoredChords, wpmMethodCalculator } from '../../../helpers/aggregation';
-import { useWordsPerMinute } from '../../../../src/hooks/useWordsPerMinute';
 
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
@@ -17,7 +16,6 @@ import { useWordsPerMinute } from '../../../../src/hooks/useWordsPerMinute';
 const LIST_LENGTH_OFFSET = 2;
 
 function StatisticsTable(): ReactElement {
-  const wpm = useWordsPerMinute();
 
   const stats = useStoreState(
     (state) => state.trainingStatistics,

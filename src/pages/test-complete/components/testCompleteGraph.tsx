@@ -214,7 +214,6 @@ export function TestCompleteGraph(): ReactElement {
   const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
   const storedTestTextData = useStoreState((store) => store.storedTestTextData);
   const testTeirHighestWPM= useStoreActions((store) => store.setTestTeirHighestWPM); 
-  const wpm = useWordsPerMinute();
 
 
 
@@ -302,13 +301,13 @@ export function TestCompleteGraph(): ReactElement {
     const handleEvent = () => {
       testTeirHighestWPM(wordPerMinute[wordPerMinute.length-1]);
         myGraph(wordNames, wordOccurrences, wordPerMinute, rawSpeedOfCurrentWord)
-        console.log('event handled ' +wordNames)
-        console.log(wordOccurrences)
-        console.log(wordPerMinute)
+
       };
   
       React.useEffect(() => {
+        
         handleEvent();
+
       }, []);
     
 

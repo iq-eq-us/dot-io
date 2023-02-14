@@ -151,7 +151,7 @@ export const useWordsPerMinute = (): number => {
     if(isTrainingTestDone){
       console.log('New WPM did fire '+ {...fastestRecordedWPM})
       //((wordsCorrectCount/parseInt(testNumber))*100)
-      if (testTeirHighestWPM >= fastestRecordedWPM[trainingScenario] && 6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/parseInt(testNumber))*100) >=95) {
+      if (6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/parseInt(testNumber))*100) >=95) {
         const currentDate = new Date();
 
         console.log('New WPM did fire inside the conditional and it was teuew ')
