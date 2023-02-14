@@ -51,7 +51,15 @@ const getHighlightPositionForString = (text: string, scenario: TrainingScenario 
 
   let chord = chordLibrary?.all?.[text];
   if(trainingLevel == 'CHM') {
-    chord = parseChord(text);  
+    if(scenario == 'LEXICAL' && pickerV1) {
+      chord = chordLibrary.chords[text];
+
+    } else if(scenario == 'LEXICAL' && pickerLite) {
+      chord = chordLibrary.chordsLite[text];
+
+    } else {
+    chord = parseChord(text); 
+    } 
   } else if (scenario =='CHORDING' && pickerV1){
     chord = parseChord(text);
   } else if (scenario == 'CHORDING' && pickerLite){
