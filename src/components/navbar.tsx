@@ -29,7 +29,7 @@ const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
 const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
 const setTrainingLevel = useStoreActions((store : any) => store.setTrainingLevel);
 /* eslint-disable */
-//const maxWPM = useStoreState((store) => (parseInt(Math.max.apply(Math, Object.values(store.fastestRecordedWordsPerMinute))?.toFixed()) * 5) > 200); 
+const maxWPM = useStoreState((store) => (parseInt(Math.max.apply(Math, Object.values(store.fastestRecordedWordsPerMinute))?.toFixed()) * 5) > 200); 
 /* eslint-enable */
 const stable = true;
 
@@ -76,8 +76,8 @@ const stable = true;
         <NavLinksImage open = {true} src={CPM_Icon} alt=""  onClick={()=>TrainingPageFunction('CPM', true)}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">        
-        <div className='text-white font-mono'>{stable ? 'ChM' : <LockIconStyle><LockIconWhite/></LockIconStyle>}</div>
-        <NavLinksImage open = {stable} src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM', stable)}/>
+        <div className='text-white font-mono'>{maxWPM ? 'ChM' : <LockIconStyle><LockIconWhite/></LockIconStyle>}</div>
+        <NavLinksImage open = {maxWPM} src={BooksImage} alt="" onClick={()=>TrainingPageFunction('CHM', maxWPM)}/>
         </NavMenuLink>
         <NavMenuLink aria-current="page">
         <LockIconStyle>
