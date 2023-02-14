@@ -8,7 +8,7 @@ import { getCumulativeAverageChordTypeTime, getCumulativeAverageChordTypeTimeFro
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
-import { wpmMethodCalculatorForStoredChords } from '../../../helpers/aggregation';
+import { wpmMethodCalculatorForStoredChords, wpmMethodCalculator } from '../../../helpers/aggregation';
 import { useWordsPerMinute } from '../../../../src/hooks/useWordsPerMinute';
 
 
@@ -129,7 +129,7 @@ const Row = ({ index, style, data }: RowData) => {
     index - LIST_LENGTH_OFFSET,
   );
 
-  const wpmValue = wpmCalculator(parseInt(item?.averageSpeed.toFixed()));
+  const wpmValue = wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()));
   return (
     <div
       onClick={(e) => {
@@ -147,38 +147,41 @@ const Row = ({ index, style, data }: RowData) => {
 
 function returnStatisticsColumnContent(data : Data, index: number){
   const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
-  const wpmValue = wpmCalculator(parseInt(item?.averageSpeed.toFixed()));
+  const wpmValue = wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()));
   const itemFromStoredChords = data?.storedChordsFromDevice?.statistics?.[index - LIST_LENGTH_OFFSET];
 
 
   const cpmValue = wpmMethodCalculatorForStoredChords(itemFromStoredChords?.chordsMastered);
   const tier = data.trainingLevel;
   console.log('Previous table chord stats '+ data?.storedChordsFromDevice?.statstics?.[index - LIST_LENGTH_OFFSET])
-  const lastTypedSpeed = wpmCalculator(itemFromStoredChords?.lastSpeed);
-  if(tier == 'CHM' && data.trainingScenario != 'LEXICOGRAPHIC' && localStorage.getItem('chordsReadFromDevice') != (null || undefined)){
+  const lastTypedSpeed = wpmMethodCalculator(itemFromStoredChords?.lastSpeed);
+  if(tier == 'CHM' && data.trainingScenario == 'ALLCHORDS' && localStorage.getItem('chordsReadFromDevice') != (null || undefined)){
     return(
     <React.Fragment>
         <RowItem>{truncateString(itemFromStoredChords?.displayTitle || "", 12)}</RowItem>
-        <RowItem>{lastTypedSpeed?.toFixed(0) == 'Infinity' ? 0 : lastTypedSpeed?.toFixed(0)}</RowItem>
+        <RowItem>{isNaN(((itemFromStoredChords?.numberOfOccurrences - itemFromStoredChords?.numberOfErrors)/itemFromStoredChords?.numberOfOccurrences)) ? '0' : (((itemFromStoredChords?.numberOfOccurrences - itemFromStoredChords?.numberOfErrors)/itemFromStoredChords?.numberOfOccurrences)*100).toFixed(2)}</RowItem>
+        {//<RowItem>{lastTypedSpeed?.toFixed(0) == 'Infinity' ? 0 : lastTypedSpeed?.toFixed(0)}</RowItem>
+        }
         <RowItem>{cpmValue?.toFixed(0) == 'Infinity' ? 0 : cpmValue?.toFixed(0)}</RowItem>
         <RowItem>{((cpmValue)).toFixed(0) == 'Infinity' ? 0 : ((cpmValue)).toFixed(0)/100}</RowItem>
     </React.Fragment>
     )
-  } else if(tier == 'CHM' && data.trainingScenario == 'LEXICOGRAPHIC'){
+  } else if(tier == 'CHM' && data.trainingScenario == 'LEXICAL'){
     return(
       <React.Fragment>
           <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-          <RowItem>{lastTypedSpeed?.toFixed(0) == 'Infinity' ? 0 : lastTypedSpeed?.toFixed(0)}</RowItem>
-          <RowItem>{cpmValue?.toFixed(0) == 'Infinity' ? 0 : cpmValue?.toFixed(0)}</RowItem>
-          <RowItem>{((cpmValue)).toFixed(0) == 'Infinity' ? 0 : ((cpmValue)).toFixed(0)/100}</RowItem>
+          <RowItem>{isNaN(((item?.numberOfOccurrences - item?.numberOfErrors)/item?.numberOfOccurrences)) ? '0' : (((item?.numberOfOccurrences - item?.numberOfErrors)/item?.numberOfOccurrences)*100).toFixed(2)}</RowItem>
+          <RowItem>{(wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()))).toFixed() == 'Infinity' ? '0' : wpmValue.toFixed()}</RowItem>
+          <RowItem>{(wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()))).toFixed() == 'Infinity' ? '0' : (wpmValue/100).toFixed(2)}</RowItem>
       </React.Fragment>
       )
+      
 
   } else {
     return(
     <React.Fragment>
         <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
-        <RowItem>{(wpmCalculator(parseInt(item?.averageSpeed.toFixed()))).toFixed() == 'Infinity' ? '0 / 0' : (wpmValue.toFixed() *5 + '/' + wpmValue.toFixed())}</RowItem>
+        <RowItem>{(wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()))).toFixed() == 'Infinity' ? '0 / 0' : (wpmValue.toFixed() *5 + '/' + wpmValue.toFixed())}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
     </React.Fragment>
@@ -237,7 +240,7 @@ console.log('this is the tier '+ tier)
         
       </HeaderItemRow>
       <HeaderItemRow helpText="Your WPM for this test.">
-        lWPM
+        Accuracy
       </HeaderItemRow>
       <HeaderItemRow helpText="Your Average WPM for this test.">
         aWPM
@@ -280,30 +283,32 @@ const AggregateRow = ({ data }: { data: Data }) => {
 };
 
 function returnStatisticsColumnHeader(data : Data){
-
- // const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
- // const wpmValue = wpmCalculator(parseInt(item?.averageSpeed.toFixed()));
-  //const itemFromStoredChords = data?.storedChordsFromDevice?.statistics?.[1 - LIST_LENGTH_OFFSET];
-
-  //const cpmValue = wpmMethodCalculatorForStoredChords(itemFromStoredChords?.chordsMastered);
   
   const average = getCumulativeAverageChordTypeTime(data.stats);
-  const averageChordsFromDevice = getCumulativeAverageChordTypeTimeFromDevice(data.storedChordsFromDevice?.statistics);
 
 
   let sumErrors = 0;
   let sumOccurrences = 0;
+  let sumOfAverages = 0;
+
+
   data.stats.forEach((d) => {
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
+    sumOfAverages += wpmMethodCalculator(d.averageSpeed) == 'Infinity' ? 0 : wpmMethodCalculator(d.averageSpeed)/100;
   });
 
   let sumOfLWPM = 0;
   let sumOfAWPM = 0;
+  let sumErrorsFromStoredDevice = 0;
+  let sumOccurrencesFromStoredDevice = 0;
+
+
   data.storedChordsFromDevice?.statistics?.forEach((d) => {
     sumOfAWPM += d.chordsMastered[d?.chordsMastered.length-1] == null || d?.chordsMastered.length == 0 || (d.chordsMastered.length ==1 && d.chordsMastered[0] == 0)? 0 : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
-    sumOfLWPM += (d.lastSpeed == 0)? 0 : wpmCalculator(d?.lastSpeed);
-
+    sumOfLWPM += (d.lastSpeed == 0)? 0 : wpmMethodCalculator(d?.lastSpeed);
+    sumErrorsFromStoredDevice += d.numberOfErrors;
+    sumOccurrencesFromStoredDevice += d.numberOfOccurrences;
   });
   
   const numberOfChordsConquered = data.storedChordsFromDevice?.statistics?.filter(
@@ -319,22 +324,34 @@ function returnStatisticsColumnHeader(data : Data){
       , ).length;
 
   const tier = data.trainingLevel;
-  //console.log('Previous table chord stats '+ data?.storedChordsFromDevice?.statstics?.[index - LIST_LENGTH_OFFSET])
 
-  if(tier == 'CHM'){
+
+
+  if(tier == 'CHM' && data.trainingScenario == 'ALLCHORDS'){
     return(
     <React.Fragment>
       <RowStatItem>Total</RowStatItem>
-      <RowStatItem>{data.displayHUD ? ((sumOfLWPM) == 0 ? '0' :  ((sumOfLWPM/totalChordsPracticed)).toFixed(2)): ''}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? isNaN((sumOccurrencesFromStoredDevice-sumErrorsFromStoredDevice)/sumOccurrencesFromStoredDevice) ? '0' :  (((sumOccurrencesFromStoredDevice-sumErrorsFromStoredDevice)/sumOccurrencesFromStoredDevice)*100).toFixed(2)+'%': ''}</RowStatItem>
+      {//<RowStatItem>{data.displayHUD ? ((sumOfLWPM) == 0 ? '0' :  ((sumOfLWPM/totalChordsPracticed)).toFixed(2)): ''}</RowStatItem>
+  } 
       <RowStatItem>{(isNaN(sumOfAWPM/(numberOfChordsConquered - numberOfChord))) ? '0' : (sumOfAWPM/(numberOfChordsConquered - numberOfChord)).toFixed(0)}</RowStatItem>
       <RowStatItem>{data.displayHUD ? (sumOfAWPM/100).toFixed(2) : ''}</RowStatItem>
     </React.Fragment>
     )
-  } else {
+  } else if (tier == 'CHM' && data.trainingScenario === 'LEXICAL'){
+    return(
+    <React.Fragment>
+      <RowStatItem>Total</RowStatItem>
+      <RowStatItem>{data.displayHUD ? isNaN((sumOccurrences-sumErrors)/sumOccurrences) ? '0' :  (((sumOccurrences-sumErrors)/sumOccurrences)*100).toFixed(2)+'%': ''}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? (parseInt(average) == 0 ? '0' : (wpmMethodCalculator(parseInt(average))).toFixed()): ''}</RowStatItem>
+      <RowStatItem>{data.displayHUD ?  (sumOfAverages).toFixed(2) : ''}</RowStatItem>
+    </React.Fragment>
+    )
+  }else {
     return(
     <React.Fragment>
       <RowStatItem>SUM</RowStatItem>
-      <RowStatItem>{data.displayHUD ? (parseInt(average) == 0 ? '0 / 0' :  (wpmCalculator(parseInt(average).toFixed())*5).toFixed() + '/' + (wpmCalculator(parseInt(average))).toFixed()): ''}</RowStatItem>
+      <RowStatItem>{data.displayHUD ? (parseInt(average) == 0 ? '0 / 0' :  (wpmMethodCalculator(parseInt(average).toFixed())*5).toFixed() + '/' + (wpmMethodCalculator(parseInt(average))).toFixed()): ''}</RowStatItem>
       <RowStatItem>{sumErrors}</RowStatItem>
       <RowStatItem>{data.displayHUD ? sumOccurrences : ''}</RowStatItem>
     </React.Fragment>
@@ -343,17 +360,6 @@ function returnStatisticsColumnHeader(data : Data){
   }
 }
 
-function wpmCalculator(average : any){
-
-
-  const avgSpeedMilliseconds = average * 10;
-  const millisecondsPerCharacter = avgSpeedMilliseconds;
-  const averageCharacterPerMin = 60000/millisecondsPerCharacter;
-  const wpm = averageCharacterPerMin/5;
-  
-  return wpm;
-
-}
 const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
   (props) => ({
     className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] hover:bg-[#333] ${props.headerStyle === 'TARGET_CHORD_ACTIVE'
