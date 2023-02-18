@@ -549,10 +549,8 @@ import { commitAllWithStart } from "../components/commitAll";
   function replaceOldAsciiKeys(inputKey){
     inputKey =  inputKey.split(" + ");
     let finishedInputKey = '';
-    //console.log('Why am I stopping')
     for(let i =0; i< inputKey.length; i++){
      if(oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])){// eslint-disable-line no-use-before-define
-     // console.log('output fuck')
 
       finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]];// eslint-disable-line no-use-before-define
     } else{
@@ -560,7 +558,6 @@ import { commitAllWithStart } from "../components/commitAll";
     }
     if(inputKey.length-1>0 && i != inputKey.length-1){
       finishedInputKey += " + "
-      //console.log('Why am I not adding the plus')
     }
   }
     return finishedInputKey;  

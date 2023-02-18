@@ -56,7 +56,6 @@ export const useWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
-  console.log('sjdnfjsnjfs '+ y);
   let currentChordSpeed = y[y?.length-1]?.lastSpeed;
   const average = parseInt(getCumulativeAverageChordTypeTime(y));//This field gets the speed of the current typed word
   const averageDailyCount = y.length;
@@ -140,18 +139,15 @@ export const useWordsPerMinute = (): number => {
           if(trainingScenario == ('LEXICAL'||'TRIGRAM')){
           //  storeCharactersPerMinute(currentDate, averageCharacterPerMin, averageDailyCount);
           }
-          console.log('am i even here')
 
         }
-        console.log('am i even here')
 
   
     }
-    console.log('New WPM did fire ' +isTrainingTestDone)
     if(isTrainingTestDone){
-      console.log('New WPM did fire '+ {...fastestRecordedWPM})
       //((wordsCorrectCount/parseInt(testNumber))*100)
-      if (6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/parseInt(testNumber))*100) >=95) {
+      const testNum = parseInt(testNumber);
+      if (6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/testNum)*100) >=95 && testTeirHighestWPM > fastestRecordedWPM[trainingScenario] ){
         const currentDate = new Date();
 
         console.log('New WPM did fire inside the conditional and it was teuew ')

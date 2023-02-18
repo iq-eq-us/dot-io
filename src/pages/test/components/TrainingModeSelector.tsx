@@ -5,6 +5,7 @@ import { isNumber } from 'lodash';
 import type { TrainingLevels } from 'src/models/trainingLevels';
 import {connectDeviceAndPopUp} from '../../../../src/pages/manager/components/connect';
 import { getId } from '../../../../src/pages/manager/components/getID';
+import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 
 
 export function TrainingModeSelector(): ReactElement {
@@ -16,7 +17,8 @@ export function TrainingModeSelector(): ReactElement {
   const moduleNumber = useStoreState((store: any) => store.moduleNumber);
   const setModuleNumber = useStoreActions((store: any) => store.setModuleNumber);
   const setDownloadModulModalToggle = useStoreActions((store : any) => store.setDownloadModulModalToggle);
-
+  const wpm = useWordsPerMinute();
+  
   const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState('CPM' as TrainingLevels); 
 
 

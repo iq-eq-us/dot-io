@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import { getCumulativeAverageChordTypeTime } from '../../../../src/helpers/aggregation';
-import { useWordsPerMinute } from '../../../../src/hooks/useWordsPerMinute';
 
 
 
