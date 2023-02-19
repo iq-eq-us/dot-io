@@ -153,6 +153,7 @@ export const useWordsPerMinute = (): number => {
         console.log('New WPM did fire inside the conditional and it was teuew ')
   
         wordTestNumber != null || undefined ? storeData(testTeirHighestWPM, currentDate) : '';//This checks to make sure we are in a testing teir
+      wordTestNumber != null || undefined ? storeAverageData( testTeirHighestWPM, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
 
           setFastestWPM({
           ...fastestRecordedWPM,
@@ -161,7 +162,7 @@ export const useWordsPerMinute = (): number => {
       
 
       }
-      wordTestNumber != null || undefined ? storeAverageData( testTeirHighestWPM, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
+      //wordTestNumber != null || undefined ? storeAverageData( testTeirHighestWPM, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
     }
     }
   }
