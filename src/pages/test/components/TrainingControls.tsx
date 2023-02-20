@@ -6,8 +6,6 @@ import { useStoreState, useStoreActions } from '../../../store/store';
 
 
 
-// This is used to account for the header row as well as the "aggregate" row that shows average speed and
-// a sum of errors and occurrences
 const LIST_LENGTH_OFFSET = 2;
 
 function TrainingControls(): ReactElement {
@@ -84,7 +82,7 @@ useEffect(() => {
   if(currentTrainingScenario == 'CUSTOMTIER'){
 
     if((sumOccurrences+1>=parseInt(sessionStorage.getItem("CutomTierTestValue")))){
-      setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
+    setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
     setPopUpDisplayValue(true);
     setTempCounter(-100);
     //Method will send the test values to local storage

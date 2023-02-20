@@ -12,7 +12,6 @@ import { PreviousTest } from './components/PreviousTests';
 import TestCompletePage from '../test-complete/testComplete';
 import ImageSlider from './components/imageSlider';
 import ModuleCompleteModal from './components/ModuleCompleteModal';
-import { ProgressBar } from '../test/components/ProgressBar';
 
 /**
  * This is the main training page.

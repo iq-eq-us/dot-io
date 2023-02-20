@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import TrainingControls from '../../test/components/TrainingControls';
 import NextTestButton from '../../../../src/pages/test/components/NextTestButton';
 import RefreshButton from '../../../../src/pages/test/components/RefreshButton';
 
@@ -16,7 +15,6 @@ export function TestControlRow(): ReactElement {
          </ItemsContainer>
       </RowContainer>    
        <TeirSelector>
-       <TrainingControls/>
        </TeirSelector>
        </React.Fragment>
       );

@@ -240,7 +240,7 @@ export function storeAverageData(avgData: number ,dateD: Date, inChordMasterdVal
 
       } 
       else if((parseInt(localStorage.getItem("theDate")) - date) == 0){ //If it is the same day
-        storeData(avgData, dateD);
+        //storeData(avgData, dateD);
         
          //These two if statements work on the avg counter
           if(localStorage.getItem("averageChordCounter")==null){
@@ -265,10 +265,15 @@ export function storeAverageData(avgData: number ,dateD: Date, inChordMasterdVal
 
       const avgWData = JSON.parse(avgGetGW);
       const avgDData = JSON.parse(avgGetGD);
+      let countCalc = 0;
+      Number(parseInt(avgWData[((avgWData.length)-1)])) >=1 ? countCalc =1: ''
+      const val = (Number(avgData) + Number((avgWData[((avgWData.length)-1)])))/(1+ countCalc);
+      
+      console.log('THis is the stats '+ avgCount + ' '+ ((avgWData[((avgWData.length)-1)])) + ' '+ avgData + ' '+val);
 
-      const val = (avgData+(parseInt(avgWData[((avgWData.length)-1)])*(avgCount-1)))/avgCount;
-    
-      avgWData.splice((avgWData.length-1),1,Math.round(val));
+      avgWData.pop();
+      avgWData.push(val.toFixed(0));
+      //avgWData.splice((avgWData.length-1),1,val);
       avgDData.splice((avgDData.length-1),1,dateD);
 
       localStorage.setItem("avgGraphWPM", JSON.stringify(avgWData));

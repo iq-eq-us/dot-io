@@ -7,8 +7,6 @@ import charachorderLiteBackground from '../../../assets/CharaChorder_Lite.png';
 import { useStoreState } from '../../../store/store';
 import type { Position, Row } from '../../../models/keyHighlightPositionsCharachorderLite';
 import {pickerV1, pickerLite, pickerNone} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
-import TrainingControls from './TrainingControls';
-import DropDown from '../../../models/keyboardDropDownFolder/keyboardDropDown';
 
 
 interface OverlayProps {

@@ -1,6 +1,4 @@
 import React, { ReactElement } from 'react';
-import { getHighestWPM } from '../../src/pages/manager/components/chordGraphs';
-import { getAverageWPM } from '../../src/pages/manager/components/chordGraphs';
 import styled from 'styled-components';
 import { useStoreState } from 'easy-peasy';
 import { wpmMethodCalculatorForStoredChords } from '../../src/helpers/aggregation';

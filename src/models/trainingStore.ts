@@ -29,7 +29,6 @@ export interface TrainingStoreActionsModel {
   toggleChordEditModal: Action<TrainingStoreModel>;
   clearTemporaryTrainingData: Action<TrainingStoreModel>;
   toggleTestCompletePage: Action<TrainingStoreModel>;
-  setTestCompleteValue: Action<TrainingStoreModel, boolean>;
   setStoredTestTextData: Action<TrainingStoreModel, string[] | undefined>;
   setCompareText: Action<TrainingStoreModel, string[] | undefined>;
   setCurrentSubindexInTrainingText: Action<TrainingStoreModel, number>;
@@ -95,7 +94,7 @@ export interface TrainingStoreStateModel {
   trainingLevel: TrainingLevels | undefined;
   currentTrainingScenario: TrainingScenario | undefined;
   wordTestNumber: WordTrainingValues | undefined;
-  isTestDone: boolean | undefined;
+  isTestDone: boolean;
   isDisplayingChordEditModal: boolean;
   compareText: string[] | undefined;
   restartTestMode: boolean,

@@ -146,28 +146,30 @@ export const useWordsPerMinute = (): number => {
     }
     if(isTrainingTestDone){
       //((wordsCorrectCount/parseInt(testNumber))*100)
+      const currentDate = new Date();
+
       const testNum = parseInt(testNumber);
       if (6>(((numberOfWordsChorded).toFixed(0)/25)*100)  && ((wordsCorrectCount/testNum)*100) >=95 && testTeirHighestWPM > fastestRecordedWPM[trainingScenario] ){
-        const currentDate = new Date();
 
         console.log('New WPM did fire inside the conditional and it was teuew ')
   
-        wordTestNumber != null || undefined ? storeData(testTeirHighestWPM, currentDate) : '';//This checks to make sure we are in a testing teir
-      wordTestNumber != null || undefined ? storeAverageData( testTeirHighestWPM, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
+        storeData(testTeirHighestWPM, currentDate);//This checks to make sure we are in a testing teir
 
           setFastestWPM({
           ...fastestRecordedWPM,
           [trainingScenario]: testTeirHighestWPM,
         });
       
+        console.log('avgCount '+ averageDailyCount)
 
       }
-      //wordTestNumber != null || undefined ? storeAverageData( testTeirHighestWPM, currentDate, currentChordSpeed, averageDailyCount) : '';//This checks to make sure we are in a testing teir
+      storeAverageData( testTeirHighestWPM, currentDate, currentChordSpeed, 1);//This checks to make sure we are in a testing teir
+      console.log('avgCount '+ averageDailyCount)
+
     }
     }
   }
 
-  console.log('Test is done '+ wpm)
   return wpm;
 
 };

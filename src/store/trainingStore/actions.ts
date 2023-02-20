@@ -281,10 +281,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   toggleChordEditModal: action((state) => {
     state.isDisplayingChordEditModal = !state.isDisplayingChordEditModal;
   }),
-
-  setTestCompleteValue: action((state, payload) => {
-    state.isTestDone = payload as unknown as boolean;
-  }),
   setAllTypedCharactersStore: action((state, payload) => {
     state.allTypedCharactersStore?.push(payload);
   }),

@@ -5,7 +5,6 @@ import type { ChordStatistics } from '../../../models/trainingStatistics';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
-import { getAverageWPM } from '../../manager/components/chordGraphs';
 import { TestControlRow } from './testControlsRow';
 
 
