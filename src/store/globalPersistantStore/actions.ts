@@ -24,9 +24,6 @@ const globalStorageStoreActions: GlobalStoreActions = {
   setIsDisplayingStatisticsModal: action((state, payload) => {
   state.isDisplayingStatisticsModal = payload;
   }),
-  setIsDisplayingIntroductionModal: action((state, payload) => {
-  state.isDisplayingIntroductionModal = payload as boolean;
-  }),
 
 }
 

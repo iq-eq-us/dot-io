@@ -36,6 +36,11 @@ const AggregateRow = ({ data } : { data: any }) => {
   const wordTestNumber = useStoreState((store) => store.wordTestNumber,);
   const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario,);
 
+  const setTrainingLevel = useStoreActions((store) => store.setTrainingLevel,);
+  const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute,); 
+  const setIsDisplayingIntroductionModal = useStoreActions((store) => store.setIsDisplayingIntroductionModal,);
+
+
   let sumErrors = 0;
   let sumOccurrences = 0;
   data.forEach((d : any) => {
@@ -49,25 +54,11 @@ const AggregateRow = ({ data } : { data: any }) => {
   const setVariable = wordTestNumber == undefined ? 26 : wordTestNumber;
   const [count, setCount] = useState(setVariable);
 
-  function beginTestBasedOnTrainingSelection (tierValue : string, val : number){
+  function LearnPageFunction (value: string){
+    const payload : any [] = []
+    payload.push(value);
     sessionStorage.removeItem("tempTestDeIncrement");
-    sessionStorage.removeItem('Refresh');
-    sessionStorage.setItem("CustomNonRefresh", JSON.stringify(1))
-    if(val != 0){
-    const payload = []
-    payload.push(tierValue);
-    payload.push(""+val+"");
-    setCount(val);
-    sessionStorage.removeItem("tempTestDeIncrement");
-    beginTraining(payload); 
-
-    } else{
-    const payload = []
-    payload.push(tierValue);
-    sessionStorage.removeItem("tempTestDeIncrement");
-    beginTraining(payload); 
-    
-    }
+    beginTraining(payload);
   }
   const [tempCounter, setTempCounter] = useState(-100);
 
@@ -93,6 +84,21 @@ useEffect(() => {
     setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
     setPopUpDisplayValue(true);
     //Method will send the test values to local storage
+  }
+
+
+  //The logic below controls if the CHM tier is slides are triggers
+  const canCHMTierBeUnlocked =  (parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed()) * 5) > 200; 
+   
+   
+  console.log('Trigger for CHM tier '+ Math.max.apply(Math, Object.values(maxWPM))?.toFixed() + ' '+ canCHMTierBeUnlocked + ' '+    JSON.parse(localStorage.getItem("FirstTimeEnteringCHMTier")));
+
+  if(canCHMTierBeUnlocked && JSON.parse(localStorage.getItem("FirstTimeEnteringCHMTier") == null)) {
+   setTrainingLevel('CHM');
+   setIsDisplayingIntroductionModal(true as boolean);
+   localStorage.setItem("FirstTimeEnteringCHMTier", JSON.parse(true));
+   LearnPageFunction('LEXICAL')
+   console.log('Trigger for CHM tier')
   }
   
 }, [sumOccurrences, setIsDisplaying]); // <-- dependency array

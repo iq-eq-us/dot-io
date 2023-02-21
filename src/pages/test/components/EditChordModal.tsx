@@ -78,11 +78,10 @@ function EditChordsModal(): ReactElement {
   };
 
   const cancelEditing = () => {
-    if (canCloseModal) {
       setTempChords(chords);
       togglePortal();
       setInputValue('');
-    }
+    
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -207,9 +206,7 @@ function EditChordsModal(): ReactElement {
 
               <BottomButtonRow>
 
-                {canCloseModal && (
                   <ThirdButton title="Cancel" onClick={cancelEditing} />
-                )}
                 <ThirdButton title="Confirm" onClick={confirmEditing} />
                 <ThirdButton title="Clear" onClick={clearChords} />
               </BottomButtonRow>

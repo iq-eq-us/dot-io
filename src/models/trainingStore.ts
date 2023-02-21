@@ -44,6 +44,7 @@ export interface TrainingStoreActionsModel {
   setTestTeirHighestWPM: Action<TrainingStoreModel, number>;
   setStoredChordsFromDevice: Action<TrainingStoreModel, number>;
   setStoredChordsRepresentation: Action<TrainingStoreModel, ChordLibraryRecord>;
+  setIsDisplayingIntroductionModal: Action<TrainingStoreModel, boolean>;
 
 
 
@@ -120,6 +121,8 @@ export interface TrainingStoreStateModel {
   testTeirHighestWPM: number;
   storedChordsFromDevice: string[];
   storedChordsRepresentation: ChordLibraryRecord;
+  isDisplayingIntroductionModal: boolean,
+
 
 }
 

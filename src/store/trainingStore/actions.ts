@@ -95,7 +95,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setModuleNumber: action((state, payload) => {
     state.moduleNumber = payload as number;
   }),
-
+  setIsDisplayingIntroductionModal: action((state, payload) => {
+    state.isDisplayingIntroductionModal = payload as boolean;
+    }),
 
   /**
    * This must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
@@ -172,6 +174,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     updateRecursionRateSettings(state);
+
   }),
   setErrorOccurredWhileAttemptingToTypeTargetChord: action((state, payload) => {
     state.errorOccurredWhileAttemptingToTypeTargetChord = payload;

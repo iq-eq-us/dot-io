@@ -19,9 +19,10 @@ function ModuleCompleteModal () : ReactElement {
   const setModuleCompleteModalToggle = useStoreActions((store : any) => store.setModuleCompleteModalToggle);
   const setDownloadModulModalToggle = useStoreActions((store : any) => store.setDownloadModulModalToggle);
   const setStoredChordsRepresentation = useStoreActions((store : any) => store.setStoredChordsRepresentation); 
-
   const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
   const setModuleNumber = useStoreActions((store: any) => store.setModuleNumber);
+
+  const trainingLevelIsCPM = trainingLevel == 'CPM';
 
   const [value, setValue] = useState(false);
 
@@ -79,7 +80,7 @@ function ModuleCompleteModal () : ReactElement {
 
   return (
     <React.Fragment>
-      {moduleCompleteModalToggle ? 
+      {moduleCompleteModalToggle && trainingLevelIsCPM ? 
     <div className='flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white'>
       <button className="close absolute ml-96 text-5xl pt-4 text-[#181818]" onClick={() => [setModuleCompleteModalToggle(!moduleCompleteModalToggle)]}>
             &times;
@@ -93,7 +94,7 @@ function ModuleCompleteModal () : ReactElement {
     : null
     }
 
-    {downloadModulModalToggle ? 
+    {downloadModulModalToggle? 
     <div className='flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white'>
       <button className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818] ${value == true? `hidden` :``}`} onClick={() => [setDownloadModulModalToggle(!downloadModulModalToggle)]}>
             &times;

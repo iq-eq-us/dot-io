@@ -6,7 +6,6 @@ export interface GlobalStoreState {
   numberOfWordsChorded: number;
   isDisplayingSettingsModal: boolean,
   isDisplayingStatisticsModal: boolean,
-  isDisplayingIntroductionModal: boolean,
 
 }
 
@@ -15,7 +14,6 @@ export interface GlobalStoreActions {
   setNumberOfWordsChorded: Action<GlobalStore, number>;
   setIsDisplayingSettingsModal: Action<GlobalStore, boolean>;
   setIsDisplayingStatisticsModal: Action<GlobalStore, boolean>;
-  setIsDisplayingIntroductionModal: Action<GlobalStore, boolean>;
 
 
 }

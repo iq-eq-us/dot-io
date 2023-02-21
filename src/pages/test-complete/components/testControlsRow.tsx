@@ -14,8 +14,7 @@ export function TestControlRow(): ReactElement {
       <NextTestButton />
          </ItemsContainer>
       </RowContainer>    
-       <TeirSelector>
-       </TeirSelector>
+       <TeirSelector/>
        </React.Fragment>
       );
   }
@@ -43,7 +42,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 font-size: 1rem;
-position: sticky;
+position: static;
 top: 0;
 z-index: 10;
 
