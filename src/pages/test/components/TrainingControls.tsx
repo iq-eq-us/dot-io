@@ -88,10 +88,13 @@ useEffect(() => {
 
 
   //The logic below controls if the CHM tier is slides are triggers
+
+  /* eslint-disable */
   const canCHMTierBeUnlocked =  (parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed()) * 5) > 200; 
+   /* eslint-enable */
+
    
-   
-  console.log('Trigger for CHM tier '+ Math.max.apply(Math, Object.values(maxWPM))?.toFixed() + ' '+ canCHMTierBeUnlocked + ' '+    JSON.parse(localStorage.getItem("FirstTimeEnteringCHMTier")));
+  //console.log('Trigger for CHM tier '+ Math.max.apply(Math, Object.values(maxWPM))?.toFixed() + ' '+ canCHMTierBeUnlocked + ' '+    JSON.parse(localStorage.getItem("FirstTimeEnteringCHMTier")));
 
   if(canCHMTierBeUnlocked && JSON.parse(localStorage.getItem("FirstTimeEnteringCHMTier") == null)) {
    setTrainingLevel('CHM');
