@@ -164,7 +164,7 @@ function returnStatisticsColumnContent(data : Data, index: number){
         <RowItem>{((cpmValue)).toFixed(0) == 'Infinity' ? 0 : ((cpmValue)).toFixed(0)/100}</RowItem>
     </React.Fragment>
     )
-  } else if(tier == 'CHM' && data.trainingScenario == 'LEXICAL'){
+  } else if(tier == 'CHM'){
     return(
       <React.Fragment>
           <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
@@ -336,7 +336,7 @@ function returnStatisticsColumnHeader(data : Data){
       <RowStatItem>{data.displayHUD ? (sumOfAWPM/100).toFixed(2) : ''}</RowStatItem>
     </React.Fragment>
     )
-  } else if (tier == 'CHM' && data.trainingScenario === 'LEXICAL'){
+  } else if (tier == 'CHM'){
     return(
     <React.Fragment>
       <RowStatItem>Total</RowStatItem>
