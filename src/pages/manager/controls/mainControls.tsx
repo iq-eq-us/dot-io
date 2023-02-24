@@ -421,8 +421,9 @@ import { commitAllWithStart } from "../components/commitAll";
         const binAction = binChord.substring(8+i*10,8+(i+1)*10); //take 10 bits at a time
         const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
         if(actionCode!=0){
-
-            const humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
+          //replaceOldAsciiKeys()
+          console.log('this is actionMap output '+ actionMap[actionCode as number])
+            const humanStringPart = replaceOldAsciiKeys(actionMap[actionCode as number]); //returns the ASCII string output from the actionMap 
             //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
             //console.log('Old Ascii '+ humanStringPart)
             humanChord.push(humanStringPart); //Replace when new action codes arrive
@@ -457,8 +458,8 @@ import { commitAllWithStart } from "../components/commitAll";
                     humanChord += " + "; //add this + between action ids; put here so we don't have to remove it at end of for-loop
                 }
   
-                const humanStringPart = actionMap[actionCode as number]; //returns the ASCII string output from the actionMap 
-                //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
+                console.log('this is actionMap output '+ actionMap[actionCode as number])
+                const humanStringPart = replaceOldAsciiKeys(actionMap[actionCode as number]);                //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
                 //console.log('Old Ascii '+ humanStringPart)
                 humanChord += humanStringPart; //Replace when new action codes arrive
                 //console.log('Human string part in the loop '+ humanChord)
@@ -551,8 +552,8 @@ import { commitAllWithStart } from "../components/commitAll";
     let finishedInputKey = '';
     for(let i =0; i< inputKey.length; i++){
      if(oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])){// eslint-disable-line no-use-before-define
-
       finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]];// eslint-disable-line no-use-before-define
+      console.log('Oldasciireplacement '+ finishedInputKey)
     } else{
       finishedInputKey += inputKey[i];
     }
