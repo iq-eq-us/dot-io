@@ -1,6 +1,17 @@
 # Introduction
 
-iq-eq Webpage is a testing/training tool for Keyboard users. It allows these users to practing their typing, trigrams, and chording.
+dot i/o is a testing/training tool for Keyboard users. It allows these users to practing their typing, trigrams, and chording.
+
+
+# Join Our Discord
+To join our active discord please click the like below
+https://discord.gg/wfJZhqD5WP
+
+To get the Developer Role within the discord please reach out to
+Maverick (@MAVERICK#1999) in the discord after you've completed an issue.
+
+
+
 
 # Dependency Installation
 
