@@ -5,7 +5,7 @@ dot i/o is a testing/training tool for Keyboard users. It allows these users to 
 
 # Join Our Discord
 To join our active discord please click the like below
-https://discord.gg/wfJZhqD5WP
+https://discord.gg/rWBuHeR9yU
 
 To get the Developer Role within the discord please ping @iq-eq Rep in the discord after you've completed an issue.
 
