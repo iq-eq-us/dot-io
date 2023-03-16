@@ -7,13 +7,8 @@ dot i/o is a testing/training tool for Keyboard users. It allows these users to 
 
 Dot I/O features some cutting-edge capabilities especially designed for the next generation of intelligent peripherals. Dot I/O is the first ever training tool with the ability to utilize the CCOS Serial API to establish a direct connection to your device while you practice. This means custom tailored practice sessions can be automatically generated from your embedded memory & history, that your custom constituent chord inputs can be highlighted on a virtual device in real-time, and that you can access advanced configuration options for your device directly inside of the web interface. That's just what is already available, and only scratches the surface of what will be possible.
 
-# Join Our Discord
-To join our active discord please click the like below
-https://discord.gg/rWBuHeR9yU
-
-To get the Developer Role within the discord please ping '@iq-eq Rep' in the discord after you've completed an issue.
-
-
+# How to Support
+To join our active discord please click here: https://discord.gg/rWBuHeR9yU. To get the Developer Role within the discord please ping '@iq-eq Rep'
 
 
 # Dependency Installation
