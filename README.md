@@ -1,7 +1,11 @@
 # Introduction
 
+Dot I/O is a free, open source, web based training tool designed to forever change the way we learn to type.
+
+Instead of measuring digital literacy with a single, all encompassing metric (words per minute), Dot I/O will measure your progress via six multivariate metrics: (tWPM, sWPM, ChM, CPM, StM, CM). These complementary metrics are designed to allow you to calibrate and track progress in a way that is meaningful to your specific goals, and to help you build a custom HCI profile that's just as unique as you are. With Dot I/O, you're more than just a number :crashWave: 
 dot i/o is a testing/training tool for Keyboard users. It allows these users to practing their typing, trigrams, and chording.
 
+Dot I/O features some cutting-edge capabilities especially designed for the next generation of intelligent peripherals. Dot I/O is the first ever training tool with the ability to utilize the CCOS Serial API to establish a direct connection to your device while you practice. This means custom tailored practice sessions can be automatically generated from your embedded memory & history, that your custom constituent chord inputs can be highlighted on a virtual device in real-time, and that you can access advanced configuration options for your device directly inside of the web interface. That's just what is already available, and only scratches the surface of what will be possible.
 
 # Join Our Discord
 To join our active discord please click the like below
