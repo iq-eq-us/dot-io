@@ -11,11 +11,13 @@ Dot I/O features some cutting-edge capabilities especially designed for the next
 
 In general, we follow the "fork-and-pull" Git workflow.
 
-Fork the repo on GitHub
-Clone the project to your own machine
-Commit changes to your own branch
-Push your work back up to your fork
-Submit a Pull request so that we can review your changes. In this request please put in the summary of the changes. 
+
+ 1. **Fork** the repo on GitHub
+ 2. **Clone** the project to your own machine
+ 3. **Commit** changes to your own branch
+ 4. **Push** your work back up to your fork
+ 5. Submit a **Pull request** so that we can review your changes. In this request please put in the summary of the changes. 
+
 NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
 To join our active discord please click here: https://discord.gg/rWBuHeR9yU. To get the Developer Role within the discord please ping '@iq-eq Rep'
