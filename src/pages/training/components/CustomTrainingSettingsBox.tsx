@@ -39,7 +39,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
 
   React.useEffect(() => {
     setTargetChords(trainingSettings.targetChords);
-    console.log('SPeed oal int he recur '+ trainingSettings.speedGoal)
+    console.log('SPeed oal int he recur ' + trainingSettings.speedGoal);
     setSpeedGoal(trainingSettings.speedGoal);
     setRate(trainingSettings.recursionRate);
   }, [trainingSettings]);

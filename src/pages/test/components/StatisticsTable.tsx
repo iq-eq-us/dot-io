@@ -89,7 +89,7 @@ const Row = ({ index, style, data }: RowData) => {
       style={style}
     >
       <NewStatisticsRow headerStyle={headerStyle}>
-        <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
+        <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
         <RowItem>{item?.averageSpeed.toFixed()}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
@@ -174,14 +174,15 @@ const AggregateRow = ({ data }: { data: Data }) => {
 
 const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle }>(
   (props) => ({
-    className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] hover:bg-[#333] ${props.headerStyle === 'TARGET_CHORD_ACTIVE'
-      ? 'bg-yellow-400 text-black font-bold'
-      : props.headerStyle === 'TARGET_CHORD_INACTIVE'
+    className: `text-gray-300 flex flex-row w-full text-white h-[36px] bg-[#222] hover:bg-[#333] ${
+      props.headerStyle === 'TARGET_CHORD_ACTIVE'
+        ? 'bg-yellow-400 text-black font-bold'
+        : props.headerStyle === 'TARGET_CHORD_INACTIVE'
         ? 'bg-[#aaa] text-black font-bold'
         : ''
-      }`,
+    }`,
   }),
-) <{ headerStyle: StatRowStyle }>``;
+)<{ headerStyle: StatRowStyle }>``;
 
 const RowItem = styled.div.attrs({
   className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4`,

@@ -21,5 +21,5 @@ export interface SectorGroupDataRow {
   eleventhKey: KeyboardKey;
   twelfthKey: KeyboardKey;
   thirteenthKey?: KeyboardKey;
-  fourteenthKey?: KeyboardKey;  
+  fourteenthKey?: KeyboardKey;
 }

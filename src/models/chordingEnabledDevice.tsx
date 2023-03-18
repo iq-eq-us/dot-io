@@ -1,3 +1,1 @@
-export type ChordingEnabled =
-  | true
-  | false;
+export type ChordingEnabled = true | false;

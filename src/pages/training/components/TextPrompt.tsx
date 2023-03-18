@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 
-
 const r = Math.random;
 
 export function TextPrompt(): ReactElement {
@@ -18,26 +17,29 @@ export function TextPrompt(): ReactElement {
   const isError = useStoreState(
     (store) => store.errorOccurredWhileAttemptingToTypeTargetChord,
   );
-  const targetCharacterIndex = useStoreState((store) => store.targetCharacterIndex);
+  const targetCharacterIndex = useStoreState(
+    (store) => store.targetCharacterIndex,
+  );
   const characterEntryMode = useStoreState((store) => store.characterEntryMode);
 
-
   return (
-
-    
     <TextPromptContainer>
-      <ChordRow >
+      <ChordRow>
         {(firstLineOfTargetText || [])?.map((chord, i) => {
-          if (characterEntryMode === "CHORD" || i !== indexOfTargetChord)
-            return <Chord
-              key={r()}
-              active={i === indexOfTargetChord}
-              error={isError && i === indexOfTargetChord}
-            >
-              {chord}
-            </Chord>
+          if (characterEntryMode === 'CHORD' || i !== indexOfTargetChord)
+            return (
+              <Chord
+                key={r()}
+                active={i === indexOfTargetChord}
+                error={isError && i === indexOfTargetChord}
+              >
+                {chord}
+              </Chord>
+            );
           else
-            return <CharacterEntryChord word={chord} index={targetCharacterIndex} />
+            return (
+              <CharacterEntryChord word={chord} index={targetCharacterIndex} />
+            );
         })}
       </ChordRow>
 
@@ -50,24 +52,37 @@ export function TextPrompt(): ReactElement {
   );
 }
 
-export default function CharacterEntryChord({ word, index }: { word: string, index: number | undefined }): ReactElement {
+export default function CharacterEntryChord({
+  word,
+  index,
+}: {
+  word: string;
+  index: number | undefined;
+}): ReactElement {
   if (index === undefined || index === null)
-    return <span className="text-green-500" key={Math.random()}>{word}</span>
+    return (
+      <span className="text-green-500" key={Math.random()}>
+        {word}
+      </span>
+    );
 
-  const wordSplit = word.split("");
+  const wordSplit = word.split('');
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', color: "red" }}>
-      {wordSplit.slice(0, index).map((char) =>
-        <span className="text-green-500" key={Math.random()}>{char}</span>
-      )}
+    <div style={{ display: 'flex', flexDirection: 'row', color: 'red' }}>
+      {wordSplit.slice(0, index).map((char) => (
+        <span className="text-green-500" key={Math.random()}>
+          {char}
+        </span>
+      ))}
       <span className="text-blue-500">{wordSplit[index]}</span>
-      {wordSplit.slice(index + 1).map((char) =>
-        <span className="text-white" key={Math.random()}>{char}</span>
-      )}
+      {wordSplit.slice(index + 1).map((char) => (
+        <span className="text-white" key={Math.random()}>
+          {char}
+        </span>
+      ))}
     </div>
-  )
+  );
 }
-
 
 interface ChordProps {
   active?: boolean;
@@ -75,9 +90,10 @@ interface ChordProps {
 }
 
 const Chord = styled.span.attrs<ChordProps>((props) => ({
-  className: `${props.active ? 'text-blue-500 underline' : ''} ${props.error ? 'text-red-500' : ''
-    }`,
-})) <ChordProps>``;
+  className: `${props.active ? 'text-blue-500 underline' : ''} ${
+    props.error ? 'text-red-500' : ''
+  }`,
+}))<ChordProps>``;
 
 const ChordRow = styled.div.attrs({
   className: `flex flex-row gap-[1vw] justify-center w-full`,

@@ -9,10 +9,8 @@ export function ChordManagerHeader(): ReactElement {
         </h1>
       </div>
       <p className="lg:w-1/2 w-full leading-relaxed text-gray-300 font-semibold font-mono">
-        Welcome to the Device Manager. Here you can exercise control over the layout and chord library of your chording enabled device.
-        
-
-
+        Welcome to the Device Manager. Here you can exercise control over the
+        layout and chord library of your chording enabled device.
       </p>
     </div>
   );

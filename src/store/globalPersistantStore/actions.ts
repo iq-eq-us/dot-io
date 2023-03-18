@@ -1,5 +1,8 @@
 import { action } from 'easy-peasy';
-import type { GlobalStoreActions, GlobalStoreState } from '../../../src/models/globalStorage';
+import type {
+  GlobalStoreActions,
+  GlobalStoreState,
+} from '../../../src/models/globalStorage';
 
 const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
 /**
@@ -8,27 +11,26 @@ const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';
  * This logic is rather complex so it may take a few tries to understand it.
  */
 
- const sessionChordingState = sessionStorage.getItem('chordingEnabledDevice');
+const sessionChordingState = sessionStorage.getItem('chordingEnabledDevice');
 
 const globalStorageStoreActions: GlobalStoreActions = {
   setIsUsingChordingEnabledDevice: action((state, payload) => {
-  state.isUsingChordingEnabledDevice = payload as boolean;
-  updateIsChordingEnabledInSessionStorage(payload as boolean);
+    state.isUsingChordingEnabledDevice = payload as boolean;
+    updateIsChordingEnabledInSessionStorage(payload as boolean);
   }),
   setIsDisplayingSettingsModal: action((state, payload) => {
-  state.isDisplayingSettingsModal = payload;
+    state.isDisplayingSettingsModal = payload;
   }),
   setNumberOfWordsChorded: action((state, payload) => {
-  state.numberOfWordsChorded = state.numberOfWordsChorded +1 as number;
+    state.numberOfWordsChorded = (state.numberOfWordsChorded + 1) as number;
   }),
   setIsDisplayingStatisticsModal: action((state, payload) => {
-  state.isDisplayingStatisticsModal = payload;
+    state.isDisplayingStatisticsModal = payload;
   }),
-
-}
+};
 
 export default globalStorageStoreActions;
 
 function updateIsChordingEnabledInSessionStorage(payload: boolean) {
-    sessionStorage.setItem('chordingEnabledDevice', JSON.stringify(payload))
-  }
+  sessionStorage.setItem('chordingEnabledDevice', JSON.stringify(payload));
+}

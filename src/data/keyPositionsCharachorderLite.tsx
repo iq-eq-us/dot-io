@@ -1,91 +1,113 @@
 import type { KeyHighlightPositionLite } from '../models/keyHighlightPositionsCharachorderLite';
 
 export const keyPositions: Record<string, KeyHighlightPositionLite> = {
-  '317-57': {//A
+  '317-57': {
+    //A
     rowGroup: 3,
     position: 2,
   },
-  '316-180': {//B
+  '316-180': {
+    //B
     rowGroup: 4,
     position: 6,
   },
-  '140-44': {//O
+  '140-44': {
+    //O
     rowGroup: 2,
     position: 10,
   },
-  '71-60': {//U
+  '71-60': {
+    //U
     rowGroup: 2,
     position: 8,
   },
-  '215-110': {//V
+  '215-110': {
+    //V
     rowGroup: 4,
     position: 5,
   },
-  '194-82': {//E
+  '194-82': {
+    //E
     rowGroup: 2,
     position: 4,
   },
-  '194-83': {//Space bar
+  '194-83': {
+    //Space bar
     rowGroup: 5,
     position: 4,
   },
-  '303-146': {//D
+  '303-146': {
+    //D
     rowGroup: 3,
     position: 4,
   },
-  '187-180': {//G
+  '187-180': {
+    //G
     rowGroup: 3,
     position: 6,
   },
-  '169-18': {//I
+  '169-18': {
+    //I
     rowGroup: 2,
     position: 9,
   },
-  '169-19': {//.
+  '169-19': {
+    //.
     rowGroup: 4,
     position: 10,
   },
-  '377-44': {//N
+  '377-44': {
+    //N
     rowGroup: 4,
     position: 7,
   },
-  '353-179':{//DUP
+  '353-179': {
+    //DUP
     rowGroup: 5,
     position: 6,
   },
-  '223-56': {//R
+  '223-56': {
+    //R
     rowGroup: 2,
     position: 5,
   },
-  '371-19': {//L
+  '371-19': {
+    //L
     rowGroup: 3,
     position: 10,
   },
-  '207-121': {//M
+  '207-121': {
+    //M
     rowGroup: 4,
     position: 8,
   },
-  '224-179': {//W
+  '224-179': {
+    //W
     rowGroup: 2,
     position: 3,
   },
-  '224-180': {//Z
+  '224-180': {
+    //Z
     rowGroup: 4,
     position: 2,
   },
-  '439-35': {//Y
+  '439-35': {
+    //Y
     rowGroup: 2,
     position: 7,
   },
-  '500-62': {//RShift
+  '500-62': {
+    //RShift
     rowGroup: 4,
     position: 1,
   },
-  '500-61': {// '
+  '500-61': {
+    // '
     rowGroup: 13,
     position: 6,
   },
-  '40-62': {//Space
+  '40-62': {
+    //Space
     rowGroup: 1,
     position: 6,
   },
@@ -101,27 +123,33 @@ export const keyPositions: Record<string, KeyHighlightPositionLite> = {
     rowGroup: 1,
     position: 6,
   },
-  '333-121': {//H
+  '333-121': {
+    //H
     rowGroup: 3,
     position: 7,
   },
-  '446-60': {//S
+  '446-60': {
+    //S
     rowGroup: 3,
     position: 3,
   },
-  '101-35': {//Y I thinkk
+  '101-35': {
+    //Y I thinkk
     rowGroup: 2,
     position: 7,
   },
-  '243-121': {// K
+  '243-121': {
+    // K
     rowGroup: 3,
     position: 9,
   },
-  '214-146': {//C
+  '214-146': {
+    //C
     rowGroup: 4,
     position: 4,
   },
-  '296-121': {//F
+  '296-121': {
+    //F
     rowGroup: 3,
     position: 5,
   },
@@ -133,15 +161,18 @@ export const keyPositions: Record<string, KeyHighlightPositionLite> = {
     rowGroup: 8,
     position: 6,
   },
-  '324-82': {//T
+  '324-82': {
+    //T
     rowGroup: 2,
     position: 6,
   },
-  '323-168': {//X
+  '323-168': {
+    //X
     rowGroup: 4,
     position: 3,
   },
-  '304-110': {//P
+  '304-110': {
+    //P
     rowGroup: 2,
     position: 11,
   },
@@ -149,18 +180,19 @@ export const keyPositions: Record<string, KeyHighlightPositionLite> = {
     rowGroup: 8,
     position: 6,
   },
-  '407-18': {//J
+  '407-18': {
+    //J
     rowGroup: 3,
     position: 8,
   },
-  '323-204': {//Q
+  '323-204': {
+    //Q
     rowGroup: 2,
     position: 2,
   },
-  '407-204': {// This is ? and /
+  '407-204': {
+    // This is ? and /
     rowGroup: 4,
     position: 11,
   },
-
-
 };

@@ -19,103 +19,113 @@ import ModuleCompleteModal from './components/ModuleCompleteModal';
  * Be sure to check out the contents of the trainingStore to understand the application logic.
  */
 
-
 function TrainingTestPage(): ReactElement {
   const contrast = useContrast();
-  const currentTrainingScenario = useStoreState((store : any) => store.currentTriningScenario);
-  const wordTestNumber = useStoreState((store : any) => store.wordTestNumber);
+  const currentTrainingScenario = useStoreState(
+    (store: any) => store.currentTriningScenario,
+  );
+  const wordTestNumber = useStoreState((store: any) => store.wordTestNumber);
   useTrainingScenarioAsDocumentTitle();
-  const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
-  const currentTrainingSetting = useStoreState((store : any) => store.trainingSettings);
+  const beginTraining = useStoreActions(
+    (store: any) => store.beginTrainingMode,
+  );
+  const currentTrainingSetting = useStoreState(
+    (store: any) => store.trainingSettings,
+  );
   const isTrainingTestDone = currentTrainingSetting.isTestDone;
-  const isDisplayingIntroductionModal = useStoreState((store : any) => store.isDisplayingIntroductionModal);
-  const setIsDisplayingIntroductionModal = useStoreActions((store : any) => store.setIsDisplayingIntroductionModal);
-  const trainingLevel = useStoreState((store : any) => store.trainingLevel);
-
-
+  const isDisplayingIntroductionModal = useStoreState(
+    (store: any) => store.isDisplayingIntroductionModal,
+  );
+  const setIsDisplayingIntroductionModal = useStoreActions(
+    (store: any) => store.setIsDisplayingIntroductionModal,
+  );
+  const trainingLevel = useStoreState((store: any) => store.trainingLevel);
 
   //setIsDisplayingIntroductionModal
-  
+
   const [toggleValue, setToggleValue] = useState(true);
 
-
   useEffect(() => {
-    document.title = "dot i/o"
-    sessionStorage.removeItem("tempTestDeIncrement");
+    document.title = 'dot i/o';
+    sessionStorage.removeItem('tempTestDeIncrement');
     sessionStorage.removeItem('Refresh');
-    const payload : any [] = []
+    const payload: any[] = [];
 
-    if(trainingLevel == 'CPM'){
-    payload.push('ALPHABET');
-    if(wordTestNumber != undefined){
-      payload.push(wordTestNumber);
-    } 
-  } else if(trainingLevel == 'CHM'){
-    payload.push('LEXICAL');
-    if(wordTestNumber != undefined){
-      payload.push(wordTestNumber);
-    } 
-  }
-    beginTraining(payload);    
-    
-    
+    if (trainingLevel == 'CPM') {
+      payload.push('ALPHABET');
+      if (wordTestNumber != undefined) {
+        payload.push(wordTestNumber);
+      }
+    } else if (trainingLevel == 'CHM') {
+      payload.push('LEXICAL');
+      if (wordTestNumber != undefined) {
+        payload.push(wordTestNumber);
+      }
+    }
+    beginTraining(payload);
   }, []); // <-- dependency array
 
   return (
     <React.Fragment>
-        <PageContainer contrast={contrast}>
-      {!currentTrainingScenario &&
-        <Redirect to="" />
-      }
-       {(isTrainingTestDone == false) && (
-        <React.Fragment>
-        <EditChordsModal />
-      <SettingsColumn/>
-      <CenterTrainingColumn />
-      <PreviousTest/>
-      { (isDisplayingIntroductionModal || localStorage.getItem("FirstTimeViewingModal") == undefined) ? 
-      <div style={modal}> 
-      <div style={modal_content}>
-      <button className="close absolute ml-96 text-5xl text-white" onClick={() => [setToggleValue(!toggleValue), localStorage.setItem("FirstTimeViewingModal", JSON.stringify(true)), setIsDisplayingIntroductionModal(false as boolean)]}>
-            &times;
-          </button>
-      <ImageSlider/>
-      </div>
-      </div>
-      : null
-}
+      <PageContainer contrast={contrast}>
+        {!currentTrainingScenario && <Redirect to="" />}
+        {isTrainingTestDone == false && (
+          <React.Fragment>
+            <EditChordsModal />
+            <SettingsColumn />
+            <CenterTrainingColumn />
+            <PreviousTest />
+            {isDisplayingIntroductionModal ||
+            localStorage.getItem('FirstTimeViewingModal') == undefined ? (
+              <div style={modal}>
+                <div style={modal_content}>
+                  <button
+                    className="close absolute ml-96 text-5xl text-white"
+                    onClick={() => [
+                      setToggleValue(!toggleValue),
+                      localStorage.setItem(
+                        'FirstTimeViewingModal',
+                        JSON.stringify(true),
+                      ),
+                      setIsDisplayingIntroductionModal(false as boolean),
+                    ]}
+                  >
+                    &times;
+                  </button>
+                  <ImageSlider />
+                </div>
+              </div>
+            ) : null}
 
-<ModuleCompleteModal/>
-      </React.Fragment>
-       )}
-       {(isTrainingTestDone == true) && (
-        <React.Fragment>
-        <TestCompletePage/>
-      </React.Fragment>
-       )}
+            <ModuleCompleteModal />
+          </React.Fragment>
+        )}
+        {isTrainingTestDone == true && (
+          <React.Fragment>
+            <TestCompletePage />
+          </React.Fragment>
+        )}
       </PageContainer>
-      </React.Fragment>
-
+    </React.Fragment>
   );
 }
 
 export default TrainingTestPage;
 
 const modal = {
-  position: "absolute" as const, 
-  zIndex: "1" as const, 
-  left: "5%" as const,
-  width: "75%" as const,
-  textAlign: "center" as const,
-  backgroundColor: "rgba(0, 0, 0, 0.25)" as const
+  position: 'absolute' as const,
+  zIndex: '1' as const,
+  left: '5%' as const,
+  width: '75%' as const,
+  textAlign: 'center' as const,
+  backgroundColor: 'rgba(0, 0, 0, 0.25)' as const,
 };
 
-
 const modal_content = {
-  backgroundColor: "#181818" as const,
-   position: "absolute" as const,
-   top: "20%" as const, 
-   left: "20%" as const, 
-   borderRadius: "5px" as const, 
-   border: "2px solid black" as const
-  }
+  backgroundColor: '#181818' as const,
+  position: 'absolute' as const,
+  top: '20%' as const,
+  left: '20%' as const,
+  borderRadius: '5px' as const,
+  border: '2px solid black' as const,
+};

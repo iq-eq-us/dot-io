@@ -35,9 +35,11 @@ function StaticSector({
         viewBox="9 9 9 9"
         className="absolute inset-0"
       >
-          <rect width="100" height="100" fill={`${active ? '#43e272' : '#8099E5'}`}/>
-
-     
+        <rect
+          width="100"
+          height="100"
+          fill={`${active ? '#43e272' : '#8099E5'}`}
+        />
       </svg>
 
       <p

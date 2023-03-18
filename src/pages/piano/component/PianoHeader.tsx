@@ -10,10 +10,8 @@ export function PianoHeader(): ReactElement {
         <div className="h-1 w-20 bg-green-500 rounded" />
       </div>
       <p className="lg:w-1/2 w-full leading-relaxed text-gray-300 font-semibold">
-        Welcome to the CharaPiano! Here you can use your CharaChorder to record you&apos;re own CharaChorder Piano Piece.
-        
-
-
+        Welcome to the CharaPiano! Here you can use your CharaChorder to record
+        you&apos;re own CharaChorder Piano Piece.
       </p>
     </div>
   );

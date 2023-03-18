@@ -10,7 +10,6 @@ import type { TrainingStatistics } from './trainingStatistics';
 import type { WordTrainingValues } from './wordTrainingValues';
 import type { TrainingLevels } from './trainingLevels';
 
-
 export interface TrainingStoreActionsModel {
   setTrainingSettings: Action<TrainingStoreModel, TrainingSettingsState>;
   setIsDisplayingStatisticsModal: Action<TrainingStoreModel, boolean>;
@@ -32,7 +31,7 @@ export interface TrainingStoreActionsModel {
   setStoredTestTextData: Action<TrainingStoreModel, string[] | undefined>;
   setCompareText: Action<TrainingStoreModel, string[] | undefined>;
   setCurrentSubindexInTrainingText: Action<TrainingStoreModel, number>;
-  setAllTypedCharactersStore:  Action<TrainingStoreModel, string>;
+  setAllTypedCharactersStore: Action<TrainingStoreModel, string>;
   setPopAllTypedCharactersStore: Action<TrainingStoreModel>;
   setUserIsEditingPreviousWord: Action<TrainingStoreModel, boolean>;
   setTextPromptUnFocused: Action<TrainingStoreModel, boolean>;
@@ -45,8 +44,6 @@ export interface TrainingStoreActionsModel {
   setStoredChordsFromDevice: Action<TrainingStoreModel, number>;
   setStoredChordsRepresentation: Action<TrainingStoreModel, ChordLibraryRecord>;
   setIsDisplayingIntroductionModal: Action<TrainingStoreModel, boolean>;
-
-
 
   /**
    * This action allows you to manually update the chords used in a particular training mode
@@ -62,7 +59,6 @@ export interface TrainingStoreActionsModel {
    * See: `beginTrainingAlphabetMode` || `beginTrainingTrigramMode` || `beginTrainingChordMode` || `beginTrainingLexicalMode`
    */
   UNSAFE_setTrainingText: Action<TrainingStoreModel, string[][]>;
-
 }
 
 export interface TrainingStoreStateModel {
@@ -98,12 +94,12 @@ export interface TrainingStoreStateModel {
   isTestDone: boolean;
   isDisplayingChordEditModal: boolean;
   compareText: string[] | undefined;
-  restartTestMode: boolean,
+  restartTestMode: boolean;
   chordsToPullFrom: ChordLibraryRecord;
   isShowingPlusIcon: boolean;
   targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
-  storedTestTextData:  Computed<TrainingStoreModel, string[]>;
+  storedTestTextData: Computed<TrainingStoreModel, string[]>;
   numberOfChordsForTrainingLevel: number;
   characterEntryMode: Computed<
     TrainingStoreModel,
@@ -113,7 +109,7 @@ export interface TrainingStoreStateModel {
   allTypedCharactersStore: string[] | undefined;
   userIsEditingPreviousWord: boolean;
   textPromptUnFocused: boolean;
-  numberOfWordsChorded:  number;
+  numberOfWordsChorded: number;
   moduleCompleteModalToggle: boolean;
   downloadModulModalToggle: boolean;
   wasModuleShown: boolean;
@@ -121,9 +117,7 @@ export interface TrainingStoreStateModel {
   testTeirHighestWPM: number;
   storedChordsFromDevice: string[];
   storedChordsRepresentation: ChordLibraryRecord;
-  isDisplayingIntroductionModal: boolean,
-
-
+  isDisplayingIntroductionModal: boolean;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

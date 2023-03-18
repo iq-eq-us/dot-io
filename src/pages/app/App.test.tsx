@@ -55,7 +55,7 @@ describe('<App>', () => {
     );
     checkThatTrainingTextIsNotEmptyForMode(() =>
       actions().beginTrainingMode('CHORDING'),
-    )
+    );
   });
 
   it('moves to second chord after typing the first chord', () => {

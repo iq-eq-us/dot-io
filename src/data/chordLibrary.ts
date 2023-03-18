@@ -1,6 +1,5 @@
 export type ChordLibraryRecord = Record<string, string[]>;
 
-
 export interface ChordLibrary {
   letters: ChordLibraryRecord;
   chords: ChordLibraryRecord;
@@ -16,30 +15,26 @@ export interface ChordLibrary {
   specialCharacters: ChordLibraryRecord;
 }
 
-
-
-
 // This chord library maps to the key positions in the keyPositions.ts file
 export const chordLibrary: ChordLibrary = {
   lexicalSentences: {
-    one:['Will you get a headache if you think too hard?'],
-    two:['We will go home at the end of the day.'],
-    three:['I am too shy to speak to that many people.'],
-    four:['If I do the dishes will you clean the bathroom?'],
-    five:['There is no way I am going to do it.'],
-    six:["I tried to get the pictures, but they're not ready."],
-    seven:['Eat all of your dinner if you want some dessert.'],
-    eight:['I think we are going to have a good day.'],
-    nine:['A lot of families have both a mother and father.'],
-    ten:['That is the least amount of work you can do.'],
-    eleven:['A lot of trees died from the Ice Storm 1998'],
-    twelve:['I would like a small fraction of the pie, please.'],
-    thirteen:['I will do it whether you like it or not!'],
-    fourteen:['I suddenly had the urge to go for a walk.'],
-
+    one: ['Will you get a headache if you think too hard?'],
+    two: ['We will go home at the end of the day.'],
+    three: ['I am too shy to speak to that many people.'],
+    four: ['If I do the dishes will you clean the bathroom?'],
+    five: ['There is no way I am going to do it.'],
+    six: ["I tried to get the pictures, but they're not ready."],
+    seven: ['Eat all of your dinner if you want some dessert.'],
+    eight: ['I think we are going to have a good day.'],
+    nine: ['A lot of families have both a mother and father.'],
+    ten: ['That is the least amount of work you can do.'],
+    eleven: ['A lot of trees died from the Ice Storm 1998'],
+    twelve: ['I would like a small fraction of the pie, please.'],
+    thirteen: ['I will do it whether you like it or not!'],
+    fourteen: ['I suddenly had the urge to go for a walk.'],
   },
   allChords: {
-   CharaChorder:  [],
+    CharaChorder: [],
   },
   supersonic: {
     word: [],
@@ -48,8 +43,6 @@ export const chordLibrary: ChordLibrary = {
   customtier: {
     sample: [],
     words: [],
-
-
   },
   lexicographic: {
     about: [],
@@ -358,12 +351,12 @@ export const chordLibrary: ChordLibrary = {
     '.': ['169-19'],
     ',': [],
     ';': [],
-    "'":[],
+    "'": [],
     '[': [],
     ']': [],
-    "\"": [],
+    '"': [],
     0: [],
-    1: [], 
+    1: [],
     2: [],
     3: [],
     4: [],
@@ -372,7 +365,6 @@ export const chordLibrary: ChordLibrary = {
     7: [],
     8: [],
     9: [],
-
   },
   letters: {
     e: ['194-82'],
@@ -563,7 +555,7 @@ export const chordLibrary: ChordLibrary = {
     into: ['169-18', '377-44', '324-82'],
     is: ['169-18', '446-60'],
     it: ['169-18', '324-82'],
-    its: ['169-18', '324-82','40-60','500-61'],
+    its: ['169-18', '324-82', '40-60', '500-61'],
     just: ['407-18', '71-60'],
     keep: ['243-121', '194-82'],
     kind: ['243-121', '169-18', '377-44', '303-146'],
@@ -625,7 +617,7 @@ export const chordLibrary: ChordLibrary = {
     plant: ['304-110', '377-44', '324-82'],
     play: ['304-110', '371-19', '317-57', '439-35'],
     point: ['304-110', '140-44', '377-44', '324-82'],
-    question: ['323-204', '71-60', '194-82', '446-60' ],
+    question: ['323-204', '71-60', '194-82', '446-60'],
     quick: ['323-204', '71-60', '169-18', '243-121'],
     quickly: ['323-204', '71-60', '243-121', '371-19', '439-35'],
     quite: ['323-204', '71-60', '324-82', '194-82'],
@@ -664,7 +656,7 @@ export const chordLibrary: ChordLibrary = {
     then: ['324-82', '333-121', '194-82', '377-44'],
     these: ['324-82', '333-121', '194-82', '446-60'],
     they: ['324-82', '333-121', '194-82', '439-35'],
-     those: ['324-82', '333-121', '140-44', '446-60', '194-82'],
+    those: ['324-82', '333-121', '140-44', '446-60', '194-82'],
     thought: ['324-82', '333-121', '140-44', '71-60', '187-180'],
     three: ['324-82', '333-121', '223-56', '194-82'],
     through: ['324-82', '333-121', '223-56', '71-60'],
@@ -699,9 +691,9 @@ export const chordLibrary: ChordLibrary = {
     write: ['224-179', '223-56', '169-18', '324-82'],
     year: ['439-35', '194-82', '317-57'],
     young: ['439-35', '140-44', '71-60', '377-44', '187-180'],
-    	
-  },chordsLite: {
-    from: ['296-121', '223-56', '140-44', '207-121'],    
+  },
+  chordsLite: {
+    from: ['296-121', '223-56', '140-44', '207-121'],
     get: ['187-180', '194-82', '324-82'],
     her: ['333-121', '194-82', '223-56'],
     him: ['333-121', '169-18', '207-121'],
@@ -724,9 +716,9 @@ export const chordLibrary: ChordLibrary = {
     put: ['304-110', '71-60', '324-82'],
     she: ['446-60', '333-121', '194-82'],
     set: ['446-60', '194-82', '324-82'],
-    seem: ['446-60', '194-82', '207-121'], 
+    seem: ['446-60', '194-82', '207-121'],
     show: ['446-60', '333-121', '140-44', '224-179'],
-    state: ['446-60','324-82', '243-121', '194-82'],  
+    state: ['446-60', '324-82', '243-121', '194-82'],
     such: ['446-60', '71-60', '214-146', '333-121'],
     take: ['324-82', '317-57', '243-121', '194-82'],
     that: ['324-82', '333-121', '317-57'],
@@ -750,7 +742,7 @@ export const chordLibrary: ChordLibrary = {
     will: ['224-179', '169-18', '371-19'],
     you: ['439-35', '140-44', '71-60'],
     your: ['439-35', '223-56'],
-    about: ['317-57', '316-180', '140-44', '71-60','324-82'],
+    about: ['317-57', '316-180', '140-44', '71-60', '324-82'],
     above: ['317-57', '316-180', '140-44', '215-110', '194-82'],
     add: ['317-57', '303-146'],
     after: ['317-57', '296-121', '324-82', '194-82', '223-56'],
@@ -764,7 +756,15 @@ export const chordLibrary: ChordLibrary = {
     an: ['317-57', '377-44'],
     and: ['317-57', '377-44', '303-146'],
     animal: ['317-57', '377-44', '169-18', '207-121'],
-    another: ['317-57', '377-44', '140-44', '324-82', '333-121', '194-82', '223-56'],
+    another: [
+      '317-57',
+      '377-44',
+      '140-44',
+      '324-82',
+      '333-121',
+      '194-82',
+      '223-56',
+    ],
     answer: ['317-57', '377-44', '446-60', '224-179', '194-82', '223-56'],
     any: ['317-57', '377-44', '101-35'],
     are: ['317-57', '223-56', '194-82'],
@@ -773,7 +773,7 @@ export const chordLibrary: ChordLibrary = {
     ask: ['317-57', '446-60', '243-121'],
     at: ['317-57', '194-82'],
     away: ['317-57', '224-179', '353-179', '439-35'],
-    back: ['316-180', '317-57', '214-146', '243-121'],  
+    back: ['316-180', '317-57', '214-146', '243-121'],
     be: ['316-180', '194-82'],
     because: ['316-180', '214-146'],
     been: ['316-180', '194-82', '377-44'],
@@ -800,7 +800,7 @@ export const chordLibrary: ChordLibrary = {
     close: ['214-146', '371-19', '140-44', '446-60', '194-82'],
     come: ['214-146', '140-44', '207-121', '194-82'],
     could: ['214-146', '140-44', '71-60', '371-19', '303-146'],
-    country: ['214-146', '140-44','71-60', '377-44', '324-82', '223-56'],
+    country: ['214-146', '140-44', '71-60', '377-44', '324-82', '223-56'],
     cut: ['214-146', '71-60', '324-82'],
     day: ['303-146', '317-57', '439-35'],
     did: ['303-146', '169-18'],
@@ -855,19 +855,19 @@ export const chordLibrary: ChordLibrary = {
     house: ['333-121', '140-44', '71-60', '446-60', '194-82'],
     idea: ['169-18', '303-146', '194-82', '317-57'],
     if: ['169-18', '296-121'],
-    important: ['169-18', '207-121', '304-110'], 
+    important: ['169-18', '207-121', '304-110'],
     in: ['169-18', '377-44'],
     into: ['169-18', '377-44', '324-82', '140-44'],
     is: ['169-18', '446-60'],
     it: ['169-18', '324-82'],
-    its: ['169-18', '324-82','40-60','500-61'],
+    its: ['169-18', '324-82', '40-60', '500-61'],
     just: ['407-18', '71-60', '446-60', '324-82'],
     keep: ['243-121', '194-82', '304-110'],
     kind: ['243-121', '377-44', '303-146'],
     know: ['243-121', '377-44', '140-44', '224-179'],
     land: ['371-19', '317-57', '377-44', '303-146'],
     large: ['371-19', '317-57', '223-56', '187-180', '194-82'],
-    last: ['371-19', '317-57', '446-60','324-82'],
+    last: ['371-19', '317-57', '446-60', '324-82'],
     later: ['371-19', '317-57', '324-82', '194-82', '223-56'],
     learn: ['371-19', '194-82', '317-57', '223-56', '377-44'],
     leave: ['371-19', '194-82', '317-57', '215-110'],
@@ -900,7 +900,7 @@ export const chordLibrary: ChordLibrary = {
     name: ['377-44', '317-57', '207-121', '194-82'],
     near: ['377-44', '194-82', '317-57', '223-56'],
     need: ['377-44', '194-82', '303-146'],
-    never: ['377-44','194-82', '215-110', '223-56'],
+    never: ['377-44', '194-82', '215-110', '223-56'],
     next: ['377-44', '323-168', '324-82'],
     night: ['377-44', '169-18', '187-180', '333-121'],
     no: ['377-44', '353-179'],
@@ -922,7 +922,7 @@ export const chordLibrary: ChordLibrary = {
     plant: ['304-110', '377-44', '324-82'],
     play: ['304-110', '371-19', '317-57', '439-35'],
     point: ['304-110', '140-44', '169-18', '377-44', '324-82'],
-    question: ['323-204', '71-60', '194-82', '446-60' ],
+    question: ['323-204', '71-60', '194-82', '446-60'],
     quick: ['323-204', '71-60', '169-18', '243-121'],
     quickly: ['323-204', '71-60', '243-121', '371-19', '439-35'],
     quite: ['323-204', '71-60', '324-82', '194-82'],
@@ -934,7 +934,7 @@ export const chordLibrary: ChordLibrary = {
     said: ['446-60', '317-57', '169-18', '303-146'],
     same: ['446-60', '317-57', '207-121', '194-82'],
     saw: ['446-60', '224-179'],
-    say: ['446-60', '353-179','439-35'],
+    say: ['446-60', '353-179', '439-35'],
     school: ['446-60', '214-146', '333-121', '140-44', '371-19'],
     sea: ['446-60', '194-82', '317-57'],
     second: ['446-60', '194-82', '214-146'],
@@ -945,7 +945,7 @@ export const chordLibrary: ChordLibrary = {
     small: ['446-60', '207-121', '317-57', '371-19'],
     so: ['446-60', '140-44'],
     some: ['446-60', '140-44', '207-121', '194-82'],
-    something: ['446-60', '140-44', '207-121', '194-82', '324-82', '333-121'],  
+    something: ['446-60', '140-44', '207-121', '194-82', '324-82', '333-121'],
     sometimes: ['446-60', '140-44', '207-121', '194-82', '324-82', '169-18'],
     song: ['446-60', '140-44', '377-44', '187-180'],
     soon: ['446-60', '140-44', '353-179', '377-44'],
@@ -1397,7 +1397,7 @@ export const chordLibrary: ChordLibrary = {
     write: [],
     year: [],
     young: [],
-  }, 
+  },
 
   get all() {
     return {

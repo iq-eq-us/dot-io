@@ -6,7 +6,7 @@ import type { KeyHighlightPosition } from '../models/keyHighlightPositions';
 //SectorGroup 4 includes: E, BS, Space, R
 //SectorGroup 5 includes: K, C, V, M
 //SectorGroup 6 includes: Click, W, Z, G
-//SectorGroup 7 includes: 
+//SectorGroup 7 includes:
 //SectorGroup 8 includes:
 //SectorGroup 9 includes: A, Enter, T, _
 //SectorGroup 10 includes:
@@ -17,21 +17,24 @@ import type { KeyHighlightPosition } from '../models/keyHighlightPositions';
 //SectorGroup 15 includes: B, Q, Dup, X
 //SectorGroup 16 includes: ?, Win, Esc, Right Click
 
-
 export const keyPositions: Record<string, KeyHighlightPosition> = {
-  '317-57': { //A 
+  '317-57': {
+    //A
     sectorGroup: 9,
     direction: 'WEST',
   },
-  '316-180': {//B
+  '316-180': {
+    //B
     sectorGroup: 15,
     direction: 'WEST',
   },
-  '140-44': {//O
+  '140-44': {
+    //O
     sectorGroup: 3,
     direction: 'SOUTH',
   },
-  '71-60': { //U
+  '71-60': {
+    //U
     sectorGroup: 2,
     direction: 'SOUTH',
   },
@@ -39,7 +42,8 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 5,
     direction: 'NORTH',
   },
-  '194-82': {//E
+  '194-82': {
+    //E
     sectorGroup: 4,
     direction: 'SOUTH',
   },
@@ -55,11 +59,13 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 6,
     direction: 'WEST',
   },
-  '169-18': {//I
+  '169-18': {
+    //I
     sectorGroup: 3,
     direction: 'EAST',
   },
-  '169-19': {//I
+  '169-19': {
+    //I
     sectorGroup: 3,
     direction: 'WEST',
   },
@@ -71,7 +77,8 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 4,
     direction: 'EAST',
   },
-  '371-19': { //L
+  '371-19': {
+    //L
     sectorGroup: 11,
     direction: 'WEST',
   },
@@ -83,7 +90,8 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 6,
     direction: 'EAST',
   },
-  '224-180': { // Z
+  '224-180': {
+    // Z
     sectorGroup: 6,
     direction: 'SOUTH',
   },
@@ -119,7 +127,8 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 14,
     direction: 'EAST',
   },
-  '446-60': {//S
+  '446-60': {
+    //S
     sectorGroup: 12,
     direction: 'SOUTH',
   },
@@ -127,7 +136,8 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 2,
     direction: 'EAST',
   },
-  '243-121': {// K
+  '243-121': {
+    // K
     sectorGroup: 5,
     direction: 'EAST',
   },
@@ -135,7 +145,8 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 15,
     direction: 'EAST',
   },
-  '214-146': {//C
+  '214-146': {
+    //C
     sectorGroup: 5,
     direction: 'SOUTH',
   },
@@ -159,7 +170,8 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 15,
     direction: 'NORTH',
   },
-  '304-110': {//P
+  '304-110': {
+    //P
     sectorGroup: 14,
     direction: 'NORTH',
   },
@@ -175,19 +187,23 @@ export const keyPositions: Record<string, KeyHighlightPosition> = {
     sectorGroup: 15,
     direction: 'SOUTH',
   },
-  '407-204': {// This is ? and /
+  '407-204': {
+    // This is ? and /
     sectorGroup: 16,
     direction: 'NORTH',
   },
-  '407-205': {// ESC
+  '407-205': {
+    // ESC
     sectorGroup: 16,
     direction: 'SOUTH',
   },
-  '407-206': {// WIN
+  '407-206': {
+    // WIN
     sectorGroup: 16,
     direction: 'EAST',
   },
-  '407-207': {// RIGHT CLICK
+  '407-207': {
+    // RIGHT CLICK
     sectorGroup: 16,
     direction: 'WEST',
   },

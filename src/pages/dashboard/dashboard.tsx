@@ -13,10 +13,8 @@ import {
 import { CardDataRowDisplay } from './components/CardDataRowDisplay';
 import { BrandingMaterial } from './components/BrandingMaterial';
 import { CopyrightNotice } from './components/CopyrightNotice';
-import {Graph} from '../../pages/manager/components/chordGraphs'
+import { Graph } from '../../pages/manager/components/chordGraphs';
 import CardData from './components/dataCard';
-
-
 
 // Change this variable to true to display Improving, Code Authority, and Code Launch branding material at the bottom of the dashboard screen
 const SHOULD_DISPLAY_BRANDING_MATERIAL = true;
@@ -27,16 +25,15 @@ const SHOULD_DISPLAY_BRANDING_MATERIAL = true;
  */
 const Dashboard = (): ReactElement => {
   React.useEffect(() => {
-    document.title = "dot i/o Profile"
-    
+    document.title = 'dot i/o Profile';
   }, []);
 
   return (
     <DashboardPageContainer>
       <TopSectionContainer>
         <Column>
-        <Graph/>
-        
+          <Graph />
+
           <CardDataRowDisplay />
           {/* This is the most important component in the dashboard. It includes the entire list of training module cards. */}
         </Column>

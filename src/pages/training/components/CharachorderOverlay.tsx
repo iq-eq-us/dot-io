@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import useWindowSize from '../../../hooks/useWindowSize';
 import charachorderLiteBackground from '../../../assets/CharaChorder_Lite.png';
 
-
 interface OverlayProps {
   overrideBottom?: boolean;
 }

@@ -11,9 +11,9 @@ ReactDOM.render(
     <App />
   </React.StrictMode>,
   document.getElementById('root'),
- // window.onbeforeunload = function() {
-   // sessionStorage.clear();
- //}
+  // window.onbeforeunload = function() {
+  // sessionStorage.clear();
+  //}
 );
 
 // Hot Module Replacement (HMR) - Remove this snippet to remove HMR.

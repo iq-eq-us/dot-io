@@ -16,21 +16,25 @@ function ChordTextInput(): ReactElement {
   );
   const displayHUD = useHUD();
 
-  const beginTraining = useStoreActions((store: any) => store.beginTrainingMode);
-  
-const currentTrainingScenario = useStoreState((store: any) => store.currentTrainingScenario);
-const setIsDisplaying = useStoreActions(
-  (store) => store.setIsDisplayingStatisticsModal,
-);
-const setTrainingSettings = useStoreActions((store: any) => store.setTrainingSettings);
-const trainingSettings = useStoreState((store) => store.trainingSettings);
+  const beginTraining = useStoreActions(
+    (store: any) => store.beginTrainingMode,
+  );
 
-const updateTrainingSetting = (newProperty: Record<string, unknown>) =>
-setTrainingSettings({ ...trainingSettings, ...newProperty });
+  const currentTrainingScenario = useStoreState(
+    (store: any) => store.currentTrainingScenario,
+  );
+  const setIsDisplaying = useStoreActions(
+    (store) => store.setIsDisplayingStatisticsModal,
+  );
+  const setTrainingSettings = useStoreActions(
+    (store: any) => store.setTrainingSettings,
+  );
+  const trainingSettings = useStoreState((store) => store.trainingSettings);
 
+  const updateTrainingSetting = (newProperty: Record<string, unknown>) =>
+    setTrainingSettings({ ...trainingSettings, ...newProperty });
 
-
-  const payload : any [] = []
+  const payload: any[] = [];
   payload.push(currentTrainingScenario);
 
   const { parentProps, Popper } = usePopover(
@@ -58,7 +62,17 @@ setTrainingSettings({ ...trainingSettings, ...newProperty });
         autoFocus
         value={textTyped}
         onChange={(e) => {
-          {firstTyped ? [sessionStorage.setItem('timeThat', JSON.stringify(performance.now())), setFirstTyped(false)] : ''}
+          {
+            firstTyped
+              ? [
+                  sessionStorage.setItem(
+                    'timeThat',
+                    JSON.stringify(performance.now()),
+                  ),
+                  setFirstTyped(false),
+                ]
+              : '';
+          }
           setStoreText(e.target.value);
         }}
       />

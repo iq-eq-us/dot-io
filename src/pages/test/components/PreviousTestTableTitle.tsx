@@ -3,10 +3,5 @@ import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingSce
 import { useStoreState } from '../../../store/store';
 
 export function PreviousTestTableTitle(): ReactElement {
-
-  return (
-    <span className="text-white text-2xl font-semibold">
-      Statistics
-    </span>
-  );
+  return <span className="text-white text-2xl font-semibold">Statistics</span>;
 }

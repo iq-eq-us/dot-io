@@ -45,7 +45,7 @@ export function TrainingCardColumn(): ReactElement {
 
   function onPressTierCard(allProps: TierCardProps): () => void {
     return () => {
-      const payload = [allProps.scenario]
+      const payload = [allProps.scenario];
       beginTraining(payload);
       history.push('/training');
     };

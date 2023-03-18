@@ -26,7 +26,6 @@ export interface ChordStatisticsFromDevice {
 export interface TrainingStatistics {
   statistics: ChordStatistics[];
   statisticsFromDevice?: ChordStatisticsFromDevice[];
-
 }
 
 export const createEmptyChordStatistics = (
@@ -41,7 +40,6 @@ export const createEmptyChordStatistics = (
     numberOfErrors: 0,
     numberOfOccurrences: 0,
     scenario,
-    
   };
 };
 
