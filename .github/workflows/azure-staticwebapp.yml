@@ -2,7 +2,7 @@ name: Deploy web app to Azure Static Web Apps
 on:
   push:
     branches:
-      - develop
+      - latest_branch
 
 permissions:
   issues: write
