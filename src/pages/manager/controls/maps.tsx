@@ -1418,7 +1418,52 @@ const  CHARACHORDER = [
       'MS_SCRL_RT', //569, Mouse Scroll Coast Right
       'MS_SCRL_LF', //570, Mouse Scroll Coast Left
       'MS_SCRL_DN', //571, Mouse Scroll Coast Down
-      'MS_SCRL_UP' //572, Mouse Scroll Coast Up
+      'MS_SCRL_UP', //572, Mouse Scroll Coast Up
+      '', //573, 
+      '', //574, 
+      '', //575, 
+      '', //576, 
+      '', //577, 
+      '', //578, 
+      '', //579, 
+      '', //580, 
+      '', //581, 
+      '', //582, 
+      '', //583, 
+      '', //584, 
+      '', //585, 
+      '', //586, 
+      '', //587, 
+      '', //588,
+      '', //589, 
+      '', //590, 
+      '', //591, 
+      '', //592, 
+      '', //593, 
+      '', //594, 
+      '', //595, 
+      '', //596, 
+      '', //597, 
+      '', //598, 
+      '', //599, 
+      'LH_THUMB_3_3D', //600
+      'LH_THUMB_2_3D', //601
+      'LH_THUMB_1_3D', //602
+      'LH_INDEX_3D',//603
+      'LH_MID_1_3D',//604
+      'LH_RING_1_3D',//605
+      'LH_PINKY_3D',//606
+      'LH_MID_2_3D',//607
+      'LH_RING_2_3D',//608
+      'RH_THUMB_3_3D',//609
+      'RH_THUMB_2_3D',//610
+      'RH_THUMB_1_3D',//611
+      'RH_INDEX_3D',//612
+      'RH_MID_1_3D',//613
+      'RH_RING_1_3D',//614
+      'RH_PINKY_3D',//615
+      'RH_MID_2_3D',//616
+      'RH_RING_2_3D',//617
   ];
   
 
@@ -1577,6 +1622,7 @@ const  CHARACHORDER = [
     'LH_Middle_Secondary_Center':'LH_MID_2_3D', //
     'LH_Middle_Primary_Center':'LH_MID_1_3D', //
     'LH_Index_Center':'LH_INDEX_3D' //
+    
 };
 
 export { _actionMap, _keyMapDefaults, _keyMap, _chordMaps, _chordLayout, actionMap, oldAsciiKeyReplacementDictionary };
