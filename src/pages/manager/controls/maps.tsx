@@ -834,584 +834,785 @@ let _keyMap = [
 _keyMap = _keyMap.reverse();
 const _keyMapDefaults = [CHARACHORDER, CHARACHORDERLITE];
 
-const _chordMaps: any[][] = [];
-const _chordLayout: any[][] = [];
+    const actionMap = [
+      '', //0, 10-bit Action Codes 0x00
+      '', //1, 10-bit Action Codes 0x01
+      '', //2, 10-bit Action Codes 0x02
+      '', //3, 10-bit Action Codes 0x03
+      '', //4, 10-bit Action Codes 0x04
+      '', //5, 10-bit Action Codes 0x05
+      '', //6, 10-bit Action Codes 0x06
+      '', //7, 10-bit Action Codes 0x07
+      '', //8, 10-bit Action Codes 0x08
+      '', //9, 10-bit Action Codes 0x09
+      '', //10, 10-bit Action Codes 0x0A
+      '', //11, 10-bit Action Codes 0x0B
+      '', //12, 10-bit Action Codes 0x0C
+      '', //13, 10-bit Action Codes 0x0D
+      '', //14, 10-bit Action Codes 0x0E
+      '', //15, 10-bit Action Codes 0x0F
+      '', //16, 10-bit Action Codes 0x10
+      '', //17, 10-bit Action Codes 0x11
+      '', //18, 10-bit Action Codes 0x12
+      '', //19, 10-bit Action Codes 0x13
+      '', //20, 10-bit Action Codes 0x14
+      '', //21, 10-bit Action Codes 0x15
+      '', //22, 10-bit Action Codes 0x16
+      '', //23, 10-bit Action Codes 0x17
+      '', //24, 10-bit Action Codes 0x18
+      '', //25, 10-bit Action Codes 0x19
+      '', //26, 10-bit Action Codes 0x1A
+      '', //27, 10-bit Action Codes 0x1B
+      '', //28, 10-bit Action Codes 0x1C
+      '', //29, 10-bit Action Codes 0x1D
+      '', //30, 10-bit Action Codes 0x1E
+      '', //31, 10-bit Action Codes 0x1F
+      ' ', //32, Space
+      '!', //33, Exclamation Point
+      '"', //34, Double Quote
+      '#', //35, Hash Symbol
+      '$', //36, Dollar Sign
+      '%', //37, Percent
+      '&', //38, Amperstand
+      '\'', //39, Single Quote
+      '(', //40, Left Parenthesis
+      ')', //41, Right Parenthesis
+      '*', //42, Asterisk
+      '+', //43, Plus
+      ',', //44, Comma
+      '-', //45, Minus
+      '.', //46, Period
+      '/', //47, Forward Slash
+      '0', //48, Zero
+      '1', //49, One
+      '2', //50, Two
+      '3', //51, Three
+      '4', //52, Four
+      '5', //53, Five
+      '6', //54, Six
+      '7', //55, Seven
+      '8', //56, Eight
+      '9', //57, Nine
+      ':', //58, Colon
+      ';', //59, Semicolon
+      '<', //60, Less Than
+      '=', //61, Equals
+      '>', //62, Greater Than
+      '?', //63, Question Mark
+      '@', //64, At Symbol
+      'A', //65, Uppercase A
+      'B', //66, Uppercase B
+      'C', //67, Uppercase C
+      'D', //68, Uppercase D
+      'E', //69, Uppercase E
+      'F', //70, Uppercase F
+      'G', //71, Uppercase G
+      'H', //72, Uppercase H
+      'I', //73, Uppercase I
+      'J', //74, Uppercase J
+      'K', //75, Uppercase K
+      'L', //76, Uppercase L
+      'M', //77, Uppercase M
+      'N', //78, Uppercase N
+      'O', //79, Uppercase O
+      'P', //80, Uppercase P
+      'Q', //81, Uppercase Q
+      'R', //82, Uppercase R
+      'S', //83, Uppercase S
+      'T', //84, Uppercase T
+      'U', //85, Uppercase U
+      'V', //86, Uppercase V
+      'W', //87, Uppercase W
+      'X', //88, Uppercase X
+      'Y', //89, Uppercase Y
+      'Z', //90, Uppercase Z
+      '[', //91, Left Bracket
+      '\\', //92, Backslash
+      ']', //93, Right Bracket
+      '^', //94, Carrot
+      '_', //95, Underscore
+      '`', //96, Grave Mark
+      'a', //97, Lowercase a
+      'b', //98, Lowercase b
+      'c', //99, Lowercase c
+      'd', //100, Lowercase d
+      'e', //101, Lowercase e
+      'f', //102, Lowercase f
+      'g', //103, Lowercase g
+      'h', //104, Lowercase h
+      'i', //105, Lowercase i
+      'j', //106, Lowercase j
+      'k', //107, Lowercase k
+      'l', //108, Lowercase l
+      'm', //109, Lowercase m
+      'n', //110, Lowercase n
+      'o', //111, Lowercase o
+      'p', //112, Lowercase p
+      'q', //113, Lowercase q
+      'r', //114, Lowercase r
+      's', //115, Lowercase s
+      't', //116, Lowercase t
+      'u', //117, Lowercase u
+      'v', //118, Lowercase v
+      'w', //119, Lowercase w
+      'x', //120, Lowercase x
+      'y', //121, Lowercase y
+      'z', //122, Lowercase z
+      '{', //123, Left Curly Brace
+      '|', //124, Pipe
+      '}', //125, Right Curly Brace
+      '~', //126, Tilde
+      'DEL', //127, Delete
+      '€', //128, Uppercase cedilla
+      '', //129, HOP (High Octet Preset)
+      '‚', //130, Single Low-9 Quotation Mark
+      'ƒ', //131, Latin Small Letter f with Hook; Florin
+      '„', //132, Double Low-9 Quotation Mark
+      '…', //133, Horizontal Ellipsis
+      '†', //134, Dagger
+      '‡', //135, Double Dagger
+      'ˆ', //136, Circumflex
+      '‰', //137, Per Mile
+      'Š', //138, Captial S Caron
+      '‹', //139, Left Guillemet
+      'Œ', //140, Captial Ligature OE
+      '', //141, RI (Reverse Index)
+      'Ž', //142, Captial Z Caron
+      '', //143, SS3 (Single-Shift G3)
+      '', //144, DCS (Device Control String)
+      '‘', //145, Single Quote Left
+      '’', //146, Single Quote Right
+      '“', //147, Double Quote Left
+      '”', //148, Double Quote Right
+      '•', //149, Bullet
+      '–', //150, En Dash
+      '—', //151, Em Dash
+      '˜', //152, Small Tilde
+      '™', //153, Trademark
+      'š', //154, Small s Carson
+      '›', //155, Right Guillement
+      'œ', //156, Small Ligature oe
+      '', //157, Operating System Command
+      'ž', //158, Small Z Caron
+      'Ÿ', //159, Capital Y Diaresis
+      ' ', //160, No Break Space
+      '¡', //161, Inverted Exclamation
+      '¢', //162, Cent
+      '£', //163, Pound
+      '¤', //164, Currency
+      '¥', //165, Yen
+      '¦', //166, Broken Bar
+      '§', //167, Section
+      '¨', //168, Diaresis
+      '©', //169, Copyright
+      'ª', //170, Feminine Ordinal
+      '«', //171, Double Left Guillement
+      '¬', //172, Not
+      '­', //173, Soft Hyphen
+      '®', //174, Registered
+      '¯', //175, Macron
+      '°', //176, Degree
+      '±', //177, Plus Minus
+      '²', //178, Superscript Two
+      '³', //179, Superscript Three
+      '´', //180, Acute
+      'µ', //181, Micro
+      '¶', //182, Pilcrow
+      '·', //183, Middle Dot
+      '¸', //184, Cedilla
+      '¹', //185, Superscript One
+      'º', //186, Masculine Ordinal
+      '»', //187, Double Right Guillement
+      '¼', //188, One Quarter Fraction
+      '½', //189, One Half Fraction
+      '¾', //190, Three Quarters Fraction
+      '¿', //191, Inverted Question
+      'À', //192, Captial A Grave
+      'Á', //193, 
+      'Â', //194, 
+      'Ã', //195, 
+      'Ä', //196, 
+      'Å', //197, 
+      'Æ', //198, 
+      'Ç', //199, 
+      'È', //200, 
+      'É', //201, 
+      'Ê', //202, 
+      'Ë', //203, 
+      'Ì', //204, 
+      'Í', //205, 
+      'Î', //206, 
+      'Ï', //207, 
+      'Ð', //208, 
+      'Ñ', //209, 
+      'Ò', //210, 
+      'Ó', //211, 
+      'Ô', //212, 
+      'Õ', //213, 
+      'Ö', //214, 
+      '×', //215, 
+      'Ø', //216, 
+      'Ù', //217, 
+      'Ú', //218, 
+      'Û', //219, 
+      'Ü', //220, 
+      'Ý', //221, 
+      'Þ', //222, 
+      'ß', //223, 
+      'à', //224, 
+      'á', //225, 
+      'â', //226, 
+      'ã', //227, 
+      'ä', //228, 
+      'å', //229, 
+      'æ', //230, 
+      'ç', //231, 
+      'è', //232, 
+      'é', //233, 
+      'ê', //234, 
+      'ë', //235, 
+      'ì', //236, 
+      'í', //237, 
+      'î', //238, 
+      'ï', //239, 
+      'ð', //240, 
+      'ñ', //241, 
+      'ò', //242, 
+      'ó', //243, 
+      'ô', //244, 
+      'õ', //245, 
+      'ö', //246, 
+      '÷', //247, 
+      'ø', //248, 
+      'ù', //249, 
+      'ú', //250, 
+      'û', //251, 
+      'ü', //252, 
+      'ý', //253, 
+      'þ', //254, 
+      'ÿ', //255, Small y Diaeresis
+      'KSC_00', //256, No Key Pressed
+      'KSC_01', //257, Keyboard Error Roll Over
+      'KSC_02', //258, Keyboard POST Fail
+      'KSC_03', //259, Keyboard Error Undefined
+      'KEY_A', //260, Keyboard a and A (US English)
+      'KEY_B', //261, Keyboard b and B (US English)
+      'KEY_C', //262, Keyboard c and C (US English)
+      'KEY_D', //263, Keyboard d and D (US English)
+      'KEY_E', //264, Keyboard e and E (US English)
+      'KEY_F', //265, Keyboard f and F (US English)
+      'KEY_G', //266, Keyboard g and G (US English)
+      'KEY_H', //267, Keyboard h and H (US English)
+      'KEY_I', //268, Keyboard i and I (US English)
+      'KEY_J', //269, Keyboard j and J (US English)
+      'KEY_K', //270, Keyboard k and K (US English)
+      'KEY_L', //271, Keyboard l and L (US English)
+      'KEY_M', //272, Keyboard m and M (US English)
+      'KEY_N', //273, Keyboard n and N (US English)
+      'KEY_O', //274, Keyboard o and O (US English)
+      'KEY_P', //275, Keyboard p and P (US English)
+      'KEY_Q', //276, Keyboard q and Q (US English)
+      'KEY_R', //277, Keyboard r and R (US English)
+      'KEY_S', //278, Keyboard s and S (US English)
+      'KEY_T', //279, Keyboard t and T (US English)
+      'KEY_U', //280, Keyboard u and U (US English)
+      'KEY_V', //281, Keyboard v and V (US English)
+      'KEY_W', //282, Keyboard w and W (US English)
+      'KEY_X', //283, Keyboard x and X (US English)
+      'KEY_Y', //284, Keyboard y and Y (US English)
+      'KEY_Z', //285, Keyboard z and Z (US English)
+      'KEY_1', //286, Keyboard 1 and ! (US English)
+      'KEY_2', //287, Keyboard 2 and @ (US English)
+      'KEY_3', //288, Keyboard 3 and # (US English)
+      'KEY_4', //289, Keyboard 4 and $ (US English)
+      'KEY_5', //290, Keyboard 5 and % (US English)
+      'KEY_6', //291, Keyboard 6 and ^ (US English)
+      'KEY_7', //292, Keyboard 7 and & (US English)
+      'KEY_8', //293, Keyboard 8 and * (US English)
+      'KEY_9', //294, Keyboard 9 and ( (US English)
+      'KEY_0', //295, Keyboard 0 and ) (US English)
+      'ENTER', //296, Keyboard Return (US English)
+      'ESC', //297, Keyboard Escape (US English)
+      'BKSP', //298, Keyboard Backspace (US English)
+      'TAB', //299, Keyboard Tab (US English)
+      'KSC_2C', //300, Keyboard Space (US English)
+      'KSC_2D', //301, Keyboard - and _ (US English)
+      'KSC_2E', //302, Keyboard = and + (US English)
+      'KSC_2F', //303, Keyboard [ and { (US English)
+      'KSC_30', //304, Keyboard ] and } (US English)
+      'KSC_31', //305, Keyboard \ and | (US English)
+      'KSC_32', //306, Keyboard Non-US # and ~ (US English)
+      'KSC_33', //307, Keyboard ; and : (US English)
+      'KSC_34', //308, Keyboard ' and " (US English)
+      'KSC_35', //309, Keyboard ` and ~ (US English)
+      'KSC_36', //310, Keyboard , and < (US English)
+      'KSC_37', //311, Keyboard . and > (US English)
+      'KSC_38', //312, Keyboard / and ? (US English)
+      'CAPSLOCK', //313, Keyboard Caps Lock
+      'F1', //314, Keyboard F1
+      'F2', //315, Keyboard F2
+      'F3', //316, Keyboard F3
+      'F4', //317, Keyboard F4
+      'F5', //318, Keyboard F5
+      'F6', //319, Keyboard F6
+      'F7', //320, Keyboard F7
+      'F8', //321, Keyboard F8
+      'F9', //322, Keyboard F9
+      'F10', //323, Keyboard F10
+      'F11', //324, Keyboard F11
+      'F12', //325, Keyboard F12
+      'PRTSCN', //326, Keyboard Print Screen
+      'SCRLK', //327, Keyboard Scroll Lock
+      'PAUSE', //328, Keyboard Pause
+      'INSERT', //329, Keyboard Insert
+      'HOME', //330, Keyboard Home
+      'PGUP', //331, Keyboard Page Up
+      'DELETE', //332, Keyboard Delete Forward
+      'END', //333, Keyboard End
+      'PGDN', //334, Keyboard Page Down
+      'ARROW_RT', //335, Keyboard Right Arrow
+      'ARROW_LF', //336, Keyboard Left Arrow
+      'ARROW_DN', //337, Keyboard Down Arrow
+      'ARROW_UP', //338, Keyboard Up Arrow
+      'NUMLOCK', //339, Keyboard Num Lock and Clear
+      'KP_SLASH', //340, Keypad /
+      'KP_ASTER', //341, Keypad *
+      'KP_MINUS', //342, Keypad -
+      'KP_PLUS', //343, Keypad +
+      'KP_ENTER', //344, Keypad Enter
+      'KP_1', //345, Keypad 1 and End
+      'KP_2', //346, Keypad 2 and Down Arrow
+      'KP_3', //347, Keypad 3 and Page Down
+      'KP_4', //348, Keypad 4 and Left Arrow
+      'KP_5', //349, Keypad 5
+      'KP_6', //350, Keypad 6 and Rigth Arrow
+      'KP_7', //351, Keypad 7 and Home
+      'KP_8', //352, Keypad 8 and Up Arrow
+      'KP_9', //353, Keypad 9 and Page Up
+      'KP_0', //354, Keypad 0 and Insert
+      'KP_DOT', //355, Keypad . and Delete
+      'KSC_64', //356, Keyboard Non-US \ and | (US English)
+      'COMPOSE', //357, Keyboard Application
+      'POWER', //358, Keyboard Power
+      'KP_EQUAL', //359, Keypad =
+      'F13', //360, Keyboard F13
+      'F14', //361, Keyboard F14
+      'F15', //362, Keyboard F15
+      'F16', //363, Keyboard F16
+      'F17', //364, Keyboard F17
+      'F18', //365, Keyboard F18
+      'F19', //366, Keyboard F19
+      'F20', //367, Keyboard F20
+      'F21', //368, Keyboard F21
+      'F22', //369, Keyboard F22
+      'F23', //370, Keyboard F23
+      'F24', //371, Keyboard F24
+      'EXECUTE', //372, Keyboard Execute
+      'HELP', //373, Keyboard Help
+      'MENU', //374, Keyboard Menu
+      'SELECT', //375, Keyboard Select
+      'STOP', //376, Keyboard Stop
+      'AGAIN', //377, Keyboard Again
+      'UNDO', //378, Keyboard Undo
+      'CUT', //379, Keyboard Cut
+      'COPY', //380, Keyboard Copy
+      'PASTE', //381, Keyboard Paste
+      'FIND', //382, Keyboard Find
+      'MUTE', //383, Keyboard Mute
+      'VOL_UP', //384, Keyboard Volume Up
+      'VOL_DN', //385, Keyboard Volume Down
+      'KSC_82', //386, Keyboard Locking Caps Lock
+      'KSC_83', //387, Keyboard Locking Num Lock
+      'KSC_84', //388, Keyboard Locking Scroll Lock
+      'KP_COMMA', //389, Keypad Comma
+      'KSC_86', //390, Keypad Equals Sign
+      'INTL1', //391, Keyboard International1
+      'INTL2', //392, Keyboard International2
+      'INTL3', //393, Keyboard International3
+      'INTL4', //394, Keyboard International4
+      'INTL5', //395, Keyboard International5
+      'INTL6', //396, Keyboard International6
+      'INTL7', //397, Keyboard International7
+      'INTL8', //398, Keyboard International8
+      'INTL9', //399, Keyboard International9
+      'LANG1', //400, Keyboard LANG1
+      'LANG2', //401, Keyboard LANG2
+      'LANG3', //402, Keyboard LANG3
+      'LANG4', //403, Keyboard LANG4
+      'LANG5', //404, Keyboard LANG5
+      'LANG6', //405, Keyboard LANG6
+      'LANG7', //406, Keyboard LANG7
+      'LANG8', //407, Keyboard LANG8
+      'LANG9', //408, Keyboard LANG9
+      'KSC_99', //409, Keyboard Alternate Erase
+      'KSC_9A', //410, Keyboard SysReq/Attention
+      'KSC_9B', //411, Keyboard Cancel
+      'KSC_9C', //412, Keyboard Clear
+      'KSC_9D', //413, Keyboard Prior
+      'KSC_9E', //414, Keyboard Return
+      'KSC_9F', //415, Keyboard Separator
+      'KSC_A0', //416, Keyboard Out
+      'KSC_A1', //417, Keyboard Oper
+      'KSC_A2', //418, Keyboard Clear/Again
+      'KSC_A3', //419, Keyboard CrSel/Props
+      'KSC_A4', //420, Keyboard ExSel
+      'KSC_A5', //421, 
+      'KSC_A6', //422, 
+      'KSC_A7', //423, 
+      'KSC_A8', //424, 
+      'KSC_A9', //425, 
+      'KSC_AA', //426, 
+      'KSC_AB', //427, 
+      'KSC_AC', //428, 
+      'KSC_AD', //429, 
+      'KSC_AE', //430, 
+      'KSC_AF', //431, 
+      'KSC_B0', //432, Keypad 00
+      'KSC_B1', //433, Keypad 000
+      'KSC_B2', //434, Thousands Separator
+      'KSC_B3', //435, Decimal Separator
+      'KSC_B4', //436, Currency Unit
+      'KSC_B5', //437, Currency Sub-unit
+      'KSC_B6', //438, Keypad (
+      'KSC_B7', //439, Keypad )
+      'KSC_B8', //440, Keypad {
+      'KSC_B9', //441, Keypad }
+      'KSC_BA', //442, Keypad Tab
+      'KSC_BB', //443, Keypad Backspace
+      'KSC_BC', //444, Keypad A
+      'KSC_BD', //445, Keypad B
+      'KSC_BE', //446, Keypad C
+      'KSC_BF', //447, Keypad D
+      'KSC_C0', //448, Keypad E
+      'KSC_C1', //449, Keypad F
+      'KSC_C2', //450, Keypad XOR
+      'KSC_C3', //451, Keypad ^
+      'KSC_C4', //452, Keypad %
+      'KSC_C5', //453, Keypad <
+      'KSC_C6', //454, Keypad >
+      'KSC_C7', //455, Keypad &
+      'KSC_C8', //456, Keypad &&
+      'KSC_C9', //457, Keypad |
+      'KSC_CA', //458, Keypad ||
+      'KSC_CB', //459, Keypad :
+      'KSC_CC', //460, Keypad #
+      'KSC_CD', //461, Keypad Space
+      'KSC_CE', //462, Keypad @
+      'KSC_CF', //463, Keypad !
+      'KSC_D0', //464, Keypad Memory Store
+      'KSC_D1', //465, Keypad Memory Recall
+      'KSC_D2', //466, Keypad Memory Clear
+      'KSC_D3', //467, Keypad Memory Add
+      'KSC_D4', //468, Keypad Memory Subtract
+      'KSC_D5', //469, Keypad Memory Multiply
+      'KSC_D6', //470, Keypad Memory Divide
+      'KSC_D7', //471, Keypad +/-
+      'KSC_D8', //472, Keypad Clear
+      'KSC_D9', //473, Keypad Clear Entry
+      'KSC_DA', //474, Keypad Binary
+      'KSC_DB', //475, Keypad Octal
+      'KSC_DC', //476, Keypad Decimal
+      'KSC_DD', //477, Keypad Hexadecimal
+      'KSC_DE', //478, 
+      'KSC_DF', //479, 
+      'KSC_E0', //480, Keyboard Left Control
+      'KSC_E1', //481, Keyboard Left Shift
+      'KSC_E2', //482, Keyboard Left Alt
+      'KSC_E3', //483, Keyboard Left GUI
+      'KSC_E4', //484, Keyboard Right Control
+      'KSC_E5', //485, Keyboard Right Shift
+      'KSC_E6', //486, Keyboard Right Alt
+      'KSC_E7', //487, Keyboard Right GUI
+      'KSC_E8', //488, Media Play Pause
+      'KSC_E9', //489, Media Stop CD
+      'KSC_EA', //490, Media Previous Song
+      'KSC_EB', //491, Media Next Song
+      'KSC_EC', //492, Media Eject CD
+      'KSC_ED', //493, Media Volume Up
+      'KSC_EE', //494, Media Volume Down
+      'KSC_EF', //495, Media Mute
+      'KSC_F0', //496, Media www
+      'KSC_F1', //497, Media Back
+      'KSC_F2', //498, Media Forward
+      'KSC_F3', //499, Media Stop
+      'KSC_F4', //500, Media Find
+      'KSC_F5', //501, Media Scroll Up
+      'KSC_F6', //502, Media Scroll Down
+      'KSC_F7', //503, Media Edit
+      'KSC_F8', //504, Media Sleep
+      'KSC_F9', //505, Media Coffee
+      'KSC_FA', //506, Media Refresh
+      'KSC_FB', //507, Media Calc
+      'KSC_FC', //508, 
+      'KSC_FD', //509, 
+      'KSC_FE', //510, 
+      'KSC_FF', //511, 
+      'LEFT_CTRL', //512, Left Control Keyboard Modifier
+      'LEFT_SHIFT', //513, Left Shift Keyboard Modifier
+      'LEFT_ALT', //514, Left Alt Keyboard Modifier
+      'LEFT_GUI', //515, Left GUI Keyboard Modifier
+      'RIGHT_CTRL', //516, Right Control Keyboard Modifier
+      'RIGHT_SHIFT', //517, Right Shift Keyboard Modifier
+      'RIGHT_ALT', //518, Right Alt Keyboard Modifier
+      'RIGHT_GUI', //519, Right GUI Keyboard Modifier
+      'RELEASE_MOD', //520, Release all keyboard modifiers
+      'RELEASE_ALL', //521, Release all keys and keyboard modifiers
+      'RELEASE_KEYS', //522, Release all keys, but not keyboard modifiers
+      '', //523, 
+      '', //524, 
+      '', //525, 
+      '', //526, 
+      '', //527, 
+      'RESTART', //528, Restart Device
+      '', //529, 
+      'BOOT', //530, Bootloader Mode
+      '', //531, 
+      'GTM', //532, Toggle GTM
+      '', //533, 
+      'IMPULSE', //534, Toggle Impulse
+      '', //535, 
+      'DUP', //536, Repeat Last Note
+      '', //537, 
+      'SPUR', //538, Spur Toggle
+      '', //539, 
+      'AMBILEFT', //540, AmbiThrow (left)
+      '', //541, 
+      'AMBIRIGHT', //542, AmbiThrow (right)
+      '', //543, 
+      'SPACERIGHT', //544, Right Spacebar (eg CC Lite)
+      '', //545, 
+      '', //546, 
+      '', //547, 
+      'KM_1_L', //548, Primary Keymap (left key)
+      'KM_1_R', //549, Primary Keymap (right key)
+      'KM_2_L', //550, Secondary Keymap [Num-shift] (left key)
+      'KM_2_R', //551, Secondary Keymap [Num-shift] (rightkey)
+      'KM_3_L', //552, Tertiary Keymap (left key)
+      'KM_3_R', //553, Tertiary Keymap (left key)
+      '', //554, 
+      '', //555, 
+      '', //556, 
+      '', //557, 
+      '', //558, 
+      '', //559, 
+      '', //560, 
+      '', //561, 
+      'MS_CLICK_LF', //562, Mouse Left Button Press and Release
+      'MS_CLICK_RT', //563, Mouse Right Button Press and Release
+      'MS_CLICK_MD', //564, Mouse Middle Button Press and Release
+      'MS_MOVE_RT', //565, Mouse Move Right
+      'MS_MOVE_LF', //566, Mouse Move Left
+      'MS_MOVE_DN', //567, Mouse Move Down
+      'MS_MOVE_UP', //568, Mouse Move Up
+      'MS_SCRL_RT', //569, Mouse Scroll Coast Right
+      'MS_SCRL_LF', //570, Mouse Scroll Coast Left
+      'MS_SCRL_DN', //571, Mouse Scroll Coast Down
+      'MS_SCRL_UP', //572, Mouse Scroll Coast Up
+      '', //573, 
+      '', //574, 
+      '', //575, 
+      '', //576, 
+      '', //577, 
+      '', //578, 
+      '', //579, 
+      '', //580, 
+      '', //581, 
+      '', //582, 
+      '', //583, 
+      '', //584, 
+      '', //585, 
+      '', //586, 
+      '', //587, 
+      '', //588,
+      '', //589, 
+      '', //590, 
+      '', //591, 
+      '', //592, 
+      '', //593, 
+      '', //594, 
+      '', //595, 
+      '', //596, 
+      '', //597, 
+      '', //598, 
+      '', //599, 
+      'LH_THUMB_3_3D', //600
+      'LH_THUMB_2_3D', //601
+      'LH_THUMB_1_3D', //602
+      'LH_INDEX_3D',//603
+      'LH_MID_1_3D',//604
+      'LH_RING_1_3D',//605
+      'LH_PINKY_3D',//606
+      'LH_MID_2_3D',//607
+      'LH_RING_2_3D',//608
+      'RH_THUMB_3_3D',//609
+      'RH_THUMB_2_3D',//610
+      'RH_THUMB_1_3D',//611
+      'RH_INDEX_3D',//612
+      'RH_MID_1_3D',//613
+      'RH_RING_1_3D',//614
+      'RH_PINKY_3D',//615
+      'RH_MID_2_3D',//616
+      'RH_RING_2_3D',//617
+  ];
+  
 
-const actionMap = [
-  '', //0, 10-bit Action Codes 0x00
-  '', //1, 10-bit Action Codes 0x01
-  '', //2, 10-bit Action Codes 0x02
-  '', //3, 10-bit Action Codes 0x03
-  '', //4, 10-bit Action Codes 0x04
-  '', //5, 10-bit Action Codes 0x05
-  '', //6, 10-bit Action Codes 0x06
-  '', //7, 10-bit Action Codes 0x07
-  '', //8, 10-bit Action Codes 0x08
-  '', //9, 10-bit Action Codes 0x09
-  '', //10, 10-bit Action Codes 0x0A
-  '', //11, 10-bit Action Codes 0x0B
-  '', //12, 10-bit Action Codes 0x0C
-  '', //13, 10-bit Action Codes 0x0D
-  '', //14, 10-bit Action Codes 0x0E
-  '', //15, 10-bit Action Codes 0x0F
-  '', //16, 10-bit Action Codes 0x10
-  '', //17, 10-bit Action Codes 0x11
-  '', //18, 10-bit Action Codes 0x12
-  '', //19, 10-bit Action Codes 0x13
-  '', //20, 10-bit Action Codes 0x14
-  '', //21, 10-bit Action Codes 0x15
-  '', //22, 10-bit Action Codes 0x16
-  '', //23, 10-bit Action Codes 0x17
-  '', //24, 10-bit Action Codes 0x18
-  '', //25, 10-bit Action Codes 0x19
-  '', //26, 10-bit Action Codes 0x1A
-  '', //27, 10-bit Action Codes 0x1B
-  '', //28, 10-bit Action Codes 0x1C
-  '', //29, 10-bit Action Codes 0x1D
-  '', //30, 10-bit Action Codes 0x1E
-  '', //31, 10-bit Action Codes 0x1F
-  ' ', //32, Space
-  '!', //33, Exclamation Point
-  '"', //34, Double Quote
-  '#', //35, Hash Symbol
-  '$', //36, Dollar Sign
-  '%', //37, Percent
-  '&', //38, Amperstand
-  "'", //39, Single Quote
-  '(', //40, Left Parenthesis
-  ')', //41, Right Parenthesis
-  '*', //42, Asterisk
-  '+', //43, Plus
-  ',', //44, Comma
-  '-', //45, Minus
-  '.', //46, Period
-  '/', //47, Forward Slash
-  '0', //48, Zero
-  '1', //49, One
-  '2', //50, Two
-  '3', //51, Three
-  '4', //52, Four
-  '5', //53, Five
-  '6', //54, Six
-  '7', //55, Seven
-  '8', //56, Eight
-  '9', //57, Nine
-  ':', //58, Colon
-  ';', //59, Semicolon
-  '<', //60, Less Than
-  '=', //61, Equals
-  '>', //62, Greater Than
-  '?', //63, Question Mark
-  '@', //64, At Symbol
-  'A', //65, Uppercase A
-  'B', //66, Uppercase B
-  'C', //67, Uppercase C
-  'D', //68, Uppercase D
-  'E', //69, Uppercase E
-  'F', //70, Uppercase F
-  'G', //71, Uppercase G
-  'H', //72, Uppercase H
-  'I', //73, Uppercase I
-  'J', //74, Uppercase J
-  'K', //75, Uppercase K
-  'L', //76, Uppercase L
-  'M', //77, Uppercase M
-  'N', //78, Uppercase N
-  'O', //79, Uppercase O
-  'P', //80, Uppercase P
-  'Q', //81, Uppercase Q
-  'R', //82, Uppercase R
-  'S', //83, Uppercase S
-  'T', //84, Uppercase T
-  'U', //85, Uppercase U
-  'V', //86, Uppercase V
-  'W', //87, Uppercase W
-  'X', //88, Uppercase X
-  'Y', //89, Uppercase Y
-  'Z', //90, Uppercase Z
-  '[', //91, Left Bracket
-  '\\', //92, Backslash
-  ']', //93, Right Bracket
-  '^', //94, Carrot
-  '_', //95, Underscore
-  '`', //96, Grave Mark
-  'a', //97, Lowercase a
-  'b', //98, Lowercase b
-  'c', //99, Lowercase c
-  'd', //100, Lowercase d
-  'e', //101, Lowercase e
-  'f', //102, Lowercase f
-  'g', //103, Lowercase g
-  'h', //104, Lowercase h
-  'i', //105, Lowercase i
-  'j', //106, Lowercase j
-  'k', //107, Lowercase k
-  'l', //108, Lowercase l
-  'm', //109, Lowercase m
-  'n', //110, Lowercase n
-  'o', //111, Lowercase o
-  'p', //112, Lowercase p
-  'q', //113, Lowercase q
-  'r', //114, Lowercase r
-  's', //115, Lowercase s
-  't', //116, Lowercase t
-  'u', //117, Lowercase u
-  'v', //118, Lowercase v
-  'w', //119, Lowercase w
-  'x', //120, Lowercase x
-  'y', //121, Lowercase y
-  'z', //122, Lowercase z
-  '{', //123, Left Curly Brace
-  '|', //124, Pipe
-  '}', //125, Right Curly Brace
-  '~', //126, Tilde
-  'DEL', //127, Delete
-  '€', //128, Uppercase cedilla
-  '', //129, HOP (High Octet Preset)
-  '‚', //130, Single Low-9 Quotation Mark
-  'ƒ', //131, Latin Small Letter f with Hook; Florin
-  '„', //132, Double Low-9 Quotation Mark
-  '…', //133, Horizontal Ellipsis
-  '†', //134, Dagger
-  '‡', //135, Double Dagger
-  'ˆ', //136, Circumflex
-  '‰', //137, Per Mile
-  'Š', //138, Captial S Caron
-  '‹', //139, Left Guillemet
-  'Œ', //140, Captial Ligature OE
-  '', //141, RI (Reverse Index)
-  'Ž', //142, Captial Z Caron
-  '', //143, SS3 (Single-Shift G3)
-  '', //144, DCS (Device Control String)
-  '‘', //145, Single Quote Left
-  '’', //146, Single Quote Right
-  '“', //147, Double Quote Left
-  '”', //148, Double Quote Right
-  '•', //149, Bullet
-  '–', //150, En Dash
-  '—', //151, Em Dash
-  '˜', //152, Small Tilde
-  '™', //153, Trademark
-  'š', //154, Small s Carson
-  '›', //155, Right Guillement
-  'œ', //156, Small Ligature oe
-  '', //157, Operating System Command
-  'ž', //158, Small Z Caron
-  'Ÿ', //159, Capital Y Diaresis
-  ' ', //160, No Break Space
-  '¡', //161, Inverted Exclamation
-  '¢', //162, Cent
-  '£', //163, Pound
-  '¤', //164, Currency
-  '¥', //165, Yen
-  '¦', //166, Broken Bar
-  '§', //167, Section
-  '¨', //168, Diaresis
-  '©', //169, Copyright
-  'ª', //170, Feminine Ordinal
-  '«', //171, Double Left Guillement
-  '¬', //172, Not
-  '­', //173, Soft Hyphen
-  '®', //174, Registered
-  '¯', //175, Macron
-  '°', //176, Degree
-  '±', //177, Plus Minus
-  '²', //178, Superscript Two
-  '³', //179, Superscript Three
-  '´', //180, Acute
-  'µ', //181, Micro
-  '¶', //182, Pilcrow
-  '·', //183, Middle Dot
-  '¸', //184, Cedilla
-  '¹', //185, Superscript One
-  'º', //186, Masculine Ordinal
-  '»', //187, Double Right Guillement
-  '¼', //188, One Quarter Fraction
-  '½', //189, One Half Fraction
-  '¾', //190, Three Quarters Fraction
-  '¿', //191, Inverted Question
-  'À', //192, Captial A Grave
-  'Á', //193,
-  'Â', //194,
-  'Ã', //195,
-  'Ä', //196,
-  'Å', //197,
-  'Æ', //198,
-  'Ç', //199,
-  'È', //200,
-  'É', //201,
-  'Ê', //202,
-  'Ë', //203,
-  'Ì', //204,
-  'Í', //205,
-  'Î', //206,
-  'Ï', //207,
-  'Ð', //208,
-  'Ñ', //209,
-  'Ò', //210,
-  'Ó', //211,
-  'Ô', //212,
-  'Õ', //213,
-  'Ö', //214,
-  '×', //215,
-  'Ø', //216,
-  'Ù', //217,
-  'Ú', //218,
-  'Û', //219,
-  'Ü', //220,
-  'Ý', //221,
-  'Þ', //222,
-  'ß', //223,
-  'à', //224,
-  'á', //225,
-  'â', //226,
-  'ã', //227,
-  'ä', //228,
-  'å', //229,
-  'æ', //230,
-  'ç', //231,
-  'è', //232,
-  'é', //233,
-  'ê', //234,
-  'ë', //235,
-  'ì', //236,
-  'í', //237,
-  'î', //238,
-  'ï', //239,
-  'ð', //240,
-  'ñ', //241,
-  'ò', //242,
-  'ó', //243,
-  'ô', //244,
-  'õ', //245,
-  'ö', //246,
-  '÷', //247,
-  'ø', //248,
-  'ù', //249,
-  'ú', //250,
-  'û', //251,
-  'ü', //252,
-  'ý', //253,
-  'þ', //254,
-  'ÿ', //255, Small y Diaeresis
-  'KSC_00', //256, No Key Pressed
-  'KSC_01', //257, Keyboard Error Roll Over
-  'KSC_02', //258, Keyboard POST Fail
-  'KSC_03', //259, Keyboard Error Undefined
-  'KEY_A', //260, Keyboard a and A (US English)
-  'KEY_B', //261, Keyboard b and B (US English)
-  'KEY_C', //262, Keyboard c and C (US English)
-  'KEY_D', //263, Keyboard d and D (US English)
-  'KEY_E', //264, Keyboard e and E (US English)
-  'KEY_F', //265, Keyboard f and F (US English)
-  'KEY_G', //266, Keyboard g and G (US English)
-  'KEY_H', //267, Keyboard h and H (US English)
-  'KEY_I', //268, Keyboard i and I (US English)
-  'KEY_J', //269, Keyboard j and J (US English)
-  'KEY_K', //270, Keyboard k and K (US English)
-  'KEY_L', //271, Keyboard l and L (US English)
-  'KEY_M', //272, Keyboard m and M (US English)
-  'KEY_N', //273, Keyboard n and N (US English)
-  'KEY_O', //274, Keyboard o and O (US English)
-  'KEY_P', //275, Keyboard p and P (US English)
-  'KEY_Q', //276, Keyboard q and Q (US English)
-  'KEY_R', //277, Keyboard r and R (US English)
-  'KEY_S', //278, Keyboard s and S (US English)
-  'KEY_T', //279, Keyboard t and T (US English)
-  'KEY_U', //280, Keyboard u and U (US English)
-  'KEY_V', //281, Keyboard v and V (US English)
-  'KEY_W', //282, Keyboard w and W (US English)
-  'KEY_X', //283, Keyboard x and X (US English)
-  'KEY_Y', //284, Keyboard y and Y (US English)
-  'KEY_Z', //285, Keyboard z and Z (US English)
-  'KEY_1', //286, Keyboard 1 and ! (US English)
-  'KEY_2', //287, Keyboard 2 and @ (US English)
-  'KEY_3', //288, Keyboard 3 and # (US English)
-  'KEY_4', //289, Keyboard 4 and $ (US English)
-  'KEY_5', //290, Keyboard 5 and % (US English)
-  'KEY_6', //291, Keyboard 6 and ^ (US English)
-  'KEY_7', //292, Keyboard 7 and & (US English)
-  'KEY_8', //293, Keyboard 8 and * (US English)
-  'KEY_9', //294, Keyboard 9 and ( (US English)
-  'KEY_0', //295, Keyboard 0 and ) (US English)
-  'ENTER', //296, Keyboard Return (US English)
-  'ESC', //297, Keyboard Escape (US English)
-  'BKSP', //298, Keyboard Backspace (US English)
-  'TAB', //299, Keyboard Tab (US English)
-  'KSC_2C', //300, Keyboard Space (US English)
-  'KSC_2D', //301, Keyboard - and _ (US English)
-  'KSC_2E', //302, Keyboard = and + (US English)
-  'KSC_2F', //303, Keyboard [ and { (US English)
-  'KSC_30', //304, Keyboard ] and } (US English)
-  'KSC_31', //305, Keyboard \ and | (US English)
-  'KSC_32', //306, Keyboard Non-US # and ~ (US English)
-  'KSC_33', //307, Keyboard ; and : (US English)
-  'KSC_34', //308, Keyboard ' and " (US English)
-  'KSC_35', //309, Keyboard ` and ~ (US English)
-  'KSC_36', //310, Keyboard , and < (US English)
-  'KSC_37', //311, Keyboard . and > (US English)
-  'KSC_38', //312, Keyboard / and ? (US English)
-  'CAPSLOCK', //313, Keyboard Caps Lock
-  'F1', //314, Keyboard F1
-  'F2', //315, Keyboard F2
-  'F3', //316, Keyboard F3
-  'F4', //317, Keyboard F4
-  'F5', //318, Keyboard F5
-  'F6', //319, Keyboard F6
-  'F7', //320, Keyboard F7
-  'F8', //321, Keyboard F8
-  'F9', //322, Keyboard F9
-  'F10', //323, Keyboard F10
-  'F11', //324, Keyboard F11
-  'F12', //325, Keyboard F12
-  'PRTSCN', //326, Keyboard Print Screen
-  'SCRLK', //327, Keyboard Scroll Lock
-  'PAUSE', //328, Keyboard Pause
-  'INSERT', //329, Keyboard Insert
-  'HOME', //330, Keyboard Home
-  'PGUP', //331, Keyboard Page Up
-  'DELETE', //332, Keyboard Delete Forward
-  'END', //333, Keyboard End
-  'PGDN', //334, Keyboard Page Down
-  'ARROW_RT', //335, Keyboard Right Arrow
-  'ARROW_LF', //336, Keyboard Left Arrow
-  'ARROW_DN', //337, Keyboard Down Arrow
-  'ARROW_UP', //338, Keyboard Up Arrow
-  'NUMLOCK', //339, Keyboard Num Lock and Clear
-  'KP_SLASH', //340, Keypad /
-  'KP_ASTER', //341, Keypad *
-  'KP_MINUS', //342, Keypad -
-  'KP_PLUS', //343, Keypad +
-  'KP_ENTER', //344, Keypad Enter
-  'KP_1', //345, Keypad 1 and End
-  'KP_2', //346, Keypad 2 and Down Arrow
-  'KP_3', //347, Keypad 3 and Page Down
-  'KP_4', //348, Keypad 4 and Left Arrow
-  'KP_5', //349, Keypad 5
-  'KP_6', //350, Keypad 6 and Rigth Arrow
-  'KP_7', //351, Keypad 7 and Home
-  'KP_8', //352, Keypad 8 and Up Arrow
-  'KP_9', //353, Keypad 9 and Page Up
-  'KP_0', //354, Keypad 0 and Insert
-  'KP_DOT', //355, Keypad . and Delete
-  'KSC_64', //356, Keyboard Non-US \ and | (US English)
-  'COMPOSE', //357, Keyboard Application
-  'POWER', //358, Keyboard Power
-  'KP_EQUAL', //359, Keypad =
-  'F13', //360, Keyboard F13
-  'F14', //361, Keyboard F14
-  'F15', //362, Keyboard F15
-  'F16', //363, Keyboard F16
-  'F17', //364, Keyboard F17
-  'F18', //365, Keyboard F18
-  'F19', //366, Keyboard F19
-  'F20', //367, Keyboard F20
-  'F21', //368, Keyboard F21
-  'F22', //369, Keyboard F22
-  'F23', //370, Keyboard F23
-  'F24', //371, Keyboard F24
-  'EXECUTE', //372, Keyboard Execute
-  'HELP', //373, Keyboard Help
-  'MENU', //374, Keyboard Menu
-  'SELECT', //375, Keyboard Select
-  'STOP', //376, Keyboard Stop
-  'AGAIN', //377, Keyboard Again
-  'UNDO', //378, Keyboard Undo
-  'CUT', //379, Keyboard Cut
-  'COPY', //380, Keyboard Copy
-  'PASTE', //381, Keyboard Paste
-  'FIND', //382, Keyboard Find
-  'MUTE', //383, Keyboard Mute
-  'VOL_UP', //384, Keyboard Volume Up
-  'VOL_DN', //385, Keyboard Volume Down
-  'KSC_82', //386, Keyboard Locking Caps Lock
-  'KSC_83', //387, Keyboard Locking Num Lock
-  'KSC_84', //388, Keyboard Locking Scroll Lock
-  'KP_COMMA', //389, Keypad Comma
-  'KSC_86', //390, Keypad Equals Sign
-  'INTL1', //391, Keyboard International1
-  'INTL2', //392, Keyboard International2
-  'INTL3', //393, Keyboard International3
-  'INTL4', //394, Keyboard International4
-  'INTL5', //395, Keyboard International5
-  'INTL6', //396, Keyboard International6
-  'INTL7', //397, Keyboard International7
-  'INTL8', //398, Keyboard International8
-  'INTL9', //399, Keyboard International9
-  'LANG1', //400, Keyboard LANG1
-  'LANG2', //401, Keyboard LANG2
-  'LANG3', //402, Keyboard LANG3
-  'LANG4', //403, Keyboard LANG4
-  'LANG5', //404, Keyboard LANG5
-  'LANG6', //405, Keyboard LANG6
-  'LANG7', //406, Keyboard LANG7
-  'LANG8', //407, Keyboard LANG8
-  'LANG9', //408, Keyboard LANG9
-  'KSC_99', //409, Keyboard Alternate Erase
-  'KSC_9A', //410, Keyboard SysReq/Attention
-  'KSC_9B', //411, Keyboard Cancel
-  'KSC_9C', //412, Keyboard Clear
-  'KSC_9D', //413, Keyboard Prior
-  'KSC_9E', //414, Keyboard Return
-  'KSC_9F', //415, Keyboard Separator
-  'KSC_A0', //416, Keyboard Out
-  'KSC_A1', //417, Keyboard Oper
-  'KSC_A2', //418, Keyboard Clear/Again
-  'KSC_A3', //419, Keyboard CrSel/Props
-  'KSC_A4', //420, Keyboard ExSel
-  'KSC_A5', //421,
-  'KSC_A6', //422,
-  'KSC_A7', //423,
-  'KSC_A8', //424,
-  'KSC_A9', //425,
-  'KSC_AA', //426,
-  'KSC_AB', //427,
-  'KSC_AC', //428,
-  'KSC_AD', //429,
-  'KSC_AE', //430,
-  'KSC_AF', //431,
-  'KSC_B0', //432, Keypad 00
-  'KSC_B1', //433, Keypad 000
-  'KSC_B2', //434, Thousands Separator
-  'KSC_B3', //435, Decimal Separator
-  'KSC_B4', //436, Currency Unit
-  'KSC_B5', //437, Currency Sub-unit
-  'KSC_B6', //438, Keypad (
-  'KSC_B7', //439, Keypad )
-  'KSC_B8', //440, Keypad {
-  'KSC_B9', //441, Keypad }
-  'KSC_BA', //442, Keypad Tab
-  'KSC_BB', //443, Keypad Backspace
-  'KSC_BC', //444, Keypad A
-  'KSC_BD', //445, Keypad B
-  'KSC_BE', //446, Keypad C
-  'KSC_BF', //447, Keypad D
-  'KSC_C0', //448, Keypad E
-  'KSC_C1', //449, Keypad F
-  'KSC_C2', //450, Keypad XOR
-  'KSC_C3', //451, Keypad ^
-  'KSC_C4', //452, Keypad %
-  'KSC_C5', //453, Keypad <
-  'KSC_C6', //454, Keypad >
-  'KSC_C7', //455, Keypad &
-  'KSC_C8', //456, Keypad &&
-  'KSC_C9', //457, Keypad |
-  'KSC_CA', //458, Keypad ||
-  'KSC_CB', //459, Keypad :
-  'KSC_CC', //460, Keypad #
-  'KSC_CD', //461, Keypad Space
-  'KSC_CE', //462, Keypad @
-  'KSC_CF', //463, Keypad !
-  'KSC_D0', //464, Keypad Memory Store
-  'KSC_D1', //465, Keypad Memory Recall
-  'KSC_D2', //466, Keypad Memory Clear
-  'KSC_D3', //467, Keypad Memory Add
-  'KSC_D4', //468, Keypad Memory Subtract
-  'KSC_D5', //469, Keypad Memory Multiply
-  'KSC_D6', //470, Keypad Memory Divide
-  'KSC_D7', //471, Keypad +/-
-  'KSC_D8', //472, Keypad Clear
-  'KSC_D9', //473, Keypad Clear Entry
-  'KSC_DA', //474, Keypad Binary
-  'KSC_DB', //475, Keypad Octal
-  'KSC_DC', //476, Keypad Decimal
-  'KSC_DD', //477, Keypad Hexadecimal
-  'KSC_DE', //478,
-  'KSC_DF', //479,
-  'KSC_E0', //480, Keyboard Left Control
-  'KSC_E1', //481, Keyboard Left Shift
-  'KSC_E2', //482, Keyboard Left Alt
-  'KSC_E3', //483, Keyboard Left GUI
-  'KSC_E4', //484, Keyboard Right Control
-  'KSC_E5', //485, Keyboard Right Shift
-  'KSC_E6', //486, Keyboard Right Alt
-  'KSC_E7', //487, Keyboard Right GUI
-  'KSC_E8', //488, Media Play Pause
-  'KSC_E9', //489, Media Stop CD
-  'KSC_EA', //490, Media Previous Song
-  'KSC_EB', //491, Media Next Song
-  'KSC_EC', //492, Media Eject CD
-  'KSC_ED', //493, Media Volume Up
-  'KSC_EE', //494, Media Volume Down
-  'KSC_EF', //495, Media Mute
-  'KSC_F0', //496, Media www
-  'KSC_F1', //497, Media Back
-  'KSC_F2', //498, Media Forward
-  'KSC_F3', //499, Media Stop
-  'KSC_F4', //500, Media Find
-  'KSC_F5', //501, Media Scroll Up
-  'KSC_F6', //502, Media Scroll Down
-  'KSC_F7', //503, Media Edit
-  'KSC_F8', //504, Media Sleep
-  'KSC_F9', //505, Media Coffee
-  'KSC_FA', //506, Media Refresh
-  'KSC_FB', //507, Media Calc
-  'KSC_FC', //508,
-  'KSC_FD', //509,
-  'KSC_FE', //510,
-  'KSC_FF', //511,
-  'LEFT_CTRL', //512, Left Control Keyboard Modifier
-  'LEFT_SHIFT', //513, Left Shift Keyboard Modifier
-  'LEFT_ALT', //514, Left Alt Keyboard Modifier
-  'LEFT_GUI', //515, Left GUI Keyboard Modifier
-  'RIGHT_CTRL', //516, Right Control Keyboard Modifier
-  'RIGHT_SHIFT', //517, Right Shift Keyboard Modifier
-  'RIGHT_ALT', //518, Right Alt Keyboard Modifier
-  'RIGHT_GUI', //519, Right GUI Keyboard Modifier
-  'RELEASE_MOD', //520, Release all keyboard modifiers
-  'RELEASE_ALL', //521, Release all keys and keyboard modifiers
-  'RELEASE_KEYS', //522, Release all keys, but not keyboard modifiers
-  '', //523,
-  '', //524,
-  '', //525,
-  '', //526,
-  '', //527,
-  'RESTART', //528, Restart Device
-  '', //529,
-  'BOOT', //530, Bootloader Mode
-  '', //531,
-  'GTM', //532, Toggle GTM
-  '', //533,
-  'IMPULSE', //534, Toggle Impulse
-  '', //535,
-  'DUP', //536, Repeat Last Note
-  '', //537,
-  'SPUR', //538, Spur Toggle
-  '', //539,
-  'AMBILEFT', //540, AmbiThrow (left)
-  '', //541,
-  'AMBIRIGHT', //542, AmbiThrow (right)
-  '', //543,
-  'SPACERIGHT', //544, Right Spacebar (eg CC Lite)
-  '', //545,
-  '', //546,
-  '', //547,
-  'KM_1_L', //548, Primary Keymap (left key)
-  'KM_1_R', //549, Primary Keymap (right key)
-  'KM_2_L', //550, Secondary Keymap [Num-shift] (left key)
-  'KM_2_R', //551, Secondary Keymap [Num-shift] (rightkey)
-  'KM_3_L', //552, Tertiary Keymap (left key)
-  'KM_3_R', //553, Tertiary Keymap (left key)
-  '', //554,
-  '', //555,
-  '', //556,
-  '', //557,
-  '', //558,
-  '', //559,
-  '', //560,
-  '', //561,
-  'MS_CLICK_LF', //562, Mouse Left Button Press and Release
-  'MS_CLICK_RT', //563, Mouse Right Button Press and Release
-  'MS_CLICK_MD', //564, Mouse Middle Button Press and Release
-  'MS_MOVE_RT', //565, Mouse Move Right
-  'MS_MOVE_LF', //566, Mouse Move Left
-  'MS_MOVE_DN', //567, Mouse Move Down
-  'MS_MOVE_UP', //568, Mouse Move Up
-  'MS_SCRL_RT', //569, Mouse Scroll Coast Right
-  'MS_SCRL_LF', //570, Mouse Scroll Coast Left
-  'MS_SCRL_DN', //571, Mouse Scroll Coast Down
-  'MS_SCRL_UP', //572, Mouse Scroll Coast Up
-];
+  const oldAsciiKeyReplacementDictionary={
+    'Tab':'TAB', //Horizontal Tab
+    'BAC':'BKSP', //Backspace
+    'LF':'ENTER', //Line Feed, New Line
+    'SPA':'SPACE', //Space
+    'Reset':'RESTART', //Reset Controller
+    'Bootloader':'BOOT', //Bootloader Mode
+    'Impulse':'IMPULSE', //Impulse
+    'LAT':'AMBILEFT', //AmbiThrow (left)
+    'RAT':'AMBIRIGHT', //AmbiThrow (right)
+    'LNS':'KM_2_L', //Number KeyMap(left)
+    'RNS':'KM_2_R', //Number KeyMap(right)
+    'SpurToggle':'SPUR', //Spur Toggle
+    'Dup':'DUP', //Repeat Last Note
+    'ImpulseToggle':'IMPULSE', //Toggle Impulse Function in Firmware
+    'GTM':'GTM', //Generative Text Menu
+    'MLB':'MS_CLICK_LF', //Mouse Left Button Press and Release
+    'RMC':'MS_CLICK_RT', //Mouse Right Button Press and Release
+    'MMB':'MS_CLICK_MD', //Mouse Middle Button Press and Release
+    'MouseLeftBtnToggle':'', //Mouse Left Button Toggle
+    'MouseRightBtnToggle':'', //Mouse Right Button Toggle
+    'MouseMiddleBtnToggle':'', //Mouse Middle Button Toggle
+    'MouseLeftBtnPress':'', //Mouse Left Button Press
+    'MouseRightBtnPress':'', //Mouse Right Button Press
+    'MouseMiddleBtnPress':'', //Mouse Middle Button Press
+    'MouseLeftBtnRelease':'', //Mouse Left Button Release
+    'MouseRightBtnRelease':'', //Mouse Right Button Release
+    'MouseMiddleBtnRelease':'', //Mouse Middle Button Release
+    'M↓':'MS_MOVE_DN', //Mouse Move Down
+    'M→':'MS_MOVE_RT', //Mouse Move Right
+    'M↑':'MS_MOVE_UP', //Mouse Move Up
+    'M←':'MS_MOVE_LF', //Mouse Move Left
+    'MSD':'MS_SCRL_DN', //Mouse Scroll Coast Down
+    'MouseScrollCoastRight':'MS_SCRL_RT', //Mouse Scroll Coast Right
+    'MSU':'MS_SCRL_UP', //Mouse Scroll Coast Up
+    'MouseScrollCoastLeft':'MS_SCRL_LF', //Mouse Scroll Coast Left
+    'LeftDoubleClick':'', //Left Double Click
+    'RightDoubleClick':'', //Right Double Click
+    'TripleClick':'', //Left Triple Click
+    'PwrStat':'POWER', //Power(Keyboard Power Status)
+    'ReleaseMods':'RELEASE_MOD', //Release All Modifier Keys
+    'LCK':'LEFT_CTRL', //LeftControl
+    'LSK':'LEFT_SHIFT', //LeftShift
+    'LAK':'LEFT_ALT', //LeftAlt
+    'LGK':'LEFT_GUI', //Left GUI
+    'RCK':'RIGHT_CTRL', //RightControl
+    'RSK':'RIGHT_SHIFT', //RightShift
+    'RAK':'RIGHT_ALT', //RightAlt
+    'RGK':'RIGHT_GUI', //RightGUI
+    'CAP':'CAPSLOCK', //Caps Lock
+    'PrintScreen':'PRTSCN', //PrintScreen
+    'ScrollLock':'SCRLK', //Scroll Lock
+    'Pause':'PAUSE', //Pause
+    'Insert':'INSERT', //Insert
+    'Home':'HOME', //Home
+    'PageUp':'PGUP', //PageUp
+    'DeleteForward':'DELETE', //Delete Forward
+    'End':'END', //End
+    'PageDown':'PGDN', //PageDown
+    '→':'ARROW_RT', //RightArrow
+    '←':'ARROW_LF', //LeftArrow
+    '↓':'ARROW_DN', //DownArrow
+    '↑':'ARROW_UP', //UpArrow
+    'NumLock':'NUMLOCK', //Num Lock and Clear
+    'Execute':'EXECUTE', //Execute
+    'Help':'HELP', //Help
+    'Menu':'MENU', //Menu
+    'Select':'SELECT', //Select
+    'Stop':'STOP', //Stop
+    'Again':'AGAIN', //Again
+    'Undo':'UNDO', //Undo
+    'Cut':'CUT', //Cut
+    'Copy':'COPY', //Copy
+    'Paste':'PASTE', //Paste
+    'Find':'FIND', //Find
+    'Mute':'MUTE', //Mute
+    'VolUp':'VOL_UP', //Volume Up
+    'VolDn':'VOL_DN', //Volume Down
+    'Intl1':'INTL1', //International1
+    'Intl2':'INTL2', //International2
+    'Intl3':'INTL3', //International3
+    'Intl4':'INTL4', //International4
+    'Intl5':'INTL5', //International5
+    'Intl6':'INTL6', //International6
+    'Intl7':'INTL7', //International7
+    'Intl8':'INTL8', //International8
+    'Intl9':'INTL9', //International9
+    'AtlErase':'KSC_99', //Alternate Erase
+    'SysReq':'KSC_9A', //SysReq/Attention
+    'Cancel':'KSC_9B', //Cancel
+    'Clear':'KSC_9C', //Clear
+    'Prior':'KSC_9D', //Prior
+    'Return':'KSC_9E', //Return
+    'Separator':'KSC_9F', //Separator
+    'Out':'KSC_A0', //Out
+    'Oper':'KSC_A1', //Oper
+    'Clear/Again':'KSC_A2', //Clear/Again
+    'CrSel/Props':'KSC_A3', //CrSel/Props
+    'ExSel':'KSC_A4', //ExSel
+    'ThouSep':'KSC_B2', //Thousands Separator
+    'DeciSep':'KSC_B3', //Decimal Separator
+    'CurrencyUnit':'KSC_B4', //Currency Unit
+    'CurrencySubUnit':'KSC_B5', //Currency Sub-unit
+    'KPMStore':'KSC_D0', //Keypad Memory Store
+    'KPMRecall':'KSC_D1', //Keypad Memory Recall
+    'KPMClear':'KSC_D2', //Keypad Memory Clear
+    'KPMAdd':'KSC_D3', //Keypad Memory Add
+    'KPMSub':'KSC_D4', //Keypad Memory Subtract
+    'KPMMult':'KSC_D5', //Keypad Memory Multiply
+    'KPMDiv':'KSC_D6', //Keypad Memory Divide
+    'KP+/-':'KSC_D7', //Keypad +/-
+    'KPClear':'KSC_D8', //Keypad Clear
+    'KPClearEntry':'KSC_D9', //Keypad Clear Entry
+    'KPBin':'KSC_DA', //Keypad Binary
+    'KPOct':'KSC_DB', //Keypad Octal
+    'KPDec':'KSC_DC', //Keypad Decimal
+    'KPHex':'KSC_DD', //Keypad Hexadecimal
+    'KMPlayPause':'KSC_E8', //KEY_MEDIA_PLAYPAUSE
+    'KMStopCD':'KSC_E9', //KEY_MEDIA_STOPCD
+    'KMPrevSong':'KSC_EA', //KEY_MEDIA_PREVIOUSSONG
+    'KMNextSong':'KSC_EB', //KEY_MEDIA_NEXTSONG
+    'KMEjectCD':'KSC_EC', //KEY_MEDIA_EJECTCD
+    'KMVolUp':'KSC_ED', //KEY_MEDIA_VOLUMEUP
+    'KMVolDn':'KSC_EE', //KEY_MEDIA_VOLUMEDOWN
+    'KMMute':'KSC_EF', //KEY_MEDIA_MUTE
+    'KMwww':'KSC_F0', //KEY_MEDIA_WWW
+    'KMBack':'KSC_F1', //KEY_MEDIA_BACK
+    'KMForward':'KSC_F2', //KEY_MEDIA_FORWARD
+    'KMStop':'KSC_F3', //KEY_MEDIA_STOP
+    'KMFind':'KSC_F4', //KEY_MEDIA_FIND
+    'KMScrollUp':'KSC_F5', //KEY_MEDIA_SCROLLUP
+    'KMScrollDn':'KSC_F6', //KEY_MEDIA_SCROLLDOWN
+    'KMEdit':'KSC_F7', //KEY_MEDIA_EDIT
+    'KMSleep':'KSC_F8', //KEY_MEDIA_SLEEP
+    'KMCoffee':'KSC_F9', //KEY_MEDIA_COFFEE
+    'KMRefresh':'KSC_FA', //KEY_MEDIA_REFRESH
+    'CC_Physical':'', //
+    'RH_Thumb_3_Center':'RH_THUMB_3_3D', //
+    'RH_Thumb_2_Center':'RH_THUMB_2_3D', //
+    'RH_Thumb_1_Center':'RH_THUMB_1_3D', //
+    'RH_Pinky_Center':'RH_PINKY_3D', //
+    'RH_Ring_Secondary_Center':'RH_RING_2_3D', //
+    'RH_Ring_Primary_Center':'RH_RING_1_3D', //
+    'RH_Middle_Secondary_Center':'RH_MID_2_3D', //
+    'RH_Middle_Primary_Center':'RH_MID_1_3D', //
+    'RH_Index_Center':'RH_INDEX_3D', //
+    'LH_Thumb_3_Center':'LH_THUMB_3_3D', //
+    'LH_Thumb_2_Center':'LH_THUMB_2_3D', //
+    'LH_Thumb_1_Center':'LH_THUMB_1_3D', //
+    'LH_Pinky_Center':'LH_PINKY_3D', //
+    'LH_Ring_Secondary_Center':'LH_RING_2_3D', //
+    'LH_Ring_Primary_Center':'LH_RING_1_3D', //
+    'LH_Middle_Secondary_Center':'LH_MID_2_3D', //
+    'LH_Middle_Primary_Center':'LH_MID_1_3D', //
+    'LH_Index_Center':'LH_INDEX_3D' //
+    
+};
 
 const oldAsciiKeyReplacementDictionary = {
   Tab: 'TAB', //Horizontal Tab
