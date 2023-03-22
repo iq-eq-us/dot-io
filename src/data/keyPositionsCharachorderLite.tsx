@@ -126,7 +126,7 @@ export const keyPositions: Record<string, KeyHighlightPositionLite> = {
     position: 5,
   },
   '33-62': {
-    rowGroup: 6,
+    rowGroup: 5,
     position: 5,
   },
   '10-87': {
