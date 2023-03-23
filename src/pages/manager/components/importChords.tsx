@@ -1,20 +1,19 @@
 import React, { ReactElement } from 'react';
-import {_chordMaps} from '../controls/maps'
+import { resetDataTable } from '../../manager/components/resetDataTable';
 import {
-
-  convertHumanStringToHexadecimalChord,
-  convertHumanStringToHexadecimalPhrase,
   appendToRow,
-  convertHexadecimalChordToHumanString
-} from '../controls/mainControls'
-import {resetDataTable} from '../../manager/components/resetDataTable'
+  convertHexadecimalChordToHumanString,
+  convertHumanStringToHexadecimalChord,
+  convertHumanStringToHexadecimalPhrase
+} from '../controls/mainControls';
+import { _chordMaps } from '../controls/maps';
 
 
 const checkElement = async selector => {
   while ( document.querySelector(selector) === null) {
     await new Promise( resolve =>  requestAnimationFrame(resolve) )
   }
-  return document.querySelector(selector); 
+  return document.querySelector(selector);
 };
 
 
@@ -28,7 +27,7 @@ function importChordMapLibrary(e : any){
     const file = e.target.files[0];
       console.log('im here')
     const fileReader = new FileReader();
-    fileReader.readAsText(file,'UTF-8');  
+    fileReader.readAsText(file,'UTF-8');
 
     fileReader.onload = readerEvent =>{
       const content = readerEvent.target.result;
@@ -42,17 +41,17 @@ function importChordMapLibrary(e : any){
         const hexChordString = convertHumanStringToHexadecimalChord(humanChord);
         //console.log('Hex chord string '+ hexChordString)
         const hexPhraseString = convertHumanStringToHexadecimalPhrase(humanPhrase);
-        
-        
+
+
         const strValues = ["","","",""];
         strValues[0] = humanChord;
         strValues[1] = humanPhrase;
         strValues[2] = hexChordString;
         strValues[3] = hexPhraseString;
         console.log(strValues);
-    
+
         _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
-    
+
         appendToRow(strValues,true);
       });
     }
@@ -70,18 +69,17 @@ function importChordMapLibrary(e : any){
   export function ImportChords(): ReactElement {
     return (
       <React.Fragment>
-    
-          <input id="file-input" type="file" name="name" style = {{display:'none'}}/>
+
+          <input id="file-input" type="file" name="name" style = {{display:'none'}} accept=".csv"/>
 
 <button
       id="importChordMapLibrary"
       className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
       onClick={() => {document.getElementById('file-input').click(); click()}}
       >Import Library</button>
-          
 
-      
+
+
       </React.Fragment>
     );
   }
-  

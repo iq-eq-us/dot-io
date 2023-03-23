@@ -45,7 +45,7 @@
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/webserial.js"></script>
         <script scr="/js/lib/es5/index.js"></script>
-        
+
         <!-- <script src="/socket.io/socket.io.js"></script> -->
     </head>
     <body>
@@ -60,18 +60,18 @@
           <button id="countButton" onclick="getCount()">Count Chord Maps</button>
           <div id="countDiv">count: >50?</div>
           <button id="getAllButton" onclick="getGetAll()">Download from Device</button>
-          
-          
+
+
           <button id="exportChordMapLibrary" onclick="exportChordMapLibrary()">Export Library</button>
           <button id="importChordMapLibrary" onclick="document.getElementById('file-input').click();">Import Library</button>
-          <input id="file-input" type="file" name="name" style="display: none;"/><br>
-          
+          <input id="file-input" type="file" name="name" style="display: none;" accept=".csv"/><br>
+
           <button id="ClearTableButton" onclick="resetDataTable()">Clear Table</button>
           <button id="CommitAllButton" onclick="commitAll()">Commit All Changes</button><br>
 
           <button id="bootLoaderButton" onclick="bootLoader()">Activate BootLoader Mode</button>
           <button id="RebootButton" onclick="reboot()">Reboot Device</button>
-          
+
         </div>
         <div id="terminal">
           <ul id="list">
@@ -79,7 +79,7 @@
           <table id="dataTable" >
           </table>
         </div>
-        
+
         <button id="addChordMap" onclick="addChordMap()">Add Chord Map</button><br>
     </body>
     <script>
