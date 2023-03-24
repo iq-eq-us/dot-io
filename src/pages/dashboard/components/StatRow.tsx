@@ -19,7 +19,7 @@ export function StatRow({
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="text-sm text-gray-900">
-         {stat.averageSpeed?.toFixed()}
+          {stat.averageSpeed?.toFixed()}
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">

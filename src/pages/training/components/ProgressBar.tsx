@@ -11,7 +11,6 @@ import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
 import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 
-
 function clamp(number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));
 }
@@ -34,7 +33,7 @@ export function ProgressBar(): ReactElement {
   const { parentProps: remainingProps, Popper: RemainingPopover } = usePopover(
     'The number of chords that you have not typed faster than your speed goal.',
   );
- 
+
   return (
     <Container>
       {Popper}
@@ -54,9 +53,11 @@ export function ProgressBar(): ReactElement {
         </ProgressBarOuter>
       </BottomProgressBar>
       <BottomDataRow>
-        <WPMText>WPM: {(isNaN(wpm)) ? "Calibrating..." : wpm.toFixed(0)}</WPMText>
+        <WPMText>WPM: {isNaN(wpm) ? 'Calibrating...' : wpm.toFixed(0)}</WPMText>
         <SpeedGoalText>
-        Speed Goal: {wpmMethodCalculator(parseInt(trainingSettings.speedGoal.toFixed())) + " WPM"}
+          Speed Goal:{' '}
+          {wpmMethodCalculator(parseInt(trainingSettings.speedGoal.toFixed())) +
+            ' WPM'}
         </SpeedGoalText>
       </BottomDataRow>
     </Container>
@@ -77,7 +78,7 @@ const SpeedGoalText = styled.span.attrs({
 
 const ProgressBarInner = styled.div.attrs<ProgressBarProgress>({
   className: `relative rounded-r-xl bg-green-500 h-full rounded-l`,
-}) <ProgressBarProgress>`
+})<ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
 

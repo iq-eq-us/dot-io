@@ -9,47 +9,35 @@ import CHMPage1 from '../../../assets/CHMPages/ChM1.png';
 import CHMPage2 from '../../../assets/CHMPages/ChM2.png';
 import CHMPage3 from '../../../assets/CHMPages/ChM3.png';
 
-
-
-
 export const SliderData = [
-    {
-      image:
-      Intro1
-        },
-    {
-      image:
-      Intro2
-        },
-    {
-      image:
-      Intro3
-        },
-    {
-      image:
-      CPMPage1
-        },
-    {
-      image:
-      CPMPage2
-    },
-    {
-        image:
-        CPMPage3
-      }
-  ];
+  {
+    image: Intro1,
+  },
+  {
+    image: Intro2,
+  },
+  {
+    image: Intro3,
+  },
+  {
+    image: CPMPage1,
+  },
+  {
+    image: CPMPage2,
+  },
+  {
+    image: CPMPage3,
+  },
+];
 
-  export const SliderDataForCHMTier = [
-    {
-      image:
-      CHMPage1
-        },
-    {
-      image:
-      CHMPage2
-        },
-    {
-      image:
-      CHMPage3
-        },
-  ];
+export const SliderDataForCHMTier = [
+  {
+    image: CHMPage1,
+  },
+  {
+    image: CHMPage2,
+  },
+  {
+    image: CHMPage3,
+  },
+];

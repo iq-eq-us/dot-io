@@ -1,6 +1,5 @@
 export type ChordLibraryRecord = Record<string, string[]>;
 
-
 export interface ChordLibrary {
   letters: ChordLibraryRecord;
   chords: ChordLibraryRecord;
@@ -16,30 +15,26 @@ export interface ChordLibrary {
   specialCharacters: ChordLibraryRecord;
 }
 
-
-
-
 // This chord library maps to the key positions in the keyPositions.ts file
 export const chordLibrary: ChordLibrary = {
   lexicalSentences: {
-    one:['Will you get a headache if you think too hard?'],
-    two:['We will go home at the end of the day.'],
-    three:['I am too shy to speak to that many people.'],
-    four:['If I do the dishes will you clean the bathroom?'],
-    five:['There is no way I am going to do it.'],
-    six:["I tried to get the pictures, but they're not ready."],
-    seven:['Eat all of your dinner if you want some dessert.'],
-    eight:['I think we are going to have a good day.'],
-    nine:['A lot of families have both a mother and father.'],
-    ten:['That is the least amount of work you can do.'],
-    eleven:['A lot of trees died from the Ice Storm 1998'],
-    twelve:['I would like a small fraction of the pie, please.'],
-    thirteen:['I will do it whether you like it or not!'],
-    fourteen:['I suddenly had the urge to go for a walk.'],
-
+    one: ['Will you get a headache if you think too hard?'],
+    two: ['We will go home at the end of the day.'],
+    three: ['I am too shy to speak to that many people.'],
+    four: ['If I do the dishes will you clean the bathroom?'],
+    five: ['There is no way I am going to do it.'],
+    six: ["I tried to get the pictures, but they're not ready."],
+    seven: ['Eat all of your dinner if you want some dessert.'],
+    eight: ['I think we are going to have a good day.'],
+    nine: ['A lot of families have both a mother and father.'],
+    ten: ['That is the least amount of work you can do.'],
+    eleven: ['A lot of trees died from the Ice Storm 1998'],
+    twelve: ['I would like a small fraction of the pie, please.'],
+    thirteen: ['I will do it whether you like it or not!'],
+    fourteen: ['I suddenly had the urge to go for a walk.'],
   },
   allChords: {
-   CharaChorder:  [],
+    CharaChorder: [],
   },
   supersonic: {
     word: [],
@@ -48,8 +43,6 @@ export const chordLibrary: ChordLibrary = {
   customtier: {
     sample: [],
     words: [],
-
-
   },
   lexicographic: {
     about: [],
@@ -358,10 +351,10 @@ export const chordLibrary: ChordLibrary = {
     '.': ['169-19'],
     ',': [],
     ';': [],
-    "'":[],
+    "'": [],
     '[': [],
     ']': [],
-    "\"": [],
+    '"': [],
     0: [],
     1: [],
     2: [],
@@ -372,7 +365,6 @@ export const chordLibrary: ChordLibrary = {
     7: [],
     8: [],
     9: [],
-
   },
   letters: {
     e: ['194-82'],

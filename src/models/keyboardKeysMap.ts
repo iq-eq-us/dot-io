@@ -35,7 +35,7 @@ export const BlankKey: KeyboardKey = {
   id: -1,
 };
 
-export const  KeyboardKeysMap: Record<number, KeyboardKey> = {
+export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   [-1]: BlankKey,
   1: AltKey,
   2: NumShiftKey,
@@ -268,8 +268,9 @@ export const  KeyboardKeysMap: Record<number, KeyboardKey> = {
     title: 'Right Click',
     id: 58,
     titleTransformOverride: 'rotate(-45deg) translate(-8px, -18px) scale(0.7)',
-  },59: {
+  },
+  59: {
     title: '1',
     id: 59,
-  }
+  },
 };

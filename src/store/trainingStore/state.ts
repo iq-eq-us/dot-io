@@ -3,10 +3,11 @@ import {
   ConvertStringToKeyHighlightPositions,
   CharacterEntryMode,
 } from '../../helpers/convertStringToKeyHighlightPositions';
+import { ConvertStringToKeyHighlightPositionsLite } from '../../helpers/convertStringToKeyHighlightPositionsCharachorderLite';
 import {
-  ConvertStringToKeyHighlightPositionsLite,
-} from '../../helpers/convertStringToKeyHighlightPositionsCharachorderLite';
-import { defaultTrainingSettings, defaultAlphabeticTestTraining } from '../../models/trainingSettingsStateModel';
+  defaultTrainingSettings,
+  defaultAlphabeticTestTraining,
+} from '../../models/trainingSettingsStateModel';
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
 import type { TrainingLevels } from '../..//models/trainingLevels';
 import { generateNewChordRecordForAllChordsModule } from '../../pages/test/components/EditChordModal';
@@ -45,7 +46,9 @@ const trainingStoreState: TrainingStoreStateModel = {
   timeAtTrainingStart: 0,
   numberOfChordsForTrainingLevel: 0,
   testTeirHighestWPM: 0,
-  storedChordsRepresentation: generateNewChordRecordForAllChordsModule(JSON?.parse(localStorage?.getItem('chordsReadFromDevice'))),
+  storedChordsRepresentation: generateNewChordRecordForAllChordsModule(
+    JSON?.parse(localStorage?.getItem('chordsReadFromDevice')),
+  ),
   // * Computed State
   currentlyHighlightedKeys: computed((state) => {
     const highlightMode = state.characterEntryMode;
@@ -53,7 +56,7 @@ const trainingStoreState: TrainingStoreStateModel = {
 
     return state.trainingSettings.isHighlightingKeys
       ? ConvertStringToKeyHighlightPositions(
-        state.currentTrainingScenario,
+          state.currentTrainingScenario,
           state.targetWord || '',
           highlightMode,
           state.targetCharacterIndex ?? -1,
@@ -61,15 +64,15 @@ const trainingStoreState: TrainingStoreStateModel = {
         )
       : [];
   }),
-    characterEntryMode: computed((state) => {
+  characterEntryMode: computed((state) => {
     if (!state.currentTrainingScenario) return undefined;
 
     const highlightMode: CharacterEntryMode =
       state.currentTrainingScenario === 'ALPHABET' ||
       state.currentTrainingScenario === 'LEXICAL' ||
       state.currentTrainingScenario === 'TRIGRAM' ||
-      state.currentTrainingScenario === 'LEXICALSENTENCES'||
-      state.currentTrainingScenario === 'ALLCHORDS'||
+      state.currentTrainingScenario === 'LEXICALSENTENCES' ||
+      state.currentTrainingScenario === 'ALLCHORDS' ||
       state.currentTrainingScenario === 'CUSTOMTIER'
         ? 'CHARACTER'
         : 'CHORD';
@@ -81,12 +84,11 @@ const trainingStoreState: TrainingStoreStateModel = {
 
     return state.trainingSettings.isHighlightingKeys
       ? ConvertStringToKeyHighlightPositionsLite(
-        state.currentTrainingScenario,
+          state.currentTrainingScenario,
           state.targetWord || '',
           highlightMode,
           state.targetCharacterIndex ?? -1,
           state.trainingLevel,
-
         )
       : [];
   }),

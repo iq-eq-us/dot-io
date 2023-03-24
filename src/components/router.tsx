@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from '../pages/dashboard/dashboard';
-import Manager from '../pages/manager/manager'
+import Manager from '../pages/manager/manager';
 import Navbar from './navbar';
 import TrainingTestPage from '../pages/test/trainingTest';
 import TrainingPage from '../pages/training/training';
@@ -10,15 +10,13 @@ import Piano from '../pages/piano/piano';
 import Footer from './footer';
 import TestCompletePage from '../../src/pages/test-complete/testComplete';
 
-
 export const ROUTER_PATHS = {
   home: '/',
   training: '/training',
   manager: '/manager',
   piano: '/piano',
   dashboard: '/dashboard',
-  results: '/results'
-
+  results: '/results',
 };
 
 /**
@@ -40,28 +38,28 @@ const Router = (): ReactElement => {
         <Route path={ROUTER_PATHS.home} exact>
           <Navbar />
           <TrainingTestPage />
-          </Route>
+        </Route>
 
         {/* This is the route to the training page, which will adapt depending on which training scenario is active. */}
         {/* You can find the active training scenario in the state.ts file inside the trainingStore, specifically the currentTrainingScenario state variable */}
         <Route path={ROUTER_PATHS.training}>
           <Navbar />
-          <TrainingPage/>
-          <Footer/>
+          <TrainingPage />
+          <Footer />
         </Route>
 
         {/* This is the route to the training page, which will adapt depending on which training scenario is active. */}
         {/* You can find the active training scenario in the state.ts file inside the trainingStore, specifically the currentTrainingScenario state variable */}
-        <Route path={ROUTER_PATHS.dashboard}> 
+        <Route path={ROUTER_PATHS.dashboard}>
           <Navbar />
-          <Dashboard/>
-          <Footer/>
+          <Dashboard />
+          <Footer />
         </Route>
 
         {/* This is the route to the chord manager page */}
         <Route path={ROUTER_PATHS.manager}>
           <Navbar />
-          <Manager/>
+          <Manager />
         </Route>
 
         {/* This is the route to the Chara Piano page. */}
@@ -69,13 +67,12 @@ const Router = (): ReactElement => {
           <Navbar />
           <Piano />
         </Route>
-          {/* This is the route to the dashboard page. */}
-          <Route path={ROUTER_PATHS.results}>
+        {/* This is the route to the dashboard page. */}
+        <Route path={ROUTER_PATHS.results}>
           <Navbar />
           <TestCompletePage />
-          <Footer/>
-          </Route>
-
+          <Footer />
+        </Route>
       </Switch>
     </HashRouter>
   );

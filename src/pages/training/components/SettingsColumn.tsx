@@ -38,7 +38,9 @@ function SettingsColumn(): ReactElement {
     },
   });
 
-  const transitionTransform = `transform -translate-x-full transition-transform ${trainingSettings.isDisplayingSettingsModal && '-translate-x-0'}`;
+  const transitionTransform = `transform -translate-x-full transition-transform ${
+    trainingSettings.isDisplayingSettingsModal && '-translate-x-0'
+  }`;
 
   const windowSize = useWindowSize();
   const onClickOutside = () => {
@@ -62,7 +64,7 @@ function SettingsColumn(): ReactElement {
         transitionTransform={transitionTransform}
       >
         <DropDown />
-        
+
         <HighlightCheckboxSetting
           trainingSettings={trainingSettings}
           updateTrainingSetting={updateTrainingSetting}
@@ -94,7 +96,6 @@ function SettingsColumn(): ReactElement {
           trainingSettings={trainingSettings}
           setTrainingSettings={setTrainingSettings}
         />
-
       </SettingsForm>
     </SettingsColumnContainer>
   );

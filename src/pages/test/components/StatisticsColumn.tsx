@@ -18,7 +18,6 @@ export function StatisticsColumn(): ReactElement {
     (store) => store.setIsDisplayingStatisticsModal,
   );
 
-
   // If the screen size changes from a small size to a large size, show this column
   // If the screen size changes from a large size to a small size, make sure this column is hidden (until the user presses the button to open it again)
   useScreenSizeBoundary({
@@ -28,8 +27,9 @@ export function StatisticsColumn(): ReactElement {
     },
   });
 
-  const transitionTransform = `transform translate-x-full transition-transform ${trainingSettings.isDisplayingStatisticsModal && 'translate-x-0'
-    }`;
+  const transitionTransform = `transform translate-x-full transition-transform ${
+    trainingSettings.isDisplayingStatisticsModal && 'translate-x-0'
+  }`;
 
   const windowSize = useWindowSize();
   const onClickOutside = () => {
@@ -43,11 +43,15 @@ export function StatisticsColumn(): ReactElement {
   const currentTrainingMode = useCurrentTrainingScenario();
 
   const shouldDisplayEditChordsButton =
-    currentTrainingMode === 'LEXICAL' || currentTrainingMode === 'TRIGRAM' || currentTrainingMode === "SUPERSONIC" || currentTrainingMode === "LEXICOGRAPHIC" || currentTrainingMode === "CUSTOMTIER";
+    currentTrainingMode === 'LEXICAL' ||
+    currentTrainingMode === 'TRIGRAM' ||
+    currentTrainingMode === 'SUPERSONIC' ||
+    currentTrainingMode === 'LEXICOGRAPHIC' ||
+    currentTrainingMode === 'CUSTOMTIER';
 
   return (
     <StatisticsColumnContainer
-    isDisplayingModal={trainingSettings.isDisplayingStatisticsModal}
+      isDisplayingModal={trainingSettings.isDisplayingStatisticsModal}
       onClick={onClickOutside}
     >
       <StatisticsTableContainer transitionTransform={transitionTransform}>

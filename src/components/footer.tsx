@@ -5,11 +5,7 @@ import styled from 'styled-components';
 import CharachorderLogoImage from '../assets/cc_logo_transparent.png';
 import BackButton from '../pages/dashboard/components/BackButton';
 import { ROUTER_PATHS } from './router';
-import IQEQLogoImage from '../assets/iq-eq_logo_copy.png'; 
-
-
-
-
+import IQEQLogoImage from '../assets/iq-eq_logo_copy.png';
 
 const Footer = (): ReactElement => {
   const history = useHistory();
@@ -18,63 +14,63 @@ const Footer = (): ReactElement => {
   );
   const needsBackButton2 = history.location.pathname.endsWith(
     ROUTER_PATHS.manager,
-);
-const needsBackButton3 = history.location.pathname.endsWith(
-  ROUTER_PATHS.piano,
-);
+  );
+  const needsBackButton3 = history.location.pathname.endsWith(
+    ROUTER_PATHS.piano,
+  );
   return (
-   <FooterContainer>
-       <FooterWrap>
-           <FooterLinksContainer>
-               <FooterLinksWrapper>
-                   <FooterLinkItems>
-                       <FooterLinkTitle>
-                           <FooterLinkLogo src={IQEQLogoImage}></FooterLinkLogo>
-                           <div/>
-                           <FooterLink>Brought to you by iq-eq</FooterLink>
-                           <div/>
-                       </FooterLinkTitle>
-                   </FooterLinkItems>
-               </FooterLinksWrapper>
-           </FooterLinksContainer>
-       </FooterWrap>
-   </FooterContainer>
+    <FooterContainer>
+      <FooterWrap>
+        <FooterLinksContainer>
+          <FooterLinksWrapper>
+            <FooterLinkItems>
+              <FooterLinkTitle>
+                <FooterLinkLogo src={IQEQLogoImage}></FooterLinkLogo>
+                <div />
+                <FooterLink>Brought to you by iq-eq</FooterLink>
+                <div />
+              </FooterLinkTitle>
+            </FooterLinkItems>
+          </FooterLinksWrapper>
+        </FooterLinksContainer>
+      </FooterWrap>
+    </FooterContainer>
   );
 };
 
 export default Footer;
 
-const FooterContainer = styled.footer `
-background-color: #181818;
-`
-
-const FooterWrap = styled.div `
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-max-width: 1100px;
-margin: 0 auto;
+const FooterContainer = styled.footer`
+  background-color: #181818;
 `;
 
-const FooterLinksContainer = styled.div `
-display: flex;
-justify-content: center;
+const FooterWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+`;
 
-@media screen and (max-width: 820px) {
+const FooterLinksContainer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 820px) {
     padding-top: 32px;
-}
-`
-
-const FooterLinksWrapper = styled.div `
-display: flex;
-
-@media screen and (max-width: 820px) {
-    flex-direction: column;
-}
+  }
 `;
 
-const FooterLinkItems = styled.div `
+const FooterLinksWrapper = styled.div`
+  display: flex;
+
+  @media screen and (max-width: 820px) {
+    flex-direction: column;
+  }
+`;
+
+const FooterLinkItems = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -91,34 +87,34 @@ color #fff
 }
 `;
 
-const FooterLinkTitle = styled.h1 `
-font-size: 14px;
-margin-bottom: 16px
-`
-
-const FooterLink = styled.a `
-color: #fff;
-text-decoration: none;
-margin-bottom: 0.5rem;
-font-size: 14px;
-
-&:hover {
-    color: #01bf71;
-    transition: 0.3s ease out;
-}
+const FooterLinkTitle = styled.h1`
+  font-size: 14px;
+  margin-bottom: 16px;
 `;
 
-const FooterLinkLogo = styled.img `
-color: #fff;
-text-decoration: none;
-margin-bottom: 0.5rem;
-font-size: 14px;
-height: 40px;
-display: block;
-margin-left: auto;
-margin-right: auto;
-&:hover {
+const FooterLink = styled.a`
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
+
+  &:hover {
     color: #01bf71;
     transition: 0.3s ease out;
-}
+  }
+`;
+
+const FooterLinkLogo = styled.img`
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
+  height: 40px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  &:hover {
+    color: #01bf71;
+    transition: 0.3s ease out;
+  }
 `;
