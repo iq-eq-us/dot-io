@@ -136,7 +136,7 @@ const Header = () => {
       <HeaderItemRow helpText="The name of the target chord or character you typed.">
         Chord
       </HeaderItemRow>
-      <HeaderItemRow helpText="The speed at which you typed the chord in hundreths of a second.">
+      <HeaderItemRow helpText="The speed at which you typed the chord in hundredths of a second.">
         Speed
       </HeaderItemRow>
       <HeaderItemRow helpText="The number of times you have made a mistake typing this chord.">

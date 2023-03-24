@@ -1,7 +1,6 @@
 import React, { ReactElement, useLayoutEffect, useRef, useState } from 'react';
-import SectorGroup from './SectorGroup';
-import charachorderBackground from '../../../assets/charachorder_background_feathered_no_center.png';
 import styled from 'styled-components';
+import charachorderBackground from '../../../assets/charachorder_background_feathered_no_center.png';
 import useWindowSize from '../../../hooks/useWindowSize';
 import charachorderLiteBackground from '../../../assets/CharaChorder_Lite.png';
 import { useStoreState } from '../../../store/store';
@@ -14,6 +13,7 @@ import {
   pickerLite,
   pickerNone,
 } from '../../../models/keyboardDropDownFolder/keyboardDropDown';
+
 
 interface OverlayProps {
   overrideBottom?: boolean;
@@ -51,446 +51,191 @@ function CharachorderOverlayLite({
   );
   const compare2 = (rowGroup: Row, position: Position): boolean => {
     return JSON.stringify(keysToHighlightLite).includes(
-      JSON.stringify({ rowGroup, position }),
+      JSON.stringify({ rowGroup ,position }),
+
     );
+
   };
+
 
   return (
     <React.Fragment>
-      <OverlayContainer
-        ref={overlayRef}
-        scaleWidth={overlayScale?.width || 1}
-        onLoad={triggerResize}
-        scaleHeight={overlayScale?.height || 1}
-        scale={overlayScale?.scale || 1}
-        {...{ overrideBottom }}
-      >
-        {pickerLite && pickerNone && (
-          <div className="body" style={keyboardBodyStyle}>
-            <div className="keyboard" style={keyboardStyle}>
-              <div className="row" style={rowStyle}>
-                <div
-                  style={compare2(1, 1) ? highlightedButtonStyle : buttonStyle}
-                >
-                  esc
-                </div>
-                <div
-                  style={compare2(1, 2) ? highlightedButtonStyle : buttonStyle}
-                >
-                  1 !
-                </div>
-                <div
-                  style={compare2(1, 3) ? highlightedButtonStyle : buttonStyle}
-                >
-                  2 @
-                </div>
-                <div
-                  style={compare2(1, 4) ? highlightedButtonStyle : buttonStyle}
-                >
-                  3 #
-                </div>
-                <div
-                  style={compare2(1, 5) ? highlightedButtonStyle : buttonStyle}
-                >
-                  4 $
-                </div>
-                <div
-                  style={compare2(1, 6) ? highlightedButtonStyle : buttonStyle}
-                >
-                  5 %
-                </div>
-                <div
-                  style={compare2(1, 7) ? highlightedButtonStyle : buttonStyle}
-                >
-                  6 ^
-                </div>
-                <div
-                  style={compare2(1, 8) ? highlightedButtonStyle : buttonStyle}
-                >
-                  7 &amp;
-                </div>
-                <div
-                  style={compare2(1, 9) ? highlightedButtonStyle : buttonStyle}
-                >
-                  8 *
-                </div>
-                <div
-                  style={compare2(1, 10) ? highlightedButtonStyle : buttonStyle}
-                >
-                  9 (
-                </div>
-                <div
-                  style={compare2(1, 11) ? highlightedButtonStyle : buttonStyle}
-                >
-                  0 )
-                </div>
-                <div
-                  style={compare2(1, 12) ? highlightedButtonStyle : buttonStyle}
-                >
-                  - _
-                </div>
-                <div
-                  style={compare2(1, 13) ? highlightedButtonStyle : buttonStyle}
-                >
-                  = +
-                </div>
-                <div
-                  style={
-                    compare2(1, 14) ? highlightedButtonStyle : shiftButtonStyle
-                  }
-                >
-                  Backspace
-                </div>
-              </div>
-              <div className="row" style={rowStyle}>
-                <div style={tabButtonStyle}>Tab</div>
-                <div
-                  style={compare2(2, 2) ? highlightedButtonStyle : buttonStyle}
-                >
-                  Q
-                </div>
-                <div
-                  style={compare2(2, 3) ? highlightedButtonStyle : buttonStyle}
-                >
-                  W
-                </div>
-                <div
-                  style={compare2(2, 4) ? highlightedButtonStyle : buttonStyle}
-                >
-                  E
-                </div>
-                <div
-                  style={compare2(2, 5) ? highlightedButtonStyle : buttonStyle}
-                >
-                  R
-                </div>
-                <div
-                  style={compare2(2, 6) ? highlightedButtonStyle : buttonStyle}
-                >
-                  T
-                </div>
-                <div
-                  style={compare2(2, 7) ? highlightedButtonStyle : buttonStyle}
-                >
-                  Y
-                </div>
-                <div
-                  style={compare2(2, 8) ? highlightedButtonStyle : buttonStyle}
-                >
-                  U
-                </div>
-                <div
-                  style={compare2(2, 9) ? highlightedButtonStyle : buttonStyle}
-                >
-                  I
-                </div>
-                <div
-                  style={compare2(2, 10) ? highlightedButtonStyle : buttonStyle}
-                >
-                  O
-                </div>
-                <div
-                  style={compare2(2, 11) ? highlightedButtonStyle : buttonStyle}
-                >
-                  P
-                </div>
-                <div
-                  style={compare2(2, 12) ? highlightedButtonStyle : buttonStyle}
-                >
-                  {' '}
-                  {'{'} [
-                </div>
-                <div
-                  style={compare2(2, 13) ? highlightedButtonStyle : buttonStyle}
-                >
-                  {' '}
-                  {'}'} ]
-                </div>
-                <div id="backslash" style={buttonStyle}>
-                  \ |
-                </div>
-              </div>
-              <div className="row" style={rowStyle}>
-                <div style={capitalButtonStyle}>Caps</div>
-                <div
-                  style={compare2(3, 2) ? highlightedButtonStyle : buttonStyle}
-                >
-                  A
-                </div>
-                <div
-                  style={compare2(3, 3) ? highlightedButtonStyle : buttonStyle}
-                >
-                  S
-                </div>
-                <div
-                  style={compare2(3, 4) ? highlightedButtonStyle : buttonStyle}
-                >
-                  D
-                </div>
-                <div
-                  style={compare2(3, 5) ? highlightedButtonStyle : buttonStyle}
-                >
-                  F
-                </div>
-                <div
-                  style={compare2(3, 6) ? highlightedButtonStyle : buttonStyle}
-                >
-                  G
-                </div>
-                <div
-                  style={compare2(3, 7) ? highlightedButtonStyle : buttonStyle}
-                >
-                  H
-                </div>
-                <div
-                  style={compare2(3, 8) ? highlightedButtonStyle : buttonStyle}
-                >
-                  J
-                </div>
-                <div
-                  style={compare2(3, 9) ? highlightedButtonStyle : buttonStyle}
-                >
-                  K
-                </div>
-                <div
-                  style={compare2(3, 10) ? highlightedButtonStyle : buttonStyle}
-                >
-                  L
-                </div>
-                <div
-                  style={compare2(3, 11) ? highlightedButtonStyle : buttonStyle}
-                >
-                  ; :
-                </div>
-                <div
-                  style={compare2(3, 12) ? highlightedButtonStyle : buttonStyle}
-                >
-                  &quot; &apos;
-                </div>
-                <div style={enterButtonStyle}>Enter</div>
-              </div>
-              <div className="row" style={rowStyle}>
-                <div style={shiftButtonStyle}>Shift</div>
-                <div
-                  style={compare2(4, 2) ? highlightedButtonStyle : buttonStyle}
-                >
-                  Z
-                </div>
-                <div
-                  style={compare2(4, 3) ? highlightedButtonStyle : buttonStyle}
-                >
-                  X
-                </div>
-                <div
-                  style={compare2(4, 4) ? highlightedButtonStyle : buttonStyle}
-                >
-                  C
-                </div>
-                <div
-                  style={compare2(4, 5) ? highlightedButtonStyle : buttonStyle}
-                >
-                  V
-                </div>
-                <div
-                  style={compare2(4, 6) ? highlightedButtonStyle : buttonStyle}
-                >
-                  B
-                </div>
-                <div
-                  style={compare2(4, 7) ? highlightedButtonStyle : buttonStyle}
-                >
-                  N
-                </div>
-                <div
-                  style={compare2(4, 8) ? highlightedButtonStyle : buttonStyle}
-                >
-                  M{' '}
-                </div>
-                <div
-                  style={compare2(4, 9) ? highlightedButtonStyle : buttonStyle}
-                >
-                  , &lt;
-                </div>
-                <div
-                  style={compare2(4, 10) ? highlightedButtonStyle : buttonStyle}
-                >
-                  . &gt;
-                </div>
-                <div
-                  style={compare2(4, 11) ? highlightedButtonStyle : buttonStyle}
-                >
-                  / ?
-                </div>
-                <div
-                  style={compare2(4, 12) ? highlightedButtonStyle : buttonStyle}
-                >
-                  ⇧
-                </div>
-                <div
-                  style={compare2(4, 13) ? highlightedButtonStyle : buttonStyle}
-                >
-                  ↑
-                </div>
-                <div
-                  style={compare2(4, 14) ? highlightedButtonStyle : buttonStyle}
-                >
-                  Del
-                </div>
-              </div>
-              <div className="row" style={rowStyle}>
-                <div style={buttonStyle}>⊞</div>
-                <div style={buttonStyle}>Ctrl</div>
-                <div style={buttonStyle}>alt</div>
-                <div
-                  style={
-                    compare2(5, 4)
-                      ? highlightedEnterButtonStyle
-                      : enterButtonStyle
-                  }
-                >
-                  Space<p>Past</p>
-                </div>
-                <div style={buttonStyle}>Fn</div>
-                <div
-                  style={compare2(5, 6) ? highlightedButtonStyle : buttonStyle}
-                >
-                  DUP
-                </div>
-                <div style={enterButtonStyle}>
-                  Space<p>Plural</p>
-                </div>
-                <div style={buttonStyle}>⊞</div>
-                <div style={buttonStyle}>Fn</div>
-                <div style={buttonStyle}>←</div>
-                <div style={buttonStyle}>↓</div>
-                <div style={buttonStyle}>→</div>
-              </div>
-            </div>
-          </div>
-        )}{' '}
-        {pickerV1 && pickerNone && (
-          <React.Fragment>
-            <img
-              onLoad={setHasLoadedToTrue}
-              src={charachorderBackground}
-              className="mt-8"
-            />
-            <div>
-              {/* Left Side Sector Groups */}
-              <SectorGroup
-                top={28.95}
-                left={11.13}
-                scale={0.75}
-                groupSpecifier={1}
-              />
-              <SectorGroup
-                top={21.6}
-                left={20.63}
-                scale={0.74}
-                groupSpecifier={2}
-              />
-              <SectorGroup
-                top={17.7}
-                left={30.6}
-                scale={0.74}
-                groupSpecifier={3}
-              />
-              <SectorGroup
-                top={28}
-                left={39.0}
-                scale={0.74}
-                groupSpecifier={4}
-              />
-              <SectorGroup
-                left={41.5}
-                top={53.3}
-                scale={0.74}
-                groupSpecifier={5}
-              />
-              <SectorGroup
-                left={38.1}
-                top={69.2}
-                scale={0.74}
-                groupSpecifier={6}
-              />
-              <SectorGroup
-                left={34.0}
-                top={84.2}
-                scale={0.74}
-                groupSpecifier={7}
-              />
-              <SectorGroup
-                left={10.2}
-                top={68.2}
-                scale={0.55}
-                groupSpecifier={8}
-              />
-              <SectorGroup
-                left={17.2}
-                top={72.9}
-                scale={0.55}
-                groupSpecifier={10}
-              />
+    <OverlayContainer
+      ref={overlayRef}
+      scaleWidth={overlayScale?.width || 1}
+      onLoad = {triggerResize}
+      scaleHeight={overlayScale?.height || 1}
+      scale={overlayScale?.scale || 1}
+      {...{ overrideBottom }}
+    >
+      {(pickerLite && pickerNone) && (
+    <div className="body" style={keyboardBodyStyle}>
+    <div className ="keyboard" style={keyboardStyle}>
+   <div className="row" style={rowStyle}>
+     <div style={ compare2(1,1) ?  highlightedButtonStyle : buttonStyle}>esc</div>
+     <div style={ compare2(1,2) ?  highlightedButtonStyle : buttonStyle}>1 !</div>
+     <div style={ compare2(1,3) ?  highlightedButtonStyle : buttonStyle}>2 @</div>
+     <div style={ compare2(1,4) ?  highlightedButtonStyle : buttonStyle}>3 #</div>
+     <div style={ compare2(1,5) ?  highlightedButtonStyle : buttonStyle}>4 $</div>
+     <div style={ compare2(1,6) ?  highlightedButtonStyle : buttonStyle}>5 %</div>
+     <div style={ compare2(1,7) ?  highlightedButtonStyle : buttonStyle}>6 ^</div>
+     <div style={ compare2(1,8) ?  highlightedButtonStyle : buttonStyle}>7 &amp;</div>
+     <div style={ compare2(1,9) ?  highlightedButtonStyle : buttonStyle}>8 *</div>
+     <div style={ compare2(1,10) ?  highlightedButtonStyle : buttonStyle}>9 (</div>
+     <div style={ compare2(1,11) ?  highlightedButtonStyle : buttonStyle}>0 )</div>
+     <div style={ compare2(1,12) ?  highlightedButtonStyle : buttonStyle}>- _</div>
+     <div style={ compare2(1,13) ?  highlightedButtonStyle : buttonStyle}>= +</div>
+     <div style={ compare2(1,14) ?  highlightedButtonStyle : shiftButtonStyle}>Backspace</div>
 
-              {/* Right Side Sector Groups */}
-              <SectorGroup
-                left={52.9}
-                top={28}
-                scale={0.74}
-                groupSpecifier={9}
-              />
-              <SectorGroup
-                left={61.3}
-                top={17.7}
-                scale={0.74}
-                groupSpecifier={11}
-              />
-              <SectorGroup
-                left={71.4}
-                top={21.5}
-                scale={0.74}
-                groupSpecifier={12}
-              />
-              <SectorGroup
-                left={80.9}
-                top={29.0}
-                scale={0.74}
-                groupSpecifier={13}
-              />
-              <SectorGroup
-                left={50.4}
-                top={53.3}
-                scale={0.74}
-                groupSpecifier={14}
-              />
-              <SectorGroup
-                left={53.9}
-                top={69.1}
-                scale={0.74}
-                groupSpecifier={15}
-              />
-              <SectorGroup
-                left={57.9}
-                top={84.2}
-                scale={0.74}
-                groupSpecifier={16}
-              />
-              <SectorGroup
-                left={74.5}
-                top={72.9}
-                scale={0.55}
-                groupSpecifier={10}
-              />
-              <SectorGroup
-                left={81.5}
-                top={68.2}
-                scale={0.55}
-                groupSpecifier={8}
-              />
-            </div>
-          </React.Fragment>
-        )}
-      </OverlayContainer>
+   </div>
+   <div className="row" style={rowStyle}>
+     <div style={tabButtonStyle}>Tab</div>
+     <div style={ compare2(2,2) ?  highlightedButtonStyle : buttonStyle}>Q</div>
+     <div style={ compare2(2,3) ?  highlightedButtonStyle : buttonStyle}>W</div>
+     <div style={ compare2(2,4) ?  highlightedButtonStyle : buttonStyle}>E</div>
+     <div style={ compare2(2,5) ?  highlightedButtonStyle : buttonStyle}>R</div>
+     <div style={ compare2(2,6) ?  highlightedButtonStyle : buttonStyle}>T</div>
+     <div style={ compare2(2,7) ?  highlightedButtonStyle : buttonStyle}>Y</div>
+     <div style={ compare2(2,8) ?  highlightedButtonStyle : buttonStyle}>U</div>
+     <div style={ compare2(2,9) ?  highlightedButtonStyle : buttonStyle}>I</div>
+     <div style={ compare2(2,10) ?  highlightedButtonStyle : buttonStyle}>O</div>
+     <div style={ compare2(2,11) ?  highlightedButtonStyle : buttonStyle}>P</div>
+     <div style={ compare2(2,12) ?  highlightedButtonStyle : buttonStyle}> {'{'} [</div>
+     <div style={ compare2(2,13) ?  highlightedButtonStyle : buttonStyle}> {'}'} ]</div>
+     <div id='backslash' style={buttonStyle}>\ |</div>
+   </div>
+   <div className="row" style={rowStyle}>
+     <div style={capitalButtonStyle}>Caps</div>
+     <div style={ compare2(3,2) ?  highlightedButtonStyle : buttonStyle}>A</div>
+     <div style={ compare2(3,3) ?  highlightedButtonStyle : buttonStyle}>S</div>
+     <div style={ compare2(3,4) ?  highlightedButtonStyle : buttonStyle}>D</div>
+     <div style={ compare2(3,5) ?  highlightedButtonStyle : buttonStyle}>F</div>
+     <div style={ compare2(3,6) ?  highlightedButtonStyle : buttonStyle}>G</div>
+     <div style={ compare2(3,7) ?  highlightedButtonStyle : buttonStyle}>H</div>
+     <div style={ compare2(3,8) ?  highlightedButtonStyle : buttonStyle}>J</div>
+     <div style={ compare2(3,9) ?  highlightedButtonStyle : buttonStyle}>K</div>
+     <div style={ compare2(3,10) ?  highlightedButtonStyle : buttonStyle}>L</div>
+     <div style={ compare2(3,11) ?  highlightedButtonStyle : buttonStyle}>; :</div>
+     <div style={ compare2(3,12) ?  highlightedButtonStyle : buttonStyle}>&quot; &apos;</div>
+     <div style={enterButtonStyle}>Enter</div>
+   </div>
+   <div className="row" style={rowStyle}>
+     <div style={shiftButtonStyle}>Shift</div>
+     <div style={ compare2(4,2) ?  highlightedButtonStyle : buttonStyle}>Z</div>
+     <div style={ compare2(4,3) ?  highlightedButtonStyle : buttonStyle}>X</div>
+     <div style={ compare2(4,4) ?  highlightedButtonStyle : buttonStyle}>C</div>
+     <div style={ compare2(4,5) ?  highlightedButtonStyle : buttonStyle}>V</div>
+     <div style={ compare2(4,6) ?  highlightedButtonStyle : buttonStyle}>B</div>
+     <div style={ compare2(4,7) ?  highlightedButtonStyle : buttonStyle}>N</div>
+     <div style={ compare2(4,8) ?  highlightedButtonStyle : buttonStyle}>M </div>
+     <div style={ compare2(4,9) ?  highlightedButtonStyle : buttonStyle}>, &lt;</div>
+     <div style={ compare2(4,10) ?  highlightedButtonStyle : buttonStyle}>. &gt;</div>
+     <div style={ compare2(4,11) ?  highlightedButtonStyle : buttonStyle}>/ ?</div>
+     <div style={ compare2(4,12) ? highlightedButtonStyle : buttonStyle}>⇧</div>
+     <div style={ compare2(4,13) ?  highlightedButtonStyle : buttonStyle}>↑</div>
+     <div style={ compare2(4,14) ?  highlightedButtonStyle : buttonStyle}>Del</div>
+   </div>
+   <div className="row" style={rowStyle}>
+     <div style={buttonStyle}>⊞</div>
+     <div style={buttonStyle}>Ctrl</div>
+     <div style={buttonStyle}>alt</div>
+     <div style={compare2(5,4) ?  highlightedEnterButtonStyle : enterButtonStyle}>Space<p>Past</p></div>
+     <div style={compare2(5,5) ?  highlightedButtonStyle : buttonStyle}>Fn</div>
+     <div style={compare2(5,6) ?  highlightedButtonStyle : buttonStyle}>DUP</div>
+     <div style={enterButtonStyle}>Space<p>Plural</p></div>
+     <div style={buttonStyle}>⊞</div>
+     <div style={buttonStyle}>Fn</div>
+     <div style={buttonStyle}>←</div>
+     <div style={buttonStyle}>↓</div>
+     <div style={buttonStyle}>→</div>
+
+   </div>
+ </div>
+ </div>
+       )}    {(pickerV1 && pickerNone) && (
+         <React.Fragment>
+        <img
+        onLoad={setHasLoadedToTrue}
+        src={charachorderBackground}
+        className="mt-8"
+      />
+        <div>
+          {/* Left Side Sector Groups */}
+          <SectorGroup
+            top={28.95}
+            left={11.13}
+            scale={0.75}
+            groupSpecifier={1}
+          />
+          <SectorGroup
+            top={21.6}
+            left={20.63}
+            scale={0.74}
+            groupSpecifier={2}
+          />
+          <SectorGroup top={17.7} left={30.6} scale={0.74} groupSpecifier={3} />
+          <SectorGroup top={28} left={39.0} scale={0.74} groupSpecifier={4} />
+          <SectorGroup left={41.5} top={53.3} scale={0.74} groupSpecifier={5} />
+          <SectorGroup left={38.1} top={69.2} scale={0.74} groupSpecifier={6} />
+          <SectorGroup left={34.0} top={84.2} scale={0.74} groupSpecifier={7} />
+          <SectorGroup left={10.2} top={68.2} scale={0.55} groupSpecifier={8} />
+          <SectorGroup
+            left={17.2}
+            top={72.9}
+            scale={0.55}
+            groupSpecifier={10}
+          />
+
+          {/* Right Side Sector Groups */}
+          <SectorGroup left={52.9} top={28} scale={0.74} groupSpecifier={9} />
+          <SectorGroup
+            left={61.3}
+            top={17.7}
+            scale={0.74}
+            groupSpecifier={11}
+          />
+          <SectorGroup
+            left={71.4}
+            top={21.5}
+            scale={0.74}
+            groupSpecifier={12}
+          />
+          <SectorGroup
+            left={80.9}
+            top={29.0}
+            scale={0.74}
+            groupSpecifier={13}
+          />
+          <SectorGroup
+            left={50.4}
+            top={53.3}
+            scale={0.74}
+            groupSpecifier={14}
+          />
+          <SectorGroup
+            left={53.9}
+            top={69.1}
+            scale={0.74}
+            groupSpecifier={15}
+          />
+          <SectorGroup
+            left={57.9}
+            top={84.2}
+            scale={0.74}
+            groupSpecifier={16}
+          />
+          <SectorGroup
+            left={74.5}
+            top={72.9}
+            scale={0.55}
+            groupSpecifier={10}
+          />
+          <SectorGroup left={81.5} top={68.2} scale={0.55} groupSpecifier={8} />
+        </div>
+        </React.Fragment>
+      )}
+
+    </OverlayContainer>
     </React.Fragment>
   );
 }

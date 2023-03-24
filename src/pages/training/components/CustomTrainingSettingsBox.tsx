@@ -50,7 +50,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
     );
 
   const { parentProps: speedGoalProps, Popper: SpeelGoalPopover } = usePopover(
-    'How fast do you want to type each chord? This is measured in hundreths of a second, so a speed goal of 100 would equate to 1 second.',
+    'How fast do you want to type each chord? This is measured in hundredths of a second, so a speed goal of 100 would equate to 1 second.',
   );
 
   const { parentProps: recursionRateProps, Popper: RecursionRatePopover } =
