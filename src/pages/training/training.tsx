@@ -17,14 +17,14 @@ import { Redirect } from 'react-router-dom';
 
 function TrainingPage(): ReactElement {
   const contrast = useContrast();
-  const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
+  const currentTrainingScenario = useStoreState(
+    (store) => store.currentTrainingScenario,
+  );
   useTrainingScenarioAsDocumentTitle();
-  
+
   return (
     <PageContainer contrast={contrast}>
-      {!currentTrainingScenario &&
-        <Redirect to="" />
-      }
+      {!currentTrainingScenario && <Redirect to="" />}
       <EditChordsModal />
       <SettingsColumn />
       <CenterTrainingColumn />
@@ -34,4 +34,3 @@ function TrainingPage(): ReactElement {
 }
 
 export default TrainingPage;
-

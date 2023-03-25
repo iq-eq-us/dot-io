@@ -27,8 +27,9 @@ export function StatisticsColumn(): ReactElement {
     },
   });
 
-  const transitionTransform = `transform translate-x-full transition-transform ${trainingSettings.isDisplayingStatisticsModal && 'translate-x-0'
-    }`;
+  const transitionTransform = `transform translate-x-full transition-transform ${
+    trainingSettings.isDisplayingStatisticsModal && 'translate-x-0'
+  }`;
 
   const windowSize = useWindowSize();
   const onClickOutside = () => {
@@ -42,7 +43,10 @@ export function StatisticsColumn(): ReactElement {
   const currentTrainingMode = useCurrentTrainingScenario();
 
   const shouldDisplayEditChordsButton =
-    currentTrainingMode === 'LEXICAL' || currentTrainingMode === 'TRIGRAM' || currentTrainingMode === "SUPERSONIC" || currentTrainingMode === "LEXICOGRAPHIC";
+    currentTrainingMode === 'LEXICAL' ||
+    currentTrainingMode === 'TRIGRAM' ||
+    currentTrainingMode === 'SUPERSONIC' ||
+    currentTrainingMode === 'LEXICOGRAPHIC';
 
   return (
     <StatisticsColumnContainer

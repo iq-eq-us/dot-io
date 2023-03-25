@@ -29,7 +29,7 @@ function SectorGroupLite({
   groupSpecifier,
 }: Props): ReactElement {
   const sectorGroupDataRow: SectorGroupDataRow =
-  SectorGroupMapRow[groupSpecifier || -1] || BlankSectorGroupData;
+    SectorGroupMapRow[groupSpecifier || -1] || BlankSectorGroupData;
 
   const keysToHighlight = useStoreState(
     (store) => store.currentlyHighlightedKeys,
@@ -68,63 +68,57 @@ function SectorGroupLite({
         </h1>
       )}
 
-   
       <StaticSectorLite
-      title={sectorGroupDataRow.firstKey.title}
-      posX={105}
-      posY={-35}
-      rotation={0}
-      active={compare2(1)}
-      
+        title={sectorGroupDataRow.firstKey.title}
+        posX={105}
+        posY={-35}
+        rotation={0}
+        active={compare2(1)}
       />
       <StaticSectorLite
-      title={sectorGroupDataRow.secondKey.title}
-      posX={85}
-      posY={-65}
-      rotation={0}
-      active={compare2(2)}
-      
-      /><StaticSectorLite
-      title={sectorGroupDataRow.thirdKey.title}
-      posX={45}
-      posY={-85}
-      rotation={3}
-      active={compare2(1)}
-      
+        title={sectorGroupDataRow.secondKey.title}
+        posX={85}
+        posY={-65}
+        rotation={0}
+        active={compare2(2)}
       />
       <StaticSectorLite
-      title={sectorGroupDataRow.fourthKey.title}
-      posX={35}
-      posY={-85}
-      rotation={3}
-      active={compare2(1)}
-      
-      /><StaticSectorLite
-      title={sectorGroupDataRow.fifthKey.title}
-      posX={135}
-      posY={-85}
-      rotation={3}
-      active={compare2(1)}
-      
-      /><StaticSectorLite
-      title={sectorGroupDataRow.sixthKey.title}
-      posX={135}
-      posY={-85}
-      rotation={1}
-      active={compare2(14)}
-      
-      /><StaticSectorLite
-      title={sectorGroupDataRow.seventhKey.title}
-      posX={135}
-      posY={-85}
-      rotation={3}
-      active={compare2(1)}
-      
+        title={sectorGroupDataRow.thirdKey.title}
+        posX={45}
+        posY={-85}
+        rotation={3}
+        active={compare2(1)}
       />
-      
+      <StaticSectorLite
+        title={sectorGroupDataRow.fourthKey.title}
+        posX={35}
+        posY={-85}
+        rotation={3}
+        active={compare2(1)}
+      />
+      <StaticSectorLite
+        title={sectorGroupDataRow.fifthKey.title}
+        posX={135}
+        posY={-85}
+        rotation={3}
+        active={compare2(1)}
+      />
+      <StaticSectorLite
+        title={sectorGroupDataRow.sixthKey.title}
+        posX={135}
+        posY={-85}
+        rotation={1}
+        active={compare2(14)}
+      />
+      <StaticSectorLite
+        title={sectorGroupDataRow.seventhKey.title}
+        posX={135}
+        posY={-85}
+        rotation={3}
+        active={compare2(1)}
+      />
     </div>
   );
 }
-
 
 export default SectorGroupLite;

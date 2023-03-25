@@ -55,7 +55,7 @@ const statisticsStorageStoreActions: StatisticsStoreActions = {
         JSON.stringify(objectToSave),
       );
     } else {
-      console.log('Here we are handle merge')
+      console.log('Here we are handle merge');
       const objectToSave = {
         statistics: payload.statistics.filter(ifHasOccurredAtLeastOnce),
       };

@@ -1,12 +1,10 @@
 import type { Action, Computed } from 'easy-peasy';
 
-
 export interface GlobalStoreState {
   isUsingChordingEnabledDevice: boolean;
   numberOfWordsChorded: number;
-  isDisplayingSettingsModal: boolean,
-  isDisplayingStatisticsModal: boolean,
-
+  isDisplayingSettingsModal: boolean;
+  isDisplayingStatisticsModal: boolean;
 }
 
 export interface GlobalStoreActions {
@@ -14,8 +12,6 @@ export interface GlobalStoreActions {
   setNumberOfWordsChorded: Action<GlobalStore, number>;
   setIsDisplayingSettingsModal: Action<GlobalStore, boolean>;
   setIsDisplayingStatisticsModal: Action<GlobalStore, boolean>;
-
-
 }
 
 export type GlobalStore = GlobalStoreState & GlobalStoreActions;

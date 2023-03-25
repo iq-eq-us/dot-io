@@ -4,10 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Soundfont from 'soundfont-player';
 
-
-
-
-class SoundfontProvider extends React.Component <any, any>{
+class SoundfontProvider extends React.Component<any, any> {
   static propTypes = {
     instrumentName: PropTypes.string.isRequired,
     hostname: PropTypes.string.isRequired,
@@ -35,7 +32,7 @@ class SoundfontProvider extends React.Component <any, any>{
     this.loadInstrument(this.props.instrumentName);
   }
 
-  componentDidUpdate(prevProps: { instrumentName: any; }, prevState: any) {
+  componentDidUpdate(prevProps: { instrumentName: any }, prevState: any) {
     if (prevProps.instrumentName !== this.props.instrumentName) {
       this.loadInstrument(this.props.instrumentName);
     }
@@ -52,7 +49,7 @@ class SoundfontProvider extends React.Component <any, any>{
       nameToUrl: (name: any, soundfont: any, format: any) => {
         return `${this.props.hostname}/${soundfont}/${name}-${format}.js`;
       },
-    }).then(instrument => {
+    }).then((instrument) => {
       this.setState({
         instrument,
       });

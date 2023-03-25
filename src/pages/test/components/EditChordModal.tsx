@@ -6,11 +6,17 @@ import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingSce
 import usePopover from '../../../hooks/usePopover';
 import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import { getGlobalDictionaries, setGlobalDictionaries } from '../../../store/trainingStore/actions';
+import {
+  getGlobalDictionaries,
+  setGlobalDictionaries,
+} from '../../../store/trainingStore/actions';
 import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
-import {pickerV1, pickerLite} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
+import {
+  pickerV1,
+  pickerLite,
+} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
 import type { ChordStatisticsFromDevice } from '../../../models/trainingStatistics';
 
 export const triggerResizeForChordModal = () => {
@@ -21,7 +27,6 @@ export const triggerResizeForChordModal = () => {
 };
 
 function EditChordsModal(): ReactElement {
-
   const isShowingPortal = useStoreState(
     (store) => store.isDisplayingChordEditModal,
   );
@@ -30,8 +35,12 @@ function EditChordsModal(): ReactElement {
     (store) => store.setStoredTestTextData,
   );
 
-  const storedChordsRepresentation = useStoreState((store) => store.storedChordsRepresentation);
-  const [chords, setChords] = useState(getDefaultChords(trainingMode, storedChordsRepresentation));
+  const storedChordsRepresentation = useStoreState(
+    (store) => store.storedChordsRepresentation,
+  );
+  const [chords, setChords] = useState(
+    getDefaultChords(trainingMode, storedChordsRepresentation),
+  );
   const [tempChords, setTempChords] = useState(chords);
   const inputRef = useRef<HTMLInputElement>(null);
   const trainingScenario = useCurrentTrainingScenario();
@@ -53,35 +62,35 @@ function EditChordsModal(): ReactElement {
     if (inputRef.current) inputRef.current.value = value;
   };
 
-  const phraseSeparator = " ";
-  const spaceSeparator = "_";
+  const phraseSeparator = ' ';
+  const spaceSeparator = '_';
 
   const canCloseModal =
     trainingScenario === 'LEXICAL' || trainingScenario === 'TRIGRAM';
 
   const addChord = (chord?: string) => {
-    const parts = chord?.split(phraseSeparator).map((e) => e.replaceAll(spaceSeparator, " ")) || [];
+    const parts =
+      chord
+        ?.split(phraseSeparator)
+        .map((e) => e.replaceAll(spaceSeparator, ' ')) || [];
     if (parts.length) {
-      setTempChords(
-        [...tempChords, ...parts]
-      );
+      setTempChords([...tempChords, ...parts]);
       setInputValue('');
     }
   };
 
   const clearChords = () => {
     setTempChords([]);
-  }
+  };
 
   const restoreDefaults = () => {
     setTempChords(getDefaultChordsFromChordLibrary(trainingMode));
   };
 
   const cancelEditing = () => {
-      setTempChords(chords);
-      togglePortal();
-      setInputValue('');
-    
+    setTempChords(chords);
+    togglePortal();
+    setInputValue('');
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -97,18 +106,17 @@ function EditChordsModal(): ReactElement {
     }
   };
 
-
-   const confirmEditing = async () => {
-    sessionStorage.removeItem("CutomTierTestValue");
-    sessionStorage.removeItem("tempTestDeIncrement");
+  const confirmEditing = async () => {
+    sessionStorage.removeItem('CutomTierTestValue');
+    sessionStorage.removeItem('tempTestDeIncrement');
     //console.log('Here is where this is being called');
-    
-    if (typeof trainingScenario === "string")
+
+    if (typeof trainingScenario === 'string')
       setGlobalDictionaries({
         ...getGlobalDictionaries(),
         [trainingScenario]: generateNewChordRecord(tempChords),
       });
-      
+
     let chordsToUse = [];
     const shouldGroupChords = trainingScenario === 'SUPERSONIC';
     if (shouldGroupChords) chordsToUse = groupIntoPairs(tempChords);
@@ -116,7 +124,8 @@ function EditChordsModal(): ReactElement {
 
     const hasChangeBeenMade =
       JSON.stringify(tempChords) !== JSON.stringify(chords) ||
-      trainingScenario === 'SUPERSONIC' || trainingScenario == 'ALLCHORDS';
+      trainingScenario === 'SUPERSONIC' ||
+      trainingScenario == 'ALLCHORDS';
 
     if (hasChangeBeenMade) {
       setStoredTestTextData([]);
@@ -127,7 +136,7 @@ function EditChordsModal(): ReactElement {
     }
 
     togglePortal();
-    document.getElementById('txt_Name')?.focus()
+    document.getElementById('txt_Name')?.focus();
   };
 
   const generateNewChordRecord = (chords: string[]): ChordLibraryRecord => {
@@ -140,7 +149,6 @@ function EditChordsModal(): ReactElement {
     return newChordLibraryRecord;
   };
 
-
   const addChords = () => {
     if (inputRef.current?.value) addChord(inputRef.current?.value);
   };
@@ -149,92 +157,100 @@ function EditChordsModal(): ReactElement {
     `You can enter multiple chords at once by separating them with a "${phraseSeparator}" character. Create multi-word chords by separating words with a "${spaceSeparator}"`,
   );
 
-
   return (
     <div>
-    
       {isShowingPortal && (
         <Portal>
-        {(isShowingPortal && (sessionStorage.getItem('Refresh')!=undefined)) ? [confirmEditing] : 
-          <div
-            onClick={cancelEditing}
-            className="fixed inset-0 width-screen height-screen bg-opacity-70 bg-black flex items-center justify-center"
-          >
+          {isShowingPortal && sessionStorage.getItem('Refresh') != undefined ? (
+            [confirmEditing]
+          ) : (
             <div
-              onClick={stopPropagation}
-              className="w-[600px] max-w-[100vw] bg-black p-2 shadow-lg"
+              onClick={cancelEditing}
+              className="fixed inset-0 width-screen height-screen bg-opacity-70 bg-black flex items-center justify-center"
             >
-              <ChordGrid>
-                {tempChords.map((chord, index) => {
-                  return (
-                    <ChordTag
-                      onClick={() => {
-                        removeChord(index);
+              <div
+                onClick={stopPropagation}
+                className="w-[600px] max-w-[100vw] bg-black p-2 shadow-lg"
+              >
+                <ChordGrid>
+                  {tempChords.map((chord, index) => {
+                    return (
+                      <ChordTag
+                        onClick={() => {
+                          removeChord(index);
+                        }}
+                        key={Math.random()}
+                      >
+                        <Chord>{chord}</Chord>
+                        <XIcon />
+                      </ChordTag>
+                    );
+                  })}
+                </ChordGrid>
+
+                <Row>
+                  <div className="relative w-full mt-2">
+                    <ChordInput
+                      type="text"
+                      id="ChordModalInput"
+                      placeholder="New chord..."
+                      ref={inputRef}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') addChords();
                       }}
-                      key={Math.random()}
+                    />
+
+                    <div
+                      {...parentProps}
+                      className="absolute right-0 top-0 h-full flex flex-col items-center justify-center w-10"
                     >
-                      <Chord>{chord}</Chord>
-                      <XIcon />
-                    </ChordTag>
-                  );
-                })}
-              </ChordGrid>
-
-              <Row>
-                <div className="relative w-full mt-2">
-                  <ChordInput
-                    type="text"
-                    id="ChordModalInput"
-                    placeholder="New chord..."
-                    ref={inputRef}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') addChords();
-                    }}
-                  />
-
-                  <div
-                    {...parentProps}
-                    className="absolute right-0 top-0 h-full flex flex-col items-center justify-center w-10"
-                  >
-                    <HelpCircleIcon />
+                      <HelpCircleIcon />
+                    </div>
                   </div>
-                </div>
-                {Popper}
+                  {Popper}
 
-                <AddButton onClick={addChords}>Add</AddButton>
-              </Row>
+                  <AddButton onClick={addChords}>Add</AddButton>
+                </Row>
 
-              <BottomButtonRow>
-
+                <BottomButtonRow>
                   <ThirdButton title="Cancel" onClick={cancelEditing} />
-                <ThirdButton title="Confirm" onClick={confirmEditing} />
-                <ThirdButton title="Clear" onClick={clearChords} />
-              </BottomButtonRow>
+                  <ThirdButton title="Confirm" onClick={confirmEditing} />
+                  <ThirdButton title="Clear" onClick={clearChords} />
+                </BottomButtonRow>
+              </div>
             </div>
-          </div>
-}
+          )}
         </Portal>
       )}
-    </div>   
-    );
+    </div>
+  );
 }
 
-export const getDefaultChords = (trainingMode?: TrainingScenario, storedChordsRepresentation?: ChordLibraryRecord) => {
+export const getDefaultChords = (
+  trainingMode?: TrainingScenario,
+  storedChordsRepresentation?: ChordLibraryRecord,
+) => {
   const globalDictionaries = getGlobalDictionaries();
   if (trainingMode && globalDictionaries[trainingMode]) {
     return Object.keys(globalDictionaries[trainingMode] as ChordLibraryRecord);
-  } else if(trainingMode == 'ALLCHORDS'){
-    console.log
-    return Object.keys(getChordLibraryForTrainingScenario(trainingMode , storedChordsRepresentation ) || {});
-
+  } else if (trainingMode == 'ALLCHORDS') {
+    console.log;
+    return Object.keys(
+      getChordLibraryForTrainingScenario(
+        trainingMode,
+        storedChordsRepresentation,
+      ) || {},
+    );
   } else {
     return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
   }
-}
+};
 
-export const getDefaultChordsFromChordLibrary = (trainingMode?: TrainingScenario) => {
+export const getDefaultChordsFromChordLibrary = (
+  trainingMode?: TrainingScenario,
+) => {
   return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
-}
+};
 
 export const stopPropagation = (
   e: React.MouseEvent<Element, MouseEvent>,
@@ -270,15 +286,19 @@ const ChordGrid = styled.div.attrs({
   className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start  overflow-scroll`,
 })``;
 
-export const generateNewChordRecordForAllChordsModule = (chords): ChordLibraryRecord => {
+export const generateNewChordRecordForAllChordsModule = (
+  chords,
+): ChordLibraryRecord => {
   const chordStats = chords?.statistics;
   console.log(chordStats?.length);
   const newChordLibraryRecord: ChordLibraryRecord = {};
   const allChord = localStorage?.getItem('chordsReadFromDevice');
-  for(let i =0; i<chordStats?.length; i++) {
-    if (chordLibrary?.all[chordStats[i]?.id]) newChordLibraryRecord[chordStats[i]?.id] = chordLibrary?.all[chordStats[i].id];
+  for (let i = 0; i < chordStats?.length; i++) {
+    if (chordLibrary?.all[chordStats[i]?.id])
+      newChordLibraryRecord[chordStats[i]?.id] =
+        chordLibrary?.all[chordStats[i].id];
     else newChordLibraryRecord[chordStats[i]?.id] = [];
-  };
+  }
   return newChordLibraryRecord;
 };
 
@@ -289,17 +309,19 @@ export const getChordLibraryForTrainingScenario = (
   const allChord = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
   if (scenario === 'ALPHABET') return chordLibrary.letters;
   else if (scenario === 'CHORDING' && pickerV1) return chordLibrary.chords;
-  else if (scenario === 'CHORDING' && pickerLite) return chordLibrary.chordsLite;
+  else if (scenario === 'CHORDING' && pickerLite)
+    return chordLibrary.chordsLite;
   else if (scenario === 'CUSTOMTIER') return chordLibrary.customtier;
   else if (scenario === 'LEXICAL') return chordLibrary.lexical;
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
   else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
-  else if (scenario === 'LEXICALSENTENCES') return chordLibrary.lexicalSentences;
-  else if (scenario === 'ALLCHORDS'){ 
-    console.log(chordRepresention)
-    return chordRepresention
-  };
+  else if (scenario === 'LEXICALSENTENCES')
+    return chordLibrary.lexicalSentences;
+  else if (scenario === 'ALLCHORDS') {
+    console.log(chordRepresention);
+    return chordRepresention;
+  }
 
   return undefined;
 };

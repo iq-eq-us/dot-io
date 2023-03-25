@@ -1,7 +1,1 @@
-export type TrainingLevels =
-  | 'CPM'
-  | 'CHM'
-  | 'aWPM'
-  | 'CM'
-  | 'StM'
-  | 'tWPM';
+export type TrainingLevels = 'CPM' | 'CHM' | 'aWPM' | 'CM' | 'StM' | 'tWPM';

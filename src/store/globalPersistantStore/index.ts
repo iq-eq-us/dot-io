@@ -1,7 +1,6 @@
-import type { GlobalStore } from "../../../src/models/globalStorage";
-import globalStoreState from "./state";
-import globalStorageStoreActions from "./actions";
-
+import type { GlobalStore } from '../../../src/models/globalStorage';
+import globalStoreState from './state';
+import globalStorageStoreActions from './actions';
 
 /**
  * This is the storage training store, split up by state and actions.

@@ -9,7 +9,7 @@ export function SettingsHeader({
     <span
       className={`pl-2 text-white text-2xl mb-2 font-semibold ${transitionTransform}`}
     >
-  Settings
+      Settings
     </span>
   );
 }

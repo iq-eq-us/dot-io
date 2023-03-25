@@ -1,24 +1,22 @@
 import React, { ReactElement } from 'react';
 import { resetLayoutDataTable } from '../../manager/components/resetDataTable';
+
 import {
   appendLayoutToRow,
   sendCommandString
 } from '../controls/mainControls';
 
 
-const checkElement = async selector => {
-  while ( document.querySelector(selector) === null) {
-    await new Promise( resolve =>  requestAnimationFrame(resolve) )
+const checkElement = async (selector) => {
+  while (document.querySelector(selector) === null) {
+    await new Promise((resolve) => requestAnimationFrame(resolve));
   }
   return document.querySelector(selector);
 };
 
-
-
 let thisArray = [];
 
-
-async function importLayoutLibrary(e : any){
+async function importLayoutLibrary(e: any) {
   thisArray = [];
   resetLayoutDataTable();
     console.log(e);
@@ -67,12 +65,7 @@ async function importLayoutLibrary(e : any){
     await sendCommandString("VAR B0");
 
   }
-
-  function click(){
-
-      const element: HTMLElement = document.getElementById("file-input") as HTMLInputElement; //.innerHTML = "status: opened serial port";
-      element.addEventListener('input', importLayoutLibrary);
-       console.log('Clicked')
+  await sendCommandString('VAR B0');
 }
 
   export function ImportChordLayout(): ReactElement {

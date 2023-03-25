@@ -90,7 +90,7 @@ const Row = ({ index, style, data }: RowData) => {
       style={style}
     >
       <NewStatisticsRow headerStyle={headerStyle} index={index}>
-        <RowItem>{truncateString(item?.displayTitle || "", 12)}</RowItem>
+        <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
         <RowItem>{item?.averageSpeed}</RowItem>
         <RowItem>{item?.numberOfErrors}</RowItem>
         <RowItem>{item?.numberOfOccurrences}</RowItem>
@@ -151,7 +151,9 @@ const Header = () => {
 };
 
 const AggregateRow = ({ data }: { data: Data }) => {
-  const wpmCheck = wpmMethodCalculator(parseInt(getCumulativeAverageChordTypeTime(data.stats))).toFixed(0);
+  const wpmCheck = wpmMethodCalculator(
+    parseInt(getCumulativeAverageChordTypeTime(data.stats)),
+  ).toFixed(0);
   const average = wpmCheck != 'Infinity' ? wpmCheck : 0;
   let sumErrors = 0;
   let sumOccurrences = 0;
@@ -174,19 +176,22 @@ const AggregateRow = ({ data }: { data: Data }) => {
   );
 };
 
-const NewStatisticsRow = styled.div.attrs<{ headerStyle: StatRowStyle, index: number }>(
-  (props) => ({
-    className: `text-gray-300 flex flex-row w-full text-white h-[36px]  ${(props.index % 2) == 0 ? 'bg-[#222]' :''  } hover:bg-[#333] ${props.headerStyle === 'TARGET_CHORD_ACTIVE'
+const NewStatisticsRow = styled.div.attrs<{
+  headerStyle: StatRowStyle;
+  index: number;
+}>((props) => ({
+  className: `text-gray-300 flex flex-row w-full text-white h-[36px]  ${
+    props.index % 2 == 0 ? 'bg-[#222]' : ''
+  } hover:bg-[#333] ${
+    props.headerStyle === 'TARGET_CHORD_ACTIVE'
       ? 'bg-yellow-400 text-black font-bold'
       : props.headerStyle === 'TARGET_CHORD_INACTIVE'
-        ? 'bg-[#aaa] text-black font-bold'
-        : ''
-      }`,
-  }),
-) <{ headerStyle: StatRowStyle }>``;
+      ? 'bg-[#aaa] text-black font-bold'
+      : ''
+  }`,
+}))<{ headerStyle: StatRowStyle }>``;
 
-const RowItem = styled.div.attrs(
-  (props) => ({
+const RowItem = styled.div.attrs((props) => ({
   className: `px-3 2xl:px-6 py-2 whitespace-nowrap text-sm w-1/4 `,
 }))``;
 

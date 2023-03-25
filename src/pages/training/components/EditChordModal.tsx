@@ -6,12 +6,17 @@ import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingSce
 import usePopover from '../../../hooks/usePopover';
 import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import { getGlobalDictionaries, setGlobalDictionaries } from '../../../store/trainingStore/actions';
+import {
+  getGlobalDictionaries,
+  setGlobalDictionaries,
+} from '../../../store/trainingStore/actions';
 import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
-import {pickerV1, pickerLite} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
-
+import {
+  pickerV1,
+  pickerLite,
+} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
 
 function EditChordsModal(): ReactElement {
   const isShowingPortal = useStoreState(
@@ -40,25 +45,26 @@ function EditChordsModal(): ReactElement {
     if (inputRef.current) inputRef.current.value = value;
   };
 
-  const phraseSeparator = " ";
-  const spaceSeparator = "_";
+  const phraseSeparator = ' ';
+  const spaceSeparator = '_';
 
   const canCloseModal =
     trainingScenario === 'LEXICAL' || trainingScenario === 'TRIGRAM';
 
   const addChord = (chord?: string) => {
-    const parts = chord?.split(phraseSeparator).map((e) => e.replaceAll(spaceSeparator, " ")) || [];
+    const parts =
+      chord
+        ?.split(phraseSeparator)
+        .map((e) => e.replaceAll(spaceSeparator, ' ')) || [];
     if (parts.length) {
-      setTempChords(
-        [...tempChords, ...parts]
-      );
+      setTempChords([...tempChords, ...parts]);
       setInputValue('');
     }
   };
 
   const clearChords = () => {
     setTempChords([]);
-  }
+  };
 
   const restoreDefaults = () => {
     setTempChords(getDefaultChordsFromChordLibrary(trainingMode));
@@ -86,12 +92,12 @@ function EditChordsModal(): ReactElement {
   };
 
   const confirmEditing = () => {
-    if (typeof trainingScenario === "string")
+    if (typeof trainingScenario === 'string')
       setGlobalDictionaries({
         ...getGlobalDictionaries(),
         [trainingScenario]: generateNewChordRecord(tempChords),
       });
-      
+
     let chordsToUse = [];
     const shouldGroupChords = trainingScenario === 'SUPERSONIC';
     if (shouldGroupChords) chordsToUse = groupIntoPairs(tempChords);
@@ -195,8 +201,8 @@ function EditChordsModal(): ReactElement {
           </div>
         </Portal>
       )}
-    </div>   
-    );
+    </div>
+  );
 }
 
 export const getDefaultChords = (trainingMode?: TrainingScenario) => {
@@ -206,11 +212,13 @@ export const getDefaultChords = (trainingMode?: TrainingScenario) => {
   } else {
     return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
   }
-}
+};
 
-export const getDefaultChordsFromChordLibrary = (trainingMode?: TrainingScenario) => {
+export const getDefaultChordsFromChordLibrary = (
+  trainingMode?: TrainingScenario,
+) => {
   return Object.keys(getChordLibraryForTrainingScenario(trainingMode) || {});
-}
+};
 
 export const stopPropagation = (
   e: React.MouseEvent<Element, MouseEvent>,
@@ -251,7 +259,8 @@ export const getChordLibraryForTrainingScenario = (
 ): Record<string, string[]> | undefined => {
   if (scenario === 'ALPHABET') return chordLibrary.letters;
   else if (scenario === 'CHORDING' && pickerV1) return chordLibrary.chords;
-  else if (scenario === 'CHORDING' && pickerLite) return chordLibrary.chordsLite;
+  else if (scenario === 'CHORDING' && pickerLite)
+    return chordLibrary.chordsLite;
   else if (scenario === 'LEXICAL') return chordLibrary.lexical;
   else if (scenario === 'TRIGRAM') return chordLibrary.trigrams;
   else if (scenario === 'LEXICOGRAPHIC') return chordLibrary.lexicographic;
