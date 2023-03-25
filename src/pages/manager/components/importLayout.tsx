@@ -57,16 +57,19 @@ async function importLayoutLibrary(e: any) {
 
 
   }
+  const delay = (delayInms) => {
+    return new Promise(resolve => setTimeout(resolve, delayInms));
+  }
+  
   export async function storeAllChanges(){
     //console.log(thisArray.replace(/(\r\n|\n|\r)/gm, ""))
     for(let i=0; i<thisArray.length; i++){
       await sendCommandString(thisArray[i].replace(/(\r\n|\n|\r)/gm, ""));
+      await delay(10);
     }
     await sendCommandString("VAR B0");
 
   }
-  await sendCommandString('VAR B0');
-}
 
   export function ImportChordLayout(): ReactElement {
     return (
