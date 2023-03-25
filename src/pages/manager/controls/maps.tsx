@@ -1612,6 +1612,15 @@ const oldAsciiKeyReplacementDictionary = {
   LH_Middle_Primary_Center: 'LH_MID_1_3D', //
   LH_Index_Center: 'LH_INDEX_3D', //
 };
+ _keyMap = _keyMap.reverse();
+  const _keyMapDefaults = [
+    
+    CHARACHORDER,
+    CHARACHORDERLITE
+  
+    ];
+    const _chordMaps: any[][] = [];
+    const _chordLayout: any[][] = []
 
 export {
   _actionMap,
