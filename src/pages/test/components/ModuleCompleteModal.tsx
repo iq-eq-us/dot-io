@@ -1,4 +1,4 @@
-import React, { useState, ReactElement } from 'react';
+import React, { useState, ReactElement, useRef } from 'react';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import { _chordMaps } from '../../../../src/pages/manager/controls/maps';
 import { downloadChordsForAllChordsModule } from '../../../../src/pages/manager/components/download';
@@ -9,7 +9,15 @@ import { generateNewChordRecordForAllChordsModule } from './EditChordModal';
 
 function ModuleCompleteModal(): ReactElement {
   const moduleNumber = useStoreState((store: any) => store.moduleNumber);
-  const trainingLevel = useStoreState((store: any) => store.trainingLevel);
+  const trainingLevel = useStoreState((store: any) => store.trainingLevel); 
+  const passwordModulModalToggle = useStoreState((store: any) => store.passwordModulModalToggle);
+  const chmTierPasswordBypass = useStoreState((store: any) => store.chmTierPasswordBypass);
+
+  const setPasswordModulModalToggle = useStoreActions((store: any) => store.setPasswordModulModalToggle,);
+  const setChmTierPasswordBypass = useStoreActions((store: any) => store.setChmTierPasswordBypass,);
+
+  
+
   const downloadModulModalToggle = useStoreState(
     (store: any) => store.downloadModulModalToggle,
   );
@@ -33,8 +41,11 @@ function ModuleCompleteModal(): ReactElement {
   );
 
   const trainingLevelIsCPM = trainingLevel == 'CPM';
+  const inputRef = useRef(null);
 
   const [value, setValue] = useState(false);
+  const [passwordErrorFlag, setPasswordErrorFlag] = useState(false);
+
 
   function LearnPageFunction(value: string) {
     const payload: any[] = [];
@@ -80,7 +91,6 @@ function ModuleCompleteModal(): ReactElement {
 
   async function downloadChords() {
     const done = await downloadChordsForAllChordsModule();
-    console.log('THis is done in downloadCHords ' + done);
     setStoredChordsRepresentation(
       generateNewChordRecordForAllChordsModule(
         JSON?.parse(localStorage.getItem('chordsReadFromDevice')),
@@ -92,6 +102,18 @@ function ModuleCompleteModal(): ReactElement {
           setDownloadModulModalToggle(!downloadModulModalToggle),
         ]
       : '';
+  }
+
+  function passwordUnlock(input) {
+
+    if(input.current.value == 'chorderclubbing0!'){
+      setChmTierPasswordBypass(true as boolean);
+      setPasswordModulModalToggle(!passwordModulModalToggle);
+      //console.log(input.current.value + ' ' + chmTierPasswordBypass)
+    } else {
+      setPasswordErrorFlag(true);
+    }
+
   }
 
   return (
@@ -162,6 +184,29 @@ function ModuleCompleteModal(): ReactElement {
             onClick={() => [setValue(true), downloadChords()]}
           >
             Download
+          </button>
+        </div>
+      ) : null}
+      {passwordModulModalToggle ? (
+        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
+          <button
+            className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818]`}
+            onClick={() => [
+              setPasswordModulModalToggle(!passwordModulModalToggle),
+            ]}
+          >
+            &times;
+          </button>
+          <p className="pt-2 m-10 font-bold mr-64">Enter the secret phrase!</p>
+          <p className={`pt-2 m-10 font-bold mr-64 text-red-500 ${
+              passwordErrorFlag == false ? `hidden` : ``
+            }`}>Wrong phrase!</p>
+          <input type="password" ref={inputRef} className='border-black border-2 ml-16 w-3/4'></input>
+          <button
+            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
+            onClick={() => [passwordUnlock(inputRef)]}
+          >
+            Unlock
           </button>
         </div>
       ) : null}

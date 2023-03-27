@@ -93,11 +93,20 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       localStorage?.getItem('chordsReadFromDevice'),
     );
   }),
+  
   setModuleCompleteModalToggle: action((state, payload) => {
     state.moduleCompleteModalToggle = payload as boolean;
   }),
   setDownloadModulModalToggle: action((state, payload) => {
     state.downloadModulModalToggle = payload as boolean;
+  }),
+  setPasswordModulModalToggle: action((state, payload) => {
+    state.passwordModulModalToggle = payload as boolean;
+  }),
+  setChmTierPasswordBypass: action((state, payload) => {
+    localStorage.setItem('chmTierPasswordBypass', JSON.stringify(true))
+    state.chmTierPasswordBypass = payload as boolean;
+
   }),
   setModuleNumber: action((state, payload) => {
     state.moduleNumber = payload as number;
