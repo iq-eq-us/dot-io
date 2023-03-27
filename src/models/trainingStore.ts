@@ -44,6 +44,9 @@ export interface TrainingStoreActionsModel {
   setStoredChordsFromDevice: Action<TrainingStoreModel, number>;
   setStoredChordsRepresentation: Action<TrainingStoreModel, ChordLibraryRecord>;
   setIsDisplayingIntroductionModal: Action<TrainingStoreModel, boolean>;
+  setPasswordModulModalToggle: Action<TrainingStoreModel, boolean>;
+  setChmTierPasswordBypass: Action<TrainingStoreModel, boolean>;
+
 
   /**
    * This action allows you to manually update the chords used in a particular training mode
@@ -118,6 +121,8 @@ export interface TrainingStoreStateModel {
   storedChordsFromDevice: string[];
   storedChordsRepresentation: ChordLibraryRecord;
   isDisplayingIntroductionModal: boolean;
+  passwordModulModalToggle: boolean;
+  chmTierPasswordBypass: boolean;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &
