@@ -73,7 +73,7 @@ const Navbar = (): ReactElement => {
     }
   }
   function triggerPasswordModal(){
-    if(chmTierPasswordBypass || !maxWPM){
+    if(!chmTierPasswordBypass || !maxWPM){
     setPasswordModulModalToggle(!passwordModulModalToggle);
     }
   }
