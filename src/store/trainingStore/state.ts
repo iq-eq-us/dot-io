@@ -37,6 +37,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   trainingLevel: 'CPM' as TrainingLevels,
   moduleCompleteModalToggle: false,
   downloadModulModalToggle: false,
+  passwordModulModalToggle: false,
   wasModuleShown: false,
   moduleNumber: 1,
   trainingStatistics: {
@@ -49,6 +50,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   storedChordsRepresentation: generateNewChordRecordForAllChordsModule(
     JSON?.parse(localStorage?.getItem('chordsReadFromDevice')),
   ),
+  chmTierPasswordBypass: JSON?.parse(localStorage?.getItem('chmTierPasswordBypass')),
   // * Computed State
   currentlyHighlightedKeys: computed((state) => {
     const highlightMode = state.characterEntryMode;

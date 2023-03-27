@@ -29,6 +29,11 @@ const Navbar = (): ReactElement => {
   const setTrainingLevel = useStoreActions(
     (store: any) => store.setTrainingLevel,
   );
+
+  const passwordModulModalToggle = useStoreState((store: any) => store.passwordModulModalToggle);
+  const setPasswordModulModalToggle = useStoreActions((store: any) => store.setPasswordModulModalToggle,);
+  const chmTierPasswordBypass = useStoreState((store: any) => store.chmTierPasswordBypass); 
+
   /* eslint-disable */
   const maxWPM = useStoreState(
     (store) =>
@@ -44,7 +49,7 @@ const Navbar = (): ReactElement => {
   const stable = true;
 
   function TrainingPageFunction(level: TrainingLevels, allowOnClick: boolean) {
-    if (allowOnClick) {
+    if (allowOnClick || chmTierPasswordBypass) {
       if (level == 'CPM') {
         const payload: any[] = [];
         payload.push('ALPHABET');
@@ -67,7 +72,11 @@ const Navbar = (): ReactElement => {
       }
     }
   }
-
+  function triggerPasswordModal(){
+    if(!chmTierPasswordBypass){
+    setPasswordModulModalToggle(!passwordModulModalToggle);
+    }
+  }
   return (
     <NavI>
       <NavbarContainer>
@@ -89,9 +98,9 @@ const Navbar = (): ReactElement => {
               onClick={() => TrainingPageFunction('CPM', true)}
             />
           </NavMenuLink>
-          <NavMenuLink aria-current="page">
-            <div className="text-white font-mono">
-              {maxWPM ? (
+          <NavMenuLink aria-current="page"  onClick={() => triggerPasswordModal()}>
+            <div className="text-white font-mono" >
+              {maxWPM || chmTierPasswordBypass ? (
                 'ChM'
               ) : (
                 <LockIconStyle>
@@ -100,7 +109,7 @@ const Navbar = (): ReactElement => {
               )}
             </div>
             <NavLinksImage
-              open={maxWPM}
+              open={chmTierPasswordBypass || maxWPM}
               src={BooksImage}
               alt=""
               onClick={() => TrainingPageFunction('CHM', maxWPM)}

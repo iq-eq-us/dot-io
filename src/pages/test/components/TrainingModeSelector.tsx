@@ -29,6 +29,9 @@ export function TrainingModeSelector(): ReactElement {
     'CPM' as TrainingLevels,
   );
 
+
+  
+
   function LearnPageFunction(value: string) {
     const payload: any[] = [];
     payload.push(value);
@@ -56,6 +59,8 @@ export function TrainingModeSelector(): ReactElement {
     beginTraining(payload);
   }
   function whatModuleSelectionToShow() {
+    const tempStoredChordStatistics: any[] = [];
+
     if (checkIfUserChangedLevels != trainingLevel) {
       setCheckIfUserChangedLevels(trainingLevel);
       setModuleNumber(1);
