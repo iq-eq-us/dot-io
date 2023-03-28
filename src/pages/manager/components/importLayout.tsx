@@ -72,6 +72,11 @@ async function importLayoutLibrary(e: any) {
   }
   function click(){
 
+      const element: HTMLElement = document.getElementById("file-input") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+      element.addEventListener('input', importLayoutLibrary);
+       console.log('Clicked')
+}
+
     const element: HTMLElement = document.getElementById("file-input") as HTMLInputElement; //.innerHTML = "status: opened serial port";
     element.addEventListener('input', importLayoutLibrary);
      console.log('Clicked')
