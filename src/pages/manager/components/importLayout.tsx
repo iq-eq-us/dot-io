@@ -70,6 +70,12 @@ async function importLayoutLibrary(e: any) {
     await sendCommandString("VAR B0");
 
   }
+  function click(){
+
+      const element: HTMLElement = document.getElementById("file-input") as HTMLInputElement; //.innerHTML = "status: opened serial port";
+      element.addEventListener('input', importLayoutLibrary);
+       console.log('Clicked')
+}
 
   export function ImportChordLayout(): ReactElement {
     return (
