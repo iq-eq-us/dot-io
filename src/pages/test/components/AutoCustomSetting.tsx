@@ -38,7 +38,7 @@ export function AutoCustomSetting(): ReactElement {
     <div>
       {Popper}
       <div
-        className="text-sm font-bold mb-1 inline-flex flex-row gap-2 items-center"
+        className="text-sm font-bold mb-1 inline-flex flex-row gap-2 items-center absolute"
         {...parentProps}
       >
         Settings Mode

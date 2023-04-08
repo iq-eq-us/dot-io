@@ -59,6 +59,12 @@ export function TextPrompt(): ReactElement {
   const allTypedText = useStoreState(
     (store: any) => store.allTypedCharactersStore,
   );
+  const trainingTestCounter = useStoreState(
+    (store: any) => store.trainingTestCounter,
+  );
+  const setTrainingTestCounter = useStoreActions(
+    (store: any) => store.setTrainingTestCounter,
+  );
   const currentTrainingScenario = useStoreState(
     (store: any) => store.currentTrainingScenario,
   );
@@ -160,13 +166,10 @@ export function TextPrompt(): ReactElement {
         const tempBestTime = Math.min(10000, heldTime);
         bestKeyTime.push(tempBestTime);
         letterPressed.push(e.key);
-        //let scanRate = Math.min(1000 / (bestKeyTime), 1000);
-        //console.log(keyDownTime.length);
 
         setBestKeyTime((bestKeyTime) => [...bestKeyTime]);
         setLetterPressed((letterPressed) => [...letterPressed]);
-        //console.log('This is the Best Time '+bestKeyTime);
-        //console.log('This is the associated letter pressed '+ wpmMethodCalculator(13));
+
       };
     }
 
@@ -515,24 +518,26 @@ export function TextPrompt(): ReactElement {
           const tempCompareValue =
             allTypedText[i + targetIndexForWhatErrorTextToShow];
           const tempTargetWord = firstLineOfTargetText[i];
-          //console.log('Colored word value '+ allTypedText[i + targetIndexForWhatErrorTextToShow] + tempCompareValue.length);
           // bevause the length og the gitdy line is larger than second we run into issues
           if (tempCompareValue != undefined) {
             tempCompareValue[t] ==
             (tempTargetWord[t] == undefined ? '' : tempTargetWord[t])
               ? coloredWordToPush.push(
-                  <span className="text-black m-0 flex">
-                    {tempTargetWord[t]}
-                  </span>,
+                  <div className="text-black whitespace-pre-wrap m-0 flex">
+                    <span >{tempTargetWord[t]}</span>
+                    
+                  </div>,
                 )
               : coloredWordToPush.push(
-                  <span className="text-red-500 m-0 flex">
+                  <div className="text-red-500 m-0 whitespace-pre-wrap flex">
+                    <span>
                     {tempTargetWord[t]}
-                  </span>,
+                    </span>
+                  </div>,
                 );
           } else {
             coloredWordToPush.push(
-              <span className="text-red m-0 flex">{tempTargetWord[t]}</span>,
+              <span className="text-red m-0 whitespace-pre-wrap flex">{tempTargetWord[t]}</span>,
             );
           }
         }
@@ -540,7 +545,8 @@ export function TextPrompt(): ReactElement {
           i,
           1,
           <React.Fragment>
-            <div className="m-0 flex">{coloredWordToPush}</div>
+            {console.log(coloredWordToPush)}
+            <div className="m-0 whitespace-pre-wrap"><span className = 'flex'>{coloredWordToPush}</span></div>
           </React.Fragment>,
         );
       } else {
@@ -624,7 +630,7 @@ export default function CharacterEntryChord({
 }): ReactElement {
   if (index === undefined || index === null)
     return (
-      <span className="text-black" key={Math.random()}>
+      <span className="text-black whitespace-pre-wrap" key={Math.random()}>
         {word}
       </span>
     );
@@ -632,13 +638,13 @@ export default function CharacterEntryChord({
   const wordSplit = word.split('');
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', color: 'gray' }}>
+    <div style={{whiteSpace:'pre-wrap', flexDirection: 'row', color: 'gray' }}>
       {wordSplit.slice(0, index).map((char) => (
-        <span className="text-black" key={Math.random()}>
+        <span className="text-black whitespace-pre-wrap" key={Math.random()}>
           {char}
         </span>
       ))}
-      <span className="text-white bg-black">{wordSplit[index]}</span>
+      <span className="text-white bg-black whitespace-pre-wrap">{wordSplit[index]}</span>
       {wordSplit.slice(index + 1).map((char) => (
         <span className="text-grey" key={Math.random()}>
           {char}
@@ -660,7 +666,7 @@ const Chord = styled.span.attrs<ChordProps>((props) => ({
 }))<ChordProps>``;
 
 const ChordRow = styled.div.attrs({
-  className: `flex flex-row gap-[1vw] justify-center w-full`,
+  className: `flex flex-row gap-[1vw] whitespace-nowrap justify-center w-full`,
 })``;
 
 const TextPromptContainer = styled.div.attrs({

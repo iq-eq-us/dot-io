@@ -8,6 +8,7 @@ export interface ChordStatistics {
   numberOfErrors: number;
   numberOfOccurrences: number;
   scenario?: TrainingScenario;
+  speedOfLastTen: Array<number>;
 }
 
 export interface ChordStatisticsFromDevice {
@@ -40,6 +41,8 @@ export const createEmptyChordStatistics = (
     numberOfErrors: 0,
     numberOfOccurrences: 0,
     scenario,
+    speedOfLastTen: [],
+    
   };
 };
 

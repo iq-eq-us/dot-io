@@ -96,12 +96,7 @@ function ModuleCompleteModal(): ReactElement {
         JSON?.parse(localStorage.getItem('chordsReadFromDevice')),
       ),
     );
-    done == true
-      ? [
-          LearnPageFunction('ALLCHORDS'),
-          setDownloadModulModalToggle(!downloadModulModalToggle),
-        ]
-      : '';
+    done == true? [LearnPageFunction('ALLCHORDS'),setDownloadModulModalToggle(false)] : '';
   }
 
   function passwordUnlock(input) {

@@ -12,6 +12,8 @@ import { PreviousTest } from './components/PreviousTests';
 import TestCompletePage from '../test-complete/testComplete';
 import ImageSlider from './components/imageSlider';
 import ModuleCompleteModal from './components/ModuleCompleteModal';
+import { oneTimeCreateStoredChordStats } from './components/TrainingModeSelector';
+import { chordLibrary } from '../../data/chordLibrary';
 
 /**
  * This is the main training page.
@@ -23,7 +25,8 @@ function TrainingTestPage(): ReactElement {
   const contrast = useContrast();
   const currentTrainingScenario = useStoreState(
     (store: any) => store.currentTriningScenario,
-  );
+  ); 
+
   const wordTestNumber = useStoreState((store: any) => store.wordTestNumber);
   useTrainingScenarioAsDocumentTitle();
   const beginTraining = useStoreActions(
@@ -45,6 +48,15 @@ function TrainingTestPage(): ReactElement {
 
   const [toggleValue, setToggleValue] = useState(true);
 
+  
+  const dictNameOfLibrary = { 
+    ALPHABET: chordLibrary.letters,
+    LEXICAL: chordLibrary.lexical,
+    ENGLISH: chordLibrary.lexical,
+    TRIGRAM: chordLibrary.trigrams,
+
+  }
+
   useEffect(() => {
     document.title = 'dot i/o';
     sessionStorage.removeItem('tempTestDeIncrement');
@@ -52,11 +64,13 @@ function TrainingTestPage(): ReactElement {
     const payload: any[] = [];
 
     if (trainingLevel == 'CPM') {
+      oneTimeCreateStoredChordStats('ALPHABET', 'CPM', dictNameOfLibrary['ALPHABET'])
       payload.push('ALPHABET');
       if (wordTestNumber != undefined) {
         payload.push(wordTestNumber);
       }
     } else if (trainingLevel == 'CHM') {
+      oneTimeCreateStoredChordStats('LEXICAL', 'CHM', dictNameOfLibrary['LEXICAL'])
       payload.push('LEXICAL');
       if (wordTestNumber != undefined) {
         payload.push(wordTestNumber);
@@ -74,7 +88,7 @@ function TrainingTestPage(): ReactElement {
             <EditChordsModal />
             <SettingsColumn />
             <CenterTrainingColumn />
-            <PreviousTest />
+            {wordTestNumber == undefined ? <PreviousTest /> : <div className="invisible"><PreviousTest /></div>}
             {isDisplayingIntroductionModal ||
             localStorage.getItem('FirstTimeViewingModal') == undefined ? (
               <div style={modal}>

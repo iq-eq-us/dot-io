@@ -51,12 +51,17 @@ function removeSessionValueAndSettoFalse() {
   pageAccessedByReload = false;
 }
 
+function hasWhiteSpace(s) {
+  return s.indexOf(' ') >= 0;
+}
+
+
 export const generateChords = (
   parameters: ChordGenerationParameters,
 ): string[] => {
   if (
     parameters.scenario == 'LEXICAL' &&
-    parameters.wordTestNumberValue != undefined
+    parameters.wordTestNumberValue != undefined 
   ) {
     const wordTestValue = parseInt(parameters.wordTestNumberValue);
     pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
@@ -198,16 +203,30 @@ export const generateChords = (
         wpmMethodCalculatorForStoredChords(a.chordsMastered) -
         wpmMethodCalculatorForStoredChords(b.chordsMastered),
     );
+//The follow code removes any duplicate words from the data set
+    const seen = new Set();
+    const newSet = chordsSortedByMastered.filter(item => {
+        const duplicate = seen.has(item.id);
+        seen.add(item.id);
+        return !duplicate;
+      });
 
-    //console.log('Should be based on speed is shown ' + numberOfChordsNotMastered);
-
-    const finalChordsToUse = chordsSortedByMastered
+    //chordsSortedByMastered = (chordsSortedByMastered.filter((item,index) => chordsSortedByMastered[index].id === item.id));
+    const finalChordsToUse = newSet
       .slice(
         0 + numberOfChordsNotMastered,
         parameters.numberOfTargetChords + numberOfChordsNotMastered,
       )
       .map((s) => s.id);
+        //In here I need to add a break in phrases if the're are phrases 
+        //for(let i=0;i<finalChordsToUse.length-1; i++){
+        //  let tempVariable;
+        //  if(hasWhiteSpace(finalChordsToUse[i])){
+        //    tempVariable = finalChordsToUse[i].replace(/\s/g, '_');
+        //    finalChordsToUse[i] = tempVariable;
 
+      //  }
+     // }
     while (allCharacters.join('').length < parameters.lineLength) {
       const shouldChooseBasedOnSpeed =
         parameters.recursionRate > Math.random() * 100;

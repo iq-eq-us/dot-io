@@ -46,6 +46,10 @@ export interface TrainingStoreActionsModel {
   setIsDisplayingIntroductionModal: Action<TrainingStoreModel, boolean>;
   setPasswordModulModalToggle: Action<TrainingStoreModel, boolean>;
   setChmTierPasswordBypass: Action<TrainingStoreModel, boolean>;
+  setNumberOfWordsTypedCorrectly: Action<TrainingStoreActionsModel, number>;
+  setTrainingTestCounter: Action<TrainingStoreActionsModel, number>;
+  setNumberOfErrorsArray: Action<TrainingStoreActionsModel, number[]>;
+
 
 
   /**
@@ -118,11 +122,15 @@ export interface TrainingStoreStateModel {
   wasModuleShown: boolean;
   moduleNumber: number;
   testTeirHighestWPM: number;
-  storedChordsFromDevice: string[];
+  storedChordsFromDevice: TrainingStatistics;
   storedChordsRepresentation: ChordLibraryRecord;
   isDisplayingIntroductionModal: boolean;
   passwordModulModalToggle: boolean;
   chmTierPasswordBypass: boolean;
+  storedChordStatistics: TrainingStatistics;
+  trainingTestCounter : number;
+  numberOfWordsTypedCorrectly: number;
+  numberOfErrorsArrayForTestMode: number[];
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

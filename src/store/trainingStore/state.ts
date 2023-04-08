@@ -18,6 +18,16 @@ import { generateNewChordRecordForAllChordsModule } from '../../pages/test/compo
  *
  * This state is only modified by the actions in the ./actions.ts folder.
  */
+async function removeDups(arr) {
+  const seen = new Set();
+  const newSet = arr?.statistics?.filter(item => {
+      const duplicate = seen.has(item.id);
+      seen.add(item.id);
+      return !duplicate;
+    });
+    console.log(newSet)
+    return newSet as TrainingStoreStateModel;
+}
 const trainingStoreState: TrainingStoreStateModel = {
   // * State
   typedTrainingText: '',
@@ -40,6 +50,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   passwordModulModalToggle: false,
   wasModuleShown: false,
   moduleNumber: 1,
+  numberOfWordsTypedCorrectly:0,
   trainingStatistics: {
     statistics: [],
   },
@@ -47,9 +58,11 @@ const trainingStoreState: TrainingStoreStateModel = {
   timeAtTrainingStart: 0,
   numberOfChordsForTrainingLevel: 0,
   testTeirHighestWPM: 0,
-  storedChordsRepresentation: generateNewChordRecordForAllChordsModule(
+  storedChordsRepresentation: removeDups(generateNewChordRecordForAllChordsModule(
     JSON?.parse(localStorage?.getItem('chordsReadFromDevice')),
-  ),
+  )),
+  numberOfErrorsArrayForTestMode: [],
+
   chmTierPasswordBypass: JSON?.parse(localStorage?.getItem('chmTierPasswordBypass')),
   // * Computed State
   currentlyHighlightedKeys: computed((state) => {

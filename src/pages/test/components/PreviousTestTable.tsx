@@ -57,7 +57,26 @@ function StatisticsTable(): ReactElement {
   const totalNumberOfWordsTyped = stats.filter(
     (s) => s.numberOfOccurrences >= 0,
   ).length;
-
+  function removeDups(arr) {
+    const seen = new Set();
+    const newSet = arr?.statistics.filter(item => {
+        const duplicate = seen.has(item.id);
+        seen.add(item.id);
+        return !duplicate;
+      });
+      //console.log({statistics : newSet});
+      return {statistics : newSet as ChordStatisticsFromDevice[]};  
+    }
+   function cs(arr){
+    const seen = new Set();
+    const newSet = arr?.statistics.filter(item => {
+        const duplicate = seen.has(item.id);
+        seen.add(item.id);
+        return !duplicate;
+      });
+      //console.log({statistics : newSet});
+      return {statistics : newSet as ChordStatisticsFromDevice[]};
+  }
   const sortBetween = (arr = [], start, end) => {
     if (numberOfChordsConquered > totalNumberOfWordsTyped - 1) {
       stats.sort((a, b) => b.averageSpeed - a.averageSpeed);
@@ -67,9 +86,11 @@ function StatisticsTable(): ReactElement {
       part.reverse();
       arr.splice(start, 0, ...part);
     }
-  };
+    
+    };
+  const newGG = removeDups(inStoredChordsFromDevice);
+  console.log('This is gg '+ newGG);
   sortBetween(stats, 0, numberOfWordsTyped);
-
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
 
   return (
@@ -85,7 +106,7 @@ function StatisticsTable(): ReactElement {
           isRecursionEnabled: trainingSettings.autoOrCustom === 'AUTO',
           displayHUD: true,
           trainingLevel: inTrainingLevel,
-          storedChordsFromDevice: inStoredChordsFromDevice,
+          storedChordsFromDevice: newGG,
           trainingScenario: inTrainingScenario,
         }}
         style={{ borderRadius: 8 }}

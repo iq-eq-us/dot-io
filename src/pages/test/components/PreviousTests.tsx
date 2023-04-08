@@ -26,7 +26,6 @@ export function PreviousTest(): ReactElement {
   const isDisplayingStatisticsModal = useStoreState(
     (store: any) => store.isDisplayingStatisticsModal,
   );
-
   // If the screen size changes from a small size to a large size, show this column
   // If the screen size changes from a large size to a small size, make sure this column is hidden (until the user presses the button to open it again)
 
@@ -58,12 +57,14 @@ export function PreviousTest(): ReactElement {
     });
   };
   const currentTrainingMode = useCurrentTrainingScenario();
+  const wordTestNumber = useStoreState((store: any) => store.wordTestNumber == undefined);
 
   return (
     <React.Fragment>
       <StatisticsColumnContainer
         onClick={onClickOutside}
         isDisplayingModal={isDisplayingStatisticsModal}
+        isTestTier={wordTestNumber}
       >
         <PreviousTestTableContainer transitionTransform={transitionTransform}>
           <Row>
