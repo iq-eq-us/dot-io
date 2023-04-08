@@ -30,17 +30,7 @@ export function TrainingModeSelector(): ReactElement {
   const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState(
     'CPM' as TrainingLevels,
   );
-
-
-  let dictNameOfLibrary = { 
-    ALPHABET: chordLibrary.letters,
-    LEXICAL: chordLibrary.lexical,
-    ENGLISH: chordLibrary.lexical,
-    TRIGRAM: chordLibrary.trigrams,
-
-  }
-
-
+  
    async function LearnPageFunction(value: any, tier : TrainingLevels) {      
     
     const payload: any[] = [];
