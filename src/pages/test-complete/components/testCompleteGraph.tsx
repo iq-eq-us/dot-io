@@ -177,18 +177,12 @@ function wpmDataCalculator(wpmArray: any) {
   let wpmTemp = 0;
   let localTemp = 0;
   let iterator = 1;
-  //console.log(wpmArray)
   for (let i = 0; i < wpmArray.length; i++) {
     localTemp = 0;
     wpmTemp = wpmTemp + wpmArray[i];
 
     i == 0 ? (localTemp = wpmTemp) : (localTemp = wpmTemp / iterator);
 
-    console.log('wpmTemp in the new function ' + wpmTemp);
-    console.log('localTemp in the new function ' + localTemp);
-    console.log(
-      'this is the first loop for wpmArray in the new function ' + wpmArray,
-    );
 
     const avgSpeedMilliseconds = localTemp * 10;
     const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
@@ -196,7 +190,6 @@ function wpmDataCalculator(wpmArray: any) {
     const wpm = averageCharacterPerMin;
 
     wpmArray[i] = wpm.toFixed(0);
-    //console.log('WPM in the new function '+ wpm.toFixed(0));
 
     iterator++;
   }
@@ -212,7 +205,9 @@ export function TestCompleteGraph(): ReactElement {
   const storedTestTextData = useStoreState((store) => store.storedTestTextData);
   const testTeirHighestWPM = useStoreActions(
     (store) => store.setTestTeirHighestWPM,
-  );
+  ); 
+  const numberOfErrorsArrayForTestMode = useStoreState((store) => store.numberOfErrorsArrayForTestMode);
+
 
   let wordNames: any = [];
   let wordOccurrences: any = [];
@@ -224,8 +219,6 @@ export function TestCompleteGraph(): ReactElement {
   );
   currentTrainingSetting.statistics.forEach((d: any) => {
     if (d.displayTitle.length * d.numberOfOccurrences != 0) {
-      //tempConst += d.averageSpeed;
-      //console.log('This is the stored test words '+storedTestTextData);
       wordNames.push(d.displayTitle);
       wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
 
@@ -236,7 +229,6 @@ export function TestCompleteGraph(): ReactElement {
 
       wordPerMinute.push(d.averageSpeed);
       rawSpeedOfCurrentWord.push(wpm.toFixed(0));
-      //console.log('This is the averageSpeed WPM '+ wpm);
     }
   });
 
@@ -245,9 +237,6 @@ export function TestCompleteGraph(): ReactElement {
   const finalRawWPM = [];
 
   if (currentTrainingScenario == 'CUSTOMTIER') {
-    console.log(
-      'Only entered if this is custom tier ' + currentTrainingScenario,
-    );
     for (let i = 0; i < chordsToChooseFrom?.length; i++) {
       finalErrorsArray.push(
         wordOccurrences[wordNames.indexOf(chordsToChooseFrom[i])],
@@ -289,21 +278,18 @@ export function TestCompleteGraph(): ReactElement {
         finalRawWPM.splice(0, 0, 0);
       }
     }
-    finalErrorsArray.shift();
-    wordOccurrences = finalErrorsArray;
+    //finalErrorsArray.shift();
+    wordOccurrences = numberOfErrorsArrayForTestMode;
     finalWPMArray.shift();
     wordPerMinute = wpmDataCalculator(finalWPMArray);
 
     //storedTestTextData.shift(); TStored test text data does not need to be shifted
     wordNames = storedTestTextData;
-    console.log(wordNames);
+    wordNames.shift();
     finalRawWPM.shift();
     rawSpeedOfCurrentWord = finalRawWPM;
-    //console.log('this is the raw speed '+rawSpeedOfCurrentWord);
+    wordOccurrences.shift();
 
-    console.log(wordPerMinute);
-    console.log(wordNames);
-    console.log(rawSpeedOfCurrentWord);
   }
 
   const handleEvent = () => {

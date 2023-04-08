@@ -6,6 +6,8 @@ import type { TrainingLevels } from 'src/models/trainingLevels';
 import { connectDeviceAndPopUp } from '../../../../src/pages/manager/components/connect';
 import { getId } from '../../../../src/pages/manager/components/getID';
 import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
+import { createEmptyChordStatistics } from '../../../models/trainingStatistics';
+import { chordLibrary } from '../../../data/chordLibrary';
 
 export function TrainingModeSelector(): ReactElement {
   const beginTraining = useStoreActions(
@@ -30,14 +32,23 @@ export function TrainingModeSelector(): ReactElement {
   );
 
 
-  
+  let dictNameOfLibrary = { 
+    ALPHABET: chordLibrary.letters,
+    LEXICAL: chordLibrary.lexical,
+    ENGLISH: chordLibrary.lexical,
+    TRIGRAM: chordLibrary.trigrams,
 
-  function LearnPageFunction(value: string) {
+  }
+
+
+   async function LearnPageFunction(value: any, tier : TrainingLevels) {      
+    
     const payload: any[] = [];
     payload.push(value);
     sessionStorage.removeItem('tempTestDeIncrement');
     beginTraining(payload);
-  }
+  
+}
   function allChords() {
     const doesLibrayExist = localStorage.getItem('chordsReadFromDevice');
     const id = getId();
@@ -45,9 +56,10 @@ export function TrainingModeSelector(): ReactElement {
       connectDeviceAndPopUp();
       setDownloadModulModalToggle(true as boolean);
     } else {
-      LearnPageFunction('ALLCHORDS');
+      LearnPageFunction('ALLCHORDS', trainingLevel);
     }
   }
+
   function TestPageFunction(value: string, testLength: any) {
     const payload: any[] = [];
     payload.push(value);
@@ -72,7 +84,7 @@ export function TrainingModeSelector(): ReactElement {
             {...(moduleNumber == 1
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
-            onClick={() => [LearnPageFunction('ALPHABET'), setModuleNumber(1)]}
+            onClick={() => [LearnPageFunction('ALPHABET', trainingLevel), setModuleNumber(1)]}
           >
             Letters
           </button>
@@ -82,7 +94,7 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
-              LearnPageFunction('TRIGRAM'),
+              LearnPageFunction('TRIGRAM', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
               setModuleNumber(2),
             ]}
@@ -95,7 +107,7 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
-              LearnPageFunction('LEXICAL'),
+              LearnPageFunction('LEXICAL', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
               setModuleNumber(3),
             ]}
@@ -125,7 +137,7 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
-              LearnPageFunction('LEXICAL'),
+              LearnPageFunction('LEXICAL', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
               setModuleNumber(1),
             ]}
@@ -151,7 +163,7 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
-              LearnPageFunction('LEXICOGRAPHIC'),
+              LearnPageFunction('LEXICOGRAPHIC', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
               setModuleNumber(3),
             ]}
@@ -169,6 +181,20 @@ export function TrainingModeSelector(): ReactElement {
   );
 }
 
+export  async function oneTimeCreateStoredChordStats(value: any, tier : any, library){
+  const check = localStorage?.getItem(tier+ '_'+value);
+  console.log('this is the check '+ tier+ '_'+value)
+    if(check == null || undefined) {
+  const storedChordStatArray = []
+  for(let i = 0; i < Object.keys(library).length; i++){
+    storedChordStatArray.push(createEmptyChordStatistics(Object.keys(library)[i], value));
+  }
+  localStorage.setItem(
+    tier+ '_'+value,
+    JSON.stringify({statistics: storedChordStatArray}),
+  );  console.log(storedChordStatArray)
+}
+}
 const ItemsContainer = styled.div`
   height: 50px;
   display: flex;

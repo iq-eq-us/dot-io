@@ -22,11 +22,11 @@ export function TestStatsCard(): ReactElement {
   const storedTestTextData = useStoreState((store) => store.storedTestTextData);
   const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
   const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM);
+  const numberOfWordsTypedCorrectly = useStoreState((store) => store.numberOfWordsTypedCorrectly);
 
   const payload = [];
   let thisVal = 0;
   let sumOccurrences = 0;
-  const oo = [];
   const numberOfWordsChorded = useStoreState(
     (state: any) => state.numberOfWordsChorded,
   );
@@ -36,14 +36,9 @@ export function TestStatsCard(): ReactElement {
   currentTrainingSetting.statistics.forEach((d) => {
     thisVal += d.numberOfErrors;
     sumOccurrences += d.displayTitle.length * d.numberOfOccurrences;
-    console.log(d.displayTitle.length * d.numberOfOccurrences);
+    //console.log(d.displayTitle.length * d.numberOfOccurrences);
   });
-  let wordsCorrectCount = 0;
-  for (let i = 0; i < storedTestTextData.length; i++) {
-    if (storedTestTextData[i] == alltypedText[i]?.slice(0, -1)) {
-      wordsCorrectCount++;
-    }
-  }
+ 
 
   return (
     <React.Fragment>
@@ -58,8 +53,7 @@ export function TestStatsCard(): ReactElement {
         </StatsCardContainer>
         <StatsCardContainer>
           <div className="text-4xl">
-            {((wordsCorrectCount / parseInt(testNumber)) * 100).toFixed(2) +
-              '%'}
+            {(numberOfWordsTypedCorrectly/parseInt(testNumber) * 100).toFixed(2)+ '%'}
           </div>
           <h1 className="text-lg">Typing Accuracy</h1>
         </StatsCardContainer>
@@ -67,7 +61,6 @@ export function TestStatsCard(): ReactElement {
           <div className="text-4xl">
             {(numberOfWordsChorded.toFixed(0) / 25) * 100 + '%'}
           </div>
-          {console.log('Number of words chorded ' + numberOfWordsChorded)}
           <h1 className="text-lg">Percent Chorded</h1>
         </StatsCardContainer>
       </TrainingStatsColumnContainer>
@@ -75,7 +68,7 @@ export function TestStatsCard(): ReactElement {
         className="items-center absolute text-lg text-red-500 ml-16 mt-2"
         style={
           parseInt(
-            ((wordsCorrectCount / parseInt(testNumber)) * 100).toFixed(2),
+            ((numberOfWordsTypedCorrectly / parseInt(testNumber)) * 100).toFixed(2),
           ) < 95 || (numberOfWordsChorded.toFixed(0) / 25) * 100 > 5
             ? { display: '' }
             : { display: 'none' }

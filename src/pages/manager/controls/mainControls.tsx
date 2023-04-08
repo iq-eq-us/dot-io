@@ -1279,6 +1279,25 @@ export const asyncCallWithTimeout = async (
   });
 };
 
+export const asyncCallForDownloadChords = async (
+  asyncPromise,
+  timeLimit,
+) => {
+  let timeoutHandle;
+
+  const timeoutPromise = new Promise((_resolve, reject) => {
+    timeoutHandle = setTimeout(
+      () => _resolve(asyncPromise),
+      timeLimit,
+    );
+  });
+
+  return Promise.race([asyncPromise, timeoutPromise]).then((result) => {
+    clearTimeout(timeoutHandle);
+    return result;
+  });
+};
+
 export async function clickCommit(virtualId) {
   const check: HTMLInputElement = document.getElementById(
     virtualId.toString() + '-delete',

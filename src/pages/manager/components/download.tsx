@@ -17,6 +17,7 @@ import {
   MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   TrainingStatistics,
 } from '../../../models/trainingStatistics';
+import { asyncCallForDownloadChords } from '../controls/mainControls';
 
 export async function getGetAll() {
   resetDataTable();
@@ -40,6 +41,15 @@ export async function getGetAll() {
   }
 }
 
+const wontTimeout = async (func) => {
+  try {
+    const { data } = await asyncCallForDownloadChords(func, 10000);
+    //console.log(data);
+  } catch (err) {
+    await asyncCallForDownloadChords(func, 10000);
+  }
+};
+
 export async function downloadChordsForAllChordsModule() {
   //resetDataTable();
   //await selectBase(); //select BASE
@@ -59,7 +69,11 @@ export async function downloadChordsForAllChordsModule() {
   for (let i = 0; i < chordCountParsedValue; i++) {
     console.log(MainControls._chordmapCountOnDevice);
     //wait sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
-    await sendCommandString('CML C1 ' + i);
+
+
+    
+   // await sendCommandString('CML C1 ' + i);
+    await wontTimeout(sendCommandString('CML C1 ' + i), i)
     //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
 
     //console.log("MapID");

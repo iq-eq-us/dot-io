@@ -35,6 +35,8 @@ const AggregateRow = ({ data }: { data: any }) => {
   const setIsDisplaying = useStoreActions(
     (store) => store.setIsDisplayingTestComplete,
   );
+  const trainingTestCounter = useStoreState((store) => store.trainingTestCounter);
+
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
   const currentTrainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
@@ -83,9 +85,10 @@ const AggregateRow = ({ data }: { data: any }) => {
         //Method will send the test values to local storage
       }
     } else if (
-      sumOccurrences + 1 >= parseInt(count) &&
+      trainingTestCounter >= parseInt(count) &&
       wordTestNumber != undefined
     ) {
+      console.log('Did this trigger correctly '+ trainingTestCounter)
       setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
       setPopUpDisplayValue(true);
       //Method will send the test values to local storage

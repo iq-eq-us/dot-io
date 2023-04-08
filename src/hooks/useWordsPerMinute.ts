@@ -26,6 +26,10 @@ export const useWordsPerMinute = (): number => {
     (store) => store.fastestRecordedWordsPerMinute,
   );
 
+  const numberOfWordsTypedCorrectly = useStoreState(
+    (store) => store.numberOfWordsTypedCorrectly,
+  );
+
   const testNumber = useStoreState((store) => store.wordTestNumber);
 
   const setFastestWPM = useStoreActions(
@@ -44,12 +48,7 @@ export const useWordsPerMinute = (): number => {
 
   const timeAtTrainingStartInSeconds = timeAtTrainingStart * 0.001;
 
-  let wordsCorrectCount = 0;
-  for (let i = 0; i < storedTestTextData.length; i++) {
-    if (storedTestTextData[i] == alltypedText[i]?.slice(0, -1)) {
-      wordsCorrectCount++;
-    }
-  }
+
   const timeNowInSeconds = performance.now() * 0.001;
   const timeNowInMilli = timeNowInSeconds * 1000;
   const timeDifferenceInSeconds =
@@ -135,13 +134,12 @@ export const useWordsPerMinute = (): number => {
         }
       }
       if (isTrainingTestDone) {
-        //((wordsCorrectCount/parseInt(testNumber))*100)
         const currentDate = new Date();
 
         const testNum = parseInt(testNumber);
         if (
           6 > (numberOfWordsChorded.toFixed(0) / 25) * 100 &&
-          (wordsCorrectCount / testNum) * 100 >= 95 &&
+          (numberOfWordsTypedCorrectly / testNum) * 100 >= 95 &&
           testTeirHighestWPM > fastestRecordedWPM[trainingScenario]
         ) {
           console.log(
