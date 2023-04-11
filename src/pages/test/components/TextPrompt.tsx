@@ -545,7 +545,6 @@ export function TextPrompt(): ReactElement {
           i,
           1,
           <React.Fragment>
-            {console.log(coloredWordToPush)}
             <div className="m-0 whitespace-pre-wrap"><span className = 'flex'>{coloredWordToPush}</span></div>
           </React.Fragment>,
         );

@@ -87,7 +87,6 @@ function ChordTextInput(): ReactElement {
                     'timeThat',
                     JSON.stringify(performance.now()),
                   ),
-                  console.log('first typed sexy ' + userIsTypingFirstChord),
                 ]
               : '';
           } // This here logs the time that the first letter was pressed and sets the state variable to false

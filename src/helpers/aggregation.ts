@@ -72,7 +72,6 @@ export const wpmMethodCalculatorForStoredChords = (value: number[]) => {
 export const avgCalculatorForTheSpeedOfLastTen = (value: number[]) => {
   const sum = value?.reduce((a, b) => a + b, 0);
   const avg = sum / value?.length || 0;
-console.log('this is the average '+ avg);
   return avg;
 };
 
