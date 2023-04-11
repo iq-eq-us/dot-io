@@ -8,6 +8,7 @@ import { getId } from '../../../../src/pages/manager/components/getID';
 import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 import { createEmptyChordStatistics } from '../../../models/trainingStatistics';
 import { chordLibrary } from '../../../data/chordLibrary';
+import EditChordsModal from './EditChordModal';
 
 export function TrainingModeSelector(): ReactElement {
   const beginTraining = useStoreActions(
@@ -173,7 +174,6 @@ export function TrainingModeSelector(): ReactElement {
 
 export  async function oneTimeCreateStoredChordStats(value: any, tier : any, library){
   const check = localStorage?.getItem(tier+ '_'+value);
-  console.log('this is the check '+ tier+ '_'+value)
     if(check == null || undefined) {
   const storedChordStatArray = []
   for(let i = 0; i < Object.keys(library).length; i++){
@@ -182,7 +182,7 @@ export  async function oneTimeCreateStoredChordStats(value: any, tier : any, lib
   localStorage.setItem(
     tier+ '_'+value,
     JSON.stringify({statistics: storedChordStatArray}),
-  );  console.log(storedChordStatArray)
+  ); 
 }
 }
 const ItemsContainer = styled.div`

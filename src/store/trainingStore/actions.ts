@@ -37,6 +37,8 @@ const dictNameOfLibrary = {
   LEXICAL: chordLibrary.lexical,
   ENGLISH: chordLibrary.lexical,
   TRIGRAM: chordLibrary.trigrams,
+  SUPERSONIC: chordLibrary.supersonic,
+  LEXICOGRAPHIC: chordLibrary.lexicographic,
 
 }
 let globalDictionaries: Record<
@@ -142,7 +144,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.storedChordsFromDevice = JSON?.parse(
       localStorage?.getItem('chordsReadFromDevice'),
     );
-    if(state.currentTrainingScenario != 'ALLCHORDS')
+    if(state.currentTrainingScenario != 'ALLCHORDS' || 'LEXICOGRAPHIC')
     oneTimeCreateStoredChordStats(state.currentTrainingScenario, state.trainingLevel ,dictNameOfLibrary[state.currentTrainingScenario])
     //This data set is created in the TrainingModeSelector.tsx 
     state.storedChordStatistics = JSON?.parse(

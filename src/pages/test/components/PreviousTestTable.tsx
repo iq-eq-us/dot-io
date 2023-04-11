@@ -89,7 +89,6 @@ function StatisticsTable(): ReactElement {
     
     };
   const newGG = removeDups(inStoredChordsFromDevice);
-  console.log('This is gg '+ newGG);
   sortBetween(stats, 0, numberOfWordsTyped);
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
 
@@ -184,10 +183,6 @@ function returnStatisticsColumnContent(data: Data, index: number) {
     itemFromStoredChords?.chordsMastered,
   );
   const tier = data.trainingLevel;
-  console.log(
-    'Previous table chord stats ' +
-      data?.storedChordsFromDevice?.statstics?.[index - LIST_LENGTH_OFFSET],
-  );
   const lastTypedSpeed = wpmMethodCalculator(itemFromStoredChords?.lastSpeed);
   if (
     tier == 'CHM' &&
@@ -316,7 +311,6 @@ const Header = ({ data }: { data: Data }) => {
 };
 
 function returnHeader(tier: string) {
-  console.log('this is the tier ' + tier);
   if (tier == 'CHM') {
     return (
       <React.Fragment>
