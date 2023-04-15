@@ -626,7 +626,7 @@ console.log('User is backspacing '+ store.userIsEditingPreviousWord + store.stor
   if (store.currentTrainingScenario != 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) { // Also need to add a check to see if the word is correct
     chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors -1;
   }
-  
+
   if (store.currentTrainingScenario == 'ALLCHORDS' && !userIsTypingFirstChord) {
     if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord) {
       chordStatsFromDevice.numberOfErrors++;
@@ -697,6 +697,7 @@ console.log('User is backspacing '+ store.userIsEditingPreviousWord + store.stor
             : e,
       ),
     };
+    const value = store.storedChordsFromDevice
     window.addEventListener(
       'beforeunload',
       function () {
@@ -704,7 +705,7 @@ console.log('User is backspacing '+ store.userIsEditingPreviousWord + store.stor
         const x = 500;
         const a = new Date().getTime() + x;
 
-        localStorage.setItem('chordsReadFromDevice', JSON.stringify(store.storedChordsFromDevice)); //Store downloaded chords in local storage
+        localStorage.setItem('chordsReadFromDevice', JSON.stringify(value)); //Store downloaded chords in local storage
 
         // browser will hold with unloading your page for X miliseconds, letting
         // your localStorage call to finish
