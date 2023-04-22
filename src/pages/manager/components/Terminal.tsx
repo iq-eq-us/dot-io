@@ -38,12 +38,14 @@ export function Terminal(): ReactElement {
   <CardColumn>
     <TerminalContainer>
       <TerminalHeader>Serial Terminal</TerminalHeader>
-     <TerminalHistoryContainer>   
-          {serialApiRequests.map((allProps, i) => (
+     <TerminalHistoryContainer
+       key={Math.random()}
+     >   
+          {serialApiRequests.map((allProps) => (
           <TerminalItem
           >{...allProps} </TerminalItem>
               ))}
-              {serialApiResponses.map((props, i) => (
+              {serialApiResponses.map((props) => (
           <TerminalItem
           >{...props} </TerminalItem>
               ))}
