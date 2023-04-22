@@ -30,8 +30,6 @@ export interface ManagerStoreActions {
 
 }
 
-export interface ManagerStoreThunks { 
-}
 
 
-export type ManagerStore = ManagerStoreState & ManagerStoreActions & ManagerStoreThunks;
+export type ManagerStore = ManagerStoreState & ManagerStoreActions;

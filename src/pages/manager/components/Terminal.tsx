@@ -41,7 +41,6 @@ export function Terminal(): ReactElement {
      <TerminalHistoryContainer>   
           {serialApiRequests.map((allProps) => (
           <TerminalItem
-          key={Math.random()}
           >{`>` +' '+allProps} </TerminalItem>
               ))}
               {serialApiResponses.map((props) => (
