@@ -39,13 +39,13 @@ export function Terminal(): ReactElement {
     <TerminalContainer>
       <TerminalHeader>Serial Terminal</TerminalHeader>
      <TerminalHistoryContainer>   
-          {serialApiRequests.map((allProps) => (
+          {serialApiRequests.map((allProps, i) => (
           <TerminalItem
-          >{`>` +' '+allProps} </TerminalItem>
+          >{...allProps} </TerminalItem>
               ))}
-              {serialApiResponses.map((props) => (
+              {serialApiResponses.map((props, i) => (
           <TerminalItem
-          >{`>` + props} </TerminalItem>
+          >{...props} </TerminalItem>
               ))}
               </TerminalHistoryContainer>
               <InputAndButtonRow>
