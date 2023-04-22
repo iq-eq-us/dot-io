@@ -43,10 +43,12 @@ export function Terminal(): ReactElement {
      >   
           {serialApiRequests.map((allProps) => (
           <TerminalItem
+          key={Math.random()}
           >{...allProps} </TerminalItem>
               ))}
               {serialApiResponses.map((props) => (
           <TerminalItem
+          key={Math.random()}
           >{...props} </TerminalItem>
               ))}
               </TerminalHistoryContainer>
