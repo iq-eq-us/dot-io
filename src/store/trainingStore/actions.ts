@@ -32,6 +32,7 @@ import { avgCalculatorForTheSpeedOfLastTen } from '../../helpers/aggregation';
 
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
+
 const dictNameOfLibrary = { 
   ALPHABET: chordLibrary.letters,
   LEXICAL: chordLibrary.lexical,
@@ -39,8 +40,8 @@ const dictNameOfLibrary = {
   TRIGRAM: chordLibrary.trigrams,
   SUPERSONIC: chordLibrary.supersonic,
   LEXICOGRAPHIC: chordLibrary.lexicographic,
-
 }
+
 let globalDictionaries: Record<
   TrainingScenario,
   ChordLibraryRecord | undefined
@@ -510,7 +511,9 @@ export async function calculateStatisticsForTargetChord(
   const couldFindChordInLibrary = !!chordStats;
   if (!couldFindChordInLibrary) chordStats = emptyChordStats;
 
-  if (store.errorOccurredWhileAttemptingToTypeTargetChord) {
+  //This if state increments the error stat if a user types a word inccorectly 
+  //But if the user got a word wrong and went back to correct and the correction was incorrect we do not add another error to the stat
+  if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord) {
     chordStats.numberOfErrors++;
   }
 
@@ -588,6 +591,16 @@ export async function calculateStatisticsForTargetChord(
     ? chordStats.numberOfOccurrences++
     : '';
   }
+console.log('User is backspacing '+ store.userIsEditingPreviousWord + store.storedTestTextData[store?.allTypedCharactersStore.length-1] + store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1))
+  if (store.currentTrainingScenario != 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) { // Also need to add a check to see if the word is correct
+    chordStats.numberOfErrors = chordStats.numberOfErrors -1;
+    console.log('User is backspacing in the if statement'+ store.userIsEditingPreviousWord)
+
+  } else if (store.currentTrainingScenario == 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]) { // Also need to add a check to see if the word is correct
+
+    chordStats.numberOfErrors = chordStats.numberOfErrors -1;
+    console.log('User is backspacing in the if statement'+ store.userIsEditingPreviousWord)
+  }
 
   if (couldFindChordInLibrary) {
     // Replace chord stats object in chord stats list
@@ -611,8 +624,12 @@ export async function calculateStatisticsForTargetChord(
     (c: ChordStatisticsFromDevice) => c.id === id,
   ) as ChordStatisticsFromDevice;
 
+  if (store.currentTrainingScenario != 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) { // Also need to add a check to see if the word is correct
+    chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors -1;
+  }
+
   if (store.currentTrainingScenario == 'ALLCHORDS' && !userIsTypingFirstChord) {
-    if (store.errorOccurredWhileAttemptingToTypeTargetChord) {
+    if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord) {
       chordStatsFromDevice.numberOfErrors++;
     }
 
@@ -681,7 +698,7 @@ export async function calculateStatisticsForTargetChord(
             : e,
       ),
     };
-    const val = store.storedChordsFromDevice;
+    const value = store.storedChordsFromDevice
     window.addEventListener(
       'beforeunload',
       function () {
@@ -689,7 +706,7 @@ export async function calculateStatisticsForTargetChord(
         const x = 500;
         const a = new Date().getTime() + x;
 
-        localStorage.setItem('chordsReadFromDevice', JSON.stringify(val)); //Store downloaded chords in local storage
+        localStorage.setItem('chordsReadFromDevice', JSON.stringify(value)); //Store downloaded chords in local storage
 
         // browser will hold with unloading your page for X miliseconds, letting
         // your localStorage call to finish
@@ -699,6 +716,7 @@ export async function calculateStatisticsForTargetChord(
       },
       false,
     );
+
   }
 }
 
@@ -756,6 +774,7 @@ function generateTestTrainingData(
   }
   return fullTestData;
 }
+
 
 function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
   const lineLength =

@@ -315,13 +315,13 @@ function returnHeader(tier: string) {
     return (
       <React.Fragment>
         <HeaderItemRow helpText="The type of test associated with these metrics."></HeaderItemRow>
-        <HeaderItemRow helpText="Your WPM for this test.">
+        <HeaderItemRow helpText="Your typing accuracy for this teir is representative of your typing accuracy all time for a given word.">
           Accuracy
         </HeaderItemRow>
-        <HeaderItemRow helpText="Your Average WPM for this test.">
+        <HeaderItemRow helpText="Your Average WPM for this test is based or your last 10 attempts at the given word.">
           aWPM
         </HeaderItemRow>
-        <HeaderItemRow helpText="Your highest WPM for a word typed during this test.">
+        <HeaderItemRow helpText="Your CHM for this test this is based on your last 10 attempts at the given word.">
           ChM
         </HeaderItemRow>
       </React.Fragment>

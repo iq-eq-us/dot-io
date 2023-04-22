@@ -3,6 +3,7 @@ import type { CompleteStoreModel } from '../models/storeModel';
 import { TrainingStorageStore } from './statisticsStorageStore';
 import { TrainingStore } from './trainingStore';
 import { GlobalStorageStore } from './globalPersistantStore';
+import { ManagerStorageStore } from './managerStorageStore';
 /**
  * This is the main application store.
  * It contains all global state for the entire application.
@@ -14,6 +15,7 @@ export const defaultStoreState: CompleteStoreModel = {
   ...TrainingStorageStore,
   ...TrainingStore,
   ...GlobalStorageStore,
+  ...ManagerStorageStore,
 };
 
 const store = createStore<CompleteStoreModel>(defaultStoreState);

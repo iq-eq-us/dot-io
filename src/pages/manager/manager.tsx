@@ -15,15 +15,19 @@ import { ImportChordLayout } from './components/importLayout';
 import { ExportChordLayout } from './components/exportLayout';
 import { AddLayoutHeaders } from './components/addHeadersLayout';
 import { CommitAllLayoutChanges } from './components/commitAllLayouts';
-import { UpgradeFunction } from './components/upgradeFunction';
+import { ChordMapColumn } from './components/ChordMapCardColumn';
+import { ChordLayoutColumn } from './components/ChordLayoutCardColumn';
+import { Terminal } from './components/Terminal';
 
 import {
   ManagerPageContainer,
   Table,
+  RightTable,
   ChordContainer,
   PageContainer,
   TopSectionContainer,
 } from '../manager/manager.styled';
+import { ChordMapCard } from './components/ChordMapCard';
 
 const Manager = (): ReactElement => {
   React.useEffect(() => {
@@ -35,18 +39,20 @@ const Manager = (): ReactElement => {
       <ManagerPageContainer>
         <TopSectionContainer>
           <ChordManagerHeader />
+
           <Table>
             <div className="font-mono text-xl ml-2">Connect</div>
             <ConnectButton />
             <DisconnectButton />
             <BootLoaderButton />
             <RebootButton />
+            <Terminal/>
             <div className="h-1 w-6/12 bg-green-500 rounded mb-10 mt-10" />
             <div className="font-mono text-xl ml-2">Layout</div>
             <ImportChordLayout />
             <ExportChordLayout />
             <CommitAllLayoutChanges />
-            <AddLayoutHeaders />
+            <ChordLayoutColumn />
             <div className="h-1 w-6/12 mt-6 bg-green-500 rounded mb-10" />
             <div className="font-mono text-xl ml-2">Library</div>
             <div id="commitAllProgress" />
@@ -54,14 +60,13 @@ const Manager = (): ReactElement => {
             <Export />
             <Download />
             <PressCommit />
-            <Clear />
           </Table>
           <PageContainer>
-            <AddHeaders />
+            <ChordMapColumn />
             <ChordContainer>
               <div />
               <div />
-
+            <AddHeaders/>
               <AddChordMap />
             </ChordContainer>
           </PageContainer>

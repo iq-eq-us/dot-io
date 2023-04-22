@@ -1,19 +1,5 @@
 import React, { ReactElement } from 'react';
-import {
-  MainControls,
-  sendCommandString,
-  readGetOneAndToss,
-  enableSerialChordOutput,
-  cancelReader,
-  readGetHexChord,
-  convertHexadecimalChordToHumanString,
-  chord_to_noteId,
-  noteId_to_chord,
-  selectBase,
-  setupLineReader,
-  convertHumanStringToHexadecimalPhrase,
-  convertHumanStringToHexadecimalChord,
-} from '../controls/mainControls';
+
 
 export function addHeadersToDataTable() {
   console.log('addHeadersToDataTable()');
@@ -71,10 +57,11 @@ export function AddHeaders(): ReactElement {
   }, []);
   return (
     <React.Fragment>
-      <div id="terminal" className="ml-center mr-center">
+      <div id="terminal" className="ml-center mr-center hidden">
         <ul id="list" />
         <table id="dataTable" />
       </div>
+      
     </React.Fragment>
   );
 }

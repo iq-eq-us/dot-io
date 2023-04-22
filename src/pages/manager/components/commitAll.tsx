@@ -6,54 +6,57 @@ import {
   clickCommit,
   asyncCallWithTimeout,
 } from '../controls/mainControls';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { convertHumanChordToHexadecimalChord, convertHumanStringToHexadecimalPhrase, sendCommandString } from '../../../pages/manager/controls/mainControls';
 
-export async function commitAll() {
-  console.log('commitAll()');
-  const dataTable = document.getElementById('dataTable');
-  //iterate through table from bottom to top to see if there's a commit enabled
-  //TODO check if we need to skip the header row
-  const element: HTMLElement = document.getElementById(
-    'commitAllProgress',
-  ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
-  const dataValue = dataTable.rows.length - 1;
-  for (let i = 0; i < dataTable.rows.length - 1; i++) {
-    //iterate through rows
-    const row = dataTable.rows[i];
-    // console.log(row);
-    // console.log(row.cells);
-    // console.log(row.cells[0]);
-    // console.log(row.cells[0].innerHTML);
-    const virtualId = parseInt(row.cells[0].innerHTML);
-
-    console.log('table row ' + i + ' has virtualId of ' + virtualId);
-    //document.getElementById(virtualId.toString()+"-commit");
-    //const myTimeout = await setTimeout(pressCommitButton,i*500,i+1);//Fiddle with this
-    //await asyncCallWithTimeout(clickCommit(i), 6000, i);//Fiddle with this
-    //await clickCommit(i);
-
-    //myTimeout.
-    //clearTimeout(myTimeout)
-    await wontTimeout(clickCommit(i), i);
-
-    element.innerHTML =
-      'Commit Progress: ' +
-      ((i / dataValue) * 100).toFixed(0) +
-      '% Please do not touch your device until completion.';
-
-    //rows would be accessed using the "row" variable assigned in the for loop
-  }
-}
-
-const wontTimeout = async (func, virtualId) => {
-  try {
-    const { data } = await asyncCallWithTimeout(func, 10000, virtualId);
-    console.log(data);
-  } catch (err) {
-    await asyncCallWithTimeout(func, 10000, virtualId);
-  }
-};
+ 
 
 export function PressCommit(): ReactElement {
+  const clearDownloadedChords = useStoreActions((store) => store.clearDownloadedChords);
+  const setDownloadedChords = useStoreActions((store) => store.setDownloadedChords);
+  const downloadedChords = useStoreState((store) => store.downloadedChords.chords);
+
+  async function commitAll() {
+    console.log('commitAll()');
+    //iterate through table from bottom to top to see if there's a commit enabled
+    //TODO check if we need to skip the header row
+    const element: HTMLElement = document.getElementById(
+      'commitAllProgress',
+    ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
+    for (let i = 0; i < downloadedChords.length - 1; i++) {
+      const card = downloadedChords[i];
+      const hexChord = convertHumanChordToHexadecimalChord(card.currentChord);
+      const hexPhrase = convertHumanStringToHexadecimalPhrase(card.currentPhrase);
+      //await sendCommandString('CML C3 '+hexChord +' '+hexPhrase );
+      //sendCommandString('CML C3 ' + newHexChord + ' ' + newHexPhrase);
+
+      //const myTimeout = await setTimeout(pressCommitButton,i*500,i+1);//Fiddle with this
+      //await asyncCallWithTimeout(clickCommit(i), 6000, i);//Fiddle with this
+      //await clickCommit(i);
+  
+      //myTimeout.
+      //clearTimeout(myTimeout)
+      await wontTimeout(sendCommandString('CML C3 '+hexChord +' '+hexPhrase ), i);
+  
+      element.innerHTML =
+        'Commit Progress: ' +
+        ((i / downloadedChords.length) * 100).toFixed(0) +
+        '% Please do not touch your device until completion.';
+  
+      //rows would be accessed using the "row" variable assigned in the for loop
+    }
+  }
+  
+  const wontTimeout = async (func, virtualId) => {
+    try {
+      const { data } = await asyncCallWithTimeout(func, 10000, virtualId);
+      console.log(data);
+    } catch (err) {
+      await asyncCallWithTimeout(func, 10000, virtualId);
+    }
+  };
+
+
   return (
     <React.Fragment>
       <button

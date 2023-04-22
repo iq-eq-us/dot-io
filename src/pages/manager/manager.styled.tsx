@@ -43,7 +43,11 @@ export const ChordContainer = styled.section.attrs({
 })``;
 
 export const Table = styled.section.attrs({
-  className: `margin-left-50px`,
+  className: `margin-left-50px flex-row`,
+})``;
+
+export const RightTable = styled.section.attrs({
+  className: `margin-right-50px flex-row`,
 })``;
 export const Section = styled.section.attrs({
   className: `left-50px position-relative`,
