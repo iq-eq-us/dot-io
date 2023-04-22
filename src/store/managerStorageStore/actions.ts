@@ -4,7 +4,7 @@ import type {
 } from '../../models/managerStorage';
 import type { ManagerStore } from '../../models/managerStorage';
 import { sendCommandString, readGetOneAndReturnOne } from '../../pages/manager/controls/mainControls';
-import { convertHumanPhraseToHexadecimalPhrase, convertHumanChordToHexadecimalChord, convertHumanStringToHexadecimalPhrase, convertHumanStringToHexadecimalChord } from '../../pages/manager/controls/mainControls';
+import { convertHumanChordToHexadecimalChord, convertHumanStringToHexadecimalPhrase } from '../../pages/manager/controls/mainControls';
 
 /**
  * This section contains all the state for the Manager storage.
@@ -61,8 +61,8 @@ export interface Chords {
 }
 
 function deleteChordInManager(store ,payload) {
-  let currentChord = payload[0];
-  let currentPhrase = payload[1];
+  const currentChord = payload[0];
+  const currentPhrase = payload[1];
   const deleteChordHex = payload[2];
 
 
@@ -83,7 +83,7 @@ function saveEditedChordInManager(store,payload) {
   let newHexChord;
 
 
-  let ChordStruct = store.downloadedChords.chords.find(
+  const ChordStruct = store.downloadedChords.chords.find(
     (c: ChordStructure) => c.currentChord === currentChord && c.currentPhrase === currentPhrase,
   ) as ChordStructure;
 
