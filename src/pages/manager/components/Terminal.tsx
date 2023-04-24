@@ -7,6 +7,8 @@ import {
      SendButton,
      TerminalHeader
     } from './Terminal.styled';
+    import { SerialCommandTable } from './SerialCommandTable';
+    
 
 import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from 'easy-peasy';
@@ -16,10 +18,7 @@ import styled from 'styled-components';
 export function Terminal(): ReactElement {
 
   const [requestInput, setRequestInput] = useState<string>('');
-  const [previousText, setPreviousText] = useState<string>('');
 
-    const downloadedChords = useStoreState((store) => store.downloadedChords.chords);
-    const setSerialApiRequests = useStoreActions((store) => store.setSerialApiRequests);
     const serialApiRequests = useStoreState((store) => store.serialApiRequests);
     const serialApiResponses = useStoreState((store) => store.serialApiResponses);
     const updateSerialAPiDataThunk = useStoreActions((store) => store.updateSerialAPiDataThunk);
@@ -65,13 +64,14 @@ export function Terminal(): ReactElement {
               </InputAndButtonRow>  
               
     </TerminalContainer>
+    <SerialCommandTable/>
     </CardColumn>
   );
   
 }
 
 const CardColumn = styled.div.attrs({
-  className: `flex relative flex-wrap flex-col`,
+  className: `flex flex-row w-full`,
 })``
 const InputAndButtonRow = styled.div.attrs({
   className: `flex flex-row `,

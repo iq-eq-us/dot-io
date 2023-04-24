@@ -27,6 +27,7 @@ export interface CardProps {
   previousPhrase?: string;
   index: number;
   }
+  
 
 export function ChordMapCard(
   props: any,
@@ -75,6 +76,33 @@ export function ChordMapCard(
   deleteDownloadedChordsData(payloadArray); 
   }
 
+  function showModal(){
+    console.log('show modal')
+    return(
+      <div className="flex-row relative border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
+        <button
+          className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818]`}
+          onClick={() => [
+            //setPasswordModulModalToggle(!passwordModulModalToggle),
+          ]}
+        >
+          &times;
+        </button>
+        <p className="pt-2 m-10 font-bold mr-64">Enter the secret phrase!</p>
+        <p className={`pt-2 m-10 font-bold mr-64 text-red-500 `}>Wrong phrase!</p>
+        <input type="password" className='border-black border-2 ml-16 w-3/4'></input>
+        <button
+          className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
+        //  onClick={() => [passwordUnlock(inputRef)]}
+        >
+          Unlock
+        </button>
+      </div>
+    
+        
+   );
+  }
+
 
 
   function change(event) {
@@ -84,7 +112,7 @@ export function ChordMapCard(
       console.log(splitChord)
       for(let i =0; i < splitChord.length; i++){
       
-        chord += splitChord[i] + ' + '; //add this + between action ids; put here so we don't have to remove it at end of for-loop
+        chord += splitChord[i] + ' + ';
       }
 
     return chord;
@@ -94,6 +122,7 @@ export function ChordMapCard(
     else
     return '';
   }
+
   return (
     <React.Fragment>
     <CardContainer>
