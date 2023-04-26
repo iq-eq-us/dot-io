@@ -152,15 +152,12 @@ export function ChordMapCard(
         value={chordTextInput}
         />
         </InputIdentifiers>
-        <CardEditButton onClick={onClick}
-        cancelled={lockInputs}
-        shouldDelete={deleteButtonProps}
-        >Edit Chord</CardEditButton>
-        <CardCancelButton onClick={onClick} cancelled={lockInputs}>Cancel</CardCancelButton>
-        <CardSaveButton onClick={onClickSaveButton}cancelled={lockInputs}>Save</CardSaveButton>
+        <CardEditButton onClick={onClick}cancelled={lockInputs} shouldDelete={deleteButtonProps}>Edit Chord</CardEditButton>
+        <CardCancelButton onClick={onClick} cancelled={lockInputs} shouldDelete={deleteButtonProps}>Cancel</CardCancelButton>
+        <CardSaveButton onClick={onClickSaveButton}cancelled={lockInputs} shouldDelete={deleteButtonProps}>Save</CardSaveButton>
         <CardDeleteButton onClick={onClickDeleteButton} shouldDelete={deleteButtonProps}>Delete</CardDeleteButton>
-        <CardConfirmDeleteButton onClick={onClickConfirmDeleteButton} shouldDelete={deleteButtonProps}>Confirm</CardConfirmDeleteButton>
         <CardCancelDeleteButton onClick={onClickCancelDeleteButton} shouldDelete={deleteButtonProps}>Cancel</CardCancelDeleteButton>
+        <CardConfirmDeleteButton onClick={onClickConfirmDeleteButton} shouldDelete={deleteButtonProps}>Confirm</CardConfirmDeleteButton>
 
     </CardContainer>
     </React.Fragment>

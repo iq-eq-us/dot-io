@@ -9,13 +9,13 @@ export const InputIdentifiers = styled.div.attrs({
     `,
   })``;
 
-  export const CardCancelButton = styled.button.attrs((props: {cancelled: boolean}) =>({
-    className: `text-xs m-2 mt-6 float-right font-semibold rounded-full px-4 py-1 shadow-sm shadow-black leading-normal bg-neutral-400 text-black hover:bg-purple hover:text-white  ${props.cancelled ? 'hidden' : ''}`,
+  export const CardCancelButton = styled.button.attrs((props: {cancelled: boolean , shouldDelete: boolean}) =>({
+    className: `text-xs m-2 mt-6 float-right font-semibold rounded-full px-4 py-1 shadow-sm shadow-black leading-normal bg-neutral-400 text-black hover:bg-purple hover:text-white  ${props.cancelled || props.shouldDelete ? 'hidden' : ''}`,
     
 }))``;
 
-export const CardSaveButton = styled.button.attrs((props: {cancelled: boolean}) =>({
-    className: `text-xs m-2 mt-6 float-right font-semibold rounded-full px-4 py-1 shadow-sm shadow-black leading-normal bg-[#22c55e] text-purple hover:bg-purple hover:text-black ${props.cancelled ? 'hidden' : ''}`,
+export const CardSaveButton = styled.button.attrs((props: {cancelled: boolean , shouldDelete: boolean}) =>({
+    className: `text-xs m-2 mt-6 float-right font-semibold rounded-full px-4 py-1 shadow-sm shadow-black leading-normal bg-[#22c55e] text-purple hover:bg-purple hover:text-black ${props.cancelled || props.shouldDelete ? 'hidden' : ''}`,
     
 }))``;
 
@@ -24,11 +24,11 @@ export const CardSaveButton = styled.button.attrs((props: {cancelled: boolean}) 
 
 }))``;
   export const CardConfirmDeleteButton = styled.button.attrs((props: {shouldDelete: boolean}) =>({
-    className: `text-xs m-2 mt-6 float-right font-semibold rounded-full px-4 py-1 shadow-sm shadow-black leading-normal bg-[#00FF00] text-black hover:bg-white hover:text-black ${!props.shouldDelete ? 'hidden' : ''}`,
+    className: `text-xs m-2 mt-6 float-right font-semibold rounded-full px-4 py-1 shadow-sm shadow-black leading-normal bg-[#22c55e] text-white hover:bg-white hover:text-black ${!props.shouldDelete ? 'hidden' : ''}`,
 }))``;
 
   export const CardCancelDeleteButton = styled.button.attrs((props: {shouldDelete: boolean}) =>({
-    className: `text-xs m-2 mt-6 float-right font-semibold rounded-full px-4 py-1 shadow-sm shadow-black leading-normal bg-neutral-400 text-black hover:bg-purple hover:text-white ${!props.shouldDelete ? 'hidden' : ''}`,
+    className: `text-xs m-2 mt-6 float-right font-semibold rounded-full px-4 py-1 shadow-sm shadow-black leading-normal bg-neutral-400 text-white hover:bg-purple hover:text-black ${!props.shouldDelete ? 'hidden' : ''}`,
 }))``;
 
   export const CardDeleteButton = styled.button.attrs((props: {shouldDelete: boolean}) =>({
