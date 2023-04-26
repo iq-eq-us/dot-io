@@ -7,7 +7,7 @@ import {
   asyncCallWithTimeout,
 } from '../controls/mainControls';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { convertHumanChordToHexadecimalChord, convertHumanStringToHexadecimalPhrase, sendCommandString } from '../../../pages/manager/controls/mainControls';
+import { convertHumanChordToHexadecimalChord, convertHumanStringToHexadecimalPhrase, sendCommandString } from '../controls/mainControls';
 
  
 
@@ -16,8 +16,8 @@ export function PressCommit(): ReactElement {
   const setDownloadedChords = useStoreActions((store) => store.setDownloadedChords);
   const downloadedChords = useStoreState((store) => store.downloadedChords.chords);
 
-  async function commitAll() {
-    console.log('commitAll()');
+  async function saveAll() {
+    console.log('saveAll()');
     //iterate through table from bottom to top to see if there's a commit enabled
     //TODO check if we need to skip the header row
     const element: HTMLElement = document.getElementById(
@@ -62,9 +62,9 @@ export function PressCommit(): ReactElement {
       <button
         className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
         color="pink"
-        onClick={async () => commitAll()}
+        onClick={async () => saveAll()}
       >
-        Commit All{' '}
+        Save All{' '}
       </button>
     </React.Fragment>
   );

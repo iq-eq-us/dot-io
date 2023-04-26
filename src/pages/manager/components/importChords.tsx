@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 import { _chordMaps } from '../controls/maps';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { createChord } from '../../../models/managerModels';
+import { createChord, ChordStructure, Chords } from '../../../models/managerModels';
+
 
 import {
   convertHumanStringToHexadecimalChord,
@@ -22,11 +23,10 @@ const checkElement = async (selector) => {
   export function ImportChords(): ReactElement {
     const clearDownloadedChords = useStoreActions((store) => store.clearDownloadedChords);
     const setDownloadedChords = useStoreActions((store) => store.setDownloadedChords);
-    const downloadedChords = useStoreState((store) => store.downloadedChords.chords);
+    const setImportedChords = useStoreActions((store) => store.setImportedChords);
 
-
-
-    function importChordMapLibrary(e : any){
+    async function importChordMapLibrary(e : any){
+      const importedChords = [];
       clearDownloadedChords();
         const file = e.target.files[0];
         const fileReader = new FileReader();
@@ -40,7 +40,6 @@ const checkElement = async (selector) => {
             const humanChord = strAllValues.shift();
             const humanPhrase = strAllValues.join(','); //handles if there's a comma in the phrase
             const hexChordString = convertHumanStringToHexadecimalChord(humanChord);
-            //console.log('Hex chord string '+ hexChordString)
             const hexPhraseString = convertHumanStringToHexadecimalPhrase(humanPhrase);
     
     
@@ -49,14 +48,16 @@ const checkElement = async (selector) => {
             strValues[1] = humanPhrase;
             strValues[2] = hexChordString;
             strValues[3] = hexPhraseString;    
-            _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
     
             //appendToRow(strValues,true);
           
-            const tempCreated = createChord(strValues[0], strValues[1], strValues[3], strValues[4]);
-            setDownloadedChords(tempCreated);
+           const tempCreated : ChordStructure = createChord(strValues[0], strValues[1], strValues[3], strValues[4]);
+           importedChords.push(tempCreated); //this ultimately isn't used
+
+            //setDownloadedChords(tempCreated);
         
           });
+          setImportedChords(importedChords)
         }
         //console.log(_chordMaps);
         //open file dialog box with only csv allowed

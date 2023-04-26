@@ -18,6 +18,7 @@ export interface ManagerStoreActions {
   deleteDownloadedChordsData: Action<ManagerStore, Chords>;
   saveDownloadedChordsData: Action<ManagerStore, Chords>;
   setDownloadedChordLayout: Action<ManagerStore, ChordLayout>;
+  setImportedChords: Action<ManagerStore, Chords>;
   deleteDownloadedChordsLayoutData: Action<ManagerStore, ChordLayout>;
   saveDownloadedChordLayoutData: Action<ManagerStore, ChordLayout>;
   clearDownloadedChords:Action<ManagerStore, ChordLayout>;

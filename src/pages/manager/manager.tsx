@@ -10,7 +10,7 @@ import { Download } from '../manager/components/download';
 import { Clear } from '../manager/components/resetDataTable';
 import { Export } from '../manager/components/exportLibrary';
 import { AddChordMap } from '../manager/components/addChordMap';
-import { PressCommit } from '../manager/components/commitAll';
+import { PressCommit } from './components/saveAll';
 import { ImportChordLayout } from './components/importLayout';
 import { ExportChordLayout } from './components/exportLayout';
 import { AddLayoutHeaders } from './components/addHeadersLayout';
@@ -46,7 +46,6 @@ const Manager = (): ReactElement => {
             <DisconnectButton />
             <BootLoaderButton />
             <RebootButton />
-            <Terminal/>
             <div className="h-1 w-6/12 bg-green-500 rounded mb-10 mt-10" />
             <div className="font-mono text-xl ml-2">Layout</div>
             <ImportChordLayout />
@@ -69,6 +68,8 @@ const Manager = (): ReactElement => {
             <AddHeaders/>
               <AddChordMap />
             </ChordContainer>
+            <Terminal/>
+
           </PageContainer>
         </TopSectionContainer>
       </ManagerPageContainer>

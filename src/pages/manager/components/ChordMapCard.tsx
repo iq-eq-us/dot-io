@@ -12,6 +12,8 @@ import {
      PhraseTextBox, 
      CardDeleteButton,
      InputIdentifiers,
+     CardConfirmDeleteButton,
+     CardCancelDeleteButton,
     } from './ChordMapCardColumn.styled'
 
 import usePopover from '../../../hooks/usePopover';
@@ -36,7 +38,7 @@ export function ChordMapCard(
     const [lockInputs, setInputs] = useState<boolean>(true);
     const [phraseTextInput, setPhraseTextInput] = useState<string>('');
     const [chordTextInput, setChordTextInput] = useState<string>('');
-    const [previousText, setPreviousText] = useState<string>('');
+    const [deleteButtonProps, setDeleteButtonProps] = useState<boolean>(false);
 
 
     const deleteDownloadedChordsData = useStoreActions((store) => store.deleteDownloadedChordsData);
@@ -58,6 +60,14 @@ export function ChordMapCard(
   setChordTextInput('');
   }
 
+  const onClickCancelDeleteButton = () => {
+    setDeleteButtonProps(!deleteButtonProps);
+    }
+
+    const onClickDeleteButton = () => {
+      setDeleteButtonProps(!deleteButtonProps);
+      }
+
   const onClickSaveButton = () =>{
     const inArray = [];
     inArray.push(chord);
@@ -72,7 +82,7 @@ export function ChordMapCard(
 
   }
   
-  const onClickDeleteButton = () => {
+  const onClickConfirmDeleteButton = () => {
   deleteDownloadedChordsData(payloadArray); 
   }
 
@@ -144,10 +154,14 @@ export function ChordMapCard(
         </InputIdentifiers>
         <CardEditButton onClick={onClick}
         cancelled={lockInputs}
+        shouldDelete={deleteButtonProps}
         >Edit Chord</CardEditButton>
         <CardCancelButton onClick={onClick} cancelled={lockInputs}>Cancel</CardCancelButton>
         <CardSaveButton onClick={onClickSaveButton}cancelled={lockInputs}>Save</CardSaveButton>
-        <CardDeleteButton onClick={onClickDeleteButton}>Delete</CardDeleteButton>
+        <CardDeleteButton onClick={onClickDeleteButton} shouldDelete={deleteButtonProps}>Delete</CardDeleteButton>
+        <CardConfirmDeleteButton onClick={onClickConfirmDeleteButton} shouldDelete={deleteButtonProps}>Confirm</CardConfirmDeleteButton>
+        <CardCancelDeleteButton onClick={onClickCancelDeleteButton} shouldDelete={deleteButtonProps}>Cancel</CardCancelDeleteButton>
+
     </CardContainer>
     </React.Fragment>
 

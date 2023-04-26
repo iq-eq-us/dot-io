@@ -9,7 +9,7 @@ import {
 } from './maps';
 import hex2Bin from 'hex-to-bin';
 import { replace } from 'lodash';
-import { commitAllWithStart } from '../components/commitAll';
+import { commitAllWithStart } from '../components/saveAll';
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
