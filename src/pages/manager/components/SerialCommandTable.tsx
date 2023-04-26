@@ -7,7 +7,7 @@ import { ChordMapCard } from './ChordMapCard';
 const data = [
     { name: "CMD", desc: "Lists available commands.", example: "CMD" },
     { name: "ID", desc: "Identifies device, such as 'CHARACHORDER ONE M0", example: "ID" },
-    { name: "VER", desc: "Returns the current firmware version, such as '1.5.16'", example: "VER"},
+    { name: "VER", desc: "Returns the current firmware version, such as '1.5.16'", example: "VERSION"},
     { name: "CML", desc: "Used for getting, setting (adding or overwriting), and deleting chordmaps.", example: "VAR B1 2E"},
     { name: "VAR", desc: "Used for getting and settings parameters. This includes setting custom chordmaps.", example: "CML C1 0"},
     { name: "RST", desc: "Restarts/reboots the microcontroller hardware. It has additional arguments for Factory and Bootloader.", example: "RST"},
