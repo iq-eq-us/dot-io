@@ -22,7 +22,6 @@ function CenterTrainingColumn(): ReactElement {
 
         <SmallScreenButtons />
         <TrainingModeSelector />
-
         <ChordTextInput />
 
         <TextPrompt />
