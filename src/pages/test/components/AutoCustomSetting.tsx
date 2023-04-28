@@ -35,10 +35,13 @@ export function AutoCustomSetting(): ReactElement {
     triggerResize();
   };
   return (
-    <div>
+    <React.Fragment>
+    <div className='absolute'>
       {Popper}
+      </div>
+
       <div
-        className="text-sm font-bold mb-1 inline-flex flex-row gap-2 items-center absolute"
+        className="text-sm font-bold mb-1 inline-flex flex-row gap-2 items-center"
         {...parentProps}
       >
         Settings Mode
@@ -72,6 +75,6 @@ export function AutoCustomSetting(): ReactElement {
           </span>
         </div>
       </div>
-    </div>
+      </React.Fragment>
   );
 }

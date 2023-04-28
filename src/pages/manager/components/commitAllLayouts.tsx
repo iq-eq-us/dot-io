@@ -5,14 +5,30 @@ import {
   sendCommandString,
   readGetOneChordLayout,
 } from '../controls/mainControls';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
-import { storeAllChanges } from './importLayout';
 
 export async function commitAll() {
   await sendCommandString('VAR B0');
 }
 
+const delay = (delayInms) => {
+  return new Promise(resolve => setTimeout(resolve, delayInms));
+}
+
 export function CommitAllLayoutChanges(): ReactElement {
+  const downloadedChordLayout = useStoreState((store) => store.downloadedChords.chordLayout);
+  async function storeAllChanges(){
+    //downloadedChordLayout.push("VAR B4 "+downloadedChordLayout.keyMap[0] +" "+strAllValues[1] +" "+strAllValues[2]);
+
+    //console.log(thisArray.replace(/(\r\n|\n|\r)/gm, ""))
+    for(let i=0; i<downloadedChordLayout.length; i++){
+      await sendCommandString('VAR B4 '+ downloadedChordLayout[i].keyMap.replace(/(\r\n|\n|\r)/gm, "") +" "+downloadedChordLayout[i].keyMapPosition.replace(/(\r\n|\n|\r)/gm, "") +" "+downloadedChordLayout[i].keyMapValue);
+      await delay(10);
+    }
+    await sendCommandString("VAR B0");
+
+  }
   return (
     <React.Fragment>
       <button

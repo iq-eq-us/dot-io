@@ -9,7 +9,9 @@ import {
 } from './maps';
 import hex2Bin from 'hex-to-bin';
 import { replace } from 'lodash';
-import { commitAllWithStart } from '../components/commitAll';
+import { commitAllWithStart } from '../components/saveAll';
+import React from 'react';
+import ReactApexChart from 'react-apexcharts';
 
 export class MainControls {
   public static serialPort: any;
@@ -710,6 +712,8 @@ export async function readGetOneChordmap() {
   const { value } = await MainControls.lineReader.read();
   const spliter = value.split(' ');
   console.log(spliter);
+  const strValues = ['', '', '', ''];
+
   if (value) {
     const arrValue = [...spliter];
     //ascii_to_hexa(arrValue);
@@ -718,10 +722,7 @@ export async function readGetOneChordmap() {
     hexChordString = strValue[3]; //Should be 32 chacters at all times
     let hexAsciiString = '';
     hexAsciiString = strValue[4];
-    const strValues = ['', '', '', ''];
-    console.log(
-      'StrValue ' + convertHexadecimalChordToHumanChord(hexChordString),
-    );
+    convertHumanStringToHexadecimalChord
     strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
     strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
     strValues[2] = hexChordString;
@@ -734,8 +735,9 @@ export async function readGetOneChordmap() {
       strValues[1],
     ]); //this ultimately isn't used
 
-    appendToRow(strValues);
+    //appendToRow(strValues);
   }
+  return strValues;
 }
 
 export async function commitChordLayout() {
@@ -762,7 +764,6 @@ export async function commitChordLayout() {
     strValues[4] = myArray[5];
     strValues[5] = myArray[6];
 
-    console.log('HEHEHEHEHEHHEEH ' + myArray);
 
     //appendToList(strValues);
     // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
@@ -776,6 +777,7 @@ export async function readGetOneChordLayout() {
   console.log('readGetOneChordMapLayout()');
   const { value } = await MainControls.lineReader.read();
   console.log('Chord layout array ' + value);
+  const strValues = ['', '', '', ''];
 
   if (value) {
     const arrValue = [...value];
@@ -786,7 +788,6 @@ export async function readGetOneChordLayout() {
     hexChordString = strValue.substr(0, 16);
     let hexAsciiString = '';
     hexAsciiString = strValue.substr(17, strValue.length);
-    const strValues = ['', '', '', ''];
     const myArray = value.split(' ');
 
     strValues[0] = myArray[1];
@@ -796,14 +797,15 @@ export async function readGetOneChordLayout() {
     strValues[4] = myArray[5];
     strValues[5] = myArray[6];
 
-    console.log('HEHEHEHEHEHHEEH ' + myArray);
 
     //appendToList(strValues);
     // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
     _chordLayout.push(value); //this ultimately isn't used
 
-    appendLayoutToRow(strValues);
+    //appendLayoutToRow(strValues);
   }
+  return strValues;
+
 }
 
 export function appendLayoutToRow(data: string[], isFromFile = false): any {
@@ -906,6 +908,7 @@ export function appendToRow(data: string[], isFromFile = false): any {
   cells.push(row.insertCell(-1)); //10 orig hex phrase
   // cells[9].innerHTML = data[2];
   // cells[10].innerHTML = data[3];
+
 
   const btnEdit = document.createElement('input');
   const chordTextOrig = document.createElement('div');
@@ -1091,6 +1094,7 @@ export function appendToRow(data: string[], isFromFile = false): any {
       virtualId.toString() + '-delete',
     ) as HTMLInputElement;
     if (check.disabled) {
+      
       //delete the chord from the device, and then also delete from this list
       //const element: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit")
       document.getElementById(virtualId.toString() + '-');
@@ -1255,6 +1259,26 @@ export function appendToRow(data: string[], isFromFile = false): any {
     phraseTextInput.value = data[1];
     btnCommit.disabled = false;
   }
+  const trow  = dataTable.insertRow(-1);
+  cells.push(trow);
+  const tr = []
+  tr.push(<React.Fragment><div className="bg-[#222] mx-auto max-w shadow-lg rounded-lg overflow-hidden row">
+  <div className="md:flex md:items-center px-6 py-4">
+    <input type={'text'} className="block h-8 sm:h-12 rounded-xs mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" />
+      <input type={'text'} className="block h-8 sm:h-12 rounded-xs mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" />
+      <div className="text-center sm:text-left sm:flex-grow">
+      <div>
+        <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">Edit Chord</button>
+        <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">Save</button>
+        <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">Delete Chord</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+</React.Fragment>
+);
+  return (<div>{tr[0]}</div>);;
 }
 
 export const asyncCallWithTimeout = async (
@@ -1509,7 +1533,7 @@ export async function commitTo(virtualId) {
   console.log('Done sending command');
 }
 
-function convertHumanChordToHexadecimalChord(humanChord) {
+export function convertHumanChordToHexadecimalChord(humanChord) {
   console.log('convertHumanChordToHexadecimalChord()');
   console.log(humanChord);
   let hexChord = '';
@@ -1549,7 +1573,7 @@ function convertHumanChordToHexadecimalChord(humanChord) {
   return hexChord;
 }
 
-function convertHumanPhraseToHexadecimalPhrase(humanPhrase) {
+export function convertHumanPhraseToHexadecimalPhrase(humanPhrase) {
   console.log('convertHumanPhraseToHexadecimalPhrase()');
   console.log(humanPhrase);
   let hexPhrase = '';
@@ -1568,3 +1592,5 @@ function convertHumanPhraseToHexadecimalPhrase(humanPhrase) {
 export async function readGetNone() {
   console.log(' ');
 }
+
+

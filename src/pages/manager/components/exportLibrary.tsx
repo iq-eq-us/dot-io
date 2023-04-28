@@ -4,48 +4,45 @@ import {
   readGetChordmapCount,
   MainControls,
 } from '../controls/mainControls';
-import { _chordMaps } from '../controls/maps';
+import { _chordMaps } from '../controls/maps'; 
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
-function exportChordMapLibrary() {
-  const dataTable = document.getElementById('dataTable');
-  //iterate through table from bottom to top to capture all the chords and phrases
-  _chordMaps.splice(0, _chordMaps.length);
-  for (let i = 1; i < dataTable.rows.length; i++) {
-    //start a 1 to skip the header
-    console.log('DataRows length ' + dataTable.rows.length);
-    const row = dataTable.rows[i];
-    _chordMaps.push([
-      row.cells[2].childNodes[0].innerHTML,
-      row.cells[3].childNodes[0].innerHTML,
-    ]);
-    //_chordMaps = [];
-  }
-
-  console.log(_chordMaps);
-  let csvRows = [];
-
-  //TODO, pull from table
-  for (const chordMap of _chordMaps) {
-    console.log(_chordMaps.length);
-    console.log(chordMap.length);
-
-    csvRows.push(chordMap.join(','));
-  }
-  const csvData = csvRows.join('\n');
-
-  const blob = new Blob([csvData], { type: 'text/csv' });
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.setAttribute('hidden', '');
-  a.setAttribute('href', url);
-  a.setAttribute('download', 'CharaChorder_ChordLibrary.csv');
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  csvRows = [];
-}
 
 export function Export(): ReactElement {
+  const clearDownloadedChords = useStoreActions((store) => store.clearDownloadedChords);
+  const setDownloadedChords = useStoreActions((store) => store.setDownloadedChords);
+  const downloadedChords = useStoreState((store) => store.downloadedChords.chords);
+
+  
+  function exportChordMapLibrary() {
+    let csvRows = [];
+    //iterate through table from bottom to top to capture all the chords and phrases
+    _chordMaps.splice(0, _chordMaps.length);
+    for (let i = 0; i<downloadedChords.length; i++) { //start a 1 to skip the header
+      _chordMaps.push(downloadedChords[i].currentChord+ ','+downloadedChords[i].currentPhrase);
+      _chordMaps.push();
+        }    
+        csvRows.push(_chordMaps.join('\n'))
+
+
+
+      
+    //csvRows.push(_chordMaps.join(','))
+    const csvData = csvRows.join('\n');
+      //start a 1 to skip the header
+      // Returning the array joining with new line
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'CharaChorder_ChordLibrary.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    csvRows = [];
+  }
+
   return (
     <React.Fragment>
       <button

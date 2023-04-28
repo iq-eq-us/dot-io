@@ -10,20 +10,24 @@ import { Download } from '../manager/components/download';
 import { Clear } from '../manager/components/resetDataTable';
 import { Export } from '../manager/components/exportLibrary';
 import { AddChordMap } from '../manager/components/addChordMap';
-import { PressCommit } from '../manager/components/commitAll';
+import { PressCommit } from './components/saveAll';
 import { ImportChordLayout } from './components/importLayout';
 import { ExportChordLayout } from './components/exportLayout';
 import { AddLayoutHeaders } from './components/addHeadersLayout';
 import { CommitAllLayoutChanges } from './components/commitAllLayouts';
-import { UpgradeFunction } from './components/upgradeFunction';
+import { ChordMapColumn } from './components/ChordMapCardColumn';
+import { ChordLayoutColumn } from './components/ChordLayoutCardColumn';
+import { Terminal } from './components/Terminal';
 
 import {
   ManagerPageContainer,
   Table,
+  RightTable,
   ChordContainer,
   PageContainer,
   TopSectionContainer,
 } from '../manager/manager.styled';
+import { ChordMapCard } from './components/ChordMapCard';
 
 const Manager = (): ReactElement => {
   React.useEffect(() => {
@@ -35,6 +39,7 @@ const Manager = (): ReactElement => {
       <ManagerPageContainer>
         <TopSectionContainer>
           <ChordManagerHeader />
+
           <Table>
             <div className="font-mono text-xl ml-2">Connect</div>
             <ConnectButton />
@@ -42,11 +47,11 @@ const Manager = (): ReactElement => {
             <BootLoaderButton />
             <RebootButton />
             <div className="h-1 w-6/12 bg-green-500 rounded mb-10 mt-10" />
-            <div className="font-mono text-xl ml-2">Layout</div>
+            <div className="font-mono text-xl ml-2">Layout <a  className="hover:text-[#40508d] active:text-[#40508d] animate-pulse" target='_blank'href="https://charachorder-config.com/"> External GUI for Chord Mapping</a></div>
             <ImportChordLayout />
             <ExportChordLayout />
             <CommitAllLayoutChanges />
-            <AddLayoutHeaders />
+            <ChordLayoutColumn />
             <div className="h-1 w-6/12 mt-6 bg-green-500 rounded mb-10" />
             <div className="font-mono text-xl ml-2">Library</div>
             <div id="commitAllProgress" />
@@ -54,16 +59,19 @@ const Manager = (): ReactElement => {
             <Export />
             <Download />
             <PressCommit />
-            <Clear />
           </Table>
           <PageContainer>
-            <AddHeaders />
+            <ChordMapColumn />
             <ChordContainer>
               <div />
               <div />
-
+            <AddHeaders/>
               <AddChordMap />
             </ChordContainer>
+            <div className="h-1 w-6/12 mt-16 bg-green-500 rounded mb-10" />
+
+            <Terminal/>
+
           </PageContainer>
         </TopSectionContainer>
       </ManagerPageContainer>

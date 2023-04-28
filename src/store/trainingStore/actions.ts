@@ -32,6 +32,7 @@ import { avgCalculatorForTheSpeedOfLastTen } from '../../helpers/aggregation';
 
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
+
 const dictNameOfLibrary = { 
   ALPHABET: chordLibrary.letters,
   LEXICAL: chordLibrary.lexical,
@@ -39,8 +40,8 @@ const dictNameOfLibrary = {
   TRIGRAM: chordLibrary.trigrams,
   SUPERSONIC: chordLibrary.supersonic,
   LEXICOGRAPHIC: chordLibrary.lexicographic,
-
 }
+
 let globalDictionaries: Record<
   TrainingScenario,
   ChordLibraryRecord | undefined

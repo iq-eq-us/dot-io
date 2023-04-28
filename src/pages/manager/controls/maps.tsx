@@ -7162,8 +7162,8 @@ const oldAsciiKeyReplacementDictionary = {
   LH_Index_Center: 'LH_INDEX_3D', //
 };
 
-    const _chordMaps: any[][] = [];
-    const _chordLayout: any[][] = []
+    const _chordMaps: any[] = [];
+    const _chordLayout: any[] = []
 
 export {
   _actionMap,

@@ -12,7 +12,6 @@ import { PreviousTest } from './components/PreviousTests';
 import TestCompletePage from '../test-complete/testComplete';
 import ImageSlider from './components/imageSlider';
 import ModuleCompleteModal from './components/ModuleCompleteModal';
-import { oneTimeCreateStoredChordStats } from './components/TrainingModeSelector';
 import { chordLibrary } from '../../data/chordLibrary';
 
 /**
@@ -64,13 +63,11 @@ function TrainingTestPage(): ReactElement {
     const payload: any[] = [];
 
     if (trainingLevel == 'CPM') {
-      oneTimeCreateStoredChordStats('ALPHABET', 'CPM', dictNameOfLibrary['ALPHABET'])
       payload.push('ALPHABET');
       if (wordTestNumber != undefined) {
         payload.push(wordTestNumber);
       }
     } else if (trainingLevel == 'CHM') {
-      oneTimeCreateStoredChordStats('LEXICAL', 'CHM', dictNameOfLibrary['LEXICAL'])
       payload.push('LEXICAL');
       if (wordTestNumber != undefined) {
         payload.push(wordTestNumber);
