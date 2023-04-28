@@ -9,6 +9,7 @@ import {
 } from '../test-complete/testComplete.styled';
 import ImageSlider from '../test/components/imageSlider';
 import { useStoreState, useStoreActions } from '../../store/store';
+import { ProgressBar } from '../test/components/ProgressBar';
 
 /**
  * This is the main Test Complete page.

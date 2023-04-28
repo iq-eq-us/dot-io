@@ -14,12 +14,9 @@ import { resetDataTable } from '../../manager/components/resetDataTable';
 import { ChordMapColumn } from './ChordMapCardColumn';
 
 import {
-  ChordStatistics,
   ChordStatisticsFromDevice,
-  createEmptyChordStatistics,
   createEmptyChordStatisticsFromDevice,
-  MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
-  TrainingStatistics,
+
 } from '../../../models/trainingStatistics';
 import { asyncCallForDownloadChords } from '../controls/mainControls';
 import { render } from 'react-dom';

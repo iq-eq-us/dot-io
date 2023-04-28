@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
-import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
+
 
 function clamp(number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));
@@ -33,18 +33,29 @@ export function ProgressBar(): ReactElement {
   const { parentProps: remainingProps, Popper: RemainingPopover } = usePopover(
     'The number of chords that you have not typed faster than your speed goal.',
   );
-
+ 
   return (
     <Container>
       {Popper}
       {RemainingPopover}
 
+      <TopDataRow>
+        <DataText {...parentProps}>Complete: {chordsConquered}</DataText>
+        <DataText>
+          Level: {currentLevel}
+          {isShowingPlusIcon && <PlusIcon />}
+        </DataText>
+        <DataText {...remainingProps}>Remaining: {chordsRemaining}</DataText>
+      </TopDataRow>
+      <TopProgressBar></TopProgressBar>
       <BottomProgressBar>
-        <ProgressBarOuter>
-          <ProgressBarInner progress={wpm.toFixed(0)} />
+      <ProgressBarOuter>
+          <ProgressBarInner progress={progress} />
         </ProgressBarOuter>
-      </BottomProgressBar>
+        </BottomProgressBar>
+        <Trapazoid/>
     </Container>
+
   );
 }
 
@@ -61,13 +72,13 @@ const SpeedGoalText = styled.span.attrs({
 })``;
 
 const ProgressBarInner = styled.div.attrs<ProgressBarProgress>({
-  className: `relative rounded-r-xl bg-green-500 h-full rounded-full`,
-})<ProgressBarProgress>`
+  className: `relative rounded-r-xl bg-green-500 h-full rounded-l`,
+}) <ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
 
 const ProgressBarOuter = styled.div.attrs({
-  className: `rounded-full bg-red-500 w-full h-full`,
+  className: `rounded bg-red-500 w-full h-full`,
 })``;
 
 const WPMText = styled.div.attrs({
@@ -86,6 +97,16 @@ const DataText = styled.div.attrs({
   className: `text-white font-semibold flex flex-row items-center`,
 })``;
 
+const Trapazoid = styled.div.attrs({
+  className: `@apply h-[12px] w-[200px] ml-[364px] border-b-[35px] border-b-[#333] border-x-[25px] border-x-transparent border-solid rotate-180 content-center	
+  `,
+})``;
+
+
 const BottomProgressBar = styled.div.attrs({
-  className: `rounded bg-[#333] h-12 w-full p-1`,
+  className: `rounded bg-[#333] h-6 w-full p-1`,
+})``;
+
+const TopProgressBar = styled.div.attrs({
+  className: `border-r-4 border-l-4 border-b-4 border-[#333] h-12 w-full p-1`,
 })``;
