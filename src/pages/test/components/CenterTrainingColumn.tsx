@@ -20,10 +20,8 @@ function CenterTrainingColumn(): ReactElement {
   return (
     <React.Fragment>
       <CenterTrainingColumnContainer>
-
         <SmallScreenButtons />
         <TrainingModeSelector />
-        <ProgressBar/>
 
         <ChordTextInput />
 
