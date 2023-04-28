@@ -98,7 +98,7 @@ const DataText = styled.div.attrs({
 })``;
 
 const Trapazoid = styled.div.attrs({
-  className: `@apply h-[12px] w-[200px] ml-[364px] border-b-[35px] border-b-[#333] border-x-[25px] border-x-transparent border-solid rotate-180 content-center	
+  className: `@apply h-[40%] w-[200px] ml-[364px] border-b-[35px] border-b-[#333] border-x-[25px] border-x-transparent border-solid rotate-180 content-center	
   `,
 })``;
 
