@@ -47,7 +47,7 @@ const Manager = (): ReactElement => {
             <BootLoaderButton />
             <RebootButton />
             <div className="h-1 w-6/12 bg-green-500 rounded mb-10 mt-10" />
-            <div className="font-mono text-xl ml-2">Layout <a  className="hover:text-[#40508d] active:text-[#40508d] animate-pulse" target='_blank'href="https://charachorder-config.com/"> External GUI for Chord Mapping</a></div>
+            <div className="font-mono text-xl ml-2">Layout <a rel="noreferrer" className="hover:text-[#40508d] active:text-[#40508d] animate-pulse" target='_blank'href="https://charachorder-config.com/"> External GUI for Chord Mapping</a></div>
             <ImportChordLayout />
             <ExportChordLayout />
             <CommitAllLayoutChanges />
