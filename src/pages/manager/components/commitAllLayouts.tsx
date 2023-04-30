@@ -17,10 +17,10 @@ const delay = (delayInms) => {
 }
 
 export function CommitAllLayoutChanges(): ReactElement {
-  const downloadedChordLayout = useStoreState((store) => store.downloadedChords.chordLayout);
+  const downloadedChordLayout = useStoreState((store) => store.downloadedChordLayout.chordLayout);
   async function storeAllChanges(){
     //downloadedChordLayout.push("VAR B4 "+downloadedChordLayout.keyMap[0] +" "+strAllValues[1] +" "+strAllValues[2]);
-
+    console.log(downloadedChordLayout.length)
     //console.log(thisArray.replace(/(\r\n|\n|\r)/gm, ""))
     for(let i=0; i<downloadedChordLayout.length; i++){
       await sendCommandString('VAR B4 '+ downloadedChordLayout[i].keyMap.replace(/(\r\n|\n|\r)/gm, "") +" "+downloadedChordLayout[i].keyMapPosition.replace(/(\r\n|\n|\r)/gm, "") +" "+downloadedChordLayout[i].keyMapValue);

@@ -11,6 +11,7 @@ import {
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
 import type { TrainingLevels } from '../..//models/trainingLevels';
 import { generateNewChordRecordForAllChordsModule } from '../../pages/test/components/EditChordModal';
+import { TimerModel } from '../../models/timerModel';
 
 /**
  * Here is the training store state, which contains the majority of the application state
@@ -25,11 +26,11 @@ async function removeDups(arr) {
       seen.add(item.id);
       return !duplicate;
     });
-    console.log(newSet)
     return newSet as TrainingStoreStateModel;
 }
 const trainingStoreState: TrainingStoreStateModel = {
   // * State
+  trainingSessionErrors: 0,
   typedTrainingText: '',
   trainingText: [],
   compareText: [],
@@ -51,8 +52,14 @@ const trainingStoreState: TrainingStoreStateModel = {
   wasModuleShown: false,
   moduleNumber: 1,
   numberOfWordsTypedCorrectly:0,
+  startTimer: false,
   trainingStatistics: {
     statistics: [],
+  },
+  timer:{
+    display: '00:00:00',
+    milliseconds: 0,
+    running: false,
   },
   currentLevel: 0,
   timeAtTrainingStart: 0,

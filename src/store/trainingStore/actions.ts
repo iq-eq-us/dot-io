@@ -103,6 +103,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       localStorage?.getItem('chordsReadFromDevice'),
     );
   }),
+  setStartTimer: action((state, payload) => {
+    state.startTimer = payload as boolean;
+  }),
   setTrainingTestCounter: action((state, payload) => {
     state.trainingTestCounter = payload;
   }),
@@ -142,6 +145,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.numberOfWordsChorded = 0;
     state.numberOfWordsTypedCorrectly = 0;
     state.numberOfErrorsArrayForTestMode =[];
+    state.startTimer = false;
     state.storedChordsFromDevice = JSON?.parse(
       localStorage?.getItem('chordsReadFromDevice'),
     );
@@ -384,6 +388,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     payload: undefined,
     result: undefined,
   },
+  
   setPopAllTypedCharactersStore: {
     type: 'action',
     payload: undefined,
@@ -515,6 +520,8 @@ export async function calculateStatisticsForTargetChord(
   //But if the user got a word wrong and went back to correct and the correction was incorrect we do not add another error to the stat
   if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord) {
     chordStats.numberOfErrors++;
+    store.trainingSessionErrors = store.trainingSessionErrors + 1;
+
   }
 
   let timeTakenToTypeChord =
@@ -552,7 +559,7 @@ export async function calculateStatisticsForTargetChord(
 
     timeTakenToTypeChord = 0;
     numberOfOccurences = -1;
-
+    store.startTimer = true;
   }
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
@@ -591,15 +598,15 @@ export async function calculateStatisticsForTargetChord(
     ? chordStats.numberOfOccurrences++
     : '';
   }
-console.log('User is backspacing '+ store.userIsEditingPreviousWord + store.storedTestTextData[store?.allTypedCharactersStore.length-1] + store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1))
   if (store.currentTrainingScenario != 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) { // Also need to add a check to see if the word is correct
     chordStats.numberOfErrors = chordStats.numberOfErrors -1;
-    console.log('User is backspacing in the if statement'+ store.userIsEditingPreviousWord)
+    store.trainingSessionErrors = store.trainingSessionErrors -1;
 
   } else if (store.currentTrainingScenario == 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]) { // Also need to add a check to see if the word is correct
 
     chordStats.numberOfErrors = chordStats.numberOfErrors -1;
-    console.log('User is backspacing in the if statement'+ store.userIsEditingPreviousWord)
+    store.trainingSessionErrors = store.trainingSessionErrors -1;
+
   }
 
   if (couldFindChordInLibrary) {
@@ -626,11 +633,14 @@ console.log('User is backspacing '+ store.userIsEditingPreviousWord + store.stor
 
   if (store.currentTrainingScenario != 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) { // Also need to add a check to see if the word is correct
     chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors -1;
+    store.trainingSessionErrors = store.trainingSessionErrors -1;
   }
 
   if (store.currentTrainingScenario == 'ALLCHORDS' && !userIsTypingFirstChord) {
     if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord) {
       chordStatsFromDevice.numberOfErrors++;
+      store.trainingSessionErrors = store.trainingSessionErrors++;
+
     }
 
     chordStatsFromDevice.lastSpeed = Math.min(

@@ -19,6 +19,7 @@ export interface ManagerStoreActions {
   saveDownloadedChordsData: Action<ManagerStore, Chords>;
   setDownloadedChordLayout: Action<ManagerStore, ChordLayout>;
   setImportedChords: Action<ManagerStore, Chords>;
+  setImportedChordsLayout: Action<ManagerStore, Chords>;
   deleteDownloadedChordsLayoutData: Action<ManagerStore, ChordLayout>;
   saveDownloadedChordLayoutData: Action<ManagerStore, ChordLayout>;
   clearDownloadedChords:Action<ManagerStore, ChordLayout>;
@@ -27,7 +28,7 @@ export interface ManagerStoreActions {
   setSerialApiRequests: Action<ManagerStore, number>;
   setCommitAllCounterForChords: Action<ManagerStore, number>;
   setCommitAllCounterForChordLayout: Action<ManagerStore, number>;
-  updateSerialAPiDataThunk: Thunk<ManagerStore>
+  updateSerialAPiDataThunk: Thunk<ManagerStore>;
 
 }
 

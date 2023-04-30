@@ -11,11 +11,13 @@ import { createChordLayout } from '../../../models/managerModels';
     const clearDownloadedChordLayout = useStoreActions((store) => store.clearDownloadedChordLayout);
     const setDownloadedChordLayout = useStoreActions((store) => store.setDownloadedChordLayout);
     const downloadedChordsLayout = useStoreState((store) => store.downloadedChordLayout.chordLayout);
+    const setImportedChordsLayout = useStoreActions((store) => store.setImportedChordsLayout);
+
     //const downloadedChordLayout = useStoreState((store) => store.downloadedChordLayout);
 
-    const thisArray = [];
 
     async function importLayoutLibrary(e: any) {
+      const thisArray = [];
       clearDownloadedChordLayout();
         const file = e.target.files[0];
         const fileReader = new FileReader();
@@ -47,12 +49,11 @@ import { createChordLayout } from '../../../models/managerModels';
             //await appendLayoutToRow(strValues, true);
            // thisArray.push("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
             const temp = createChordLayout(strAllValues[0],strAllValues[1],strAllValues[2]);
-            setDownloadedChordLayout(temp);
-    
+            thisArray.push(temp)
           });
+          setImportedChordsLayout(thisArray);
     
         }
-        console.log(downloadedChordsLayout)
       }
 
       function click(){

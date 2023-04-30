@@ -9,6 +9,7 @@ import type { TrainingSettingsState } from './trainingSettingsStateModel';
 import type { TrainingStatistics } from './trainingStatistics';
 import type { WordTrainingValues } from './wordTrainingValues';
 import type { TrainingLevels } from './trainingLevels';
+import type { TimerModel } from './timerModel';
 
 export interface TrainingStoreActionsModel {
   setTrainingSettings: Action<TrainingStoreModel, TrainingSettingsState>;
@@ -49,7 +50,9 @@ export interface TrainingStoreActionsModel {
   setNumberOfWordsTypedCorrectly: Action<TrainingStoreActionsModel, number>;
   setTrainingTestCounter: Action<TrainingStoreActionsModel, number>;
   setNumberOfErrorsArray: Action<TrainingStoreActionsModel, number[]>;
-
+  setTimerModel: Action<TrainingStoreActionsModel, TimerModel>;
+  setStartTimer: Action<TrainingStoreActionsModel, boolean>;
+  setTrainingSessionErrors: Action<TrainingStoreActionsModel, number>;
 
 
   /**
@@ -131,6 +134,10 @@ export interface TrainingStoreStateModel {
   trainingTestCounter : number;
   numberOfWordsTypedCorrectly: number;
   numberOfErrorsArrayForTestMode: number[];
+  timer: TimerModel;
+  startTimer: boolean;
+  trainingSessionErrors: number;
+  
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &
