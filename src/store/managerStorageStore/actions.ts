@@ -27,8 +27,10 @@ const managerStorageStoreActions: ManagerStoreActions = {
     state.downloadedChordLayout.chordLayout.push(payload);
   }),
   setImportedChords: action((state, payload) => {
-    console.log(payload)
     state.downloadedChords.chords = payload;
+  }),
+  setImportedChordsLayout: action((state, payload) => {
+    state.downloadedChordLayout.chordLayout = payload;
   }),
   clearDownloadedChords: action((state) => {
     state.downloadedChords.chords = [];
@@ -49,7 +51,7 @@ const managerStorageStoreActions: ManagerStoreActions = {
     const returnedResponse = await readGetOneAndReturnOne();
     state.setSerialApiRequests(returnedResponse);
   }),
-
+  
 };
 export interface ChordStructure {
   currentChord: string;

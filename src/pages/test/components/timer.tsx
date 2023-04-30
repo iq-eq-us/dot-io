@@ -1,0 +1,72 @@
+import React, { useState, useEffect, ReactElement } from "react";
+import { useStoreState } from "easy-peasy";
+
+
+function Timer() {
+  // state to store time
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+
+  // state to check stopwatch running or not
+  const startAndStop = () => {
+    setIsRunning(!startTimer);
+  };
+
+  const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
+  const startTimer = useStoreState((store) => store.startTimer);
+
+
+
+  if(startTimer == true && alltypedText.length > 0){
+   () => setIsRunning(true);
+  }
+
+  useEffect(() => {
+    let intervalId;
+
+    if (startTimer) {
+        //startAndStop.click();
+      // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
+      intervalId = setInterval(() => setTime(time + 1), 10);
+    } else {
+        setTime(0);
+
+    }
+    return () => clearInterval(intervalId);
+  }, [startTimer, time]);
+
+  // Hours calculation
+  const hours = Math.floor(time / 360000);
+
+  // Minutes calculation
+  const minutes = Math.floor((time % 360000) / 6000);
+
+  // Seconds calculation
+  const seconds = Math.floor((time % 6000) / 100);
+
+  // Milliseconds calculation
+  const milliseconds = time % 100;
+
+  // Method to start and stop timer
+
+  //console.log('timer '+ alltypedText)
+
+
+  // Method to reset timer back to 0
+  const reset = () => {
+  };
+
+
+  return (
+    <div className="rotate-180 text-l text-white stopwatch-container">
+      <p className="stopwatch-time">
+        {hours}:{minutes.toString().padStart(2, "0")}:
+        {seconds.toString().padStart(2, "0")}
+      </p>
+      <div className="stopwatch-buttons">
+      </div>
+   </div>
+  );
+};
+
+export default Timer;
