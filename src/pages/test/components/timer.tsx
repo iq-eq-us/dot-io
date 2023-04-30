@@ -53,8 +53,7 @@ function Timer() {
 
 
   // Method to reset timer back to 0
-  const reset = () => {
-  };
+
 
 
   return (
