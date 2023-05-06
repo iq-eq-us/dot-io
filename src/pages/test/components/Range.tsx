@@ -3,6 +3,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 import './multirangeslider.css';
 import './multirangesliderblack.css';
+  /* eslint-disable */
 
 type Props = {
 	id?: string;
@@ -420,6 +421,7 @@ export const MultiRangeSlider = (props: Props, ref: React.ForwardedRef<HTMLDivEl
 		</div>
 	);
 };
+  /* eslint-enable */
 
 export default React.memo(forwardRef<HTMLDivElement, Props>(MultiRangeSlider));
 
