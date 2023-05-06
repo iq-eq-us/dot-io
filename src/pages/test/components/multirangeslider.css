@@ -8,7 +8,6 @@
 .multi-range-slider {
 	display: flex;
 	position: relative;
-	background: transparent;
 	flex-direction: column;
 	-webkit-touch-callout: none; /* iOS Safari */
 	-webkit-user-select: none; /* Safari */
@@ -19,16 +18,13 @@
 }
 .multi-range-slider .bar {
 	display: flex;
-	background: transparent;
 
 }
 .multi-range-slider .bar-left {
 	width: 25%;
-	background: transparent;
 }
 .multi-range-slider .bar-right {
 	width: 25%;
-	background: transparent;
 
 }
 .multi-range-slider .bar-inner {
@@ -118,7 +114,6 @@
 .multi-range-slider .ruler {
 	margin: 10px 0px -5px 0px;
 	border-color: #525252;
-	border-radius: 0.125rem;
 
 
 	display: flex;
