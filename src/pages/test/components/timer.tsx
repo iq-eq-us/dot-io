@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement } from "react";
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreActions } from "easy-peasy";
 
 
 function Timer() {
@@ -14,6 +14,8 @@ function Timer() {
 
   const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
   const startTimer = useStoreState((store) => store.startTimer);
+  const trainingIsDone = useStoreState((store) => store.trainingIsDone);
+  const setTimerValue = useStoreActions((store) => store.setTimerValue);
 
 
 
@@ -49,15 +51,14 @@ function Timer() {
 
   // Method to start and stop timer
 
-  //console.log('timer '+ alltypedText)
+  //console.log('timer '+ hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0")) 
+  setTimerValue(hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0"));
 
-
-  // Method to reset timer back to 0
 
 
 
   return (
-    <div className="rotate-180 text-l text-white stopwatch-container">
+    <div className="rotate-180 text-l text-neutral-400 font-medium">
       <p className="stopwatch-time">
         {hours}:{minutes.toString().padStart(2, "0")}:
         {seconds.toString().padStart(2, "0")}

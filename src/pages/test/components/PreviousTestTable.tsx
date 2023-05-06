@@ -473,7 +473,7 @@ function returnStatisticsColumnHeader(data: Data) {
             ? parseInt(average) == 0
               ? '0 / 0'
               : (
-                  wpmMethodCalculator(parseInt(average).toFixed()) * 5
+                  wpmMethodCalculator(parseInt(average)).toFixed() * 5
                 ).toFixed() +
                 '/' +
                 wpmMethodCalculator(parseInt(average)).toFixed()

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import RefreshIcon from './RefreshIcon';
-import ForwardIcon from './ForwardIcon';
+import ForwardIcon from '../../../../src/pages/test/components/ForwardIcon';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 function NextTestButton(): ReactElement {
@@ -16,17 +16,13 @@ function NextTestButton(): ReactElement {
     (store) => store.setRestartTestMode,
   );
 
-  const setTrainingIsDone = useStoreActions(
-    (store) => store.setTrainingIsDone,
-  );
-
   return (
     <button
       className="p-2 bg-[#333] flex w-10 rounded mt-4 m-2 cursor-pointer hover:bg-[#444] active:bg-[#222]"
       onClick={() => {
         sessionStorage.removeItem('tempTestDeIncrement');
-        setTrainingIsDone(true);
-        //beginTraining(payload);
+        setRestartTestMode(false);
+        beginTraining(payload);
       }}
     >
       <ForwardIcon />

@@ -53,7 +53,8 @@ export interface TrainingStoreActionsModel {
   setTimerModel: Action<TrainingStoreActionsModel, TimerModel>;
   setStartTimer: Action<TrainingStoreActionsModel, boolean>;
   setTrainingSessionErrors: Action<TrainingStoreActionsModel, number>;
-
+  setTrainingIsDone: Action<TrainingStoreActionsModel, boolean>;
+  setTimerValue: Action<TrainingStoreActionsModel, string>;
 
   /**
    * This action allows you to manually update the chords used in a particular training mode
@@ -137,6 +138,9 @@ export interface TrainingStoreStateModel {
   timer: TimerModel;
   startTimer: boolean;
   trainingSessionErrors: number;
+  trainingSessionAggregatedTime: number;
+  trainingIsDone: boolean;
+  timerValue: string;
   
 }
 

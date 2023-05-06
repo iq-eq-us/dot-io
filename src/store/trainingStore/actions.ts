@@ -129,6 +129,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setIsDisplayingIntroductionModal: action((state, payload) => {
     state.isDisplayingIntroductionModal = payload as boolean;
   }),
+   setTrainingIsDone: action((state, payload) => {
+    state.trainingIsDone = payload as boolean;
+  }),
+  setTimerValue: action((state, payload) => {
+    state.timerValue = payload;
+  }),
 
   /**
    * This must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
@@ -142,10 +148,13 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.compareText = [];
     state.trainingTestCounter = 0;
     state.isTestDone = false;
+    state.storedTestTextData = [];
     state.numberOfWordsChorded = 0;
     state.numberOfWordsTypedCorrectly = 0;
+    state.trainingSessionErrors = 0;
     state.numberOfErrorsArrayForTestMode =[];
     state.startTimer = false;
+    state.trainingIsDone = false;
     state.storedChordsFromDevice = JSON?.parse(
       localStorage?.getItem('chordsReadFromDevice'),
     );
@@ -528,6 +537,7 @@ export async function calculateStatisticsForTargetChord(
     (performance.now() - store.timeOfLastChordStarted) / 10;
   let numberOfOccurences = 0;
 
+
   const numberOfChordsConquered = store.trainingStatistics.statistics.filter(
     (s) =>
       s.averageSpeed > store.trainingSettings.speedGoal &&
@@ -554,6 +564,7 @@ export async function calculateStatisticsForTargetChord(
   //This conditional takes the stored session value timeThat that is set in both ChordTextInput.tsx files. That
   // set value contains the time that the user first typed. We take that value and the value of went the word was complete to determine
   // The value for the first word
+  !userIsTypingFirstChord ? store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + timeTakenToTypeChord : '';
 
   if (userIsTypingFirstChord) {
 
@@ -570,6 +581,7 @@ export async function calculateStatisticsForTargetChord(
     MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   );
   store.timeTakenToTypePreviousChord = chordStats?.lastSpeed;
+  //store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + store.timeTakenToTypePreviousChord;
 
   if (chordStats.speedOfLastTen.length == 10) {
     chordStats.speedOfLastTen.push(
@@ -730,11 +742,16 @@ export async function calculateStatisticsForTargetChord(
   }
 }
 
-  if (store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) {
+  if (store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1) && store.currentTrainingScenario !='ALPHABET') {
     store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly +1;
     store.numberOfErrorsArrayForTestMode[store?.allTypedCharactersStore.length-1] = 0;
     //Need to add an errors calculator here 
-  }else{
+  }
+  else if(store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1] && store.currentTrainingScenario =='ALPHABET'){
+    store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly +1;
+    store.numberOfErrorsArrayForTestMode[store?.allTypedCharactersStore.length-1] = 0;
+  }
+  else{
     store.numberOfErrorsArrayForTestMode[store?.allTypedCharactersStore.length-1] = 1;
   }
 

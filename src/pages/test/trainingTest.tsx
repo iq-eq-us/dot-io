@@ -43,6 +43,10 @@ function TrainingTestPage(): ReactElement {
   );
   const trainingLevel = useStoreState((store: any) => store.trainingLevel);
 
+  const trainingIsDone = useStoreState(
+    (store) => store.trainingIsDone,
+  );
+
   //setIsDisplayingIntroductionModal
 
   const [toggleValue, setToggleValue] = useState(true);
@@ -80,7 +84,7 @@ function TrainingTestPage(): ReactElement {
     <React.Fragment>
       <PageContainer contrast={contrast}>
         {!currentTrainingScenario && <Redirect to="" />}
-        {isTrainingTestDone == false && (
+        {(isTrainingTestDone == false && trainingIsDone == false) && (
           <React.Fragment>
             <EditChordsModal />
             <SettingsColumn />
@@ -111,7 +115,7 @@ function TrainingTestPage(): ReactElement {
             <ModuleCompleteModal />
           </React.Fragment>
         )}
-        {isTrainingTestDone == true && (
+        {(isTrainingTestDone == true || trainingIsDone) && (
           <React.Fragment>
             <TestCompletePage />
           </React.Fragment>

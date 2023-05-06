@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { TestControlRow } from './testControlsRow';
+import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
 
 export function TestStatsCard(): ReactElement {
   const beginTraining = useStoreActions(
@@ -21,6 +22,12 @@ export function TestStatsCard(): ReactElement {
   const testNumber = useStoreState((store) => store.wordTestNumber);
   const storedTestTextData = useStoreState((store) => store.storedTestTextData);
   const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
+
+  const wordTestNumber = useStoreState(
+    (store) => store.wordTestNumber);
+
+    const wpm = useSessionWordsPerMinute();
+
   const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM);
   const numberOfWordsTypedCorrectly = useStoreState((store) => store.numberOfWordsTypedCorrectly);
 
@@ -38,30 +45,46 @@ export function TestStatsCard(): ReactElement {
     sumOccurrences += d.displayTitle.length * d.numberOfOccurrences;
     //console.log(d.displayTitle.length * d.numberOfOccurrences);
   });
- 
+  
+  const allTypedText = useStoreState(
+    (store: any) => store.allTypedCharactersStore,
+  );
+  
+  const trainingSessionErrors = useStoreState((store) => store.trainingSessionErrors);
+
+  const Accuracy = (((allTypedText.length-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
+
+  const timerValue = useStoreState((store) => store.timerValue);
+  //console.log('timerValue '+ timerValue)
 
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
         <StatsCardContainer>
-          <div className="text-6xl">{testTeirHighestWPM}</div>
+          <div className="text-6xl">{wordTestNumber != undefined ? testTeirHighestWPM :( wpm.toFixed(0)*5)}</div>
           <h1 className="text-2xl">CPM</h1>
-        </StatsCardContainer>
+        </StatsCardContainer> 
         <StatsCardContainer>
-          <div className="text-4xl">{(testTeirHighestWPM / 5).toFixed(0)}</div>
+          <div className="text-4xl">{ wordTestNumber != undefined ? (testTeirHighestWPM / 5).toFixed(0) : wpm.toFixed(0)}</div>
           <h1 className="text-lg">WPM</h1>
         </StatsCardContainer>
         <StatsCardContainer>
           <div className="text-4xl">
-            {(numberOfWordsTypedCorrectly/parseInt(testNumber) * 100).toFixed(2)+ '%'}
+            {wordTestNumber != undefined ? (numberOfWordsTypedCorrectly/parseInt(testNumber) * 100).toFixed(2)+ '%' : Accuracy+'%'}
           </div>
           <h1 className="text-lg">Typing Accuracy</h1>
         </StatsCardContainer>
         <StatsCardContainer>
-          <div className="text-4xl">
-            {(numberOfWordsChorded.toFixed(0) / 25) * 100 + '%'}
-          </div>
+        <div className="text-4xl">
+          {(numberOfWordsChorded.toFixed(0) / 25) * 100 + '%'}
+          </div> 
           <h1 className="text-lg">Percent Chorded</h1>
+        </StatsCardContainer>
+        <StatsCardContainer>
+        <div className="text-4xl">
+          {timerValue}
+          </div> 
+          <h1 className="text-lg">Time Taken</h1>
         </StatsCardContainer>
       </TrainingStatsColumnContainer>
       <div
