@@ -136,10 +136,13 @@ export function ProgressBar(): ReactElement {
     persistantValue= (sumOfChordsMastered);
 
    } else{
+      /* eslint-disable */
+
     progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
     persistantValue = (parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     ));
+  /* eslint-enable */
 
    }
 
