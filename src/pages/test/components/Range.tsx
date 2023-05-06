@@ -411,7 +411,7 @@ export const MultiRangeSlider = (props: Props, ref: React.ForwardedRef<HTMLDivEl
 					<div className='bar-inner-right' onClick={onInnerBarRightClick}></div>
 				</div>
 				<input placeholder='max-value' className='input-type-range input-type-range-max' type='range' min={min} max={max} step={step} value={maxValue} onInput={onInputMaxChange} />
-				<div className='thumb thumb-right pointer-events-none	' style={{ backgroundColor: props.thumbRightColor }} onMouseDown={onRightThumbMousedown} onTouchStart={onRightThumbTouchStart}>
+				<div className='thumb thumb-right pointer-events-none	bg-sky-500' style={{ backgroundColor: props.thumbRightColor }} onMouseDown={onRightThumbMousedown} onTouchStart={onRightThumbTouchStart}>
 					<div className='caption'>
 						<span className='max-caption'>{maxCaption}</span>
 					</div>

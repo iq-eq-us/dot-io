@@ -188,7 +188,8 @@ export function ProgressBar(): ReactElement {
       max={(maxValue || 500)}
       minValue= {isNaN(wpm.toFixed(0)) || wpm.toFixed(0) < 0 ? '0' : wpm.toFixed(0)}
       maxValue= {persistantValue}
-
+      thumbRightColor='red'
+      thumbLeftColor='blue'
       />
       </TopProgressBar>
       <BottomProgressBar >
