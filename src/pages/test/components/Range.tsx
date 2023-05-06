@@ -395,7 +395,7 @@ export const MultiRangeSlider = (props: Props, ref: React.ForwardedRef<HTMLDivEl
 							{(subSteps) && [...Array(10)].map((e, n) => <div key={n} className='ruler-sub-rule absolute'>
 
               </div>)}
-              <div className='text-[7px] absolute font-bold m-auto text-center text-neutral-600 flex-col'>{i*10}</div>
+              <div className='text-[6px] absolute font-bold m-auto text-center text-neutral-600 flex-col'>{i*10}</div>
 
 						</div>
 					))}
