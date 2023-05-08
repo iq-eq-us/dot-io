@@ -15,6 +15,8 @@ import { wpmMethodCalculatorForStoredChords, wpmMethodCalculator, getCumulativeA
 import {
   getCumulativeAverageChordTypeTimeFromDevice,
 } from '../../../helpers/aggregation';
+import { defaultProgressBarValues } from '../../../models/trainingSettingsStateModel';
+import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 
 function clamp(number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));
@@ -66,6 +68,8 @@ export function ProgressBar(): ReactElement {
   
 
   const wpm = useSessionWordsPerMinute();
+  const wpm2 = useWordsPerMinute();
+  console.log('wpm '+ wpm + ' '+ 'wpm2 '+ wpm2)
   const totalNumberOfChords = useTotalChordsToConquer();
   const tier = useStoreState((store) => store.trainingLevel);
   const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
@@ -81,6 +85,7 @@ export function ProgressBar(): ReactElement {
   const avgStats = getCumulativeAverageChordTypeTime(trainingStatistics)
 
   let progress;
+  let inMaxValue;
   
   const numberOfChordsConquered = trainingStatistics.filter(
     (s) =>
@@ -92,8 +97,6 @@ export function ProgressBar(): ReactElement {
   ).length;
 
   const [minValue, setMinValue] = useState<number>(0)
-  const [maxValue, setMaxValue] = useState<number>(500)
-  const [sessionValue, setSessionValue] = useState<number>(0)
   let persistantValue = 0
 
 
@@ -122,38 +125,73 @@ export function ProgressBar(): ReactElement {
   );
  const Accuracy = ((((allTypedText.length)-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
 
-   const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM);
+   const trainingSessionAggregatedTime = useStoreState((store) => store.trainingSessionAggregatedTime);
 
    sumOfAverages.toFixed(2) 
 
-   //switch statement 
+
+   console.log('AVG using exisiting '+trainingSessionAggregatedTime/(allTypedText.length-1))
+
+   
    if(tier == 'CHM' && currentTrainingScenario != 'ALLCHORDS'){
     progress = clamp((numberOfChordsMastered / totalNumberOfChords) * 100, 0, 100);
     persistantValue= (sumOfChordsMastered);
+    inMaxValue = (defaultProgressBarValues.CHM.ALLCHM)
 
     } else if(tier == 'CHM' && currentTrainingScenario == 'ALLCHORDS'){
     progress = clamp(((numberOfChord) / storedTrainingStatistics.length) * 100, 0, 100)
     persistantValue= (sumOfChordsMastered);
+    inMaxValue = (defaultProgressBarValues.CHM.ALLCHM)
 
-   } else{
+   } else if(tier == 'CPM' && currentTrainingScenario == 'ALPHABET'){
       /* eslint-disable */
-
     progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
     persistantValue = (parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+      
     ));
-  /* eslint-enable */
+    inMaxValue = (defaultProgressBarValues.CPM.ALPHABET)
 
-   }
+  /* eslint-enable */
+   }  else if(tier == 'CPM' && currentTrainingScenario == 'TRIGRAM'){
+    /* eslint-disable */
+  progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
+  persistantValue = (parseInt(
+    Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+    
+  ));
+  inMaxValue = (defaultProgressBarValues.CPM.TRIGRAMS)
+
+/* eslint-enable */
+ }  else if(tier == 'CPM' && currentTrainingScenario == 'LEXICAL'){
+  /* eslint-disable */
+progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
+persistantValue = (parseInt(
+  Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+  
+));
+inMaxValue = (defaultProgressBarValues.CPM.LEXICAL)
+
+/* eslint-enable */
+}  else {
+  /* eslint-disable */
+progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
+persistantValue = (parseInt(
+  Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+  
+));
+
+/* eslint-enable */
+}
 
    function handleInputInRealTimeForMin(value) {
     let added = 100;
-    if(maxValue >= parseInt(value) ){
+    if(inMaxValue >= parseInt(value) ){
     setMinValue(value);
     
     } else {
       added +=parseInt(value);
-      setMaxValue(added);
+      inMaxValue = (added);
       setMinValue(value);
 
     }
@@ -161,9 +199,9 @@ export function ProgressBar(): ReactElement {
    }
    function handleInputInRealTimeForMax(value) {
     if(parseInt(value) >= minValue ){
-      setMaxValue(value);
+      inMaxValue =(value);
     } else{
-      setMaxValue(minValue+0);
+      inMaxValue =(minValue+0);
 
     }
 
@@ -185,8 +223,8 @@ export function ProgressBar(): ReactElement {
       label='true'
       ruler='true'
       min={(minValue || 0)}
-      max={(maxValue || 500)}
-      minValue= {isNaN(wpm.toFixed(0)) || wpm.toFixed(0) < 0 ? '0' : wpm.toFixed(0)}
+      max={(inMaxValue || 500)}
+      minValue= {isNaN(wpm?.toFixed(0)) || wpm?.toFixed(0) < 0 ? '0' : wpm.toFixed(0)}
       maxValue= {persistantValue}
       thumbRightColor='red'
       thumbLeftColor='blue'
@@ -194,7 +232,7 @@ export function ProgressBar(): ReactElement {
       </TopProgressBar>
       <BottomProgressBar >
       <ProgressBarOuter>
-          <ProgressBarInner progress={progress}>{progress.toFixed(1)}% </ProgressBarInner>
+          <ProgressBarInner progress={progress}>{progress?.toFixed(1)}% </ProgressBarInner>
         </ProgressBarOuter>
         </BottomProgressBar>
         <Trapazoid>
@@ -206,7 +244,7 @@ export function ProgressBar(): ReactElement {
 
         </Trapazoid>
     </Container>
-    <input id='maxInputValue' className='w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center' value={maxValue} placeholder='500' onChange={() => handleInputInRealTimeForMax(document.getElementById('maxInputValue').value)}/>
+    <input id='maxInputValue' className='w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center' value={inMaxValue} placeholder='500' onChange={() => handleInputInRealTimeForMax(document.getElementById('maxInputValue').value)}/>
 
     </div>
 
@@ -290,27 +328,3 @@ const TopProgressBar = styled.div.attrs({
 })``;
 
 
-const RangeContainer = styled.div.attrs({
-  className: `relative flex flex-col w-4/5 m-[35%]`,
-})``;
-
-const SliderControls = styled.div.attrs({
-  className: `relative min-h-[50px]`,
-})``;
-
-const FormControl = styled.div.attrs({
-  className: `relative flex justify-between text-2xl text-gray-700`,
-})``;
-
-const InputRange = styled.div.attrs({
-  className: `w-6 h-6 bg-white cursor-pointer`,
-})``;
-
-const InputRange2 = styled.div.attrs({
-  className: `w-6 h-6 bg-white cursor-pointer`,
-})``;
-
-const FromSlider = styled.input.attrs({
-  className: `h-0
-  `,
-})``;

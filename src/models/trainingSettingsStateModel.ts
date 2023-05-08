@@ -17,6 +17,7 @@ export interface TrainingSettingsState {
   restartTestMode: boolean;
 }
 
+
 export const defaultTrainingSettings: TrainingSettingsState = {
   isHighlightingKeys: true,
   isUsingRecursion: true,
@@ -49,6 +50,37 @@ export const defaultTrigramsTestTraining: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+};
+
+export interface CPMStats {
+  ALPHABET: number;
+  TRIGRAMS: number;
+  LEXICAL: number;
+}
+
+export interface CHMStats {
+  ALLCHM: number;
+}
+
+export interface ProgressState {
+  CPM: CPMStats;
+  CHM: CHMStats;
+}
+
+
+export const defaultProgressBarValues: ProgressState = {
+  CPM: 
+    {
+      ALPHABET: 20,
+      TRIGRAMS: 40,
+      LEXICAL: 60,
+    }
+  ,
+  CHM: 
+    {
+      ALLCHM: 150,
+    }
+  
 };
 
 export const defaultAlphabeticTestTraining: TrainingSettingsState = {

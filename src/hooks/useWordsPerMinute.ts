@@ -3,6 +3,7 @@ import { getCumulativeAverageChordTypeTime } from '../helpers/aggregation';
 import {
   storeAverageData,
   storeData,
+
 } from '../pages/manager/components/chordGraphs';
 
 export const useWordsPerMinute = (): number => {
@@ -60,8 +61,9 @@ export const useWordsPerMinute = (): number => {
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
   let currentChordSpeed = y[y?.length - 1]?.lastSpeed;
-  const average = parseInt(getCumulativeAverageChordTypeTime(y)); //This field gets the speed of the current typed word
+  const average = getCumulativeAverageChordTypeTime(y); //This field gets the speed of the current typed word
   const averageDailyCount = y.length;
+  console.log('trainingSession avg'+ average)
 
   const chordLength = totalNumberOfCharactersTyped / 5;
 

@@ -11,6 +11,8 @@ import RefreshButton from './RefreshButton';
 import { TrainingModeSelector } from './TrainingModeSelector';
 import { ProgressBar } from './ProgressBar';
 import { useStoreState, useStoreActions } from '../../../store/store';
+import ModuleCompleteModal from './ModuleCompleteModal';
+
 
 function CenterTrainingColumn(): ReactElement {
   const currentTrainingScenario = useStoreState(
@@ -24,8 +26,11 @@ function CenterTrainingColumn(): ReactElement {
         <SmallScreenButtons />
         <TrainingModeSelector />
         <ProgressBar/>
+
         <ChordTextInput />
         <TextPrompt />
+        <ModuleCompleteModal/>
+
         <ItemsContainer>
           {(currentTrainingScenario == 'LEXICAL' && wordTestNumber != null) ||
           undefined ? (
@@ -53,7 +58,6 @@ const CenterTrainingColumnContainer = styled.div.attrs({
 const ItemsContainer = styled.div`
   height: 50px;
   display: flex;
-  position: relative;
   flex-direction: row;
   padding: '1rem';
   justify-content: center;

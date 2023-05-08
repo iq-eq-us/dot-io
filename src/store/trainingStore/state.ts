@@ -58,6 +58,9 @@ const trainingStoreState: TrainingStoreStateModel = {
   trainingStatistics: {
     statistics: [],
   },
+  localTrainingStatistics: {
+    statistics: [],
+  },
   timer:{
     display: '00:00:00',
     milliseconds: 0,

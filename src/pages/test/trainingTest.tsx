@@ -111,8 +111,6 @@ function TrainingTestPage(): ReactElement {
                 </div>
               </div>
             ) : null}
-
-            <ModuleCompleteModal />
           </React.Fragment>
         )}
         {(isTrainingTestDone == true || trainingIsDone) && (

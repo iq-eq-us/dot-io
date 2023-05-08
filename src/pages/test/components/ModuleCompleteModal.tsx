@@ -114,9 +114,9 @@ function ModuleCompleteModal(): ReactElement {
   return (
     <React.Fragment>
       {moduleCompleteModalToggle && trainingLevelIsCPM ? (
-        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
+        <div className="flex-row absolute border-zinc-400 border-4 left-56 rounded-xl absolute ml-auto mr-auto justify-items-center mt-24 justify-center h-2/5 bg-white">
           <button
-            className="close absolute ml-96 text-5xl pt-4 text-[#181818]"
+            className="close pr-16 float-right text-5xl pt-4 text-[#181818]"
             onClick={() => [
               setModuleCompleteModalToggle(!moduleCompleteModalToggle),
             ]}
@@ -132,7 +132,7 @@ function ModuleCompleteModal(): ReactElement {
             Or press &lsquo;X&rsquo; to continue practicing.
           </p>
           <button
-            className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-36 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
+            className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-auto mr-auto focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
             onClick={() => [
               selectTheTrainingMode(),
               setModuleCompleteModalToggle(!moduleCompleteModalToggle),
@@ -145,7 +145,7 @@ function ModuleCompleteModal(): ReactElement {
       ) : null}
 
       {downloadModulModalToggle ? (
-        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
+        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-auto mr-auto mt-24 justify-center h-2/5 bg-white">
           <button
             className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818] ${
               value == true ? `hidden` : ``
@@ -173,7 +173,7 @@ function ModuleCompleteModal(): ReactElement {
             id="downloadCompletionPercentage"
           ></p>
           <button
-            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ${
+            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-auto mr-auto mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ${
               value == true ? `hidden` : ``
             }`}
             onClick={() => [setValue(true), downloadChords()]}
@@ -183,7 +183,7 @@ function ModuleCompleteModal(): ReactElement {
         </div>
       ) : null}
       {passwordModulModalToggle ? (
-        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
+        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-auto mr-auto mt-24 justify-center h-2/5 bg-white">
           <button
             className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818]`}
             onClick={() => [
@@ -198,7 +198,7 @@ function ModuleCompleteModal(): ReactElement {
             }`}>Wrong phrase!</p>
           <input type="password" ref={inputRef} className='border-black border-2 ml-16 w-3/4'></input>
           <button
-            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
+            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-auto mr-auto mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
             onClick={() => [passwordUnlock(inputRef)]}
           >
             Unlock

@@ -37,10 +37,9 @@ export const useSessionWordsPerMinute = (): number => {
     totalNumberOfCharactersTyped += charactersTyped;
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
-  const currentChordSpeed = y[y?.length - 1]?.lastSpeed;
+  let currentChordSpeed = y[y?.length - 1]?.lastSpeed;
   const average = trainingSessionAggregatedTime/(allTypedCharactersStore.length-1); //This field gets the speed of the current typed word
   
-console.log(average)
   // According to Riley, the equation for WPM is equal to (characters per minute typed correctly / 5)
   // I believe the constant 5 is chosen to represent average word length
   const charactersTypedCorrectly = totalNumberOfCharactersTyped;
@@ -53,14 +52,16 @@ console.log(average)
 
   if (trainingSettings.isAutoWrite) {
     if (typeof trainingScenario === 'string') {
+      let averageSpeed = 0;
+      let averageSpeedCount = 0;
 
       if (trainingSceneario == 'ALPHABET') {
         if (totalNumberOfCharactersTyped == 0) {
           wpm = 0;
         } else {
-          const avgSpeedMilliseconds = average * 10;
-          const millisecondsPerCharacter = avgSpeedMilliseconds;
-          const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
+          let avgSpeedMilliseconds = average * 10;
+          let millisecondsPerCharacter = avgSpeedMilliseconds;
+          let averageCharacterPerMin = 60000 / millisecondsPerCharacter;
           wpm = averageCharacterPerMin / 5;
 
 
@@ -76,10 +77,12 @@ console.log(average)
         } else {
 
           
-          const avgSpeedMilliseconds = average * 10;
-          const millisecondsPerCharacter = avgSpeedMilliseconds / 5; //In the future 5.23 needs to be dynamic based on the practice set
-          const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
+          let avgSpeedMilliseconds = average * 10;
+          let millisecondsPerCharacter = avgSpeedMilliseconds / 5; //In the future 5.23 needs to be dynamic based on the practice set
+          let averageCharacterPerMin = 60000 / millisecondsPerCharacter;
           wpm = (averageCharacterPerMin / 5);
+
+          
 
           if (currentChordSpeed >= 100 && currentChordSpeed != 6276) {
             //storeMasteredData(currentDate, currentChordSpeed);

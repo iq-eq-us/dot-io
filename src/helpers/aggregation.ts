@@ -5,7 +5,7 @@ import type {
 
 export const getCumulativeAverageChordTypeTime = (
   stats: ChordStatistics[],
-): string => {
+): number => {
   const statsWithUntypedChordsRemoved = stats.filter(
     (stat) => stat.averageSpeed != 0,
   );
@@ -20,7 +20,7 @@ export const getCumulativeAverageChordTypeTime = (
       { averageSpeed: 0 },
     ).averageSpeed / statsWithUntypedChordsRemoved.length;
 
-  return (isNaN(average) ? '0' : average?.toFixed()) || '0';
+  return (isNaN(average) ? 0 : average) || 0;
 };
 
 export const getCumulativeAverageChordTypeTimeFromDevice = (

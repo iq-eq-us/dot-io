@@ -158,7 +158,7 @@ const Row = ({ index, style, data }: RowData) => {
     index - LIST_LENGTH_OFFSET,
   );
 
-  const wpmValue = wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()));
+  const wpmValue = wpmMethodCalculator(item?.averageSpeed);
   return (
     <div
       onClick={(e) => {
@@ -175,7 +175,7 @@ const Row = ({ index, style, data }: RowData) => {
 
 function returnStatisticsColumnContent(data: Data, index: number) {
   const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
-  const wpmValue = wpmMethodCalculator(parseInt(item?.averageSpeed.toFixed()));
+  const wpmValue = wpmMethodCalculator(item?.averageSpeed);
   const itemFromStoredChords =
     data?.storedChordsFromDevice?.statistics?.[index - LIST_LENGTH_OFFSET];
 
@@ -237,14 +237,14 @@ function returnStatisticsColumnContent(data: Data, index: number) {
         </RowItem>
         <RowItem>
           {wpmMethodCalculator(
-            parseInt(item?.averageSpeed.toFixed()),
-          ).toFixed() == 'Infinity'
+            item?.averageSpeed)
+          .toFixed() == 'Infinity'
             ? '0'
             : wpmValue.toFixed()}
         </RowItem>
         <RowItem>
           {wpmMethodCalculator(
-            parseInt(item?.averageSpeed.toFixed()),
+            item?.averageSpeed,
           ).toFixed() == 'Infinity'
             ? '0'
             : (wpmValue / 100).toFixed(2)}
@@ -257,7 +257,7 @@ function returnStatisticsColumnContent(data: Data, index: number) {
         <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
         <RowItem>
           {wpmMethodCalculator(
-            parseInt(item?.averageSpeed.toFixed()),
+            item?.averageSpeed,
           ).toFixed() == 'Infinity'
             ? '0 / 0'
             : wpmValue.toFixed() * 5 + '/' + wpmValue.toFixed()}
@@ -359,7 +359,7 @@ const AggregateRow = ({ data }: { data: Data }) => {
 
 function returnStatisticsColumnHeader(data: Data) {
   const average = getCumulativeAverageChordTypeTime(data.stats);
-
+console.log('AVG using exisiting '+average)
   let sumErrors = 0;
   let sumOccurrences = 0;
   let sumOfAverages = 0;
@@ -454,9 +454,9 @@ function returnStatisticsColumnHeader(data: Data) {
         </RowStatItem>
         <RowStatItem>
           {data.displayHUD
-            ? parseInt(average) == 0
+            ? average == 0
               ? '0'
-              : wpmMethodCalculator(parseInt(average)).toFixed()
+              : wpmMethodCalculator(average).toFixed()
             : ''}
         </RowStatItem>
         <RowStatItem>
@@ -470,13 +470,13 @@ function returnStatisticsColumnHeader(data: Data) {
         <RowStatItem>SUM</RowStatItem>
         <RowStatItem>
           {data.displayHUD
-            ? parseInt(average) == 0
+            ? (average) == 0
               ? '0 / 0'
               : (
-                  wpmMethodCalculator(parseInt(average)).toFixed() * 5
+                  wpmMethodCalculator((average)) * 5
                 ).toFixed() +
                 '/' +
-                wpmMethodCalculator(parseInt(average)).toFixed()
+                wpmMethodCalculator((average)).toFixed()
             : ''}
         </RowStatItem>
         <RowStatItem>{sumErrors}</RowStatItem>

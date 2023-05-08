@@ -564,7 +564,14 @@ export async function calculateStatisticsForTargetChord(
   //This conditional takes the stored session value timeThat that is set in both ChordTextInput.tsx files. That
   // set value contains the time that the user first typed. We take that value and the value of went the word was complete to determine
   // The value for the first word
-  !userIsTypingFirstChord ? store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + timeTakenToTypeChord : '';
+
+  const regulatedTimeToChord = Math.min(
+    timeTakenToTypeChord,
+    MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
+  );
+
+  !userIsTypingFirstChord ? store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + regulatedTimeToChord : console.log('here I am this is time');
+
 
   if (userIsTypingFirstChord) {
 
@@ -581,7 +588,6 @@ export async function calculateStatisticsForTargetChord(
     MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   );
   store.timeTakenToTypePreviousChord = chordStats?.lastSpeed;
-  //store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + store.timeTakenToTypePreviousChord;
 
   if (chordStats.speedOfLastTen.length == 10) {
     chordStats.speedOfLastTen.push(
@@ -595,8 +601,7 @@ export async function calculateStatisticsForTargetChord(
   }
 
     //Need to aggregate the speeds in speedOfLastTen array and divide by the number if speeds in that array to derrive the avg speed
-  chordStats.averageSpeed =
-  avgCalculatorForTheSpeedOfLastTen(chordStats.speedOfLastTen);
+  chordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(chordStats.speedOfLastTen);
 
   if (userIsTypingFirstChord) {
     if(chordStats.numberOfOccurrences != 0)
@@ -660,16 +665,11 @@ export async function calculateStatisticsForTargetChord(
       MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
     );
 
-    //const sum = chordStatsFromDevice.chordsMastered?.reduce((a, b) => a + b, 0);
-
-    //chordStatsFromDevice.averageSpeed = (sum / chordStatsFromDevice.chordsMastered?.length) || 0;
-
     chordStatsFromDevice.averageSpeed =
       (chordStatsFromDevice.averageSpeed *
         chordStatsFromDevice.numberOfOccurrences +
         chordStatsFromDevice.lastSpeed) /
       (chordStatsFromDevice.numberOfOccurrences + 1);
-
 
       if (userIsTypingFirstChord) {
         if(chordStatsFromDevice.numberOfOccurrences != 0)
@@ -684,9 +684,6 @@ export async function calculateStatisticsForTargetChord(
         : '';
       }
       
-
-
-
     if (chordStatsFromDevice.chordsMastered?.length == 10) {
       chordStatsFromDevice.chordsMastered?.push(
         chordStatsFromDevice.averageSpeed,
