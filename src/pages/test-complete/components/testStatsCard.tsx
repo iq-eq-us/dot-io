@@ -56,7 +56,9 @@ export function TestStatsCard(): ReactElement {
 
   const timerValue = useStoreState((store) => store.timerValue);
   //console.log('timerValue '+ timerValue)
-
+  const trainingIsDone = useStoreState(
+    (store) => store.trainingIsDone,
+  );
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
@@ -90,9 +92,9 @@ export function TestStatsCard(): ReactElement {
       <div
         className="items-center absolute text-lg text-red-500 ml-16 mt-2"
         style={
-          parseInt(
+          ((parseInt(
             ((numberOfWordsTypedCorrectly / parseInt(testNumber)) * 100).toFixed(2),
-          ) < 95 || (numberOfWordsChorded.toFixed(0) / 25) * 100 > 5
+          ) < 95 || (numberOfWordsChorded.toFixed(0) / 25) * 100 > 5) && !trainingIsDone)
             ? { display: '' }
             : { display: 'none' }
         }
