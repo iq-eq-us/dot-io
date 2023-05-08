@@ -525,9 +525,19 @@ export async function calculateStatisticsForTargetChord(
   const couldFindChordInLibrary = !!chordStats;
   if (!couldFindChordInLibrary) chordStats = emptyChordStats;
 
+  
+  // Don't penalize the user if this is the first character they type
+  // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
+  // So if this is their very first chord, we give them a very short time for it
+  const userIsTypingFirstChord =
+    store.currentLineOfTrainingText === 0 &&
+    store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
+  // if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
+  
+
   //This if state increments the error stat if a user types a word inccorectly 
   //But if the user got a word wrong and went back to correct and the correction was incorrect we do not add another error to the stat
-  if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord) {
+  if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord && !userIsTypingFirstChord) {
     chordStats.numberOfErrors++;
     store.trainingSessionErrors = store.trainingSessionErrors + 1;
 
@@ -552,14 +562,6 @@ export async function calculateStatisticsForTargetChord(
     store.moduleCompleteModalToggle = true as boolean;
     store.wasModuleShown = true as boolean;
   }
-
-  // Don't penalize the user if this is the first character they type
-  // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
-  // So if this is their very first chord, we give them a very short time for it
-  const userIsTypingFirstChord =
-    store.currentLineOfTrainingText === 0 &&
-    store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
-  // if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
 
   //This conditional takes the stored session value timeThat that is set in both ChordTextInput.tsx files. That
   // set value contains the time that the user first typed. We take that value and the value of went the word was complete to determine
@@ -637,7 +639,6 @@ export async function calculateStatisticsForTargetChord(
     store.trainingStatistics.statistics.push(chordStats);
   }
 
-  store.userIsEditingPreviousWord = false;
   if(store.wordTestNumber == undefined)// this is to prevent stats from storing during the testing module 
   localStorage.setItem(store.trainingLevel+'_'+store.currentTrainingScenario, JSON.stringify({statistics: store.trainingStatistics.statistics})); //Store downloaded chords in local storage
 
@@ -672,10 +673,14 @@ export async function calculateStatisticsForTargetChord(
       (chordStatsFromDevice.numberOfOccurrences + 1);
 
       if (userIsTypingFirstChord) {
-        if(chordStatsFromDevice.numberOfOccurrences != 0)
+        if(chordStatsFromDevice.numberOfOccurrences != 0){
         chordStatsFromDevice.numberOfOccurrences = chordStatsFromDevice.numberOfOccurrences - 1;
-        else
+        chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors - 1;
+        } else {
         chordStatsFromDevice.numberOfOccurrences = chordStatsFromDevice.numberOfOccurrences = 0;
+        chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors = 0;
+
+        }
       } else{
         chordStatsFromDevice.numberOfOccurrences =
       chordStatsFromDevice.numberOfOccurrences + numberOfOccurences;
@@ -707,6 +712,8 @@ export async function calculateStatisticsForTargetChord(
         (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
       ),
     };
+
+    console.log('Look at all the stats '+ chordStatsFromDevice.numberOfErrors + ' occur '+ chordStatsFromDevice.numberOfOccurrences)
 
     store.storedChordsFromDevice = {
       statistics: store.storedChordsFromDevice.statistics.map(
@@ -751,6 +758,9 @@ export async function calculateStatisticsForTargetChord(
   else{
     store.numberOfErrorsArrayForTestMode[store?.allTypedCharactersStore.length-1] = 1;
   }
+
+  store.userIsEditingPreviousWord = false;
+
 
 }
 export function savedStoredChordStats(state : TrainingStoreModel){

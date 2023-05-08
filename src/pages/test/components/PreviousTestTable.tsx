@@ -359,7 +359,6 @@ const AggregateRow = ({ data }: { data: Data }) => {
 
 function returnStatisticsColumnHeader(data: Data) {
   const average = getCumulativeAverageChordTypeTime(data.stats);
-console.log('AVG using exisiting '+average)
   let sumErrors = 0;
   let sumOccurrences = 0;
   let sumOfAverages = 0;
