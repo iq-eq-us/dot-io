@@ -51,9 +51,14 @@ const trainingStoreState: TrainingStoreStateModel = {
   passwordModulModalToggle: false,
   wasModuleShown: false,
   moduleNumber: 1,
-  numberOfWordsTypedCorrectly:0,
+  numberOfWordsTypedCorrectly: 0,
+  trainingSessionAggregatedTime: 0,
   startTimer: false,
+  trainingIsDone: false,
   trainingStatistics: {
+    statistics: [],
+  },
+  localTrainingStatistics: {
     statistics: [],
   },
   timer:{

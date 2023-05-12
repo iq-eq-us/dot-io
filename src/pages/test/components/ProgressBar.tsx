@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
+import React, { ReactElement, useState } from 'react';
+import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
 import useNumberOfChordsConquered from '../../../hooks/useChordsConquered';
 import useChordsNotConquered, {
   useTotalChordsToConquer,
@@ -10,18 +10,13 @@ import { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
 import  Timer from './timer';
+import MultiRangeSlider from './Range';
 import { wpmMethodCalculatorForStoredChords, wpmMethodCalculator, getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
-
-const data = [
-  { name: "|" },
-  { name: "|" },
-  { name: "|" },
-  { name: "|" },
-  { name: "|" },
-  { name: "|" },
-  //{ name: "RAM", desc: "Prints the current amount of SRAM available. This is primarily used for debugging.", example: "RAM"},
-  //{ name: "SIM", desc: "Simulates/injects a chord and outputs the chord output if the chord exists in the chord library. This is primarily used for debugging.", example: "SIM CHORD 000000000000C1AE46DED6731EC20F2A"},
-];
+import {
+  getCumulativeAverageChordTypeTimeFromDevice,
+} from '../../../helpers/aggregation';
+import { defaultProgressBarValues } from '../../../models/trainingSettingsStateModel';
+import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 
 function clamp(number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));
@@ -43,15 +38,20 @@ export function ProgressBar(): ReactElement {
 
   let sumErrors = 0;
   let sumOccurrences = 0;
+  let numberOfChordsMastered = 0;
+  let tempChordMasteredValue = 0;
   let sumOfAverages = 0;
 
   stats.statistics.forEach((d) => {
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
-    sumOfAverages +=
+
+    tempChordMasteredValue =
       wpmMethodCalculator(d.averageSpeed) == 'Infinity'
         ? 0
         : wpmMethodCalculator(d.averageSpeed) / 100;
+      sumOfAverages += tempChordMasteredValue;
+      (tempChordMasteredValue) >=1 ? numberOfChordsMastered++ : '';
   });
 
   inStoredChordsFromDevice?.statistics?.forEach((d) => {
@@ -67,23 +67,58 @@ export function ProgressBar(): ReactElement {
   });
   
 
-  const wpm = useWordsPerMinute();
-  const chordsConquered = useNumberOfChordsConquered();
-  const [currentLevel] = useCurrentLevel();
-  const chordsRemaining = useChordsNotConquered();
+  const wpm = useSessionWordsPerMinute();
+  let allTimeWPM;
   const totalNumberOfChords = useTotalChordsToConquer();
   const tier = useStoreState((store) => store.trainingLevel);
-  const startTimer = useStoreState((store) => store.startTimer);
+  const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
 
   const allTypedText = useStoreState(
     (store: any) => store.allTypedCharactersStore,
   );
-  const trainingSessionErrors = useStoreState((store) => store.trainingSessionErrors);
+  const storedTrainingStatistics = useStoreState((store) => store.storedChordsFromDevice?.statistics);
 
+  const trainingStatistics = useStoreState((store) => store.trainingStatistics.statistics);
+  const trainingSettings = useStoreState((store) => store.trainingSettings);
+  const trainingSessionErrors = useStoreState((store) => store.trainingSessionErrors);
+  const avgStats = getCumulativeAverageChordTypeTime(trainingStatistics)
 
   let progress;
-  tier == 'CHM' ?   progress = clamp(((sumOfAWPM / 100).toFixed(2) / totalNumberOfChords) * 100, 0, 100) : progress = clamp(((sumOfAverages / 100).toFixed(2) / totalNumberOfChords) * 100, 0, 100);
+  let inMaxValue;
   
+  const numberOfChordsConquered = trainingStatistics.filter(
+    (s) =>
+      s.averageSpeed > trainingSettings.speedGoal && s.numberOfOccurrences >= 10,
+  ).length;
+
+  const numberOfChord = storedTrainingStatistics?.filter(
+    (d) => d.chordsMastered.length == 1 && d.chordsMastered[0] == 0,
+  ).length;
+
+  tier == 'CPM' ? allTimeWPM = wpmMethodCalculator(getCumulativeAverageChordTypeTime(trainingStatistics)) : wpmMethodCalculator(getCumulativeAverageChordTypeTime(storedChordStats.statistics));
+
+
+  const [minValue, setMinValue] = useState<number>(0)
+  let persistantValue = 0
+
+
+  const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
+
+  //wpmMethodCalculator((average))
+
+  const storedChordsFromDevice = useStoreState(
+    (store) => store.storedChordsFromDevice,
+  );
+
+  let sumOfChordsMastered = 0;
+  storedChordsFromDevice?.statistics?.forEach((d) => {
+    sumOfChordsMastered +=
+      d.chordsMastered[d?.chordsMastered.length - 1] == null ||
+      d?.chordsMastered.length == 0 ||
+      (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
+        ? 0
+        : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
+  });
 
   const { parentProps, Popper } = usePopover(
     'The number of chords that you have typed faster than your speed goal.',
@@ -92,40 +127,132 @@ export function ProgressBar(): ReactElement {
   const { parentProps: remainingProps, Popper: RemainingPopover } = usePopover(
     'The number of chords that you have not typed faster than your speed goal.',
   );
-  console.log('progress '+progress)
- const Accuracy = (((allTypedText.length-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
- console.log('Accuracy '+ trainingSessionErrors + startTimer)
+ const Accuracy = ((((allTypedText.length)-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
+
+   const trainingSessionAggregatedTime = useStoreState((store) => store.trainingSessionAggregatedTime);
+
+   sumOfAverages.toFixed(2) 
+
+   
+   
+   if(tier == 'CHM' && currentTrainingScenario != 'ALLCHORDS'){
+    progress = clamp((numberOfChordsMastered / totalNumberOfChords) * 100, 0, 100);
+    persistantValue= (sumOfChordsMastered);
+    inMaxValue = (defaultProgressBarValues.CHM.ALLCHM)
+
+    } else if(tier == 'CHM' && currentTrainingScenario == 'ALLCHORDS'){
+    progress = clamp(((numberOfChord) / storedTrainingStatistics.length) * 100, 0, 100)
+    persistantValue= (sumOfChordsMastered);
+    inMaxValue = (defaultProgressBarValues.CHM.ALLCHM)
+
+   } else if(tier == 'CPM' && currentTrainingScenario == 'ALPHABET'){
+      /* eslint-disable */
+    progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
+    persistantValue = (parseInt(
+      Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+      
+    ));
+    inMaxValue = (defaultProgressBarValues.CPM.ALPHABET);
+
+  /* eslint-enable */
+   }  else if(tier == 'CPM' && currentTrainingScenario == 'TRIGRAM'){
+    /* eslint-disable */
+  progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
+  persistantValue = (parseInt(
+    Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+    
+  ));
+  inMaxValue = (defaultProgressBarValues.CPM.TRIGRAMS)
+
+/* eslint-enable */
+ }  else if(tier == 'CPM' && currentTrainingScenario == 'LEXICAL'){
+  /* eslint-disable */
+progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
+persistantValue = (parseInt(
+  Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+  
+));
+inMaxValue = (defaultProgressBarValues.CPM.LEXICAL)
+
+/* eslint-enable */
+}  else {
+  /* eslint-disable */
+progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
+persistantValue = (parseInt(
+  Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+  
+));
+
+/* eslint-enable */
+
+
+}
+
+   function handleInputInRealTimeForMin(value) {
+    let added = 100;
+    if(inMaxValue >= parseInt(value) ){
+    setMinValue(value);
+    
+    } else {
+      added +=parseInt(value);
+      inMaxValue = (added);
+      setMinValue(value);
+
+    }
+
+   }
+   function handleInputInRealTimeForMax(value) {
+    if(parseInt(value) >= minValue ){
+      inMaxValue =(value);
+    } else{
+      inMaxValue =(minValue+0);
+
+    }
+
+   }
+
+
   return (
+    <React.Fragment>
+      <div className='float-left flex flex-row inline-block'>
+        <input id='minInputValue' className='w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center'value={minValue} placeholder='0' onChange={() => handleInputInRealTimeForMin(document.getElementById('minInputValue').value)}/>
     <Container>
       {Popper}
       {RemainingPopover}
       <TopDataRow>
       </TopDataRow>
       <TopProgressBar >
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-      <span className="h-3 w-1 bg-neutral-700 rounded mb-10 rotate" />
-
+      <MultiRangeSlider
+      className='w-full'
+      label='true'
+      ruler='true'
+      min={(minValue || 0)}
+      max={(inMaxValue || 500)}
+      minValue= {isNaN(wpm?.toFixed(0)) || wpm?.toFixed(0) < 0 ? '0' : wpm.toFixed(0)}
+      maxValue= {allTimeWPM}
+      thumbRightColor='red'
+      thumbLeftColor='blue'
+      />
       </TopProgressBar>
-      <BottomProgressBar>
+      <BottomProgressBar >
       <ProgressBarOuter>
-          <ProgressBarInner progress={progress} />
+          <ProgressBarInner progress={progress}>{progress?.toFixed(1)}% </ProgressBarInner>
         </ProgressBarOuter>
         </BottomProgressBar>
         <Trapazoid>
-        <RightTerms>{isNaN(Accuracy) ? '0' : Accuracy}% acc</RightTerms>
+        <RightTerms>{isNaN(Accuracy) ? '0' : Accuracy}% acc
+        <div>{isNaN(wpm.toFixed(0)) || wpm.toFixed(0) < 0 ? '0' : wpm.toFixed(0)} WPM</div>
+        </RightTerms>
         <Timer/>
-        <Terms>{...allTypedText.length} Terms</Terms>
+        <LeftTerms>{...allTypedText.length} Terms</LeftTerms>
 
         </Trapazoid>
     </Container>
+    <input id='maxInputValue' className='w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center' value={inMaxValue} placeholder='500' onChange={() => handleInputInRealTimeForMax(document.getElementById('maxInputValue').value)}/>
 
+    </div>
+
+    </React.Fragment>
   );
 }
 
@@ -136,6 +263,17 @@ interface ProgressBarProgress {
 interface TermsSection {
   Terms?: number;
 }
+const AllTimeSpeed = styled.div.attrs<ProgressBarProgress>({
+  className: `relative border-r-[5px] border-r-[#333] h-full  text-white text-xs`,
+}) <ProgressBarProgress>`
+  width: ${(props) => props.progress?.toString()}%;
+`;
+
+const SessionSpeed = styled.div.attrs<ProgressBarProgress>({
+  className: `relative border-r-[5px] border-r-[#333] h-full  text-white text-xs`,
+}) <ProgressBarProgress>`
+  width: ${(props) => props.progress?.toString()}%;
+`;
 
 const BottomDataRow = styled.div.attrs({
   className: `flex flex-row w-full mt-2 justify-between text-white font-semibold`,
@@ -146,7 +284,7 @@ const SpeedGoalText = styled.span.attrs({
 })``;
 
 const ProgressBarInner = styled.div.attrs<ProgressBarProgress>({
-  className: `relative rounded-r-xl bg-green-500 h-full rounded-l`,
+  className: `relative rounded-r-xl bg-green-500 h-full rounded-l text-white text-xs`,
 }) <ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
@@ -155,12 +293,12 @@ const ProgressBarOuter = styled.div.attrs({
   className: `rounded bg-black w-full h-full`,
 })``;
 
-const Terms = styled.div.attrs({
-  className: `rotate-180 float-left text-xs text-white`,
+const LeftTerms = styled.div.attrs({
+  className: `rotate-180 float-left text-xs text-neutral-400`,
 })``;
 
 const RightTerms = styled.div.attrs({
-  className: `rotate-180  text-xs text-white`,
+  className: `rotate-180  text-xs text-neutral-400`,
 })``;
 
 const WPMText = styled.div.attrs({
@@ -168,7 +306,7 @@ const WPMText = styled.div.attrs({
 })``;
 
 const Container = styled.div.attrs({
-  className: ``,
+  className: `w-full`,
 })``;
 
 const TopDataRow = styled.div.attrs({
@@ -180,7 +318,7 @@ const DataText = styled.div.attrs({
 })``;
 
 const Trapazoid = styled.div.attrs({
-  className: `grid grid-cols-3 gap-x-[.5] h-[12px] w-[220px] ml-[38%] border-b-[35px] border-b-[#333] border-x-[25px] border-x-transparent border-solid rotate-180
+  className: `ml-auto mr-auto justify-items-center grid grid-cols-3 gap-x-[.5] h-[12px] w-[220px]  border-b-[35px] border-b-[#333] border-x-[25px] border-x-transparent border-solid rotate-180
   `,
 })``;
 
@@ -192,3 +330,5 @@ const BottomProgressBar = styled.div.attrs({
 const TopProgressBar = styled.div.attrs({
   className: `border-r-4 border-l-4 border-b-4 flex space-x-20 text-center justify-center	inline-block border-[#333] h-12 w-full p-1`,
 })``;
+
+

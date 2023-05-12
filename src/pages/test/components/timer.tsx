@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement } from "react";
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreActions } from "easy-peasy";
 
 
 function Timer() {
@@ -14,6 +14,9 @@ function Timer() {
 
   const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
   const startTimer = useStoreState((store) => store.startTimer);
+  const trainingIsDone = useStoreState((store) => store.trainingIsDone);
+  const textPromptUnFocused = useStoreState((store) => store.textPromptUnFocused);
+  const setTimerValue = useStoreActions((store) => store.setTimerValue);
 
 
 
@@ -28,12 +31,15 @@ function Timer() {
         //startAndStop.click();
       // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
       intervalId = setInterval(() => setTime(time + 1), 10);
-    } else {
+    }  else if(!startTimer && textPromptUnFocused){
+      setTime(time);
+    }
+    else{
         setTime(0);
-
     }
     return () => clearInterval(intervalId);
   }, [startTimer, time]);
+
 
   // Hours calculation
   const hours = Math.floor(time / 360000);
@@ -49,15 +55,15 @@ function Timer() {
 
   // Method to start and stop timer
 
-  //console.log('timer '+ alltypedText)
+  //console.log('timer '+ hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0")) 
+  setTimerValue(hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0"));
 
-
-  // Method to reset timer back to 0
+  console.log('Textprompt value1 '+ textPromptUnFocused + startTimer)
 
 
 
   return (
-    <div className="rotate-180 text-l text-white stopwatch-container">
+    <div className="rotate-180 text-l text-neutral-400 font-medium">
       <p className="stopwatch-time">
         {hours}:{minutes.toString().padStart(2, "0")}:
         {seconds.toString().padStart(2, "0")}

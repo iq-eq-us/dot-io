@@ -11,7 +11,6 @@ import { Redirect } from 'react-router-dom';
 import { PreviousTest } from './components/PreviousTests';
 import TestCompletePage from '../test-complete/testComplete';
 import ImageSlider from './components/imageSlider';
-import ModuleCompleteModal from './components/ModuleCompleteModal';
 import { chordLibrary } from '../../data/chordLibrary';
 
 /**
@@ -42,6 +41,10 @@ function TrainingTestPage(): ReactElement {
     (store: any) => store.setIsDisplayingIntroductionModal,
   );
   const trainingLevel = useStoreState((store: any) => store.trainingLevel);
+
+  const trainingIsDone = useStoreState(
+    (store) => store.trainingIsDone,
+  );
 
   //setIsDisplayingIntroductionModal
 
@@ -80,7 +83,7 @@ function TrainingTestPage(): ReactElement {
     <React.Fragment>
       <PageContainer contrast={contrast}>
         {!currentTrainingScenario && <Redirect to="" />}
-        {isTrainingTestDone == false && (
+        {(isTrainingTestDone == false && trainingIsDone == false) && (
           <React.Fragment>
             <EditChordsModal />
             <SettingsColumn />
@@ -107,11 +110,9 @@ function TrainingTestPage(): ReactElement {
                 </div>
               </div>
             ) : null}
-
-            <ModuleCompleteModal />
           </React.Fragment>
         )}
-        {isTrainingTestDone == true && (
+        {(isTrainingTestDone == true || trainingIsDone) && (
           <React.Fragment>
             <TestCompletePage />
           </React.Fragment>

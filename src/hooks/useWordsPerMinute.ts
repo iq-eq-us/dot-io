@@ -3,8 +3,7 @@ import { getCumulativeAverageChordTypeTime } from '../helpers/aggregation';
 import {
   storeAverageData,
   storeData,
-  storeMasteredData,
-  storeCharactersPerMinute,
+
 } from '../pages/manager/components/chordGraphs';
 
 export const useWordsPerMinute = (): number => {
@@ -62,8 +61,9 @@ export const useWordsPerMinute = (): number => {
   });
   const y = trainingStatistics.statistics.filter((s) => s.averageSpeed);
   let currentChordSpeed = y[y?.length - 1]?.lastSpeed;
-  const average = parseInt(getCumulativeAverageChordTypeTime(y)); //This field gets the speed of the current typed word
+  const average = getCumulativeAverageChordTypeTime(y); //This field gets the speed of the current typed word
   const averageDailyCount = y.length;
+  console.log('trainingSession avg'+ average)
 
   const chordLength = totalNumberOfCharactersTyped / 5;
 
@@ -142,9 +142,7 @@ export const useWordsPerMinute = (): number => {
           (numberOfWordsTypedCorrectly / testNum) * 100 >= 95 &&
           testTeirHighestWPM > fastestRecordedWPM[trainingScenario]
         ) {
-          console.log(
-            'New WPM did fire inside the conditional and it was teuew ',
-          );
+
 
           storeData(testTeirHighestWPM, currentDate); //This checks to make sure we are in a testing teir
 
@@ -153,10 +151,8 @@ export const useWordsPerMinute = (): number => {
             [trainingScenario]: testTeirHighestWPM,
           });
 
-          console.log('avgCount ' + averageDailyCount);
         }
         storeAverageData(testTeirHighestWPM, currentDate, currentChordSpeed, 1); //This checks to make sure we are in a testing teir
-        console.log('avgCount ' + averageDailyCount);
       }
     }
   }

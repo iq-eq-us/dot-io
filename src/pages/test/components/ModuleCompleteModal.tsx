@@ -114,16 +114,16 @@ function ModuleCompleteModal(): ReactElement {
   return (
     <React.Fragment>
       {moduleCompleteModalToggle && trainingLevelIsCPM ? (
-        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
-          <button
-            className="close absolute ml-96 text-5xl pt-4 text-[#181818]"
+        <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[45%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
+        <button
+            className="close ml-96 text-5xl pt-4 text-[#181818]"
             onClick={() => [
               setModuleCompleteModalToggle(!moduleCompleteModalToggle),
             ]}
           >
             &times;
           </button>
-          <p className="pt-4 m-10 font-bold ">Congratulations!</p>
+          <p className=" font-bold ">Congratulations!</p>
           <p className=" ml-10 mr-10">You have completed the current module!</p>
           <p className=" ml-10 mr-10 ">
             Press &lsquo;Continue&rsquo; below to move on to the next Module,
@@ -132,7 +132,7 @@ function ModuleCompleteModal(): ReactElement {
             Or press &lsquo;X&rsquo; to continue practicing.
           </p>
           <button
-            className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-36 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
+            className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 mr-auto ml-auto focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
             onClick={() => [
               selectTheTrainingMode(),
               setModuleCompleteModalToggle(!moduleCompleteModalToggle),
@@ -145,9 +145,9 @@ function ModuleCompleteModal(): ReactElement {
       ) : null}
 
       {downloadModulModalToggle ? (
-        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
-          <button
-            className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818] ${
+        <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[45%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
+        <button
+            className={`close  ml-96 text-5xl pl-8 pt-4 text-[#181818] ${
               value == true ? `hidden` : ``
             }`}
             onClick={() => [
@@ -156,7 +156,7 @@ function ModuleCompleteModal(): ReactElement {
           >
             &times;
           </button>
-          <p className="pt-2 m-10 font-bold mr-64">Download Your Chords!</p>
+          <p className=" font-bold mr-64">Download Your Chords!</p>
           <p className=" ml-10 mr-10" id="statusDiv"></p>
           <p className=" ml-10 mr-10 text-white">
             Or press &lsquo;X&rsquo; to continue practicing. Or press
@@ -173,7 +173,7 @@ function ModuleCompleteModal(): ReactElement {
             id="downloadCompletionPercentage"
           ></p>
           <button
-            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ${
+            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-auto mr-auto mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ${
               value == true ? `hidden` : ``
             }`}
             onClick={() => [setValue(true), downloadChords()]}
@@ -183,9 +183,9 @@ function ModuleCompleteModal(): ReactElement {
         </div>
       ) : null}
       {passwordModulModalToggle ? (
-        <div className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
-          <button
-            className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818]`}
+        <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[45%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
+        <button
+            className={`close ml-96 text-5xl pl-8 pt-4 text-[#181818]`}
             onClick={() => [
               setPasswordModulModalToggle(!passwordModulModalToggle),
             ]}
@@ -198,7 +198,7 @@ function ModuleCompleteModal(): ReactElement {
             }`}>Wrong phrase!</p>
           <input type="password" ref={inputRef} className='border-black border-2 ml-16 w-3/4'></input>
           <button
-            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
+            className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-auto mr-auto mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
             onClick={() => [passwordUnlock(inputRef)]}
           >
             Unlock

@@ -151,7 +151,6 @@ export function Download(): ReactElement {
       //console.log("MapID");
       //console.log(MainControls._chordmapId);
       const inValue = await readGetOneChordmap();
-      console.log(inValue)
       const tempCreated = createChord( inValue[0], inValue[1], inValue[2], inValue[3]);
       setDownloadedChords(tempCreated);
   

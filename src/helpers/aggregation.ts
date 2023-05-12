@@ -5,7 +5,7 @@ import type {
 
 export const getCumulativeAverageChordTypeTime = (
   stats: ChordStatistics[],
-): string => {
+): number => {
   const statsWithUntypedChordsRemoved = stats.filter(
     (stat) => stat.averageSpeed != 0,
   );
@@ -15,13 +15,14 @@ export const getCumulativeAverageChordTypeTime = (
       (a, b) => ({
         averageSpeed: a.averageSpeed + b.averageSpeed,
         // ? Could also be done this way to account for the number of occurrences of the given chord typed
-        // averageSpeed: a.averageSpeed + b.averageSpeed * b.numberOfOccurrences,
+         //averageSpeed: a.averageSpeed + b.averageSpeed * b.numberOfOccurrences,
       }),
       { averageSpeed: 0 },
     ).averageSpeed / statsWithUntypedChordsRemoved.length;
 
-  return (isNaN(average) ? '0' : average?.toFixed()) || '0';
+  return (isNaN(average) ? 0 : average) || 0;
 };
+
 
 export const getCumulativeAverageChordTypeTimeFromDevice = (
   stats: ChordStatisticsFromDevice[],
@@ -56,6 +57,7 @@ export const wpmMethodCalculator = (value: number) => {
   return wpm;
 };
 
+
 export const wpmMethodCalculatorForStoredChords = (value: number[]) => {
   const sum = value?.reduce((a, b) => a + b, 0);
   const avg = sum / value?.length || 0;
@@ -74,6 +76,7 @@ export const avgCalculatorForTheSpeedOfLastTen = (value: number[]) => {
   const avg = sum / value?.length || 0;
   return avg;
 };
+
 
 export const getCumulativeValueByPropertyName = <T>(
   object: T[],

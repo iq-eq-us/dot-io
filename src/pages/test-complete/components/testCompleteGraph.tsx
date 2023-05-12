@@ -202,11 +202,15 @@ export function TestCompleteGraph(): ReactElement {
   const currentTrainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
-  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
-  const testTeirHighestWPM = useStoreActions(
-    (store) => store.setTestTeirHighestWPM,
-  ); 
+
+  const storedTestTextData = useStoreState((store) => store.storedTestTextData); 
+
   const numberOfErrorsArrayForTestMode = useStoreState((store) => store.numberOfErrorsArrayForTestMode);
+  const allTypedCharactersStore = useStoreState((store) => store.allTypedCharactersStore);
+  const wordTestNumber = useStoreState((store) => store.wordTestNumber);
+  const testTeirHighestWPM = useStoreActions((store) => store.setTestTeirHighestWPM);
+  //trainingLevel == 'CPM'
+  const teir = useStoreState((store) => store.trainingLevel);
 
 
   let wordNames: any = [];
@@ -253,9 +257,11 @@ export function TestCompleteGraph(): ReactElement {
     wordPerMinute = finalWPMArray;
     wordNames = chordsToChooseFrom;
     rawSpeedOfCurrentWord = finalRawWPM;
-  } else {
+  
+  } else if (wordTestNumber != undefined){ //Checks to see if the user is doing the 25 word test  
+
     let firstWordIndex;
-    for (let i = 1; i < storedTestTextData?.length; i++) {
+    for (let i = 1; i < allTypedCharactersStore?.length; i++) {
       if (
         isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false
       ) {
@@ -289,6 +295,79 @@ export function TestCompleteGraph(): ReactElement {
     finalRawWPM.shift();
     rawSpeedOfCurrentWord = finalRawWPM;
     wordOccurrences.shift();
+
+  } else if(teir == 'CHM'){
+    let tempV;
+    rawSpeedOfCurrentWord.shift();
+    wordPerMinute.shift();
+        for (let i = 0; i < allTypedCharactersStore?.length; i++) {
+    
+      if (
+        isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false
+      ) {
+        finalErrorsArray.push(
+          wordOccurrences[wordNames.indexOf(storedTestTextData[i])],
+        );
+        finalWPMArray.push(
+          wordPerMinute[wordNames.indexOf(storedTestTextData[i])],
+        );
+        tempV =  rawSpeedOfCurrentWord[wordNames.indexOf(storedTestTextData[i])]/100        ;
+        finalRawWPM.push(tempV);
+      } 
+      if (i == storedTestTextData.length - 1) {
+        finalErrorsArray.splice(0, 0, 0);
+        finalWPMArray.splice(0, 0, 0);
+        finalRawWPM.splice(0, 0, 0);
+      }
+   
+    }
+    //finalErrorsArray.shift();
+    wordOccurrences = numberOfErrorsArrayForTestMode.slice(1, allTypedCharactersStore?.length);
+    //finalWPMArray.shift();
+    wordPerMinute = wpmDataCalculator(finalWPMArray)
+
+    //storedTestTextData.shift(); TStored test text data does not need to be shifted
+    wordNames = storedTestTextData.slice(1, allTypedCharactersStore?.length);
+
+   //finalRawWPM.shift();
+    rawSpeedOfCurrentWord = finalRawWPM
+
+  } else {
+    for (let i = 0; i < allTypedCharactersStore?.length-1; i++) {
+
+
+    
+      if (
+        isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false
+      ) {
+        finalErrorsArray.push(
+          wordOccurrences[wordNames.indexOf(storedTestTextData[i])],
+        );
+        finalWPMArray.push(
+          wordPerMinute[wordNames.indexOf(storedTestTextData[i])],
+        );
+        finalRawWPM.push(
+          rawSpeedOfCurrentWord[wordNames.indexOf(storedTestTextData[i])],
+        );
+      } 
+      if (i == storedTestTextData.length - 1) {
+        finalErrorsArray.splice(0, 0, 0);
+        finalWPMArray.splice(0, 0, 0);
+        finalRawWPM.splice(0, 0, 0);
+      }
+   
+    }
+    //finalErrorsArray.shift();
+    wordOccurrences = numberOfErrorsArrayForTestMode.slice(1, allTypedCharactersStore?.length);
+    //finalWPMArray.shift();
+    wordPerMinute = wpmDataCalculator(finalWPMArray)
+
+    //storedTestTextData.shift(); TStored test text data does not need to be shifted
+    wordNames = storedTestTextData.slice(1, allTypedCharactersStore?.length);
+
+   //finalRawWPM.shift();
+    rawSpeedOfCurrentWord = finalRawWPM
+
 
   }
 

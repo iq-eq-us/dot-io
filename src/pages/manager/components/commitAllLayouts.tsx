@@ -29,12 +29,16 @@ export function CommitAllLayoutChanges(): ReactElement {
     await sendCommandString("VAR B0");
 
   }
+  async function combined(){
+    await storeAllChanges();
+    await sendCommandString("VAR B0");
+  }
   return (
     <React.Fragment>
       <button
         className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
         color="pink"
-        onClick={() => storeAllChanges()}
+        onClick={() => commitAll()}
       >
         Save Changes{' '}
       </button>

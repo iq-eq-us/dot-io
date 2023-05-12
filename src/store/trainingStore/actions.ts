@@ -129,6 +129,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setIsDisplayingIntroductionModal: action((state, payload) => {
     state.isDisplayingIntroductionModal = payload as boolean;
   }),
+   setTrainingIsDone: action((state, payload) => {
+    state.trainingIsDone = payload as boolean;
+  }),
+  setTimerValue: action((state, payload) => {
+    state.timerValue = payload;
+  }),
 
   /**
    * This must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
@@ -142,10 +148,13 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.compareText = [];
     state.trainingTestCounter = 0;
     state.isTestDone = false;
+    state.storedTestTextData = [];
     state.numberOfWordsChorded = 0;
     state.numberOfWordsTypedCorrectly = 0;
+    state.trainingSessionErrors = 0;
     state.numberOfErrorsArrayForTestMode =[];
     state.startTimer = false;
+    state.trainingIsDone = false;
     state.storedChordsFromDevice = JSON?.parse(
       localStorage?.getItem('chordsReadFromDevice'),
     );
@@ -516,9 +525,19 @@ export async function calculateStatisticsForTargetChord(
   const couldFindChordInLibrary = !!chordStats;
   if (!couldFindChordInLibrary) chordStats = emptyChordStats;
 
+  
+  // Don't penalize the user if this is the first character they type
+  // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
+  // So if this is their very first chord, we give them a very short time for it
+  const userIsTypingFirstChord =
+    store.currentLineOfTrainingText === 0 &&
+    store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
+  // if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
+  
+
   //This if state increments the error stat if a user types a word inccorectly 
   //But if the user got a word wrong and went back to correct and the correction was incorrect we do not add another error to the stat
-  if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord) {
+  if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord && !userIsTypingFirstChord) {
     chordStats.numberOfErrors++;
     store.trainingSessionErrors = store.trainingSessionErrors + 1;
 
@@ -527,6 +546,7 @@ export async function calculateStatisticsForTargetChord(
   let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
   let numberOfOccurences = 0;
+
 
   const numberOfChordsConquered = store.trainingStatistics.statistics.filter(
     (s) =>
@@ -543,17 +563,17 @@ export async function calculateStatisticsForTargetChord(
     store.wasModuleShown = true as boolean;
   }
 
-  // Don't penalize the user if this is the first character they type
-  // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
-  // So if this is their very first chord, we give them a very short time for it
-  const userIsTypingFirstChord =
-    store.currentLineOfTrainingText === 0 &&
-    store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
-  // if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
-
   //This conditional takes the stored session value timeThat that is set in both ChordTextInput.tsx files. That
   // set value contains the time that the user first typed. We take that value and the value of went the word was complete to determine
   // The value for the first word
+
+  const regulatedTimeToChord = Math.min(
+    timeTakenToTypeChord,
+    MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
+  );
+
+  !userIsTypingFirstChord ? store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + regulatedTimeToChord : console.log('here I am this is time');
+
 
   if (userIsTypingFirstChord) {
 
@@ -583,8 +603,9 @@ export async function calculateStatisticsForTargetChord(
   }
 
     //Need to aggregate the speeds in speedOfLastTen array and divide by the number if speeds in that array to derrive the avg speed
-  chordStats.averageSpeed =
-  avgCalculatorForTheSpeedOfLastTen(chordStats.speedOfLastTen);
+  chordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(chordStats.speedOfLastTen);
+
+
 
   if (userIsTypingFirstChord) {
     if(chordStats.numberOfOccurrences != 0)
@@ -620,7 +641,6 @@ export async function calculateStatisticsForTargetChord(
     store.trainingStatistics.statistics.push(chordStats);
   }
 
-  store.userIsEditingPreviousWord = false;
   if(store.wordTestNumber == undefined)// this is to prevent stats from storing during the testing module 
   localStorage.setItem(store.trainingLevel+'_'+store.currentTrainingScenario, JSON.stringify({statistics: store.trainingStatistics.statistics})); //Store downloaded chords in local storage
 
@@ -648,22 +668,21 @@ export async function calculateStatisticsForTargetChord(
       MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
     );
 
-    //const sum = chordStatsFromDevice.chordsMastered?.reduce((a, b) => a + b, 0);
-
-    //chordStatsFromDevice.averageSpeed = (sum / chordStatsFromDevice.chordsMastered?.length) || 0;
-
     chordStatsFromDevice.averageSpeed =
       (chordStatsFromDevice.averageSpeed *
         chordStatsFromDevice.numberOfOccurrences +
         chordStatsFromDevice.lastSpeed) /
       (chordStatsFromDevice.numberOfOccurrences + 1);
 
-
       if (userIsTypingFirstChord) {
-        if(chordStatsFromDevice.numberOfOccurrences != 0)
+        if(chordStatsFromDevice.numberOfOccurrences != 0){
         chordStatsFromDevice.numberOfOccurrences = chordStatsFromDevice.numberOfOccurrences - 1;
-        else
+        chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors - 1;
+        } else {
         chordStatsFromDevice.numberOfOccurrences = chordStatsFromDevice.numberOfOccurrences = 0;
+        chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors = 0;
+
+        }
       } else{
         chordStatsFromDevice.numberOfOccurrences =
       chordStatsFromDevice.numberOfOccurrences + numberOfOccurences;
@@ -672,9 +691,6 @@ export async function calculateStatisticsForTargetChord(
         : '';
       }
       
-
-
-
     if (chordStatsFromDevice.chordsMastered?.length == 10) {
       chordStatsFromDevice.chordsMastered?.push(
         chordStatsFromDevice.averageSpeed,
@@ -698,6 +714,8 @@ export async function calculateStatisticsForTargetChord(
         (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
       ),
     };
+
+    console.log('Look at all the stats '+ chordStatsFromDevice.numberOfErrors + ' occur '+ chordStatsFromDevice.numberOfOccurrences)
 
     store.storedChordsFromDevice = {
       statistics: store.storedChordsFromDevice.statistics.map(
@@ -730,13 +748,21 @@ export async function calculateStatisticsForTargetChord(
   }
 }
 
-  if (store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) {
+  if (store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1) && store.currentTrainingScenario !='ALPHABET') {
     store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly +1;
     store.numberOfErrorsArrayForTestMode[store?.allTypedCharactersStore.length-1] = 0;
     //Need to add an errors calculator here 
-  }else{
+  }
+  else if(store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1] && store.currentTrainingScenario =='ALPHABET'){
+    store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly +1;
+    store.numberOfErrorsArrayForTestMode[store?.allTypedCharactersStore.length-1] = 0;
+  }
+  else{
     store.numberOfErrorsArrayForTestMode[store?.allTypedCharactersStore.length-1] = 1;
   }
+
+  store.userIsEditingPreviousWord = false;
+
 
 }
 export function savedStoredChordStats(state : TrainingStoreModel){

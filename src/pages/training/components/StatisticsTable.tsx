@@ -152,9 +152,9 @@ const Header = () => {
 
 const AggregateRow = ({ data }: { data: Data }) => {
   const wpmCheck = wpmMethodCalculator(
-    parseInt(getCumulativeAverageChordTypeTime(data.stats)),
-  ).toFixed(0);
-  const average = wpmCheck != 'Infinity' ? wpmCheck : 0;
+    getCumulativeAverageChordTypeTime(data.stats),
+  );
+  const average = (wpmCheck != undefined || null) ? wpmCheck : 0;
   let sumErrors = 0;
   let sumOccurrences = 0;
   data.stats.forEach((d) => {

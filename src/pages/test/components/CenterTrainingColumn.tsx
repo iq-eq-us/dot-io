@@ -9,7 +9,10 @@ import Footer from '../../../../src/components/footer';
 import NextTestButton from './NextTestButton';
 import RefreshButton from './RefreshButton';
 import { TrainingModeSelector } from './TrainingModeSelector';
+import { ProgressBar } from './ProgressBar';
 import { useStoreState, useStoreActions } from '../../../store/store';
+import ModuleCompleteModal from './ModuleCompleteModal';
+
 
 function CenterTrainingColumn(): ReactElement {
   const currentTrainingScenario = useStoreState(
@@ -24,8 +27,9 @@ function CenterTrainingColumn(): ReactElement {
         <TrainingModeSelector />
 
         <ChordTextInput />
-
         <TextPrompt />
+        <ModuleCompleteModal/>
+
         <ItemsContainer>
           {(currentTrainingScenario == 'LEXICAL' && wordTestNumber != null) ||
           undefined ? (
@@ -47,13 +51,12 @@ function CenterTrainingColumn(): ReactElement {
 
 const CenterTrainingColumnContainer = styled.div.attrs({
   className:
-    'flex flex-col text-center	 align-center w-full xl:w-5/6 ml-auto mr-auto lgml-36 relative bg-[#181818]',
+    'flex flex-col text-center align-center w-full xl:w-5/6 ml-auto mr-auto lgml-36 relative bg-[#181818]',
 })``;
 
 const ItemsContainer = styled.div`
   height: 50px;
   display: flex;
-  position: relative;
   flex-direction: row;
   padding: '1rem';
   justify-content: center;
