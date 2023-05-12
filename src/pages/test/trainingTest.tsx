@@ -11,7 +11,6 @@ import { Redirect } from 'react-router-dom';
 import { PreviousTest } from './components/PreviousTests';
 import TestCompletePage from '../test-complete/testComplete';
 import ImageSlider from './components/imageSlider';
-import ModuleCompleteModal from './components/ModuleCompleteModal';
 import { chordLibrary } from '../../data/chordLibrary';
 
 /**

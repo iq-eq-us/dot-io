@@ -15,6 +15,7 @@ function Timer() {
   const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
   const startTimer = useStoreState((store) => store.startTimer);
   const trainingIsDone = useStoreState((store) => store.trainingIsDone);
+  const textPromptUnFocused = useStoreState((store) => store.textPromptUnFocused);
   const setTimerValue = useStoreActions((store) => store.setTimerValue);
 
 
@@ -30,12 +31,15 @@ function Timer() {
         //startAndStop.click();
       // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
       intervalId = setInterval(() => setTime(time + 1), 10);
-    } else {
+    }  else if(!startTimer && textPromptUnFocused){
+      setTime(time);
+    }
+    else{
         setTime(0);
-
     }
     return () => clearInterval(intervalId);
   }, [startTimer, time]);
+
 
   // Hours calculation
   const hours = Math.floor(time / 360000);
@@ -54,6 +58,7 @@ function Timer() {
   //console.log('timer '+ hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0")) 
   setTimerValue(hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0"));
 
+  console.log('Textprompt value1 '+ textPromptUnFocused + startTimer)
 
 
 

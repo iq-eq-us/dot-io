@@ -92,6 +92,7 @@ export interface TrainingStoreStateModel {
    * * go to the statisticsStorageStore.ts file in the store directory.
    */
   trainingStatistics: TrainingStatistics;
+  localTrainingStatistics: TrainingStatistics;
   errorOccurredWhileAttemptingToTypeTargetChord: boolean;
   timeOfLastChordStarted: number;
   timeTakenToTypePreviousChord: number;

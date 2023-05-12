@@ -10,13 +10,18 @@ export function TextBluredScreen() {
   const setTextPromptUnFocused = useStoreActions(
     (store) => store.setTextPromptUnFocused,
   );
+  const setStartTimer = useStoreActions(
+    (store) => store.setStartTimer,
+  );
+
 
   return (
     <div
-      className="wi from-green-800	 bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black"
+      className="wi from-green-800 bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black"
       onClick={() => [
         document.getElementById('txt_Name')?.focus(),
         setTextPromptUnFocused(false),
+        setStartTimer(true)
       ]}
     >
       Click to Re-Focus

@@ -68,8 +68,7 @@ export function ProgressBar(): ReactElement {
   
 
   const wpm = useSessionWordsPerMinute();
-  const wpm2 = useWordsPerMinute();
-  console.log('wpm '+ wpm + ' '+ 'wpm2 '+ wpm2)
+  let allTimeWPM;
   const totalNumberOfChords = useTotalChordsToConquer();
   const tier = useStoreState((store) => store.trainingLevel);
   const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
@@ -96,11 +95,16 @@ export function ProgressBar(): ReactElement {
     (d) => d.chordsMastered.length == 1 && d.chordsMastered[0] == 0,
   ).length;
 
+  tier == 'CPM' ? allTimeWPM = wpmMethodCalculator(getCumulativeAverageChordTypeTime(trainingStatistics)) : wpmMethodCalculator(getCumulativeAverageChordTypeTime(storedChordStats.statistics));
+
+
   const [minValue, setMinValue] = useState<number>(0)
   let persistantValue = 0
 
 
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
+
+  //wpmMethodCalculator((average))
 
   const storedChordsFromDevice = useStoreState(
     (store) => store.storedChordsFromDevice,
@@ -129,9 +133,7 @@ export function ProgressBar(): ReactElement {
 
    sumOfAverages.toFixed(2) 
 
-
-   console.log('AVG using exisiting '+trainingSessionAggregatedTime/(allTypedText.length-1))
-
+   
    
    if(tier == 'CHM' && currentTrainingScenario != 'ALLCHORDS'){
     progress = clamp((numberOfChordsMastered / totalNumberOfChords) * 100, 0, 100);
@@ -150,7 +152,7 @@ export function ProgressBar(): ReactElement {
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
       
     ));
-    inMaxValue = (defaultProgressBarValues.CPM.ALPHABET)
+    inMaxValue = (defaultProgressBarValues.CPM.ALPHABET);
 
   /* eslint-enable */
    }  else if(tier == 'CPM' && currentTrainingScenario == 'TRIGRAM'){
@@ -182,6 +184,8 @@ persistantValue = (parseInt(
 ));
 
 /* eslint-enable */
+
+
 }
 
    function handleInputInRealTimeForMin(value) {
@@ -225,7 +229,7 @@ persistantValue = (parseInt(
       min={(minValue || 0)}
       max={(inMaxValue || 500)}
       minValue= {isNaN(wpm?.toFixed(0)) || wpm?.toFixed(0) < 0 ? '0' : wpm.toFixed(0)}
-      maxValue= {persistantValue}
+      maxValue= {allTimeWPM}
       thumbRightColor='red'
       thumbLeftColor='blue'
       />

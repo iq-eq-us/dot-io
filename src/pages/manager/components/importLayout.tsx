@@ -15,9 +15,24 @@ import { createChordLayout } from '../../../models/managerModels';
 
     //const downloadedChordLayout = useStoreState((store) => store.downloadedChordLayout);
 
+    const thisArray = [];
+    const newArray = [];
+
+    const delay = (delayInms) => {
+      return new Promise(resolve => setTimeout(resolve, delayInms));
+    }
+    
+    async function storeAllChanges(){
+      //console.log(thisArray.replace(/(\r\n|\n|\r)/gm, ""))
+      for(let i=0; i<thisArray.length; i++){
+        await sendCommandString(newArray[i].replace(/(\r\n|\n|\r)/gm, ""));
+        await delay(10);
+      }
+  
+    }
+
 
     async function importLayoutLibrary(e: any) {
-      const thisArray = [];
       clearDownloadedChordLayout();
         const file = e.target.files[0];
         const fileReader = new FileReader();
@@ -50,18 +65,25 @@ import { createChordLayout } from '../../../models/managerModels';
            // thisArray.push("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
             const temp = createChordLayout(strAllValues[0],strAllValues[1],strAllValues[2]);
             thisArray.push(temp)
+            newArray.push('VAR B4 '+ strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
+
           });
           setImportedChordsLayout(thisArray);
-    
+          await storeAllChanges();
         }
-      }
 
+    }
+
+      
       function click(){
         document.getElementById("file-input-layout").click();
         const element: HTMLInputElement = document.getElementById("file-input-layout") as HTMLInputElement; //.innerHTML = "status: opened serial port";
         element.addEventListener('input', importLayoutLibrary);
 
   }
+
+
+
     return (
       <React.Fragment>
 
