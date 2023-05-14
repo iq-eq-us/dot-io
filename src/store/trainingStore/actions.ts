@@ -522,8 +522,15 @@ export async function calculateStatisticsForTargetChord(
     (c: ChordStatistics) => c.id === id,
   ) as ChordStatistics;
 
+  let localChordStats = store.localTrainingStatistics.statistics.find(
+    (c: ChordStatistics) => c.id === id,
+  ) as ChordStatistics;
+
   const couldFindChordInLibrary = !!chordStats;
   if (!couldFindChordInLibrary) chordStats = emptyChordStats;
+
+  const couldFindChordInLocalLibrary = !!localChordStats;
+  if (!couldFindChordInLocalLibrary) localChordStats = emptyChordStats;
 
   
   // Don't penalize the user if this is the first character they type
@@ -537,15 +544,31 @@ export async function calculateStatisticsForTargetChord(
 
   //This if state increments the error stat if a user types a word inccorectly 
   //But if the user got a word wrong and went back to correct and the correction was incorrect we do not add another error to the stat
+
+  let timeTakenToTypeChord =
+    (performance.now() - store.timeOfLastChordStarted) / 10;
+  let numberOfOccurences = 0;
+
+
+  // Don't penalize the user if this is the first character they type
+  // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
+  // So if this is their very first chord, we give them a very short time for it
+
+  // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
+
+  //This logic handles local Chord stats merge
+  localChordStats.lastSpeed = Math.min(
+    timeTakenToTypeChord,
+    MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
+  );
+
+
+
   if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord && !userIsTypingFirstChord) {
     chordStats.numberOfErrors++;
     store.trainingSessionErrors = store.trainingSessionErrors + 1;
 
   }
-
-  let timeTakenToTypeChord =
-    (performance.now() - store.timeOfLastChordStarted) / 10;
-  let numberOfOccurences = 0;
 
 
   const numberOfChordsConquered = store.trainingStatistics.statistics.filter(
@@ -572,15 +595,44 @@ export async function calculateStatisticsForTargetChord(
     MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   );
 
-  !userIsTypingFirstChord ? store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + regulatedTimeToChord : console.log('here I am this is time');
+  !userIsTypingFirstChord ? store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + regulatedTimeToChord : '';
 
 
   if (userIsTypingFirstChord) {
-
     timeTakenToTypeChord = 0;
     numberOfOccurences = -1;
     store.startTimer = true;
   }
+
+  if(!userIsTypingFirstChord){
+
+  store.timeTakenToTypePreviousChord = localChordStats?.lastSpeed;
+
+  if (localChordStats.speedOfLastTen.length == 10) {
+    localChordStats.speedOfLastTen.push(
+      localChordStats.lastSpeed,
+    );
+    localChordStats.speedOfLastTen.shift();
+  } else {
+    localChordStats.speedOfLastTen.push(
+      localChordStats.lastSpeed,
+    );
+  }
+
+  localChordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(chordStats.speedOfLastTen);
+
+  if (couldFindChordInLocalLibrary) {
+    // Replace chord stats object in chord stats list
+    store.localTrainingStatistics = {
+      statistics: store.localTrainingStatistics.statistics.map(
+        (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
+      ),
+    };
+  } else {
+    store.localTrainingStatistics.statistics.push(chordStats);
+  }
+}
+
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
   if(store.currentTrainingScenario != 'ALLCHORDS' && !userIsTypingFirstChord) {

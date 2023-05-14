@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from '../../../store/store';
-import { getCumulativeAverageChordTypeTime } from '../../../../src/helpers/aggregation';
+import { getCumulativeAverageChordTypeTime, wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 
 //myGraph(wordNames, wordOccurrences, wordPerMinute)
 
@@ -196,8 +196,11 @@ function wpmDataCalculator(wpmArray: any) {
   return wpmArray;
 }
 export function TestCompleteGraph(): ReactElement {
-  const currentTrainingSetting = useStoreState(
+  const trainingStatistics = useStoreState(
     (store: any) => store.trainingStatistics,
+  );
+  const localTrainingStatistics = useStoreState(
+    (store: any) => store.localTrainingStatistics,
   );
   const currentTrainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
@@ -213,6 +216,7 @@ export function TestCompleteGraph(): ReactElement {
   const teir = useStoreState((store) => store.trainingLevel);
 
 
+
   let wordNames: any = [];
   let wordOccurrences: any = [];
   let wordPerMinute: any = [];
@@ -221,7 +225,8 @@ export function TestCompleteGraph(): ReactElement {
   const chordsToChooseFrom = JSON.parse(
     localStorage.getItem('chordsToChooseFrom'),
   );
-  currentTrainingSetting.statistics.forEach((d: any) => {
+  if(wordTestNumber != undefined){
+    trainingStatistics.statistics.forEach((d: any) => {
     if (d.displayTitle.length * d.numberOfOccurrences != 0) {
       wordNames.push(d.displayTitle);
       wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
@@ -234,7 +239,26 @@ export function TestCompleteGraph(): ReactElement {
       wordPerMinute.push(d.averageSpeed);
       rawSpeedOfCurrentWord.push(wpm.toFixed(0));
     }
-  });
+  }); 
+} else {
+  localTrainingStatistics.statistics.forEach((d: any) => {
+    if (d.displayTitle.length * d.numberOfOccurrences != 0) {
+      wordNames.push(d.displayTitle);
+      wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
+
+      const avgSpeedMilliseconds = d.averageSpeed * 10;
+      const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
+      const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
+      const wpm = averageCharacterPerMin;
+
+      wordPerMinute.push(d.averageSpeed);
+      rawSpeedOfCurrentWord.push(wpm.toFixed(0));
+    }
+  }); 
+
+
+}
+const averageOfLocalStats = wpmMethodCalculator(getCumulativeAverageChordTypeTime(localTrainingStatistics.statistics))
 
   const finalErrorsArray = [];
   const finalWPMArray = [];
@@ -322,21 +346,18 @@ export function TestCompleteGraph(): ReactElement {
    
     }
     //finalErrorsArray.shift();
-    wordOccurrences = numberOfErrorsArrayForTestMode.slice(1, allTypedCharactersStore?.length);
+    wordOccurrences = numberOfErrorsArrayForTestMode.slice(1, allTypedCharactersStore.length);
     //finalWPMArray.shift();
     wordPerMinute = wpmDataCalculator(finalWPMArray)
 
     //storedTestTextData.shift(); TStored test text data does not need to be shifted
-    wordNames = storedTestTextData.slice(1, allTypedCharactersStore?.length);
+    wordNames = storedTestTextData.slice(1, allTypedCharactersStore.length);
 
    //finalRawWPM.shift();
     rawSpeedOfCurrentWord = finalRawWPM
 
   } else {
     for (let i = 0; i < allTypedCharactersStore?.length-1; i++) {
-
-
-    
       if (
         isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false
       ) {
@@ -349,25 +370,24 @@ export function TestCompleteGraph(): ReactElement {
         finalRawWPM.push(
           rawSpeedOfCurrentWord[wordNames.indexOf(storedTestTextData[i])],
         );
-      } 
-      if (i == storedTestTextData.length - 1) {
+      } if (i == storedTestTextData.length - 1) {
         finalErrorsArray.splice(0, 0, 0);
         finalWPMArray.splice(0, 0, 0);
         finalRawWPM.splice(0, 0, 0);
       }
-   
     }
     //finalErrorsArray.shift();
     wordOccurrences = numberOfErrorsArrayForTestMode.slice(1, allTypedCharactersStore?.length);
     //finalWPMArray.shift();
     wordPerMinute = wpmDataCalculator(finalWPMArray)
-
+    if(wordTestNumber == undefined) {
+    wordPerMinute.pop();
+    wordPerMinute.push((averageOfLocalStats.toFixed(0))* 5);
+    }
     //storedTestTextData.shift(); TStored test text data does not need to be shifted
     wordNames = storedTestTextData.slice(1, allTypedCharactersStore?.length);
-
    //finalRawWPM.shift();
-    rawSpeedOfCurrentWord = finalRawWPM
-
+    rawSpeedOfCurrentWord = finalRawWPM;
 
   }
 

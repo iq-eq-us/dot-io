@@ -6,6 +6,9 @@ import { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { TestControlRow } from './testControlsRow';
 import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
+import { wpmMethodCalculator } from '../../../helpers/aggregation';
+import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+
 
 export function TestStatsCard(): ReactElement {
   const beginTraining = useStoreActions(
@@ -18,10 +21,9 @@ export function TestStatsCard(): ReactElement {
   const currentTrainingSetting = useStoreState(
     (store: any) => store.trainingStatistics,
   );
-  const trainingSettings = useStoreState((store) => store.trainingSettings);
+  const teir = useStoreState((store) => store.trainingLevel);
   const testNumber = useStoreState((store) => store.wordTestNumber);
-  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
-  const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
+  const localTrainingStatistics = useStoreState((store) => store.localTrainingStatistics.statistics);
 
   const wordTestNumber = useStoreState(
     (store) => store.wordTestNumber);
@@ -55,19 +57,31 @@ export function TestStatsCard(): ReactElement {
   const Accuracy = (((allTypedText.length-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
 
   const timerValue = useStoreState((store) => store.timerValue);
-  //console.log('timerValue '+ timerValue)
   const trainingIsDone = useStoreState(
     (store) => store.trainingIsDone,
   );
+
+  const averageOfLocalStats = wpmMethodCalculator(getCumulativeAverageChordTypeTime(localTrainingStatistics))
+
+  function returnValueBasedOnTeir(){
+    if(teir == 'CPM'){
+      return averageOfLocalStats.toFixed(0)*5;
+    }
+    else if(teir == 'CHM') {
+      return averageOfLocalStats.toFixed(0)/100;
+
+    }
+  }
+
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
         <StatsCardContainer>
-          <div className="text-6xl">{wordTestNumber != undefined ? testTeirHighestWPM :( wpm.toFixed(0)*5)}</div>
-          <h1 className="text-2xl">CPM</h1>
+          <div className="text-6xl">{wordTestNumber != undefined ? testTeirHighestWPM :returnValueBasedOnTeir()}</div>
+          <h1 className="text-2xl">{teir}</h1>
         </StatsCardContainer> 
         <StatsCardContainer>
-          <div className="text-4xl">{ wordTestNumber != undefined ? (testTeirHighestWPM / 5).toFixed(0) : wpm.toFixed(0)}</div>
+          <div className="text-4xl">{ wordTestNumber != undefined ? (testTeirHighestWPM / 5).toFixed(0) : averageOfLocalStats.toFixed(0)}</div>
           <h1 className="text-lg">WPM</h1>
         </StatsCardContainer>
         <StatsCardContainer>

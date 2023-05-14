@@ -118,7 +118,7 @@ export interface TrainingStoreStateModel {
     CharacterEntryMode | undefined
   >;
   targetCharacterIndex: Computed<TrainingStoreModel, number | undefined>;
-  allTypedCharactersStore: string[] | undefined;
+  allTypedCharactersStore: string[];
   userIsEditingPreviousWord: boolean;
   textPromptUnFocused: boolean;
   numberOfWordsChorded: number;

@@ -29,6 +29,8 @@ export function ProgressBar(): ReactElement {
   let sumErrorsFromStoredDevice = 0;
   let sumOccurrencesFromStoredDevice = 0;
   const storedChordStats = useStoreState((store) => store.storedChordStatistics);
+  const localTrainingStatistics = useStoreState((store) => store.localTrainingStatistics.statistics);
+
   const inStoredChordsFromDevice = useStoreState(
     (store: any) => store.storedChordsFromDevice,
   );
@@ -41,6 +43,11 @@ export function ProgressBar(): ReactElement {
   let numberOfChordsMastered = 0;
   let tempChordMasteredValue = 0;
   let sumOfAverages = 0;
+
+  let averageOfLocalStats = 0;
+
+  averageOfLocalStats = wpmMethodCalculator(getCumulativeAverageChordTypeTime(localTrainingStatistics))
+
 
   stats.statistics.forEach((d) => {
     sumErrors += d.numberOfErrors;
@@ -81,7 +88,7 @@ export function ProgressBar(): ReactElement {
   const trainingStatistics = useStoreState((store) => store.trainingStatistics.statistics);
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const trainingSessionErrors = useStoreState((store) => store.trainingSessionErrors);
-  const avgStats = getCumulativeAverageChordTypeTime(trainingStatistics)
+
 
   let progress;
   let inMaxValue;
@@ -128,8 +135,6 @@ export function ProgressBar(): ReactElement {
     'The number of chords that you have not typed faster than your speed goal.',
   );
  const Accuracy = ((((allTypedText.length)-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
-
-   const trainingSessionAggregatedTime = useStoreState((store) => store.trainingSessionAggregatedTime);
 
    sumOfAverages.toFixed(2) 
 
@@ -192,14 +197,11 @@ persistantValue = (parseInt(
     let added = 100;
     if(inMaxValue >= parseInt(value) ){
     setMinValue(value);
-    
     } else {
       added +=parseInt(value);
       inMaxValue = (added);
       setMinValue(value);
-
     }
-
    }
    function handleInputInRealTimeForMax(value) {
     if(parseInt(value) >= minValue ){
@@ -241,7 +243,7 @@ persistantValue = (parseInt(
         </BottomProgressBar>
         <Trapazoid>
         <RightTerms>{isNaN(Accuracy) ? '0' : Accuracy}% acc
-        <div>{isNaN(wpm.toFixed(0)) || wpm.toFixed(0) < 0 ? '0' : wpm.toFixed(0)} WPM</div>
+        <div>{averageOfLocalStats.toFixed(0) == 'Infinity' ? '0' : averageOfLocalStats.toFixed(0)} WPM</div>
         </RightTerms>
         <Timer/>
         <LeftTerms>{...allTypedText.length} Terms</LeftTerms>
