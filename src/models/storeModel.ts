@@ -6,6 +6,9 @@ interface AppStoreModel {
   isDebug: boolean;
 }
 
-type CompleteStoreModel = AppStoreModel & TrainingStoreModel & StatisticsStore & ManagerStoreState;
+type CompleteStoreModel = AppStoreModel &
+  TrainingStoreModel &
+  StatisticsStore &
+  ManagerStoreState;
 
 export { CompleteStoreModel };

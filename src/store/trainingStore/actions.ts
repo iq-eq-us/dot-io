@@ -8,7 +8,10 @@ import {
   defaultTrigramsTestTraining,
   defaultTrainingSettingsState,
 } from '../../models/trainingSettingsStateModel';
-import { oldAsciiKeyReplacementDictionary, _keyMapDefaults } from '../../pages/manager/controls/maps';
+import {
+  oldAsciiKeyReplacementDictionary,
+  _keyMapDefaults,
+} from '../../pages/manager/controls/maps';
 import {
   ChordStatistics,
   createEmptyChordStatistics,
@@ -33,14 +36,14 @@ import { avgCalculatorForTheSpeedOfLastTen } from '../../helpers/aggregation';
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
 
-const dictNameOfLibrary = { 
+const dictNameOfLibrary = {
   ALPHABET: chordLibrary.letters,
   LEXICAL: chordLibrary.lexical,
   ENGLISH: chordLibrary.lexical,
   TRIGRAM: chordLibrary.trigrams,
   SUPERSONIC: chordLibrary.supersonic,
   LEXICOGRAPHIC: chordLibrary.lexicographic,
-}
+};
 
 let globalDictionaries: Record<
   TrainingScenario,
@@ -119,9 +122,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.passwordModulModalToggle = payload as boolean;
   }),
   setChmTierPasswordBypass: action((state, payload) => {
-    localStorage.setItem('chmTierPasswordBypass', JSON.stringify(true))
+    localStorage.setItem('chmTierPasswordBypass', JSON.stringify(true));
     state.chmTierPasswordBypass = payload as boolean;
-
   }),
   setModuleNumber: action((state, payload) => {
     state.moduleNumber = payload as number;
@@ -129,7 +131,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setIsDisplayingIntroductionModal: action((state, payload) => {
     state.isDisplayingIntroductionModal = payload as boolean;
   }),
-   setTrainingIsDone: action((state, payload) => {
+  setTrainingIsDone: action((state, payload) => {
     state.trainingIsDone = payload as boolean;
   }),
   setTimerValue: action((state, payload) => {
@@ -162,13 +164,17 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.storedChordsFromDevice = JSON?.parse(
       localStorage?.getItem('chordsReadFromDevice'),
     );
-    if(state.currentTrainingScenario != ('ALLCHORDS' || 'LEXICOGRAPHIC'))
-    oneTimeCreateStoredChordStats(state.currentTrainingScenario, state.trainingLevel ,dictNameOfLibrary[state.currentTrainingScenario])
-    //This data set is created in the TrainingModeSelector.tsx 
+    if (state.currentTrainingScenario != ('ALLCHORDS' || 'LEXICOGRAPHIC'))
+      oneTimeCreateStoredChordStats(
+        state.currentTrainingScenario,
+        state.trainingLevel,
+        dictNameOfLibrary[state.currentTrainingScenario],
+      );
+    //This data set is created in the TrainingModeSelector.tsx
     state.storedChordStatistics = JSON?.parse(
-    localStorage?.getItem(state.trainingLevel+'_'+payload[0]),
-  );
-  
+      localStorage?.getItem(state.trainingLevel + '_' + payload[0]),
+    );
+
     //  console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
     // Pull the chord library from memory if it's there, otherwise pull it from defaults
     if (state.currentTrainingScenario === 'ALLCHORDS') {
@@ -194,10 +200,13 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingSettings = generateTrainingSettings(
       state as unknown as TrainingStoreStateModel,
     );
-    if(state.currentTrainingScenario != 'ALLCHORDS')
-    state.trainingStatistics = JSON.parse(localStorage.getItem(state.trainingLevel+'_'+state.currentTrainingScenario));
-    else
-    state.trainingStatistics = state.storedChordsFromDevice;
+    if (state.currentTrainingScenario != 'ALLCHORDS')
+      state.trainingStatistics = JSON.parse(
+        localStorage.getItem(
+          state.trainingLevel + '_' + state.currentTrainingScenario,
+        ),
+      );
+    else state.trainingStatistics = state.storedChordsFromDevice;
     if (
       state.currentTrainingScenario == 'LEXICAL' &&
       state.wordTestNumber != undefined &&
@@ -401,7 +410,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     payload: undefined,
     result: undefined,
   },
-  
+
   setPopAllTypedCharactersStore: {
     type: 'action',
     payload: undefined,
@@ -424,18 +433,20 @@ function checkIfShouldProceedToNextTargetChord(
     : storeState.targetWord + ' ';
   const userHasEnteredChordCorrectly =
     wordToCompare === storeState.typedTrainingText;
-    let isPhrase;
-    //This logic here checks if the current word being tested is a phrase
-    if(!isNaN(parseFloat(storeState?.targetWord?.indexOf(' '))) || !isNaN(storeState?.targetCharacterIndex-1)) {
+  let isPhrase;
+  //This logic here checks if the current word being tested is a phrase
+  if (
+    !isNaN(parseFloat(storeState?.targetWord?.indexOf(' '))) ||
+    !isNaN(storeState?.targetCharacterIndex - 1)
+  ) {
+    isPhrase =
+      storeState?.targetWord[storeState?.targetCharacterIndex - 1] === ' ' &&
+      parseFloat(storeState?.targetWord?.indexOf(' ')) >= 0;
+  } else {
+    isPhrase = false;
+  }
 
-     isPhrase = storeState?.targetWord[storeState?.targetCharacterIndex-1] === ' ' &&
-    (parseFloat(storeState?.targetWord?.indexOf(' ')) >= 0);
-    
-    } else{
-      isPhrase =false;
-    }
-    
-    //storeState.targetWord[storeState.targetCharacterIndex]?.indexOf(' ') >= 0
+  //storeState.targetWord[storeState.targetCharacterIndex]?.indexOf(' ') >= 0
   //Here we allow the user to go to the next work if the press the space
   if (isInAlphabetMode && userHasEnteredChordCorrectly) {
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
@@ -444,12 +455,12 @@ function checkIfShouldProceedToNextTargetChord(
   } else if (
     storeState.typedTrainingText.charAt(
       storeState.typedTrainingText.length - 1,
-    ) == ' ' && !isPhrase
+    ) == ' ' &&
+    !isPhrase
   ) {
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');
-
   }
 }
 
@@ -535,7 +546,6 @@ export async function calculateStatisticsForTargetChord(
   const couldFindChordInLocalLibrary = !!localChordStats;
   if (!couldFindChordInLocalLibrary) localChordStats = emptyChordStats;
 
-  
   // Don't penalize the user if this is the first character they type
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
   // So if this is their very first chord, we give them a very short time for it
@@ -543,15 +553,13 @@ export async function calculateStatisticsForTargetChord(
     store.currentLineOfTrainingText === 0 &&
     store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
   // if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
-  
 
-  //This if state increments the error stat if a user types a word inccorectly 
+  //This if state increments the error stat if a user types a word inccorectly
   //But if the user got a word wrong and went back to correct and the correction was incorrect we do not add another error to the stat
 
   let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
   let numberOfOccurences = 0;
-
 
   // Don't penalize the user if this is the first character they type
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
@@ -565,32 +573,48 @@ export async function calculateStatisticsForTargetChord(
     MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   );
 
+  if (!userIsTypingFirstChord) {
+    if (
+      store.errorOccurredWhileAttemptingToTypeTargetChord &&
+      !store.userIsEditingPreviousWord &&
+      !userIsTypingFirstChord
+    ) {
+      chordStats.numberOfErrors++;
+      store.trainingSessionErrors = store.trainingSessionErrors + 1;
+      store.trainingTestCounter = store.trainingTestCounter + 1;
+      store.numberOfErrorsArrayForTestMode.push(1);
 
-if(!userIsTypingFirstChord){
-  if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord && !userIsTypingFirstChord) {
-    chordStats.numberOfErrors++;
-    store.trainingSessionErrors = store.trainingSessionErrors + 1;
-    store.trainingTestCounter = store.trainingTestCounter +1;
-    store.numberOfErrorsArrayForTestMode.push(1);
-    
-    console.log('How am I handling errors '+ store.numberOfErrorsArrayForTestMode)
-
-  } else if (store.errorOccurredWhileAttemptingToTypeTargetChord && store.userIsEditingPreviousWord && !userIsTypingFirstChord) {
+      console.log(
+        'How am I handling errors ' + store.numberOfErrorsArrayForTestMode,
+      );
+    } else if (
+      store.errorOccurredWhileAttemptingToTypeTargetChord &&
+      store.userIsEditingPreviousWord &&
+      !userIsTypingFirstChord
+    ) {
       store.numberOfErrorsArrayForTestMode.pop();
-    store.numberOfErrorsArrayForTestMode.push(1);
-    console.log('How am I handling errors '+ store.numberOfErrorsArrayForTestMode)
-
-  } else if(!store.errorOccurredWhileAttemptingToTypeTargetChord && store.userIsEditingPreviousWord && !userIsTypingFirstChord) {
-    store.numberOfErrorsArrayForTestMode.pop();
-    store.trainingSessionErrors = store.trainingSessionErrors -1;
-    store.numberOfErrorsArrayForTestMode.push(0);
-    console.log('How am I handling errors '+ store.numberOfErrorsArrayForTestMode)
-  } else{
-    store.numberOfErrorsArrayForTestMode.push(0);
-    console.log('How am I handling errors '+ store.numberOfErrorsArrayForTestMode)
-
+      store.numberOfErrorsArrayForTestMode.push(1);
+      console.log(
+        'How am I handling errors ' + store.numberOfErrorsArrayForTestMode,
+      );
+    } else if (
+      !store.errorOccurredWhileAttemptingToTypeTargetChord &&
+      store.userIsEditingPreviousWord &&
+      !userIsTypingFirstChord
+    ) {
+      store.numberOfErrorsArrayForTestMode.pop();
+      store.trainingSessionErrors = store.trainingSessionErrors - 1;
+      store.numberOfErrorsArrayForTestMode.push(0);
+      console.log(
+        'How am I handling errors ' + store.numberOfErrorsArrayForTestMode,
+      );
+    } else {
+      store.numberOfErrorsArrayForTestMode.push(0);
+      console.log(
+        'How am I handling errors ' + store.numberOfErrorsArrayForTestMode,
+      );
+    }
   }
-}
 
   const numberOfChordsConquered = store.trainingStatistics.statistics.filter(
     (s) =>
@@ -616,230 +640,264 @@ if(!userIsTypingFirstChord){
     MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   );
 
-  !userIsTypingFirstChord ? store.trainingSessionAggregatedTime = store.trainingSessionAggregatedTime + regulatedTimeToChord : '';
-
+  !userIsTypingFirstChord
+    ? (store.trainingSessionAggregatedTime =
+        store.trainingSessionAggregatedTime + regulatedTimeToChord)
+    : '';
 
   if (userIsTypingFirstChord) {
     timeTakenToTypeChord = 0;
     numberOfOccurences = -1;
     store.startTimer = true;
   }
-  if(!userIsTypingFirstChord && !store.userIsEditingPreviousWord){
-    store.wordsPracticedInOrder.push(id)
+  if (!userIsTypingFirstChord && !store.userIsEditingPreviousWord) {
+    store.wordsPracticedInOrder.push(id);
   }
 
-  if(!userIsTypingFirstChord && !store.userIsEditingPreviousWord){
+  if (!userIsTypingFirstChord && !store.userIsEditingPreviousWord) {
     store.timeTakenToTypeEachWordInOrder.push(regulatedTimeToChord);
-  store.timeTakenToTypePreviousChord = localChordStats?.lastSpeed;
+    store.timeTakenToTypePreviousChord = localChordStats?.lastSpeed;
 
-  if (localChordStats.speedOfLastTen.length == 10) {
-    localChordStats.speedOfLastTen.push(
-      localChordStats.lastSpeed,
-    );
-    localChordStats.speedOfLastTen.shift();
-  } else {
-    localChordStats.speedOfLastTen.push(
-      localChordStats.lastSpeed,
-    );
-  }
-
-  localChordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(chordStats.speedOfLastTen);
-
-  if (couldFindChordInLocalLibrary) {
-    // Replace chord stats object in chord stats list
-    store.localTrainingStatistics = {
-      statistics: store.localTrainingStatistics.statistics.map(
-        (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
-      ),
-    };
-  } else {
-    store.localTrainingStatistics.statistics.push(chordStats);
-  }
-}
-
-
-  // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
-  if(store.currentTrainingScenario != 'ALLCHORDS' && !userIsTypingFirstChord) {
-
-  chordStats.lastSpeed = Math.min(
-    timeTakenToTypeChord,
-    MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
-  );
-  store.timeTakenToTypePreviousChord = chordStats?.lastSpeed;
-
-  if (chordStats.speedOfLastTen.length == 10) {
-    chordStats.speedOfLastTen.push(
-      chordStats.lastSpeed,
-    );
-    chordStats.speedOfLastTen.shift();
-  } else {
-    chordStats.speedOfLastTen.push(
-      chordStats.lastSpeed,
-    );
-  }
-
-    //Need to aggregate the speeds in speedOfLastTen array and divide by the number if speeds in that array to derrive the avg speed
-  chordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(chordStats.speedOfLastTen);
-
-
-
-  if (userIsTypingFirstChord) {
-    if(chordStats.numberOfOccurrences != 0)
-    chordStats.numberOfOccurrences = chordStats.numberOfOccurrences - 1;
-    else
-    chordStats.numberOfOccurrences = chordStats.numberOfOccurrences = 0;
-  } else{
-  chordStats.numberOfOccurrences =
-    chordStats.numberOfOccurrences + numberOfOccurences;
-  store.userIsEditingPreviousWord === false
-    ? chordStats.numberOfOccurrences++
-    : '';
-  }
-  if (store.currentTrainingScenario != 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) { // Also need to add a check to see if the word is correct
-    chordStats.numberOfErrors = chordStats.numberOfErrors -1;
-    store.trainingTestCounter = store.trainingTestCounter -1;
-
-  } else if (store.currentTrainingScenario == 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]) { // Also need to add a check to see if the word is correct
-
-    chordStats.numberOfErrors = chordStats.numberOfErrors -1;
-    store.trainingTestCounter = store.trainingTestCounter -1;
-
-
-  }
-
-  if (couldFindChordInLibrary) {
-    // Replace chord stats object in chord stats list
-    store.trainingStatistics = {
-      statistics: store.trainingStatistics.statistics.map(
-        (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
-      ),
-    };
-  } else {
-    store.trainingStatistics.statistics.push(chordStats);
-  }
-
-  if(store.wordTestNumber == undefined)// this is to prevent stats from storing during the testing module 
-  localStorage.setItem(store.trainingLevel+'_'+store.currentTrainingScenario, JSON.stringify({statistics: store.trainingStatistics.statistics})); //Store downloaded chords in local storage
-
-
-
-} else if (!userIsTypingFirstChord) {
-  const chordStatsFromDevice = store?.storedChordsFromDevice?.statistics.find(
-    (c: ChordStatisticsFromDevice) => c.id === id,
-  ) as ChordStatisticsFromDevice;
-
-  if (store.currentTrainingScenario != 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) { // Also need to add a check to see if the word is correct
-    chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors -1;
-  }
-
-  if (store.currentTrainingScenario == 'ALLCHORDS' && !userIsTypingFirstChord) {
-    if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord) {
-      chordStatsFromDevice.numberOfErrors++;
-
+    if (localChordStats.speedOfLastTen.length == 10) {
+      localChordStats.speedOfLastTen.push(localChordStats.lastSpeed);
+      localChordStats.speedOfLastTen.shift();
+    } else {
+      localChordStats.speedOfLastTen.push(localChordStats.lastSpeed);
     }
 
-    chordStatsFromDevice.lastSpeed = Math.min(
+    localChordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(
+      chordStats.speedOfLastTen,
+    );
+
+    if (couldFindChordInLocalLibrary) {
+      // Replace chord stats object in chord stats list
+      store.localTrainingStatistics = {
+        statistics: store.localTrainingStatistics.statistics.map(
+          (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
+        ),
+      };
+    } else {
+      store.localTrainingStatistics.statistics.push(chordStats);
+    }
+  }
+
+  // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
+  if (store.currentTrainingScenario != 'ALLCHORDS' && !userIsTypingFirstChord) {
+    chordStats.lastSpeed = Math.min(
       timeTakenToTypeChord,
       MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
     );
+    store.timeTakenToTypePreviousChord = chordStats?.lastSpeed;
 
-    chordStatsFromDevice.averageSpeed =
-      (chordStatsFromDevice.averageSpeed *
-        chordStatsFromDevice.numberOfOccurrences +
-        chordStatsFromDevice.lastSpeed) /
-      (chordStatsFromDevice.numberOfOccurrences + 1);
-
-      if (userIsTypingFirstChord) {
-        if(chordStatsFromDevice.numberOfOccurrences != 0){
-        chordStatsFromDevice.numberOfOccurrences = chordStatsFromDevice.numberOfOccurrences - 1;
-        chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors - 1;
-        } else {
-        chordStatsFromDevice.numberOfOccurrences = chordStatsFromDevice.numberOfOccurrences = 0;
-        chordStatsFromDevice.numberOfErrors = chordStatsFromDevice.numberOfErrors = 0;
-
-        }
-      } else{
-        chordStatsFromDevice.numberOfOccurrences =
-      chordStatsFromDevice.numberOfOccurrences + numberOfOccurences;
-      store.userIsEditingPreviousWord === false
-        ? chordStatsFromDevice.numberOfOccurrences++
-        : '';
-      }
-      
-    if (chordStatsFromDevice.chordsMastered?.length == 10) {
-      chordStatsFromDevice.chordsMastered?.push(
-        chordStatsFromDevice.averageSpeed,
-      );
-      chordStatsFromDevice.chordsMastered?.shift();
+    if (chordStats.speedOfLastTen.length == 10) {
+      chordStats.speedOfLastTen.push(chordStats.lastSpeed);
+      chordStats.speedOfLastTen.shift();
     } else {
-      chordStatsFromDevice.chordsMastered?.push(
-        chordStatsFromDevice.averageSpeed,
-      );
+      chordStats.speedOfLastTen.push(chordStats.lastSpeed);
     }
 
-    const sum = chordStatsFromDevice?.chordsMastered?.reduce(
-      (a, b) => a + b,
-      0,
+    //Need to aggregate the speeds in speedOfLastTen array and divide by the number if speeds in that array to derrive the avg speed
+    chordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(
+      chordStats.speedOfLastTen,
     );
-    chordStatsFromDevice.averageSpeed =
-      sum / chordStatsFromDevice.chordsMastered?.length || 0;
 
-    store.trainingStatistics = {
-      statistics: store.trainingStatistics.statistics.map(
-        (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
-      ),
-    };
+    if (userIsTypingFirstChord) {
+      if (chordStats.numberOfOccurrences != 0)
+        chordStats.numberOfOccurrences = chordStats.numberOfOccurrences - 1;
+      else chordStats.numberOfOccurrences = chordStats.numberOfOccurrences = 0;
+    } else {
+      chordStats.numberOfOccurrences =
+        chordStats.numberOfOccurrences + numberOfOccurences;
+      store.userIsEditingPreviousWord === false
+        ? chordStats.numberOfOccurrences++
+        : '';
+    }
+    if (
+      store.currentTrainingScenario != 'ALPHABET' &&
+      store.userIsEditingPreviousWord &&
+      store.storedTestTextData[store?.allTypedCharactersStore.length - 1] ==
+        store?.allTypedCharactersStore[
+          store?.allTypedCharactersStore?.length - 1
+        ]?.slice(0, -1)
+    ) {
+      // Also need to add a check to see if the word is correct
+      chordStats.numberOfErrors = chordStats.numberOfErrors - 1;
+      store.trainingTestCounter = store.trainingTestCounter - 1;
+    } else if (
+      store.currentTrainingScenario == 'ALPHABET' &&
+      store.userIsEditingPreviousWord &&
+      store.storedTestTextData[store?.allTypedCharactersStore.length - 1] ==
+        store?.allTypedCharactersStore[
+          store?.allTypedCharactersStore?.length - 1
+        ]
+    ) {
+      // Also need to add a check to see if the word is correct
 
+      chordStats.numberOfErrors = chordStats.numberOfErrors - 1;
+      store.trainingTestCounter = store.trainingTestCounter - 1;
+    }
 
-    store.storedChordsFromDevice = {
-      statistics: store.storedChordsFromDevice.statistics.map(
-        (e: ChordStatisticsFromDevice) =>
-          e.id === chordStatsFromDevice.id &&
-          e.chord === chordStatsFromDevice.chord
-            ? chordStatsFromDevice
-            : e,
-      ),
-    };
-    const value = store.storedChordsFromDevice
-    window.addEventListener(
-      'beforeunload',
-      function () {
-        // number of miliseconds to hold before unloading page
-        const x = 500;
-        const a = new Date().getTime() + x;
+    if (couldFindChordInLibrary) {
+      // Replace chord stats object in chord stats list
+      store.trainingStatistics = {
+        statistics: store.trainingStatistics.statistics.map(
+          (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
+        ),
+      };
+    } else {
+      store.trainingStatistics.statistics.push(chordStats);
+    }
 
-        localStorage.setItem('chordsReadFromDevice', JSON.stringify(value)); //Store downloaded chords in local storage
+    if (store.wordTestNumber == undefined)
+      // this is to prevent stats from storing during the testing module
+      localStorage.setItem(
+        store.trainingLevel + '_' + store.currentTrainingScenario,
+        JSON.stringify({ statistics: store.trainingStatistics.statistics }),
+      ); //Store downloaded chords in local storage
+  } else if (!userIsTypingFirstChord) {
+    const chordStatsFromDevice = store?.storedChordsFromDevice?.statistics.find(
+      (c: ChordStatisticsFromDevice) => c.id === id,
+    ) as ChordStatisticsFromDevice;
 
-        // browser will hold with unloading your page for X miliseconds, letting
-        // your localStorage call to finish
-        while (new Date().getTime() < a) {
-          //Not an Empty block statement en-list
+    if (
+      store.currentTrainingScenario != 'ALPHABET' &&
+      store.userIsEditingPreviousWord &&
+      store.storedTestTextData[store?.allTypedCharactersStore.length - 1] ==
+        store?.allTypedCharactersStore[
+          store?.allTypedCharactersStore?.length - 1
+        ]?.slice(0, -1)
+    ) {
+      // Also need to add a check to see if the word is correct
+      chordStatsFromDevice.numberOfErrors =
+        chordStatsFromDevice.numberOfErrors - 1;
+    }
+
+    if (
+      store.currentTrainingScenario == 'ALLCHORDS' &&
+      !userIsTypingFirstChord
+    ) {
+      if (
+        store.errorOccurredWhileAttemptingToTypeTargetChord &&
+        !store.userIsEditingPreviousWord
+      ) {
+        chordStatsFromDevice.numberOfErrors++;
+      }
+
+      chordStatsFromDevice.lastSpeed = Math.min(
+        timeTakenToTypeChord,
+        MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
+      );
+
+      chordStatsFromDevice.averageSpeed =
+        (chordStatsFromDevice.averageSpeed *
+          chordStatsFromDevice.numberOfOccurrences +
+          chordStatsFromDevice.lastSpeed) /
+        (chordStatsFromDevice.numberOfOccurrences + 1);
+
+      if (userIsTypingFirstChord) {
+        if (chordStatsFromDevice.numberOfOccurrences != 0) {
+          chordStatsFromDevice.numberOfOccurrences =
+            chordStatsFromDevice.numberOfOccurrences - 1;
+          chordStatsFromDevice.numberOfErrors =
+            chordStatsFromDevice.numberOfErrors - 1;
+        } else {
+          chordStatsFromDevice.numberOfOccurrences =
+            chordStatsFromDevice.numberOfOccurrences = 0;
+          chordStatsFromDevice.numberOfErrors =
+            chordStatsFromDevice.numberOfErrors = 0;
         }
-      },
-      false,
-    );
+      } else {
+        chordStatsFromDevice.numberOfOccurrences =
+          chordStatsFromDevice.numberOfOccurrences + numberOfOccurences;
+        store.userIsEditingPreviousWord === false
+          ? chordStatsFromDevice.numberOfOccurrences++
+          : '';
+      }
 
-  }
-}
-if(!userIsTypingFirstChord) {
+      if (chordStatsFromDevice.chordsMastered?.length == 10) {
+        chordStatsFromDevice.chordsMastered?.push(
+          chordStatsFromDevice.averageSpeed,
+        );
+        chordStatsFromDevice.chordsMastered?.shift();
+      } else {
+        chordStatsFromDevice.chordsMastered?.push(
+          chordStatsFromDevice.averageSpeed,
+        );
+      }
 
-  if (store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1) && store.currentTrainingScenario !='ALPHABET') {
-    store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly +1;
-    //Need to add an errors calculator here 
-  }
-  else if(store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1] && store.currentTrainingScenario =='ALPHABET'){
-    store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly +1;
-  }
+      const sum = chordStatsFromDevice?.chordsMastered?.reduce(
+        (a, b) => a + b,
+        0,
+      );
+      chordStatsFromDevice.averageSpeed =
+        sum / chordStatsFromDevice.chordsMastered?.length || 0;
 
-}
-  console.log('Training chords returned '+ store.numberOfErrorsArrayForTestMode)
+      store.trainingStatistics = {
+        statistics: store.trainingStatistics.statistics.map(
+          (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
+        ),
+      };
+
+      store.storedChordsFromDevice = {
+        statistics: store.storedChordsFromDevice.statistics.map(
+          (e: ChordStatisticsFromDevice) =>
+            e.id === chordStatsFromDevice.id &&
+            e.chord === chordStatsFromDevice.chord
+              ? chordStatsFromDevice
+              : e,
+        ),
+      };
+      const value = store.storedChordsFromDevice;
+      window.addEventListener(
+        'beforeunload',
+        function () {
+          // number of miliseconds to hold before unloading page
+          const x = 500;
+          const a = new Date().getTime() + x;
+
+          localStorage.setItem('chordsReadFromDevice', JSON.stringify(value)); //Store downloaded chords in local storage
+
+          // browser will hold with unloading your page for X miliseconds, letting
+          // your localStorage call to finish
+          while (new Date().getTime() < a) {
+            //Not an Empty block statement en-list
+          }
+        },
+        false,
+      );
+    }
+  }
+  if (!userIsTypingFirstChord) {
+    if (
+      store.storedTestTextData[store?.allTypedCharactersStore.length - 1] ==
+        store?.allTypedCharactersStore[
+          store?.allTypedCharactersStore?.length - 1
+        ]?.slice(0, -1) &&
+      store.currentTrainingScenario != 'ALPHABET'
+    ) {
+      store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly + 1;
+      //Need to add an errors calculator here
+    } else if (
+      store.storedTestTextData[store?.allTypedCharactersStore.length - 1] ==
+        store?.allTypedCharactersStore[
+          store?.allTypedCharactersStore?.length - 1
+        ] &&
+      store.currentTrainingScenario == 'ALPHABET'
+    ) {
+      store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly + 1;
+    }
+  }
+  console.log(
+    'Training chords returned ' + store.numberOfErrorsArrayForTestMode,
+  );
   store.userIsEditingPreviousWord = false;
-
-
 }
-export function savedStoredChordStats(state : TrainingStoreModel){
-  if(state.currentTrainingScenario == 'ALLCHORDS')
-  localStorage.setItem('chordsReadFromDevice', JSON.stringify(state.storedChordsFromDevice)); //Store downloaded chords in local storage
+export function savedStoredChordStats(state: TrainingStoreModel) {
+  if (state.currentTrainingScenario == 'ALLCHORDS')
+    localStorage.setItem(
+      'chordsReadFromDevice',
+      JSON.stringify(state.storedChordsFromDevice),
+    ); //Store downloaded chords in local storage
 }
 
 function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
@@ -882,7 +940,6 @@ function generateTestTrainingData(
   }
   return fullTestData;
 }
-
 
 function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
   const lineLength =

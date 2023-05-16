@@ -16,13 +16,12 @@ import { ChordMapColumn } from './ChordMapCardColumn';
 import {
   ChordStatisticsFromDevice,
   createEmptyChordStatisticsFromDevice,
-
 } from '../../../models/trainingStatistics';
 import { asyncCallForDownloadChords } from '../controls/mainControls';
 import { render } from 'react-dom';
 
 export async function getGetAll() {
-  const tab =[];
+  const tab = [];
   resetDataTable();
   //await selectBase(); //select BASE
   await sendCommandString('CML C0');
@@ -41,9 +40,7 @@ export async function getGetAll() {
     //console.log("MapID");
     //console.log(MainControls._chordmapId);
     await readGetOneChordmap();
-
   }
-
 }
 
 const wontTimeout = async (func) => {
@@ -75,10 +72,8 @@ export async function downloadChordsForAllChordsModule() {
     console.log(MainControls._chordmapCountOnDevice);
     //wait sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
 
-
-    
-   // await sendCommandString('CML C1 ' + i);
-    await wontTimeout(sendCommandString('CML C1 ' + i), i)
+    // await sendCommandString('CML C1 ' + i);
+    await wontTimeout(sendCommandString('CML C1 ' + i), i);
     //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
 
     //console.log("MapID");
@@ -126,14 +121,14 @@ export async function downloadChordsForAllChordsModule() {
   return true;
 }
 
-
-
 export function Download(): ReactElement {
-  const setDownloadedChords = useStoreActions((store) => store.setDownloadedChords);
+  const setDownloadedChords = useStoreActions(
+    (store) => store.setDownloadedChords,
+  );
   const downloadedChords = useStoreState((store) => store.downloadedChords);
 
   async function getGet() {
-    const tab =[];
+    const tab = [];
     //await selectBase(); //select BASE
     await sendCommandString('CML C0');
     const { value } = await MainControls.lineReader.read();
@@ -141,21 +136,24 @@ export function Download(): ReactElement {
     const chordCountParsedValue = parseInt(
       chordCountSplit[chordCountSplit.length - 1],
     );
-  
+
     for (let i = 0; i < chordCountParsedValue; i++) {
       console.log(MainControls._chordmapCountOnDevice);
       //wait sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
       await sendCommandString('CML C1 ' + i);
       //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
-  
+
       //console.log("MapID");
       //console.log(MainControls._chordmapId);
       const inValue = await readGetOneChordmap();
-      const tempCreated = createChord( inValue[0], inValue[1], inValue[2], inValue[3]);
+      const tempCreated = createChord(
+        inValue[0],
+        inValue[1],
+        inValue[2],
+        inValue[3],
+      );
       setDownloadedChords(tempCreated);
-  
     }
-
   }
   return (
     <React.Fragment>
@@ -170,8 +168,6 @@ export function Download(): ReactElement {
       >
         Populate Table
       </button>
-
     </React.Fragment>
   );
 }
-

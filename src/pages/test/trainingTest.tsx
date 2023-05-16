@@ -23,7 +23,7 @@ function TrainingTestPage(): ReactElement {
   const contrast = useContrast();
   const currentTrainingScenario = useStoreState(
     (store: any) => store.currentTriningScenario,
-  ); 
+  );
 
   const wordTestNumber = useStoreState((store: any) => store.wordTestNumber);
   useTrainingScenarioAsDocumentTitle();
@@ -42,22 +42,18 @@ function TrainingTestPage(): ReactElement {
   );
   const trainingLevel = useStoreState((store: any) => store.trainingLevel);
 
-  const trainingIsDone = useStoreState(
-    (store) => store.trainingIsDone,
-  );
+  const trainingIsDone = useStoreState((store) => store.trainingIsDone);
 
   //setIsDisplayingIntroductionModal
 
   const [toggleValue, setToggleValue] = useState(true);
 
-  
-  const dictNameOfLibrary = { 
+  const dictNameOfLibrary = {
     ALPHABET: chordLibrary.letters,
     LEXICAL: chordLibrary.lexical,
     ENGLISH: chordLibrary.lexical,
     TRIGRAM: chordLibrary.trigrams,
-
-  }
+  };
 
   useEffect(() => {
     document.title = 'dot i/o';
@@ -83,12 +79,18 @@ function TrainingTestPage(): ReactElement {
     <React.Fragment>
       <PageContainer contrast={contrast}>
         {!currentTrainingScenario && <Redirect to="" />}
-        {(isTrainingTestDone == false && trainingIsDone == false) && (
+        {isTrainingTestDone == false && trainingIsDone == false && (
           <React.Fragment>
             <EditChordsModal />
             <SettingsColumn />
             <CenterTrainingColumn />
-            {wordTestNumber == undefined ? <PreviousTest /> : <div className="invisible"><PreviousTest /></div>}
+            {wordTestNumber == undefined ? (
+              <PreviousTest />
+            ) : (
+              <div className="invisible">
+                <PreviousTest />
+              </div>
+            )}
             {isDisplayingIntroductionModal ||
             localStorage.getItem('FirstTimeViewingModal') == undefined ? (
               <div style={modal}>

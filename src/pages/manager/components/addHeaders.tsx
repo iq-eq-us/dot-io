@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 
-
 export function addHeadersToDataTable() {
   console.log('addHeadersToDataTable()');
   const dataTable: HTMLTableElement = document.getElementById(
@@ -61,7 +60,6 @@ export function AddHeaders(): ReactElement {
         <ul id="list" />
         <table id="dataTable" />
       </div>
-      
     </React.Fragment>
   );
 }

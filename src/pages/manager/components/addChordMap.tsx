@@ -3,13 +3,12 @@ import { appendToRow } from '../../manager/controls/mainControls';
 import { createChord } from '../../../models/managerModels';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
-
-
-
 export function AddChordMap(): ReactElement {
-  const setDownloadedChords = useStoreActions((store) => store.setDownloadedChords);
-  function addChordMap(){
-    const newChordMap = createChord('','','','');
+  const setDownloadedChords = useStoreActions(
+    (store) => store.setDownloadedChords,
+  );
+  function addChordMap() {
+    const newChordMap = createChord('', '', '', '');
     setDownloadedChords(newChordMap);
   }
   return (

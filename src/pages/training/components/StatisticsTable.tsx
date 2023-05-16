@@ -154,7 +154,7 @@ const AggregateRow = ({ data }: { data: Data }) => {
   const wpmCheck = wpmMethodCalculator(
     getCumulativeAverageChordTypeTime(data.stats),
   );
-  const average = (wpmCheck != undefined || null) ? wpmCheck : 0;
+  const average = wpmCheck != undefined || null ? wpmCheck : 0;
   let sumErrors = 0;
   let sumOccurrences = 0;
   data.stats.forEach((d) => {

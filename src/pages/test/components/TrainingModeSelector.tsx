@@ -31,15 +31,13 @@ export function TrainingModeSelector(): ReactElement {
   const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState(
     'CPM' as TrainingLevels,
   );
-  
-   async function LearnPageFunction(value: any, tier : TrainingLevels) {      
-    
+
+  async function LearnPageFunction(value: any, tier: TrainingLevels) {
     const payload: any[] = [];
     payload.push(value);
     sessionStorage.removeItem('tempTestDeIncrement');
     beginTraining(payload);
-  
-}
+  }
   function allChords() {
     const doesLibrayExist = localStorage.getItem('chordsReadFromDevice');
     const id = getId();
@@ -75,7 +73,10 @@ export function TrainingModeSelector(): ReactElement {
             {...(moduleNumber == 1
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
-            onClick={() => [LearnPageFunction('ALPHABET', trainingLevel), setModuleNumber(1)]}
+            onClick={() => [
+              LearnPageFunction('ALPHABET', trainingLevel),
+              setModuleNumber(1),
+            ]}
           >
             Letters
           </button>
@@ -172,18 +173,24 @@ export function TrainingModeSelector(): ReactElement {
   );
 }
 
-export  async function oneTimeCreateStoredChordStats(value: any, tier : any, library){
-  const check = localStorage?.getItem(tier+ '_'+value);
-    if(check == null || undefined) {
-  const storedChordStatArray = []
-  for(let i = 0; i < Object.keys(library).length; i++){
-    storedChordStatArray.push(createEmptyChordStatistics(Object.keys(library)[i], value));
+export async function oneTimeCreateStoredChordStats(
+  value: any,
+  tier: any,
+  library,
+) {
+  const check = localStorage?.getItem(tier + '_' + value);
+  if (check == null || undefined) {
+    const storedChordStatArray = [];
+    for (let i = 0; i < Object.keys(library).length; i++) {
+      storedChordStatArray.push(
+        createEmptyChordStatistics(Object.keys(library)[i], value),
+      );
+    }
+    localStorage.setItem(
+      tier + '_' + value,
+      JSON.stringify({ statistics: storedChordStatArray }),
+    );
   }
-  localStorage.setItem(
-    tier+ '_'+value,
-    JSON.stringify({statistics: storedChordStatArray}),
-  ); 
-}
 }
 const ItemsContainer = styled.div`
   height: 50px;

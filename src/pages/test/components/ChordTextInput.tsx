@@ -22,8 +22,6 @@ function ChordTextInput(): ReactElement {
   const setStartTimer = useStoreActions((store) => store.setStartTimer);
   const startTimer = useStoreState((store) => store.startTimer);
 
-
-
   const setTextPromptUnFocused = useStoreActions(
     (store) => store.setTextPromptUnFocused,
   );
@@ -77,7 +75,10 @@ function ChordTextInput(): ReactElement {
         ref={inputRef}
         id="txt_Name"
         autoFocus
-        onBlurCapture={() => [setTextPromptUnFocused(true), setStartTimer(false)]}
+        onBlurCapture={() => [
+          setTextPromptUnFocused(true),
+          setStartTimer(false),
+        ]}
         onFocus={() =>
           isShowingPortal == true
             ? document.getElementById('txt_Name')?.focus()

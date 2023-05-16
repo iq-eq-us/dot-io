@@ -35,7 +35,9 @@ const AggregateRow = ({ data }: { data: any }) => {
   const setIsDisplaying = useStoreActions(
     (store) => store.setIsDisplayingTestComplete,
   );
-  const trainingTestCounter = useStoreState((store) => store.trainingTestCounter);
+  const trainingTestCounter = useStoreState(
+    (store) => store.trainingTestCounter,
+  );
 
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
   const currentTrainingScenario = useStoreState(
@@ -88,7 +90,7 @@ const AggregateRow = ({ data }: { data: any }) => {
         //Method will send the test values to local storage
       }
     } else if (
-      (allTypedCharactersStore.length) >= parseInt(count) &&
+      allTypedCharactersStore.length >= parseInt(count) &&
       wordTestNumber != undefined
     ) {
       setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page

@@ -134,7 +134,7 @@ export interface TrainingStoreStateModel {
   passwordModulModalToggle: boolean;
   chmTierPasswordBypass: boolean;
   storedChordStatistics: TrainingStatistics;
-  trainingTestCounter : number;
+  trainingTestCounter: number;
   numberOfWordsTypedCorrectly: number;
   numberOfErrorsArrayForTestMode: number[];
   timer: TimerModel;
@@ -144,7 +144,6 @@ export interface TrainingStoreStateModel {
   trainingIsDone: boolean;
   timerValue: string;
   timeTakenToTypeEachWordInOrder: number[];
-  
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

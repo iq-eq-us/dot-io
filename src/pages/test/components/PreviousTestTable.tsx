@@ -59,23 +59,23 @@ function StatisticsTable(): ReactElement {
   ).length;
   function removeDups(arr) {
     const seen = new Set();
-    const newSet = arr?.statistics.filter(item => {
-        const duplicate = seen.has(item.id);
-        seen.add(item.id);
-        return !duplicate;
-      });
-      //console.log({statistics : newSet});
-      return {statistics : newSet as ChordStatisticsFromDevice[]};  
-    }
-   function cs(arr){
+    const newSet = arr?.statistics.filter((item) => {
+      const duplicate = seen.has(item.id);
+      seen.add(item.id);
+      return !duplicate;
+    });
+    //console.log({statistics : newSet});
+    return { statistics: newSet as ChordStatisticsFromDevice[] };
+  }
+  function cs(arr) {
     const seen = new Set();
-    const newSet = arr?.statistics.filter(item => {
-        const duplicate = seen.has(item.id);
-        seen.add(item.id);
-        return !duplicate;
-      });
-      //console.log({statistics : newSet});
-      return {statistics : newSet as ChordStatisticsFromDevice[]};
+    const newSet = arr?.statistics.filter((item) => {
+      const duplicate = seen.has(item.id);
+      seen.add(item.id);
+      return !duplicate;
+    });
+    //console.log({statistics : newSet});
+    return { statistics: newSet as ChordStatisticsFromDevice[] };
   }
   const sortBetween = (arr = [], start, end) => {
     if (numberOfChordsConquered > totalNumberOfWordsTyped - 1) {
@@ -86,8 +86,7 @@ function StatisticsTable(): ReactElement {
       part.reverse();
       arr.splice(start, 0, ...part);
     }
-    
-    };
+  };
   const newGG = removeDups(inStoredChordsFromDevice);
   sortBetween(stats, 0, numberOfWordsTyped);
   const [ref, dimensions] = useContainerDimensions<HTMLDivElement>();
@@ -236,16 +235,12 @@ function returnStatisticsColumnContent(data: Data, index: number) {
               ).toFixed(2)}
         </RowItem>
         <RowItem>
-          {wpmMethodCalculator(
-            item?.averageSpeed)
-          .toFixed() == 'Infinity'
+          {wpmMethodCalculator(item?.averageSpeed).toFixed() == 'Infinity'
             ? '0'
             : wpmValue.toFixed()}
         </RowItem>
         <RowItem>
-          {wpmMethodCalculator(
-            item?.averageSpeed,
-          ).toFixed() == 'Infinity'
+          {wpmMethodCalculator(item?.averageSpeed).toFixed() == 'Infinity'
             ? '0'
             : (wpmValue / 100).toFixed(2)}
         </RowItem>
@@ -256,9 +251,7 @@ function returnStatisticsColumnContent(data: Data, index: number) {
       <React.Fragment>
         <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
         <RowItem>
-          {wpmMethodCalculator(
-            item?.averageSpeed,
-          ).toFixed() == 'Infinity'
+          {wpmMethodCalculator(item?.averageSpeed).toFixed() == 'Infinity'
             ? '0 / 0'
             : wpmValue.toFixed() * 5 + '/' + wpmValue.toFixed()}
         </RowItem>
@@ -472,13 +465,11 @@ function returnStatisticsColumnHeader(data: Data) {
         <RowStatItem>SUM</RowStatItem>
         <RowStatItem>
           {data.displayHUD
-            ? (average) == 0
+            ? average == 0
               ? '0 / 0'
-              : (
-                  wpmMethodCalculator((average)) * 5
-                ).toFixed() +
+              : (wpmMethodCalculator(average) * 5).toFixed() +
                 '/' +
-                wpmMethodCalculator((average)).toFixed()
+                wpmMethodCalculator(average).toFixed()
             : ''}
         </RowStatItem>
         <RowStatItem>{sumErrors}</RowStatItem>

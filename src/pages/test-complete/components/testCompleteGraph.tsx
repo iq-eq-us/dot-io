@@ -3,7 +3,11 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from '../../../store/store';
-import { getCumulativeAverageChordTypeTime, wpmMethodCalculator, avgCalculatorForTheSpeedOfLastTen } from '../../../../src/helpers/aggregation';
+import {
+  getCumulativeAverageChordTypeTime,
+  wpmMethodCalculator,
+  avgCalculatorForTheSpeedOfLastTen,
+} from '../../../../src/helpers/aggregation';
 
 //myGraph(wordNames, wordOccurrences, wordPerMinute)
 
@@ -183,7 +187,6 @@ function wpmDataCalculator(wpmArray: any) {
 
     i == 0 ? (localTemp = wpmTemp) : (localTemp = wpmTemp / iterator);
 
-
     const avgSpeedMilliseconds = localTemp * 10;
     const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
     const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
@@ -212,16 +215,20 @@ export function TestCompleteGraph(): ReactElement {
     (store) => store.wordsPracticedInOrder,
   );
 
-  const storedTestTextData = useStoreState((store) => store.storedTestTextData); 
+  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
 
-  const numberOfErrorsArrayForTestMode = useStoreState((store) => store.numberOfErrorsArrayForTestMode);
-  const allTypedCharactersStore = useStoreState((store) => store.allTypedCharactersStore);
+  const numberOfErrorsArrayForTestMode = useStoreState(
+    (store) => store.numberOfErrorsArrayForTestMode,
+  );
+  const allTypedCharactersStore = useStoreState(
+    (store) => store.allTypedCharactersStore,
+  );
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
-  const testTeirHighestWPM = useStoreActions((store) => store.setTestTeirHighestWPM);
+  const testTeirHighestWPM = useStoreActions(
+    (store) => store.setTestTeirHighestWPM,
+  );
   //trainingLevel == 'CPM'
   const teir = useStoreState((store) => store.trainingLevel);
-
-
 
   let wordNames: any = [];
   let wordOccurrences: any = [];
@@ -232,55 +239,65 @@ export function TestCompleteGraph(): ReactElement {
     localStorage.getItem('chordsToChooseFrom'),
   );
 
-console.log('test Mode statistics  errors' +numberOfErrorsArrayForTestMode + ' '+ numberOfErrorsArrayForTestMode.length );
-console.log('test Mode statistics  wordsPracticed' +wordsPracticedInOrder + ' '+ wordsPracticedInOrder.length);
-console.log('test Mode statistics timeTakenForEach Chord' +timeTakenToTypeEachWordInOrder + ' '+ timeTakenToTypeEachWordInOrder.length)
-const finalErrorsArray = [];
-const finalWPMArray = [];
-const finalRawWPM = [];
-let aggregate = 0;
-const timeTakenArray = []
-if(teir == 'CPM'){
-
-for(let i=0; i < timeTakenToTypeEachWordInOrder.length; i++) {
-  const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i])
-  finalRawWPM.push(tempWPM.toFixed(0)*5);
-  timeTakenArray.push(timeTakenToTypeEachWordInOrder[i])
-  aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
-  const aggWPM = wpmMethodCalculator(aggregate);
-  finalWPMArray.push(aggWPM.toFixed(0)*5)
-
-}
-testTeirHighestWPM(wordPerMinute[wordPerMinute.length-1]*5);
-
-}
-else {
-  for(let i=0; i < timeTakenToTypeEachWordInOrder.length; i++) {
-    const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i])
-    finalRawWPM.push(tempWPM.toFixed(0));
-    timeTakenArray.push(timeTakenToTypeEachWordInOrder[i])
-    aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
-    const aggWPM = wpmMethodCalculator(aggregate);
-    finalWPMArray.push(aggWPM.toFixed(0))
-  
+  console.log(
+    'test Mode statistics  errors' +
+      numberOfErrorsArrayForTestMode +
+      ' ' +
+      numberOfErrorsArrayForTestMode.length,
+  );
+  console.log(
+    'test Mode statistics  wordsPracticed' +
+      wordsPracticedInOrder +
+      ' ' +
+      wordsPracticedInOrder.length,
+  );
+  console.log(
+    'test Mode statistics timeTakenForEach Chord' +
+      timeTakenToTypeEachWordInOrder +
+      ' ' +
+      timeTakenToTypeEachWordInOrder.length,
+  );
+  const finalErrorsArray = [];
+  const finalWPMArray = [];
+  const finalRawWPM = [];
+  let aggregate = 0;
+  const timeTakenArray = [];
+  if (teir == 'CPM') {
+    for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
+      const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i]);
+      finalRawWPM.push(tempWPM.toFixed(0) * 5);
+      timeTakenArray.push(timeTakenToTypeEachWordInOrder[i]);
+      aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
+      const aggWPM = wpmMethodCalculator(aggregate);
+      finalWPMArray.push(aggWPM.toFixed(0) * 5);
+    }
+    testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1] * 5);
+  } else {
+    for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
+      const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i]);
+      finalRawWPM.push(tempWPM.toFixed(0));
+      timeTakenArray.push(timeTakenToTypeEachWordInOrder[i]);
+      aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
+      const aggWPM = wpmMethodCalculator(aggregate);
+      finalWPMArray.push(aggWPM.toFixed(0));
+    }
+    testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1]);
   }
-  testTeirHighestWPM(wordPerMinute[wordPerMinute.length-1]);
+  wordPerMinute = finalWPMArray;
+  rawSpeedOfCurrentWord = finalRawWPM;
+  wordOccurrences = numberOfErrorsArrayForTestMode;
+  wordNames = wordsPracticedInOrder;
+  const averageOfLocalStats = wpmMethodCalculator(
+    getCumulativeAverageChordTypeTime(localTrainingStatistics.statistics),
+  );
 
-}
-wordPerMinute = finalWPMArray;
-rawSpeedOfCurrentWord = finalRawWPM;
-wordOccurrences = numberOfErrorsArrayForTestMode;
-wordNames = wordsPracticedInOrder;
-const averageOfLocalStats = wpmMethodCalculator(getCumulativeAverageChordTypeTime(localTrainingStatistics.statistics))
+  if (wordTestNumber == undefined) {
+    wordPerMinute.pop();
+    wordPerMinute.push(averageOfLocalStats.toFixed(0));
+  }
 
-if(wordTestNumber == undefined) {
-  wordPerMinute.pop();
-  wordPerMinute.push(averageOfLocalStats.toFixed(0));
-}
-
- 
   const handleEvent = () => {
-    testTeirHighestWPM(wordPerMinute[wordPerMinute.length-1]);
+    testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1]);
     myGraph(wordNames, wordOccurrences, wordPerMinute, rawSpeedOfCurrentWord);
   };
 

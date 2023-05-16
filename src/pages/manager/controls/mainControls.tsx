@@ -722,7 +722,7 @@ export async function readGetOneChordmap() {
     hexChordString = strValue[3]; //Should be 32 chacters at all times
     let hexAsciiString = '';
     hexAsciiString = strValue[4];
-    convertHumanStringToHexadecimalChord
+    convertHumanStringToHexadecimalChord;
     strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
     strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
     strValues[2] = hexChordString;
@@ -764,7 +764,6 @@ export async function commitChordLayout() {
     strValues[4] = myArray[5];
     strValues[5] = myArray[6];
 
-
     //appendToList(strValues);
     // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
     _chordLayout.push(value); //this ultimately isn't used
@@ -797,7 +796,6 @@ export async function readGetOneChordLayout() {
     strValues[4] = myArray[5];
     strValues[5] = myArray[6];
 
-
     //appendToList(strValues);
     // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
     _chordLayout.push(value); //this ultimately isn't used
@@ -805,7 +803,6 @@ export async function readGetOneChordLayout() {
     //appendLayoutToRow(strValues);
   }
   return strValues;
-
 }
 
 export function appendLayoutToRow(data: string[], isFromFile = false): any {
@@ -908,7 +905,6 @@ export function appendToRow(data: string[], isFromFile = false): any {
   cells.push(row.insertCell(-1)); //10 orig hex phrase
   // cells[9].innerHTML = data[2];
   // cells[10].innerHTML = data[3];
-
 
   const btnEdit = document.createElement('input');
   const chordTextOrig = document.createElement('div');
@@ -1094,7 +1090,6 @@ export function appendToRow(data: string[], isFromFile = false): any {
       virtualId.toString() + '-delete',
     ) as HTMLInputElement;
     if (check.disabled) {
-      
       //delete the chord from the device, and then also delete from this list
       //const element: HTMLInputElement = document.getElementById(virtualId.toString()+"-commit")
       document.getElementById(virtualId.toString() + '-');
@@ -1259,26 +1254,39 @@ export function appendToRow(data: string[], isFromFile = false): any {
     phraseTextInput.value = data[1];
     btnCommit.disabled = false;
   }
-  const trow  = dataTable.insertRow(-1);
+  const trow = dataTable.insertRow(-1);
   cells.push(trow);
-  const tr = []
-  tr.push(<React.Fragment><div className="bg-[#222] mx-auto max-w shadow-lg rounded-lg overflow-hidden row">
-  <div className="md:flex md:items-center px-6 py-4">
-    <input type={'text'} className="block h-8 sm:h-12 rounded-xs mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" />
-      <input type={'text'} className="block h-8 sm:h-12 rounded-xs mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" />
-      <div className="text-center sm:text-left sm:flex-grow">
-      <div>
-        <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">Edit Chord</button>
-        <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">Save</button>
-        <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">Delete Chord</button>
-
+  const tr = [];
+  tr.push(
+    <React.Fragment>
+      <div className="bg-[#222] mx-auto max-w shadow-lg rounded-lg overflow-hidden row">
+        <div className="md:flex md:items-center px-6 py-4">
+          <input
+            type={'text'}
+            className="block h-8 sm:h-12 rounded-xs mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0"
+          />
+          <input
+            type={'text'}
+            className="block h-8 sm:h-12 rounded-xs mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0"
+          />
+          <div className="text-center sm:text-left sm:flex-grow">
+            <div>
+              <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">
+                Edit Chord
+              </button>
+              <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">
+                Save
+              </button>
+              <button className="text-xs float-right font-semibold rounded-full px-4 py-1 leading-normal bg-[#22c55e] border border-purple text-purple hover:bg-purple hover:text-black">
+                Delete Chord
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-</React.Fragment>
-);
-  return (<div>{tr[0]}</div>);;
+    </React.Fragment>,
+  );
+  return <div>{tr[0]}</div>;
 }
 
 export const asyncCallWithTimeout = async (
@@ -1303,17 +1311,11 @@ export const asyncCallWithTimeout = async (
   });
 };
 
-export const asyncCallForDownloadChords = async (
-  asyncPromise,
-  timeLimit,
-) => {
+export const asyncCallForDownloadChords = async (asyncPromise, timeLimit) => {
   let timeoutHandle;
 
   const timeoutPromise = new Promise((_resolve, reject) => {
-    timeoutHandle = setTimeout(
-      () => _resolve(asyncPromise),
-      timeLimit,
-    );
+    timeoutHandle = setTimeout(() => _resolve(asyncPromise), timeLimit);
   });
 
   return Promise.race([asyncPromise, timeoutPromise]).then((result) => {
@@ -1592,5 +1594,3 @@ export function convertHumanPhraseToHexadecimalPhrase(humanPhrase) {
 export async function readGetNone() {
   console.log(' ');
 }
-
-

@@ -10,10 +10,7 @@ export function TextBluredScreen() {
   const setTextPromptUnFocused = useStoreActions(
     (store) => store.setTextPromptUnFocused,
   );
-  const setStartTimer = useStoreActions(
-    (store) => store.setStartTimer,
-  );
-
+  const setStartTimer = useStoreActions((store) => store.setStartTimer);
 
   return (
     <div
@@ -21,7 +18,7 @@ export function TextBluredScreen() {
       onClick={() => [
         document.getElementById('txt_Name')?.focus(),
         setTextPromptUnFocused(false),
-        setStartTimer(true)
+        setStartTimer(true),
       ]}
     >
       Click to Re-Focus
@@ -174,7 +171,6 @@ export function TextPrompt(): ReactElement {
 
         setBestKeyTime((bestKeyTime) => [...bestKeyTime]);
         setLetterPressed((letterPressed) => [...letterPressed]);
-
       };
     }
 
@@ -529,20 +525,19 @@ export function TextPrompt(): ReactElement {
             (tempTargetWord[t] == undefined ? '' : tempTargetWord[t])
               ? coloredWordToPush.push(
                   <div className="text-black whitespace-pre-wrap m-0 flex">
-                    <span >{tempTargetWord[t]}</span>
-                    
+                    <span>{tempTargetWord[t]}</span>
                   </div>,
                 )
               : coloredWordToPush.push(
                   <div className="text-red-500 m-0 whitespace-pre-wrap flex">
-                    <span>
-                    {tempTargetWord[t]}
-                    </span>
+                    <span>{tempTargetWord[t]}</span>
                   </div>,
                 );
           } else {
             coloredWordToPush.push(
-              <span className="text-red m-0 whitespace-pre-wrap flex">{tempTargetWord[t]}</span>,
+              <span className="text-red m-0 whitespace-pre-wrap flex">
+                {tempTargetWord[t]}
+              </span>,
             );
           }
         }
@@ -550,7 +545,9 @@ export function TextPrompt(): ReactElement {
           i,
           1,
           <React.Fragment>
-            <div className="m-0 whitespace-pre-wrap"><span className = 'flex'>{coloredWordToPush}</span></div>
+            <div className="m-0 whitespace-pre-wrap">
+              <span className="flex">{coloredWordToPush}</span>
+            </div>
           </React.Fragment>,
         );
       } else {
@@ -642,13 +639,17 @@ export default function CharacterEntryChord({
   const wordSplit = word.split('');
 
   return (
-    <div style={{whiteSpace:'pre-wrap', flexDirection: 'row', color: 'gray' }}>
+    <div
+      style={{ whiteSpace: 'pre-wrap', flexDirection: 'row', color: 'gray' }}
+    >
       {wordSplit.slice(0, index).map((char) => (
         <span className="text-black whitespace-pre-wrap" key={Math.random()}>
           {char}
         </span>
       ))}
-      <span className="text-white bg-black whitespace-pre-wrap">{wordSplit[index]}</span>
+      <span className="text-white bg-black whitespace-pre-wrap">
+        {wordSplit[index]}
+      </span>
       {wordSplit.slice(index + 1).map((char) => (
         <span className="text-grey" key={Math.random()}>
           {char}
