@@ -31,10 +31,10 @@ export function ProgressBar(): ReactElement {
   let sumErrorsFromStoredDevice = 0;
   let sumOccurrencesFromStoredDevice = 0;
   const storedChordStats = useStoreState(
-    (store) => store.storedChordStatistics,
+    (store) => store?.storedChordStatistics,
   );
   const localTrainingStatistics = useStoreState(
-    (store) => store.localTrainingStatistics.statistics,
+    (store) => store.localTrainingStatistics?.statistics,
   );
 
   const inStoredChordsFromDevice = useStoreState(
@@ -119,7 +119,7 @@ export function ProgressBar(): ReactElement {
         getCumulativeAverageChordTypeTime(trainingStatistics),
       ))
     : wpmMethodCalculator(
-        getCumulativeAverageChordTypeTime(storedChordStats.statistics),
+        getCumulativeAverageChordTypeTime(storedChordStats?.statistics),
       );
 
   const [minValue, setMinValue] = useState<number>(0);

@@ -123,11 +123,10 @@ export function TestStatsCard(): ReactElement {
       <div
         className="items-center absolute text-lg text-red-500 ml-16 mt-2"
         style={
-          (parseInt(
+          (
             (
-              (Accuracy) *
-              100
-            ).toFixed(2),
+            Accuracy
+        
           ) < 95 ||
             (numberOfWordsChorded.toFixed(0) / 25) * 100 > 5) &&
           !trainingIsDone
@@ -138,6 +137,7 @@ export function TestStatsCard(): ReactElement {
         *Only tests with a minimum accuracy of 95% and less than 5% words
         chorded are counted towards your progress.
       </div>
+      {console.log('Changes hsbdhsd '+ (Accuracy))}
     </React.Fragment>
   );
 }
