@@ -152,9 +152,13 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.numberOfWordsChorded = 0;
     state.numberOfWordsTypedCorrectly = 0;
     state.trainingSessionErrors = 0;
-    state.numberOfErrorsArrayForTestMode =[];
+    state.numberOfErrorsArrayForTestMode = [];
     state.startTimer = false;
     state.trainingIsDone = false;
+    state.timeTakenToTypeEachWordInOrder = [];
+    state.wordsPracticedInOrder = [];
+    state.localTrainingStatistics = { statistics: [] };
+
     state.storedChordsFromDevice = JSON?.parse(
       localStorage?.getItem('chordsReadFromDevice'),
     );
@@ -513,7 +517,7 @@ export async function calculateStatisticsForTargetChord(
     return;
   }
 
-  store.trainingTestCounter = store.trainingTestCounter +1;
+  //store.trainingTestCounter = store.trainingTestCounter +1;
 
   //Here is where I need to find the chord in the live chords stats array and pull the storedChordStats
   const emptyChordStats = createEmptyChordStatistics(id);
@@ -525,7 +529,6 @@ export async function calculateStatisticsForTargetChord(
   let localChordStats = store.localTrainingStatistics.statistics.find(
     (c: ChordStatistics) => c.id === id,
   ) as ChordStatistics;
-
   const couldFindChordInLibrary = !!chordStats;
   if (!couldFindChordInLibrary) chordStats = emptyChordStats;
 
@@ -567,6 +570,8 @@ export async function calculateStatisticsForTargetChord(
   if (store.errorOccurredWhileAttemptingToTypeTargetChord && !store.userIsEditingPreviousWord && !userIsTypingFirstChord) {
     chordStats.numberOfErrors++;
     store.trainingSessionErrors = store.trainingSessionErrors + 1;
+    store.trainingTestCounter = store.trainingTestCounter +1;
+    
 
   }
 
@@ -605,7 +610,8 @@ export async function calculateStatisticsForTargetChord(
   }
 
   if(!userIsTypingFirstChord){
-
+    store.wordsPracticedInOrder.push(id)
+    store.timeTakenToTypeEachWordInOrder.push(regulatedTimeToChord);
   store.timeTakenToTypePreviousChord = localChordStats?.lastSpeed;
 
   if (localChordStats.speedOfLastTen.length == 10) {
@@ -674,11 +680,13 @@ export async function calculateStatisticsForTargetChord(
   if (store.currentTrainingScenario != 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1)) { // Also need to add a check to see if the word is correct
     chordStats.numberOfErrors = chordStats.numberOfErrors -1;
     store.trainingSessionErrors = store.trainingSessionErrors -1;
+    store.trainingTestCounter = store.trainingTestCounter -1;
 
   } else if (store.currentTrainingScenario == 'ALPHABET' && store.userIsEditingPreviousWord && store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]) { // Also need to add a check to see if the word is correct
 
     chordStats.numberOfErrors = chordStats.numberOfErrors -1;
     store.trainingSessionErrors = store.trainingSessionErrors -1;
+    store.trainingTestCounter = store.trainingTestCounter -1;
 
   }
 
@@ -767,7 +775,6 @@ export async function calculateStatisticsForTargetChord(
       ),
     };
 
-    console.log('Look at all the stats '+ chordStatsFromDevice.numberOfErrors + ' occur '+ chordStatsFromDevice.numberOfOccurrences)
 
     store.storedChordsFromDevice = {
       statistics: store.storedChordsFromDevice.statistics.map(
@@ -799,6 +806,7 @@ export async function calculateStatisticsForTargetChord(
 
   }
 }
+if(!userIsTypingFirstChord) {
 
   if (store.storedTestTextData[store?.allTypedCharactersStore.length-1] == store?.allTypedCharactersStore[store?.allTypedCharactersStore?.length-1]?.slice(0, -1) && store.currentTrainingScenario !='ALPHABET') {
     store.numberOfWordsTypedCorrectly = store.numberOfWordsTypedCorrectly +1;
@@ -812,6 +820,7 @@ export async function calculateStatisticsForTargetChord(
   else{
     store.numberOfErrorsArrayForTestMode[store?.allTypedCharactersStore.length-1] = 1;
   }
+}
 
   store.userIsEditingPreviousWord = false;
 

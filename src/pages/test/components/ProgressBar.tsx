@@ -134,7 +134,7 @@ export function ProgressBar(): ReactElement {
   const { parentProps: remainingProps, Popper: RemainingPopover } = usePopover(
     'The number of chords that you have not typed faster than your speed goal.',
   );
- const Accuracy = ((((allTypedText.length)-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
+ const Accuracy = ((((allTypedText.length-1)-trainingSessionErrors)/(allTypedText.length-1)) * 100).toFixed(0);
 
    sumOfAverages.toFixed(2) 
 

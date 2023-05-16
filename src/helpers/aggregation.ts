@@ -19,7 +19,7 @@ export const getCumulativeAverageChordTypeTime = (
       }),
       { averageSpeed: 0 },
     ).averageSpeed / statsWithUntypedChordsRemoved.length;
-
+    
   return (isNaN(average) ? 0 : average) || 0;
 };
 

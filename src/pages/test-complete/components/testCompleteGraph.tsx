@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from '../../../store/store';
-import { getCumulativeAverageChordTypeTime, wpmMethodCalculator } from '../../../../src/helpers/aggregation';
+import { getCumulativeAverageChordTypeTime, wpmMethodCalculator, avgCalculatorForTheSpeedOfLastTen } from '../../../../src/helpers/aggregation';
 
 //myGraph(wordNames, wordOccurrences, wordPerMinute)
 
@@ -202,8 +202,14 @@ export function TestCompleteGraph(): ReactElement {
   const localTrainingStatistics = useStoreState(
     (store: any) => store.localTrainingStatistics,
   );
+  const timeTakenToTypeEachWordInOrder = useStoreState(
+    (store: any) => store.timeTakenToTypeEachWordInOrder,
+  );
   const currentTrainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
+  );
+  const wordsPracticedInOrder = useStoreState(
+    (store) => store.wordsPracticedInOrder,
   );
 
   const storedTestTextData = useStoreState((store) => store.storedTestTextData); 
@@ -225,174 +231,52 @@ export function TestCompleteGraph(): ReactElement {
   const chordsToChooseFrom = JSON.parse(
     localStorage.getItem('chordsToChooseFrom'),
   );
-  if(wordTestNumber != undefined){
-    trainingStatistics.statistics.forEach((d: any) => {
-    if (d.displayTitle.length * d.numberOfOccurrences != 0) {
-      wordNames.push(d.displayTitle);
-      wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
 
-      const avgSpeedMilliseconds = d.averageSpeed * 10;
-      const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
-      const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
-      const wpm = averageCharacterPerMin;
+console.log('test Mode statistics  errors' +numberOfErrorsArrayForTestMode + ' '+ numberOfErrorsArrayForTestMode.length );
+console.log('test Mode statistics  wordsPracticed' +wordsPracticedInOrder + ' '+ wordsPracticedInOrder.length);
+console.log('test Mode statistics timeTakenForEach Chord' +timeTakenToTypeEachWordInOrder + ' '+ timeTakenToTypeEachWordInOrder.length)
+const finalErrorsArray = [];
+const finalWPMArray = [];
+const finalRawWPM = [];
+let aggregate = 0;
+const timeTakenArray = []
+if(teir == 'CPM'){
 
-      wordPerMinute.push(d.averageSpeed);
-      rawSpeedOfCurrentWord.push(wpm.toFixed(0));
-    }
-  }); 
-} else {
-  localTrainingStatistics.statistics.forEach((d: any) => {
-    if (d.displayTitle.length * d.numberOfOccurrences != 0) {
-      wordNames.push(d.displayTitle);
-      wordOccurrences.push(d.displayTitle.length * d.numberOfErrors);
-
-      const avgSpeedMilliseconds = d.averageSpeed * 10;
-      const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
-      const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
-      const wpm = averageCharacterPerMin;
-
-      wordPerMinute.push(d.averageSpeed);
-      rawSpeedOfCurrentWord.push(wpm.toFixed(0));
-    }
-  }); 
-
+for(let i=0; i < timeTakenToTypeEachWordInOrder.length; i++) {
+  const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i])
+  finalRawWPM.push(tempWPM.toFixed(0)*5);
+  timeTakenArray.push(timeTakenToTypeEachWordInOrder[i])
+  aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
+  const aggWPM = wpmMethodCalculator(aggregate);
+  finalWPMArray.push(aggWPM.toFixed(0)*5)
 
 }
+}
+else {
+  for(let i=0; i < timeTakenToTypeEachWordInOrder.length; i++) {
+    const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i])
+    finalRawWPM.push(tempWPM.toFixed(0));
+    timeTakenArray.push(timeTakenToTypeEachWordInOrder[i])
+    aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
+    const aggWPM = wpmMethodCalculator(aggregate);
+    finalWPMArray.push(aggWPM.toFixed(0))
+  
+  }
+}
+wordPerMinute = finalWPMArray;
+rawSpeedOfCurrentWord = finalRawWPM;
+wordOccurrences = numberOfErrorsArrayForTestMode.slice(1,numberOfErrorsArrayForTestMode.length);
+wordNames = wordsPracticedInOrder;
 const averageOfLocalStats = wpmMethodCalculator(getCumulativeAverageChordTypeTime(localTrainingStatistics.statistics))
 
-  const finalErrorsArray = [];
-  const finalWPMArray = [];
-  const finalRawWPM = [];
+if(wordTestNumber == undefined) {
+  wordPerMinute.pop();
+  wordPerMinute.push(averageOfLocalStats.toFixed(0));
+}
 
-  if (currentTrainingScenario == 'CUSTOMTIER') {
-    for (let i = 0; i < chordsToChooseFrom?.length; i++) {
-      finalErrorsArray.push(
-        wordOccurrences[wordNames.indexOf(chordsToChooseFrom[i])],
-      );
-      finalWPMArray.push(
-        wordPerMinute[wordNames.indexOf(chordsToChooseFrom[i])],
-      );
-      finalRawWPM.push(
-        rawSpeedOfCurrentWord[wordNames.indexOf(chordsToChooseFrom[i])],
-      );
-    }
-
-    wordOccurrences = finalErrorsArray;
-    wordPerMinute = finalWPMArray;
-    wordNames = chordsToChooseFrom;
-    rawSpeedOfCurrentWord = finalRawWPM;
-  
-  } else if (wordTestNumber != undefined){ //Checks to see if the user is doing the 25 word test  
-
-    let firstWordIndex;
-    for (let i = 1; i < allTypedCharactersStore?.length; i++) {
-      if (
-        isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false
-      ) {
-        finalErrorsArray.push(
-          wordOccurrences[wordNames.indexOf(storedTestTextData[i])],
-        );
-        finalWPMArray.push(
-          wordPerMinute[wordNames.indexOf(storedTestTextData[i])],
-        );
-        finalRawWPM.push(
-          rawSpeedOfCurrentWord[wordNames.indexOf(storedTestTextData[i])],
-        );
-      } else {
-        firstWordIndex = i;
-      }
-
-      if (i == storedTestTextData.length - 1) {
-        finalErrorsArray.splice(0, 0, 0);
-        finalWPMArray.splice(0, 0, 0);
-        finalRawWPM.splice(0, 0, 0);
-      }
-    }
-    //finalErrorsArray.shift();
-    wordOccurrences = numberOfErrorsArrayForTestMode;
-    finalWPMArray.shift();
-    wordPerMinute = wpmDataCalculator(finalWPMArray);
-
-    //storedTestTextData.shift(); TStored test text data does not need to be shifted
-    wordNames = storedTestTextData;
-    wordNames.shift();
-    finalRawWPM.shift();
-    rawSpeedOfCurrentWord = finalRawWPM;
-    wordOccurrences.shift();
-
-  } else if(teir == 'CHM'){
-    let tempV;
-    rawSpeedOfCurrentWord.shift();
-    wordPerMinute.shift();
-        for (let i = 0; i < allTypedCharactersStore?.length; i++) {
-    
-      if (
-        isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false
-      ) {
-        finalErrorsArray.push(
-          wordOccurrences[wordNames.indexOf(storedTestTextData[i])],
-        );
-        finalWPMArray.push(
-          wordPerMinute[wordNames.indexOf(storedTestTextData[i])],
-        );
-        tempV =  rawSpeedOfCurrentWord[wordNames.indexOf(storedTestTextData[i])]/100        ;
-        finalRawWPM.push(tempV);
-      } 
-      if (i == storedTestTextData.length - 1) {
-        finalErrorsArray.splice(0, 0, 0);
-        finalWPMArray.splice(0, 0, 0);
-        finalRawWPM.splice(0, 0, 0);
-      }
-   
-    }
-    //finalErrorsArray.shift();
-    wordOccurrences = numberOfErrorsArrayForTestMode.slice(1, allTypedCharactersStore.length);
-    //finalWPMArray.shift();
-    wordPerMinute = wpmDataCalculator(finalWPMArray)
-
-    //storedTestTextData.shift(); TStored test text data does not need to be shifted
-    wordNames = storedTestTextData.slice(1, allTypedCharactersStore.length);
-
-   //finalRawWPM.shift();
-    rawSpeedOfCurrentWord = finalRawWPM
-
-  } else {
-    for (let i = 0; i < allTypedCharactersStore?.length-1; i++) {
-      if (
-        isNaN(wordPerMinute[wordNames.indexOf(storedTestTextData[i])]) == false
-      ) {
-        finalErrorsArray.push(
-          wordOccurrences[wordNames.indexOf(storedTestTextData[i])],
-        );
-        finalWPMArray.push(
-          wordPerMinute[wordNames.indexOf(storedTestTextData[i])],
-        );
-        finalRawWPM.push(
-          rawSpeedOfCurrentWord[wordNames.indexOf(storedTestTextData[i])],
-        );
-      } if (i == storedTestTextData.length - 1) {
-        finalErrorsArray.splice(0, 0, 0);
-        finalWPMArray.splice(0, 0, 0);
-        finalRawWPM.splice(0, 0, 0);
-      }
-    }
-    //finalErrorsArray.shift();
-    wordOccurrences = numberOfErrorsArrayForTestMode.slice(1, allTypedCharactersStore?.length);
-    //finalWPMArray.shift();
-    wordPerMinute = wpmDataCalculator(finalWPMArray)
-    if(wordTestNumber == undefined) {
-    wordPerMinute.pop();
-    wordPerMinute.push((averageOfLocalStats.toFixed(0))* 5);
-    }
-    //storedTestTextData.shift(); TStored test text data does not need to be shifted
-    wordNames = storedTestTextData.slice(1, allTypedCharactersStore?.length);
-   //finalRawWPM.shift();
-    rawSpeedOfCurrentWord = finalRawWPM;
-
-  }
-
+ 
   const handleEvent = () => {
-    testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1]);
+    testTeirHighestWPM(wordPerMinute[wordPerMinute.length-1]);
     myGraph(wordNames, wordOccurrences, wordPerMinute, rawSpeedOfCurrentWord);
   };
 

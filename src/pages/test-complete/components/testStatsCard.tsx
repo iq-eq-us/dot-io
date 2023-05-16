@@ -54,7 +54,7 @@ export function TestStatsCard(): ReactElement {
   
   const trainingSessionErrors = useStoreState((store) => store.trainingSessionErrors);
 
-  const Accuracy = (((allTypedText.length-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
+  const Accuracy = ((((allTypedText.length-1)-trainingSessionErrors)/(allTypedText.length-1)) * 100).toFixed(0);
 
   const timerValue = useStoreState((store) => store.timerValue);
   const trainingIsDone = useStoreState(
@@ -65,28 +65,38 @@ export function TestStatsCard(): ReactElement {
 
   function returnValueBasedOnTeir(){
     if(teir == 'CPM'){
-      return averageOfLocalStats.toFixed(0)*5;
+       
+      if(averageOfLocalStats.toFixed(0) == 'Infinity')
+       return '0';
+       else
+        return averageOfLocalStats.toFixed(0)*5
+      
     }
     else if(teir == 'CHM') {
-      return averageOfLocalStats.toFixed(0)/100;
-
+      if(averageOfLocalStats.toFixed(0) == 'Infinity')
+      return '0';
+      else
+       return averageOfLocalStats.toFixed(0)
+     
     }
   }
 
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
+        {(teir == 'CPM') && 
         <StatsCardContainer>
           <div className="text-6xl">{wordTestNumber != undefined ? testTeirHighestWPM :returnValueBasedOnTeir()}</div>
           <h1 className="text-2xl">{teir}</h1>
         </StatsCardContainer> 
+        }
         <StatsCardContainer>
           <div className="text-4xl">{ wordTestNumber != undefined ? (testTeirHighestWPM / 5).toFixed(0) : averageOfLocalStats.toFixed(0)}</div>
           <h1 className="text-lg">WPM</h1>
         </StatsCardContainer>
         <StatsCardContainer>
           <div className="text-4xl">
-            {wordTestNumber != undefined ? (numberOfWordsTypedCorrectly/parseInt(testNumber) * 100).toFixed(2)+ '%' : Accuracy+'%'}
+            {wordTestNumber != undefined ? Accuracy+ '%' : Accuracy+'%'}
           </div>
           <h1 className="text-lg">Typing Accuracy</h1>
         </StatsCardContainer>

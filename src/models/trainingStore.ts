@@ -98,6 +98,7 @@ export interface TrainingStoreStateModel {
   timeTakenToTypePreviousChord: number;
   previousTargetChord: Computed<TrainingStoreModel, string | undefined>;
   currentLevel: number;
+  wordsPracticedInOrder: string[];
   timeAtTrainingStart: number;
   typedTrainingText: string;
   trainingLevel: TrainingLevels | undefined;
@@ -142,6 +143,7 @@ export interface TrainingStoreStateModel {
   trainingSessionAggregatedTime: number;
   trainingIsDone: boolean;
   timerValue: string;
+  timeTakenToTypeEachWordInOrder: number[];
   
 }
 

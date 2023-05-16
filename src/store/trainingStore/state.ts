@@ -45,6 +45,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   restartTestMode: false,
   userIsEditingPreviousWord: false,
   allTypedCharactersStore: [],
+  wordsPracticedInOrder:[],
   trainingLevel: 'CPM' as TrainingLevels,
   moduleCompleteModalToggle: false,
   downloadModulModalToggle: false,
