@@ -251,6 +251,8 @@ for(let i=0; i < timeTakenToTypeEachWordInOrder.length; i++) {
   finalWPMArray.push(aggWPM.toFixed(0)*5)
 
 }
+testTeirHighestWPM(wordPerMinute[wordPerMinute.length-1]*5);
+
 }
 else {
   for(let i=0; i < timeTakenToTypeEachWordInOrder.length; i++) {
@@ -262,10 +264,12 @@ else {
     finalWPMArray.push(aggWPM.toFixed(0))
   
   }
+  testTeirHighestWPM(wordPerMinute[wordPerMinute.length-1]);
+
 }
 wordPerMinute = finalWPMArray;
 rawSpeedOfCurrentWord = finalRawWPM;
-wordOccurrences = numberOfErrorsArrayForTestMode.slice(1,numberOfErrorsArrayForTestMode.length);
+wordOccurrences = numberOfErrorsArrayForTestMode;
 wordNames = wordsPracticedInOrder;
 const averageOfLocalStats = wpmMethodCalculator(getCumulativeAverageChordTypeTime(localTrainingStatistics.statistics))
 
