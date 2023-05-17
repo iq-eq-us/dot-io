@@ -115,10 +115,7 @@ export function TestStatsCard(): ReactElement {
           </div>
           <h1 className="text-lg">Percent Chorded</h1>
         </StatsCardContainer>
-        <StatsCardContainer>
-          <div className="text-4xl">{timerValue}</div>
-          <h1 className="text-lg">Time Taken</h1>
-        </StatsCardContainer>
+
       </TrainingStatsColumnContainer>
       <div
         className="items-center absolute text-lg text-red-500 ml-16 mt-2"
@@ -137,7 +134,6 @@ export function TestStatsCard(): ReactElement {
         *Only tests with a minimum accuracy of 95% and less than 5% words
         chorded are counted towards your progress.
       </div>
-      {console.log('Changes hsbdhsd '+ (Accuracy))}
     </React.Fragment>
   );
 }

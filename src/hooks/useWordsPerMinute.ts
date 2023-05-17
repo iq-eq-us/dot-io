@@ -143,7 +143,7 @@ export const useWordsPerMinute = (): number => {
         const testNum = parseInt(testNumber);
         if (
           6 > (numberOfWordsChorded.toFixed(0) / 25) * 100 &&
-          (Accuracy) * 100 >= 95 &&
+          (Accuracy) >= 95 &&
           testTeirHighestWPM > fastestRecordedWPM[trainingScenario]
         ) {
           storeData(testTeirHighestWPM, currentDate); //This checks to make sure we are in a testing teir
