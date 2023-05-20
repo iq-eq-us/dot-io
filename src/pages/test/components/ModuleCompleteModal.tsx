@@ -162,7 +162,7 @@ function ModuleCompleteModal(): ReactElement {
             &times;
           </button>
           <p className=" font-bold mr-64">Download Your Chords!</p>
-          <p className=" ml-10 mr-10" id="statusDiv"></p>
+          <p className=" ml-10 mr-10" id="statusDiv" />
           <p className=" ml-10 mr-10 text-white">
             Or press &lsquo;X&rsquo; to continue practicing. Or press
             &lsquo;X&rsquo; to conti.
@@ -173,10 +173,7 @@ function ModuleCompleteModal(): ReactElement {
               value == false ? `hidden` : ``
             }`}
           />
-          <p
-            className=" ml-10 mr-10 ml-36"
-            id="downloadCompletionPercentage"
-          ></p>
+          <p className=" ml-10 mr-10 ml-36" id="downloadCompletionPercentage" />
           <button
             className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-auto mr-auto mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ${
               value == true ? `hidden` : ``
@@ -209,7 +206,7 @@ function ModuleCompleteModal(): ReactElement {
             type="password"
             ref={inputRef}
             className="border-black border-2 ml-16 w-3/4"
-          ></input>
+          />
           <button
             className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-auto mr-auto mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
             onClick={() => [passwordUnlock(inputRef)]}

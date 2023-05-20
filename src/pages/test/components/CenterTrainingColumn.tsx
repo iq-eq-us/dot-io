@@ -13,7 +13,6 @@ import { ProgressBar } from './ProgressBar';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import ModuleCompleteModal from './ModuleCompleteModal';
 
-
 function CenterTrainingColumn(): ReactElement {
   const currentTrainingScenario = useStoreState(
     (store: any) => store.currentTrainingScenario,
@@ -22,13 +21,12 @@ function CenterTrainingColumn(): ReactElement {
   return (
     <React.Fragment>
       <CenterTrainingColumnContainer>
-
         <SmallScreenButtons />
         <TrainingModeSelector />
-        <ProgressBar/>
+        <ProgressBar />
         <ChordTextInput />
         <TextPrompt />
-        <ModuleCompleteModal/>
+        <ModuleCompleteModal />
 
         <ItemsContainer>
           {(currentTrainingScenario == 'LEXICAL' && wordTestNumber != null) ||

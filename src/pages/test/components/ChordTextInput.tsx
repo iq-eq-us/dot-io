@@ -36,7 +36,6 @@ function ChordTextInput(): ReactElement {
 
   const set = useStoreActions((store: any) => store.setCompareText);
   const setS = useStoreState((store: any) => store.compareText);
-
   const currentLineOfTrainingText = useStoreState(
     (store: any) => store.currentLineOfTrainingText,
   );
@@ -66,7 +65,7 @@ function ChordTextInput(): ReactElement {
         className={`mb-2 mr-2 text-white font-semibold ${
           !displayHUD && 'hidden'
         }`}
-      ></span>
+      />
 
       <input
         autoCorrect="off"
@@ -96,9 +95,9 @@ function ChordTextInput(): ReactElement {
                 ]
               : '';
           } // This here logs the time that the first letter was pressed and sets the state variable to false
-          setStoreText(e.target.value);
+          e.target.value[0] == ' ' ? '' : setStoreText(e.target.value);
           {
-            set(e.target.value);
+            e.target.value[0] == ' ' ? '' : set(e.target.value);
           }
         }}
       />

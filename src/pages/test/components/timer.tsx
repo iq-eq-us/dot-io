@@ -80,7 +80,7 @@ function Timer() {
         {hours}:{minutes.toString().padStart(2, '0')}:
         {seconds.toString().padStart(2, '0')}
       </p>
-      <div className="stopwatch-buttons"></div>
+      <div className="stopwatch-buttons" />
     </div>
   );
 }

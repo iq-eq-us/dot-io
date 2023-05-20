@@ -98,10 +98,7 @@ export function ChordMapCard(props: any, index: number): ReactElement {
         <p className={`pt-2 m-10 font-bold mr-64 text-red-500 `}>
           Wrong phrase!
         </p>
-        <input
-          type="password"
-          className="border-black border-2 ml-16 w-3/4"
-        ></input>
+        <input type="password" className="border-black border-2 ml-16 w-3/4" />
         <button
           className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
           //  onClick={() => [passwordUnlock(inputRef)]}

@@ -45,11 +45,10 @@ export const useWordsPerMinute = (): number => {
   );
   let totalNumberOfCharactersTyped = 0;
   let wpm = 0;
-  const Accuracy = (
+  const Accuracy =
     ((allTypedText.length - 1 - trainingSessionErrors) /
       (allTypedText.length - 1)) *
-    100
-  );
+    100;
   const timeAtTrainingStartInSeconds = timeAtTrainingStart * 0.001;
 
   const timeNowInSeconds = performance.now() * 0.001;
@@ -143,7 +142,7 @@ export const useWordsPerMinute = (): number => {
         const testNum = parseInt(testNumber);
         if (
           6 > (numberOfWordsChorded.toFixed(0) / 25) * 100 &&
-          (Accuracy) >= 95 &&
+          Accuracy >= 95 &&
           testTeirHighestWPM > fastestRecordedWPM[trainingScenario]
         ) {
           storeData(testTeirHighestWPM, currentDate); //This checks to make sure we are in a testing teir

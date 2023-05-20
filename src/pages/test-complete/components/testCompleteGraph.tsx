@@ -265,11 +265,11 @@ export function TestCompleteGraph(): ReactElement {
   if (teir == 'CPM') {
     for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
       const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i]);
-      finalRawWPM.push(tempWPM.toFixed(0) * 5);
+      finalRawWPM.push((tempWPM * 5).toFixed(0));
       timeTakenArray.push(timeTakenToTypeEachWordInOrder[i]);
       aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
       const aggWPM = wpmMethodCalculator(aggregate);
-      finalWPMArray.push(aggWPM.toFixed(0) * 5);
+      finalWPMArray.push((aggWPM * 5).toFixed(0));
     }
     testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1] * 5);
   } else {
@@ -292,8 +292,13 @@ export function TestCompleteGraph(): ReactElement {
   );
 
   if (wordTestNumber == undefined) {
-    wordPerMinute.pop();
-    wordPerMinute.push(averageOfLocalStats.toFixed(0));
+    if (teir == 'CPM') {
+      wordPerMinute.pop();
+      wordPerMinute.push(averageOfLocalStats.toFixed(0) * 5);
+    } else {
+      wordPerMinute.pop();
+      wordPerMinute.push(averageOfLocalStats.toFixed(0));
+    }
   }
 
   const handleEvent = () => {

@@ -103,7 +103,6 @@ export function ProgressBar(): ReactElement {
 
   const [maxValue, setMaxValue] = useState<number>();
 
-
   const numberOfChordsConquered = trainingStatistics.filter(
     (s) =>
       s.averageSpeed > trainingSettings.speedGoal &&
@@ -114,21 +113,23 @@ export function ProgressBar(): ReactElement {
     (d) => d.chordsMastered.length == 1 && d.chordsMastered[0] == 0,
   ).length;
 
-  if(tier == 'CPM' ) {
+  if (tier == 'CPM') {
     allTimeWPM = wpmMethodCalculator(
+      getCumulativeAverageChordTypeTime(trainingStatistics),
+    );
+  } else {
+    if (currentTrainingScenario != 'ALLCHORDS') {
+      allTimeWPM = wpmMethodCalculator(
         getCumulativeAverageChordTypeTime(trainingStatistics),
-      )
-    } else {
-      if(currentTrainingScenario != 'ALLCHORDS'){
-        allTimeWPM = wpmMethodCalculator(
-    getCumulativeAverageChordTypeTime(trainingStatistics),
       );
-   } else {
-    allTimeWPM = wpmMethodCalculator(
-        getCumulativeAverageChordTypeTimeFromDevice(inStoredChordsFromDevice?.statistics)
-        );
-      }
-   }
+    } else {
+      allTimeWPM = wpmMethodCalculator(
+        getCumulativeAverageChordTypeTimeFromDevice(
+          inStoredChordsFromDevice?.statistics,
+        ),
+      );
+    }
+  }
   const [minValue, setMinValue] = useState<number>(0);
   let persistantValue = 0;
 
@@ -245,7 +246,7 @@ export function ProgressBar(): ReactElement {
     }
   }
   function handleInputInRealTimeForMax(value) {
-    if ((value) >= minValue) {
+    if (value >= minValue) {
       setMaxValue(value);
     } else {
       setMaxValue(minValue);
@@ -258,7 +259,7 @@ export function ProgressBar(): ReactElement {
         <input
           id="minInputValue"
           className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center"
-          value={(minValue > (inMaxValue || maxValue) ? 0 : minValue)}
+          value={minValue > (inMaxValue || maxValue) ? 0 : minValue}
           placeholder="0"
           onChange={() =>
             handleInputInRealTimeForMin(
@@ -269,20 +270,24 @@ export function ProgressBar(): ReactElement {
         <Container>
           {Popper}
           {RemainingPopover}
-          <TopDataRow></TopDataRow>
+          <TopDataRow />
           <TopProgressBar>
             <MultiRangeSlider
               className="w-full"
               label="true"
               ruler="true"
-              min={(minValue > (inMaxValue || maxValue) ? 0 : minValue)}
+              min={minValue > (inMaxValue || maxValue) ? 0 : minValue}
               max={maxValue || inMaxValue}
               minValue={
                 averageOfLocalStats.toFixed(0) == 'Infinity'
                   ? '0'
                   : averageOfLocalStats.toFixed(0)
               }
-              maxValue={allTimeWPM}
+              maxValue={
+                allTimeWPM.toFixed(0) == 'Infinity'
+                  ? '0'
+                  : allTimeWPM.toFixed(0)
+              }
               thumbRightColor="red"
               thumbLeftColor="blue"
             />

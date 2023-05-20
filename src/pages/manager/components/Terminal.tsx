@@ -50,7 +50,7 @@ export function Terminal(): ReactElement {
             onChange={(e) => setRequestInput(e.target.value)}
             value={requestInput}
             onKeyUp={(e) => (e.key === 'Enter' ? handleSendClick() : '')}
-          ></TerminalInput>
+          />
           <SendButton onClick={handleSendClick}>Send</SendButton>
         </InputAndButtonRow>
       </TerminalContainer>

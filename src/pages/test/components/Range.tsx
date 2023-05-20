@@ -2,6 +2,8 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 import './multirangeslider.css';
 import './multirangesliderblack.css';
+import usePopover from '../../../hooks/usePopover';
+
 /* eslint-disable */
 
 type Props = {
@@ -96,22 +98,6 @@ export const MultiRangeSlider = (
     _maxValue = 75;
   }
   _maxValue = +_maxValue;
-
-  if (_minValue < min) {
-    _minValue = min;
-  }
-  if (_minValue > max) {
-    _minValue = max;
-  }
-  if (_maxValue < _minValue) {
-    _maxValue = +_minValue + +step;
-  }
-  if (_maxValue > max) {
-    _maxValue = max;
-  }
-  if (_maxValue < min) {
-    _maxValue = min;
-  }
 
   const [minValue, set_minValue] = useState(+_minValue);
   const [maxValue, set_maxValue] = useState(+_maxValue);
@@ -401,6 +387,23 @@ export const MultiRangeSlider = (
     setIsChange(false);
     set_maxValue(+_maxValue);
   }, [props.maxValue, min, max, step]);
+  const { parentProps: progresAllTimeWPMsProps, Popper: AllTimePopper } =
+    usePopover(
+      'All Time WPM for this module = ' +
+        _maxValue +
+        '\r\n ' +
+        'Session WPM for this module = ' +
+        minValue,
+    );
+
+  const { parentProps: progresSessionWPMsProps, Popper: LocalPopper } =
+    usePopover(
+      'All Time WPM for this module - ' +
+        _maxValue.toFixed(0) +
+        `\n` +
+        'Session WPM for this module - ' +
+        minValue.toFixed(0),
+    );
 
   return (
     <div
@@ -412,8 +415,9 @@ export const MultiRangeSlider = (
         (props.className || '')
       }
       style={props.style}
-      onWheel={onMouseWheel}
     >
+      {LocalPopper}
+      {AllTimePopper}
       {ruler && (
         <div className="ruler">
           {[...Array(stepCount)].map((e, i) => (
@@ -430,27 +434,25 @@ export const MultiRangeSlider = (
         </div>
       )}
 
-      <div className="bar flex pointer-events-none" ref={refBar}>
+      <div className="bar flex" ref={refBar}>
         <div
           className="bar-left"
           style={{ width: barMin + '%', backgroundColor: props.barLeftColor }}
-          onClick={onBarLeftClick}
         ></div>
         <input
           placeholder="min-value"
-          className="input-type-range input-type-range-min"
+          className="input-type-range input-type-range-min absolute"
           type="range"
           min={min}
           max={max}
           step={step}
           value={minValue}
-          onInput={onInputMinChange}
+          {...progresAllTimeWPMsProps}
+          {...progresSessionWPMsProps}
         />
         <div
-          className="thumb thumb-left pointer-events-none	"
+          className="thumb thumb-left absolute"
           style={{ backgroundColor: props.thumbLeftColor }}
-          onMouseDown={onLeftThumbMousedown}
-          onTouchStart={onLeftThumbTouchStart}
         >
           <div className="caption">
             <span className="min-caption">{minCaption}</span>
@@ -460,24 +462,22 @@ export const MultiRangeSlider = (
           className="bar-inner"
           style={{ backgroundColor: props.barInnerColor }}
         >
-          <div className="bar-inner-left" onClick={onInnerBarLeftClick}></div>
-          <div className="bar-inner-right" onClick={onInnerBarRightClick}></div>
+          <div className="bar-inner-left"></div>
+          <div className="bar-inner-right"></div>
         </div>
         <input
           placeholder="max-value"
-          className="input-type-range input-type-range-max"
+          className="input-type-range input-type-range-max	absolute"
           type="range"
           min={min}
           max={max}
           step={step}
           value={maxValue}
-          onInput={onInputMaxChange}
+          {...progresAllTimeWPMsProps}
         />
         <div
-          className="thumb thumb-right pointer-events-none	bg-sky-500"
+          className="thumb thumb-right absolute"
           style={{ backgroundColor: props.thumbRightColor }}
-          onMouseDown={onRightThumbMousedown}
-          onTouchStart={onRightThumbTouchStart}
         >
           <div className="caption">
             <span className="max-caption">{maxCaption}</span>
@@ -486,7 +486,6 @@ export const MultiRangeSlider = (
         <div
           className="bar-right"
           style={{ width: barMax + '%', backgroundColor: props.barRightColor }}
-          onClick={onBarRightClick}
         ></div>
       </div>
     </div>

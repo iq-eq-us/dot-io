@@ -25,7 +25,7 @@ const Footer = (): ReactElement => {
           <FooterLinksWrapper>
             <FooterLinkItems>
               <FooterLinkTitle>
-                <FooterLinkLogo src={IQEQLogoImage}></FooterLinkLogo>
+                <FooterLinkLogo src={IQEQLogoImage} />
                 <div />
                 <FooterLink>Brought to you by iq-eq</FooterLink>
                 <div />

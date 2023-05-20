@@ -88,7 +88,7 @@ export class PopUp extends Component {
                       required
                     />
                   </td>
-                  <td id="realTimeWeeklyValWPM"></td>
+                  <td id="realTimeWeeklyValWPM" />
                 </tr>
                 <tr>
                   <td>aWPM</td>
@@ -101,7 +101,7 @@ export class PopUp extends Component {
                       required
                     />
                   </td>
-                  <td></td>
+                  <td />
                 </tr>
                 <tr>
                   <td>ChM</td>
@@ -114,7 +114,7 @@ export class PopUp extends Component {
                       required
                     />
                   </td>
-                  <td></td>
+                  <td />
                 </tr>
                 <tr>
                   <td>aCPM</td>
@@ -127,7 +127,7 @@ export class PopUp extends Component {
                       required
                     />
                   </td>
-                  <td></td>
+                  <td />
                 </tr>
               </table>
               <button

@@ -428,6 +428,7 @@ function checkIfShouldProceedToNextTargetChord(
   storeState: TrainingStoreStateModel,
   actions: Actions<TrainingStoreModel>,
 ) {
+  const wordValue = document.getElementById('txt_Name')?.value;
   const wordToCompare = isInAlphabetMode
     ? storeState.targetWord
     : storeState.targetWord + ' ';
@@ -442,12 +443,14 @@ function checkIfShouldProceedToNextTargetChord(
     isPhrase =
       storeState?.targetWord[storeState?.targetCharacterIndex - 1] === ' ' &&
       parseFloat(storeState?.targetWord?.indexOf(' ')) >= 0;
+
+    storeState?.targetWord[storeState?.targetCharacterIndex - 1] === ' ';
   } else {
     isPhrase = false;
   }
 
   //storeState.targetWord[storeState.targetCharacterIndex]?.indexOf(' ') >= 0
-  //Here we allow the user to go to the next work if the press the space
+  //Here we allow the user to go to the next work if they press space
   if (isInAlphabetMode && userHasEnteredChordCorrectly) {
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
@@ -456,8 +459,15 @@ function checkIfShouldProceedToNextTargetChord(
     storeState.typedTrainingText.charAt(
       storeState.typedTrainingText.length - 1,
     ) == ' ' &&
-    !isPhrase
+    !isPhrase &&
+    storeState.typedTrainingText.length > 0 &&
+    wordValue[0] != ' ' &&
+    wordValue[0] != undefined
   ) {
+    console.log(
+      'logging ' + storeState.compareText[storeState.compareText.length - 1],
+    );
+
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');
@@ -583,7 +593,6 @@ export async function calculateStatisticsForTargetChord(
       store.trainingSessionErrors = store.trainingSessionErrors + 1;
       store.trainingTestCounter = store.trainingTestCounter + 1;
       store.numberOfErrorsArrayForTestMode.push(1);
-
     } else if (
       store.errorOccurredWhileAttemptingToTypeTargetChord &&
       store.userIsEditingPreviousWord &&
@@ -591,7 +600,6 @@ export async function calculateStatisticsForTargetChord(
     ) {
       store.numberOfErrorsArrayForTestMode.pop();
       store.numberOfErrorsArrayForTestMode.push(1);
-
     } else if (
       !store.errorOccurredWhileAttemptingToTypeTargetChord &&
       store.userIsEditingPreviousWord &&
@@ -600,10 +608,8 @@ export async function calculateStatisticsForTargetChord(
       store.numberOfErrorsArrayForTestMode.pop();
       store.trainingSessionErrors = store.trainingSessionErrors - 1;
       store.numberOfErrorsArrayForTestMode.push(0);
-
     } else {
       store.numberOfErrorsArrayForTestMode.push(0);
-
     }
   }
 

@@ -120,7 +120,7 @@ const AggregateRow = ({ data }: { data: any }) => {
     }
   }, [sumOccurrences, setIsDisplaying]); // <-- dependency array
 
-  return <React.Fragment></React.Fragment>;
+  return <React.Fragment />;
 };
 
 const TrainingStatsColumnContainer = styled.div.attrs({
