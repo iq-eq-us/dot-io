@@ -98,8 +98,8 @@ export function TestStatsCard(): ReactElement {
         <StatsCardContainer>
           <div className="text-4xl">
             {wordTestNumber != undefined
-              ? (testTeirHighestWPM / 5).toFixed(0)
-              : averageOfLocalStats.toFixed(0)}
+              ? (testTeirHighestWPM / 5)?.toFixed(0) != 'Infinity' ? (testTeirHighestWPM / 5)?.toFixed(0) : '0'
+              : averageOfLocalStats?.toFixed(0) != 'Infinity' ? averageOfLocalStats?.toFixed(0)  : '0'}
           </div>
           <h1 className="text-lg">WPM</h1>
         </StatsCardContainer>
@@ -115,7 +115,10 @@ export function TestStatsCard(): ReactElement {
           </div>
           <h1 className="text-lg">Percent Chorded</h1>
         </StatsCardContainer>
-
+        <StatsCardContainer>
+          <div className="text-4xl">{timerValue}</div>
+          <h1 className="text-lg">Time Taken</h1>
+        </StatsCardContainer>
       </TrainingStatsColumnContainer>
       <div
         className="items-center absolute text-lg text-red-500 ml-16 mt-2"

@@ -30,9 +30,7 @@ export function ProgressBar(): ReactElement {
   let sumOfAWPM = 0;
   let sumErrorsFromStoredDevice = 0;
   let sumOccurrencesFromStoredDevice = 0;
-  const storedChordStats = useStoreState(
-    (store) => store?.storedChordStatistics,
-  );
+
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics?.statistics,
   );
@@ -100,9 +98,11 @@ export function ProgressBar(): ReactElement {
   const trainingSessionErrors = useStoreState(
     (store) => store.trainingSessionErrors,
   );
-
   let progress;
   let inMaxValue;
+
+  const [maxValue, setMaxValue] = useState<number>();
+
 
   const numberOfChordsConquered = trainingStatistics.filter(
     (s) =>
@@ -114,14 +114,21 @@ export function ProgressBar(): ReactElement {
     (d) => d.chordsMastered.length == 1 && d.chordsMastered[0] == 0,
   ).length;
 
-  tier == 'CPM'
-    ? (allTimeWPM = wpmMethodCalculator(
+  if(tier == 'CPM' ) {
+    allTimeWPM = wpmMethodCalculator(
         getCumulativeAverageChordTypeTime(trainingStatistics),
-      ))
-    : wpmMethodCalculator(
-        getCumulativeAverageChordTypeTime(storedChordStats?.statistics),
+      )
+    } else {
+      if(currentTrainingScenario != 'ALLCHORDS'){
+        allTimeWPM = wpmMethodCalculator(
+    getCumulativeAverageChordTypeTime(trainingStatistics),
       );
-
+   } else {
+    allTimeWPM = wpmMethodCalculator(
+        getCumulativeAverageChordTypeTimeFromDevice(inStoredChordsFromDevice?.statistics)
+        );
+      }
+   }
   const [minValue, setMinValue] = useState<number>(0);
   let persistantValue = 0;
 
@@ -238,10 +245,10 @@ export function ProgressBar(): ReactElement {
     }
   }
   function handleInputInRealTimeForMax(value) {
-    if (parseInt(value) >= minValue) {
-      inMaxValue = value;
+    if ((value) >= minValue) {
+      setMaxValue(value);
     } else {
-      inMaxValue = minValue + 0;
+      setMaxValue(minValue);
     }
   }
 
@@ -251,7 +258,7 @@ export function ProgressBar(): ReactElement {
         <input
           id="minInputValue"
           className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center"
-          value={minValue}
+          value={(minValue > (inMaxValue || maxValue) ? 0 : minValue)}
           placeholder="0"
           onChange={() =>
             handleInputInRealTimeForMin(
@@ -268,12 +275,12 @@ export function ProgressBar(): ReactElement {
               className="w-full"
               label="true"
               ruler="true"
-              min={minValue || 0}
-              max={inMaxValue || 500}
+              min={(minValue > (inMaxValue || maxValue) ? 0 : minValue)}
+              max={maxValue || inMaxValue}
               minValue={
-                isNaN(wpm?.toFixed(0)) || wpm?.toFixed(0) < 0
+                averageOfLocalStats.toFixed(0) == 'Infinity'
                   ? '0'
-                  : wpm.toFixed(0)
+                  : averageOfLocalStats.toFixed(0)
               }
               maxValue={allTimeWPM}
               thumbRightColor="red"
@@ -304,8 +311,7 @@ export function ProgressBar(): ReactElement {
         <input
           id="maxInputValue"
           className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center"
-          value={inMaxValue}
-          placeholder="500"
+          value={maxValue || inMaxValue}
           onChange={() =>
             handleInputInRealTimeForMax(
               document.getElementById('maxInputValue').value,

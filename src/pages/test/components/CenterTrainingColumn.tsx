@@ -25,6 +25,7 @@ function CenterTrainingColumn(): ReactElement {
 
         <SmallScreenButtons />
         <TrainingModeSelector />
+        <ProgressBar/>
         <ChordTextInput />
         <TextPrompt />
         <ModuleCompleteModal/>
