@@ -266,20 +266,18 @@ export function TestCompleteGraph(): ReactElement {
     for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
       const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i]);
       finalRawWPM.push((tempWPM * 5).toFixed(0));
-      timeTakenArray.push(timeTakenToTypeEachWordInOrder[i]);
+      timeTakenArray.push(tempWPM * 5);
       aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
-      const aggWPM = wpmMethodCalculator(aggregate);
-      finalWPMArray.push((aggWPM * 5).toFixed(0));
+      finalWPMArray.push(aggregate.toFixed(0));
     }
     testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1] * 5);
   } else {
     for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
       const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i]);
       finalRawWPM.push(tempWPM.toFixed(0));
-      timeTakenArray.push(timeTakenToTypeEachWordInOrder[i]);
+      timeTakenArray.push(tempWPM);
       aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
-      const aggWPM = wpmMethodCalculator(aggregate);
-      finalWPMArray.push(aggWPM.toFixed(0));
+      finalWPMArray.push(aggregate.toFixed(0));
     }
     testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1]);
   }
