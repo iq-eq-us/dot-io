@@ -182,3 +182,10 @@
 	height: 25px;
 
 }
+
+.multi-range-slider.zero-ranage-margin .thumb-middle {
+	left: 16;
+	width: 25px;
+	height: 25px;
+
+}

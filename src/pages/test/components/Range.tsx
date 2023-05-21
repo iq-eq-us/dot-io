@@ -483,6 +483,7 @@ export const MultiRangeSlider = (
             <span className="max-caption">{maxCaption}</span>
           </div>
         </div>
+
         <div
           className="bar-right"
           style={{ width: barMax + '%', backgroundColor: props.barRightColor }}

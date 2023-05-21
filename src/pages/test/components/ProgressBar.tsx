@@ -16,7 +16,10 @@ import {
   wpmMethodCalculator,
   getCumulativeAverageChordTypeTime,
 } from '../../../helpers/aggregation';
-import { getCumulativeAverageChordTypeTimeFromDevice } from '../../../helpers/aggregation';
+import {
+  getCumulativeAverageChordTypeTimeFromDevice,
+  avgCalculatorForTheSpeedOfLastTen,
+} from '../../../helpers/aggregation';
 import { defaultProgressBarValues } from '../../../models/trainingSettingsStateModel';
 import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 
@@ -33,6 +36,10 @@ export function ProgressBar(): ReactElement {
 
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics?.statistics,
+  );
+
+  const wordsPracticedInOrder = useStoreState(
+    (store) => store.wordsPracticedInOrder,
   );
 
   const inStoredChordsFromDevice = useStoreState(
@@ -139,6 +146,9 @@ export function ProgressBar(): ReactElement {
 
   const storedChordsFromDevice = useStoreState(
     (store) => store.storedChordsFromDevice,
+  );
+  const timeTakenToTypeEachWordInOrder = useStoreState(
+    (store: any) => store.timeTakenToTypeEachWordInOrder,
   );
 
   let sumOfChordsMastered = 0;
@@ -301,7 +311,7 @@ export function ProgressBar(): ReactElement {
           </BottomProgressBar>
           <Trapazoid>
             <RightTerms>
-              {isNaN(Accuracy) ? '0' : Accuracy}% acc
+              {timeTakenToTypeEachWordInOrder?.length == 0 ? 0 : Accuracy}% acc
               <div>
                 {averageOfLocalStats.toFixed(0) == 'Infinity'
                   ? '0'
@@ -310,7 +320,21 @@ export function ProgressBar(): ReactElement {
               </div>
             </RightTerms>
             <Timer />
-            <LeftTerms>{...allTypedText.length} Terms</LeftTerms>
+            <LeftTerms>
+              {wordsPracticedInOrder.length} Terms
+              <div>
+                {timeTakenToTypeEachWordInOrder?.length == 0
+                  ? 0
+                  : timeTakenToTypeEachWordInOrder?.length == 0 < 10
+                  ? averageOfLocalStats.toFixed(0)
+                  : wpmMethodCalculator(
+                      avgCalculatorForTheSpeedOfLastTen(
+                        timeTakenToTypeEachWordInOrder?.slice(-10),
+                      ),
+                    ).toFixed(0)}{' '}
+                RWPM
+              </div>
+            </LeftTerms>
           </Trapazoid>
         </Container>
         <input
