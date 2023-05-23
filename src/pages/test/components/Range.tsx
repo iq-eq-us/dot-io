@@ -389,11 +389,13 @@ export const MultiRangeSlider = (
   }, [props.maxValue, min, max, step]);
   const { parentProps: progresAllTimeWPMsProps, Popper: AllTimePopper } =
     usePopover(
-      'All Time WPM for this module = ' +
+      'Typing Speed of the Last 10 words = ' +
         _maxValue +
+        ' rWPM' +
         '\r\n ' +
-        'Session WPM for this module = ' +
-        minValue,
+        'Total typing Speed for this session = ' +
+        minValue +
+        ' WPM',
     );
 
   const { parentProps: progresSessionWPMsProps, Popper: LocalPopper } =

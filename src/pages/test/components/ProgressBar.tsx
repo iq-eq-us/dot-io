@@ -151,6 +151,17 @@ export function ProgressBar(): ReactElement {
     (store: any) => store.timeTakenToTypeEachWordInOrder,
   );
 
+  const rWPM =
+    timeTakenToTypeEachWordInOrder?.length == 0
+      ? 0
+      : timeTakenToTypeEachWordInOrder?.length == 0 < 10
+      ? averageOfLocalStats
+      : wpmMethodCalculator(
+          avgCalculatorForTheSpeedOfLastTen(
+            timeTakenToTypeEachWordInOrder?.slice(-10),
+          ),
+        );
+
   let sumOfChordsMastered = 0;
   storedChordsFromDevice?.statistics?.forEach((d) => {
     sumOfChordsMastered +=
@@ -293,11 +304,7 @@ export function ProgressBar(): ReactElement {
                   ? '0'
                   : averageOfLocalStats.toFixed(0)
               }
-              maxValue={
-                allTimeWPM.toFixed(0) == 'Infinity'
-                  ? '0'
-                  : allTimeWPM.toFixed(0)
-              }
+              maxValue={rWPM.toFixed(0) == 'Infinity' ? '0' : rWPM.toFixed(0)}
               thumbRightColor="red"
               thumbLeftColor="blue"
             />
@@ -332,7 +339,7 @@ export function ProgressBar(): ReactElement {
                         timeTakenToTypeEachWordInOrder?.slice(-10),
                       ),
                     ).toFixed(0)}{' '}
-                RWPM
+                rWPM
               </div>
             </LeftTerms>
           </Trapazoid>
