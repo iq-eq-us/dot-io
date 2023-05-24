@@ -332,7 +332,7 @@ export function ProgressBar(): ReactElement {
               <div>
                 {timeTakenToTypeEachWordInOrder?.length == 0
                   ? 0
-                  : timeTakenToTypeEachWordInOrder?.length == 0 < 10
+                  : timeTakenToTypeEachWordInOrder?.length < 10
                   ? averageOfLocalStats.toFixed(0)
                   : wpmMethodCalculator(
                       avgCalculatorForTheSpeedOfLastTen(
