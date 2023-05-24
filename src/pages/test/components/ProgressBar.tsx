@@ -154,7 +154,7 @@ export function ProgressBar(): ReactElement {
   const rWPM =
     timeTakenToTypeEachWordInOrder?.length == 0
       ? 0
-      : timeTakenToTypeEachWordInOrder?.length == 0 < 10
+      : timeTakenToTypeEachWordInOrder?.length < 10
       ? averageOfLocalStats
       : wpmMethodCalculator(
           avgCalculatorForTheSpeedOfLastTen(
@@ -274,8 +274,22 @@ export function ProgressBar(): ReactElement {
     }
   }
 
+  const { parentProps: progresAllTimeWPMsProps, Popper: AllTimePopper } =
+    usePopover(
+      'Typing Speed of the Last 10 words = ' +
+        rWPM.toFixed(0) +
+        ' rWPM' +
+        '\r\n ' +
+        'Total typing Speed for this session = ' +
+        (averageOfLocalStats.toFixed(0) == 'Infinity'
+          ? 0
+          : averageOfLocalStats.toFixed(0)) +
+        ' WPM',
+    );
+
   return (
     <React.Fragment>
+      {AllTimePopper}
       <div className="float-left flex flex-row inline-block">
         <input
           id="minInputValue"
@@ -292,7 +306,7 @@ export function ProgressBar(): ReactElement {
           {Popper}
           {RemainingPopover}
           <TopDataRow />
-          <TopProgressBar>
+          <TopProgressBar {...progresAllTimeWPMsProps}>
             <MultiRangeSlider
               className="w-full"
               label="true"

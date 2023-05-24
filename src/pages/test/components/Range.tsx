@@ -387,25 +387,6 @@ export const MultiRangeSlider = (
     setIsChange(false);
     set_maxValue(+_maxValue);
   }, [props.maxValue, min, max, step]);
-  const { parentProps: progresAllTimeWPMsProps, Popper: AllTimePopper } =
-    usePopover(
-      'Typing Speed of the Last 10 words = ' +
-        _maxValue +
-        ' rWPM' +
-        '\r\n ' +
-        'Total typing Speed for this session = ' +
-        minValue +
-        ' WPM',
-    );
-
-  const { parentProps: progresSessionWPMsProps, Popper: LocalPopper } =
-    usePopover(
-      'All Time WPM for this module - ' +
-        _maxValue.toFixed(0) +
-        `\n` +
-        'Session WPM for this module - ' +
-        minValue.toFixed(0),
-    );
 
   return (
     <div
@@ -418,8 +399,6 @@ export const MultiRangeSlider = (
       }
       style={props.style}
     >
-      {LocalPopper}
-      {AllTimePopper}
       {ruler && (
         <div className="ruler">
           {[...Array(stepCount)].map((e, i) => (
@@ -449,8 +428,6 @@ export const MultiRangeSlider = (
           max={max}
           step={step}
           value={minValue}
-          {...progresAllTimeWPMsProps}
-          {...progresSessionWPMsProps}
         />
         <div
           className="thumb thumb-left absolute"
@@ -475,7 +452,6 @@ export const MultiRangeSlider = (
           max={max}
           step={step}
           value={maxValue}
-          {...progresAllTimeWPMsProps}
         />
         <div
           className="thumb thumb-right absolute"
