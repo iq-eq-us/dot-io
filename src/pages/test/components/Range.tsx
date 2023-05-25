@@ -32,6 +32,10 @@ type Props = {
   onInput?: (e: ChangeResult) => void;
   onChange?: (e: ChangeResult) => void;
 };
+
+let thumbLeftColor = 'red';
+let thumbRightColor = 'blue';
+
 export type ChangeResult = {
   min: number;
   max: number;
@@ -107,21 +111,6 @@ export const MultiRangeSlider = (
   const [maxCaption, setMaxCaption] = useState<string>('');
   const [isChange, setIsChange] = useState(true);
 
-  const onBarLeftClick = (e: React.MouseEvent) => {
-    let _minValue = minValue - step;
-    if (_minValue < min) {
-      _minValue = min;
-    }
-    set_minValue(_minValue);
-  };
-  const onInputMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let _minValue = parseFloat(e.target.value);
-    if (_minValue > maxValue - step) {
-      _minValue = maxValue - step;
-    }
-    set_minValue(_minValue);
-    setIsChange(true);
-  };
   const onLeftThumbMousedown: React.MouseEventHandler = (
     e: React.MouseEvent,
   ) => {
@@ -140,11 +129,7 @@ export const MultiRangeSlider = (
         val = Math.round(val / step) * step;
       }
       val = parseFloat(val.toFixed(fixed));
-      if (val < min) {
-        val = min;
-      } else if (val > maxValue - step) {
-        val = maxValue - step;
-      }
+
       set_minValue(val);
     };
     let onLeftThumbMouseup: { (e: MouseEvent): void } = (e: MouseEvent) => {
@@ -171,11 +156,7 @@ export const MultiRangeSlider = (
         val = Math.round(val / step) * step;
       }
       val = parseFloat(val.toFixed(fixed));
-      if (val < min) {
-        val = min;
-      } else if (val > maxValue - step) {
-        val = maxValue - step;
-      }
+
       set_minValue(val);
     };
     let onLeftThumbTouchEnd: { (e: TouchEvent): void } = (e: TouchEvent) => {
@@ -187,146 +168,7 @@ export const MultiRangeSlider = (
     document.addEventListener('touchmove', onLeftThumbToucheMove);
     document.addEventListener('touchend', onLeftThumbTouchEnd);
   };
-  const onInnerBarLeftClick = (e: React.MouseEvent) => {
-    let _minValue = minValue + step;
-    if (_minValue > maxValue - step) {
-      _minValue = maxValue - step;
-    }
-    set_minValue(_minValue);
-  };
-  const onInnerBarRightClick = (e: React.MouseEvent) => {
-    let _maxValue = maxValue - step;
-    if (_maxValue < minValue + step) {
-      _maxValue = minValue + step;
-    }
-    set_maxValue(_maxValue);
-  };
-  const onInputMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let _maxValue = parseFloat(e.target.value);
-    if (_maxValue < minValue + step) {
-      _maxValue = minValue + step;
-    }
-    set_maxValue(_maxValue);
-    setIsChange(true);
-  };
-  const onRightThumbMousedown: React.MouseEventHandler = (
-    e: React.MouseEvent,
-  ) => {
-    let startX = e.clientX;
-    let thumb = e.target as HTMLDivElement;
-    let bar = thumb.parentNode as HTMLDivElement;
-    let barBox = bar.getBoundingClientRect();
-    let barValue = maxValue;
-    setIsChange(false);
-    let onRightThumbMousemove: { (e: MouseEvent): void } = (e: MouseEvent) => {
-      let clientX = e.clientX;
-      let dx = clientX - startX;
-      let per = dx / barBox.width;
-      let val = barValue + (max - min) * per;
-      if (stepOnly) {
-        val = Math.round(val / step) * step;
-      }
-      val = parseFloat(val.toFixed(fixed));
-      if (val < minValue + step) {
-        val = minValue + step;
-      } else if (val > max) {
-        val = max;
-      }
-      set_maxValue(val);
-    };
-    let onRightThumbMouseup: { (e: MouseEvent): void } = (e: MouseEvent) => {
-      setIsChange(true);
-      document.removeEventListener('mousemove', onRightThumbMousemove);
-      document.removeEventListener('mouseup', onRightThumbMouseup);
-    };
-    document.addEventListener('mousemove', onRightThumbMousemove);
-    document.addEventListener('mouseup', onRightThumbMouseup);
-  };
-  const onRightThumbTouchStart = (e: React.TouchEvent) => {
-    let startX = e.touches[0].clientX;
-    let thumb = e.target as HTMLDivElement;
-    let bar = thumb.parentNode as HTMLDivElement;
-    let barBox = bar.getBoundingClientRect();
-    let barValue = maxValue;
-    setIsChange(false);
-    let onRightThumbTouchMove: { (e: TouchEvent): void } = (e: TouchEvent) => {
-      let clientX = e.touches[0].clientX;
-      let dx = clientX - startX;
-      let per = dx / barBox.width;
-      let val = barValue + (max - min) * per;
-      if (stepOnly) {
-        val = Math.round(val / step) * step;
-      }
-      val = parseFloat(val.toFixed(fixed));
-      if (val < minValue + step) {
-        val = minValue + step;
-      } else if (val > max) {
-        val = max;
-      }
-      set_maxValue(val);
-    };
-    let onRightThumbTouchEnd: { (e: TouchEvent): void } = (e: TouchEvent) => {
-      setIsChange(true);
-      document.removeEventListener('touchmove', onRightThumbTouchMove);
-      document.removeEventListener('touchend', onRightThumbTouchEnd);
-    };
-    document.addEventListener('touchmove', onRightThumbTouchMove);
-    document.addEventListener('touchend', onRightThumbTouchEnd);
-  };
-  const onBarRightClick = (e: React.MouseEvent) => {
-    let _maxValue = maxValue + step;
-    if (_maxValue > max) {
-      _maxValue = max;
-    }
-    set_maxValue(_maxValue);
-  };
-  const onMouseWheel = (e: React.WheelEvent) => {
-    if (preventWheel === true) {
-      return;
-    }
-    if (!e.shiftKey && !e.ctrlKey) {
-      return;
-    }
-    let val = (max - min) / 100;
-    if (val > 1) {
-      val = 1;
-    }
-    if (e.deltaY < 0) {
-      val = -val;
-    }
 
-    let _minValue = minValue;
-    let _maxValue = maxValue;
-    if (e.shiftKey && e.ctrlKey) {
-      if (_minValue + val >= min && _maxValue + val <= max) {
-        _minValue = _minValue + val;
-        _maxValue = _maxValue + val;
-      }
-    } else if (e.ctrlKey) {
-      val = _maxValue + val;
-      if (val < _minValue + step) {
-        val = _minValue + step;
-      } else if (val > max) {
-        val = max;
-      }
-      _maxValue = val;
-    } else if (e.shiftKey) {
-      val = _minValue + val;
-      if (val < min) {
-        val = min;
-      } else if (val > _maxValue - step) {
-        val = _maxValue - step;
-      }
-      _minValue = val;
-    }
-    setIsChange(false);
-    set_maxValue(_maxValue);
-    set_minValue(_minValue);
-    _wheelTimeout && window.clearTimeout(_wheelTimeout);
-    _wheelTimeout = window.setTimeout(() => {
-      setIsChange(true);
-    }, 100);
-  };
   useEffect(() => {
     if (refBar && refBar.current) {
       let bar = refBar.current as HTMLDivElement;
@@ -361,13 +203,7 @@ export const MultiRangeSlider = (
     if (_minValue === null || _minValue === undefined) {
       _minValue = 25;
     }
-    _minValue = +_minValue;
-    if (_minValue < min) {
-      _minValue = min;
-    }
-    if (_minValue > max) {
-      _minValue = max;
-    }
+
     setIsChange(false);
     set_minValue(+_minValue);
   }, [props.minValue, min, max]);
@@ -378,15 +214,18 @@ export const MultiRangeSlider = (
     }
     _maxValue = +_maxValue;
 
-    if (_maxValue > max) {
-      _maxValue = max;
-    }
-    if (_maxValue < min) {
-      _maxValue = min;
-    }
     setIsChange(false);
     set_maxValue(+_maxValue);
   }, [props.maxValue, min, max, step]);
+
+  if (minValue > maxValue) {
+    const tempHold = maxValue;
+    set_maxValue(minValue);
+    set_minValue(tempHold);
+    //maxValue = minValue
+    thumbLeftColor = 'blue';
+    thumbRightColor = 'red';
+  }
 
   return (
     <div
@@ -431,7 +270,7 @@ export const MultiRangeSlider = (
         />
         <div
           className="thumb thumb-left absolute"
-          style={{ backgroundColor: props.thumbLeftColor }}
+          style={{ backgroundColor: thumbLeftColor }}
         >
           <div className="caption">
             <span className="min-caption">{minCaption}</span>
@@ -455,7 +294,7 @@ export const MultiRangeSlider = (
         />
         <div
           className="thumb thumb-right absolute"
-          style={{ backgroundColor: props.thumbRightColor }}
+          style={{ backgroundColor: thumbRightColor }}
         >
           <div className="caption">
             <span className="max-caption">{maxCaption}</span>
