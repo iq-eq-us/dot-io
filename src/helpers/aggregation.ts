@@ -47,9 +47,11 @@ export const getCumulativeOccurence = (stats: ChordStatistics[]): string => {
   const occur = stats.filter((stat) => stat.numberOfOccurrences != 0);
   return String(occur);
 };
-export const wpmMethodCalculator = (value: number) => {
+export const wpmMethodCalculator = (value: number, scenario?) => {
   const avgSpeedMilliseconds = value * 10;
-  const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
+  const millisecondsPerCharacter =
+    avgSpeedMilliseconds / (scenario == 'ALPHABET' ? 1 : 5);
+  console.log('scenaarion ' + scenario);
   const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
   const wpm = averageCharacterPerMin / 5;
 

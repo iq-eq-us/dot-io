@@ -123,16 +123,19 @@ export function ProgressBar(): ReactElement {
   if (tier == 'CPM') {
     allTimeWPM = wpmMethodCalculator(
       getCumulativeAverageChordTypeTime(trainingStatistics),
+      currentTrainingScenario,
     );
   } else {
     if (currentTrainingScenario != 'ALLCHORDS') {
       allTimeWPM = wpmMethodCalculator(
         getCumulativeAverageChordTypeTime(trainingStatistics),
+        currentTrainingScenario,
       );
     } else {
       allTimeWPM = wpmMethodCalculator(
         getCumulativeAverageChordTypeTimeFromDevice(
           inStoredChordsFromDevice?.statistics,
+          currentTrainingScenario,
         ),
       );
     }
@@ -160,6 +163,7 @@ export function ProgressBar(): ReactElement {
           avgCalculatorForTheSpeedOfLastTen(
             timeTakenToTypeEachWordInOrder?.slice(-10),
           ),
+          currentTrainingScenario,
         );
 
   let sumOfChordsMastered = 0;
@@ -169,7 +173,10 @@ export function ProgressBar(): ReactElement {
       d?.chordsMastered.length == 0 ||
       (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
         ? 0
-        : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
+        : wpmMethodCalculatorForStoredChords(
+            d?.chordsMastered,
+            currentTrainingScenario,
+          );
   });
 
   const { parentProps, Popper } = usePopover(
@@ -284,7 +291,7 @@ export function ProgressBar(): ReactElement {
         (averageOfLocalStats.toFixed(0) == 'Infinity'
           ? 0
           : averageOfLocalStats.toFixed(0)) +
-        ' WPM',
+        ' lWPM',
     );
 
   return (
@@ -352,6 +359,7 @@ export function ProgressBar(): ReactElement {
                       avgCalculatorForTheSpeedOfLastTen(
                         timeTakenToTypeEachWordInOrder?.slice(-10),
                       ),
+                      currentTrainingScenario,
                     ).toFixed(0)}{' '}
                 rWPM
               </div>

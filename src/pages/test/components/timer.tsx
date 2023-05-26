@@ -40,7 +40,6 @@ function Timer() {
       // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
       intervalId = setInterval(() => setTime(time + 1), 10);
     } else if (alltypedText.length == 0) {
-      //  console.log('sjdfjnf '+(!startTimer && !userIsTypingFirstChord && textPromptUnFocused))
       setTime(0);
     } else if (!startTimer && textPromptUnFocused && !userIsTypingFirstChord) {
       setTime(time);
@@ -63,7 +62,6 @@ function Timer() {
 
   // Method to start and stop timer
 
-  //console.log('timer '+ hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0"))
   setTimerValue(
     hours +
       ':' +
@@ -71,8 +69,6 @@ function Timer() {
       ':' +
       seconds.toString().padStart(2, '0'),
   );
-
-  console.log('Textprompt value1 ' + textPromptUnFocused + startTimer);
 
   return (
     <div className="rotate-180 text-l text-neutral-400 font-medium">

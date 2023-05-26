@@ -222,7 +222,6 @@ export const MultiRangeSlider = (
     const tempHold = maxValue;
     set_maxValue(minValue);
     set_minValue(tempHold);
-    //maxValue = minValue
     thumbLeftColor = 'blue';
     thumbRightColor = 'red';
   }
