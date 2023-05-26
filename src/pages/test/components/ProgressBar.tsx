@@ -344,7 +344,7 @@ export function ProgressBar(): ReactElement {
                 {averageOfLocalStats.toFixed(0) == 'Infinity'
                   ? '0'
                   : averageOfLocalStats.toFixed(0)}{' '}
-                WPM
+                lWPM
               </div>
             </RightTerms>
             <Timer />
