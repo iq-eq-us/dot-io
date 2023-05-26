@@ -47,6 +47,10 @@ export function ProgressBar(): ReactElement {
   );
   const stats = useStoreState((state) => state.trainingStatistics);
 
+  const currentTrainingScenario = useStoreState(
+    (store) => store.currentTrainingScenario,
+  );
+
   let sumErrors = 0;
   let sumOccurrences = 0;
   let numberOfChordsMastered = 0;
@@ -57,6 +61,7 @@ export function ProgressBar(): ReactElement {
 
   averageOfLocalStats = wpmMethodCalculator(
     getCumulativeAverageChordTypeTime(localTrainingStatistics),
+    currentTrainingScenario,
   );
 
   stats.statistics.forEach((d) => {
@@ -64,9 +69,9 @@ export function ProgressBar(): ReactElement {
     sumOccurrences += d.numberOfOccurrences;
 
     tempChordMasteredValue =
-      wpmMethodCalculator(d.averageSpeed) == 'Infinity'
+      wpmMethodCalculator(d.averageSpeed, currentTrainingScenario) == 'Infinity'
         ? 0
-        : wpmMethodCalculator(d.averageSpeed) / 100;
+        : wpmMethodCalculator(d.averageSpeed, currentTrainingScenario) / 100;
     sumOfAverages += tempChordMasteredValue;
     tempChordMasteredValue >= 1 ? numberOfChordsMastered++ : '';
   });
@@ -77,8 +82,14 @@ export function ProgressBar(): ReactElement {
       d?.chordsMastered.length == 0 ||
       (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
         ? 0
-        : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
-    sumOfLWPM += d.lastSpeed == 0 ? 0 : wpmMethodCalculator(d?.lastSpeed);
+        : wpmMethodCalculatorForStoredChords(
+            d?.chordsMastered,
+            currentTrainingScenario,
+          );
+    sumOfLWPM +=
+      d.lastSpeed == 0
+        ? 0
+        : wpmMethodCalculator(d?.lastSpeed, currentTrainingScenario);
     sumErrorsFromStoredDevice += d.numberOfErrors;
     sumOccurrencesFromStoredDevice += d.numberOfOccurrences;
   });
@@ -87,9 +98,6 @@ export function ProgressBar(): ReactElement {
   let allTimeWPM;
   const totalNumberOfChords = useTotalChordsToConquer();
   const tier = useStoreState((store) => store.trainingLevel);
-  const currentTrainingScenario = useStoreState(
-    (store) => store.currentTrainingScenario,
-  );
 
   const allTypedText = useStoreState(
     (store: any) => store.allTypedCharactersStore,
