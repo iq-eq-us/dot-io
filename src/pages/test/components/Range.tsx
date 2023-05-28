@@ -112,6 +112,9 @@ export const MultiRangeSlider = (
     set_minValue(+props.maxValue);
     thumbLeftColor = 'blue';
     thumbRightColor = 'red';
+  } else {
+    thumbLeftColor = 'red';
+    thumbRightColor = 'blue';
   }
 
   const [barMin, set_barMin] = useState(((minValue - min) / (max - min)) * 100);
