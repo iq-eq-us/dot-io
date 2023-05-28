@@ -334,8 +334,6 @@ export function ProgressBar(): ReactElement {
                   : averageOfLocalStats
               }
               maxValue={rWPM.toFixed(0) == 'Infinity' ? '0' : rWPM}
-              thumbRightColor="red"
-              thumbLeftColor="blue"
             />
           </TopProgressBar>
           <BottomProgressBar>
