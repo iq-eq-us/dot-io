@@ -51,7 +51,6 @@ export const wpmMethodCalculator = (value: number, scenario?) => {
   const avgSpeedMilliseconds = value * 10;
   const millisecondsPerCharacter =
     avgSpeedMilliseconds / (scenario == 'ALPHABET' ? 1 : 5);
-  console.log('scenaarion ' + scenario);
   const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
   const wpm = averageCharacterPerMin / 5;
 

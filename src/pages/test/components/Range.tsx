@@ -64,6 +64,7 @@ export const MultiRangeSlider = (
     props.preventWheel === undefined || props.preventWheel === null
       ? false
       : props.preventWheel;
+
   let refBar = useRef<HTMLDivElement>(null);
   let min = +(props.min || 0);
   let max = +(props.max || 350);
@@ -101,86 +102,23 @@ export const MultiRangeSlider = (
   if (_maxValue === null || _maxValue === undefined) {
     _maxValue = 75;
   }
-  _maxValue = +_maxValue;
 
-  const [minValue, set_minValue] = useState(+_minValue);
-  const [maxValue, set_maxValue] = useState(+_maxValue);
+  const [minValue, set_minValue] = useState(+props.minValue);
+  const [maxValue, set_maxValue] = useState(+props.maxValue);
+
+  if (minValue > maxValue) {
+    const tempHold = props.maxValue;
+    set_maxValue(+props.minValue);
+    set_minValue(+props.maxValue);
+    thumbLeftColor = 'blue';
+    thumbRightColor = 'red';
+  }
+
   const [barMin, set_barMin] = useState(((minValue - min) / (max - min)) * 100);
   const [barMax, set_barMax] = useState(((max - maxValue) / (max - min)) * 100);
   const [minCaption, setMinCaption] = useState<string>('');
   const [maxCaption, setMaxCaption] = useState<string>('');
   const [isChange, setIsChange] = useState(true);
-
-  const onLeftThumbMousedown: React.MouseEventHandler = (
-    e: React.MouseEvent,
-  ) => {
-    let startX = e.clientX;
-    let thumb = e.target as HTMLDivElement;
-    let bar = thumb.parentNode as HTMLDivElement;
-    let barBox = bar.getBoundingClientRect();
-    let barValue = minValue;
-    setIsChange(false);
-    let onLeftThumbMousemove: { (e: MouseEvent): void } = (e: MouseEvent) => {
-      let clientX = e.clientX;
-      let dx = clientX - startX;
-      let per = dx / barBox.width;
-      let val = barValue + (max - min) * per;
-      if (stepOnly) {
-        val = Math.round(val / step) * step;
-      }
-      val = parseFloat(val.toFixed(fixed));
-
-      set_minValue(val);
-    };
-    let onLeftThumbMouseup: { (e: MouseEvent): void } = (e: MouseEvent) => {
-      setIsChange(true);
-      document.removeEventListener('mousemove', onLeftThumbMousemove);
-      document.removeEventListener('mouseup', onLeftThumbMouseup);
-    };
-    document.addEventListener('mousemove', onLeftThumbMousemove);
-    document.addEventListener('mouseup', onLeftThumbMouseup);
-  };
-  const onLeftThumbTouchStart = (e: React.TouchEvent) => {
-    let startX = e.touches[0].clientX;
-    let thumb = e.target as HTMLDivElement;
-    let bar = thumb.parentNode as HTMLDivElement;
-    let barBox = bar.getBoundingClientRect();
-    let barValue = minValue;
-    setIsChange(false);
-    let onLeftThumbToucheMove: { (e: TouchEvent): void } = (e: TouchEvent) => {
-      let clientX = e.touches[0].clientX;
-      let dx = clientX - startX;
-      let per = dx / barBox.width;
-      let val = barValue + (max - min) * per;
-      if (stepOnly) {
-        val = Math.round(val / step) * step;
-      }
-      val = parseFloat(val.toFixed(fixed));
-
-      set_minValue(val);
-    };
-    let onLeftThumbTouchEnd: { (e: TouchEvent): void } = (e: TouchEvent) => {
-      setIsChange(true);
-      document.removeEventListener('touchmove', onLeftThumbToucheMove);
-      document.removeEventListener('touchend', onLeftThumbTouchEnd);
-    };
-
-    document.addEventListener('touchmove', onLeftThumbToucheMove);
-    document.addEventListener('touchend', onLeftThumbTouchEnd);
-  };
-
-  useEffect(() => {
-    if (refBar && refBar.current) {
-      let bar = refBar.current as HTMLDivElement;
-      let p_bar = bar.parentNode as HTMLDivElement;
-      p_bar.addEventListener('wheel', (e) => {
-        if (!e.shiftKey && !e.ctrlKey) {
-          return;
-        }
-        e.preventDefault();
-      });
-    }
-  }, [refBar]);
 
   useEffect(() => {
     const triggerChange = () => {
@@ -200,31 +138,17 @@ export const MultiRangeSlider = (
 
   useEffect(() => {
     let _minValue = props.minValue;
-    if (_minValue === null || _minValue === undefined) {
-      _minValue = 25;
-    }
 
     setIsChange(false);
     set_minValue(+_minValue);
   }, [props.minValue, min, max]);
+
   useEffect(() => {
     let _maxValue = props.maxValue;
-    if (_maxValue === null || _maxValue === undefined) {
-      _maxValue = 75;
-    }
-    _maxValue = +_maxValue;
 
     setIsChange(false);
     set_maxValue(+_maxValue);
   }, [props.maxValue, min, max, step]);
-
-  if (minValue > maxValue) {
-    const tempHold = maxValue;
-    set_maxValue(minValue);
-    set_minValue(tempHold);
-    thumbLeftColor = 'blue';
-    thumbRightColor = 'red';
-  }
 
   return (
     <div

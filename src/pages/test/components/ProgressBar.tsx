@@ -143,8 +143,8 @@ export function ProgressBar(): ReactElement {
       allTimeWPM = wpmMethodCalculator(
         getCumulativeAverageChordTypeTimeFromDevice(
           inStoredChordsFromDevice?.statistics,
-          currentTrainingScenario,
         ),
+        currentTrainingScenario,
       );
     }
   }
@@ -165,7 +165,7 @@ export function ProgressBar(): ReactElement {
   const rWPM =
     timeTakenToTypeEachWordInOrder?.length == 0
       ? 0
-      : timeTakenToTypeEachWordInOrder?.length < 10
+      : timeTakenToTypeEachWordInOrder?.length < 11
       ? averageOfLocalStats
       : wpmMethodCalculator(
           avgCalculatorForTheSpeedOfLastTen(
@@ -331,9 +331,9 @@ export function ProgressBar(): ReactElement {
               minValue={
                 averageOfLocalStats.toFixed(0) == 'Infinity'
                   ? '0'
-                  : averageOfLocalStats.toFixed(0)
+                  : averageOfLocalStats
               }
-              maxValue={rWPM.toFixed(0) == 'Infinity' ? '0' : rWPM.toFixed(0)}
+              maxValue={rWPM.toFixed(0) == 'Infinity' ? '0' : rWPM}
               thumbRightColor="red"
               thumbLeftColor="blue"
             />
@@ -357,11 +357,13 @@ export function ProgressBar(): ReactElement {
             </RightTerms>
             <Timer />
             <LeftTerms>
-              {wordsPracticedInOrder.length} Terms
+              {wordsPracticedInOrder.length > 999
+                ? '999+Terms'
+                : wordsPracticedInOrder.length + ' Terms'}
               <div>
                 {timeTakenToTypeEachWordInOrder?.length == 0
                   ? 0
-                  : timeTakenToTypeEachWordInOrder?.length < 10
+                  : timeTakenToTypeEachWordInOrder?.length < 11
                   ? averageOfLocalStats.toFixed(0)
                   : wpmMethodCalculator(
                       avgCalculatorForTheSpeedOfLastTen(
