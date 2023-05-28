@@ -107,14 +107,14 @@ export const MultiRangeSlider = (
   const [maxValue, set_maxValue] = useState(+props.maxValue);
 
   if (minValue > maxValue) {
-    const tempHold = props.maxValue;
     set_maxValue(+props.minValue);
     set_minValue(+props.maxValue);
-    thumbRightColor = 'blue';
-    thumbLeftColor = 'red';
+
+    props.thumbRightColor = 'blue';
+    props.thumbLeftColor = 'red';
   } else {
-    thumbRightColor = 'red';
-    thumbLeftColor = 'blue';
+    props.thumbRightColor = 'red';
+    props.thumbLeftColor = 'blue';
   }
 
   const [barMin, set_barMin] = useState(((minValue - min) / (max - min)) * 100);
@@ -196,7 +196,7 @@ export const MultiRangeSlider = (
         />
         <div
           className="thumb thumb-left absolute"
-          style={{ backgroundColor: thumbLeftColor }}
+          style={{ backgroundColor: props.thumbLeftColor }}
         >
           <div className="caption">
             <span className="min-caption">{minCaption}</span>
@@ -220,7 +220,7 @@ export const MultiRangeSlider = (
         />
         <div
           className="thumb thumb-right absolute"
-          style={{ backgroundColor: thumbRightColor }}
+          style={{ backgroundColor: props.thumbRightColor }}
         >
           <div className="caption">
             <span className="max-caption">{maxCaption}</span>
