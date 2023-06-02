@@ -83,11 +83,37 @@ export const MultiRangeSlider = (
   ) {
     //console.log('inMacValue ' + inMaxValue + ' ' + maxValue)
     if (props.maxValue > props.minValue) {
-      const inVal = props.maxValue + 30;
-      max = inVal;
+      if (100 > props.maxValue) {
+        max = 100;
+      } else if (200 > props.maxValue) {
+        max = 200;
+      } else if (300 > props.maxValue) {
+        max = 300;
+      } else if (400 > props.maxValue) {
+        max = 400;
+      } else if (500 > props.maxValue) {
+        max = 500;
+      } else if (600 > props.maxValue) {
+        max = 600;
+      } else if (700 > props.maxValue) {
+        max = 700;
+      }
     } else if (trainingSettings.isProgressBarDynamic == true) {
-      const inVal = props.minValue + 30;
-      max = inVal;
+      if (100 > props.minValue) {
+        max = 100;
+      } else if (200 > props.minValue) {
+        max = 200;
+      } else if (300 > props.minValue) {
+        max = 300;
+      } else if (400 > props.minValue) {
+        max = 400;
+      } else if (500 > props.minValue) {
+        max = 500;
+      } else if (600 > props.minValue) {
+        max = 600;
+      } else if (700 > props.minValue) {
+        max = 700;
+      }
     }
   }
 
@@ -128,9 +154,9 @@ export const MultiRangeSlider = (
 
   if (minValue > maxValue) {
     set_maxValue(+props.minValue);
-    console.log('Props min ' + props.minValue + ' ' + minValue);
+    console.log('Props min ' + props.minValue + ' ' + minValue + ' ' + max);
     set_minValue(+props.maxValue);
-    console.log('Props min ' + props.maxValue + ' ' + maxValue);
+    console.log('Props min ' + props.maxValue + ' ' + maxValue + ' ' + max);
   }
 
   const [barMin, set_barMin] = useState(((minValue - min) / (max - min)) * 100);
@@ -138,24 +164,6 @@ export const MultiRangeSlider = (
   const [minCaption, setMinCaption] = useState<string>('');
   const [maxCaption, setMaxCaption] = useState<string>('');
   const [isChange, setIsChange] = useState(true);
-
-  if (trainingSettings.isProgressBarDynamic == false) {
-    if (_minValue < min) {
-      _minValue = min;
-    }
-    if (_minValue > max) {
-      _minValue = max;
-    }
-    if (_maxValue < _minValue) {
-      _maxValue = +_minValue + +step;
-    }
-    if (_maxValue > max) {
-      _maxValue = max;
-    }
-    if (_maxValue < min) {
-      _maxValue = min;
-    }
-  }
 
   useEffect(() => {
     const triggerChange = () => {
