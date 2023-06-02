@@ -193,6 +193,7 @@ function ModuleCompleteModal(): ReactElement {
             className={`close ml-96 relative text-5xl pl-8 pt-4 text-[#181818]`}
             onClick={() => [
               setPasswordModulModalToggle(!passwordModulModalToggle),
+              console.log('x out out out'),
             ]}
           >
             &times;
