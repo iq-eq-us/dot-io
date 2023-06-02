@@ -42,7 +42,6 @@ export const createEmptyChordStatistics = (
     numberOfOccurrences: 0,
     scenario,
     speedOfLastTen: [],
-    
   };
 };
 

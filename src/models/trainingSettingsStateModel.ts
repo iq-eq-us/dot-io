@@ -15,8 +15,8 @@ export interface TrainingSettingsState {
   isDisplayingStatisticsModal: boolean;
   isTestDone: boolean;
   restartTestMode: boolean;
+  isProgressBarDynamic: boolean;
 }
-
 
 export const defaultTrainingSettings: TrainingSettingsState = {
   isHighlightingKeys: true,
@@ -33,6 +33,7 @@ export const defaultTrainingSettings: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+  isProgressBarDynamic: true,
 };
 
 export const defaultTrigramsTestTraining: TrainingSettingsState = {
@@ -50,6 +51,7 @@ export const defaultTrigramsTestTraining: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+  isProgressBarDynamic: true,
 };
 
 export interface CPMStats {
@@ -67,20 +69,15 @@ export interface ProgressState {
   CHM: CHMStats;
 }
 
-
 export const defaultProgressBarValues: ProgressState = {
-  CPM: 
-    {
-      ALPHABET: 20,
-      TRIGRAMS: 40,
-      LEXICAL: 60,
-    }
-  ,
-  CHM: 
-    {
-      ALLCHM: 150,
-    }
-  
+  CPM: {
+    ALPHABET: 20,
+    TRIGRAMS: 40,
+    LEXICAL: 60,
+  },
+  CHM: {
+    ALLCHM: 150,
+  },
 };
 
 export const defaultAlphabeticTestTraining: TrainingSettingsState = {
@@ -98,6 +95,7 @@ export const defaultAlphabeticTestTraining: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+  isProgressBarDynamic: true,
 };
 
 export const defaultTrainingSettingsState: TrainingSettingsState = {
@@ -115,4 +113,5 @@ export const defaultTrainingSettingsState: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+  isProgressBarDynamic: true,
 };

@@ -16,9 +16,7 @@ function NextTestButton(): ReactElement {
     (store) => store.setRestartTestMode,
   );
 
-  const setTrainingIsDone = useStoreActions(
-    (store) => store.setTrainingIsDone,
-  );
+  const setTrainingIsDone = useStoreActions((store) => store.setTrainingIsDone);
 
   return (
     <button

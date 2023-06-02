@@ -1,6 +1,5 @@
-import React, { useState, useEffect, ReactElement } from "react";
-import { useStoreState, useStoreActions } from "easy-peasy";
-
+import React, { useState, useEffect, ReactElement } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 function Timer() {
   // state to store time
@@ -15,31 +14,39 @@ function Timer() {
   const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
   const startTimer = useStoreState((store) => store.startTimer);
   const trainingIsDone = useStoreState((store) => store.trainingIsDone);
-  const textPromptUnFocused = useStoreState((store) => store.textPromptUnFocused);
+  const textPromptUnFocused = useStoreState(
+    (store) => store.textPromptUnFocused,
+  );
   const setTimerValue = useStoreActions((store) => store.setTimerValue);
+  const currentLineOfTrainingText = useStoreState(
+    (store) => store.currentLineOfTrainingText,
+  );
+  const currentSubindexInTrainingText = useStoreState(
+    (store) => store.currentSubindexInTrainingText,
+  );
 
+  const userIsTypingFirstChord =
+    currentLineOfTrainingText === 0 && currentSubindexInTrainingText === 1;
 
-
-  if(startTimer == true && alltypedText.length > 0){
-   () => setIsRunning(true);
+  if (startTimer == true && alltypedText.length > 0) {
+    () => setIsRunning(true);
   }
 
   useEffect(() => {
     let intervalId;
 
-    if (startTimer) {
-        //startAndStop.click();
+    if (startTimer && alltypedText.length >= 1) {
+      //startAndStop.click();
       // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
       intervalId = setInterval(() => setTime(time + 1), 10);
-    }  else if(!startTimer && textPromptUnFocused){
+    } else if (alltypedText.length == 0) {
+      setTime(0);
+    } else if (!startTimer && textPromptUnFocused && !userIsTypingFirstChord) {
       setTime(time);
     }
-    else{
-        setTime(0);
-    }
-    return () => clearInterval(intervalId);
-  }, [startTimer, time]);
 
+    return () => clearInterval(intervalId);
+  }, [startTimer, time, alltypedText, userIsTypingFirstChord]);
 
   // Hours calculation
   const hours = Math.floor(time / 360000);
@@ -55,23 +62,23 @@ function Timer() {
 
   // Method to start and stop timer
 
-  //console.log('timer '+ hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0")) 
-  setTimerValue(hours+':'+minutes.toString().padStart(2, "0")+':'+seconds.toString().padStart(2, "0"));
-
-  console.log('Textprompt value1 '+ textPromptUnFocused + startTimer)
-
-
+  setTimerValue(
+    hours +
+      ':' +
+      minutes.toString().padStart(2, '0') +
+      ':' +
+      seconds.toString().padStart(2, '0'),
+  );
 
   return (
     <div className="rotate-180 text-l text-neutral-400 font-medium">
       <p className="stopwatch-time">
-        {hours}:{minutes.toString().padStart(2, "0")}:
-        {seconds.toString().padStart(2, "0")}
+        {hours}:{minutes.toString().padStart(2, '0')}:
+        {seconds.toString().padStart(2, '0')}
       </p>
-      <div className="stopwatch-buttons">
-      </div>
-   </div>
+      <div className="stopwatch-buttons" />
+    </div>
   );
-};
+}
 
 export default Timer;

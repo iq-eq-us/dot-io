@@ -36,9 +36,7 @@ export function AutoCustomSetting(): ReactElement {
   };
   return (
     <React.Fragment>
-    <div className='absolute'>
-      {Popper}
-      </div>
+      <div className="absolute">{Popper}</div>
 
       <div
         className="text-sm font-bold mb-1 inline-flex flex-row gap-2 items-center"
@@ -75,6 +73,6 @@ export function AutoCustomSetting(): ReactElement {
           </span>
         </div>
       </div>
-      </React.Fragment>
+    </React.Fragment>
   );
 }

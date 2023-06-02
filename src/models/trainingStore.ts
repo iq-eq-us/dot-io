@@ -55,7 +55,7 @@ export interface TrainingStoreActionsModel {
   setTrainingSessionErrors: Action<TrainingStoreActionsModel, number>;
   setTrainingIsDone: Action<TrainingStoreActionsModel, boolean>;
   setTimerValue: Action<TrainingStoreActionsModel, string>;
-
+  setIsProgressBarDynamic: Action<TrainingStoreActionsModel, boolean>;
   /**
    * This action allows you to manually update the chords used in a particular training mode
    * For example, if you were in Lexical training, you can use the top right "View/Edit" chords box
@@ -98,6 +98,7 @@ export interface TrainingStoreStateModel {
   timeTakenToTypePreviousChord: number;
   previousTargetChord: Computed<TrainingStoreModel, string | undefined>;
   currentLevel: number;
+  wordsPracticedInOrder: string[];
   timeAtTrainingStart: number;
   typedTrainingText: string;
   trainingLevel: TrainingLevels | undefined;
@@ -118,7 +119,7 @@ export interface TrainingStoreStateModel {
     CharacterEntryMode | undefined
   >;
   targetCharacterIndex: Computed<TrainingStoreModel, number | undefined>;
-  allTypedCharactersStore: string[] | undefined;
+  allTypedCharactersStore: string[];
   userIsEditingPreviousWord: boolean;
   textPromptUnFocused: boolean;
   numberOfWordsChorded: number;
@@ -133,7 +134,7 @@ export interface TrainingStoreStateModel {
   passwordModulModalToggle: boolean;
   chmTierPasswordBypass: boolean;
   storedChordStatistics: TrainingStatistics;
-  trainingTestCounter : number;
+  trainingTestCounter: number;
   numberOfWordsTypedCorrectly: number;
   numberOfErrorsArrayForTestMode: number[];
   timer: TimerModel;
@@ -142,7 +143,8 @@ export interface TrainingStoreStateModel {
   trainingSessionAggregatedTime: number;
   trainingIsDone: boolean;
   timerValue: string;
-  
+  timeTakenToTypeEachWordInOrder: number[];
+  isProgressBarDynamic: boolean;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

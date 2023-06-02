@@ -7,6 +7,7 @@ import {
   RecursionCheckboxSetting,
   HUDCheckboxSetting,
   AutosaveSetting,
+  ProgressBarDynamic,
 } from './CheckboxSettings';
 import { ContrastInputSetting } from './ContrastInputSetting';
 import { SettingsColumnContainer } from './SettingsColumnContainer';
@@ -88,6 +89,10 @@ function SettingsColumn(): ReactElement {
           />
 
           <AutosaveSetting
+            trainingSettings={trainingSettings}
+            updateTrainingSetting={updateTrainingSetting}
+          />
+          <ProgressBarDynamic
             trainingSettings={trainingSettings}
             updateTrainingSetting={updateTrainingSetting}
           />

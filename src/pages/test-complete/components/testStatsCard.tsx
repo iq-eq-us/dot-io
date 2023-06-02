@@ -6,6 +6,8 @@ import { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { TestControlRow } from './testControlsRow';
 import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
+import { wpmMethodCalculator } from '../../../helpers/aggregation';
+import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 
 export function TestStatsCard(): ReactElement {
   const beginTraining = useStoreActions(
@@ -18,18 +20,20 @@ export function TestStatsCard(): ReactElement {
   const currentTrainingSetting = useStoreState(
     (store: any) => store.trainingStatistics,
   );
-  const trainingSettings = useStoreState((store) => store.trainingSettings);
+  const teir = useStoreState((store) => store.trainingLevel);
   const testNumber = useStoreState((store) => store.wordTestNumber);
-  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
-  const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
+  const localTrainingStatistics = useStoreState(
+    (store) => store.localTrainingStatistics.statistics,
+  );
 
-  const wordTestNumber = useStoreState(
-    (store) => store.wordTestNumber);
+  const wordTestNumber = useStoreState((store) => store.wordTestNumber);
 
-    const wpm = useSessionWordsPerMinute();
+  const wpm = useSessionWordsPerMinute();
 
   const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM);
-  const numberOfWordsTypedCorrectly = useStoreState((store) => store.numberOfWordsTypedCorrectly);
+  const numberOfWordsTypedCorrectly = useStoreState(
+    (store) => store.numberOfWordsTypedCorrectly,
+  );
 
   const payload = [];
   let thisVal = 0;
@@ -45,56 +49,86 @@ export function TestStatsCard(): ReactElement {
     sumOccurrences += d.displayTitle.length * d.numberOfOccurrences;
     //console.log(d.displayTitle.length * d.numberOfOccurrences);
   });
-  
+
   const allTypedText = useStoreState(
     (store: any) => store.allTypedCharactersStore,
   );
-  
-  const trainingSessionErrors = useStoreState((store) => store.trainingSessionErrors);
 
-  const Accuracy = (((allTypedText.length-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
+  const trainingSessionErrors = useStoreState(
+    (store) => store.trainingSessionErrors,
+  );
+
+  const Accuracy =
+    ((allTypedText.length - 1 - trainingSessionErrors) /
+      (allTypedText.length - 1)) *
+    100;
 
   const timerValue = useStoreState((store) => store.timerValue);
-  //console.log('timerValue '+ timerValue)
-  const trainingIsDone = useStoreState(
-    (store) => store.trainingIsDone,
+  const trainingIsDone = useStoreState((store) => store.trainingIsDone);
+
+  const averageOfLocalStats = wpmMethodCalculator(
+    getCumulativeAverageChordTypeTime(localTrainingStatistics),
   );
+
+  function returnValueBasedOnTeir() {
+    if (teir == 'CPM') {
+      if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
+      else return averageOfLocalStats.toFixed(0) * 5;
+    } else if (teir == 'CHM') {
+      if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
+      else return averageOfLocalStats.toFixed(0);
+    }
+  }
+
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
+        {teir == 'CPM' && (
+          <StatsCardContainer>
+            <div className="text-6xl">
+              {wordTestNumber != undefined
+                ? testTeirHighestWPM
+                : returnValueBasedOnTeir()}
+            </div>
+            <h1 className="text-2xl">{teir}</h1>
+          </StatsCardContainer>
+        )}
         <StatsCardContainer>
-          <div className="text-6xl">{wordTestNumber != undefined ? testTeirHighestWPM :( wpm.toFixed(0)*5)}</div>
-          <h1 className="text-2xl">CPM</h1>
-        </StatsCardContainer> 
-        <StatsCardContainer>
-          <div className="text-4xl">{ wordTestNumber != undefined ? (testTeirHighestWPM / 5).toFixed(0) : wpm.toFixed(0)}</div>
+          <div className="text-4xl">
+            {wordTestNumber != undefined
+              ? (testTeirHighestWPM / 5)?.toFixed(0) != 'Infinity'
+                ? (testTeirHighestWPM / 5)?.toFixed(0)
+                : '0'
+              : averageOfLocalStats?.toFixed(0) != 'Infinity'
+              ? averageOfLocalStats?.toFixed(0)
+              : '0'}
+          </div>
           <h1 className="text-lg">WPM</h1>
         </StatsCardContainer>
         <StatsCardContainer>
           <div className="text-4xl">
-            {wordTestNumber != undefined ? (numberOfWordsTypedCorrectly/parseInt(testNumber) * 100).toFixed(2)+ '%' : Accuracy+'%'}
+            {wordTestNumber != undefined
+              ? Accuracy.toFixed(2) + '%'
+              : Accuracy.toFixed(2) + '%'}
           </div>
           <h1 className="text-lg">Typing Accuracy</h1>
         </StatsCardContainer>
         <StatsCardContainer>
-        <div className="text-4xl">
-          {(numberOfWordsChorded.toFixed(0) / 25) * 100 + '%'}
-          </div> 
+          <div className="text-4xl">
+            {(numberOfWordsChorded.toFixed(0) / 25) * 100 + '%'}
+          </div>
           <h1 className="text-lg">Percent Chorded</h1>
         </StatsCardContainer>
         <StatsCardContainer>
-        <div className="text-4xl">
-          {timerValue}
-          </div> 
+          <div className="text-4xl">{timerValue}</div>
           <h1 className="text-lg">Time Taken</h1>
         </StatsCardContainer>
       </TrainingStatsColumnContainer>
       <div
         className="items-center absolute text-lg text-red-500 ml-16 mt-2"
         style={
-          ((parseInt(
-            ((numberOfWordsTypedCorrectly / parseInt(testNumber)) * 100).toFixed(2),
-          ) < 95 || (numberOfWordsChorded.toFixed(0) / 25) * 100 > 5) && !trainingIsDone)
+          (Accuracy < 95 || (numberOfWordsChorded.toFixed(0) / 25) * 100 > 5) &&
+          !trainingIsDone
             ? { display: '' }
             : { display: 'none' }
         }

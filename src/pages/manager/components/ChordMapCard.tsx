@@ -4,21 +4,20 @@ import type { ChordStatistics } from '../../../models/trainingStatistics';
 import { useStoreActions, useStoreState } from '../../../store/store';
 
 import {
-    CardEditButton,
-     CardSaveButton,
-     CardCancelButton, 
-     CardContainer, 
-     ChordTextBox, 
-     PhraseTextBox, 
-     CardDeleteButton,
-     InputIdentifiers,
-     CardConfirmDeleteButton,
-     CardCancelDeleteButton,
-    } from './ChordMapCardColumn.styled'
+  CardEditButton,
+  CardSaveButton,
+  CardCancelButton,
+  CardContainer,
+  ChordTextBox,
+  PhraseTextBox,
+  CardDeleteButton,
+  InputIdentifiers,
+  CardConfirmDeleteButton,
+  CardCancelDeleteButton,
+} from './ChordMapCardColumn.styled';
 
 import usePopover from '../../../hooks/usePopover';
 import { values } from 'lodash';
-
 
 export interface CardProps {
   currentChord: string;
@@ -28,47 +27,45 @@ export interface CardProps {
   previousChord?: string;
   previousPhrase?: string;
   index: number;
-  }
-  
+}
 
-export function ChordMapCard(
-  props: any,
-  index: number
-): ReactElement {
-    const [lockInputs, setInputs] = useState<boolean>(true);
-    const [phraseTextInput, setPhraseTextInput] = useState<string>('');
-    const [chordTextInput, setChordTextInput] = useState<string>('');
-    const [deleteButtonProps, setDeleteButtonProps] = useState<boolean>(false);
+export function ChordMapCard(props: any, index: number): ReactElement {
+  const [lockInputs, setInputs] = useState<boolean>(true);
+  const [phraseTextInput, setPhraseTextInput] = useState<string>('');
+  const [chordTextInput, setChordTextInput] = useState<string>('');
+  const [deleteButtonProps, setDeleteButtonProps] = useState<boolean>(false);
 
+  const deleteDownloadedChordsData = useStoreActions(
+    (store) => store.deleteDownloadedChordsData,
+  );
+  const saveDownloadedChordsData = useStoreActions(
+    (store) => store.saveDownloadedChordsData,
+  );
 
-    const deleteDownloadedChordsData = useStoreActions((store) => store.deleteDownloadedChordsData);
-    const saveDownloadedChordsData = useStoreActions((store) => store.saveDownloadedChordsData);
+  const chord: string = props.currentChord;
+  const phrase: string = props.currentPhrase;
+  const originalHexChord = props.originalHexChord;
+  const originalHexPhrase = props.originalHexPhrase;
 
-
-    const chord : string = props.currentChord;
-    const phrase : string  = props.currentPhrase; 
-    const originalHexChord = props.originalHexChord;
-    const originalHexPhrase = props.originalHexPhrase;
-
-    const payloadArray = [];
-    payloadArray.push(chord);
-    payloadArray.push(phrase);
-    payloadArray.push(originalHexChord);
+  const payloadArray = [];
+  payloadArray.push(chord);
+  payloadArray.push(phrase);
+  payloadArray.push(originalHexChord);
 
   const onClick = () => {
-  setInputs(!lockInputs);
-  setChordTextInput('');
-  }
+    setInputs(!lockInputs);
+    setChordTextInput('');
+  };
 
   const onClickCancelDeleteButton = () => {
     setDeleteButtonProps(!deleteButtonProps);
-    }
+  };
 
-    const onClickDeleteButton = () => {
-      setDeleteButtonProps(!deleteButtonProps);
-      }
+  const onClickDeleteButton = () => {
+    setDeleteButtonProps(!deleteButtonProps);
+  };
 
-  const onClickSaveButton = () =>{
+  const onClickSaveButton = () => {
     const inArray = [];
     inArray.push(chord);
     inArray.push(phrase);
@@ -79,16 +76,15 @@ export function ChordMapCard(
 
     saveDownloadedChordsData(inArray);
     setInputs(!lockInputs);
+  };
 
-  }
-  
   const onClickConfirmDeleteButton = () => {
-  deleteDownloadedChordsData(payloadArray); 
-  }
+    deleteDownloadedChordsData(payloadArray);
+  };
 
-  function showModal(){
-    console.log('show modal')
-    return(
+  function showModal() {
+    console.log('show modal');
+    return (
       <div className="flex-row relative border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
         <button
           className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818]`}
@@ -99,68 +95,100 @@ export function ChordMapCard(
           &times;
         </button>
         <p className="pt-2 m-10 font-bold mr-64">Enter the secret phrase!</p>
-        <p className={`pt-2 m-10 font-bold mr-64 text-red-500 `}>Wrong phrase!</p>
-        <input type="password" className='border-black border-2 ml-16 w-3/4'></input>
+        <p className={`pt-2 m-10 font-bold mr-64 text-red-500 `}>
+          Wrong phrase!
+        </p>
+        <input type="password" className="border-black border-2 ml-16 w-3/4" />
         <button
           className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
-        //  onClick={() => [passwordUnlock(inputRef)]}
+          //  onClick={() => [passwordUnlock(inputRef)]}
         >
           Unlock
         </button>
       </div>
-    
-        
-   );
+    );
   }
 
-
-
   function change(event) {
-    if(chordTextInput != '' && event.key != 'Delete' && event.key!= 'Backspace'){
+    if (
+      chordTextInput != '' &&
+      event.key != 'Delete' &&
+      event.key != 'Backspace'
+    ) {
       let chord = '';
-      const splitChord = chordTextInput.split(" + ").join(""); 
-      console.log(splitChord)
-      for(let i =0; i < splitChord.length; i++){
-      
+      const splitChord = chordTextInput.split(' + ').join('');
+      console.log(splitChord);
+      for (let i = 0; i < splitChord.length; i++) {
         chord += splitChord[i] + ' + ';
       }
 
-    return chord;
-    } else if(event.key == 'Delete' || event.key == 'Backspace'){
+      return chord;
+    } else if (event.key == 'Delete' || event.key == 'Backspace') {
       return chordTextInput.slice(0, -3);
-    }
-    else
-    return '';
+    } else return '';
   }
 
   return (
     <React.Fragment>
-    <CardContainer>
-        <InputIdentifiers>Output
-        <PhraseTextBox 
-        placeholder={phrase.toString()}
-        disabled={lockInputs}
-        onChange={e => setPhraseTextInput(e.target.value)}
-        /> 
+      <CardContainer>
+        <InputIdentifiers>
+          Output
+          <PhraseTextBox
+            placeholder={phrase.toString()}
+            disabled={lockInputs}
+            onChange={(e) => setPhraseTextInput(e.target.value)}
+          />
         </InputIdentifiers>
-        <InputIdentifiers>Input
-        <ChordTextBox 
-        placeholder={chord.toString()}
-        disabled={lockInputs}
-        onKeyDown= {e => setChordTextInput(change(e))}
-        onChange={e => setChordTextInput(e.target.value)}
-        value={chordTextInput}
-        />
+        <InputIdentifiers>
+          Input
+          <ChordTextBox
+            placeholder={chord.toString()}
+            disabled={lockInputs}
+            onKeyDown={(e) => setChordTextInput(change(e))}
+            onChange={(e) => setChordTextInput(e.target.value)}
+            value={chordTextInput}
+          />
         </InputIdentifiers>
-        <CardEditButton onClick={onClick}cancelled={lockInputs} shouldDelete={deleteButtonProps}>Edit Chord</CardEditButton>
-        <CardCancelButton onClick={onClick} cancelled={lockInputs} shouldDelete={deleteButtonProps}>Cancel</CardCancelButton>
-        <CardSaveButton onClick={onClickSaveButton}cancelled={lockInputs} shouldDelete={deleteButtonProps}>Save</CardSaveButton>
-        <CardDeleteButton onClick={onClickDeleteButton} shouldDelete={deleteButtonProps}>Delete</CardDeleteButton>
-        <CardCancelDeleteButton onClick={onClickCancelDeleteButton} shouldDelete={deleteButtonProps}>Cancel</CardCancelDeleteButton>
-        <CardConfirmDeleteButton onClick={onClickConfirmDeleteButton} shouldDelete={deleteButtonProps}>Confirm</CardConfirmDeleteButton>
-
-    </CardContainer>
+        <CardEditButton
+          onClick={onClick}
+          cancelled={lockInputs}
+          shouldDelete={deleteButtonProps}
+        >
+          Edit Chord
+        </CardEditButton>
+        <CardCancelButton
+          onClick={onClick}
+          cancelled={lockInputs}
+          shouldDelete={deleteButtonProps}
+        >
+          Cancel
+        </CardCancelButton>
+        <CardSaveButton
+          onClick={onClickSaveButton}
+          cancelled={lockInputs}
+          shouldDelete={deleteButtonProps}
+        >
+          Save
+        </CardSaveButton>
+        <CardDeleteButton
+          onClick={onClickDeleteButton}
+          shouldDelete={deleteButtonProps}
+        >
+          Delete
+        </CardDeleteButton>
+        <CardCancelDeleteButton
+          onClick={onClickCancelDeleteButton}
+          shouldDelete={deleteButtonProps}
+        >
+          Cancel
+        </CardCancelDeleteButton>
+        <CardConfirmDeleteButton
+          onClick={onClickConfirmDeleteButton}
+          shouldDelete={deleteButtonProps}
+        >
+          Confirm
+        </CardConfirmDeleteButton>
+      </CardContainer>
     </React.Fragment>
-
   );
 }

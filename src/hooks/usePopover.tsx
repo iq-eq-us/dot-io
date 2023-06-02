@@ -27,6 +27,15 @@ export default function usePopover(text: string): {
       },
     ],
   });
+  const tt = text.split('\n');
+  function re() {
+    const tf = [];
+    for (let i = 0; i < tt.length; i++) {
+      tf.push(tt[i]);
+      tf.push(<br />);
+    }
+    return tf;
+  }
 
   return {
     parentProps: parentElementProps,
@@ -38,7 +47,7 @@ export default function usePopover(text: string): {
         isOpen={isShowing || false}
         {...attributes.popper}
       >
-        {text}
+        {re()}
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         <Arrow ref={setArrowElement as any} style={styles.arrow} />
       </PopperContainer>

@@ -9,11 +9,16 @@ import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
-import  Timer from './timer';
+import Timer from './timer';
 import MultiRangeSlider from './Range';
-import { wpmMethodCalculatorForStoredChords, wpmMethodCalculator, getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+import {
+  wpmMethodCalculatorForStoredChords,
+  wpmMethodCalculator,
+  getCumulativeAverageChordTypeTime,
+} from '../../../helpers/aggregation';
 import {
   getCumulativeAverageChordTypeTimeFromDevice,
+  avgCalculatorForTheSpeedOfLastTen,
 } from '../../../helpers/aggregation';
 import { defaultProgressBarValues } from '../../../models/trainingSettingsStateModel';
 import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
@@ -23,35 +28,50 @@ function clamp(number: number, min: number, max: number) {
 }
 
 export function ProgressBar(): ReactElement {
- // const average = getCumulativeAverageChordTypeTime(data.stats);
+  // const average = getCumulativeAverageChordTypeTime(data.stats);
   let sumOfLWPM = 0;
   let sumOfAWPM = 0;
   let sumErrorsFromStoredDevice = 0;
   let sumOccurrencesFromStoredDevice = 0;
-  const storedChordStats = useStoreState((store) => store.storedChordStatistics);
-  const inStoredChordsFromDevice = useStoreState(
-    (store: any) => store.storedChordsFromDevice,
-  );
-  const stats = useStoreState(
-    (state) => state.trainingStatistics,
-  );
-
   let sumErrors = 0;
   let sumOccurrences = 0;
   let numberOfChordsMastered = 0;
   let tempChordMasteredValue = 0;
   let sumOfAverages = 0;
+  let averageOfLocalStats = 0;
+  let allTimeWPM;
+  let progress;
+  let inMaxValue;
+
+  const localTrainingStatistics = useStoreState(
+    (store) => store.localTrainingStatistics?.statistics,
+  );
+  const wordsPracticedInOrder = useStoreState(
+    (store) => store.wordsPracticedInOrder,
+  );
+  const inStoredChordsFromDevice = useStoreState(
+    (store: any) => store.storedChordsFromDevice,
+  );
+  const stats = useStoreState((state) => state.trainingStatistics);
+  const currentTrainingScenario = useStoreState(
+    (store) => store.currentTrainingScenario,
+  );
+
+  averageOfLocalStats = wpmMethodCalculator(
+    getCumulativeAverageChordTypeTime(localTrainingStatistics),
+    currentTrainingScenario,
+  );
 
   stats.statistics.forEach((d) => {
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
 
     tempChordMasteredValue =
-      wpmMethodCalculator(d.averageSpeed) == 'Infinity'
+      wpmMethodCalculator(d.averageSpeed, currentTrainingScenario) == 'Infinity'
         ? 0
-        : wpmMethodCalculator(d.averageSpeed) / 100;
-      sumOfAverages += tempChordMasteredValue;
-      (tempChordMasteredValue) >=1 ? numberOfChordsMastered++ : '';
+        : wpmMethodCalculator(d.averageSpeed, currentTrainingScenario) / 100;
+    sumOfAverages += tempChordMasteredValue;
+    tempChordMasteredValue >= 1 ? numberOfChordsMastered++ : '';
   });
 
   inStoredChordsFromDevice?.statistics?.forEach((d) => {
@@ -60,47 +80,71 @@ export function ProgressBar(): ReactElement {
       d?.chordsMastered.length == 0 ||
       (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
         ? 0
-        : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
-    sumOfLWPM += d.lastSpeed == 0 ? 0 : wpmMethodCalculator(d?.lastSpeed);
+        : wpmMethodCalculatorForStoredChords(
+            d?.chordsMastered,
+            currentTrainingScenario,
+          );
+    sumOfLWPM +=
+      d.lastSpeed == 0
+        ? 0
+        : wpmMethodCalculator(d?.lastSpeed, currentTrainingScenario);
     sumErrorsFromStoredDevice += d.numberOfErrors;
     sumOccurrencesFromStoredDevice += d.numberOfOccurrences;
   });
-  
 
   const wpm = useSessionWordsPerMinute();
-  let allTimeWPM;
   const totalNumberOfChords = useTotalChordsToConquer();
   const tier = useStoreState((store) => store.trainingLevel);
-  const currentTrainingScenario = useStoreState((store) => store.currentTrainingScenario);
 
   const allTypedText = useStoreState(
     (store: any) => store.allTypedCharactersStore,
   );
-  const storedTrainingStatistics = useStoreState((store) => store.storedChordsFromDevice?.statistics);
+  const storedTrainingStatistics = useStoreState(
+    (store) => store.storedChordsFromDevice?.statistics,
+  );
 
-  const trainingStatistics = useStoreState((store) => store.trainingStatistics.statistics);
+  const trainingStatistics = useStoreState(
+    (store) => store.trainingStatistics.statistics,
+  );
   const trainingSettings = useStoreState((store) => store.trainingSettings);
-  const trainingSessionErrors = useStoreState((store) => store.trainingSessionErrors);
-  const avgStats = getCumulativeAverageChordTypeTime(trainingStatistics)
+  const trainingSessionErrors = useStoreState(
+    (store) => store.trainingSessionErrors,
+  );
 
-  let progress;
-  let inMaxValue;
-  
+  const [maxValue, setMaxValue] = useState<number>();
+
   const numberOfChordsConquered = trainingStatistics.filter(
     (s) =>
-      s.averageSpeed > trainingSettings.speedGoal && s.numberOfOccurrences >= 10,
+      s.averageSpeed > trainingSettings.speedGoal &&
+      s.numberOfOccurrences >= 10,
   ).length;
 
   const numberOfChord = storedTrainingStatistics?.filter(
     (d) => d.chordsMastered.length == 1 && d.chordsMastered[0] == 0,
   ).length;
 
-  tier == 'CPM' ? allTimeWPM = wpmMethodCalculator(getCumulativeAverageChordTypeTime(trainingStatistics)) : wpmMethodCalculator(getCumulativeAverageChordTypeTime(storedChordStats.statistics));
-
-
-  const [minValue, setMinValue] = useState<number>(0)
-  let persistantValue = 0
-
+  if (tier == 'CPM') {
+    allTimeWPM = wpmMethodCalculator(
+      getCumulativeAverageChordTypeTime(trainingStatistics),
+      currentTrainingScenario,
+    );
+  } else {
+    if (currentTrainingScenario != 'ALLCHORDS') {
+      allTimeWPM = wpmMethodCalculator(
+        getCumulativeAverageChordTypeTime(trainingStatistics),
+        currentTrainingScenario,
+      );
+    } else {
+      allTimeWPM = wpmMethodCalculator(
+        getCumulativeAverageChordTypeTimeFromDevice(
+          inStoredChordsFromDevice?.statistics,
+        ),
+        currentTrainingScenario,
+      );
+    }
+  }
+  const [minValue, setMinValue] = useState<number>(0);
+  let persistantValue = 0;
 
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
 
@@ -109,6 +153,21 @@ export function ProgressBar(): ReactElement {
   const storedChordsFromDevice = useStoreState(
     (store) => store.storedChordsFromDevice,
   );
+  const timeTakenToTypeEachWordInOrder = useStoreState(
+    (store: any) => store.timeTakenToTypeEachWordInOrder,
+  );
+
+  const rWPM =
+    timeTakenToTypeEachWordInOrder?.length == 0
+      ? 0
+      : timeTakenToTypeEachWordInOrder?.length < 11
+      ? averageOfLocalStats
+      : wpmMethodCalculator(
+          avgCalculatorForTheSpeedOfLastTen(
+            timeTakenToTypeEachWordInOrder?.slice(-10),
+          ),
+          currentTrainingScenario,
+        );
 
   let sumOfChordsMastered = 0;
   storedChordsFromDevice?.statistics?.forEach((d) => {
@@ -117,7 +176,10 @@ export function ProgressBar(): ReactElement {
       d?.chordsMastered.length == 0 ||
       (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
         ? 0
-        : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
+        : wpmMethodCalculatorForStoredChords(
+            d?.chordsMastered,
+            currentTrainingScenario,
+          );
   });
 
   const { parentProps, Popper } = usePopover(
@@ -127,131 +189,204 @@ export function ProgressBar(): ReactElement {
   const { parentProps: remainingProps, Popper: RemainingPopover } = usePopover(
     'The number of chords that you have not typed faster than your speed goal.',
   );
- const Accuracy = ((((allTypedText.length)-trainingSessionErrors)/allTypedText.length) * 100).toFixed(0);
+  const Accuracy = (
+    ((allTypedText.length - 1 - trainingSessionErrors) /
+      (allTypedText.length - 1)) *
+    100
+  ).toFixed(0);
 
-   const trainingSessionAggregatedTime = useStoreState((store) => store.trainingSessionAggregatedTime);
+  sumOfAverages.toFixed(2);
 
-   sumOfAverages.toFixed(2) 
-
-   
-   
-   if(tier == 'CHM' && currentTrainingScenario != 'ALLCHORDS'){
-    progress = clamp((numberOfChordsMastered / totalNumberOfChords) * 100, 0, 100);
-    persistantValue= (sumOfChordsMastered);
-    inMaxValue = (defaultProgressBarValues.CHM.ALLCHM)
-
-    } else if(tier == 'CHM' && currentTrainingScenario == 'ALLCHORDS'){
-    progress = clamp(((numberOfChord) / storedTrainingStatistics.length) * 100, 0, 100)
-    persistantValue= (sumOfChordsMastered);
-    inMaxValue = (defaultProgressBarValues.CHM.ALLCHM)
-
-   } else if(tier == 'CPM' && currentTrainingScenario == 'ALPHABET'){
-      /* eslint-disable */
-    progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
-    persistantValue = (parseInt(
-      Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
-      
-    ));
-    inMaxValue = (defaultProgressBarValues.CPM.ALPHABET);
-
-  /* eslint-enable */
-   }  else if(tier == 'CPM' && currentTrainingScenario == 'TRIGRAM'){
+  if (tier == 'CHM' && currentTrainingScenario != 'ALLCHORDS') {
+    progress = clamp(
+      (numberOfChordsMastered / totalNumberOfChords) * 100,
+      0,
+      100,
+    );
+    persistantValue = sumOfChordsMastered;
+    inMaxValue = defaultProgressBarValues.CHM.ALLCHM;
+  } else if (tier == 'CHM' && currentTrainingScenario == 'ALLCHORDS') {
+    progress = clamp(
+      (numberOfChord / storedTrainingStatistics.length) * 100,
+      0,
+      100,
+    );
+    persistantValue = sumOfChordsMastered;
+    inMaxValue = defaultProgressBarValues.CHM.ALLCHM;
+  } else if (tier == 'CPM' && currentTrainingScenario == 'ALPHABET') {
     /* eslint-disable */
-  progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
-  persistantValue = (parseInt(
-    Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
-    
-  ));
-  inMaxValue = (defaultProgressBarValues.CPM.TRIGRAMS)
+    progress = clamp(
+      (numberOfChordsConquered / trainingStatistics.length) * 100,
+      0,
+      100,
+    );
+    persistantValue = parseInt(
+      Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+    );
+    inMaxValue = defaultProgressBarValues.CPM.ALPHABET;
 
-/* eslint-enable */
- }  else if(tier == 'CPM' && currentTrainingScenario == 'LEXICAL'){
-  /* eslint-disable */
-progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
-persistantValue = (parseInt(
-  Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
-  
-));
-inMaxValue = (defaultProgressBarValues.CPM.LEXICAL)
+    /* eslint-enable */
+  } else if (tier == 'CPM' && currentTrainingScenario == 'TRIGRAM') {
+    /* eslint-disable */
+    progress = clamp(
+      (numberOfChordsConquered / trainingStatistics.length) * 100,
+      0,
+      100,
+    );
+    persistantValue = parseInt(
+      Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+    );
+    inMaxValue = defaultProgressBarValues.CPM.TRIGRAMS;
 
-/* eslint-enable */
-}  else {
-  /* eslint-disable */
-progress = clamp(numberOfChordsConquered/trainingStatistics.length * 100, 0, 100);
-persistantValue = (parseInt(
-  Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
-  
-));
+    /* eslint-enable */
+  } else if (tier == 'CPM' && currentTrainingScenario == 'LEXICAL') {
+    /* eslint-disable */
+    progress = clamp(
+      (numberOfChordsConquered / trainingStatistics.length) * 100,
+      0,
+      100,
+    );
+    persistantValue = parseInt(
+      Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+    );
+    inMaxValue = defaultProgressBarValues.CPM.LEXICAL;
 
-/* eslint-enable */
+    /* eslint-enable */
+  } else {
+    /* eslint-disable */
+    progress = clamp(
+      (numberOfChordsConquered / trainingStatistics.length) * 100,
+      0,
+      100,
+    );
+    persistantValue = parseInt(
+      Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+    );
 
+    /* eslint-enable */
+  }
 
-}
-
-   function handleInputInRealTimeForMin(value) {
+  function handleInputInRealTimeForMin(value) {
     let added = 100;
-    if(inMaxValue >= parseInt(value) ){
-    setMinValue(value);
-    
-    } else {
-      added +=parseInt(value);
-      inMaxValue = (added);
+    if (inMaxValue >= parseInt(value)) {
       setMinValue(value);
-
+    } else {
+      added += parseInt(value);
+      inMaxValue = added;
+      setMinValue(value);
     }
-
-   }
-   function handleInputInRealTimeForMax(value) {
-    if(parseInt(value) >= minValue ){
-      inMaxValue =(value);
-    } else{
-      inMaxValue =(minValue+0);
-
+  }
+  function handleInputInRealTimeForMax(value) {
+    if (value >= minValue) {
+      setMaxValue(value);
+    } else {
+      setMaxValue(minValue);
     }
+  }
 
-   }
-
+  const { parentProps: progresAllTimeWPMsProps, Popper: AllTimePopper } =
+    usePopover(
+      'Typing Speed of the Last 10 words = ' +
+        rWPM.toFixed(0) +
+        ' rWPM' +
+        '\r\n ' +
+        'Total typing Speed for this session = ' +
+        (averageOfLocalStats.toFixed(0) == 'Infinity'
+          ? 0
+          : averageOfLocalStats.toFixed(0)) +
+        ' lWPM',
+    );
 
   return (
     <React.Fragment>
-      <div className='float-left flex flex-row inline-block'>
-        <input id='minInputValue' className='w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center'value={minValue} placeholder='0' onChange={() => handleInputInRealTimeForMin(document.getElementById('minInputValue').value)}/>
-    <Container>
-      {Popper}
-      {RemainingPopover}
-      <TopDataRow>
-      </TopDataRow>
-      <TopProgressBar >
-      <MultiRangeSlider
-      className='w-full'
-      label='true'
-      ruler='true'
-      min={(minValue || 0)}
-      max={(inMaxValue || 500)}
-      minValue= {isNaN(wpm?.toFixed(0)) || wpm?.toFixed(0) < 0 ? '0' : wpm.toFixed(0)}
-      maxValue= {allTimeWPM}
-      thumbRightColor='red'
-      thumbLeftColor='blue'
-      />
-      </TopProgressBar>
-      <BottomProgressBar >
-      <ProgressBarOuter>
-          <ProgressBarInner progress={progress}>{progress?.toFixed(1)}% </ProgressBarInner>
-        </ProgressBarOuter>
-        </BottomProgressBar>
-        <Trapazoid>
-        <RightTerms>{isNaN(Accuracy) ? '0' : Accuracy}% acc
-        <div>{isNaN(wpm.toFixed(0)) || wpm.toFixed(0) < 0 ? '0' : wpm.toFixed(0)} WPM</div>
-        </RightTerms>
-        <Timer/>
-        <LeftTerms>{...allTypedText.length} Terms</LeftTerms>
-
-        </Trapazoid>
-    </Container>
-    <input id='maxInputValue' className='w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center' value={inMaxValue} placeholder='500' onChange={() => handleInputInRealTimeForMax(document.getElementById('maxInputValue').value)}/>
-
-    </div>
-
+      {trainingSettings.isDisplayingHUD && (
+        <ProgresBarContainer>
+          {AllTimePopper}
+          {!trainingSettings.isProgressBarDynamic && (
+            <input
+              id="minInputValue"
+              className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center"
+              value={minValue > (inMaxValue || maxValue) ? 0 : minValue}
+              placeholder="0"
+              onChange={() =>
+                handleInputInRealTimeForMin(
+                  document.getElementById('minInputValue').value,
+                )
+              }
+            />
+          )}
+          <Container>
+            {Popper}
+            {RemainingPopover}
+            <TopDataRow />
+            <TopProgressBar {...progresAllTimeWPMsProps}>
+              <MultiRangeSlider
+                className="w-full"
+                label="true"
+                ruler="true"
+                min={minValue > (inMaxValue || maxValue) ? 0 : minValue}
+                max={maxValue || inMaxValue}
+                minValue={
+                  averageOfLocalStats.toFixed(0) == 'Infinity'
+                    ? '0'
+                    : averageOfLocalStats
+                }
+                maxValue={rWPM.toFixed(0) == 'Infinity' ? '0' : rWPM}
+              />
+            </TopProgressBar>
+            <BottomProgressBar>
+              <ProgressBarOuter>
+                <ProgressBarInner progress={progress}>
+                  {progress?.toFixed(1)}%{' '}
+                </ProgressBarInner>
+              </ProgressBarOuter>
+            </BottomProgressBar>
+            <Trapazoid>
+              <RightTerms>
+                {timeTakenToTypeEachWordInOrder?.length == 0 ? 0 : Accuracy}%
+                acc
+                <div>
+                  {averageOfLocalStats.toFixed(0) == 'Infinity'
+                    ? '0'
+                    : averageOfLocalStats.toFixed(0)}{' '}
+                  lWPM
+                </div>
+              </RightTerms>
+              <Timer />
+              <LeftTerms>
+                {wordsPracticedInOrder.length > 999
+                  ? '999+Terms'
+                  : wordsPracticedInOrder.length + ' Terms'}
+                <div>
+                  {timeTakenToTypeEachWordInOrder?.length == 0
+                    ? 0
+                    : timeTakenToTypeEachWordInOrder?.length < 11
+                    ? averageOfLocalStats.toFixed(0)
+                    : wpmMethodCalculator(
+                        avgCalculatorForTheSpeedOfLastTen(
+                          timeTakenToTypeEachWordInOrder?.slice(-10),
+                        ),
+                        currentTrainingScenario,
+                      ).toFixed(0)}{' '}
+                  rWPM
+                </div>
+              </LeftTerms>
+            </Trapazoid>
+          </Container>
+          {!trainingSettings.isProgressBarDynamic && (
+            <input
+              id="maxInputValue"
+              className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center"
+              value={maxValue || inMaxValue}
+              onChange={() =>
+                handleInputInRealTimeForMax(
+                  document.getElementById('maxInputValue').value,
+                )
+              }
+            />
+          )}
+        </ProgresBarContainer>
+      )}
     </React.Fragment>
   );
 }
@@ -265,18 +400,18 @@ interface TermsSection {
 }
 const AllTimeSpeed = styled.div.attrs<ProgressBarProgress>({
   className: `relative border-r-[5px] border-r-[#333] h-full  text-white text-xs`,
-}) <ProgressBarProgress>`
+})<ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
 
 const SessionSpeed = styled.div.attrs<ProgressBarProgress>({
   className: `relative border-r-[5px] border-r-[#333] h-full  text-white text-xs`,
-}) <ProgressBarProgress>`
+})<ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
 
-const BottomDataRow = styled.div.attrs({
-  className: `flex flex-row w-full mt-2 justify-between text-white font-semibold`,
+const ProgresBarContainer = styled.div.attrs({
+  className: `float-left flex flex-row inline-block`,
 })``;
 
 const SpeedGoalText = styled.span.attrs({
@@ -285,7 +420,7 @@ const SpeedGoalText = styled.span.attrs({
 
 const ProgressBarInner = styled.div.attrs<ProgressBarProgress>({
   className: `relative rounded-r-xl bg-green-500 h-full rounded-l text-white text-xs`,
-}) <ProgressBarProgress>`
+})<ProgressBarProgress>`
   width: ${(props) => props.progress?.toString()}%;
 `;
 
@@ -322,7 +457,6 @@ const Trapazoid = styled.div.attrs({
   `,
 })``;
 
-
 const BottomProgressBar = styled.div.attrs({
   className: `rounded-b-lg bg-[#333] h-6 w-full p-1`,
 })``;
@@ -330,5 +464,3 @@ const BottomProgressBar = styled.div.attrs({
 const TopProgressBar = styled.div.attrs({
   className: `border-r-4 border-l-4 border-b-4 flex space-x-20 text-center justify-center	inline-block border-[#333] h-12 w-full p-1`,
 })``;
-
-

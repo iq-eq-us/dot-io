@@ -7,14 +7,22 @@ import {
   asyncCallWithTimeout,
 } from '../controls/mainControls';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { convertHumanChordToHexadecimalChord, convertHumanStringToHexadecimalPhrase, sendCommandString } from '../controls/mainControls';
-
- 
+import {
+  convertHumanChordToHexadecimalChord,
+  convertHumanStringToHexadecimalPhrase,
+  sendCommandString,
+} from '../controls/mainControls';
 
 export function PressCommit(): ReactElement {
-  const clearDownloadedChords = useStoreActions((store) => store.clearDownloadedChords);
-  const setDownloadedChords = useStoreActions((store) => store.setDownloadedChords);
-  const downloadedChords = useStoreState((store) => store.downloadedChords.chords);
+  const clearDownloadedChords = useStoreActions(
+    (store) => store.clearDownloadedChords,
+  );
+  const setDownloadedChords = useStoreActions(
+    (store) => store.setDownloadedChords,
+  );
+  const downloadedChords = useStoreState(
+    (store) => store.downloadedChords.chords,
+  );
 
   async function saveAll() {
     console.log('saveAll()');
@@ -26,27 +34,32 @@ export function PressCommit(): ReactElement {
     for (let i = 0; i < downloadedChords.length - 1; i++) {
       const card = downloadedChords[i];
       const hexChord = convertHumanChordToHexadecimalChord(card.currentChord);
-      const hexPhrase = convertHumanStringToHexadecimalPhrase(card.currentPhrase);
+      const hexPhrase = convertHumanStringToHexadecimalPhrase(
+        card.currentPhrase,
+      );
       //await sendCommandString('CML C3 '+hexChord +' '+hexPhrase );
       //sendCommandString('CML C3 ' + newHexChord + ' ' + newHexPhrase);
 
       //const myTimeout = await setTimeout(pressCommitButton,i*500,i+1);//Fiddle with this
       //await asyncCallWithTimeout(clickCommit(i), 6000, i);//Fiddle with this
       //await clickCommit(i);
-  
+
       //myTimeout.
       //clearTimeout(myTimeout)
-      await wontTimeout(sendCommandString('CML C3 '+hexChord +' '+hexPhrase ), i);
-  
+      await wontTimeout(
+        sendCommandString('CML C3 ' + hexChord + ' ' + hexPhrase),
+        i,
+      );
+
       element.innerHTML =
         'Commit Progress: ' +
         ((i / downloadedChords.length) * 100).toFixed(0) +
         '% Please do not touch your device until completion.';
-  
+
       //rows would be accessed using the "row" variable assigned in the for loop
     }
   }
-  
+
   const wontTimeout = async (func, virtualId) => {
     try {
       const { data } = await asyncCallWithTimeout(func, 10000, virtualId);
@@ -55,7 +68,6 @@ export function PressCommit(): ReactElement {
       await asyncCallWithTimeout(func, 10000, virtualId);
     }
   };
-
 
   return (
     <React.Fragment>

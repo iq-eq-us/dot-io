@@ -1,7 +1,6 @@
 import type { Action, Computed, Thunk } from 'easy-peasy';
 import type { Chords, ChordLayout } from './managerModels';
 
-
 export interface ManagerStoreState {
   downloadedChords: Chords;
   downloadedChordLayout: ChordLayout;
@@ -9,8 +8,6 @@ export interface ManagerStoreState {
   serialApiRequests: string[];
   commitAllCounterForChords: number;
   commitAllCounterForChordLayout: number;
-
-
 }
 
 export interface ManagerStoreActions {
@@ -22,16 +19,13 @@ export interface ManagerStoreActions {
   setImportedChordsLayout: Action<ManagerStore, Chords>;
   deleteDownloadedChordsLayoutData: Action<ManagerStore, ChordLayout>;
   saveDownloadedChordLayoutData: Action<ManagerStore, ChordLayout>;
-  clearDownloadedChords:Action<ManagerStore, ChordLayout>;
-  clearDownloadedChordLayout:Action<ManagerStore, ChordLayout>;
+  clearDownloadedChords: Action<ManagerStore, ChordLayout>;
+  clearDownloadedChordLayout: Action<ManagerStore, ChordLayout>;
   setSerialApiResponses: Action<ManagerStore, string[]>;
   setSerialApiRequests: Action<ManagerStore, number>;
   setCommitAllCounterForChords: Action<ManagerStore, number>;
   setCommitAllCounterForChordLayout: Action<ManagerStore, number>;
   updateSerialAPiDataThunk: Thunk<ManagerStore>;
-
 }
-
-
 
 export type ManagerStore = ManagerStoreState & ManagerStoreActions;

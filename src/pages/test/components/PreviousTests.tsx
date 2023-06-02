@@ -57,7 +57,9 @@ export function PreviousTest(): ReactElement {
     });
   };
   const currentTrainingMode = useCurrentTrainingScenario();
-  const wordTestNumber = useStoreState((store: any) => store.wordTestNumber == undefined);
+  const wordTestNumber = useStoreState(
+    (store: any) => store.wordTestNumber == undefined,
+  );
 
   return (
     <React.Fragment>

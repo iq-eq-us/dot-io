@@ -302,8 +302,6 @@ export const generateNewChordRecordForAllChordsModule = (
   return newChordLibraryRecord;
 };
 
-
-
 export const getChordLibraryForTrainingScenario = (
   scenario?: TrainingScenario | undefined,
   chordRepresention?: ChordLibraryRecord | undefined,

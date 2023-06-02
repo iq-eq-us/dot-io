@@ -3,7 +3,6 @@ import { getCumulativeAverageChordTypeTime } from '../helpers/aggregation';
 import {
   storeAverageData,
   storeData,
-
 } from '../pages/manager/components/chordGraphs';
 
 export const useWordsPerMinute = (): number => {
@@ -37,16 +36,20 @@ export const useWordsPerMinute = (): number => {
 
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
   const storedTestTextData = useStoreState((store) => store.storedTestTextData);
-  const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
+  const allTypedText = useStoreState((store) => store.allTypedCharactersStore);
   const numberOfWordsChorded = useStoreState(
     (state: any) => state.numberOfWordsChorded,
   );
-
+  const trainingSessionErrors = useStoreState(
+    (store) => store.trainingSessionErrors,
+  );
   let totalNumberOfCharactersTyped = 0;
   let wpm = 0;
-
+  const Accuracy =
+    ((allTypedText.length - 1 - trainingSessionErrors) /
+      (allTypedText.length - 1)) *
+    100;
   const timeAtTrainingStartInSeconds = timeAtTrainingStart * 0.001;
-
 
   const timeNowInSeconds = performance.now() * 0.001;
   const timeNowInMilli = timeNowInSeconds * 1000;
@@ -63,7 +66,7 @@ export const useWordsPerMinute = (): number => {
   let currentChordSpeed = y[y?.length - 1]?.lastSpeed;
   const average = getCumulativeAverageChordTypeTime(y); //This field gets the speed of the current typed word
   const averageDailyCount = y.length;
-  console.log('trainingSession avg'+ average)
+  console.log('trainingSession avg' + average);
 
   const chordLength = totalNumberOfCharactersTyped / 5;
 
@@ -139,18 +142,15 @@ export const useWordsPerMinute = (): number => {
         const testNum = parseInt(testNumber);
         if (
           6 > (numberOfWordsChorded.toFixed(0) / 25) * 100 &&
-          (numberOfWordsTypedCorrectly / testNum) * 100 >= 95 &&
+          Accuracy >= 95 &&
           testTeirHighestWPM > fastestRecordedWPM[trainingScenario]
         ) {
-
-
           storeData(testTeirHighestWPM, currentDate); //This checks to make sure we are in a testing teir
 
           setFastestWPM({
             ...fastestRecordedWPM,
             [trainingScenario]: testTeirHighestWPM,
           });
-
         }
         storeAverageData(testTeirHighestWPM, currentDate, currentChordSpeed, 1); //This checks to make sure we are in a testing teir
       }

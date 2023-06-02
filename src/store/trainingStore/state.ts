@@ -21,12 +21,12 @@ import { TimerModel } from '../../models/timerModel';
  */
 async function removeDups(arr) {
   const seen = new Set();
-  const newSet = arr?.statistics?.filter(item => {
-      const duplicate = seen.has(item.id);
-      seen.add(item.id);
-      return !duplicate;
-    });
-    return newSet as TrainingStoreStateModel;
+  const newSet = arr?.statistics?.filter((item) => {
+    const duplicate = seen.has(item.id);
+    seen.add(item.id);
+    return !duplicate;
+  });
+  return newSet as TrainingStoreStateModel;
 }
 const trainingStoreState: TrainingStoreStateModel = {
   // * State
@@ -45,6 +45,8 @@ const trainingStoreState: TrainingStoreStateModel = {
   restartTestMode: false,
   userIsEditingPreviousWord: false,
   allTypedCharactersStore: [],
+  wordsPracticedInOrder: [],
+  timeTakenToTypeEachWordInOrder: [],
   trainingLevel: 'CPM' as TrainingLevels,
   moduleCompleteModalToggle: false,
   downloadModulModalToggle: false,
@@ -61,7 +63,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   localTrainingStatistics: {
     statistics: [],
   },
-  timer:{
+  timer: {
     display: '00:00:00',
     milliseconds: 0,
     running: false,
@@ -70,12 +72,16 @@ const trainingStoreState: TrainingStoreStateModel = {
   timeAtTrainingStart: 0,
   numberOfChordsForTrainingLevel: 0,
   testTeirHighestWPM: 0,
-  storedChordsRepresentation: removeDups(generateNewChordRecordForAllChordsModule(
-    JSON?.parse(localStorage?.getItem('chordsReadFromDevice')),
-  )),
+  storedChordsRepresentation: removeDups(
+    generateNewChordRecordForAllChordsModule(
+      JSON?.parse(localStorage?.getItem('chordsReadFromDevice')),
+    ),
+  ),
   numberOfErrorsArrayForTestMode: [],
 
-  chmTierPasswordBypass: JSON?.parse(localStorage?.getItem('chmTierPasswordBypass')),
+  chmTierPasswordBypass: JSON?.parse(
+    localStorage?.getItem('chmTierPasswordBypass'),
+  ),
   // * Computed State
   currentlyHighlightedKeys: computed((state) => {
     const highlightMode = state.characterEntryMode;
