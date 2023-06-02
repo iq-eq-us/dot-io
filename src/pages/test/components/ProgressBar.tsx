@@ -299,91 +299,94 @@ export function ProgressBar(): ReactElement {
 
   return (
     <React.Fragment>
-      {AllTimePopper}
-      <div className="float-left flex flex-row inline-block">
-        {!trainingSettings.isProgressBarDynamic && (
-          <input
-            id="minInputValue"
-            className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center"
-            value={minValue > (inMaxValue || maxValue) ? 0 : minValue}
-            placeholder="0"
-            onChange={() =>
-              handleInputInRealTimeForMin(
-                document.getElementById('minInputValue').value,
-              )
-            }
-          />
-        )}
-        <Container>
-          {Popper}
-          {RemainingPopover}
-          <TopDataRow />
-          <TopProgressBar {...progresAllTimeWPMsProps}>
-            <MultiRangeSlider
-              className="w-full"
-              label="true"
-              ruler="true"
-              min={minValue > (inMaxValue || maxValue) ? 0 : minValue}
-              max={maxValue || inMaxValue}
-              minValue={
-                averageOfLocalStats.toFixed(0) == 'Infinity'
-                  ? '0'
-                  : averageOfLocalStats
+      {trainingSettings.isDisplayingHUD && (
+        <ProgresBarContainer>
+          {AllTimePopper}
+          {!trainingSettings.isProgressBarDynamic && (
+            <input
+              id="minInputValue"
+              className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center"
+              value={minValue > (inMaxValue || maxValue) ? 0 : minValue}
+              placeholder="0"
+              onChange={() =>
+                handleInputInRealTimeForMin(
+                  document.getElementById('minInputValue').value,
+                )
               }
-              maxValue={rWPM.toFixed(0) == 'Infinity' ? '0' : rWPM}
             />
-          </TopProgressBar>
-          <BottomProgressBar>
-            <ProgressBarOuter>
-              <ProgressBarInner progress={progress}>
-                {progress?.toFixed(1)}%{' '}
-              </ProgressBarInner>
-            </ProgressBarOuter>
-          </BottomProgressBar>
-          <Trapazoid>
-            <RightTerms>
-              {timeTakenToTypeEachWordInOrder?.length == 0 ? 0 : Accuracy}% acc
-              <div>
-                {averageOfLocalStats.toFixed(0) == 'Infinity'
-                  ? '0'
-                  : averageOfLocalStats.toFixed(0)}{' '}
-                lWPM
-              </div>
-            </RightTerms>
-            <Timer />
-            <LeftTerms>
-              {wordsPracticedInOrder.length > 999
-                ? '999+Terms'
-                : wordsPracticedInOrder.length + ' Terms'}
-              <div>
-                {timeTakenToTypeEachWordInOrder?.length == 0
-                  ? 0
-                  : timeTakenToTypeEachWordInOrder?.length < 11
-                  ? averageOfLocalStats.toFixed(0)
-                  : wpmMethodCalculator(
-                      avgCalculatorForTheSpeedOfLastTen(
-                        timeTakenToTypeEachWordInOrder?.slice(-10),
-                      ),
-                      currentTrainingScenario,
-                    ).toFixed(0)}{' '}
-                rWPM
-              </div>
-            </LeftTerms>
-          </Trapazoid>
-        </Container>
-        {!trainingSettings.isProgressBarDynamic && (
-          <input
-            id="maxInputValue"
-            className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center"
-            value={maxValue || inMaxValue}
-            onChange={() =>
-              handleInputInRealTimeForMax(
-                document.getElementById('maxInputValue').value,
-              )
-            }
-          />
-        )}
-      </div>
+          )}
+          <Container>
+            {Popper}
+            {RemainingPopover}
+            <TopDataRow />
+            <TopProgressBar {...progresAllTimeWPMsProps}>
+              <MultiRangeSlider
+                className="w-full"
+                label="true"
+                ruler="true"
+                min={minValue > (inMaxValue || maxValue) ? 0 : minValue}
+                max={maxValue || inMaxValue}
+                minValue={
+                  averageOfLocalStats.toFixed(0) == 'Infinity'
+                    ? '0'
+                    : averageOfLocalStats
+                }
+                maxValue={rWPM.toFixed(0) == 'Infinity' ? '0' : rWPM}
+              />
+            </TopProgressBar>
+            <BottomProgressBar>
+              <ProgressBarOuter>
+                <ProgressBarInner progress={progress}>
+                  {progress?.toFixed(1)}%{' '}
+                </ProgressBarInner>
+              </ProgressBarOuter>
+            </BottomProgressBar>
+            <Trapazoid>
+              <RightTerms>
+                {timeTakenToTypeEachWordInOrder?.length == 0 ? 0 : Accuracy}%
+                acc
+                <div>
+                  {averageOfLocalStats.toFixed(0) == 'Infinity'
+                    ? '0'
+                    : averageOfLocalStats.toFixed(0)}{' '}
+                  lWPM
+                </div>
+              </RightTerms>
+              <Timer />
+              <LeftTerms>
+                {wordsPracticedInOrder.length > 999
+                  ? '999+Terms'
+                  : wordsPracticedInOrder.length + ' Terms'}
+                <div>
+                  {timeTakenToTypeEachWordInOrder?.length == 0
+                    ? 0
+                    : timeTakenToTypeEachWordInOrder?.length < 11
+                    ? averageOfLocalStats.toFixed(0)
+                    : wpmMethodCalculator(
+                        avgCalculatorForTheSpeedOfLastTen(
+                          timeTakenToTypeEachWordInOrder?.slice(-10),
+                        ),
+                        currentTrainingScenario,
+                      ).toFixed(0)}{' '}
+                  rWPM
+                </div>
+              </LeftTerms>
+            </Trapazoid>
+          </Container>
+          {!trainingSettings.isProgressBarDynamic && (
+            <input
+              id="maxInputValue"
+              className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center"
+              value={maxValue || inMaxValue}
+              onChange={() =>
+                handleInputInRealTimeForMax(
+                  document.getElementById('maxInputValue').value,
+                )
+              }
+            />
+          )}
+        </ProgresBarContainer>
+      )}
     </React.Fragment>
   );
 }
@@ -407,8 +410,8 @@ const SessionSpeed = styled.div.attrs<ProgressBarProgress>({
   width: ${(props) => props.progress?.toString()}%;
 `;
 
-const BottomDataRow = styled.div.attrs({
-  className: `flex flex-row w-full mt-2 justify-between text-white font-semibold`,
+const ProgresBarContainer = styled.div.attrs({
+  className: `float-left flex flex-row inline-block`,
 })``;
 
 const SpeedGoalText = styled.span.attrs({
