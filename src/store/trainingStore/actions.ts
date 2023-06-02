@@ -148,6 +148,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.wordTestNumber = payload[1] as WordTrainingValues;
     state.allTypedCharactersStore = [];
     state.compareText = [];
+    state.isProgressBarDynamic = false;
     state.trainingTestCounter = 0;
     state.isTestDone = false;
     state.storedTestTextData = [];
@@ -337,6 +338,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   }),
   setTypedTrainingText: action((state, payload) => {
     state.typedTrainingText = payload;
+  }),
+  setIsProgressBarDynamic: action((state, payload) => {
+    state.isProgressBarDynamic = payload;
   }),
   setTestTeirHighestWPM: action((state, payload) => {
     state.testTeirHighestWPM = payload as number;

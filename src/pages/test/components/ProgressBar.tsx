@@ -33,31 +33,29 @@ export function ProgressBar(): ReactElement {
   let sumOfAWPM = 0;
   let sumErrorsFromStoredDevice = 0;
   let sumOccurrencesFromStoredDevice = 0;
-
-  const localTrainingStatistics = useStoreState(
-    (store) => store.localTrainingStatistics?.statistics,
-  );
-
-  const wordsPracticedInOrder = useStoreState(
-    (store) => store.wordsPracticedInOrder,
-  );
-
-  const inStoredChordsFromDevice = useStoreState(
-    (store: any) => store.storedChordsFromDevice,
-  );
-  const stats = useStoreState((state) => state.trainingStatistics);
-
-  const currentTrainingScenario = useStoreState(
-    (store) => store.currentTrainingScenario,
-  );
-
   let sumErrors = 0;
   let sumOccurrences = 0;
   let numberOfChordsMastered = 0;
   let tempChordMasteredValue = 0;
   let sumOfAverages = 0;
-
   let averageOfLocalStats = 0;
+  let allTimeWPM;
+  let progress;
+  let inMaxValue;
+
+  const localTrainingStatistics = useStoreState(
+    (store) => store.localTrainingStatistics?.statistics,
+  );
+  const wordsPracticedInOrder = useStoreState(
+    (store) => store.wordsPracticedInOrder,
+  );
+  const inStoredChordsFromDevice = useStoreState(
+    (store: any) => store.storedChordsFromDevice,
+  );
+  const stats = useStoreState((state) => state.trainingStatistics);
+  const currentTrainingScenario = useStoreState(
+    (store) => store.currentTrainingScenario,
+  );
 
   averageOfLocalStats = wpmMethodCalculator(
     getCumulativeAverageChordTypeTime(localTrainingStatistics),
@@ -95,7 +93,6 @@ export function ProgressBar(): ReactElement {
   });
 
   const wpm = useSessionWordsPerMinute();
-  let allTimeWPM;
   const totalNumberOfChords = useTotalChordsToConquer();
   const tier = useStoreState((store) => store.trainingLevel);
 
@@ -113,8 +110,6 @@ export function ProgressBar(): ReactElement {
   const trainingSessionErrors = useStoreState(
     (store) => store.trainingSessionErrors,
   );
-  let progress;
-  let inMaxValue;
 
   const [maxValue, setMaxValue] = useState<number>();
 
@@ -306,17 +301,19 @@ export function ProgressBar(): ReactElement {
     <React.Fragment>
       {AllTimePopper}
       <div className="float-left flex flex-row inline-block">
-        <input
-          id="minInputValue"
-          className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center"
-          value={minValue > (inMaxValue || maxValue) ? 0 : minValue}
-          placeholder="0"
-          onChange={() =>
-            handleInputInRealTimeForMin(
-              document.getElementById('minInputValue').value,
-            )
-          }
-        />
+        {!trainingSettings.isProgressBarDynamic && (
+          <input
+            id="minInputValue"
+            className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center"
+            value={minValue > (inMaxValue || maxValue) ? 0 : minValue}
+            placeholder="0"
+            onChange={() =>
+              handleInputInRealTimeForMin(
+                document.getElementById('minInputValue').value,
+              )
+            }
+          />
+        )}
         <Container>
           {Popper}
           {RemainingPopover}
@@ -374,16 +371,18 @@ export function ProgressBar(): ReactElement {
             </LeftTerms>
           </Trapazoid>
         </Container>
-        <input
-          id="maxInputValue"
-          className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center"
-          value={maxValue || inMaxValue}
-          onChange={() =>
-            handleInputInRealTimeForMax(
-              document.getElementById('maxInputValue').value,
-            )
-          }
-        />
+        {!trainingSettings.isProgressBarDynamic && (
+          <input
+            id="maxInputValue"
+            className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center"
+            value={maxValue || inMaxValue}
+            onChange={() =>
+              handleInputInRealTimeForMax(
+                document.getElementById('maxInputValue').value,
+              )
+            }
+          />
+        )}
       </div>
     </React.Fragment>
   );

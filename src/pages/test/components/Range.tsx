@@ -3,6 +3,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import './multirangeslider.css';
 import './multirangesliderblack.css';
 import usePopover from '../../../hooks/usePopover';
+import { useStoreState } from 'easy-peasy';
 
 /* eslint-disable */
 
@@ -71,6 +72,25 @@ export const MultiRangeSlider = (
   let step = +(props.step || 10);
   let fixed = 0;
 
+  const trainingSettings = useStoreState(
+    (store: any) => store.trainingSettings,
+  );
+
+  if (
+    props.minValue != 'Infinity' &&
+    (props.minValue > max || props.maxValue > max) &&
+    trainingSettings.isProgressBarDynamic == true
+  ) {
+    //console.log('inMacValue ' + inMaxValue + ' ' + maxValue)
+    if (props.maxValue > props.minValue) {
+      const inVal = props.maxValue + 30;
+      max = inVal;
+    } else if (trainingSettings.isProgressBarDynamic == true) {
+      const inVal = props.minValue + 30;
+      max = inVal;
+    }
+  }
+
   let stepCount = Math.floor((+max - +min) / +step);
   let labels: string[] = props.labels || [];
   if (labels.length === 0) {
@@ -108,7 +128,9 @@ export const MultiRangeSlider = (
 
   if (minValue > maxValue) {
     set_maxValue(+props.minValue);
+    console.log('Props min ' + props.minValue + ' ' + minValue);
     set_minValue(+props.maxValue);
+    console.log('Props min ' + props.maxValue + ' ' + maxValue);
   }
 
   const [barMin, set_barMin] = useState(((minValue - min) / (max - min)) * 100);
@@ -117,14 +139,31 @@ export const MultiRangeSlider = (
   const [maxCaption, setMaxCaption] = useState<string>('');
   const [isChange, setIsChange] = useState(true);
 
+  if (trainingSettings.isProgressBarDynamic == false) {
+    if (_minValue < min) {
+      _minValue = min;
+    }
+    if (_minValue > max) {
+      _minValue = max;
+    }
+    if (_maxValue < _minValue) {
+      _maxValue = +_minValue + +step;
+    }
+    if (_maxValue > max) {
+      _maxValue = max;
+    }
+    if (_maxValue < min) {
+      _maxValue = min;
+    }
+  }
+
   useEffect(() => {
     const triggerChange = () => {
       let result: ChangeResult = { min, max, minValue, maxValue };
       isChange && props.onChange && props.onChange(result);
       props.onInput && props.onInput(result);
     };
-    setMinCaption(props.minCaption || minValue.toFixed(fixed));
-    setMaxCaption(props.maxCaption || maxValue.toFixed(fixed));
+
     let _barMin = ((minValue - min) / (max - min)) * 100;
     set_barMin(_barMin);
     let _barMax = ((max - maxValue) / (max - min)) * 100;
@@ -193,11 +232,7 @@ export const MultiRangeSlider = (
           style={{
             backgroundColor: props.minValue > props.maxValue ? 'red' : 'blue',
           }}
-        >
-          <div className="caption">
-            <span className="min-caption">{minCaption}</span>
-          </div>
-        </div>
+        ></div>
         <div
           className="bar-inner"
           style={{ backgroundColor: props.barInnerColor }}
@@ -219,11 +254,7 @@ export const MultiRangeSlider = (
           style={{
             backgroundColor: props.minValue > props.maxValue ? 'blue' : 'red',
           }}
-        >
-          <div className="caption">
-            <span className="max-caption">{maxCaption}</span>
-          </div>
-        </div>
+        ></div>
 
         <div
           className="bar-right"

@@ -52,6 +52,21 @@ export function HUDCheckboxSetting(props: CheckboxProps): JSX.Element {
   );
 }
 
+export function ProgressBarDynamic(props: CheckboxProps): JSX.Element {
+  return (
+    <CheckboxSetting
+      helpText="Control the state of the progress bar to Dynamic or Static."
+      title="Progress Bar State"
+      checked={props.trainingSettings.isProgressBarDynamic}
+      onChange={() => {
+        props.updateTrainingSetting({
+          isProgressBarDynamic: !props.trainingSettings.isProgressBarDynamic,
+        });
+      }}
+    />
+  );
+}
+
 export function AutosaveSetting(props: CheckboxProps): JSX.Element {
   return (
     <CheckboxSetting

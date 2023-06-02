@@ -15,6 +15,7 @@ export interface TrainingSettingsState {
   isDisplayingStatisticsModal: boolean;
   isTestDone: boolean;
   restartTestMode: boolean;
+  isProgressBarDynamic: boolean;
 }
 
 export const defaultTrainingSettings: TrainingSettingsState = {
@@ -32,6 +33,7 @@ export const defaultTrainingSettings: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+  isProgressBarDynamic: false,
 };
 
 export const defaultTrigramsTestTraining: TrainingSettingsState = {
@@ -49,6 +51,7 @@ export const defaultTrigramsTestTraining: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+  isProgressBarDynamic: false,
 };
 
 export interface CPMStats {
@@ -92,6 +95,7 @@ export const defaultAlphabeticTestTraining: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+  isProgressBarDynamic: false,
 };
 
 export const defaultTrainingSettingsState: TrainingSettingsState = {
@@ -109,4 +113,5 @@ export const defaultTrainingSettingsState: TrainingSettingsState = {
   isDisplayingStatisticsModal: false,
   isTestDone: false,
   restartTestMode: false,
+  isProgressBarDynamic: false,
 };
