@@ -260,7 +260,6 @@ export const generateChords = (
       (a, b) => b.averageSpeed - a.averageSpeed,
     );
 
-    let chordToFeed = '';
     const numberOfChordsNotConquered = parameters.stats.filter(
       (s) =>
         (parameters.speedGoal > s.averageSpeed && 10 >= 10) ||
@@ -275,7 +274,7 @@ export const generateChords = (
     const tempChords: string[] = Object.keys(
       parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
     );
-    let allCharacters: string[] = [];
+    const allCharacters: string[] = [];
 
     let i = 0;
     let increment = 0;
