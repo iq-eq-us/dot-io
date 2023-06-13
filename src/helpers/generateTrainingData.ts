@@ -94,7 +94,7 @@ export const generateChords = (
     const newString: string[] = [];
 
     while (newString.join('').length < parameters.lineLength) {
-      if (0 == tempDeIncrementValue) {
+      if (tempDeIncrementValue == 0) {
         const valToEvaluate = newString.length - 1 + wordTestValue;
         const loopValue = valToEvaluate - wordTestValue;
         if (loopValue! < 0) {

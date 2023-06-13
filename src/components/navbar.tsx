@@ -74,15 +74,16 @@ const Navbar = (): ReactElement => {
         if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
           history.push(ROUTER_PATHS.home);
         }
-      } else if (level == 'StM') {
-        const payload: any[] = [];
-        payload.push('LEXICALSENTENCES');
-        sessionStorage.removeItem('tempTestDeIncrement');
-        setTrainingLevel('StM');
-        beginTraining(payload);
-        if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
-          history.push(ROUTER_PATHS.home);
-        }
+      }
+    }
+    if (level == 'StM') {
+      const payload: any[] = [];
+      payload.push('LEXICALSENTENCES');
+      sessionStorage.removeItem('tempTestDeIncrement');
+      setTrainingLevel('StM');
+      beginTraining(payload);
+      if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
+        history.push(ROUTER_PATHS.home);
       }
     }
   }
