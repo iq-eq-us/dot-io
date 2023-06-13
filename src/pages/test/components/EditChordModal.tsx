@@ -318,8 +318,11 @@ export const getChordLibraryForTrainingScenario = (
   else if (scenario === 'SUPERSONIC') return chordLibrary.supersonic;
   else if (scenario === 'LEXICALSENTENCES')
     return chordLibrary.lexicalSentences;
+  else if (scenario === 'LEXICALSENTENCESDUOS')
+    return chordLibrary.lexicalSentencesDuos;
+  else if (scenario === 'LEXICALSENTENCESTRIOS')
+    return chordLibrary.lexicalSentencesTrios;
   else if (scenario === 'ALLCHORDS') {
-    console.log(chordRepresention);
     return chordRepresention;
   }
 

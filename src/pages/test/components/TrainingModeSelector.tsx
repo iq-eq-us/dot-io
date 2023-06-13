@@ -164,6 +164,75 @@ export function TrainingModeSelector(): ReactElement {
           </button>
         </React.Fragment>
       );
+    } else if (trainingLevel == 'StM') {
+      return (
+        <React.Fragment>
+          <button
+            {...(moduleNumber == 1
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              LearnPageFunction('LEXICALSENTENCES', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+              setModuleNumber(1),
+            ]}
+          >
+            Chords
+          </button>
+          <div>/</div>
+          <button
+            {...(moduleNumber == 2
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              LearnPageFunction('LEXICALSENTENCESDUOS', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+              setModuleNumber(2),
+            ]}
+          >
+            Duos
+          </button>
+          <div>/</div>
+          <button
+            {...(moduleNumber == 3
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              LearnPageFunction('LEXICALSENTENCESTRIOS', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+              setModuleNumber(3),
+            ]}
+          >
+            Trios
+          </button>
+          <div>/</div>
+          <button
+            {...(moduleNumber == 4
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              LearnPageFunction('LEXICALSENTENCES', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+              setModuleNumber(4),
+            ]}
+          >
+            Test
+          </button>
+          <div>/</div>
+          <button
+            {...(moduleNumber == 5
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              LearnPageFunction('LEXICALSENTENCES', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+              setModuleNumber(5),
+            ]}
+          >
+            Catalog
+          </button>
+        </React.Fragment>
+      );
     }
   }
   return (

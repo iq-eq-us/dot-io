@@ -346,7 +346,7 @@ export function TextPrompt(): ReactElement {
             const tempVal =
               storedTestTextData[
                 indexOfTargetChord + targetIndexForWhatErrorTextToShow
-              ].length - arr.length;
+              ]?.length - arr.length;
             let tempBufferValues = '';
             let frontBufferValues = '';
 

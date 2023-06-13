@@ -9,6 +9,8 @@ import type { TrainingScenario } from '../models/trainingScenario';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { wpmMethodCalculatorForStoredChords } from './aggregation';
 
+let checkIt = 0;
+
 const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
 
@@ -24,6 +26,13 @@ interface ChordGenerationParameters {
   scenario?: TrainingScenario;
   storedTestData?: any[];
   storedChordsFromDevice?: ChordStatisticsFromDevice[];
+  lexicalSentenceToChoose: any;
+  indexOfTrainingText: number;
+  allTypedText: string[];
+  subIndexOfTrainingText: number;
+  timeOfLastChordStarted: any;
+  trainingLevel: any;
+  continueSentenceFlow: boolean;
 }
 
 //const [internalWordCountState, setinternalWordCountState] = useState<number | null>(null);
@@ -241,6 +250,73 @@ export const generateChords = (
     for (let i = 0; i < allCharacters.length; i++) {
       parameters.storedTestData?.push(allCharacters[i]);
     }
+    return allCharacters;
+  } else if (parameters.trainingLevel == 'StM') {
+    // * Uncomment the next two lines to use just the alphabet to test with
+    // const IS_TESTING = true;
+    // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
+
+    const chordsSortedByTypingSpeed = parameters.stats.sort(
+      (a, b) => b.averageSpeed - a.averageSpeed,
+    );
+
+    let chordToFeed = '';
+    const numberOfChordsNotConquered = parameters.stats.filter(
+      (s) =>
+        (parameters.speedGoal > s.averageSpeed && 10 >= 10) ||
+        s.averageSpeed === 0,
+    ).length;
+    console.log(parameters.lexicalSentenceToChoose);
+
+    const numberOfChordsConquered = parameters.stats.filter(
+      (s) =>
+        s.averageSpeed > parameters.speedGoal && s.numberOfOccurrences >= 10,
+    ).length;
+    const tempChords: string[] = Object.keys(
+      parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
+    );
+    let allCharacters: string[] = [];
+
+    let i = 0;
+    let increment = 0;
+
+    // console.log('Stored Characters length '+ parameters.numberOfTargetChords + ' ' + parameters.indexOfTrainingText + ' ' + checkIt + ' ' + tempChords.length + ' ' + parameters.allTypedText.length + ' AllCharacters '+ allCharacters.length + ' '+ parameters.subIndexOfTrainingText + ' '+ increment + ' ' + i);
+    // (checkIt != 0 && parameters.allTypedText.length == 0 && parameters.subIndexOfTrainingText == 0)  ? checkIt = 0: '';
+
+    //This ensures the typed text does not generate more even after the first sentence is created
+    if (
+      parameters.allTypedText.length > 0 &&
+      checkIt == 0 &&
+      !parameters.continueSentenceFlow
+    ) {
+      return allCharacters;
+    }
+
+    while (allCharacters.join('').length < parameters.lineLength) {
+      if (checkIt <= tempChords.length - 1) {
+        allCharacters.push(tempChords[checkIt]);
+        checkIt++;
+        increment++;
+      } else {
+        break;
+      }
+      i++;
+      console.log('Check it ' + checkIt);
+    }
+    //This sets the count to zero once the entire sentence has been generated
+    if (checkIt >= tempChords.length) {
+      checkIt = 0;
+    }
+
+    console.log(
+      'they type ' +
+        parameters.allTypedText.length +
+        ' ' +
+        checkIt +
+        ' ' +
+        parameters.continueSentenceFlow,
+    );
+
     return allCharacters;
   } else {
     // * Uncomment the next two lines to use just the alphabet to test with

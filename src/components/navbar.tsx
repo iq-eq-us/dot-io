@@ -74,6 +74,15 @@ const Navbar = (): ReactElement => {
         if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
           history.push(ROUTER_PATHS.home);
         }
+      } else if (level == 'StM') {
+        const payload: any[] = [];
+        payload.push('LEXICALSENTENCES');
+        sessionStorage.removeItem('tempTestDeIncrement');
+        setTrainingLevel('StM');
+        beginTraining(payload);
+        if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
+          history.push(ROUTER_PATHS.home);
+        }
       }
     }
   }
@@ -124,10 +133,14 @@ const Navbar = (): ReactElement => {
             />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
-            <LockIconStyle>
-              <LockIconWhite />
-            </LockIconStyle>
-            <NavLinksImage open={false} src={DumbellImage} alt="" />
+            <div className="text-white font-mono">StM</div>
+
+            <NavLinksImage
+              open={true}
+              src={DumbellImage}
+              alt=""
+              onClick={() => TrainingPageFunction('StM', maxWPM)}
+            />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
             <LockIconStyle>

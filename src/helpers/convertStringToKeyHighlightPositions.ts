@@ -82,12 +82,14 @@ const getHighlightPositionForString = (
     chord = parseChord(text);
   } else if (scenario == 'LEXICALSENTENCES' && pickerV1) {
     chord = chordLibrary.lexicalSentences[text];
+  } else if (scenario == 'LEXICALSENTENCESDUOS' && pickerV1) {
+    chord = chordLibrary.lexicalSentencesDuos[text];
   } else {
     chord = chordLibrary?.all?.[text];
   }
 
   if (chord) {
-    const keyHighlightPositionsBeforeTransformation = chord.map(
+    const keyHighlightPositionsBeforeTransformation = chord?.map(
       (nonTransformedKeyPosition) => keyPositions?.[nonTransformedKeyPosition],
     );
     return keyHighlightPositionsBeforeTransformation;

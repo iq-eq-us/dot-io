@@ -78,6 +78,7 @@ const trainingStoreState: TrainingStoreStateModel = {
     ),
   ),
   numberOfErrorsArrayForTestMode: [],
+  lexicalSentencesIndex: 'SentenceOne',
 
   chmTierPasswordBypass: JSON?.parse(
     localStorage?.getItem('chmTierPasswordBypass'),
@@ -105,6 +106,8 @@ const trainingStoreState: TrainingStoreStateModel = {
       state.currentTrainingScenario === 'LEXICAL' ||
       state.currentTrainingScenario === 'TRIGRAM' ||
       state.currentTrainingScenario === 'LEXICALSENTENCES' ||
+      state.currentTrainingScenario === 'LEXICALSENTENCESDUOS' ||
+      state.currentTrainingScenario === 'LEXICALSENTENCESTRIOS' ||
       state.currentTrainingScenario === 'ALLCHORDS' ||
       state.currentTrainingScenario === 'CUSTOMTIER'
         ? 'CHARACTER'
