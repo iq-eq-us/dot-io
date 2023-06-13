@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState, useEffect } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import { Portal } from 'react-portal';
 import styled from 'styled-components';
 import { chordLibrary, ChordLibraryRecord } from '../../../data/chordLibrary';
@@ -17,7 +17,6 @@ import {
   pickerV1,
   pickerLite,
 } from '../../../models/keyboardDropDownFolder/keyboardDropDown';
-import type { ChordStatisticsFromDevice } from '../../../models/trainingStatistics';
 
 export const triggerResizeForChordModal = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -31,6 +30,12 @@ function EditChordsModal(): ReactElement {
     (store) => store.isDisplayingChordEditModal,
   );
   const trainingMode = useStoreState((store) => store.currentTrainingScenario);
+  const trainingLevel = useStoreState((store) => store.trainingLevel);
+  const lexicalSentencesIndex = useStoreState(
+    (store) => store.lexicalSentencesIndex,
+  );
+  const chordsToPullFrom = useStoreState((store) => store.chordsToPullFrom);
+
   const setStoredTestTextData = useStoreActions(
     (store) => store.setStoredTestTextData,
   );
@@ -39,9 +44,45 @@ function EditChordsModal(): ReactElement {
     (store) => store.storedChordsRepresentation,
   );
   const [chords, setChords] = useState(
-    getDefaultChords(trainingMode, storedChordsRepresentation),
+    getDefaultChords(
+      trainingMode,
+      storedChordsRepresentation,
+      lexicalSentencesIndex,
+      trainingLevel,
+      chordsToPullFrom,
+    ),
   );
-  const [tempChords, setTempChords] = useState(chords);
+
+  const [tempChords, setTempChords] = useState(chords); //need to add and if for StM trainingLevel
+
+  console.log('These are the chords ' + chords);
+  {
+    tempChords.length == 0 && isShowingPortal
+      ? [
+          setTempChords(
+            getDefaultChords(
+              trainingMode,
+              storedChordsRepresentation,
+              lexicalSentencesIndex,
+              trainingLevel,
+              chordsToPullFrom,
+            ),
+          ),
+          setChords(
+            getDefaultChords(
+              trainingMode,
+              storedChordsRepresentation,
+              lexicalSentencesIndex,
+              trainingLevel,
+              chordsToPullFrom,
+            ),
+          ),
+        ]
+      : '';
+  }
+
+  //trainingLevel == 'StM' ?
+
   const inputRef = useRef<HTMLInputElement>(null);
   const trainingScenario = useCurrentTrainingScenario();
 
@@ -229,9 +270,19 @@ function EditChordsModal(): ReactElement {
 export const getDefaultChords = (
   trainingMode?: TrainingScenario,
   storedChordsRepresentation?: ChordLibraryRecord,
+  lexicalSentencesIndex?: string,
+  trainingLevel?: any,
+  chordsToPullFrom?: any,
 ) => {
   const globalDictionaries = getGlobalDictionaries();
+  if (trainingLevel == 'StM') {
+    const tp = chordsToPullFrom as ChordLibraryRecord;
+    console.log(tp[lexicalSentencesIndex]);
+    return Object.keys(tp[lexicalSentencesIndex]);
+  }
   if (trainingMode && globalDictionaries[trainingMode]) {
+    console.log(globalDictionaries[trainingMode] as ChordLibraryRecord);
+
     return Object.keys(globalDictionaries[trainingMode] as ChordLibraryRecord);
   } else if (trainingMode == 'ALLCHORDS') {
     console.log;
@@ -292,7 +343,6 @@ export const generateNewChordRecordForAllChordsModule = (
   const chordStats = chords?.statistics;
   console.log(chordStats?.length);
   const newChordLibraryRecord: ChordLibraryRecord = {};
-  const allChord = localStorage?.getItem('chordsReadFromDevice');
   for (let i = 0; i < chordStats?.length; i++) {
     if (chordLibrary?.all[chordStats[i]?.id])
       newChordLibraryRecord[chordStats[i]?.id] =
@@ -306,7 +356,6 @@ export const getChordLibraryForTrainingScenario = (
   scenario?: TrainingScenario | undefined,
   chordRepresention?: ChordLibraryRecord | undefined,
 ): Record<string, string[]> | undefined => {
-  const allChord = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
   if (scenario === 'ALPHABET') return chordLibrary.letters;
   else if (scenario === 'CHORDING' && pickerV1) return chordLibrary.chords;
   else if (scenario === 'CHORDING' && pickerLite)
