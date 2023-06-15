@@ -134,20 +134,20 @@ const Navbar = (): ReactElement => {
             />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
+            <LockIconStyle>
+              <LockIconWhite />
+            </LockIconStyle>
+            <NavLinksImage open={false} src={DumbellImage} alt="" />
+          </NavMenuLink>
+          <NavMenuLink aria-current="page">
             <div className="text-white font-mono">StM</div>
 
             <NavLinksImage
               open={true}
-              src={DumbellImage}
+              src={StM_Icon}
               alt=""
               onClick={() => TrainingPageFunction('StM', maxWPM)}
             />
-          </NavMenuLink>
-          <NavMenuLink aria-current="page">
-            <LockIconStyle>
-              <LockIconWhite />
-            </LockIconStyle>
-            <NavLinksImage open={false} src={StM_Icon} alt="" />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
             <LockIconStyle>

@@ -225,6 +225,11 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         ),
       );
     else state.trainingStatistics = state.storedChordsFromDevice;
+
+    state.lexicalSentencesIndex = generateLexicalSentenceIndex(
+      state as unknown as TrainingStoreStateModel,
+    );
+
     if (
       state.currentTrainingScenario == 'LEXICAL' &&
       state.wordTestNumber != undefined &&
@@ -233,6 +238,19 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.storedTestTextData = generateTestTrainingData(
         state.chordsToPullFrom,
         parseInt(state.wordTestNumber),
+      );
+    }
+    if (state.trainingLevel == 'StM' && state.restartTestMode == false) {
+      console.log(
+        'Did I enter here' +
+          state?.lexicalSentencesIndex +
+          ' cpf ' +
+          state?.chordsToPullFrom,
+      );
+      console.log(
+        (state.storedTestTextData = Object.keys(
+          state?.chordsToPullFrom[state?.lexicalSentencesIndex],
+        )),
       );
     } else if (
       state.currentTrainingScenario == 'LEXICAL' &&
@@ -247,9 +265,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
 
     state.numberOfChordsForTrainingLevel =
       state.trainingStatistics.statistics?.length;
-    state.lexicalSentencesIndex = generateLexicalSentenceIndex(
-      state as unknown as TrainingStoreStateModel,
-    );
 
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
 
@@ -278,6 +293,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     updateRecursionRateSettings(state);
+
+    if (
+      state.storedTestTextData?.length == state.allTypedCharactersStore?.length
+    ) {
+      state.trainingIsDone = true;
+    }
   }),
   setErrorOccurredWhileAttemptingToTypeTargetChord: action((state, payload) => {
     state.errorOccurredWhileAttemptingToTypeTargetChord = payload;
@@ -486,10 +507,6 @@ function checkIfShouldProceedToNextTargetChord(
     wordValue[0] != ' ' &&
     wordValue[0] != undefined
   ) {
-    console.log(
-      'logging ' + storeState.compareText[storeState.compareText.length - 1],
-    );
-
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');

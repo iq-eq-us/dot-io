@@ -215,8 +215,6 @@ export function TestCompleteGraph(): ReactElement {
     (store) => store.wordsPracticedInOrder,
   );
 
-  const storedTestTextData = useStoreState((store) => store.storedTestTextData);
-
   const numberOfErrorsArrayForTestMode = useStoreState(
     (store) => store.numberOfErrorsArrayForTestMode,
   );

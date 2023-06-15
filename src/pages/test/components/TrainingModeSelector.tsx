@@ -218,19 +218,6 @@ export function TrainingModeSelector(): ReactElement {
           >
             Test
           </button>
-          <div>/</div>
-          <button
-            {...(moduleNumber == 5
-              ? { className: ' text-white m-2 font-mono' }
-              : { className: ' text-neutral-400 m-2 font-mono' })}
-            onClick={() => [
-              LearnPageFunction('LEXICALSENTENCES', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
-              setModuleNumber(5),
-            ]}
-          >
-            Catalog
-          </button>
         </React.Fragment>
       );
     }

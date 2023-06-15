@@ -48,7 +48,6 @@ export function TextPrompt(): ReactElement {
   const textPromptUnFocused = useStoreState(
     (store) => store.textPromptUnFocused,
   );
-
   const targetCharacterIndex = useStoreState(
     (store: any) => store.targetCharacterIndex,
   );
@@ -184,8 +183,6 @@ export function TextPrompt(): ReactElement {
     indexOfCharacterInTargetChord: any,
     arr: any,
   ) {
-    // console.log(storedTestTextData)
-
     let displayArray = [];
     if (allTypedText.length >= 0 && storedTestTextData != undefined) {
       indexOfTargetChord - 1 == 0 &&
@@ -676,7 +673,7 @@ const ChordRow = styled.div.attrs({
 
 const TextPromptContainer = styled.div.attrs({
   className: `
-    flex text-md font-bold flex flex-col items-center w-full	 justify-center text-gray-400
+    flex text-md font-bold flex flex-col items-center w-full justify-center text-gray-400
     sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-10 h-40	m-auto font-mono
   `,
 })``;

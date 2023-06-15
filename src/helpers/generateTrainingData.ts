@@ -256,25 +256,10 @@ export const generateChords = (
     // const IS_TESTING = true;
     // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
 
-    const chordsSortedByTypingSpeed = parameters.stats.sort(
-      (a, b) => b.averageSpeed - a.averageSpeed,
-    );
-
-    const numberOfChordsNotConquered = parameters.stats.filter(
-      (s) =>
-        (parameters.speedGoal > s.averageSpeed && 10 >= 10) ||
-        s.averageSpeed === 0,
-    ).length;
-    console.log(parameters.lexicalSentenceToChoose);
-
-    const numberOfChordsConquered = parameters.stats.filter(
-      (s) =>
-        s.averageSpeed > parameters.speedGoal && s.numberOfOccurrences >= 10,
-    ).length;
     const tempChords: string[] = Object.keys(
       parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
     );
-    const allCharacters: string[] = [];
+    let allCharacters: string[] = [];
 
     let i = 0;
     let increment = 0;
@@ -306,15 +291,6 @@ export const generateChords = (
     if (checkIt >= tempChords.length) {
       checkIt = 0;
     }
-
-    console.log(
-      'they type ' +
-        parameters.allTypedText.length +
-        ' ' +
-        checkIt +
-        ' ' +
-        parameters.continueSentenceFlow,
-    );
 
     return allCharacters;
   } else {

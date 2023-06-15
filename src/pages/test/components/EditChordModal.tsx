@@ -36,10 +36,6 @@ function EditChordsModal(): ReactElement {
   );
   const chordsToPullFrom = useStoreState((store) => store.chordsToPullFrom);
 
-  const setStoredTestTextData = useStoreActions(
-    (store) => store.setStoredTestTextData,
-  );
-
   const storedChordsRepresentation = useStoreState(
     (store) => store.storedChordsRepresentation,
   );
@@ -259,6 +255,10 @@ function EditChordsModal(): ReactElement {
                   <ThirdButton title="Clear" onClick={clearChords} />
                 </BottomButtonRow>
               </div>
+              <SentenceAndStatsContainer>
+                <SentenceContainer> yer</SentenceContainer>
+                <SentenceStats>10</SentenceStats>
+              </SentenceAndStatsContainer>
             </div>
           )}
         </Portal>
@@ -335,6 +335,18 @@ const ChordTag = styled.span.attrs({
 
 const ChordGrid = styled.div.attrs({
   className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start  overflow-scroll`,
+})``;
+
+const SentenceAndStatsContainer = styled.button.attrs({
+  className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start  overflow-scroll`,
+})``;
+
+const SentenceContainer = styled.div.attrs({
+  className: `tile bg-yellow-500 col-span-2 md:col-span-3 lg:col-span-5`,
+})``;
+
+const SentenceStats = styled.div.attrs({
+  className: `tile bg-amber-500 col-span-1 md:col-span-2 lg:col-span-3`,
 })``;
 
 export const generateNewChordRecordForAllChordsModule = (
