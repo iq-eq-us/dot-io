@@ -26,7 +26,14 @@ export function TrainingModeSelector(): ReactElement {
   const setDownloadModulModalToggle = useStoreActions(
     (store: any) => store.setDownloadModulModalToggle,
   );
-  const wpm = useWordsPerMinute();
+  const trainingSettings = useStoreState(
+    (store: any) => store.trainingSettings,
+  );
+  const updateTrainingSetting = (newProperty: Record<string, unknown>) =>
+    setTrainingSettings({ ...trainingSettings, ...newProperty });
+  const setTrainingSettings = useStoreActions(
+    (store: any) => store.setTrainingSettings,
+  );
 
   const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState(
     'CPM' as TrainingLevels,
@@ -214,6 +221,9 @@ export function TrainingModeSelector(): ReactElement {
               LearnPageFunction('LEXICALSENTENCES', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
               setModuleNumber(4),
+              updateTrainingSetting({
+                lexicalSentencesContinueFlow: true,
+              }),
             ]}
           >
             Test

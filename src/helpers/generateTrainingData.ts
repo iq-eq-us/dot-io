@@ -255,7 +255,7 @@ export const generateChords = (
     // * Uncomment the next two lines to use just the alphabet to test with
     // const IS_TESTING = true;
     // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
-    const allCharacters: string[] = [];
+    let allCharacters: string[] = [];
 
     if (!parameters.continueSentenceFlow) {
       const tempChords: string[] = Object.keys(
