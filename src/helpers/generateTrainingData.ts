@@ -255,41 +255,85 @@ export const generateChords = (
     // * Uncomment the next two lines to use just the alphabet to test with
     // const IS_TESTING = true;
     // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
-
-    const tempChords: string[] = Object.keys(
-      parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
-    );
     const allCharacters: string[] = [];
 
-    let i = 0;
-    let increment = 0;
+    if (!parameters.continueSentenceFlow) {
+      const tempChords: string[] = Object.keys(
+        parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
+      );
 
-    // console.log('Stored Characters length '+ parameters.numberOfTargetChords + ' ' + parameters.indexOfTrainingText + ' ' + checkIt + ' ' + tempChords.length + ' ' + parameters.allTypedText.length + ' AllCharacters '+ allCharacters.length + ' '+ parameters.subIndexOfTrainingText + ' '+ increment + ' ' + i);
-    // (checkIt != 0 && parameters.allTypedText.length == 0 && parameters.subIndexOfTrainingText == 0)  ? checkIt = 0: '';
+      let i = 0;
+      let increment = 0;
 
-    //This ensures the typed text does not generate more even after the first sentence is created
-    if (
-      parameters.allTypedText.length > 0 &&
-      checkIt == 0 &&
-      !parameters.continueSentenceFlow
-    ) {
-      return allCharacters;
-    }
+      // console.log('Stored Characters length '+ parameters.numberOfTargetChords + ' ' + parameters.indexOfTrainingText + ' ' + checkIt + ' ' + tempChords.length + ' ' + parameters.allTypedText.length + ' AllCharacters '+ allCharacters.length + ' '+ parameters.subIndexOfTrainingText + ' '+ increment + ' ' + i);
+      // (checkIt != 0 && parameters.allTypedText.length == 0 && parameters.subIndexOfTrainingText == 0)  ? checkIt = 0: '';
 
-    while (allCharacters.join('').length < parameters.lineLength) {
-      if (checkIt <= tempChords.length - 1) {
-        allCharacters.push(tempChords[checkIt]);
-        checkIt++;
-        increment++;
-      } else {
-        break;
+      //This ensures the typed text does not generate more even after the first sentence is created
+      if (
+        parameters.allTypedText.length > 0 &&
+        checkIt == 0 &&
+        !parameters.continueSentenceFlow
+      ) {
+        return allCharacters;
       }
-      i++;
-      console.log('Check it ' + checkIt);
-    }
-    //This sets the count to zero once the entire sentence has been generated
-    if (checkIt >= tempChords.length) {
-      checkIt = 0;
+
+      while (allCharacters.join('').length < parameters.lineLength) {
+        if (checkIt <= tempChords.length - 1) {
+          allCharacters.push(tempChords[checkIt]);
+          checkIt++;
+          increment++;
+        } else {
+          break;
+        }
+        i++;
+      }
+      //This sets the count to zero once the entire sentence has been generated
+      if (checkIt >= tempChords.length) {
+        checkIt = 0;
+      }
+    } else {
+      const chordsSortedByTypingSpeed = parameters.stats.sort(
+        (a, b) => b.averageSpeed - a.averageSpeed,
+      );
+
+      let chordToFeed = '';
+      const numberOfChordsNotConquered = parameters.stats.filter(
+        (s) => s.averageSpeed > parameters.speedGoal || s.averageSpeed === 0,
+      ).length;
+      if (numberOfChordsNotConquered > 0) {
+        // Check for one remaining chord with zero speed
+        // This happens on the first pass through the chord library
+        const chordsWithZeroSpeed = parameters.stats.filter(
+          (stat) => stat.averageSpeed === 0,
+        );
+        if (chordsWithZeroSpeed.length > 0)
+          chordToFeed =
+            getRandomElementFromArray(chordsWithZeroSpeed).displayTitle;
+        // If there is no chord with zero speed, then we move onto the highest
+        else chordToFeed = chordsSortedByTypingSpeed[0].displayTitle;
+      }
+
+      allCharacters = [chordToFeed].filter((a) => !!a);
+
+      const slowestTypedChordsAccountingForDepth = chordsSortedByTypingSpeed
+        .slice(0, parameters.numberOfTargetChords)
+        .map((s) => s.id);
+      const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
+
+      while (allCharacters.join('').length < parameters.lineLength) {
+        const shouldChooseBasedOnSpeed =
+          parameters.recursionRate > Math.random() * 100;
+        if (
+          shouldChooseBasedOnSpeed &&
+          parameters.numberOfTargetChords > 0 &&
+          parameters.recursionIsEnabledGlobally
+        )
+          allCharacters.push(
+            getRandomElementFromArray(slowestTypedChordsAccountingForDepth),
+          );
+        else
+          allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
+      }
     }
 
     return allCharacters;
