@@ -295,7 +295,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     updateRecursionRateSettings(state);
 
     if (
-      state.storedTestTextData?.length == state.allTypedCharactersStore?.length
+      state.storedTestTextData?.length ==
+        state.allTypedCharactersStore?.length &&
+      !state.trainingSettings.lexicalSentencesContinueFlow
     ) {
       state.trainingIsDone = true;
     }
