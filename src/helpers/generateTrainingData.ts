@@ -259,7 +259,7 @@ export const generateChords = (
     const tempChords: string[] = Object.keys(
       parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
     );
-    let allCharacters: string[] = [];
+    const allCharacters: string[] = [];
 
     let i = 0;
     let increment = 0;
