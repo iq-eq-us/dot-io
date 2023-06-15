@@ -318,7 +318,9 @@ export const generateChords = (
       const slowestTypedChordsAccountingForDepth = chordsSortedByTypingSpeed
         .slice(0, parameters.numberOfTargetChords)
         .map((s) => s.id);
-      const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
+      const chordLibraryCharacters = Object.keys(
+        parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
+      );
 
       while (allCharacters.join('').length < parameters.lineLength) {
         const shouldChooseBasedOnSpeed =
