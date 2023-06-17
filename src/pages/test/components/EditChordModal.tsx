@@ -17,6 +17,7 @@ import {
   pickerV1,
   pickerLite,
 } from '../../../models/keyboardDropDownFolder/keyboardDropDown';
+import { Container } from 'react-bootstrap';
 
 export const triggerResizeForChordModal = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -194,6 +195,12 @@ function EditChordsModal(): ReactElement {
     `You can enter multiple chords at once by separating them with a "${phraseSeparator}" character. Create multi-word chords by separating words with a "${spaceSeparator}"`,
   );
 
+  const StMIndexes = [];
+
+  Object.keys(chordsToPullFrom).forEach((key, index) => {
+    StMIndexes.push(key);
+  });
+
   return (
     <div>
       {isShowingPortal && (
@@ -209,21 +216,43 @@ function EditChordsModal(): ReactElement {
                 onClick={stopPropagation}
                 className="w-[600px] max-w-[100vw] bg-black p-2 shadow-lg"
               >
-                <ChordGrid>
-                  {tempChords.map((chord, index) => {
-                    return (
-                      <ChordTag
-                        onClick={() => {
-                          removeChord(index);
-                        }}
-                        key={Math.random()}
-                      >
-                        <Chord>{chord}</Chord>
-                        <XIcon />
-                      </ChordTag>
-                    );
-                  })}
-                </ChordGrid>
+                {trainingLevel != 'StM' && (
+                  <ChordGrid>
+                    {tempChords.map((chord, index) => {
+                      return (
+                        <ChordTag
+                          onClick={() => {
+                            removeChord(index);
+                          }}
+                          key={Math.random()}
+                        >
+                          <Chord>{chord}</Chord>
+                          <XIcon />
+                        </ChordTag>
+                      );
+                    })}
+                  </ChordGrid>
+                )}
+                {trainingLevel == 'StM' && (
+                  <Container>
+                    {console.log(
+                      'pull these chords ' + Object.keys(chordsToPullFrom),
+                    )}
+
+                    {StMIndexes.map((xhord) => {
+                      return (
+                        <React.Fragment>
+                          <SentenceAndStatsContainer>
+                            <SentenceContainer>
+                              {Object.keys(chordsToPullFrom[xhord]).join(' ')}
+                            </SentenceContainer>
+                            <SentenceStats>10 12 99 10</SentenceStats>
+                          </SentenceAndStatsContainer>
+                        </React.Fragment>
+                      );
+                    })}
+                  </Container>
+                )}
 
                 <Row>
                   <div className="relative w-full mt-2">
@@ -255,10 +284,6 @@ function EditChordsModal(): ReactElement {
                   <ThirdButton title="Clear" onClick={clearChords} />
                 </BottomButtonRow>
               </div>
-              <SentenceAndStatsContainer>
-                <SentenceContainer> yer</SentenceContainer>
-                <SentenceStats>10</SentenceStats>
-              </SentenceAndStatsContainer>
             </div>
           )}
         </Portal>
@@ -334,19 +359,21 @@ const ChordTag = styled.span.attrs({
 })``;
 
 const ChordGrid = styled.div.attrs({
-  className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start  overflow-scroll`,
+  className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start overflow-scroll`,
 })``;
 
-const SentenceAndStatsContainer = styled.button.attrs({
-  className: `bg-white break-all rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row flex-wrap p-2 gap-x-1 gap-y-1 content-start  overflow-scroll`,
+const Container = styled.button.attrs({
+  className: ` bg-white rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row w-full flex-wrap p-2 gap-x-1 gap-y-1 content-start overflow-scroll`,
 })``;
-
+const SentenceAndStatsContainer = styled.div.attrs({
+  className: `bg-gray-300 text-gray-900 w-full hover:bg-gray-400 rounded-full px-3 flex flex-row items-left pr-2 leading-loose`,
+})``;
 const SentenceContainer = styled.div.attrs({
-  className: `tile bg-yellow-500 col-span-2 md:col-span-3 lg:col-span-5`,
+  className: `tile w-3/4`,
 })``;
 
 const SentenceStats = styled.div.attrs({
-  className: `tile bg-amber-500 col-span-1 md:col-span-2 lg:col-span-3`,
+  className: `w-1/4`,
 })``;
 
 export const generateNewChordRecordForAllChordsModule = (

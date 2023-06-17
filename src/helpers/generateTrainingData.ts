@@ -22,7 +22,7 @@ interface ChordGenerationParameters {
   chordsToChooseFrom: ChordLibraryRecord;
   recursionIsEnabledGlobally: boolean;
   speedGoal: number;
-  wordTestNumberValue?: WordTrainingValues;
+  wordTestNumberValue?: number;
   scenario?: TrainingScenario;
   storedTestData?: any[];
   storedChordsFromDevice?: ChordStatisticsFromDevice[];
@@ -33,6 +33,7 @@ interface ChordGenerationParameters {
   timeOfLastChordStarted: any;
   trainingLevel: any;
   continueSentenceFlow: boolean;
+  moduleNumber: number;
 }
 
 //const [internalWordCountState, setinternalWordCountState] = useState<number | null>(null);
@@ -71,7 +72,8 @@ export const generateChords = (
     parameters.scenario == 'LEXICAL' &&
     parameters.wordTestNumberValue != undefined
   ) {
-    const wordTestValue = parseInt(parameters.wordTestNumberValue);
+    const wordTestValue = parameters.wordTestNumberValue;
+    console.log('nummy ' + wordTestValue);
     pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
 
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
@@ -94,7 +96,7 @@ export const generateChords = (
     const newString: string[] = [];
 
     while (newString.join('').length < parameters.lineLength) {
-      if (tempDeIncrementValue == 0) {
+      if (0 == tempDeIncrementValue) {
         const valToEvaluate = newString.length - 1 + wordTestValue;
         const loopValue = valToEvaluate - wordTestValue;
         if (loopValue! < 0) {
@@ -252,12 +254,33 @@ export const generateChords = (
     }
     return allCharacters;
   } else if (parameters.trainingLevel == 'StM') {
+    parameters.storedTestData.length == 0 ? (checkIt = 0) : '';
     // * Uncomment the next two lines to use just the alphabet to test with
     // const IS_TESTING = true;
     // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
     let allCharacters: string[] = [];
 
-    if (!parameters.continueSentenceFlow) {
+    if (parameters.moduleNumber == 4) {
+      // * Uncomment the next two lines to use just the alphabet to test with
+      // const IS_TESTING = true;
+      // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
+
+      const chordsSortedByTypingSpeed = parameters.stats.sort(
+        (a, b) => b.averageSpeed - a.averageSpeed,
+      );
+
+      let chordToFeed = '';
+      const numberOfChordsNotConquered = parameters.stats.filter(
+        (s) =>
+          (parameters.speedGoal > s.averageSpeed && 10 >= 10) ||
+          s.averageSpeed === 0,
+      ).length;
+      console.log(parameters.lexicalSentenceToChoose);
+
+      const numberOfChordsConquered = parameters.stats.filter(
+        (s) =>
+          s.averageSpeed > parameters.speedGoal && s.numberOfOccurrences >= 10,
+      ).length;
       const tempChords: string[] = Object.keys(
         parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
       );
@@ -286,15 +309,28 @@ export const generateChords = (
           break;
         }
         i++;
+        console.log('Check it ' + checkIt);
       }
       //This sets the count to zero once the entire sentence has been generated
       if (checkIt >= tempChords.length) {
         checkIt = 0;
       }
+
+      console.log(
+        'they type ' +
+          parameters.allTypedText.length +
+          ' ' +
+          checkIt +
+          ' ' +
+          parameters.continueSentenceFlow,
+      );
     } else {
+      console.log('Stored Length did I make it');
+
       const chordsSortedByTypingSpeed = parameters.stats.sort(
         (a, b) => b.averageSpeed - a.averageSpeed,
       );
+      console.log('chordsSortedByTypingSpeed Library ' + parameters.stats);
 
       let chordToFeed = '';
       const numberOfChordsNotConquered = parameters.stats.filter(
@@ -306,18 +342,10 @@ export const generateChords = (
         const chordsWithZeroSpeed = parameters.stats.filter(
           (stat) => stat.averageSpeed === 0,
         );
-        if (chordsWithZeroSpeed.length > 0)
-          chordToFeed =
-            getRandomElementFromArray(chordsWithZeroSpeed).displayTitle;
-        // If there is no chord with zero speed, then we move onto the highest
-        else chordToFeed = chordsSortedByTypingSpeed[0].displayTitle;
       }
 
-      allCharacters = [chordToFeed].filter((a) => !!a);
+      allCharacters = [];
 
-      const slowestTypedChordsAccountingForDepth = chordsSortedByTypingSpeed
-        .slice(0, parameters.numberOfTargetChords)
-        .map((s) => s.id);
       const chordLibraryCharacters = Object.keys(
         parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
       );
@@ -325,19 +353,10 @@ export const generateChords = (
       while (allCharacters.join('').length < parameters.lineLength) {
         const shouldChooseBasedOnSpeed =
           parameters.recursionRate > Math.random() * 100;
-        if (
-          shouldChooseBasedOnSpeed &&
-          parameters.numberOfTargetChords > 0 &&
-          parameters.recursionIsEnabledGlobally
-        )
-          allCharacters.push(
-            getRandomElementFromArray(slowestTypedChordsAccountingForDepth),
-          );
-        else
-          allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
+
+        allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
       }
     }
-
     return allCharacters;
   } else {
     // * Uncomment the next two lines to use just the alphabet to test with

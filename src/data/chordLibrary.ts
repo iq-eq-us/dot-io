@@ -15,7 +15,7 @@ export interface ChordLibrary {
   customtier: ChordLibraryRecord;
   allChords: ChordLibraryRecord;
   specialCharacters: ChordLibraryRecord;
-  sentences: ChordLibraryRecord;
+  //sentences: ChordLibraryRecord;
 }
 
 // This chord library maps to the key positions in the keyPositions.ts file
@@ -95,965 +95,967 @@ export const chordLibrary: ChordLibrary = {
       'and leave me': [],
       'in awe.': [],
     },
-    sentences: {
-      'I love to explore new places and create lasting memories.': [],
-      'The sunsets on the beach are simply breathtaking and always leave me in awe.':
-        [],
-      "Family is the foundation that supports us through all of life's challenges and triumphs.":
-        [],
-      'We should always strive to be kind and compassionate towards others.':
-        [],
-      'Learning is a lifelong journey that never fails to expand our horizons.':
-        [],
-      'Laughter is the best medicine; it has the power to heal and bring joy.':
-        [],
-      'Friendship is a priceless treasure that should be cherished and nurtured.':
-        [],
-      'In the darkest moments, hope is the guiding light that leads us towards a brighter tomorrow.':
-        [],
-      'Time spent in nature is a reminder of the beauty and serenity that surrounds us.':
-        [],
-      'Success is not measured by wealth or status, but by the positive impact we make on others.':
-        [],
-      'The love between a parent and child is unbreakable and filled with endless devotion.':
-        [],
-      "A smile can brighten someone's day and create ripples of happiness in the world.":
-        [],
-      'Hard work and perseverance are the keys to achieving our dreams and aspirations.':
-        [],
-      'Music has a unique ability to touch our souls and evoke powerful emotions.':
-        [],
-      'Kindness costs nothing but has the power to change lives.': [],
-      'The beauty of art lies in its ability to express the depths of human emotions.':
-        [],
-      'Education is the passport to a better future and a world of opportunities.':
-        [],
-      'Happiness is found in the simplest moments of gratitude and contentment.':
-        [],
-      'Courage is not the absence of fear, but the strength to face it head-on.':
-        [],
-      'In a world filled with negativity, be the light that radiates positivity and kindness.':
-        [],
-      'We are all connected by the common thread of humanity, and our differences should be celebrated.':
-        [],
-      'The power of forgiveness liberates us from the shackles of resentment and bitterness.':
-        [],
-      'Dream big, work hard, and never stop believing in yourself.': [],
-      'The greatest gift we can give others is our undivided attention and genuine presence.':
-        [],
-      'Gratitude is a powerful force that can transform our outlook on life.':
-        [],
-      'Embrace change and adaptability, for they are the stepping stones to growth and progress.':
-        [],
-      'Love is a verb that requires constant action and nurturing.': [],
-      "A kind word has the potential to brighten someone's day and restore their faith in humanity.":
-        [],
-      'The journey of a thousand miles begins with a single step.': [],
-      "Empathy allows us to walk in someone else's shoes and understand their perspective.":
-        [],
-      'Success is not an overnight achievement but a result of consistent effort and perseverance.':
-        [],
-      'The power of imagination knows no bounds and can unlock endless possibilities.':
-        [],
-      'Our actions today shape the world we leave behind for future generations.':
-        [],
-      'Love is the universal language that transcends barriers and brings people together.':
-        [],
-      'True strength lies not in physical prowess but in the ability to overcome adversity.':
-        [],
-      'The pursuit of knowledge enriches our lives and broadens our understanding of the world.':
-        [],
-      'A good book has the power to transport us to different realms and ignite our imagination.':
-        [],
-      'Believe in yourself, for you are capable of achieving great things.': [],
-      'The bond between siblings is a lifelong connection that withstands the test of time.':
-        [],
-      'Compassion is the key to building a more inclusive and understanding society.':
-        [],
-      'Every cloud has a silver lining; even in the darkest moments, there is hope.':
-        [],
-      'The sound of laughter is contagious and can bring joy to even the gloomiest of days.':
-        [],
-      'True wealth lies in the richness of experiences and meaningful relationships.':
-        [],
-      'The beauty of nature is a constant reminder of the miracles that surround us.':
-        [],
-      "Patience is a virtue that allows us to navigate life's challenges with grace and resilience.":
-        [],
-      'The power of a genuine smile can brighten the lives of those around us.':
-        [],
-      'Education is the foundation upon which we build a better and brighter future.':
-        [],
-      'Dreams become realities when we have the courage to pursue them.': [],
-      'Life is a journey filled with ups and downs, but it is the lessons we learn along the way that define us.':
-        [],
-      'Kindness is like a boomerang; it always comes back to us in unexpected ways.':
-        [],
-      'The beauty of a sunset reminds us of the transient nature of life and the importance of cherishing each moment.':
-        [],
-      'A good friend is like a rare gem, cherished for their uniqueness and the joy they bring to our lives.':
-        [],
-      "Success is not about reaching the destination; it's about the journey and the lessons learned along the way.":
-        [],
-      'The power of a positive mindset can transform obstacles into opportunities.':
-        [],
-      'Gratitude unlocks the fullness of life and allows us to appreciate the present moment.':
-        [],
-      'Love knows no boundaries and has the power to bridge the gaps between cultures and continents.':
-        [],
-      'The pursuit of happiness is a lifelong journey that starts with self-acceptance and embracing our true selves.':
-        [],
-      'The strength of a community lies in its ability to come together and support one another in times of need.':
-        [],
-      'We have the power to make a difference in the world through small acts of kindness and compassion.':
-        [],
-      'Life is too short to hold grudges; forgiveness sets us free and allows us to move forward.':
-        [],
-      'Every ending is a new beginning; change brings opportunities for growth and self-discovery.':
-        [],
-      'The power of a positive attitude can overcome even the most challenging of circumstances.':
-        [],
-      'In the midst of chaos, finding moments of stillness and peace can restore our inner balance.':
-        [],
-      'Time is a precious commodity; invest it wisely in things that bring you joy and fulfillment.':
-        [],
-      "A genuine compliment has the power to brighten someone's day and boost their confidence.":
-        [],
-      'Learning from our mistakes is a crucial part of personal growth and self-improvement.':
-        [],
-      'The beauty of diversity lies in the richness of perspectives and the vibrant tapestry it creates.':
-        [],
-      'Adversity builds resilience and strength; it is through challenges that we grow and evolve.':
-        [],
-      'The power of a kind word or gesture can have a ripple effect, inspiring others to pay it forward.':
-        [],
-      'A grateful heart attracts abundance and fosters a positive outlook on life.':
-        [],
-      'Courage is not the absence of fear, but the willingness to face it head-on.':
-        [],
-      'The magic of childhood lies in the boundless imagination and the sense of wonder that accompanies it.':
-        [],
-      'True happiness comes from within; it is not dependent on external circumstances.':
-        [],
-      'A true leader empowers others and brings out the best in those around them.':
-        [],
-      'The beauty of a sunrise reminds us that every day is an opportunity for a fresh start.':
-        [],
-      'The power of a single act of kindness can create a chain reaction of positivity.':
-        [],
-      "Life's challenges are not meant to break us but to help us discover our inner strength.":
-        [],
-      'The joy of giving is far greater than any material possession.': [],
-      'We are the authors of our own destiny; our choices shape the path we walk.':
-        [],
-      'The value of a moment is not measured by its duration but by the memories it leaves behind.':
-        [],
-      'Love is a language that transcends words and is understood by the heart.':
-        [],
-      'The power of determination and perseverance can overcome even the most daunting of obstacles.':
-        [],
-      'Change is inevitable; embracing it allows us to grow and evolve.': [],
-      'The world is full of beauty, but it is our perception that determines what we see.':
-        [],
-      'True success is not just about personal achievements but about lifting others up along the way.':
-        [],
-      'The small acts of kindness we extend to others can have a profound impact on their lives.':
-        [],
-      'The power of a positive mindset can turn setbacks into stepping stones towards success.':
-        [],
-      'A genuine apology can mend even the deepest wounds and rebuild trust.':
-        [],
-      'The beauty of a sunset reminds us to pause and appreciate the simple pleasures in life.':
-        [],
-      'True friendship is built on trust, loyalty, and a deep understanding of one another.':
-        [],
-      'The pursuit of knowledge is a lifelong endeavor that broadens our horizons and fuels our curiosity.':
-        [],
-      'The power of gratitude can transform even the most ordinary moments into extraordinary ones.':
-        [],
-      'Kindness is contagious; one act of kindness can inspire others to spread positivity.':
-        [],
-      'The beauty of nature has a way of rejuvenating our spirits and grounding us in the present moment.':
-        [],
-      'Success is not defined by material possessions but by the impact we have on the lives of others.':
-        [],
-      'The power of self-belief can move mountains and turn dreams into reality.':
-        [],
-      "A genuine smile has the power to brighten someone's day and create a ripple of positivity.":
-        [],
-      'The journey of self-discovery is a lifelong adventure filled with surprises and growth.':
-        [],
-      'The world is full of opportunities for those who have the courage to pursue their passions.':
-        [],
-      'Kindness is the language that transcends borders and brings people together.':
-        [],
-      'The power of empathy lies in its ability to foster understanding and connection.':
-        [],
-      'Success is not a destination but a continuous journey of growth and self-improvement.':
-        [],
-      'The beauty of art is its ability to evoke emotions and spark creativity.':
-        [],
-      'Gratitude is the antidote to negativity and opens the door to abundance.':
-        [],
-      'Love is the thread that weaves us together and gives meaning to our lives.':
-        [],
-      'The power of a positive attitude can turn obstacles into stepping stones towards success.':
-        [],
-      'In the midst of chaos, finding moments of stillness and peace can restore our inner balance.':
-        [],
-      'Time is a precious gift; invest it in things that bring you joy and fulfillment.':
-        [],
-      "A kind word has the power to uplift someone's spirit and brighten their day.":
-        [],
-      'Learning from our mistakes is a vital part of personal growth and self-improvement.':
-        [],
-      'The beauty of diversity lies in the richness of perspectives and the tapestry it creates.':
-        [],
-      'Adversity builds resilience and strength; it is through challenges that we grow and evolve.':
-        [],
-      'The power of a single act of kindness can create a ripple effect, inspiring others to do the same.':
-        [],
-      'A grateful heart attracts abundance and fosters a positive outlook on life.':
-        [],
-      'Courage is not the absence of fear, but the willingness to face it head-on.':
-        [],
-      'The magic of childhood lies in the boundless imagination and sense of wonder that accompanies it.':
-        [],
-      'True happiness comes from within and is not dependent on external circumstances.':
-        [],
-      'A true leader empowers others and brings out the best in those around them.':
-        [],
-      'The beauty of a sunrise reminds us that every day is an opportunity for a fresh start.':
-        [],
-      'The power of a single act of kindness can create a ripple effect of positivity.':
-        [],
-      "Life's challenges are not meant to break us but to help us discover our inner strength.":
-        [],
-      'The joy of giving is far greater than any material possession.': [],
-      'We are the authors of our own destiny, and our choices shape the path we walk.':
-        [],
-      'The value of a moment is not measured by its duration but by the memories it leaves behind.':
-        [],
-      'Love is a language that transcends words and is understood by the heart.':
-        [],
-      'The power of determination and perseverance can overcome even the most daunting of obstacles.':
-        [],
-      'Change is inevitable, and embracing it allows us to grow and evolve.':
-        [],
-      'The world is full of beauty, but it is our perception that determines what we see.':
-        [],
-      'True success is not just about personal achievements but about lifting others up along the way.':
-        [],
-      'The small acts of kindness we extend to others can have a profound impact on their lives.':
-        [],
-      'The power of a positive mindset can turn setbacks into stepping stones towards success.':
-        [],
-      'A genuine apology can mend even the deepest wounds and rebuild trust.':
-        [],
-      'The beauty of a sunset reminds us to pause and appreciate the simple pleasures in life.':
-        [],
-      'True friendship is built on trust, loyalty, and a deep understanding of one another.':
-        [],
-      'The pursuit of knowledge is a lifelong endeavor that broadens our horizons and fuels our curiosity.':
-        [],
-      'The power of gratitude can transform even the most ordinary moments into extraordinary ones.':
-        [],
-      'Kindness is contagious; one act of kindness can inspire others to spread positivity.':
-        [],
-      'The beauty of nature has a way of rejuvenating our spirits and grounding us in the present moment.':
-        [],
-      'Success is not defined by material possessions but by the impact we have on the lives of others.':
-        [],
-      'The power of self-belief can move mountains and turn dreams into reality.':
-        [],
-      "A genuine smile has the power to brighten someone's day and create a ripple of positivity.":
-        [],
-      'The journey of self-discovery is a lifelong adventure filled with surprises and growth.':
-        [],
-      'The world is full of opportunities for those who have the courage to pursue their passions.':
-        [],
-      'Kindness is the language that transcends borders and brings people together.':
-        [],
-      'The power of empathy lies in its ability to foster understanding and connection.':
-        [],
-      'Success is not a destination but a continuous journey of growth and self-improvement.':
-        [],
-      'The beauty of art is its ability to evoke emotions and spark creativity.':
-        [],
-      'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
-        [],
-      'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
-        [],
-      'A positive mindset is a catalyst for success and personal fulfillment.':
-        [],
-      'In the midst of chaos, finding inner peace is a testament to our resilience.':
-        [],
-      'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
-        [],
-      "A kind gesture can make a world of difference in someone's day.": [],
-      'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
-        [],
-      'Diversity is a beautiful tapestry that enriches our understanding of the world.':
-        [],
-      'Strength and character are forged through adversity and challenges.': [],
-      'A small act of kindness can create a ripple effect, spreading positivity to others.':
-        [],
-      'Gratitude attracts abundance and opens the doors to new opportunities.':
-        [],
-      'Courage is the fuel that propels us forward in the face of fear.': [],
-      'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
-        [],
-      'True happiness is found within ourselves, independent of external circumstances.':
-        [],
-      'A true leader inspires others through their actions and empowers them to reach their full potential.':
-        [],
-      'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
-        [],
-      "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
-        [],
-      'Giving without expecting anything in return is a true testament of kindness and compassion.':
-        [],
-      'Our choices shape our destiny, and it is up to us to create the life we envision.':
-        [],
-      'Moments may be fleeting, but the memories we create can last a lifetime.':
-        [],
-      'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
-        [],
-      'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
-        [],
-      'Embracing change allows us to grow, adapt, and discover new possibilities.':
-        [],
-      'The world is a canvas, and art has the power to evoke emotions and inspire change.':
-        [],
-      'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
-        [],
-      'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
-        [],
-      'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
-        [],
-      'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
-        [],
-      'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
-        [],
-      'Gratitude is the gateway to abundance and a fulfilling life.': [],
-      'Courage is not the absence of fear, but the ability to take action despite it.':
-        [],
-      'Childhood is a time of innocence, wonder, and endless possibilities.':
-        [],
-      'True happiness comes from within, independent of external circumstances.':
-        [],
-      'A true leader empowers others to discover their full potential and achieve greatness.':
-        [],
-      'The beauty of a sunrise reminds us of the limitless potential each day holds.':
-        [],
-      'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
-        [],
-      'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
-        [],
-      'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
-        [],
-      'Moments may be fleeting, but the memories we create last a lifetime.':
-        [],
-      'Love transcends language barriers and is understood by the heart.': [],
-      'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
-        [],
-      'Embracing change opens doors to new possibilities and personal growth.':
-        [],
-      'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
-        [],
-      'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
-        [],
-      "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
-        [],
-      'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
-        [],
-      'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
-        [],
-      'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
-        [],
-      'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
-        [],
-      'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
-        [],
-      'A positive mindset is a catalyst for success and personal fulfillment.':
-        [],
-      'In the midst of chaos, finding inner peace is a testament to our resilience.':
-        [],
-      'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
-        [],
-      "A kind gesture can make a world of difference in someone's day.": [],
-      'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
-        [],
-      'Diversity is a beautiful tapestry that enriches our understanding of the world.':
-        [],
-      'Strength and character are forged through adversity and challenges.': [],
-      'A small act of kindness can create a ripple effect, spreading positivity to others.':
-        [],
-      'Gratitude attracts abundance and opens the doors to new opportunities.':
-        [],
-      'Courage is the fuel that propels us forward in the face of fear.': [],
-      'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
-        [],
-      'True happiness is found within ourselves, independent of external circumstances.':
-        [],
-      'A true leader inspires others through their actions and empowers them to reach their full potential.':
-        [],
-      'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
-        [],
-      "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
-        [],
-      'Giving without expecting anything in return is a true testament of kindness and compassion.':
-        [],
-      'Our choices shape our destiny, and it is up to us to create the life we envision.':
-        [],
-      'Moments may be fleeting, but the memories we create can last a lifetime.':
-        [],
-      'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
-        [],
-      'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
-        [],
-      'Embracing change allows us to grow, adapt, and discover new possibilities.':
-        [],
-      'The world is a canvas, and art has the power to evoke emotions and inspire change.':
-        [],
-      'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
-        [],
-      'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
-        [],
-      'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
-        [],
-      'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
-        [],
-      'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
-        [],
-      'Gratitude is the gateway to abundance and a fulfilling life.': [],
-      'Courage is not the absence of fear, but the ability to take action despite it.':
-        [],
-      'Childhood is a time of innocence, wonder, and endless possibilities.':
-        [],
-      'True happiness comes from within, independent of external circumstances.':
-        [],
-      'A true leader empowers others to discover their full potential and achieve greatness.':
-        [],
-      'The beauty of a sunrise reminds us of the limitless potential each day holds.':
-        [],
-      'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
-        [],
-      'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
-        [],
-      'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
-        [],
-      'Moments may be fleeting, but the memories we create last a lifetime.':
-        [],
-      'Love transcends language barriers and is understood by the heart.': [],
-      'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
-        [],
-      'Embracing change opens doors to new possibilities and personal growth.':
-        [],
-      'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
-        [],
-      'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
-        [],
-      "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
-        [],
-      'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
-        [],
-      'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
-        [],
-      'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
-        [],
-      'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
-        [],
-      'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
-        [],
-      'A positive mindset is a catalyst for success and personal fulfillment.':
-        [],
-      'In the midst of chaos, finding inner peace is a testament to our resilience.':
-        [],
-      'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
-        [],
-      "A kind gesture can make a world of difference in someone's day.": [],
-      'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
-        [],
-      'Diversity is a beautiful tapestry that enriches our understanding of the world.':
-        [],
-      'Strength and character are forged through adversity and challenges.': [],
-      'A small act of kindness can create a ripple effect, spreading positivity to others.':
-        [],
-      'Gratitude attracts abundance and opens the doors to new opportunities.':
-        [],
-      'Courage is the fuel that propels us forward in the face of fear.': [],
-      'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
-        [],
-      'True happiness is found within ourselves, independent of external circumstances.':
-        [],
-      'A true leader inspires others through their actions and empowers them to reach their full potential.':
-        [],
-      'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
-        [],
-      "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
-        [],
-      'Giving without expecting anything in return is a true testament of kindness and compassion.':
-        [],
-      'Our choices shape our destiny, and it is up to us to create the life we envision.':
-        [],
-      'Moments may be fleeting, but the memories we create can last a lifetime.':
-        [],
-      'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
-        [],
-      'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
-        [],
-      'Embracing change allows us to grow, adapt, and discover new possibilities.':
-        [],
-      'The world is a canvas, and art has the power to evoke emotions and inspire change.':
-        [],
-      'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
-        [],
-      'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
-        [],
-      'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
-        [],
-      'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
-        [],
-      'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
-        [],
-      'Gratitude is the gateway to abundance and a fulfilling life.': [],
-      'Courage is not the absence of fear, but the ability to take action despite it.':
-        [],
-      'Childhood is a time of innocence, wonder, and endless possibilities.':
-        [],
-      'True happiness comes from within, independent of external circumstances.':
-        [],
-      'A true leader empowers others to discover their full potential and achieve greatness.':
-        [],
-      'The beauty of a sunrise reminds us of the limitless potential each day holds.':
-        [],
-      'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
-        [],
-      'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
-        [],
-      'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
-        [],
-      'Moments may be fleeting, but the memories we create last a lifetime.':
-        [],
-      'Love transcends language barriers and is understood by the heart.': [],
-      'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
-        [],
-      'Embracing change opens doors to new possibilities and personal growth.':
-        [],
-      'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
-        [],
-      'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
-        [],
-      "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
-        [],
-      'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
-        [],
-      'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
-        [],
-      'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
-        [],
-      'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
-        [],
-      'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
-        [],
-      'A positive mindset is a catalyst for success and personal fulfillment.':
-        [],
-      'In the midst of chaos, finding inner peace is a testament to our resilience.':
-        [],
-      'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
-        [],
-      "A kind gesture can make a world of difference in someone's day.": [],
-      'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
-        [],
-      'Diversity is a beautiful tapestry that enriches our understanding of the world.':
-        [],
-      'Strength and character are forged through adversity and challenges.': [],
-      'A small act of kindness can create a ripple effect, spreading positivity to others.':
-        [],
-      'Gratitude attracts abundance and opens the doors to new opportunities.':
-        [],
-      'Courage is the fuel that propels us forward in the face of fear.': [],
-      'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
-        [],
-      'True happiness is found within ourselves, independent of external circumstances.':
-        [],
-      'A true leader inspires others through their actions and empowers them to reach their full potential.':
-        [],
-      'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
-        [],
-      "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
-        [],
-      'Giving without expecting anything in return is a true testament of kindness and compassion.':
-        [],
-      'Our choices shape our destiny, and it is up to us to create the life we envision.':
-        [],
-      'Moments may be fleeting, but the memories we create can last a lifetime.':
-        [],
-      'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
-        [],
-      'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
-        [],
-      'Embracing change allows us to grow, adapt, and discover new possibilities.':
-        [],
-      'The world is a canvas, and art has the power to evoke emotions and inspire change.':
-        [],
-      'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
-        [],
-      'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
-        [],
-      'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
-        [],
-      'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
-        [],
-      'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
-        [],
-      'Gratitude is the gateway to abundance and a fulfilling life.': [],
-      'Courage is not the absence of fear, but the ability to take action despite it.':
-        [],
-      'Childhood is a time of innocence, wonder, and endless possibilities.':
-        [],
-      'True happiness comes from within, independent of external circumstances.':
-        [],
-      'A true leader empowers others to discover their full potential and achieve greatness.':
-        [],
-      'The beauty of a sunrise reminds us of the limitless potential each day holds.':
-        [],
-      'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
-        [],
-      'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
-        [],
-      'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
-        [],
-      'Moments may be fleeting, but the memories we create last a lifetime.':
-        [],
-      'Love transcends language barriers and is understood by the heart.': [],
-      'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
-        [],
-      'Embracing change opens doors to new possibilities and personal growth.':
-        [],
-      'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
-        [],
-      'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
-        [],
-      "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
-        [],
-      'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
-        [],
-      'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
-        [],
-      'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
-        [],
-      'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
-        [],
-      'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
-        [],
-      'A positive mindset is a catalyst for success and personal fulfillment.':
-        [],
-      'In the midst of chaos, finding inner peace is a testament to our resilience.':
-        [],
-      'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
-        [],
-      "A kind gesture can make a world of difference in someone's day.": [],
-      'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
-        [],
-      'Diversity is a beautiful tapestry that enriches our understanding of the world.':
-        [],
-      'Strength and character are forged through adversity and challenges.': [],
-      'A small act of kindness can create a ripple effect, spreading positivity to others.':
-        [],
-      'Gratitude attracts abundance and opens the doors to new opportunities.':
-        [],
-      'Courage is the fuel that propels us forward in the face of fear.': [],
-      'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
-        [],
-      'True happiness is found within ourselves, independent of external circumstances.':
-        [],
-      'A true leader inspires others through their actions and empowers them to reach their full potential.':
-        [],
-      'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
-        [],
-      "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
-        [],
-      'Giving without expecting anything in return is a true testament of kindness and compassion.':
-        [],
-      'Our choices shape our destiny, and it is up to us to create the life we envision.':
-        [],
-      'Moments may be fleeting, but the memories we create can last a lifetime.':
-        [],
-      'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
-        [],
-      'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
-        [],
-      'Embracing change allows us to grow, adapt, and discover new possibilities.':
-        [],
-      'The world is a canvas, and art has the power to evoke emotions and inspire change.':
-        [],
-      'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
-        [],
-      'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
-        [],
-      'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
-        [],
-      'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
-        [],
-      'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
-        [],
-      'Gratitude is the gateway to abundance and a fulfilling life.': [],
-      'Courage is not the absence of fear, but the ability to take action despite it.':
-        [],
-      'Childhood is a time of innocence, wonder, and endless possibilities.':
-        [],
-      'True happiness comes from within, independent of external circumstances.':
-        [],
-      'A true leader empowers others to discover their full potential and achieve greatness.':
-        [],
-      'The beauty of a sunrise reminds us of the limitless potential each day holds.':
-        [],
-      'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
-        [],
-      'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
-        [],
-      'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
-        [],
-      'Moments may be fleeting, but the memories we create last a lifetime.':
-        [],
-      'Love transcends language barriers and is understood by the heart.': [],
-      'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
-        [],
-      'Embracing change opens doors to new possibilities and personal growth.':
-        [],
-      'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
-        [],
-      'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
-        [],
-      "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
-        [],
-      'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
-        [],
-      'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
-        [],
-      'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
-        [],
-      'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
-        [],
-      'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
-        [],
-      'A positive mindset is a catalyst for success and personal fulfillment.':
-        [],
-      'In the midst of chaos, finding inner peace is a testament to our resilience.':
-        [],
-      'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
-        [],
-      "A kind gesture can make a world of difference in someone's day.": [],
-      'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
-        [],
-      'Diversity is a beautiful tapestry that enriches our understanding of the world.':
-        [],
-      'Strength and character are forged through adversity and challenges.': [],
-      'A small act of kindness can create a ripple effect, spreading positivity to others.':
-        [],
-      'Gratitude attracts abundance and opens the doors to new opportunities.':
-        [],
-      'Courage is the fuel that propels us forward in the face of fear.': [],
-      'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
-        [],
-      'True happiness is found within ourselves, independent of external circumstances.':
-        [],
-      'A true leader inspires others through their actions and empowers them to reach their full potential.':
-        [],
-      'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
-        [],
-      "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
-        [],
-      'Giving without expecting anything in return is a true testament of kindness and compassion.':
-        [],
-      'Our choices shape our destiny, and it is up to us to create the life we envision.':
-        [],
-      'Moments may be fleeting, but the memories we create can last a lifetime.':
-        [],
-      'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
-        [],
-      'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
-        [],
-      'Embracing change allows us to grow, adapt, and discover new possibilities.':
-        [],
-      'The world is a canvas, and art has the power to evoke emotions and inspire change.':
-        [],
-      'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
-        [],
-      'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
-        [],
-      'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
-        [],
-      'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
-        [],
-      'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
-        [],
-      'Gratitude is the gateway to abundance and a fulfilling life.': [],
-      'Courage is not the absence of fear, but the ability to take action despite it.':
-        [],
-      'Childhood is a time of innocence, wonder, and endless possibilities.':
-        [],
-      'True happiness comes from within, independent of external circumstances.':
-        [],
-      'A true leader empowers others to discover their full potential and achieve greatness.':
-        [],
-      'The beauty of a sunrise reminds us of the limitless potential each day holds.':
-        [],
-      'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
-        [],
-      'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
-        [],
-      'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
-        [],
-      'Moments may be fleeting, but the memories we create last a lifetime.':
-        [],
-      'Love transcends language barriers and is understood by the heart.': [],
-      'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
-        [],
-      'Embracing change opens doors to new possibilities and personal growth.':
-        [],
-      'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
-        [],
-      'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
-        [],
-      "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
-        [],
-      'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
-        [],
-      'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
-        [],
-      'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
-        [],
-      'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
-        [],
-      'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
-        [],
-      'A positive mindset is a catalyst for success and personal fulfillment.':
-        [],
-      'In the midst of chaos, finding inner peace is a testament to our resilience.':
-        [],
-      'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
-        [],
-      "A kind gesture can make a world of difference in someone's day.": [],
-      'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
-        [],
-      'Diversity is a beautiful tapestry that enriches our understanding of the world.':
-        [],
-      'Strength and character are forged through adversity and challenges.': [],
-      'A small act of kindness can create a ripple effect, spreading positivity to others.':
-        [],
-      'Gratitude attracts abundance and opens the doors to new opportunities.':
-        [],
-      'Courage is the fuel that propels us forward in the face of fear.': [],
-      'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
-        [],
-      'True happiness is found within ourselves, independent of external circumstances.':
-        [],
-      'A true leader inspires others through their actions and empowers them to reach their full potential.':
-        [],
-      'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
-        [],
-      "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
-        [],
-      'Giving without expecting anything in return is a true testament of kindness and compassion.':
-        [],
-      'Our choices shape our destiny, and it is up to us to create the life we envision.':
-        [],
-      'Moments may be fleeting, but the memories we create can last a lifetime.':
-        [],
-      'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
-        [],
-      'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
-        [],
-      'Embracing change allows us to grow, adapt, and discover new possibilities.':
-        [],
-      'The world is a canvas, and art has the power to evoke emotions and inspire change.':
-        [],
-      'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
-        [],
-      'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
-        [],
-      'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
-        [],
-      'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
-        [],
-      'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
-        [],
-      'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
-        [],
-      'Gratitude is the gateway to abundance and a fulfilling life.': [],
-      'Courage is not the absence of fear, but the ability to take action despite it.':
-        [],
-      'Childhood is a time of innocence, wonder, and endless possibilities.':
-        [],
-      'True happiness comes from within, independent of external circumstances.':
-        [],
-      'A true leader empowers others to discover their full potential and achieve greatness.':
-        [],
-      'The beauty of a sunrise reminds us of the limitless potential each day holds.':
-        [],
-      'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
-        [],
-      "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
-        [],
-      'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
-        [],
-      'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
-        [],
-    },
   },
+  /*
+  sentences: {
+    'I love to explore new places and create lasting memories.': [],
+    'The sunsets on the beach are simply breathtaking and always leave me in awe.':
+      [],
+    "Family is the foundation that supports us through all of life's challenges and triumphs.":
+      [],
+    'We should always strive to be kind and compassionate towards others.':
+      [],
+    'Learning is a lifelong journey that never fails to expand our horizons.':
+      [],
+    'Laughter is the best medicine; it has the power to heal and bring joy.':
+      [],
+    'Friendship is a priceless treasure that should be cherished and nurtured.':
+      [],
+    'In the darkest moments, hope is the guiding light that leads us towards a brighter tomorrow.':
+      [],
+    'Time spent in nature is a reminder of the beauty and serenity that surrounds us.':
+      [],
+    'Success is not measured by wealth or status, but by the positive impact we make on others.':
+      [],
+    'The love between a parent and child is unbreakable and filled with endless devotion.':
+      [],
+    "A smile can brighten someone's day and create ripples of happiness in the world.":
+      [],
+    'Hard work and perseverance are the keys to achieving our dreams and aspirations.':
+      [],
+    'Music has a unique ability to touch our souls and evoke powerful emotions.':
+      [],
+    'Kindness costs nothing but has the power to change lives.': [],
+    'The beauty of art lies in its ability to express the depths of human emotions.':
+      [],
+    'Education is the passport to a better future and a world of opportunities.':
+      [],
+    'Happiness is found in the simplest moments of gratitude and contentment.':
+      [],
+    'Courage is not the absence of fear, but the strength to face it head-on.':
+      [],
+    'In a world filled with negativity, be the light that radiates positivity and kindness.':
+      [],
+    'We are all connected by the common thread of humanity, and our differences should be celebrated.':
+      [],
+    'The power of forgiveness liberates us from the shackles of resentment and bitterness.':
+      [],
+    'Dream big, work hard, and never stop believing in yourself.': [],
+    'The greatest gift we can give others is our undivided attention and genuine presence.':
+      [],
+    'Gratitude is a powerful force that can transform our outlook on life.':
+      [],
+    'Embrace change and adaptability, for they are the stepping stones to growth and progress.':
+      [],
+    'Love is a verb that requires constant action and nurturing.': [],
+    "A kind word has the potential to brighten someone's day and restore their faith in humanity.":
+      [],
+    'The journey of a thousand miles begins with a single step.': [],
+    "Empathy allows us to walk in someone else's shoes and understand their perspective.":
+      [],
+    'Success is not an overnight achievement but a result of consistent effort and perseverance.':
+      [],
+    'The power of imagination knows no bounds and can unlock endless possibilities.':
+      [],
+    'Our actions today shape the world we leave behind for future generations.':
+      [],
+    'Love is the universal language that transcends barriers and brings people together.':
+      [],
+    'True strength lies not in physical prowess but in the ability to overcome adversity.':
+      [],
+    'The pursuit of knowledge enriches our lives and broadens our understanding of the world.':
+      [],
+    'A good book has the power to transport us to different realms and ignite our imagination.':
+      [],
+    'Believe in yourself, for you are capable of achieving great things.': [],
+    'The bond between siblings is a lifelong connection that withstands the test of time.':
+      [],
+    'Compassion is the key to building a more inclusive and understanding society.':
+      [],
+    'Every cloud has a silver lining; even in the darkest moments, there is hope.':
+      [],
+    'The sound of laughter is contagious and can bring joy to even the gloomiest of days.':
+      [],
+    'True wealth lies in the richness of experiences and meaningful relationships.':
+      [],
+    'The beauty of nature is a constant reminder of the miracles that surround us.':
+      [],
+    "Patience is a virtue that allows us to navigate life's challenges with grace and resilience.":
+      [],
+    'The power of a genuine smile can brighten the lives of those around us.':
+      [],
+    'Education is the foundation upon which we build a better and brighter future.':
+      [],
+    'Dreams become realities when we have the courage to pursue them.': [],
+    'Life is a journey filled with ups and downs, but it is the lessons we learn along the way that define us.':
+      [],
+    'Kindness is like a boomerang; it always comes back to us in unexpected ways.':
+      [],
+    'The beauty of a sunset reminds us of the transient nature of life and the importance of cherishing each moment.':
+      [],
+    'A good friend is like a rare gem, cherished for their uniqueness and the joy they bring to our lives.':
+      [],
+    "Success is not about reaching the destination; it's about the journey and the lessons learned along the way.":
+      [],
+    'The power of a positive mindset can transform obstacles into opportunities.':
+      [],
+    'Gratitude unlocks the fullness of life and allows us to appreciate the present moment.':
+      [],
+    'Love knows no boundaries and has the power to bridge the gaps between cultures and continents.':
+      [],
+    'The pursuit of happiness is a lifelong journey that starts with self-acceptance and embracing our true selves.':
+      [],
+    'The strength of a community lies in its ability to come together and support one another in times of need.':
+      [],
+    'We have the power to make a difference in the world through small acts of kindness and compassion.':
+      [],
+    'Life is too short to hold grudges; forgiveness sets us free and allows us to move forward.':
+      [],
+    'Every ending is a new beginning; change brings opportunities for growth and self-discovery.':
+      [],
+    'The power of a positive attitude can overcome even the most challenging of circumstances.':
+      [],
+    'In the midst of chaos, finding moments of stillness and peace can restore our inner balance.':
+      [],
+    'Time is a precious commodity; invest it wisely in things that bring you joy and fulfillment.':
+      [],
+    "A genuine compliment has the power to brighten someone's day and boost their confidence.":
+      [],
+    'Learning from our mistakes is a crucial part of personal growth and self-improvement.':
+      [],
+    'The beauty of diversity lies in the richness of perspectives and the vibrant tapestry it creates.':
+      [],
+    'Adversity builds resilience and strength; it is through challenges that we grow and evolve.':
+      [],
+    'The power of a kind word or gesture can have a ripple effect, inspiring others to pay it forward.':
+      [],
+    'A grateful heart attracts abundance and fosters a positive outlook on life.':
+      [],
+    'Courage is not the absence of fear, but the willingness to face it head-on.':
+      [],
+    'The magic of childhood lies in the boundless imagination and the sense of wonder that accompanies it.':
+      [],
+    'True happiness comes from within; it is not dependent on external circumstances.':
+      [],
+    'A true leader empowers others and brings out the best in those around them.':
+      [],
+    'The beauty of a sunrise reminds us that every day is an opportunity for a fresh start.':
+      [],
+    'The power of a single act of kindness can create a chain reaction of positivity.':
+      [],
+    "Life's challenges are not meant to break us but to help us discover our inner strength.":
+      [],
+    'The joy of giving is far greater than any material possession.': [],
+    'We are the authors of our own destiny; our choices shape the path we walk.':
+      [],
+    'The value of a moment is not measured by its duration but by the memories it leaves behind.':
+      [],
+    'Love is a language that transcends words and is understood by the heart.':
+      [],
+    'The power of determination and perseverance can overcome even the most daunting of obstacles.':
+      [],
+    'Change is inevitable; embracing it allows us to grow and evolve.': [],
+    'The world is full of beauty, but it is our perception that determines what we see.':
+      [],
+    'True success is not just about personal achievements but about lifting others up along the way.':
+      [],
+    'The small acts of kindness we extend to others can have a profound impact on their lives.':
+      [],
+    'The power of a positive mindset can turn setbacks into stepping stones towards success.':
+      [],
+    'A genuine apology can mend even the deepest wounds and rebuild trust.':
+      [],
+    'The beauty of a sunset reminds us to pause and appreciate the simple pleasures in life.':
+      [],
+    'True friendship is built on trust, loyalty, and a deep understanding of one another.':
+      [],
+    'The pursuit of knowledge is a lifelong endeavor that broadens our horizons and fuels our curiosity.':
+      [],
+    'The power of gratitude can transform even the most ordinary moments into extraordinary ones.':
+      [],
+    'Kindness is contagious; one act of kindness can inspire others to spread positivity.':
+      [],
+    'The beauty of nature has a way of rejuvenating our spirits and grounding us in the present moment.':
+      [],
+    'Success is not defined by material possessions but by the impact we have on the lives of others.':
+      [],
+    'The power of self-belief can move mountains and turn dreams into reality.':
+      [],
+    "A genuine smile has the power to brighten someone's day and create a ripple of positivity.":
+      [],
+    'The journey of self-discovery is a lifelong adventure filled with surprises and growth.':
+      [],
+    'The world is full of opportunities for those who have the courage to pursue their passions.':
+      [],
+    'Kindness is the language that transcends borders and brings people together.':
+      [],
+    'The power of empathy lies in its ability to foster understanding and connection.':
+      [],
+    'Success is not a destination but a continuous journey of growth and self-improvement.':
+      [],
+    'The beauty of art is its ability to evoke emotions and spark creativity.':
+      [],
+    'Gratitude is the antidote to negativity and opens the door to abundance.':
+      [],
+    'Love is the thread that weaves us together and gives meaning to our lives.':
+      [],
+    'The power of a positive attitude can turn obstacles into stepping stones towards success.':
+      [],
+    'In the midst of chaos, finding moments of stillness and peace can restore our inner balance.':
+      [],
+    'Time is a precious gift; invest it in things that bring you joy and fulfillment.':
+      [],
+    "A kind word has the power to uplift someone's spirit and brighten their day.":
+      [],
+    'Learning from our mistakes is a vital part of personal growth and self-improvement.':
+      [],
+    'The beauty of diversity lies in the richness of perspectives and the tapestry it creates.':
+      [],
+    'Adversity builds resilience and strength; it is through challenges that we grow and evolve.':
+      [],
+    'The power of a single act of kindness can create a ripple effect, inspiring others to do the same.':
+      [],
+    'A grateful heart attracts abundance and fosters a positive outlook on life.':
+      [],
+    'Courage is not the absence of fear, but the willingness to face it head-on.':
+      [],
+    'The magic of childhood lies in the boundless imagination and sense of wonder that accompanies it.':
+      [],
+    'True happiness comes from within and is not dependent on external circumstances.':
+      [],
+    'A true leader empowers others and brings out the best in those around them.':
+      [],
+    'The beauty of a sunrise reminds us that every day is an opportunity for a fresh start.':
+      [],
+    'The power of a single act of kindness can create a ripple effect of positivity.':
+      [],
+    "Life's challenges are not meant to break us but to help us discover our inner strength.":
+      [],
+    'The joy of giving is far greater than any material possession.': [],
+    'We are the authors of our own destiny, and our choices shape the path we walk.':
+      [],
+    'The value of a moment is not measured by its duration but by the memories it leaves behind.':
+      [],
+    'Love is a language that transcends words and is understood by the heart.':
+      [],
+    'The power of determination and perseverance can overcome even the most daunting of obstacles.':
+      [],
+    'Change is inevitable, and embracing it allows us to grow and evolve.':
+      [],
+    'The world is full of beauty, but it is our perception that determines what we see.':
+      [],
+    'True success is not just about personal achievements but about lifting others up along the way.':
+      [],
+    'The small acts of kindness we extend to others can have a profound impact on their lives.':
+      [],
+    'The power of a positive mindset can turn setbacks into stepping stones towards success.':
+      [],
+    'A genuine apology can mend even the deepest wounds and rebuild trust.':
+      [],
+    'The beauty of a sunset reminds us to pause and appreciate the simple pleasures in life.':
+      [],
+    'True friendship is built on trust, loyalty, and a deep understanding of one another.':
+      [],
+    'The pursuit of knowledge is a lifelong endeavor that broadens our horizons and fuels our curiosity.':
+      [],
+    'The power of gratitude can transform even the most ordinary moments into extraordinary ones.':
+      [],
+    'Kindness is contagious; one act of kindness can inspire others to spread positivity.':
+      [],
+    'The beauty of nature has a way of rejuvenating our spirits and grounding us in the present moment.':
+      [],
+    'Success is not defined by material possessions but by the impact we have on the lives of others.':
+      [],
+    'The power of self-belief can move mountains and turn dreams into reality.':
+      [],
+    "A genuine smile has the power to brighten someone's day and create a ripple of positivity.":
+      [],
+    'The journey of self-discovery is a lifelong adventure filled with surprises and growth.':
+      [],
+    'The world is full of opportunities for those who have the courage to pursue their passions.':
+      [],
+    'Kindness is the language that transcends borders and brings people together.':
+      [],
+    'The power of empathy lies in its ability to foster understanding and connection.':
+      [],
+    'Success is not a destination but a continuous journey of growth and self-improvement.':
+      [],
+    'The beauty of art is its ability to evoke emotions and spark creativity.':
+      [],
+    'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
+      [],
+    'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
+      [],
+    'A positive mindset is a catalyst for success and personal fulfillment.':
+      [],
+    'In the midst of chaos, finding inner peace is a testament to our resilience.':
+      [],
+    'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
+      [],
+    "A kind gesture can make a world of difference in someone's day.": [],
+    'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
+      [],
+    'Diversity is a beautiful tapestry that enriches our understanding of the world.':
+      [],
+    'Strength and character are forged through adversity and challenges.': [],
+    'A small act of kindness can create a ripple effect, spreading positivity to others.':
+      [],
+    'Gratitude attracts abundance and opens the doors to new opportunities.':
+      [],
+    'Courage is the fuel that propels us forward in the face of fear.': [],
+    'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
+      [],
+    'True happiness is found within ourselves, independent of external circumstances.':
+      [],
+    'A true leader inspires others through their actions and empowers them to reach their full potential.':
+      [],
+    'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
+      [],
+    "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
+      [],
+    'Giving without expecting anything in return is a true testament of kindness and compassion.':
+      [],
+    'Our choices shape our destiny, and it is up to us to create the life we envision.':
+      [],
+    'Moments may be fleeting, but the memories we create can last a lifetime.':
+      [],
+    'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
+      [],
+    'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
+      [],
+    'Embracing change allows us to grow, adapt, and discover new possibilities.':
+      [],
+    'The world is a canvas, and art has the power to evoke emotions and inspire change.':
+      [],
+    'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
+      [],
+    'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
+      [],
+    'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
+      [],
+    'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
+      [],
+    'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
+      [],
+    'Gratitude is the gateway to abundance and a fulfilling life.': [],
+    'Courage is not the absence of fear, but the ability to take action despite it.':
+      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.':
+      [],
+    'True happiness comes from within, independent of external circumstances.':
+      [],
+    'A true leader empowers others to discover their full potential and achieve greatness.':
+      [],
+    'The beauty of a sunrise reminds us of the limitless potential each day holds.':
+      [],
+    'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
+      [],
+    'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
+      [],
+    'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
+      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.':
+      [],
+    'Love transcends language barriers and is understood by the heart.': [],
+    'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
+      [],
+    'Embracing change opens doors to new possibilities and personal growth.':
+      [],
+    'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
+      [],
+    'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
+      [],
+    "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
+      [],
+    'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
+      [],
+    'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
+      [],
+    'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
+      [],
+    'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
+      [],
+    'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
+      [],
+    'A positive mindset is a catalyst for success and personal fulfillment.':
+      [],
+    'In the midst of chaos, finding inner peace is a testament to our resilience.':
+      [],
+    'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
+      [],
+    "A kind gesture can make a world of difference in someone's day.": [],
+    'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
+      [],
+    'Diversity is a beautiful tapestry that enriches our understanding of the world.':
+      [],
+    'Strength and character are forged through adversity and challenges.': [],
+    'A small act of kindness can create a ripple effect, spreading positivity to others.':
+      [],
+    'Gratitude attracts abundance and opens the doors to new opportunities.':
+      [],
+    'Courage is the fuel that propels us forward in the face of fear.': [],
+    'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
+      [],
+    'True happiness is found within ourselves, independent of external circumstances.':
+      [],
+    'A true leader inspires others through their actions and empowers them to reach their full potential.':
+      [],
+    'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
+      [],
+    "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
+      [],
+    'Giving without expecting anything in return is a true testament of kindness and compassion.':
+      [],
+    'Our choices shape our destiny, and it is up to us to create the life we envision.':
+      [],
+    'Moments may be fleeting, but the memories we create can last a lifetime.':
+      [],
+    'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
+      [],
+    'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
+      [],
+    'Embracing change allows us to grow, adapt, and discover new possibilities.':
+      [],
+    'The world is a canvas, and art has the power to evoke emotions and inspire change.':
+      [],
+    'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
+      [],
+    'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
+      [],
+    'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
+      [],
+    'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
+      [],
+    'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
+      [],
+    'Gratitude is the gateway to abundance and a fulfilling life.': [],
+    'Courage is not the absence of fear, but the ability to take action despite it.':
+      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.':
+      [],
+    'True happiness comes from within, independent of external circumstances.':
+      [],
+    'A true leader empowers others to discover their full potential and achieve greatness.':
+      [],
+    'The beauty of a sunrise reminds us of the limitless potential each day holds.':
+      [],
+    'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
+      [],
+    'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
+      [],
+    'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
+      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.':
+      [],
+    'Love transcends language barriers and is understood by the heart.': [],
+    'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
+      [],
+    'Embracing change opens doors to new possibilities and personal growth.':
+      [],
+    'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
+      [],
+    'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
+      [],
+    "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
+      [],
+    'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
+      [],
+    'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
+      [],
+    'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
+      [],
+    'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
+      [],
+    'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
+      [],
+    'A positive mindset is a catalyst for success and personal fulfillment.':
+      [],
+    'In the midst of chaos, finding inner peace is a testament to our resilience.':
+      [],
+    'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
+      [],
+    "A kind gesture can make a world of difference in someone's day.": [],
+    'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
+      [],
+    'Diversity is a beautiful tapestry that enriches our understanding of the world.':
+      [],
+    'Strength and character are forged through adversity and challenges.': [],
+    'A small act of kindness can create a ripple effect, spreading positivity to others.':
+      [],
+    'Gratitude attracts abundance and opens the doors to new opportunities.':
+      [],
+    'Courage is the fuel that propels us forward in the face of fear.': [],
+    'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
+      [],
+    'True happiness is found within ourselves, independent of external circumstances.':
+      [],
+    'A true leader inspires others through their actions and empowers them to reach their full potential.':
+      [],
+    'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
+      [],
+    "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
+      [],
+    'Giving without expecting anything in return is a true testament of kindness and compassion.':
+      [],
+    'Our choices shape our destiny, and it is up to us to create the life we envision.':
+      [],
+    'Moments may be fleeting, but the memories we create can last a lifetime.':
+      [],
+    'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
+      [],
+    'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
+      [],
+    'Embracing change allows us to grow, adapt, and discover new possibilities.':
+      [],
+    'The world is a canvas, and art has the power to evoke emotions and inspire change.':
+      [],
+    'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
+      [],
+    'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
+      [],
+    'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
+      [],
+    'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
+      [],
+    'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
+      [],
+    'Gratitude is the gateway to abundance and a fulfilling life.': [],
+    'Courage is not the absence of fear, but the ability to take action despite it.':
+      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.':
+      [],
+    'True happiness comes from within, independent of external circumstances.':
+      [],
+    'A true leader empowers others to discover their full potential and achieve greatness.':
+      [],
+    'The beauty of a sunrise reminds us of the limitless potential each day holds.':
+      [],
+    'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
+      [],
+    'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
+      [],
+    'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
+      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.':
+      [],
+    'Love transcends language barriers and is understood by the heart.': [],
+    'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
+      [],
+    'Embracing change opens doors to new possibilities and personal growth.':
+      [],
+    'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
+      [],
+    'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
+      [],
+    "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
+      [],
+    'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
+      [],
+    'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
+      [],
+    'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
+      [],
+    'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
+      [],
+    'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
+      [],
+    'A positive mindset is a catalyst for success and personal fulfillment.':
+      [],
+    'In the midst of chaos, finding inner peace is a testament to our resilience.':
+      [],
+    'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
+      [],
+    "A kind gesture can make a world of difference in someone's day.": [],
+    'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
+      [],
+    'Diversity is a beautiful tapestry that enriches our understanding of the world.':
+      [],
+    'Strength and character are forged through adversity and challenges.': [],
+    'A small act of kindness can create a ripple effect, spreading positivity to others.':
+      [],
+    'Gratitude attracts abundance and opens the doors to new opportunities.':
+      [],
+    'Courage is the fuel that propels us forward in the face of fear.': [],
+    'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
+      [],
+    'True happiness is found within ourselves, independent of external circumstances.':
+      [],
+    'A true leader inspires others through their actions and empowers them to reach their full potential.':
+      [],
+    'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
+      [],
+    "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
+      [],
+    'Giving without expecting anything in return is a true testament of kindness and compassion.':
+      [],
+    'Our choices shape our destiny, and it is up to us to create the life we envision.':
+      [],
+    'Moments may be fleeting, but the memories we create can last a lifetime.':
+      [],
+    'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
+      [],
+    'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
+      [],
+    'Embracing change allows us to grow, adapt, and discover new possibilities.':
+      [],
+    'The world is a canvas, and art has the power to evoke emotions and inspire change.':
+      [],
+    'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
+      [],
+    'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
+      [],
+    'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
+      [],
+    'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
+      [],
+    'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
+      [],
+    'Gratitude is the gateway to abundance and a fulfilling life.': [],
+    'Courage is not the absence of fear, but the ability to take action despite it.':
+      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.':
+      [],
+    'True happiness comes from within, independent of external circumstances.':
+      [],
+    'A true leader empowers others to discover their full potential and achieve greatness.':
+      [],
+    'The beauty of a sunrise reminds us of the limitless potential each day holds.':
+      [],
+    'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
+      [],
+    'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
+      [],
+    'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
+      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.':
+      [],
+    'Love transcends language barriers and is understood by the heart.': [],
+    'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
+      [],
+    'Embracing change opens doors to new possibilities and personal growth.':
+      [],
+    'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
+      [],
+    'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
+      [],
+    "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
+      [],
+    'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
+      [],
+    'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
+      [],
+    'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
+      [],
+    'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
+      [],
+    'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
+      [],
+    'A positive mindset is a catalyst for success and personal fulfillment.':
+      [],
+    'In the midst of chaos, finding inner peace is a testament to our resilience.':
+      [],
+    'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
+      [],
+    "A kind gesture can make a world of difference in someone's day.": [],
+    'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
+      [],
+    'Diversity is a beautiful tapestry that enriches our understanding of the world.':
+      [],
+    'Strength and character are forged through adversity and challenges.': [],
+    'A small act of kindness can create a ripple effect, spreading positivity to others.':
+      [],
+    'Gratitude attracts abundance and opens the doors to new opportunities.':
+      [],
+    'Courage is the fuel that propels us forward in the face of fear.': [],
+    'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
+      [],
+    'True happiness is found within ourselves, independent of external circumstances.':
+      [],
+    'A true leader inspires others through their actions and empowers them to reach their full potential.':
+      [],
+    'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
+      [],
+    "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
+      [],
+    'Giving without expecting anything in return is a true testament of kindness and compassion.':
+      [],
+    'Our choices shape our destiny, and it is up to us to create the life we envision.':
+      [],
+    'Moments may be fleeting, but the memories we create can last a lifetime.':
+      [],
+    'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
+      [],
+    'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
+      [],
+    'Embracing change allows us to grow, adapt, and discover new possibilities.':
+      [],
+    'The world is a canvas, and art has the power to evoke emotions and inspire change.':
+      [],
+    'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
+      [],
+    'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
+      [],
+    'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
+      [],
+    'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
+      [],
+    'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
+      [],
+    'Gratitude is the gateway to abundance and a fulfilling life.': [],
+    'Courage is not the absence of fear, but the ability to take action despite it.':
+      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.':
+      [],
+    'True happiness comes from within, independent of external circumstances.':
+      [],
+    'A true leader empowers others to discover their full potential and achieve greatness.':
+      [],
+    'The beauty of a sunrise reminds us of the limitless potential each day holds.':
+      [],
+    'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
+      [],
+    'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
+      [],
+    'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
+      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.':
+      [],
+    'Love transcends language barriers and is understood by the heart.': [],
+    'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
+      [],
+    'Embracing change opens doors to new possibilities and personal growth.':
+      [],
+    'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
+      [],
+    'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
+      [],
+    "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
+      [],
+    'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
+      [],
+    'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
+      [],
+    'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
+      [],
+    'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
+      [],
+    'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
+      [],
+    'A positive mindset is a catalyst for success and personal fulfillment.':
+      [],
+    'In the midst of chaos, finding inner peace is a testament to our resilience.':
+      [],
+    'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
+      [],
+    "A kind gesture can make a world of difference in someone's day.": [],
+    'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
+      [],
+    'Diversity is a beautiful tapestry that enriches our understanding of the world.':
+      [],
+    'Strength and character are forged through adversity and challenges.': [],
+    'A small act of kindness can create a ripple effect, spreading positivity to others.':
+      [],
+    'Gratitude attracts abundance and opens the doors to new opportunities.':
+      [],
+    'Courage is the fuel that propels us forward in the face of fear.': [],
+    'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
+      [],
+    'True happiness is found within ourselves, independent of external circumstances.':
+      [],
+    'A true leader inspires others through their actions and empowers them to reach their full potential.':
+      [],
+    'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
+      [],
+    "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
+      [],
+    'Giving without expecting anything in return is a true testament of kindness and compassion.':
+      [],
+    'Our choices shape our destiny, and it is up to us to create the life we envision.':
+      [],
+    'Moments may be fleeting, but the memories we create can last a lifetime.':
+      [],
+    'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
+      [],
+    'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
+      [],
+    'Embracing change allows us to grow, adapt, and discover new possibilities.':
+      [],
+    'The world is a canvas, and art has the power to evoke emotions and inspire change.':
+      [],
+    'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
+      [],
+    'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
+      [],
+    'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
+      [],
+    'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
+      [],
+    'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
+      [],
+    'Gratitude is the gateway to abundance and a fulfilling life.': [],
+    'Courage is not the absence of fear, but the ability to take action despite it.':
+      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.':
+      [],
+    'True happiness comes from within, independent of external circumstances.':
+      [],
+    'A true leader empowers others to discover their full potential and achieve greatness.':
+      [],
+    'The beauty of a sunrise reminds us of the limitless potential each day holds.':
+      [],
+    'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
+      [],
+    'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
+      [],
+    'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
+      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.':
+      [],
+    'Love transcends language barriers and is understood by the heart.': [],
+    'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
+      [],
+    'Embracing change opens doors to new possibilities and personal growth.':
+      [],
+    'The world is a canvas, and art has the power to inspire, provoke, and evoke emotions.':
+      [],
+    'Success is measured by the impact we have on the lives of others and the legacy we leave behind.':
+      [],
+    "A genuine smile has the power to brighten someone's day and create a ripple effect of joy.":
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal transformation.':
+      [],
+    'The world is a tapestry of diverse cultures, each contributing its unique perspective and beauty.':
+      [],
+    'Adversity builds resilience and strength, shaping us into stronger and more resilient individuals.':
+      [],
+    'Kindness is contagious, spreading warmth, compassion, and positivity to all those we encounter.':
+      [],
+    'Gratitude is the key that unlocks the door to a more fulfilling and meaningful life.':
+      [],
+    'Love has the power to heal wounds, mend broken hearts, and ignite the soul.':
+      [],
+    'A positive mindset is a catalyst for success and personal fulfillment.':
+      [],
+    'In the midst of chaos, finding inner peace is a testament to our resilience.':
+      [],
+    'Time is a precious resource; invest it in activities that bring you joy and fulfillment.':
+      [],
+    "A kind gesture can make a world of difference in someone's day.": [],
+    'Mistakes are valuable lessons that pave the way for personal growth and improvement.':
+      [],
+    'Diversity is a beautiful tapestry that enriches our understanding of the world.':
+      [],
+    'Strength and character are forged through adversity and challenges.': [],
+    'A small act of kindness can create a ripple effect, spreading positivity to others.':
+      [],
+    'Gratitude attracts abundance and opens the doors to new opportunities.':
+      [],
+    'Courage is the fuel that propels us forward in the face of fear.': [],
+    'Childhood is a magical time filled with wonder, imagination, and endless possibilities.':
+      [],
+    'True happiness is found within ourselves, independent of external circumstances.':
+      [],
+    'A true leader inspires others through their actions and empowers them to reach their full potential.':
+      [],
+    'The sunrise symbolizes hope and new beginnings, reminding us that each day is a fresh start.':
+      [],
+    "A simple act of kindness can brighten someone's day and create a ripple effect of positivity.":
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into stronger individuals.":
+      [],
+    'Giving without expecting anything in return is a true testament of kindness and compassion.':
+      [],
+    'Our choices shape our destiny, and it is up to us to create the life we envision.':
+      [],
+    'Moments may be fleeting, but the memories we create can last a lifetime.':
+      [],
+    'Love speaks volumes without uttering a single word; it is felt deep within the heart.':
+      [],
+    'Determination and perseverance are the keys to overcoming obstacles and achieving our goals.':
+      [],
+    'Embracing change allows us to grow, adapt, and discover new possibilities.':
+      [],
+    'The world is a canvas, and art has the power to evoke emotions and inspire change.':
+      [],
+    'Success is not measured by wealth or fame, but by the positive impact we leave on others.':
+      [],
+    'A genuine smile has the power to brighten the darkest of days and uplift those around us.':
+      [],
+    'Self-discovery is a lifelong journey of exploration, learning, and personal growth.':
+      [],
+    'The world is a tapestry of diverse cultures, each with its own unique beauty and perspective.':
+      [],
+    'Adversity tests our resilience and strength, shaping us into stronger versions of ourselves.':
+      [],
+    'Kindness has a ripple effect, spreading joy and positivity to all those we encounter.':
+      [],
+    'Gratitude is the gateway to abundance and a fulfilling life.': [],
+    'Courage is not the absence of fear, but the ability to take action despite it.':
+      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.':
+      [],
+    'True happiness comes from within, independent of external circumstances.':
+      [],
+    'A true leader empowers others to discover their full potential and achieve greatness.':
+      [],
+    'The beauty of a sunrise reminds us of the limitless potential each day holds.':
+      [],
+    'A single act of kindness can ignite a spark of positivity that spreads far and wide.':
+      [],
+    "Life's challenges are opportunities for growth and self-discovery, molding us into better versions of ourselves.":
+      [],
+    'The joy of giving surpasses any material possession; it is a gift that keeps on giving.':
+      [],
+    'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
+      [],
+  },
+  */
 
   allChords: {
     CharaChorder: [],

@@ -150,9 +150,10 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     savedStoredChordStats(state);
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
     state.currentTrainingScenario = payload[0] as TrainingScenario;
-    state.wordTestNumber = payload[1] as WordTrainingValues;
+    state.wordTestNumber = payload[1] as number;
     state.allTypedCharactersStore = [];
     state.compareText = [];
+    state.isProgressBarDynamic = false;
     state.trainingTestCounter = 0;
     state.isTestDone = false;
     state.storedTestTextData = [];
@@ -165,6 +166,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.timeTakenToTypeEachWordInOrder = [];
     state.wordsPracticedInOrder = [];
     state.localTrainingStatistics = { statistics: [] };
+
     state.storedChordsFromDevice = JSON?.parse(
       localStorage?.getItem('chordsReadFromDevice'),
     );
@@ -195,6 +197,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       localStorage?.getItem(state.trainingLevel + '_' + payload[0]),
     );
 
+    //  console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
     // Pull the chord library from memory if it's there, otherwise pull it from defaults
     if (state.currentTrainingScenario === 'ALLCHORDS') {
       //console.log('stored chord rep '+ state.storedChordsRepresentation)
@@ -209,6 +212,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.chordsToPullFrom = globalDictionaries[
         state.currentTrainingScenario
       ] as ChordLibraryRecord;
+      console.log('stored chord rep ' + state.storedChordsRepresentation);
     } else {
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         state.currentTrainingScenario,
@@ -225,11 +229,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         ),
       );
     else state.trainingStatistics = state.storedChordsFromDevice;
-
     state.lexicalSentencesIndex = generateLexicalSentenceIndex(
       state as unknown as TrainingStoreStateModel,
     );
-
     if (
       state.currentTrainingScenario == 'LEXICAL' &&
       state.wordTestNumber != undefined &&
@@ -238,19 +240,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.storedTestTextData = generateTestTrainingData(
         state.chordsToPullFrom,
         parseInt(state.wordTestNumber),
-      );
-    }
-    if (state.trainingLevel == 'StM' && state.restartTestMode == false) {
-      console.log(
-        'Did I enter here' +
-          state?.lexicalSentencesIndex +
-          ' cpf ' +
-          state?.chordsToPullFrom,
-      );
-      console.log(
-        (state.storedTestTextData = Object.keys(
-          state?.chordsToPullFrom[state?.lexicalSentencesIndex],
-        )),
       );
     } else if (
       state.currentTrainingScenario == 'LEXICAL' &&
@@ -264,8 +253,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     }
 
     state.numberOfChordsForTrainingLevel =
-      state.trainingStatistics.statistics?.length;
-
+      state?.trainingStatistics?.statistic?.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
 
     // Open the chord editing modal if the user is starting the fourth, fifth, or sixth training module
@@ -293,14 +281,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     updateRecursionRateSettings(state);
-
-    if (
-      state.storedTestTextData?.length ==
-        state.allTypedCharactersStore?.length &&
-      !state.trainingSettings.lexicalSentencesContinueFlow
-    ) {
-      state.trainingIsDone = true;
-    }
   }),
   setErrorOccurredWhileAttemptingToTypeTargetChord: action((state, payload) => {
     state.errorOccurredWhileAttemptingToTypeTargetChord = payload;
@@ -382,6 +362,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   }),
   setTypedTrainingText: action((state, payload) => {
     state.typedTrainingText = payload;
+  }),
+  setIsProgressBarDynamic: action((state, payload) => {
+    state.isProgressBarDynamic = payload;
   }),
   setTestTeirHighestWPM: action((state, payload) => {
     state.testTeirHighestWPM = payload as number;
@@ -509,6 +492,10 @@ function checkIfShouldProceedToNextTargetChord(
     wordValue[0] != ' ' &&
     wordValue[0] != undefined
   ) {
+    console.log(
+      'logging ' + storeState.compareText[storeState.compareText.length - 1],
+    );
+
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');
@@ -982,7 +969,6 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
     state.currentTrainingScenario === 'ALPHABET'
       ? ALPHABET_LINE_LENGTH
       : CHORD_LINE_LENGTH;
-
   state.trainingText = [
     ...state.trainingText,
     generateChords({
@@ -990,7 +976,7 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       numberOfTargetChords: state.trainingSettings.targetChords,
       recursionIsEnabledGlobally: state.trainingSettings.isUsingRecursion,
       recursionRate: state.trainingSettings.recursionRate,
-      stats: state.trainingStatistics.statistics,
+      stats: state?.trainingStatistics?.statistics,
       lineLength,
       speedGoal: state.trainingSettings.speedGoal,
       wordTestNumberValue: state.wordTestNumber,
@@ -1004,6 +990,7 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       timeOfLastChordStarted: state.timeOfLastChordStarted,
       trainingLevel: state.trainingLevel,
       continueSentenceFlow: state.trainingSettings.lexicalSentencesContinueFlow,
+      moduleNumber: state.moduleNumber,
     }),
   ];
 }
@@ -1037,10 +1024,10 @@ function updateRecursionRateSettings(state: TrainingStoreModel) {
     state.trainingSettings.recursionRate = recursionRate;
   }
 }
-
 const generateLexicalSentenceIndex = (state: TrainingStoreStateModel) => {
   console.log('Chords to pull from ' + state.currentTrainingScenario);
-  console.log(state.chordsToPullFrom);
+  console.log('module number ' + state.moduleNumber);
+
   const allCharacters = Object.keys(state.chordsToPullFrom);
   const returnRandom =
     allCharacters[(allCharacters.length * Math.random()) | 0];
@@ -1059,7 +1046,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       numberOfTargetChords: state.trainingSettings.targetChords,
       recursionIsEnabledGlobally: state.trainingSettings.isUsingRecursion,
       recursionRate: state.trainingSettings.recursionRate,
-      stats: state.trainingStatistics.statistics,
+      stats: state?.trainingStatistics?.statistics,
       lineLength,
       speedGoal: state.trainingSettings.speedGoal,
       wordTestNumberValue: state.wordTestNumber,
@@ -1073,8 +1060,8 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       timeOfLastChordStarted: state.timeOfLastChordStarted,
       trainingLevel: state.trainingLevel,
       continueSentenceFlow: state.trainingSettings.lexicalSentencesContinueFlow,
+      moduleNumber: state.moduleNumber,
     });
-
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
   document.getElementById('txt_Name')?.focus();
 };

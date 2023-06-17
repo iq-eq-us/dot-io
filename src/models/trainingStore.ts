@@ -102,7 +102,7 @@ export interface TrainingStoreStateModel {
   typedTrainingText: string;
   trainingLevel: TrainingLevels | undefined;
   currentTrainingScenario: TrainingScenario | undefined;
-  wordTestNumber: WordTrainingValues | undefined;
+  wordTestNumber: number | undefined;
   isTestDone: boolean;
   isDisplayingChordEditModal: boolean;
   compareText: string[] | undefined;

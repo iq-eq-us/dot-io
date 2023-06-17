@@ -40,14 +40,7 @@ export const useWordsPerMinute = (): number => {
   const numberOfWordsChorded = useStoreState(
     (state: any) => state.numberOfWordsChorded,
   );
-  console.log(
-    'jsndjnfsndfnksf ' +
-      storedTestTextData?.length +
-      ' ' +
-      wordTestNumber +
-      ' ' +
-      allTypedText?.length,
-  );
+
   const trainingSessionErrors = useStoreState(
     (store) => store.trainingSessionErrors,
   );

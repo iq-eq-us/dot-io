@@ -29,7 +29,9 @@ const Navbar = (): ReactElement => {
   const setTrainingLevel = useStoreActions(
     (store: any) => store.setTrainingLevel,
   );
-
+  const setModuleNumber = useStoreActions(
+    (store: any) => store.setModuleNumber,
+  );
   const passwordModulModalToggle = useStoreState(
     (store: any) => store.passwordModulModalToggle,
   );
@@ -57,6 +59,7 @@ const Navbar = (): ReactElement => {
   function TrainingPageFunction(level: TrainingLevels, allowOnClick: boolean) {
     if (allowOnClick || chmTierPasswordBypass) {
       if (level == 'CPM') {
+        setModuleNumber(1);
         const payload: any[] = [];
         payload.push('ALPHABET');
         sessionStorage.removeItem('tempTestDeIncrement');
@@ -66,6 +69,7 @@ const Navbar = (): ReactElement => {
           history.push(ROUTER_PATHS.home);
         }
       } else if (level == 'CHM') {
+        setModuleNumber(1);
         const payload: any[] = [];
         payload.push('LEXICAL');
         sessionStorage.removeItem('tempTestDeIncrement');
@@ -77,6 +81,7 @@ const Navbar = (): ReactElement => {
       }
     }
     if (level == 'StM') {
+      setModuleNumber(1);
       const payload: any[] = [];
       payload.push('LEXICALSENTENCES');
       sessionStorage.removeItem('tempTestDeIncrement');
