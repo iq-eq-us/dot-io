@@ -243,16 +243,10 @@ function EditChordsModal(): ReactElement {
                 {trainingLevel == 'StM' && (
                   <Container>
                     <Header>
-                      <SentenceContainer>Sentence</SentenceContainer>
-                      <SentenceStats>
-                        <div>Chords</div>
-                      </SentenceStats>
-                      <SentenceStats>
-                        <div>WPM</div>
-                      </SentenceStats>
-                      <SentenceStats>
-                        <div>StM</div>
-                      </SentenceStats>
+                      <HeaderSentenceItem>Sentence</HeaderSentenceItem>
+                      <HeaderItems>Chords</HeaderItems>
+                      <HeaderItems>WPM</HeaderItems>
+                      <HeaderItems>StM</HeaderItems>
                     </Header>
                     {StMIndexes.map((chord, index) => {
                       return (
@@ -393,7 +387,13 @@ const SentenceAndStatsContainer = styled.button.attrs({
   className: `bg-gray-300 text-gray-900 w-full hover:bg-gray-400 rounded px-3 flex flex-row items-left pr-2 leading-loose`,
 })``;
 const Header = styled.div.attrs({
-  className: `text-gray-900 w-full rounded px-3 flex flex-row items-left pr-2 leading-loose`,
+  className: `text-gray-900 w-full font-bold rounded px-3 flex flex-row items-left pr-2 leading-loose`,
+})``;
+const HeaderItems = styled.div.attrs({
+  className: `w-1/4`,
+})``;
+const HeaderSentenceItem = styled.div.attrs({
+  className: `tile w-3/4 text-left	`,
 })``;
 const SentenceContainer = styled.div.attrs({
   className: `tile w-3/4 text-left	`,
