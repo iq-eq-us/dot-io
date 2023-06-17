@@ -235,7 +235,7 @@ function EditChordsModal(): ReactElement {
                 )}
                 {trainingLevel == 'StM' && (
                   <Container>
-                    {StMIndexes.map((chord) => {
+                    {StMIndexes.map((chord, index) => {
                       return (
                         <SentenceAndStatsContainer>
                           <SentenceContainer>
