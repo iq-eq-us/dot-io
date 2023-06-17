@@ -221,9 +221,6 @@ export function TrainingModeSelector(): ReactElement {
               setModuleNumber(4),
               LearnPageFunction('LEXICALSENTENCES', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
-              updateTrainingSetting({
-                lexicalSentencesContinueFlow: false,
-              }),
             ]}
           >
             Test

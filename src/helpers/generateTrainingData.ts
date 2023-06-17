@@ -30,7 +30,6 @@ interface ChordGenerationParameters {
   indexOfTrainingText: number;
   allTypedText: string[];
   subIndexOfTrainingText: number;
-  timeOfLastChordStarted: any;
   trainingLevel: any;
   continueSentenceFlow: boolean;
   moduleNumber: number;

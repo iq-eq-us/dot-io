@@ -8,7 +8,6 @@ import {
   HUDCheckboxSetting,
   AutosaveSetting,
   ProgressBarDynamic,
-  LexicalSentencesFlow,
 } from './CheckboxSettings';
 import { ContrastInputSetting } from './ContrastInputSetting';
 import { SettingsColumnContainer } from './SettingsColumnContainer';
@@ -94,11 +93,6 @@ function SettingsColumn(): ReactElement {
             updateTrainingSetting={updateTrainingSetting}
           />
           <ProgressBarDynamic
-            trainingSettings={trainingSettings}
-            updateTrainingSetting={updateTrainingSetting}
-          />
-
-          <LexicalSentencesFlow
             trainingSettings={trainingSettings}
             updateTrainingSetting={updateTrainingSetting}
           />

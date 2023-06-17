@@ -67,22 +67,6 @@ export function ProgressBarDynamic(props: CheckboxProps): JSX.Element {
   );
 }
 
-export function LexicalSentencesFlow(props: CheckboxProps): JSX.Element {
-  return (
-    <CheckboxSetting
-      helpText="Control the state of the progress bar to Dynamic or Ranged."
-      title="Perpetual Sentences"
-      checked={props.trainingSettings.lexicalSentencesContinueFlow}
-      onChange={() => {
-        props.updateTrainingSetting({
-          lexicalSentencesContinueFlow:
-            !props.trainingSettings.lexicalSentencesContinueFlow,
-        });
-      }}
-    />
-  );
-}
-
 export function AutosaveSetting(props: CheckboxProps): JSX.Element {
   return (
     <CheckboxSetting

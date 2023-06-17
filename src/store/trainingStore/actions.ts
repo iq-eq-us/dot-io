@@ -260,7 +260,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     }
 
     state.numberOfChordsForTrainingLevel =
-      state?.trainingStatistics?.statistic?.length;
+      state?.trainingStatistics?.statistics?.length;
     generateStartingTrainingData(state as unknown as TrainingStoreStateModel);
 
     // Open the chord editing modal if the user is starting the fourth, fifth, or sixth training module
@@ -382,9 +382,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   }),
   setTypedTrainingText: action((state, payload) => {
     state.typedTrainingText = payload;
-  }),
-  setIsProgressBarDynamic: action((state, payload) => {
-    state.isProgressBarDynamic = payload;
   }),
   setTestTeirHighestWPM: action((state, payload) => {
     state.testTeirHighestWPM = payload as number;
@@ -727,7 +724,11 @@ export async function calculateStatisticsForTargetChord(
   }
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
-  if (store.currentTrainingScenario != 'ALLCHORDS' && !userIsTypingFirstChord) {
+  if (
+    store.currentTrainingScenario != 'ALLCHORDS' &&
+    !userIsTypingFirstChord &&
+    store.trainingLevel != 'StM'
+  ) {
     chordStats.lastSpeed = Math.min(
       timeTakenToTypeChord,
       MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
@@ -799,7 +800,7 @@ export async function calculateStatisticsForTargetChord(
         store.trainingLevel + '_' + store.currentTrainingScenario,
         JSON.stringify({ statistics: store.trainingStatistics.statistics }),
       ); //Store downloaded chords in local storage
-  } else if (!userIsTypingFirstChord) {
+  } else if (!userIsTypingFirstChord && store.trainingLevel != 'StM') {
     const chordStatsFromDevice = store?.storedChordsFromDevice?.statistics.find(
       (c: ChordStatisticsFromDevice) => c.id === id,
     ) as ChordStatisticsFromDevice;
@@ -911,6 +912,23 @@ export async function calculateStatisticsForTargetChord(
         false,
       );
     }
+  } else {
+    chordStats.averageSpeed =
+      (chordStats.averageSpeed * chordStats.numberOfOccurrences +
+        chordStats.lastSpeed) /
+      (chordStats.numberOfOccurrences + 1);
+    chordStats.numberOfOccurrences++;
+
+    if (couldFindChordInLibrary) {
+      // Replace chord stats object in chord stats list
+      store.trainingStatistics = {
+        statistics: store.trainingStatistics.statistics.map(
+          (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
+        ),
+      };
+    } else {
+      store.trainingStatistics.statistics.push(chordStats);
+    }
   }
   if (!userIsTypingFirstChord) {
     if (
@@ -1007,9 +1025,7 @@ function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
       indexOfTrainingText: state.allTypedCharactersStore.length,
       allTypedText: state.allTypedCharactersStore,
       subIndexOfTrainingText: state.currentSubindexInTrainingText,
-      timeOfLastChordStarted: state.timeOfLastChordStarted,
       trainingLevel: state.trainingLevel,
-      continueSentenceFlow: state.trainingSettings.lexicalSentencesContinueFlow,
       moduleNumber: state.moduleNumber,
     }),
   ];
@@ -1045,9 +1061,6 @@ function updateRecursionRateSettings(state: TrainingStoreModel) {
   }
 }
 const generateLexicalSentenceIndex = (state: TrainingStoreStateModel) => {
-  console.log('Chords to pull from ' + state.currentTrainingScenario);
-  console.log('module number ' + state.moduleNumber);
-
   const allCharacters = Object.keys(state.chordsToPullFrom);
   const returnRandom =
     allCharacters[(allCharacters.length * Math.random()) | 0];
@@ -1077,9 +1090,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       indexOfTrainingText: state.allTypedCharactersStore.length,
       allTypedText: state.allTypedCharactersStore,
       subIndexOfTrainingText: state.currentSubindexInTrainingText,
-      timeOfLastChordStarted: state.timeOfLastChordStarted,
       trainingLevel: state.trainingLevel,
-      continueSentenceFlow: state.trainingSettings.lexicalSentencesContinueFlow,
       moduleNumber: state.moduleNumber,
     });
   state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];

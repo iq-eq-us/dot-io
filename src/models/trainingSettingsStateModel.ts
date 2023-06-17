@@ -42,7 +42,6 @@ export interface TrainingSettingsState {
   isTestDone: boolean;
   restartTestMode: boolean;
   isProgressBarDynamic: boolean;
-  lexicalSentencesContinueFlow: boolean;
 }
 
 export const defaultTrainingSettings: TrainingSettingsState = {
@@ -61,7 +60,6 @@ export const defaultTrainingSettings: TrainingSettingsState = {
   isTestDone: false,
   restartTestMode: false,
   isProgressBarDynamic: true,
-  lexicalSentencesContinueFlow: true,
 };
 
 export const defaultTrigramsTestTraining: TrainingSettingsState = {
@@ -80,7 +78,6 @@ export const defaultTrigramsTestTraining: TrainingSettingsState = {
   isTestDone: false,
   restartTestMode: false,
   isProgressBarDynamic: true,
-  lexicalSentencesContinueFlow: true,
 };
 
 export const defaultAlphabeticTestTraining: TrainingSettingsState = {
@@ -99,7 +96,6 @@ export const defaultAlphabeticTestTraining: TrainingSettingsState = {
   isTestDone: false,
   restartTestMode: false,
   isProgressBarDynamic: true,
-  lexicalSentencesContinueFlow: true,
 };
 
 export const defaultTrainingSettingsState: TrainingSettingsState = {
@@ -118,5 +114,4 @@ export const defaultTrainingSettingsState: TrainingSettingsState = {
   isTestDone: false,
   restartTestMode: false,
   isProgressBarDynamic: true,
-  lexicalSentencesContinueFlow: true,
 };
