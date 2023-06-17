@@ -237,14 +237,12 @@ function EditChordsModal(): ReactElement {
                   <Container>
                     {StMIndexes.map((chord) => {
                       return (
-                        <React.Fragment>
-                          <SentenceAndStatsContainer>
-                            <SentenceContainer>
-                              {Object.keys(chordsToPullFrom[chord]).join(' ')}
-                            </SentenceContainer>
-                            <SentenceStats>10 12 99 10</SentenceStats>
-                          </SentenceAndStatsContainer>
-                        </React.Fragment>
+                        <SentenceAndStatsContainer>
+                          <SentenceContainer>
+                            {Object.keys(chordsToPullFrom[chord]).join(' ')}
+                          </SentenceContainer>
+                          <SentenceStats>10 12 99 10</SentenceStats>
+                        </SentenceAndStatsContainer>
                       );
                     })}
                   </Container>
