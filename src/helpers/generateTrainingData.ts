@@ -269,7 +269,7 @@ export const generateChords = (
         (a, b) => b.averageSpeed - a.averageSpeed,
       );
 
-      let chordToFeed = '';
+      const chordToFeed = '';
       const numberOfChordsNotConquered = parameters.stats.filter(
         (s) =>
           (parameters.speedGoal > s.averageSpeed && 10 >= 10) ||
@@ -332,7 +332,7 @@ export const generateChords = (
       );
       console.log('chordsSortedByTypingSpeed Library ' + parameters.stats);
 
-      let chordToFeed = '';
+      const chordToFeed = '';
       const numberOfChordsNotConquered = parameters.stats.filter(
         (s) => s.averageSpeed > parameters.speedGoal || s.averageSpeed === 0,
       ).length;

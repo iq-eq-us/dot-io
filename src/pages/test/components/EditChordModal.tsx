@@ -235,16 +235,12 @@ function EditChordsModal(): ReactElement {
                 )}
                 {trainingLevel == 'StM' && (
                   <Container>
-                    {console.log(
-                      'pull these chords ' + Object.keys(chordsToPullFrom),
-                    )}
-
-                    {StMIndexes.map((xhord) => {
+                    {StMIndexes.map((chord) => {
                       return (
                         <React.Fragment>
                           <SentenceAndStatsContainer>
                             <SentenceContainer>
-                              {Object.keys(chordsToPullFrom[xhord]).join(' ')}
+                              {Object.keys(chordsToPullFrom[chord]).join(' ')}
                             </SentenceContainer>
                             <SentenceStats>10 12 99 10</SentenceStats>
                           </SentenceAndStatsContainer>
