@@ -237,7 +237,7 @@ function EditChordsModal(): ReactElement {
                   <Container>
                     {StMIndexes.map((chord, index) => {
                       return (
-                        <SentenceAndStatsContainer>
+                        <SentenceAndStatsContainer key={Math.random()}>
                           <SentenceContainer>
                             {Object.keys(chordsToPullFrom[chord]).join(' ')}
                           </SentenceContainer>
