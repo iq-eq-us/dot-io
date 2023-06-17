@@ -43,7 +43,6 @@ function EditChordsModal(): ReactElement {
   payload.push(trainingMode);
 
   const chordsToPullFrom = useStoreState((store) => store.chordsToPullFrom);
-
   const storedChordsRepresentation = useStoreState(
     (store) => store.storedChordsRepresentation,
   );
@@ -59,7 +58,6 @@ function EditChordsModal(): ReactElement {
 
   const [tempChords, setTempChords] = useState(chords); //need to add and if for StM trainingLevel
 
-  console.log('These are the chords ' + chords);
   {
     tempChords.length == 0 && isShowingPortal
       ? [
@@ -204,7 +202,7 @@ function EditChordsModal(): ReactElement {
 
   const StMIndexes = [];
 
-  Object.keys(chordsToPullFrom).forEach((key, index) => {
+  Object.keys(chordLibrary.lexicalSentences).forEach((key, index) => {
     StMIndexes.push(key);
   });
 
@@ -261,7 +259,9 @@ function EditChordsModal(): ReactElement {
                           }}
                         >
                           <SentenceContainer>
-                            {Object.keys(chordsToPullFrom[chord]).join(' ')}
+                            {Object.keys(
+                              chordLibrary.lexicalSentences[chord],
+                            ).join(' ')}
                           </SentenceContainer>
                           <SentenceStats>{chord.length}</SentenceStats>
                           <SentenceStats>{chord.length}</SentenceStats>

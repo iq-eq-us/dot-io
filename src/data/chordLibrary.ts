@@ -80,6 +80,18 @@ export const chordLibrary: ChordLibrary = {
       'me in': [],
       'awe.': [],
     },
+    SentenceThree: {
+      'She practiced': [],
+      'practiced ballet': [],
+      'ballet diligently': [],
+      'diligently honing,': [],
+      'honing her': [],
+      'her technique': [],
+      'technique and': [],
+      'and perfecting': [],
+      'perfecting graceful': [],
+      'graceful movements': [],
+    },
   },
   lexicalSentencesTrios: {
     SentenceOne: {
