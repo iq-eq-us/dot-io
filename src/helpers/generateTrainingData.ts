@@ -254,33 +254,15 @@ export const generateChords = (
     }
     return allCharacters;
   } else if (parameters.trainingLevel == 'StM') {
-    parameters.storedTestData.length == 0 ? (checkIt = 0) : '';
+    parameters.storedTestData.length == 0 && parameters.wordTestNumberValue == 4
+      ? (checkIt = 0)
+      : '';
     // * Uncomment the next two lines to use just the alphabet to test with
     // const IS_TESTING = true;
     // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
     let allCharacters: string[] = [];
 
     if (parameters.moduleNumber == 4) {
-      // * Uncomment the next two lines to use just the alphabet to test with
-      // const IS_TESTING = true;
-      // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
-
-      const chordsSortedByTypingSpeed = parameters.stats.sort(
-        (a, b) => b.averageSpeed - a.averageSpeed,
-      );
-
-      const chordToFeed = '';
-      const numberOfChordsNotConquered = parameters.stats.filter(
-        (s) =>
-          (parameters.speedGoal > s.averageSpeed && 10 >= 10) ||
-          s.averageSpeed === 0,
-      ).length;
-      console.log(parameters.lexicalSentenceToChoose);
-
-      const numberOfChordsConquered = parameters.stats.filter(
-        (s) =>
-          s.averageSpeed > parameters.speedGoal && s.numberOfOccurrences >= 10,
-      ).length;
       const tempChords: string[] = Object.keys(
         parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
       );
@@ -309,28 +291,15 @@ export const generateChords = (
           break;
         }
         i++;
-        console.log('Check it ' + checkIt);
       }
       //This sets the count to zero once the entire sentence has been generated
       if (checkIt >= tempChords.length) {
         checkIt = 0;
       }
-
-      console.log(
-        'they type ' +
-          parameters.allTypedText.length +
-          ' ' +
-          checkIt +
-          ' ' +
-          parameters.continueSentenceFlow,
-      );
     } else {
-      console.log('Stored Length did I make it');
-
       const chordsSortedByTypingSpeed = parameters.stats.sort(
         (a, b) => b.averageSpeed - a.averageSpeed,
       );
-      console.log('chordsSortedByTypingSpeed Library ' + parameters.stats);
 
       const chordToFeed = '';
       const numberOfChordsNotConquered = parameters.stats.filter(
@@ -344,7 +313,7 @@ export const generateChords = (
         );
       }
 
-      allCharacters = [];
+      //allCharacters = [];
 
       const chordLibraryCharacters = Object.keys(
         parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],

@@ -142,6 +142,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setTimerValue: action((state, payload) => {
     state.timerValue = payload;
   }),
+  setLexicalSentencesIndex: action((state, payload) => {
+    state.lexicalSentencesIndex = payload;
+  }),
 
   /**
    * This must be run before you enter the training screen to ensure it is in the correct state for the corresponding scenario
@@ -229,9 +232,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         ),
       );
     else state.trainingStatistics = state.storedChordsFromDevice;
-    state.lexicalSentencesIndex = generateLexicalSentenceIndex(
-      state as unknown as TrainingStoreStateModel,
-    );
+    //state.lexicalSentencesIndex = generateLexicalSentenceIndex(
+    //  state as unknown as TrainingStoreStateModel,
+    //);
     if (
       state.currentTrainingScenario == 'LEXICAL' &&
       state.wordTestNumber != undefined &&
@@ -240,6 +243,10 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       state.storedTestTextData = generateTestTrainingData(
         state.chordsToPullFrom,
         parseInt(state.wordTestNumber),
+      );
+    } else if (state.trainingLevel == 'StM' && state.restartTestMode == false) {
+      state.storedTestTextData = Object.keys(
+        state?.chordsToPullFrom[state?.lexicalSentencesIndex],
       );
     } else if (
       state.currentTrainingScenario == 'LEXICAL' &&
@@ -281,6 +288,19 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     updateRecursionRateSettings(state);
+
+    console.log('THis is the storedLength' + state.storedTestTextData?.length);
+    console.log(
+      'THis is the storedLength allCharacters' +
+        state.allTypedCharactersStore?.length,
+    );
+
+    if (
+      state.storedTestTextData?.length == state.allTypedCharactersStore?.length
+    ) {
+      console.log('Yes training is done');
+      state.trainingIsDone = true;
+    }
   }),
   setErrorOccurredWhileAttemptingToTypeTargetChord: action((state, payload) => {
     state.errorOccurredWhileAttemptingToTypeTargetChord = payload;

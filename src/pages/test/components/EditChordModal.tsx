@@ -17,7 +17,6 @@ import {
   pickerV1,
   pickerLite,
 } from '../../../models/keyboardDropDownFolder/keyboardDropDown';
-import { Container } from 'react-bootstrap';
 
 export const triggerResizeForChordModal = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -32,9 +31,17 @@ function EditChordsModal(): ReactElement {
   );
   const trainingMode = useStoreState((store) => store.currentTrainingScenario);
   const trainingLevel = useStoreState((store) => store.trainingLevel);
+  const level = [trainingMode];
   const lexicalSentencesIndex = useStoreState(
     (store) => store.lexicalSentencesIndex,
   );
+  const setLexicalSentencesIndex = useStoreActions(
+    (store) => store.setLexicalSentencesIndex,
+  );
+  const beginTrainingMode = useStoreActions((store) => store.beginTrainingMode);
+  const payload: any[] = [];
+  payload.push(trainingMode);
+
   const chordsToPullFrom = useStoreState((store) => store.chordsToPullFrom);
 
   const storedChordsRepresentation = useStoreState(
@@ -237,7 +244,16 @@ function EditChordsModal(): ReactElement {
                   <Container>
                     {StMIndexes.map((chord, index) => {
                       return (
-                        <SentenceAndStatsContainer key={Math.random()}>
+                        <SentenceAndStatsContainer
+                          key={Math.random()}
+                          onClick={() => {
+                            [
+                              setLexicalSentencesIndex('' + chord + ''),
+                              togglePortal(!isShowingPortal),
+                              beginTrainingMode(payload),
+                            ];
+                          }}
+                        >
                           <SentenceContainer>
                             {Object.keys(chordsToPullFrom[chord]).join(' ')}
                           </SentenceContainer>
@@ -359,11 +375,11 @@ const ChordGrid = styled.div.attrs({
 const Container = styled.button.attrs({
   className: ` bg-white rounded overflow-x-hidden h-[400px] max-h-[90vh] flex flex-row w-full flex-wrap p-2 gap-x-1 gap-y-1 content-start overflow-scroll`,
 })``;
-const SentenceAndStatsContainer = styled.div.attrs({
-  className: `bg-gray-300 text-gray-900 w-full hover:bg-gray-400 rounded-full px-3 flex flex-row items-left pr-2 leading-loose`,
+const SentenceAndStatsContainer = styled.button.attrs({
+  className: `bg-gray-300 text-gray-900 w-full hover:bg-gray-400 rounded px-3 flex flex-row items-left pr-2 leading-loose`,
 })``;
 const SentenceContainer = styled.div.attrs({
-  className: `tile w-3/4`,
+  className: `tile w-3/4 text-left	`,
 })``;
 
 const SentenceStats = styled.div.attrs({
