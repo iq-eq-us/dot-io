@@ -264,13 +264,22 @@ function EditChordsModal(): ReactElement {
                             ).join(' ')}
                           </SentenceContainer>
                           <SentenceStats>
-                            {chordLibrary.lexicalSentences[chord].length}
+                            {
+                              Object.keys(chordLibrary.lexicalSentences[chord])
+                                .length
+                            }
                           </SentenceStats>
                           <SentenceStats>
-                            {chordLibrary.lexicalSentences[chord].length}
+                            {
+                              Object.keys(chordLibrary.lexicalSentences[chord])
+                                .length
+                            }
                           </SentenceStats>
                           <SentenceStats>
-                            {chordLibrary.lexicalSentences[chord].length}
+                            {
+                              Object.keys(chordLibrary.lexicalSentences[chord])
+                                .length
+                            }
                           </SentenceStats>
                         </SentenceAndStatsContainer>
                       );
