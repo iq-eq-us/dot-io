@@ -289,16 +289,11 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // @ts-ignore
     updateRecursionRateSettings(state);
 
-    console.log('THis is the storedLength' + state.storedTestTextData?.length);
-    console.log(
-      'THis is the storedLength allCharacters' +
-        state.allTypedCharactersStore?.length,
-    );
-
     if (
-      state.storedTestTextData?.length == state.allTypedCharactersStore?.length
+      state.storedTestTextData?.length ==
+        state.allTypedCharactersStore?.length &&
+      state.moduleNumber == 4
     ) {
-      console.log('Yes training is done');
       state.trainingIsDone = true;
     }
   }),
