@@ -263,9 +263,15 @@ function EditChordsModal(): ReactElement {
                               chordLibrary.lexicalSentences[chord],
                             ).join(' ')}
                           </SentenceContainer>
-                          <SentenceStats>{chord.length}</SentenceStats>
-                          <SentenceStats>{chord.length}</SentenceStats>
-                          <SentenceStats>{chord.length}</SentenceStats>
+                          <SentenceStats>
+                            {chordLibrary.lexicalSentences[chord].length}
+                          </SentenceStats>
+                          <SentenceStats>
+                            {chordLibrary.lexicalSentences[chord].length}
+                          </SentenceStats>
+                          <SentenceStats>
+                            {chordLibrary.lexicalSentences[chord].length}
+                          </SentenceStats>
                         </SentenceAndStatsContainer>
                       );
                     })}
