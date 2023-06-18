@@ -184,6 +184,7 @@ export function TextPrompt(): ReactElement {
     arr: any,
   ) {
     let displayArray = [];
+    console.log('Stored test text data ' + storedTestTextData);
     if (allTypedText.length >= 0 && storedTestTextData != undefined) {
       indexOfTargetChord - 1 == 0 &&
       targetIndexForWhatErrorTextToShow != allTypedText.length - 1

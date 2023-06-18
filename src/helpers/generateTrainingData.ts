@@ -325,6 +325,9 @@ export const generateChords = (
         allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
       }
     }
+    for (let i = 0; i < allCharacters.length; i++) {
+      parameters.storedTestData?.push(allCharacters[i]);
+    }
     return allCharacters;
   } else {
     // * Uncomment the next two lines to use just the alphabet to test with

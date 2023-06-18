@@ -244,10 +244,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         state.chordsToPullFrom,
         parseInt(state.wordTestNumber),
       );
-    } else if (state.trainingLevel == 'StM' && state.restartTestMode == false) {
-      state.storedTestTextData = Object.keys(
-        state?.chordsToPullFrom[state?.lexicalSentencesIndex],
-      );
     } else if (
       state.currentTrainingScenario == 'LEXICAL' &&
       state.wordTestNumber != undefined &&
