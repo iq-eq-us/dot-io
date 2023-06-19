@@ -11,15 +11,12 @@ function RefreshButton(): ReactElement {
   const trainingSceneario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
-  const currentWordTestNumber = useStoreState((store) => store.wordTestNumber);
   const setRestartTestMode = useStoreActions(
     (store) => store.setRestartTestMode,
   );
-  const mode = useStoreState((store) => store.restartTestMode);
 
   const payload = [];
   payload.push(trainingSceneario);
-  payload.push(currentWordTestNumber);
   function letsGoAgain() {
     sessionStorage.setItem('Refresh', JSON.stringify(1));
     sessionStorage.removeItem('CutomTierTestValue');

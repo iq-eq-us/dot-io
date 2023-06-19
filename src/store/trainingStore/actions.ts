@@ -264,6 +264,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       payload[0] === 'LEXICOGRAPHIC' ||
       payload[0] === 'SUPERSONIC' ||
       payload[0] === 'CUSTOMTIER'
+      // state.trainingLevel == 'StM'
     )
       state.isDisplayingChordEditModal = true;
     else state.isDisplayingChordEditModal = false;
@@ -559,6 +560,7 @@ function resetTrainingStore(state: TrainingStoreStateModel) {
   state.isShowingPlusIcon = false;
   state.numberOfWordsTypedCorrectly = 0;
   state.numberOfErrorsArrayForTestMode = [];
+  state.isDisplayingChordEditModal = false;
 }
 
 function resetTargetChordMetaInformation(state: TrainingStoreModel) {

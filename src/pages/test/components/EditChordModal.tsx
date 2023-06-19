@@ -269,52 +269,47 @@ function EditChordsModal(): ReactElement {
                                 .length
                             }
                           </SentenceStats>
-                          <SentenceStats>
-                            {
-                              Object.keys(chordLibrary.lexicalSentences[chord])
-                                .length
-                            }
-                          </SentenceStats>
-                          <SentenceStats>
-                            {
-                              Object.keys(chordLibrary.lexicalSentences[chord])
-                                .length
-                            }
-                          </SentenceStats>
+                          <SentenceStats>{'0'}</SentenceStats>
+                          <SentenceStats>{'0'}</SentenceStats>
                         </SentenceAndStatsContainer>
                       );
                     })}
                   </Container>
                 )}
+                {trainingLevel != 'StM' && (
+                  <Row>
+                    <div className="relative w-full mt-2">
+                      <ChordInput
+                        type="text"
+                        id="ChordModalInput"
+                        placeholder="New chord..."
+                        ref={inputRef}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') addChords();
+                        }}
+                      />
 
-                <Row>
-                  <div className="relative w-full mt-2">
-                    <ChordInput
-                      type="text"
-                      id="ChordModalInput"
-                      placeholder="New chord..."
-                      ref={inputRef}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') addChords();
-                      }}
-                    />
-
-                    <div
-                      {...parentProps}
-                      className="absolute right-0 top-0 h-full flex flex-col items-center justify-center w-10"
-                    >
-                      <HelpCircleIcon />
+                      <div
+                        {...parentProps}
+                        className="absolute right-0 top-0 h-full flex flex-col items-center justify-center w-10"
+                      >
+                        <HelpCircleIcon />
+                      </div>
                     </div>
-                  </div>
-                  {Popper}
+                    {Popper}
 
-                  <AddButton onClick={addChords}>Add</AddButton>
-                </Row>
+                    <AddButton onClick={addChords}>Add</AddButton>
+                  </Row>
+                )}
 
                 <BottomButtonRow>
                   <ThirdButton title="Cancel" onClick={cancelEditing} />
-                  <ThirdButton title="Confirm" onClick={confirmEditing} />
-                  <ThirdButton title="Clear" onClick={clearChords} />
+                  {trainingLevel != 'StM' && (
+                    <React.Fragment>
+                      <ThirdButton title="Confirm" onClick={confirmEditing} />
+                      <ThirdButton title="Clear" onClick={clearChords} />
+                    </React.Fragment>
+                  )}
                 </BottomButtonRow>
               </div>
             </div>
@@ -335,15 +330,11 @@ export const getDefaultChords = (
   const globalDictionaries = getGlobalDictionaries();
   if (trainingLevel == 'StM') {
     const tp = chordsToPullFrom as ChordLibraryRecord;
-    console.log(tp[lexicalSentencesIndex]);
     return Object.keys(tp[lexicalSentencesIndex]);
   }
   if (trainingMode && globalDictionaries[trainingMode]) {
-    console.log(globalDictionaries[trainingMode] as ChordLibraryRecord);
-
     return Object.keys(globalDictionaries[trainingMode] as ChordLibraryRecord);
   } else if (trainingMode == 'ALLCHORDS') {
-    console.log;
     return Object.keys(
       getChordLibraryForTrainingScenario(
         trainingMode,
