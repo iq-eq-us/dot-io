@@ -207,7 +207,7 @@ function EditChordsModal(): ReactElement {
   );
 
   const StMIndexes = [];
-  let stmStats = trainingStatistics?.stmStatistics.find(
+  let stmStats = trainingStatistics?.stmStatistics?.find(
     (c) => c.sentenceIndex === lexicalSentencesIndex,
   );
   let tempWPM = '0';
@@ -258,7 +258,7 @@ function EditChordsModal(): ReactElement {
                     </Header>
 
                     {StMIndexes.map((sentenceIndex, index) => {
-                      stmStats = trainingStatistics?.stmStatistics.find(
+                      stmStats = trainingStatistics?.stmStatistics?.find(
                         (c) => c.sentenceIndex === sentenceIndex,
                       );
                       stmStats == undefined || null

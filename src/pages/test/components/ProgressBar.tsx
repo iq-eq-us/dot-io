@@ -167,6 +167,9 @@ export function ProgressBar(): ReactElement {
           currentTrainingScenario,
         );
 
+  console.log('deducing rwpm ' + timeTakenToTypeEachWordInOrder);
+  console.log('deducing rwpm ' + averageOfLocalStats);
+
   let sumOfChordsMastered = 0;
   storedChordsFromDevice?.statistics?.forEach((d) => {
     sumOfChordsMastered +=
