@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from 'react';
-import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
 import useNumberOfChordsConquered from '../../../hooks/useChordsConquered';
 import useChordsNotConquered, {
   useTotalChordsToConquer,
@@ -57,6 +56,33 @@ export function ProgressBar(): ReactElement {
     (store) => store.currentTrainingScenario,
   );
 
+  const totalNumberOfChords = useTotalChordsToConquer();
+  const tier = useStoreState((store) => store.trainingLevel);
+
+  const allTypedText = useStoreState(
+    (store: any) => store.allTypedCharactersStore,
+  );
+  const storedTrainingStatistics = useStoreState(
+    (store) => store.storedChordsFromDevice?.statistics,
+  );
+
+  const trainingStatistics = useStoreState(
+    (store) => store.trainingStatistics.statistics,
+  );
+  const trainingSettings = useStoreState((store) => store.trainingSettings);
+
+  const trainingSessionErrors = useStoreState(
+    (store) => store.trainingSessionErrors,
+  );
+  const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
+
+  const storedChordsFromDevice = useStoreState(
+    (store) => store.storedChordsFromDevice,
+  );
+  const timeTakenToTypeEachWordInOrder = useStoreState(
+    (store: any) => store.timeTakenToTypeEachWordInOrder,
+  );
+
   averageOfLocalStats = wpmMethodCalculator(
     getCumulativeAverageChordTypeTime(localTrainingStatistics),
     currentTrainingScenario,
@@ -91,25 +117,6 @@ export function ProgressBar(): ReactElement {
     sumErrorsFromStoredDevice += d.numberOfErrors;
     sumOccurrencesFromStoredDevice += d.numberOfOccurrences;
   });
-
-  const wpm = useSessionWordsPerMinute();
-  const totalNumberOfChords = useTotalChordsToConquer();
-  const tier = useStoreState((store) => store.trainingLevel);
-
-  const allTypedText = useStoreState(
-    (store: any) => store.allTypedCharactersStore,
-  );
-  const storedTrainingStatistics = useStoreState(
-    (store) => store.storedChordsFromDevice?.statistics,
-  );
-
-  const trainingStatistics = useStoreState(
-    (store) => store.trainingStatistics.statistics,
-  );
-  const trainingSettings = useStoreState((store) => store.trainingSettings);
-  const trainingSessionErrors = useStoreState(
-    (store) => store.trainingSessionErrors,
-  );
 
   const [maxValue, setMaxValue] = useState<number>();
 
@@ -146,16 +153,7 @@ export function ProgressBar(): ReactElement {
   const [minValue, setMinValue] = useState<number>(0);
   let persistantValue = 0;
 
-  const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
-
   //wpmMethodCalculator((average))
-
-  const storedChordsFromDevice = useStoreState(
-    (store) => store.storedChordsFromDevice,
-  );
-  const timeTakenToTypeEachWordInOrder = useStoreState(
-    (store: any) => store.timeTakenToTypeEachWordInOrder,
-  );
 
   const rWPM =
     timeTakenToTypeEachWordInOrder?.length == 0

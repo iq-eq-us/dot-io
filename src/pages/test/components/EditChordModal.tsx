@@ -17,6 +17,10 @@ import {
   pickerV1,
   pickerLite,
 } from '../../../models/keyboardDropDownFolder/keyboardDropDown';
+import {
+  avgCalculatorForTheSpeedOfLastTen,
+  stmCalculator,
+} from '../../../../src/helpers/aggregation';
 
 export const triggerResizeForChordModal = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -87,6 +91,8 @@ function EditChordsModal(): ReactElement {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const trainingScenario = useCurrentTrainingScenario();
+
+  const trainingStatistics = useStoreState((store) => store.trainingStatistics);
 
   const updateChordsUsedInStore = useStoreActions(
     (store) => store.updateChordsUsedForTraining,
@@ -201,6 +207,10 @@ function EditChordsModal(): ReactElement {
   );
 
   const StMIndexes = [];
+  let stmStats = trainingStatistics?.stmStatistics.find(
+    (c) => c.sentenceIndex === lexicalSentencesIndex,
+  );
+  let tempWPM = '0';
 
   Object.keys(chordLibrary.lexicalSentences).forEach((key, index) => {
     StMIndexes.push(key);
@@ -246,13 +256,22 @@ function EditChordsModal(): ReactElement {
                       <HeaderItems>WPM</HeaderItems>
                       <HeaderItems>StM</HeaderItems>
                     </Header>
-                    {StMIndexes.map((chord, index) => {
+
+                    {StMIndexes.map((sentenceIndex, index) => {
+                      stmStats = trainingStatistics?.stmStatistics.find(
+                        (c) => c.sentenceIndex === sentenceIndex,
+                      );
+                      stmStats == undefined || null
+                        ? (tempWPM = '0')
+                        : (tempWPM = avgCalculatorForTheSpeedOfLastTen(
+                            stmStats.speedOfLastTenTests,
+                          ).toFixed(0));
                       return (
                         <SentenceAndStatsContainer
                           key={Math.random()}
                           onClick={() => {
                             [
-                              setLexicalSentencesIndex('' + chord + ''),
+                              setLexicalSentencesIndex('' + sentenceIndex + ''),
                               togglePortal(!isShowingPortal),
                               beginTrainingMode(payload),
                             ];
@@ -260,17 +279,25 @@ function EditChordsModal(): ReactElement {
                         >
                           <SentenceContainer>
                             {Object.keys(
-                              chordLibrary.lexicalSentences[chord],
+                              chordLibrary.lexicalSentences[sentenceIndex],
                             ).join(' ')}
                           </SentenceContainer>
                           <SentenceStats>
                             {
-                              Object.keys(chordLibrary.lexicalSentences[chord])
-                                .length
+                              Object.keys(
+                                chordLibrary.lexicalSentences[sentenceIndex],
+                              ).length
                             }
                           </SentenceStats>
-                          <SentenceStats>{'0'}</SentenceStats>
-                          <SentenceStats>{'0'}</SentenceStats>
+                          <SentenceStats>{tempWPM}</SentenceStats>
+                          <SentenceStats>
+                            {stmCalculator(
+                              tempWPM,
+                              Object.keys(
+                                chordLibrary.lexicalSentences[sentenceIndex],
+                              ).length,
+                            ).toFixed(2)}
+                          </SentenceStats>
                         </SentenceAndStatsContainer>
                       );
                     })}

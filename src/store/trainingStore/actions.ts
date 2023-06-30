@@ -15,9 +15,11 @@ import {
 import {
   ChordStatistics,
   createEmptyChordStatistics,
+  createEmptyLexicalStMStatistics,
   createEmptyChordStatisticsFromDevice,
   MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
   TrainingStatistics,
+  StoredStMStatistics,
 } from '../../models/trainingStatistics';
 import type {
   TrainingStoreActionsModel,
@@ -29,9 +31,16 @@ import type { WordTrainingValues } from 'src/models/wordTrainingValues';
 import type { TrainingLevels } from 'src/models/trainingLevels';
 import store from '../store';
 import type { ChordStatisticsFromDevice } from 'src/models/trainingStatisticsFromDevice';
-import { oneTimeCreateStoredChordStats } from '../../pages/test/components/TrainingModeSelector';
+import {
+  oneTimeCreateStoredChordStats,
+  oneTimeCreateLexicalStoredSentences,
+} from '../../pages/test/components/TrainingModeSelector';
 import { chordLibrary } from '../../data/chordLibrary';
-import { avgCalculatorForTheSpeedOfLastTen } from '../../helpers/aggregation';
+import {
+  avgCalculatorForTheSpeedOfLastTen,
+  getCumulativeAverageChordTypeTime,
+  wpmMethodCalculator,
+} from '../../helpers/aggregation';
 
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
@@ -71,7 +80,10 @@ export const setGlobalDictionaries = (
 ): void => {
   globalDictionaries = dict;
 };
-
+export interface TrainingStatistics {
+  statistics: ChordStatistics[];
+  stmStatistics: StoredStMStatistics[];
+}
 /**
  * Here are all of the actions that modify the state in the ./state folder.
  * Any change made to state here will automatically be reflected in any component that consumes this state.
@@ -195,6 +207,11 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         state.trainingLevel,
         dictNameOfLibrary[state.currentTrainingScenario],
       );
+    else if (state.trainingLevel == 'StM')
+      oneTimeCreateLexicalStoredSentences(
+        state.currentTrainingScenario,
+        state.trainingLevel,
+      );
     //This data set is created in the TrainingModeSelector.tsx
     state.storedChordStatistics = JSON?.parse(
       localStorage?.getItem(state.trainingLevel + '_' + payload[0]),
@@ -232,6 +249,9 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         ),
       );
     else state.trainingStatistics = state.storedChordsFromDevice;
+
+    state.trainingStatistics.stmStatistics = getStMStats();
+
     //state.lexicalSentencesIndex = generateLexicalSentenceIndex(
     //  state as unknown as TrainingStoreStateModel,
     //);
@@ -291,7 +311,66 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         state.allTypedCharactersStore?.length &&
       state.moduleNumber == 4
     ) {
+      //One time create the localStorage item
+      if (state.trainingStatistics.stmStatistics == null || undefined) {
+        localStorage.setItem(
+          'StMStatistics',
+          JSON.stringify({ stmStatistics: [] }),
+        );
+        state.trainingStatistics.stmStatistics = JSON.parse(
+          localStorage.getItem('StMStatistics'),
+        ).stmStatistics;
+      }
+      const emptyStmStats = createEmptyLexicalStMStatistics(
+        state.lexicalSentencesIndex,
+        state.currentTrainingScenario,
+      ) as StoredStMStatistics;
+
+      let stmStats = state?.trainingStatistics?.stmStatistics.find(
+        (c: StoredStMStatistics) =>
+          c.sentenceIndex === state.lexicalSentencesIndex,
+      );
+
+      const couldFindChordInLibrary = !!stmStats;
+
+      if (!couldFindChordInLibrary) stmStats = emptyStmStats;
+
+      const averageWPM = wpmMethodCalculator(
+        getCumulativeAverageChordTypeTime(
+          state.localTrainingStatistics.statistics,
+        ),
+      );
+      stmStats.numberOfOccurrences = stmStats.numberOfOccurrences + 1;
+
+      if (stmStats.speedOfLastTenTests.length == 10) {
+        stmStats.speedOfLastTenTests.push(averageWPM);
+        stmStats.speedOfLastTenTests.shift();
+      } else {
+        stmStats.speedOfLastTenTests.push(averageWPM);
+      }
+      stmStats.averageTestSpeed = avgCalculatorForTheSpeedOfLastTen(
+        stmStats.speedOfLastTenTests,
+      );
+
       state.trainingIsDone = true;
+
+      if (couldFindChordInLibrary) {
+        state.trainingStatistics = {
+          stmStatistics: state.trainingStatistics.stmStatistics.map(
+            (e: StoredStMStatistics) =>
+              e.sentenceIndex === stmStats.sentenceIndex ? stmStats : e,
+          ),
+        };
+      } else {
+        state.trainingStatistics.stmStatistics.push(stmStats);
+      }
+
+      localStorage.setItem(
+        'StMStatistics',
+        JSON.stringify({
+          stmStatistics: state.trainingStatistics.stmStatistics,
+        }),
+      ); //Store downloaded chords in local storage
     }
   }),
   setErrorOccurredWhileAttemptingToTypeTargetChord: action((state, payload) => {
@@ -310,7 +389,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       //    Number of target chords is set to the number of existing chords whose average speed is greater than the new speed goal
       const speedThesholdToCompleteLevel = state.trainingSettings.speedGoal;
       const hasCompletedLevel =
-        state.trainingStatistics.statistics.filter(
+        state.trainingStatistics.statistics?.filter(
           (s) =>
             s.averageSpeed === 0 ||
             s.averageSpeed > speedThesholdToCompleteLevel,
@@ -501,10 +580,6 @@ function checkIfShouldProceedToNextTargetChord(
     wordValue[0] != ' ' &&
     wordValue[0] != undefined
   ) {
-    console.log(
-      'logging ' + storeState.compareText[storeState.compareText.length - 1],
-    );
-
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();
     actions.setTypedTrainingText('');
@@ -739,6 +814,8 @@ export async function calculateStatisticsForTargetChord(
     chordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(
       chordStats.speedOfLastTen,
     );
+
+    //  createEmptyChordStatistics()
 
     if (userIsTypingFirstChord) {
       if (chordStats.numberOfOccurrences != 0)
@@ -1053,6 +1130,16 @@ function updateRecursionRateSettings(state: TrainingStoreModel) {
     state.trainingSettings.recursionRate = recursionRate;
   }
 }
+const getStMStats = () => {
+  const storedSTMData = localStorage.getItem('StMStatistics');
+  // JSON.parse(localStorage.getItem('StMStatistics')).stmStatistics
+  if (storedSTMData == null || undefined) {
+    return [];
+  } else {
+    return JSON.parse(storedSTMData).stmStatistics;
+  }
+};
+
 const generateLexicalSentenceIndex = (state: TrainingStoreStateModel) => {
   const allCharacters = Object.keys(state.chordsToPullFrom);
   const returnRandom =

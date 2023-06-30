@@ -6,7 +6,10 @@ import type { KeyHighlightPositionLite } from './keyHighlightPositionsCharachord
 
 import type { TrainingScenario } from './trainingScenario';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
-import type { TrainingStatistics } from './trainingStatistics';
+import type {
+  TrainingStatistics,
+  StoredStMStatistics,
+} from './trainingStatistics';
 import type { WordTrainingValues } from './wordTrainingValues';
 import type { TrainingLevels } from './trainingLevels';
 import type { TimerModel } from './timerModel';

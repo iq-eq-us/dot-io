@@ -255,6 +255,28 @@ export async function oneTimeCreateStoredChordStats(
     );
   }
 }
+export async function oneTimeCreateLexicalStoredSentences(
+  value: any,
+  tier: any,
+) {
+  const check = localStorage?.getItem(tier + '_Scores');
+  const ItemArray = [];
+  if (check == null || undefined) {
+    Object.keys(chordLibrary.lexicalSentences).forEach((key, index) => {
+      ItemArray.push(key);
+    });
+    const storedChordStatArray = [];
+    for (let i = 0; i < ItemArray.length; i++) {
+      storedChordStatArray.push(
+        createEmptyLexicalSentenceStatistics(ItemArray[i], value),
+      );
+    }
+    localStorage.setItem(
+      tier + '_Scores',
+      JSON.stringify({ statistics: storedChordStatArray }),
+    );
+  }
+}
 const ItemsContainer = styled.div`
   height: 50px;
   display: flex;

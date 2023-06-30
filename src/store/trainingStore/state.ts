@@ -59,6 +59,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   trainingIsDone: false,
   trainingStatistics: {
     statistics: [],
+    stmStatistics: [],
   },
   localTrainingStatistics: {
     statistics: [],

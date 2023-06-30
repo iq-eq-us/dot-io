@@ -75,6 +75,10 @@ export const avgCalculatorForTheSpeedOfLastTen = (value: number[]) => {
   return avg;
 };
 
+export const stmCalculator = (inWPM, numberOfChords) => {
+  return inWPM / 250 / (numberOfChords / 10);
+};
+
 export const getCumulativeValueByPropertyName = <T>(
   object: T[],
   propertyName: keyof T,

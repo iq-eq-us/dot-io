@@ -11,6 +11,15 @@ export interface ChordStatistics {
   speedOfLastTen: Array<number>;
 }
 
+export interface StoredStMStatistics {
+  sentenceIndex: string;
+  averageTestSpeed: number;
+  speedOfLastTenTests: Array<number>;
+  lastSpeed: number;
+  numberOfOccurrences: number;
+  scenario?: TrainingScenario;
+}
+
 export interface ChordStatisticsFromDevice {
   id: string;
   displayTitle: string;
@@ -27,7 +36,22 @@ export interface ChordStatisticsFromDevice {
 export interface TrainingStatistics {
   statistics: ChordStatistics[];
   statisticsFromDevice?: ChordStatisticsFromDevice[];
+  stmStatistics?: StoredStMStatistics[];
 }
+
+export const createEmptyLexicalStMStatistics = (
+  id: string,
+  scenario?: TrainingScenario,
+): StoredStMStatistics => {
+  return {
+    sentenceIndex: id,
+    averageTestSpeed: 0,
+    speedOfLastTenTests: [],
+    lastSpeed: 0,
+    numberOfOccurrences: 0,
+    scenario: scenario,
+  };
+};
 
 export const createEmptyChordStatistics = (
   id: string,

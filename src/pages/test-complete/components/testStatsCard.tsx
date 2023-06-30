@@ -5,14 +5,10 @@ import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { TestControlRow } from './testControlsRow';
-import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
 import { wpmMethodCalculator } from '../../../helpers/aggregation';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 
 export function TestStatsCard(): ReactElement {
-  const beginTraining = useStoreActions(
-    (store: any) => store.beginTrainingMode,
-  );
   const trainingSceneario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
@@ -21,19 +17,13 @@ export function TestStatsCard(): ReactElement {
     (store: any) => store.trainingStatistics,
   );
   const teir = useStoreState((store) => store.trainingLevel);
-  const testNumber = useStoreState((store) => store.wordTestNumber);
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics.statistics,
   );
 
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
 
-  const wpm = useSessionWordsPerMinute();
-
   const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM);
-  const numberOfWordsTypedCorrectly = useStoreState(
-    (store) => store.numberOfWordsTypedCorrectly,
-  );
 
   const payload = [];
   let thisVal = 0;
@@ -44,7 +34,7 @@ export function TestStatsCard(): ReactElement {
   payload.push(trainingSceneario);
   payload.push(currentWordTestNumber);
 
-  currentTrainingSetting.statistics.forEach((d) => {
+  currentTrainingSetting.statistics?.forEach((d) => {
     thisVal += d.numberOfErrors;
     sumOccurrences += d.displayTitle.length * d.numberOfOccurrences;
     //console.log(d.displayTitle.length * d.numberOfOccurrences);
