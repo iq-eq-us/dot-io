@@ -760,10 +760,11 @@ export async function calculateStatisticsForTargetChord(
     numberOfOccurences = -1;
     store.startTimer = true;
   }
+
   if (!userIsTypingFirstChord && !store.userIsEditingPreviousWord) {
     store.wordsPracticedInOrder.push(id);
   }
-
+  //Local Store Calculations
   if (!userIsTypingFirstChord && !store.userIsEditingPreviousWord) {
     store.timeTakenToTypeEachWordInOrder.push(regulatedTimeToChord);
     store.timeTakenToTypePreviousChord = localChordStats?.lastSpeed;
@@ -811,12 +812,13 @@ export async function calculateStatisticsForTargetChord(
       chordStats.speedOfLastTen,
     );
 
-    //  createEmptyChordStatistics()
-
     if (userIsTypingFirstChord) {
       if (chordStats.numberOfOccurrences != 0)
         chordStats.numberOfOccurrences = chordStats.numberOfOccurrences - 1;
-      else chordStats.numberOfOccurrences = chordStats.numberOfOccurrences = 0;
+      else {
+        chordStats.numberOfOccurrences = chordStats.numberOfOccurrences - 1;
+      }
+      console.log('Calculating hthe occurence and subtracting');
     } else {
       chordStats.numberOfOccurrences =
         chordStats.numberOfOccurrences + numberOfOccurences;
@@ -983,7 +985,7 @@ export async function calculateStatisticsForTargetChord(
       (chordStats.averageSpeed * chordStats.numberOfOccurrences +
         chordStats.lastSpeed) /
       (chordStats.numberOfOccurrences + 1);
-    chordStats.numberOfOccurrences++;
+    // chordStats.numberOfOccurrences++;
 
     if (couldFindChordInLibrary) {
       // Replace chord stats object in chord stats list

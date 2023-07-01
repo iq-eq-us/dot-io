@@ -17,6 +17,7 @@ import { truncateString } from '../../../helpers/truncateString';
 import {
   wpmMethodCalculatorForStoredChords,
   wpmMethodCalculator,
+  stmCalculator,
 } from '../../../helpers/aggregation';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
@@ -221,10 +222,21 @@ function returnStatisticsColumnContent(data: Data, index: number) {
         </RowItem>
       </React.Fragment>
     );
-  } else if (tier == 'CHM') {
+  } else if (tier == 'StM') {
+    const wpm =
+      wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
+      'Infinity'
+        ? '0'
+        : (wpmValue / 100).toFixed(2);
     return (
       <React.Fragment>
         <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
+        <RowItem>
+          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
+          'Infinity'
+            ? '0'
+            : wpmValue.toFixed()}
+        </RowItem>
         <RowItem>
           {isNaN(
             (item?.numberOfOccurrences - item?.numberOfErrors) /
@@ -237,17 +249,11 @@ function returnStatisticsColumnContent(data: Data, index: number) {
                 100
               ).toFixed(2)}
         </RowItem>
+
         <RowItem>
-          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
-          'Infinity'
+          {isNaN(stmCalculator(wpm, item?.numberOfOccurrences).toFixed(2))
             ? '0'
-            : wpmValue.toFixed()}
-        </RowItem>
-        <RowItem>
-          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
-          'Infinity'
-            ? '0'
-            : (wpmValue / 100).toFixed(2)}
+            : stmCalculator(wpm, item?.numberOfOccurrences).toFixed(2)}
         </RowItem>
       </React.Fragment>
     );
@@ -322,6 +328,21 @@ function returnHeader(tier: string) {
         </HeaderItemRow>
         <HeaderItemRow helpText="Your CHM for this test this is based on your last 10 attempts at the given word.">
           ChM
+        </HeaderItemRow>
+      </React.Fragment>
+    );
+  } else if (tier == 'StM') {
+    return (
+      <React.Fragment>
+        <HeaderItemRow helpText="The type of test associated with these metrics." />
+        <HeaderItemRow helpText="Your typing accuracy for this teir is representative of your typing accuracy all time for a given word.">
+          Speed
+        </HeaderItemRow>
+        <HeaderItemRow helpText="Your Average WPM for this test is based or your last 10 attempts at the given word.">
+          %
+        </HeaderItemRow>
+        <HeaderItemRow helpText="Your CHM for this test this is based on your last 10 attempts at the given word.">
+          StM
         </HeaderItemRow>
       </React.Fragment>
     );
@@ -426,9 +447,6 @@ function returnStatisticsColumnHeader(data: Data) {
                 ).toFixed(2) + '%'
             : ''}
         </RowStatItem>
-        {
-          //<RowStatItem>{data.displayHUD ? ((sumOfLWPM) == 0 ? '0' :  ((sumOfLWPM/totalChordsPracticed)).toFixed(2)): ''}</RowStatItem>
-        }
         <RowStatItem>
           {isNaN(sumOfAWPM / (numberOfChordsConquered - numberOfChord))
             ? '0'
@@ -463,6 +481,33 @@ function returnStatisticsColumnHeader(data: Data) {
         </RowStatItem>
         <RowStatItem>
           {data.displayHUD ? sumOfAverages.toFixed(2) : ''}
+        </RowStatItem>
+      </React.Fragment>
+    );
+  } else if (tier == 'StM') {
+    return (
+      <React.Fragment>
+        <RowStatItem>Total</RowStatItem>
+        <RowStatItem>
+          {data.displayHUD
+            ? average == 0
+              ? '0'
+              : wpmMethodCalculator(average, data.trainingScenario).toFixed()
+            : ''}
+        </RowStatItem>
+        <RowStatItem>
+          {data.displayHUD
+            ? isNaN((sumOccurrences - sumErrors) / sumOccurrences)
+              ? '0'
+              : (((sumOccurrences - sumErrors) / sumOccurrences) * 100).toFixed(
+                  2,
+                ) + '%'
+            : ''}
+        </RowStatItem>
+        <RowStatItem>
+          {isNaN(stmCalculator(sumOfAverages, sumOccurrences).toFixed(2))
+            ? '0'
+            : stmCalculator(sumOfAverages, sumOccurrences).toFixed(2)}
         </RowStatItem>
       </React.Fragment>
     );
