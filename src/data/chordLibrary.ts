@@ -116,7 +116,7 @@ export const chordLibrary: ChordLibrary = {
       'her technique and': [],
       'technique and perfecting': [],
       'and perfecting graceful': [],
-      'perfecting graceful movements': [],
+      'graceful movements.': [],
     },
   },
   /*
