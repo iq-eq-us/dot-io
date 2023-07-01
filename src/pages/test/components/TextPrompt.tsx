@@ -184,13 +184,11 @@ export function TextPrompt(): ReactElement {
     arr: any,
   ) {
     let displayArray = [];
-    console.log('Stored test text data ' + storedTestTextData);
     if (allTypedText.length >= 0 && storedTestTextData != undefined) {
       indexOfTargetChord - 1 == 0 &&
       targetIndexForWhatErrorTextToShow != allTypedText.length - 1
         ? setTargetIndexForWhatErrorTextToShow(allTypedText.length - 1)
         : '';
-      //console.log('This is the stored test wordsasdasdj njk ajks djkm akdasd ' + setS)
 
       if (targetIndexForWhatErrorTextToShow > allTypedText.length) {
         setTargetIndexForWhatErrorTextToShow(0);

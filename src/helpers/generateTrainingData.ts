@@ -56,7 +56,7 @@ let pageAccessedByReload =
 //Method to remove session value and set refresh constant back to false
 function removeSessionValueAndSettoFalse() {
   sessionStorage.removeItem('tempTestDeIncrement');
-
+  checkIt = 0;
   pageAccessedByReload = false;
 }
 
@@ -67,12 +67,12 @@ function hasWhiteSpace(s) {
 export const generateChords = (
   parameters: ChordGenerationParameters,
 ): string[] => {
+  parameters.storedTestData.length == 0 ? (checkIt = 0) : '';
   if (
     parameters.scenario == 'LEXICAL' &&
     parameters.wordTestNumberValue != undefined
   ) {
     const wordTestValue = parameters.wordTestNumberValue;
-    console.log('nummy ' + wordTestValue);
     pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
 
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
@@ -135,7 +135,6 @@ export const generateChords = (
 
     const wordTestValue = chordLibraryCharacters.length;
     pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
-    const checkVal = sessionStorage.getItem('tempTestDeIncrement');
     if (
       sessionStorage.getItem('tempTestDeIncrement') == undefined ||
       isNaN(parseInt(sessionStorage.getItem('tempTestDeIncrement')))

@@ -72,7 +72,7 @@ export function ProgressBar(): ReactElement {
     (store) => store.trainingStatistics.statistics,
   );
   const trainingStats = useStoreState((store) => store.trainingStatistics);
-  trainingStats?.stmStatistics.forEach((d) => {
+  trainingStats?.stmStatistics?.forEach((d) => {
     const avg = avgCalculatorForTheSpeedOfLastTen(d.speedOfLastTenTests);
     const stmV = stmCalculator(avg);
     if (stmV >= 1) {

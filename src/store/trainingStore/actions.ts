@@ -248,7 +248,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       );
     else if (state.trainingLevel == 'StM') {
       state.trainingStatistics = generateEmptyChordStatistics(
-        state.chordsToPullFrom[state.lexicalSentencesIndex],
+        state.chordsToPullFrom[state?.lexicalSentencesIndex],
         payload[0] as TrainingScenario,
       );
     } else state.trainingStatistics = state.storedChordsFromDevice;
@@ -790,8 +790,6 @@ export async function calculateStatisticsForTargetChord(
       store.localTrainingStatistics.statistics.push(chordStats);
     }
   }
-
-  console.log('yeppie ' + store.localTrainingStatistics.statistics.length);
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
   if (store.currentTrainingScenario != 'ALLCHORDS' && !userIsTypingFirstChord) {
