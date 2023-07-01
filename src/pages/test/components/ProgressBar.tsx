@@ -18,6 +18,7 @@ import {
 import {
   getCumulativeAverageChordTypeTimeFromDevice,
   avgCalculatorForTheSpeedOfLastTen,
+  stmCalculator,
 } from '../../../helpers/aggregation';
 import { defaultProgressBarValues } from '../../../models/trainingSettingsStateModel';
 import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
@@ -41,6 +42,7 @@ export function ProgressBar(): ReactElement {
   let allTimeWPM;
   let progress;
   let inMaxValue;
+  let stmValues = 0;
 
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics?.statistics,
@@ -69,6 +71,15 @@ export function ProgressBar(): ReactElement {
   const trainingStatistics = useStoreState(
     (store) => store.trainingStatistics.statistics,
   );
+  const trainingStats = useStoreState((store) => store.trainingStatistics);
+  trainingStats?.stmStatistics.forEach((d) => {
+    const avg = avgCalculatorForTheSpeedOfLastTen(d.speedOfLastTenTests);
+    const stmV = stmCalculator(avg);
+    if (stmV >= 1) {
+      stmValues += 1;
+    }
+  });
+
   const trainingSettings = useStoreState((store) => store.trainingSettings);
 
   const trainingSessionErrors = useStoreState(
@@ -253,6 +264,8 @@ export function ProgressBar(): ReactElement {
     inMaxValue = defaultProgressBarValues.CPM.LEXICAL;
 
     /* eslint-enable */
+  } else if (tier == 'StM') {
+    progress = clamp((stmValues / 120 / 120) * 100, 0, 100);
   } else {
     /* eslint-disable */
     progress = clamp(

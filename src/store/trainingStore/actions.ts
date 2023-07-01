@@ -207,11 +207,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         state.trainingLevel,
         dictNameOfLibrary[state.currentTrainingScenario],
       );
-    else if (state.trainingLevel == 'StM')
-      oneTimeCreateLexicalStoredSentences(
-        state.currentTrainingScenario,
-        state.trainingLevel,
-      );
     //This data set is created in the TrainingModeSelector.tsx
     state.storedChordStatistics = JSON?.parse(
       localStorage?.getItem(state.trainingLevel + '_' + payload[0]),
@@ -242,25 +237,24 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingSettings = generateTrainingSettings(
       state as unknown as TrainingStoreStateModel,
     );
-    if (state.currentTrainingScenario != 'ALLCHORDS' && state.trainingLevel != 'StM')
+    if (
+      state.currentTrainingScenario != 'ALLCHORDS' &&
+      state.trainingLevel != 'StM'
+    )
       state.trainingStatistics = JSON.parse(
         localStorage.getItem(
           state.trainingLevel + '_' + state.currentTrainingScenario,
         ),
       );
-      else if(state.trainingLevel =='StM'){
-        state.trainingStatistics =generateEmptyChordStatistics(
-          state.chordsToPullFrom[state.lexicalSentencesIndex],
-          payload[0] as TrainingScenario
-        );
-      }
-    else state.trainingStatistics = state.storedChordsFromDevice;
+    else if (state.trainingLevel == 'StM') {
+      state.trainingStatistics = generateEmptyChordStatistics(
+        state.chordsToPullFrom[state.lexicalSentencesIndex],
+        payload[0] as TrainingScenario,
+      );
+    } else state.trainingStatistics = state.storedChordsFromDevice;
 
     state.trainingStatistics.stmStatistics = getStMStats();
 
-    //state.lexicalSentencesIndex = generateLexicalSentenceIndex(
-    //  state as unknown as TrainingStoreStateModel,
-    //);
     if (
       state.currentTrainingScenario == 'LEXICAL' &&
       state.wordTestNumber != undefined &&
@@ -797,14 +791,10 @@ export async function calculateStatisticsForTargetChord(
     }
   }
 
-  console.log('yeppie '+store.localTrainingStatistics.statistics.length)
+  console.log('yeppie ' + store.localTrainingStatistics.statistics.length);
 
   // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
-  if (
-    store.currentTrainingScenario != 'ALLCHORDS' &&
-    !userIsTypingFirstChord &&
-    store.trainingLevel != 'StM'
-  ) {
+  if (store.currentTrainingScenario != 'ALLCHORDS' && !userIsTypingFirstChord) {
     chordStats.lastSpeed = Math.min(
       timeTakenToTypeChord,
       MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
