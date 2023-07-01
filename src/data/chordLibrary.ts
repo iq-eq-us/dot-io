@@ -107,6 +107,17 @@ export const chordLibrary: ChordLibrary = {
       'and leave me': [],
       'in awe.': [],
     },
+    SentenceThree: {
+      'She practiced ballet': [],
+      'practiced ballet diligently': [],
+      'ballet diligently honing': [],
+      'diligently honing, her': [],
+      'honing her technique': [],
+      'her technique and': [],
+      'technique and perfecting': [],
+      'and perfecting graceful': [],
+      'perfecting graceful movements': [],
+    },
   },
   /*
   sentences: {
