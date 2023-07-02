@@ -28,6 +28,7 @@ function StatisticsTable(): ReactElement {
   const stats = useStoreState(
     (state) => state.trainingStatistics,
   ).statistics.sort((a, b) => b.numberOfOccurrences - a.numberOfOccurrences);
+
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const inTrainingLevel = useStoreState((store: any) => store.trainingLevel);
   const inStoredChordsFromDevice = useStoreState(
@@ -158,7 +159,11 @@ const Row = ({ index, style, data }: RowData) => {
     index - LIST_LENGTH_OFFSET,
   );
 
-  const wpmValue = wpmMethodCalculator(item?.averageSpeed, item.scenario);
+  const wpmValue = wpmMethodCalculator(
+    item?.averageSpeed,
+    item.id.length,
+    item.scenario,
+  );
   return (
     <div
       onClick={(e) => {
@@ -175,7 +180,11 @@ const Row = ({ index, style, data }: RowData) => {
 
 function returnStatisticsColumnContent(data: Data, index: number) {
   const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
-  const wpmValue = wpmMethodCalculator(item?.averageSpeed, item.scenario);
+  const wpmValue = wpmMethodCalculator(
+    item?.averageSpeed,
+    item.id.length,
+    item.scenario,
+  );
   const itemFromStoredChords =
     data?.storedChordsFromDevice?.statistics?.[index - LIST_LENGTH_OFFSET];
 
@@ -185,6 +194,7 @@ function returnStatisticsColumnContent(data: Data, index: number) {
   const tier = data.trainingLevel;
   const lastTypedSpeed = wpmMethodCalculator(
     itemFromStoredChords?.lastSpeed,
+    item.id.length,
     item.scenario,
   );
   if (
@@ -222,18 +232,54 @@ function returnStatisticsColumnContent(data: Data, index: number) {
         </RowItem>
       </React.Fragment>
     );
+  } else if (tier == 'CHM') {
+    return (
+      <React.Fragment>
+        <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
+        <RowItem>
+          {isNaN(
+            (item?.numberOfOccurrences - item?.numberOfErrors) /
+              item?.numberOfOccurrences,
+          )
+            ? '0'
+            : (
+                ((item?.numberOfOccurrences - item?.numberOfErrors) /
+                  item?.numberOfOccurrences) *
+                100
+              ).toFixed(2)}
+        </RowItem>
+        <RowItem>
+          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
+          'Infinity'
+            ? '0'
+            : wpmValue.toFixed()}
+        </RowItem>
+        <RowItem>
+          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
+          'Infinity'
+            ? '0'
+            : (wpmValue / 100).toFixed(2)}
+        </RowItem>
+      </React.Fragment>
+    );
   } else if (tier == 'StM') {
     const wpm =
-      wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
-      'Infinity'
+      wpmMethodCalculator(
+        item?.averageSpeed,
+        item.id.length,
+        item.scenario,
+      ).toFixed() == 'Infinity'
         ? '0'
         : (wpmValue / 100).toFixed(2);
     return (
       <React.Fragment>
         <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
         <RowItem>
-          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
-          'Infinity'
+          {wpmMethodCalculator(
+            item?.averageSpeed,
+            item.id.length,
+            item.scenario,
+          ).toFixed() == 'Infinity'
             ? '0'
             : wpmValue.toFixed()}
         </RowItem>
@@ -262,8 +308,11 @@ function returnStatisticsColumnContent(data: Data, index: number) {
       <React.Fragment>
         <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
         <RowItem>
-          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
-          'Infinity'
+          {wpmMethodCalculator(
+            item?.averageSpeed,
+            item.id.length,
+            item.scenario,
+          ).toFixed() == 'Infinity'
             ? '0 / 0'
             : wpmValue.toFixed() * 5 + '/' + wpmValue.toFixed()}
         </RowItem>
@@ -387,9 +436,9 @@ function returnStatisticsColumnHeader(data: Data) {
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
     sumOfAverages +=
-      wpmMethodCalculator(d.averageSpeed) == 'Infinity'
+      wpmMethodCalculator(d.averageSpeed, d.id.length) == 'Infinity'
         ? 0
-        : wpmMethodCalculator(d.averageSpeed, d.scenario) / 100;
+        : wpmMethodCalculator(d.averageSpeed, d.id.length, d.scenario) / 100;
   });
 
   //Need to change the avgeraging of chords I trink I may need to multip;y the avg out and then add
@@ -408,7 +457,9 @@ function returnStatisticsColumnHeader(data: Data) {
         ? 0
         : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
     sumOfLWPM +=
-      d.lastSpeed == 0 ? 0 : wpmMethodCalculator(d?.lastSpeed, d.scenario);
+      d.lastSpeed == 0
+        ? 0
+        : wpmMethodCalculator(d?.lastSpeed, d.id.length, d.scenario);
     sumErrorsFromStoredDevice += d.numberOfErrors;
     sumOccurrencesFromStoredDevice += d.numberOfOccurrences;
   });
