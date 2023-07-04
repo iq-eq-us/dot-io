@@ -363,10 +363,7 @@ function returnHeader(tier: string) {
   if (tier == 'CHM') {
     return (
       <React.Fragment>
-        <HeaderItemRow
-          helpText="The type of test associated with these metrics."
-          children={''}
-        />
+        <HeaderItemRow helpText="The type of test associated with these metrics." />
         <HeaderItemRow helpText="Your typing accuracy for this teir is representative of your typing accuracy all time for a given word.">
           Accuracy
         </HeaderItemRow>
@@ -381,10 +378,7 @@ function returnHeader(tier: string) {
   } else if (tier == 'StM') {
     return (
       <React.Fragment>
-        <HeaderItemRow
-          helpText="The type of test associated with these metrics."
-          children={''}
-        />
+        <HeaderItemRow helpText="The type of test associated with these metrics." />
         <HeaderItemRow helpText="Your typing accuracy for this teir is representative of your typing accuracy all time for a given word.">
           Speed
         </HeaderItemRow>

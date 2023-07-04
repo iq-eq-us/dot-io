@@ -34,11 +34,9 @@ export function TestStatsCard(): ReactElement {
   payload.push(trainingSceneario);
   payload.push(currentWordTestNumber);
 
-  let totalSum = 0;
   currentTrainingSetting.statistics?.forEach((d) => {
     thisVal += d.numberOfErrors;
     sumOccurrences += d.displayTitle.length * d.numberOfOccurrences;
-    // totalSum += d
     //console.log(d.displayTitle.length * d.numberOfOccurrences);
   });
 
@@ -81,15 +79,6 @@ export function TestStatsCard(): ReactElement {
         : wpmMethodCalculator(d.averageSpeed, d.id.length) *
           d.speedOfLastTen?.length;
   });
-
-  console.log(
-    ' asj dkj asd ' +
-      averageOfLocalStats2 +
-      ' ' +
-      sumOfLastTenOccurences +
-      ' ' +
-      averageOfLocalStats2 / sumOfLastTenOccurences,
-  );
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>

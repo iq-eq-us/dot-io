@@ -36,7 +36,6 @@ export function ProgressBar(): ReactElement {
   let sumErrors = 0;
   let sumOccurrences = 0;
   let numberOfChordsMastered = 0;
-  let tempChordMasteredValue = 0;
   let sumOfAverages = 0;
   let averageOfLocalStats = 0;
   let allTimeWPM;
@@ -174,7 +173,7 @@ export function ProgressBar(): ReactElement {
   let persistantValue = 0;
 
   let avgOfTheLastTenTyped = 0;
-  let lastTenWords = wordsPracticedInOrder?.slice(-10);
+  const lastTenWords = wordsPracticedInOrder?.slice(-10);
   const lastTenTWordsTime = timeTakenToTypeEachWordInOrder?.slice(-10);
   for (let y = 0; y < 10; y++) {
     avgOfTheLastTenTyped += isNaN(
