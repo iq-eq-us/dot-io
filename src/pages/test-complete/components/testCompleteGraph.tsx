@@ -177,27 +177,6 @@ export function myGraph(
   chart.render();
 }
 
-function wpmDataCalculator(wpmArray: any) {
-  let wpmTemp = 0;
-  let localTemp = 0;
-  let iterator = 1;
-  for (let i = 0; i < wpmArray.length; i++) {
-    localTemp = 0;
-    wpmTemp = wpmTemp + wpmArray[i];
-
-    i == 0 ? (localTemp = wpmTemp) : (localTemp = wpmTemp / iterator);
-
-    const avgSpeedMilliseconds = localTemp * 10;
-    const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
-    const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
-    const wpm = averageCharacterPerMin;
-
-    wpmArray[i] = wpm.toFixed(0);
-
-    iterator++;
-  }
-  return wpmArray;
-}
 export function TestCompleteGraph(): ReactElement {
   const trainingStatistics = useStoreState(
     (store: any) => store.trainingStatistics,
@@ -237,32 +216,23 @@ export function TestCompleteGraph(): ReactElement {
     localStorage.getItem('chordsToChooseFrom'),
   );
 
-  console.log(
-    'test Mode statistics  errors' +
-      numberOfErrorsArrayForTestMode +
-      ' ' +
-      numberOfErrorsArrayForTestMode.length,
-  );
-  console.log(
-    'test Mode statistics  wordsPracticed' +
-      wordsPracticedInOrder +
-      ' ' +
-      wordsPracticedInOrder.length,
-  );
-  console.log(
-    'test Mode statistics timeTakenForEach Chord' +
-      timeTakenToTypeEachWordInOrder +
-      ' ' +
-      timeTakenToTypeEachWordInOrder.length,
-  );
   const finalErrorsArray = [];
   const finalWPMArray = [];
   const finalRawWPM = [];
   let aggregate = 0;
   const timeTakenArray = [];
+  console.log(
+    'Console length ' +
+      timeTakenToTypeEachWordInOrder +
+      ' ' +
+      wordsPracticedInOrder,
+  );
   if (teir == 'CPM') {
     for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
-      const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i]);
+      const tempWPM = wpmMethodCalculator(
+        timeTakenToTypeEachWordInOrder[i],
+        wordsPracticedInOrder[i].length,
+      );
       finalRawWPM.push((tempWPM * 5).toFixed(0));
       timeTakenArray.push(tempWPM * 5);
       aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
@@ -271,7 +241,10 @@ export function TestCompleteGraph(): ReactElement {
     testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1] * 5);
   } else {
     for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
-      const tempWPM = wpmMethodCalculator(timeTakenToTypeEachWordInOrder[i]);
+      const tempWPM = wpmMethodCalculator(
+        timeTakenToTypeEachWordInOrder[i],
+        wordsPracticedInOrder[i].length,
+      );
       finalRawWPM.push(tempWPM.toFixed(0));
       timeTakenArray.push(tempWPM);
       aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
@@ -283,17 +256,14 @@ export function TestCompleteGraph(): ReactElement {
   rawSpeedOfCurrentWord = finalRawWPM;
   wordOccurrences = numberOfErrorsArrayForTestMode;
   wordNames = wordsPracticedInOrder;
-  const averageOfLocalStats = wpmMethodCalculator(
-    getCumulativeAverageChordTypeTime(localTrainingStatistics.statistics),
-  );
 
   if (wordTestNumber == undefined) {
     if (teir == 'CPM') {
       wordPerMinute.pop();
       wordPerMinute.push(averageOfLocalStats.toFixed(0) * 5);
     } else {
-      wordPerMinute.pop();
-      wordPerMinute.push(averageOfLocalStats.toFixed(0));
+      //  wordPerMinute.pop();
+      // wordPerMinute.push(averageOfLocalStats.toFixed(0));
     }
   }
 

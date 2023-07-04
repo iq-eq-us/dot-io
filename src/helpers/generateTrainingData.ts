@@ -199,7 +199,10 @@ export const generateChords = (
 
     const numberOfChordsNotMastered = parameters.storedChordsFromDevice.filter(
       (s) =>
-        (wpmMethodCalculatorForStoredChords(s.chordsMastered).toFixed(0) /
+        (wpmMethodCalculatorForStoredChords(
+          s.chordsMastered,
+          s.id.length,
+        ).toFixed(0) /
           100 >=
           1 &&
           s.chordsMastered.length >= 10) ||
@@ -208,8 +211,8 @@ export const generateChords = (
 
     const chordsSortedByMastered = parameters.storedChordsFromDevice.sort(
       (a, b) =>
-        wpmMethodCalculatorForStoredChords(a.chordsMastered) -
-        wpmMethodCalculatorForStoredChords(b.chordsMastered),
+        wpmMethodCalculatorForStoredChords(a.chordsMastered, a.id.length) -
+        wpmMethodCalculatorForStoredChords(b.chordsMastered, b.id.length),
     );
     //The follow code removes any duplicate words from the data set
     const seen = new Set();

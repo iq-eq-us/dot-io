@@ -53,32 +53,30 @@ export const wpmMethodCalculator = (
   scenario?,
 ) => {
   const avgSpeedMilliseconds = value * 10;
-  const millisecondsPerCharacter = avgSpeedMilliseconds / inputLength;
-
-  //avgSpeedMilliseconds / (scenario == 'ALPHABET' ? 1 : 5);
-
+  const millisecondsPerCharacter = avgSpeedMilliseconds / (inputLength + 1);
   const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
-  console.log(
-    'Character per minute ' +
-      averageCharacterPerMin +
-      ' ' +
-      millisecondsPerCharacter,
-  );
   const wpm = averageCharacterPerMin / 5;
 
   return wpm;
 };
 
-export const wpmMethodCalculatorForStoredChords = (value: number[]) => {
+export const wpmMethodCalculatorForStoredChords = (
+  value: number[],
+  inputLength?: number,
+) => {
   const sum = value?.reduce((a, b) => a + b, 0);
   const avg = sum / value?.length || 0;
 
   const avgSpeedMilliseconds = avg * 10;
-  const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
+  const millisecondsPerCharacter = avgSpeedMilliseconds / (inputLength + 1);
   const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
   const wpm = averageCharacterPerMin / 5;
 
   return wpm;
+};
+
+export const averageCalculator = (inValue: number, divisor: number) => {
+  return inValue / divisor;
 };
 
 export const avgCalculatorForTheSpeedOfLastTen = (value: number[]) => {

@@ -17,7 +17,7 @@ export function ScoresComponent(): ReactElement {
       d?.chordsMastered.length == 0 ||
       (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
         ? 0
-        : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
+        : wpmMethodCalculatorForStoredChords(d?.chordsMastered, d.id.length);
   });
 
   const HideWhenScreenGetSmallEnough = styled.div`

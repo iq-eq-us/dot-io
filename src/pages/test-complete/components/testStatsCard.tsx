@@ -34,9 +34,11 @@ export function TestStatsCard(): ReactElement {
   payload.push(trainingSceneario);
   payload.push(currentWordTestNumber);
 
+  let totalSum = 0;
   currentTrainingSetting.statistics?.forEach((d) => {
     thisVal += d.numberOfErrors;
     sumOccurrences += d.displayTitle.length * d.numberOfOccurrences;
+    // totalSum += d
     //console.log(d.displayTitle.length * d.numberOfOccurrences);
   });
 
@@ -69,7 +71,25 @@ export function TestStatsCard(): ReactElement {
       else return averageOfLocalStats.toFixed(0);
     }
   }
+  let sumOfLastTenOccurences = 0;
+  let averageOfLocalStats2 = 0;
+  localTrainingStatistics?.forEach((d) => {
+    sumOfLastTenOccurences += d.speedOfLastTen?.length;
+    averageOfLocalStats2 +=
+      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
+        ? 0
+        : wpmMethodCalculator(d.averageSpeed, d.id.length) *
+          d.speedOfLastTen?.length;
+  });
 
+  console.log(
+    ' asj dkj asd ' +
+      averageOfLocalStats2 +
+      ' ' +
+      sumOfLastTenOccurences +
+      ' ' +
+      averageOfLocalStats2 / sumOfLastTenOccurences,
+  );
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
@@ -89,9 +109,7 @@ export function TestStatsCard(): ReactElement {
               ? (testTeirHighestWPM / 5)?.toFixed(0) != 'Infinity'
                 ? (testTeirHighestWPM / 5)?.toFixed(0)
                 : '0'
-              : averageOfLocalStats?.toFixed(0) != 'Infinity'
-              ? averageOfLocalStats?.toFixed(0)
-              : '0'}
+              : (averageOfLocalStats2 / sumOfLastTenOccurences)?.toFixed(0)}
           </div>
           <h1 className="text-lg">WPM</h1>
         </StatsCardContainer>

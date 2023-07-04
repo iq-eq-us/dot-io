@@ -777,18 +777,19 @@ export async function calculateStatisticsForTargetChord(
     }
 
     localChordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(
-      chordStats.speedOfLastTen,
+      localChordStats.speedOfLastTen,
     );
 
     if (couldFindChordInLocalLibrary) {
       // Replace chord stats object in chord stats list
       store.localTrainingStatistics = {
         statistics: store.localTrainingStatistics.statistics.map(
-          (e: ChordStatistics) => (e.id === chordStats.id ? chordStats : e),
+          (e: ChordStatistics) =>
+            e.id === localChordStats.id ? localChordStats : e,
         ),
       };
     } else {
-      store.localTrainingStatistics.statistics.push(chordStats);
+      store.localTrainingStatistics.statistics.push(localChordStats);
     }
   }
 

@@ -94,21 +94,29 @@ export function ProgressBar(): ReactElement {
     (store: any) => store.timeTakenToTypeEachWordInOrder,
   );
 
-  averageOfLocalStats = wpmMethodCalculator(
-    getCumulativeAverageChordTypeTime(localTrainingStatistics),
-    currentTrainingScenario,
-  );
+  let sumOfLastTenOccurences = 0;
+
+  localTrainingStatistics.forEach((d) => {
+    sumOfLastTenOccurences += d.speedOfLastTen?.length;
+    averageOfLocalStats +=
+      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
+        ? 0
+        : wpmMethodCalculator(d.averageSpeed, d.id.length) *
+          d.speedOfLastTen?.length;
+  });
+
+  averageOfLocalStats = averageOfLocalStats / sumOfLastTenOccurences;
 
   stats.statistics.forEach((d) => {
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
-
-    tempChordMasteredValue =
-      wpmMethodCalculator(d.averageSpeed, currentTrainingScenario) == 'Infinity'
+    const tempWpm =
+      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
         ? 0
-        : wpmMethodCalculator(d.averageSpeed, currentTrainingScenario) / 100;
-    sumOfAverages += tempChordMasteredValue;
-    tempChordMasteredValue >= 1 ? numberOfChordsMastered++ : '';
+        : wpmMethodCalculator(d.averageSpeed, d.id.length) *
+          d.speedOfLastTen?.length;
+    sumOfAverages += tempWpm / 100;
+    tempWpm >= 1 ? numberOfChordsMastered++ : '';
   });
 
   inStoredChordsFromDevice?.statistics?.forEach((d) => {
@@ -117,14 +125,15 @@ export function ProgressBar(): ReactElement {
       d?.chordsMastered.length == 0 ||
       (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
         ? 0
-        : wpmMethodCalculatorForStoredChords(
-            d?.chordsMastered,
-            currentTrainingScenario,
-          );
+        : wpmMethodCalculatorForStoredChords(d?.chordsMastered, d?.id.length);
     sumOfLWPM +=
       d.lastSpeed == 0
         ? 0
-        : wpmMethodCalculator(d?.lastSpeed, currentTrainingScenario);
+        : wpmMethodCalculator(
+            d?.lastSpeed,
+            d.id.length,
+            currentTrainingScenario,
+          );
     sumErrorsFromStoredDevice += d.numberOfErrors;
     sumOccurrencesFromStoredDevice += d.numberOfOccurrences;
   });
@@ -164,19 +173,24 @@ export function ProgressBar(): ReactElement {
   const [minValue, setMinValue] = useState<number>(0);
   let persistantValue = 0;
 
-  //wpmMethodCalculator((average))
+  let avgOfTheLastTenTyped = 0;
+  let lastTenWords = wordsPracticedInOrder?.slice(-10);
+  const lastTenTWordsTime = timeTakenToTypeEachWordInOrder?.slice(-10);
+  for (let y = 0; y < 10; y++) {
+    avgOfTheLastTenTyped += isNaN(
+      wpmMethodCalculator(lastTenTWordsTime[y], lastTenWords[y]?.length),
+    )
+      ? 0
+      : wpmMethodCalculator(lastTenTWordsTime[y], lastTenWords[y]?.length);
+  }
+  avgOfTheLastTenTyped = avgOfTheLastTenTyped / 10;
 
   const rWPM =
     timeTakenToTypeEachWordInOrder?.length == 0
       ? 0
       : timeTakenToTypeEachWordInOrder?.length < 11
       ? averageOfLocalStats
-      : wpmMethodCalculator(
-          avgCalculatorForTheSpeedOfLastTen(
-            timeTakenToTypeEachWordInOrder?.slice(-10),
-          ),
-          currentTrainingScenario,
-        );
+      : avgOfTheLastTenTyped;
 
   let sumOfChordsMastered = 0;
   storedChordsFromDevice?.statistics?.forEach((d) => {
@@ -187,6 +201,7 @@ export function ProgressBar(): ReactElement {
         ? 0
         : wpmMethodCalculatorForStoredChords(
             d?.chordsMastered,
+            d.id?.length,
             currentTrainingScenario,
           );
   });
@@ -298,11 +313,11 @@ export function ProgressBar(): ReactElement {
   const { parentProps: progresAllTimeWPMsProps, Popper: AllTimePopper } =
     usePopover(
       'Typing Speed of the Last 10 words = ' +
-        rWPM.toFixed(0) +
+        (isNaN(rWPM.toFixed(0)) ? 0 : rWPM.toFixed(0)) +
         ' rWPM' +
         '\r\n ' +
         'Total typing Speed for this session = ' +
-        (averageOfLocalStats.toFixed(0) == 'Infinity'
+        (isNaN(averageOfLocalStats.toFixed(0))
           ? 0
           : averageOfLocalStats.toFixed(0)) +
         ' lWPM',
@@ -338,11 +353,11 @@ export function ProgressBar(): ReactElement {
                 min={minValue > (inMaxValue || maxValue) ? 0 : minValue}
                 max={maxValue || inMaxValue}
                 minValue={
-                  averageOfLocalStats.toFixed(0) == 'Infinity'
+                  isNaN(averageOfLocalStats.toFixed(0))
                     ? '0'
                     : averageOfLocalStats
                 }
-                maxValue={rWPM.toFixed(0) == 'Infinity' ? '0' : rWPM}
+                maxValue={isNaN(rWPM.toFixed(0)) ? '0' : rWPM}
               />
             </TopProgressBar>
             <BottomProgressBar>
@@ -357,7 +372,7 @@ export function ProgressBar(): ReactElement {
                 {timeTakenToTypeEachWordInOrder?.length == 0 ? 0 : Accuracy}%
                 acc
                 <div>
-                  {averageOfLocalStats.toFixed(0) == 'Infinity'
+                  {isNaN(averageOfLocalStats.toFixed(0))
                     ? '0'
                     : averageOfLocalStats.toFixed(0)}{' '}
                   lWPM
@@ -373,12 +388,7 @@ export function ProgressBar(): ReactElement {
                     ? 0
                     : timeTakenToTypeEachWordInOrder?.length < 11
                     ? averageOfLocalStats.toFixed(0)
-                    : wpmMethodCalculator(
-                        avgCalculatorForTheSpeedOfLastTen(
-                          timeTakenToTypeEachWordInOrder?.slice(-10),
-                        ),
-                        currentTrainingScenario,
-                      ).toFixed(0)}{' '}
+                    : rWPM.toFixed(0)}{' '}
                   rWPM
                 </div>
               </LeftTerms>
