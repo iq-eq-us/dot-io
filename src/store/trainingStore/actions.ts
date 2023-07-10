@@ -566,7 +566,7 @@ function checkIfShouldProceedToNextTargetChord(
   }
 
   //storeState.targetWord[storeState.targetCharacterIndex]?.indexOf(' ') >= 0
-  //Here we allow the user to go to the next work if they press space
+  //Here we allow the user to go to the next word if they press space
   if (isInAlphabetMode && userHasEnteredChordCorrectly) {
     actions.setAllTypedCharactersStore(storeState.typedTrainingText);
     actions.proceedToNextWord();

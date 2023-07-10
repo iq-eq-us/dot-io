@@ -115,6 +115,7 @@ export interface TrainingStoreStateModel {
   isShowingPlusIcon: boolean;
   targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
+  previousTargetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   storedTestTextData: Computed<TrainingStoreModel, string[]>;
   numberOfChordsForTrainingLevel: number;
   characterEntryMode: Computed<

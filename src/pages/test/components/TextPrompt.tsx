@@ -34,7 +34,9 @@ export function TextPrompt(): ReactElement {
   const setTextPromptUnFocused = useStoreActions(
     (store) => store.setTextPromptUnFocused,
   );
-
+  const previousTargetTextLineOne = useStoreState(
+    (store: any) => store.previousTargetTextLineOne,
+  );
   const firstLineOfTargetText = useStoreState(
     (store: any) => store.targetTextLineOne,
   );
@@ -570,6 +572,18 @@ export function TextPrompt(): ReactElement {
 
       <TextPromptContainer>
         {textPromptUnFocused ? isFocused() : isFocused()}
+        {previousTargetTextLineOne != null && (
+          <React.Fragment>
+            <PreviousChordRow>
+              {(previousTargetTextLineOne || [])?.map((chord) => (
+                <Chord key={r()}>{chord}</Chord>
+              ))}
+            </PreviousChordRow>
+
+            <Spacer></Spacer>
+          </React.Fragment>
+        )}
+
         <ChordRow>
           {(colorTargetLine(firstLineOfTargetText) || [])?.map(
             (chord: any, i: any) => {
@@ -669,10 +683,17 @@ const Chord = styled.span.attrs<ChordProps>((props) => ({
 const ChordRow = styled.div.attrs({
   className: `flex flex-row gap-[1vw] whitespace-nowrap justify-center w-full`,
 })``;
+const Spacer = styled.div.attrs({
+  className: `  flex-row gap-[1vw]  w-full h-6`,
+})``;
+
+const PreviousChordRow = styled.div.attrs({
+  className: `flex flex-row gap-[1vw] whitespace-nowrap justify-center w-full text-black`,
+})``;
 
 const TextPromptContainer = styled.div.attrs({
   className: `
     flex text-md font-bold flex flex-col items-center w-full justify-center text-gray-400
-    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-10 h-40 	m-auto font-mono
+    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-10 h-50 	m-auto font-mono
   `,
 })``;

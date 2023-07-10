@@ -171,6 +171,9 @@ const trainingStoreState: TrainingStoreStateModel = {
   isDisplayingChordEditModal: false,
   chordsToPullFrom: {},
   isShowingPlusIcon: false,
+  previousTargetTextLineOne: computed((state) => {
+    return state?.trainingText[state?.currentLineOfTrainingText - 1];
+  }),
   targetTextLineOne: computed((state) => {
     return state.trainingText[state.currentLineOfTrainingText];
   }),
