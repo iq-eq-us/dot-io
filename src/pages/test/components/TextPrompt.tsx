@@ -327,7 +327,7 @@ export function TextPrompt(): ReactElement {
           const y = allTypedText.length;
           for (
             let d = y;
-            d < targetTextLineOne.length + targetIndexForWhatErrorTextToShow;
+            d < targetTextLineOne?.length + targetIndexForWhatErrorTextToShow;
             d++
           ) {
             let sd = '';

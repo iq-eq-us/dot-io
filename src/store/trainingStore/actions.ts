@@ -1,4 +1,4 @@
-import { action, actionOn, Actions, thunkOn } from 'easy-peasy';
+import { action, actionOn, Actions, computed, thunkOn } from 'easy-peasy';
 import type { ChordLibraryRecord } from '../../data/chordLibrary';
 import { generateChords } from '../../helpers/generateTrainingData';
 import type { TrainingScenario } from '../../models/trainingScenario';
@@ -181,6 +181,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.timeTakenToTypeEachWordInOrder = [];
     state.wordsPracticedInOrder = [];
     state.localTrainingStatistics = { statistics: [] };
+    state.generateThePreviousLine = false;
 
     state.storedChordsFromDevice = JSON?.parse(
       localStorage?.getItem('chordsReadFromDevice'),
@@ -521,6 +522,22 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setCompareText: action((state, payload) => {
     state.compareText = payload;
   }),
+  setGenerateThePreviousLine: action((state, payload) => {
+    if (payload == true) {
+      return (
+        (state.currentSubindexInTrainingText =
+          state.trainingText[state.currentLineOfTrainingText + -1].length),
+        (state.currentLineOfTrainingText -= 1),
+        //state.subIndexOfTrainingText = state.targetTextLineOneIndex.length-1,
+        console.log(
+          'Am I setting and running' +
+            state.allTypedCharactersStore +
+            ' ' +
+            state.currentSubindexInTrainingText,
+        )
+      );
+    }
+  }),
   toggleTestCompletePage: {
     type: 'action',
     payload: undefined,
@@ -544,6 +561,7 @@ function checkIfShouldProceedToNextTargetChord(
   storeState: TrainingStoreStateModel,
   actions: Actions<TrainingStoreModel>,
 ) {
+  console.log('Should I proceed');
   const wordValue = document.getElementById('txt_Name')?.value;
   const wordToCompare = isInAlphabetMode
     ? storeState.targetWord

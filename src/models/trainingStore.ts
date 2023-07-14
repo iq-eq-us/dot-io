@@ -59,6 +59,14 @@ export interface TrainingStoreActionsModel {
   setTrainingIsDone: Action<TrainingStoreActionsModel, boolean>;
   setTimerValue: Action<TrainingStoreActionsModel, string>;
   setLexicalSentencesIndex: Action<TrainingStoreActionsModel, string>;
+  setGenerateThePreviousLine: Action<TrainingStoreActionsModel, boolean>;
+  previousPreviousTargetTextLineOneIndex: Action<
+    TrainingStoreActionsModel,
+    number
+  >;
+  previousTargetTextLineOneIndex: Action<TrainingStoreActionsModel, number>;
+  targetTextLineOneIndex: Action<TrainingStoreActionsModel, number>;
+  targetTextLineTwoIndex: Action<TrainingStoreActionsModel, number>;
   /**
    * This action allows you to manually update the chords used in a particular training mode
    * For example, if you were in Lexical training, you can use the top right "View/Edit" chords box
@@ -116,6 +124,10 @@ export interface TrainingStoreStateModel {
   targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
   previousTargetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
+  previousPreviousTargetTextLineOne: Computed<
+    TrainingStoreModel,
+    string[] | undefined
+  >;
   storedTestTextData: Computed<TrainingStoreModel, string[]>;
   numberOfChordsForTrainingLevel: number;
   characterEntryMode: Computed<
@@ -149,6 +161,7 @@ export interface TrainingStoreStateModel {
   timerValue: string;
   timeTakenToTypeEachWordInOrder: number[];
   lexicalSentencesIndex: any;
+  generateThePreviousLine: boolean;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &
