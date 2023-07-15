@@ -37,7 +37,7 @@ function Timer() {
 
     if (startTimer && allTypedText.length >= 1) {
       //startAndStop.click();
-      // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
+      // setting time from 0 to 1 every 10 millisecond using javascript setInterval method
       intervalId = setInterval(() => setTime(time + 1), 10);
     } else if (allTypedText.length == 0) {
       setTime(0);

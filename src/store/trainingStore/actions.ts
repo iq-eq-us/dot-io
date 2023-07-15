@@ -852,13 +852,13 @@ export async function calculateStatisticsForTargetChord(
       window.addEventListener(
         'beforeunload',
         function () {
-          // number of miliseconds to hold before unloading page
+          // number of milliseconds to hold before unloading page
           const x = 500;
           const a = new Date().getTime() + x;
 
           localStorage.setItem('chordsReadFromDevice', JSON.stringify(value)); //Store downloaded chords in local storage
 
-          // browser will hold with unloading your page for X miliseconds, letting
+          // browser will hold with unloading your page for X milliseconds, letting
           // your localStorage call to finish
           while (new Date().getTime() < a) {
             //Not an Empty block statement en-list
