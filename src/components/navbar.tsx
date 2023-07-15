@@ -30,11 +30,11 @@ const Navbar = (): ReactElement => {
     (store: any) => store.setTrainingLevel,
   );
 
-  const passwordModulModalToggle = useStoreState(
-    (store: any) => store.passwordModulModalToggle,
+  const passwordModuleModalToggle = useStoreState(
+    (store: any) => store.passwordModuleModalToggle,
   );
-  const setPasswordModulModalToggle = useStoreActions(
-    (store: any) => store.setPasswordModulModalToggle,
+  const setPasswordModuleModalToggle = useStoreActions(
+    (store: any) => store.setPasswordModuleModalToggle,
   );
   const chmTierPasswordBypass = useStoreState(
     (store: any) => store.chmTierPasswordBypass,
@@ -79,7 +79,7 @@ const Navbar = (): ReactElement => {
   }
   function triggerPasswordModal() {
     if (maxWPM == false && !chmTierPasswordBypass) {
-      setPasswordModulModalToggle(!passwordModulModalToggle);
+      setPasswordModuleModalToggle(!passwordModuleModalToggle);
     }
   }
   return (
