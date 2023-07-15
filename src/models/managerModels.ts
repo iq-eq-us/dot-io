@@ -24,8 +24,8 @@ export interface ChordLayoutStructure {
 export const createChord = (
   inCurrentChord: string,
   inCurrentPhrase: string,
-  inOrginalHexChord: string,
-  inOrginalHexPhrase: string,
+  inOriginalHexChord: string,
+  inOriginalHexPhrase: string,
 ): ChordStructure => {
   return {
     currentChord: inCurrentChord,
@@ -34,8 +34,8 @@ export const createChord = (
     editedPhrase: '',
     previousChord: '',
     previousPhrase: '',
-    originalHexChord: inOrginalHexChord,
-    originalHexPhrase: inOrginalHexPhrase,
+    originalHexChord: inOriginalHexChord,
+    originalHexPhrase: inOriginalHexPhrase,
   };
 };
 
