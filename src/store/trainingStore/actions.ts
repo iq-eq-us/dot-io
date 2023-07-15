@@ -342,8 +342,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setIsProgressBarDynamic: action((state, payload) => {
     state.isProgressBarDynamic = payload;
   }),
-  setTestTeirHighestWPM: action((state, payload) => {
-    state.testTeirHighestWPM = payload as number;
+  setTestTierHighestWPM: action((state, payload) => {
+    state.testTierHighestWPM = payload as number;
   }),
   // This needs to be a thunkOn so that we can dispatch multiple actions
   // when the target word matches the word the user has entered

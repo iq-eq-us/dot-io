@@ -7,7 +7,7 @@ import {
   sendCommandString,
   selectBase,
   readGetOneChordmap,
-  convertHexadecimalChordToHumanChordForAllChordsTeir,
+  convertHexadecimalChordToHumanChordForAllChordsTier,
   convertHexadecimalPhraseToAsciiString,
 } from '../controls/mainControls';
 import { resetDataTable } from '../../manager/components/resetDataTable';
@@ -96,11 +96,11 @@ export async function downloadChordsForAllChordsModule() {
       hexAsciiString = strValue[4];
       //console.log('StrValue '+convertHexadecimalChordToHumanChord(hexChordString));
       tempCurrentChord[0] =
-        convertHexadecimalChordToHumanChordForAllChordsTeir(hexChordString);
+        convertHexadecimalChordToHumanChordForAllChordsTier(hexChordString);
       tempCurrentChord[1] =
         convertHexadecimalPhraseToAsciiString(hexAsciiString);
       chord =
-        convertHexadecimalChordToHumanChordForAllChordsTeir(hexChordString);
+        convertHexadecimalChordToHumanChordForAllChordsTier(hexChordString);
       phrase = convertHexadecimalPhraseToAsciiString(hexAsciiString);
     }
     const newStat: ChordStatisticsFromDevice =

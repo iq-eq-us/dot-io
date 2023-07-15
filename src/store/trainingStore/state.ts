@@ -71,7 +71,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   currentLevel: 0,
   timeAtTrainingStart: 0,
   numberOfChordsForTrainingLevel: 0,
-  testTeirHighestWPM: 0,
+  testTierHighestWPM: 0,
   storedChordsRepresentation: removeDups(
     generateNewChordRecordForAllChordsModule(
       JSON?.parse(localStorage?.getItem('chordsReadFromDevice')),

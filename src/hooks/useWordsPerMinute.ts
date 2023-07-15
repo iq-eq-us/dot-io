@@ -18,7 +18,7 @@ export const useWordsPerMinute = (): number => {
     (store: any) => store.trainingSettings,
   );
   const isTrainingTestDone = currentTrainingSetting.isTestDone;
-  const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM);
+  const testTierHighestWPM = useStoreState((store) => store.testTierHighestWPM);
 
   const fastestRecordedWPM = useStoreState(
     (store) => store.fastestRecordedWordsPerMinute,
@@ -143,16 +143,16 @@ export const useWordsPerMinute = (): number => {
         if (
           6 > (numberOfWordsChorded.toFixed(0) / 25) * 100 &&
           Accuracy >= 95 &&
-          testTeirHighestWPM > fastestRecordedWPM[trainingScenario]
+          testTierHighestWPM > fastestRecordedWPM[trainingScenario]
         ) {
-          storeData(testTeirHighestWPM, currentDate); //This checks to make sure we are in a testing teir
+          storeData(testTierHighestWPM, currentDate); //This checks to make sure we are in a testing tier
 
           setFastestWPM({
             ...fastestRecordedWPM,
-            [trainingScenario]: testTeirHighestWPM,
+            [trainingScenario]: testTierHighestWPM,
           });
         }
-        storeAverageData(testTeirHighestWPM, currentDate, currentChordSpeed, 1); //This checks to make sure we are in a testing teir
+        storeAverageData(testTierHighestWPM, currentDate, currentChordSpeed, 1); //This checks to make sure we are in a testing tier
       }
     }
   }

@@ -20,7 +20,7 @@ export function TestStatsCard(): ReactElement {
   const currentTrainingSetting = useStoreState(
     (store: any) => store.trainingStatistics,
   );
-  const teir = useStoreState((store) => store.trainingLevel);
+  const tier = useStoreState((store) => store.trainingLevel);
   const testNumber = useStoreState((store) => store.wordTestNumber);
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics.statistics,
@@ -30,7 +30,7 @@ export function TestStatsCard(): ReactElement {
 
   const wpm = useSessionWordsPerMinute();
 
-  const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM);
+  const testTierHighestWPM = useStoreState((store) => store.testTierHighestWPM);
   const numberOfWordsTypedCorrectly = useStoreState(
     (store) => store.numberOfWordsTypedCorrectly,
   );
@@ -70,11 +70,11 @@ export function TestStatsCard(): ReactElement {
     getCumulativeAverageChordTypeTime(localTrainingStatistics),
   );
 
-  function returnValueBasedOnTeir() {
-    if (teir == 'CPM') {
+  function returnValueBasedOnTier() {
+    if (tier == 'CPM') {
       if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
       else return averageOfLocalStats.toFixed(0) * 5;
-    } else if (teir == 'CHM') {
+    } else if (tier == 'CHM') {
       if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
       else return averageOfLocalStats.toFixed(0);
     }
@@ -83,21 +83,21 @@ export function TestStatsCard(): ReactElement {
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
-        {teir == 'CPM' && (
+        {tier == 'CPM' && (
           <StatsCardContainer>
             <div className="text-6xl">
               {wordTestNumber != undefined
-                ? testTeirHighestWPM
-                : returnValueBasedOnTeir()}
+                ? testTierHighestWPM
+                : returnValueBasedOnTier()}
             </div>
-            <h1 className="text-2xl">{teir}</h1>
+            <h1 className="text-2xl">{tier}</h1>
           </StatsCardContainer>
         )}
         <StatsCardContainer>
           <div className="text-4xl">
             {wordTestNumber != undefined
-              ? (testTeirHighestWPM / 5)?.toFixed(0) != 'Infinity'
-                ? (testTeirHighestWPM / 5)?.toFixed(0)
+              ? (testTierHighestWPM / 5)?.toFixed(0) != 'Infinity'
+                ? (testTierHighestWPM / 5)?.toFixed(0)
                 : '0'
               : averageOfLocalStats?.toFixed(0) != 'Infinity'
               ? averageOfLocalStats?.toFixed(0)

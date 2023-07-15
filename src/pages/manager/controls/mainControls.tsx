@@ -476,7 +476,7 @@ function Hex2Dec(n) {
   return parseInt(n, 16).toString(10);
 }
 
-export function convertHexadecimalChordToHumanChordForAllChordsTeir(hexChord) {
+export function convertHexadecimalChordToHumanChordForAllChordsTier(hexChord) {
   //console.log("convertHexadecimalChordToHumanChord()");
   //console.log(hexChord);
   const humanChord = [];
