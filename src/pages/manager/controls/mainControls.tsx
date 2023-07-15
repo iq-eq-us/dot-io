@@ -561,8 +561,8 @@ export async function setupLineReader() {
   if (MainControls.serialPort) {
     console.log('setupLineReader()');
     const decoder = new TextDecoderStream();
-    MainControls.abortController1 = new AbortController(); //reset abortControler1
-    MainControls.abortController2 = new AbortController(); //reset abortControler2
+    MainControls.abortController1 = new AbortController(); //reset abortController1
+    MainControls.abortController2 = new AbortController(); //reset abortController2
     //preventAbort:true,
     MainControls.lineReaderDone = MainControls.serialPort.readable.pipeTo(
       decoder.writable,

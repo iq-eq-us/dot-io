@@ -935,8 +935,8 @@ async function setupLineReader(){
   if(serialPort){
     console.log('setupLineReader()');
     let decoder = new TextDecoderStream();
-    abortController1 = new AbortController(); //reset abortControler1
-    abortController2 = new AbortController(); //reset abortControler2
+    abortController1 = new AbortController(); //reset abortController1
+    abortController2 = new AbortController(); //reset abortController2
     //preventAbort:true,
     lineReaderDone = serialPort.readable.pipeTo(decoder.writable, {signal:abortController1.signal});//throws error here
     let inputStream = decoder.readable.pipeThrough(
