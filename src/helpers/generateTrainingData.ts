@@ -139,7 +139,10 @@ export const generateChords = (
         JSON.stringify(chordLibraryCharacters),
       );
     }
-    sessionStorage.setItem('CutomTierTestValue', JSON.stringify(wordTestValue));
+    sessionStorage.setItem(
+      'CustomTierTestValue',
+      JSON.stringify(wordTestValue),
+    );
     let tempDeIncrementValue = parseInt(
       sessionStorage.getItem('tempTestDeIncrement'),
     );

@@ -107,7 +107,7 @@ function EditChordsModal(): ReactElement {
   };
 
   const confirmEditing = async () => {
-    sessionStorage.removeItem('CutomTierTestValue');
+    sessionStorage.removeItem('CustomTierTestValue');
     sessionStorage.removeItem('tempTestDeIncrement');
     //console.log('Here is where this is being called');
 

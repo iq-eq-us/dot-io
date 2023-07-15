@@ -22,7 +22,7 @@ function RefreshButton(): ReactElement {
   payload.push(currentWordTestNumber);
   function letsGoAgain() {
     sessionStorage.setItem('Refresh', JSON.stringify(1));
-    sessionStorage.removeItem('CutomTierTestValue');
+    sessionStorage.removeItem('CustomTierTestValue');
     sessionStorage.removeItem('tempTestDeIncrement');
     setRestartTestMode(true);
     beginTraining(payload);
