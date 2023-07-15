@@ -192,7 +192,7 @@ export async function cancelReader() {
       await MainControls.abortController1.abort();
       console.log(MainControls.serialPort.readable);
       await MainControls.lineReaderDone.catch(() => {
-        /* Ingore the error */
+        /* Ignore the error */
       }); //this frees up the serialPort.readable after the abortControl1.abort() signal
       // await serialPort.readable.cancel();
       // }
