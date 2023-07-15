@@ -153,7 +153,7 @@
 .multi-range-slider .labels {
 	display: flex;
 	justify-content: space-between;
-	
+
 	padding: 0px;
 	margin-top: 10px;
 	margin-bottom: -20px;
@@ -171,19 +171,19 @@
 .multi-range-slider .label:last-child {
 	justify-content: end;
 }
-.multi-range-slider.zero-ranage-margin .thumb-left {
+.multi-range-slider.zero-range-margin .thumb-left {
 	right: 12px;
 	width: 25px;
 	height: 25px;
 }
-.multi-range-slider.zero-ranage-margin .thumb-right {
+.multi-range-slider.zero-range-margin .thumb-right {
 	left: 8px;
 	width: 25px;
 	height: 25px;
 
 }
 
-.multi-range-slider.zero-ranage-margin .thumb-middle {
+.multi-range-slider.zero-range-margin .thumb-middle {
 	left: 16;
 	width: 25px;
 	height: 25px;
