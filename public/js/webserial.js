@@ -933,7 +933,7 @@ async function openSerialPort(){
 
 async function setupLineReader(){
   if(serialPort){
-    console.log('setupLineRader()');
+    console.log('setupLineReader()');
     let decoder = new TextDecoderStream();
     abortController1 = new AbortController(); //reset abortControler1
     abortController2 = new AbortController(); //reset abortControler2
