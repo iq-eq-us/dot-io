@@ -977,7 +977,7 @@ function generateDayWiseTimeSeries2() {
   const series = [];
 
   const currentDate = new Date();
-  //If this is called and the expressiton is true this means the user has not attempted a training session. So we add the previously stored data to make the graph flush
+  //If this is called and the expression is true this means the user has not attempted a training session. So we add the previously stored data to make the graph flush
   if (parseInt(localStorage.getItem('theDate')) == null) {
     storeAverageData(0, currentDate, 0, 0);
   }
