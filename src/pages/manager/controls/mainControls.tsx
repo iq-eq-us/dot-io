@@ -1505,7 +1505,7 @@ export function pressCommitButton(virtualId: { toString: () => string }) {
   const commitButton = document.getElementById(
     virtualId.toString() + '-commit',
   );
-  //onst myTimeout = await setTimeout(pressCommitButton,virtualId*10000,virtualId);//Fiddle with this
+  //const myTimeout = await setTimeout(pressCommitButton,virtualId*10000,virtualId);//Fiddle with this
   //myTimeout.
   clickCommit(virtualId);
   //clearTimeout(myTimeout);
