@@ -371,7 +371,7 @@ function returnStatisticsColumnHeader(data: Data) {
         : wpmMethodCalculator(d.averageSpeed, d.scenario) / 100;
   });
 
-  //Need to change the average of chords I think I may need to multip;y the avg out and then add
+  //Need to change the average of chords I think I may need to multiply the avg out and then add
   // In the neew speed to the multiplied avg and then divide
 
   let sumOfLWPM = 0;
