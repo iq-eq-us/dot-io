@@ -183,7 +183,7 @@ export function storeAverageData(
       localStorage.setItem('avgGraphDate', JSON.stringify(avgDData));
       localStorage.setItem('dailyWPMAVG', JSON.stringify(dailyWPM));
     } else if (date - parseInt(localStorage.getItem('theDate')) == 1) {
-      //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond
+      //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasn't completed in 1 decisecond
       if (inAvgChordCount != localStorage.getItem('prevAverageChordCounter')) {
         let avgCount = JSON.parse(localStorage.getItem('averageChordCounter'));
         let prevAvgCount = JSON.parse(
