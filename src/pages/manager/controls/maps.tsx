@@ -3712,11 +3712,11 @@ const actionMap = [
   '‡', //135, Double Dagger
   'ˆ', //136, Circumflex
   '‰', //137, Per Mile
-  'Š', //138, Captial S Caron
+  'Š', //138, Capital S Caron
   '‹', //139, Left Guillemet
-  'Œ', //140, Captial Ligature OE
+  'Œ', //140, Capital Ligature OE
   '', //141, RI (Reverse Index)
-  'Ž', //142, Captial Z Caron
+  'Ž', //142, Capital Z Caron
   '', //143, SS3 (Single-Shift G3)
   '', //144, DCS (Device Control String)
   '‘', //145, Single Quote Left
@@ -3766,7 +3766,7 @@ const actionMap = [
   '½', //189, One Half Fraction
   '¾', //190, Three Quarters Fraction
   '¿', //191, Inverted Question
-  'À', //192, Captial A Grave
+  'À', //192, Capital A Grave
   'Á', //193,
   'Â', //194,
   'Ã', //195,
