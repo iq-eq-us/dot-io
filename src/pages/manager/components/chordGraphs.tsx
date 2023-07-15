@@ -314,7 +314,7 @@ export function storeMasteredData(dateD: Date, inChordMasteredValue: number) {
 
   const storedMasterData = JSON.parse(localStorage.getItem('storedMasterData'));
   const storedMasterDate = JSON.parse(localStorage.getItem('storedMasterDate'));
-  //We get this information to check if users already have this data to make the graph flush, This is only neccesary because we introduced this later
+  //We get this information to check if users already have this data to make the graph flush, This is only necessary because we introduced this later
   const prevStoredAVGWPM = JSON.parse(localStorage.getItem('avgGraphWPM'));
   const prevStoredAVGDate = JSON.parse(localStorage.getItem('avgGraphDate'));
   const prevStoredWPMWPM = JSON.parse(localStorage.getItem('wpmGraphWPM'));
@@ -448,7 +448,7 @@ export function storeCharactersPerMinute(
   //console.log(storedCharactersPerMinuteData);
   //console.log(storedCharactersPerMinuteDate);
 
-  //We get this information to check if users already have this data to make the graph flush, This is only neccesary because we introduced this later
+  //We get this information to check if users already have this data to make the graph flush, This is only necessary because we introduced this later
   const prevStoredW = JSON.parse(localStorage.getItem('wpmGraphDate'));
   const prevStoredAVGDate = JSON.parse(localStorage.getItem('avgGraphDate'));
   const prevStoredWPMWPM = JSON.parse(localStorage.getItem('wpmGraphWPM'));
