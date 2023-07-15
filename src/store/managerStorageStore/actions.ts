@@ -12,7 +12,7 @@ import {
 
 /**
  * This section contains all the state for the Manager storage.
- * It also handles merging existing chords into the stored chords to make exporting and importing seemless.
+ * It also handles merging existing chords into the stored chords to make exporting and importing seamless.
  */
 
 const managerStorageStoreActions: ManagerStoreActions = {
