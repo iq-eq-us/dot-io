@@ -3733,7 +3733,7 @@ const actionMap = [
   'œ', //156, Small Ligature oe
   '', //157, Operating System Command
   'ž', //158, Small Z Caron
-  'Ÿ', //159, Capital Y Diaresis
+  'Ÿ', //159, Capital Y Diaeresis
   ' ', //160, No Break Space
   '¡', //161, Inverted Exclamation
   '¢', //162, Cent
@@ -3742,7 +3742,7 @@ const actionMap = [
   '¥', //165, Yen
   '¦', //166, Broken Bar
   '§', //167, Section
-  '¨', //168, Diaresis
+  '¨', //168, Diaeresis
   '©', //169, Copyright
   'ª', //170, Feminine Ordinal
   '«', //171, Double Left Guillemet
