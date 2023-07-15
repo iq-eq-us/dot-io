@@ -1586,7 +1586,7 @@ export function convertHumanPhraseToHexadecimalPhrase(humanPhrase) {
     const hexPhrasePart = pad(Dec2Hex(actionCode), 2); //convert the actionCode to a hex string and pad with zeros
     hexPhrase += hexPhrasePart; //append to final hexadecimal string
   }
-  hexPhrase = hexPhrase.toUpperCase(); //conver to uppercase
+  hexPhrase = hexPhrase.toUpperCase(); //convert to uppercase
   console.log('This is the hex human phrase ' + hexPhrase);
   return hexPhrase;
 }
