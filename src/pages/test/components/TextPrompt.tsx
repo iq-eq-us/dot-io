@@ -89,7 +89,7 @@ export function TextPrompt(): ReactElement {
   const setChordingEnabled = useStoreActions(
     (store: any) => store.setIsUsingChordingEnabledDevice,
   );
-  const setnumberOfWordsChorded = useStoreActions(
+  const setNumberOfWordsChorded = useStoreActions(
     (store: any) => store.setNumberOfWordsChorded,
   );
   const numberOfWordsChorded = useStoreState(
@@ -133,7 +133,7 @@ export function TextPrompt(): ReactElement {
       }
       if (numberOfBestTimesUnderTen >= 2) {
         setChordingEnabled(true);
-        setnumberOfWordsChorded();
+        setNumberOfWordsChorded();
         // console.log("setChordingEnabled "+ numberOfWordsChorded)
       }
       setBestKeyTime([]);
