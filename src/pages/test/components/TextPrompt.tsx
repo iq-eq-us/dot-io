@@ -519,7 +519,7 @@ export function TextPrompt(): ReactElement {
           const tempCompareValue =
             allTypedText[i + targetIndexForWhatErrorTextToShow];
           const tempTargetWord = firstLineOfTargetText[i];
-          // bevause the length og the gitdy line is larger than second we run into issues
+          // because the length og the gitdy line is larger than second we run into issues
           if (tempCompareValue != undefined) {
             tempCompareValue[t] ==
             (tempTargetWord[t] == undefined ? '' : tempTargetWord[t])
