@@ -6,7 +6,7 @@ import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 
 const r = Math.random;
 
-export function TextBluredScreen() {
+export function TextBlurredScreen() {
   const setTextPromptUnFocused = useStoreActions(
     (store) => store.setTextPromptUnFocused,
   );
@@ -562,7 +562,7 @@ export function TextPrompt(): ReactElement {
     const inputValue = document.getElementById('txt_Name') as HTMLInputElement;
     const isFocused = document.activeElement === inputValue;
     if (!isFocused) {
-      return TextBluredScreen();
+      return TextBlurredScreen();
     } else {
       setTextPromptUnFocused(false);
     }
