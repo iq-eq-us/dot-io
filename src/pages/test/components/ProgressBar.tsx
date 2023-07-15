@@ -284,7 +284,7 @@ export function ProgressBar(): ReactElement {
     }
   }
 
-  const { parentProps: progresAllTimeWPMsProps, Popper: AllTimePopper } =
+  const { parentProps: progressAllTimeWPMsProps, Popper: AllTimePopper } =
     usePopover(
       'Typing Speed of the Last 10 words = ' +
         rWPM.toFixed(0) +
@@ -300,7 +300,7 @@ export function ProgressBar(): ReactElement {
   return (
     <React.Fragment>
       {trainingSettings.isDisplayingHUD && (
-        <ProgresBarContainer>
+        <ProgressBarContainer>
           {AllTimePopper}
           {!trainingSettings.isProgressBarDynamic && (
             <input
@@ -319,7 +319,7 @@ export function ProgressBar(): ReactElement {
             {Popper}
             {RemainingPopover}
             <TopDataRow />
-            <TopProgressBar {...progresAllTimeWPMsProps}>
+            <TopProgressBar {...progressAllTimeWPMsProps}>
               <MultiRangeSlider
                 className="w-full"
                 label="true"
@@ -385,7 +385,7 @@ export function ProgressBar(): ReactElement {
               }
             />
           )}
-        </ProgresBarContainer>
+        </ProgressBarContainer>
       )}
     </React.Fragment>
   );
@@ -410,7 +410,7 @@ const SessionSpeed = styled.div.attrs<ProgressBarProgress>({
   width: ${(props) => props.progress?.toString()}%;
 `;
 
-const ProgresBarContainer = styled.div.attrs({
+const ProgressBarContainer = styled.div.attrs({
   className: `float-left flex flex-row inline-block`,
 })``;
 
