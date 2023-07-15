@@ -291,7 +291,7 @@ export function TextPrompt(): ReactElement {
               }
               const thisNewArray = [];
 
-              //This for loop returns after a word is complete. It checks if word the user typed is inccorect and if it is shows the incorrect words at the bottom of the word
+              //This for loop returns after a word is complete. It checks if word the user typed is incorrect and if it is shows the incorrect words at the bottom of the word
               for (let t = 0; t < storedTestTextData[i]?.length; t++) {
                 const tempCompareValue = allTypedText[i];
                 const tempTargetWord = storedTestTextData[i];

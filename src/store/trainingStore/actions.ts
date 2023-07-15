@@ -568,7 +568,7 @@ export async function calculateStatisticsForTargetChord(
     store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
   // if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
 
-  //This if state increments the error stat if a user types a word inccorectly
+  //This if state increments the error stat if a user types a word incorrectly
   //But if the user got a word wrong and went back to correct and the correction was incorrect we do not add another error to the stat
 
   let timeTakenToTypeChord =
