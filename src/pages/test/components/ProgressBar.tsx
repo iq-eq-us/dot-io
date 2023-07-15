@@ -144,7 +144,7 @@ export function ProgressBar(): ReactElement {
     }
   }
   const [minValue, setMinValue] = useState<number>(0);
-  let persistantValue = 0;
+  let persistentValue = 0;
 
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
 
@@ -203,7 +203,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = sumOfChordsMastered;
+    persistentValue = sumOfChordsMastered;
     inMaxValue = defaultProgressBarValues.CHM.ALLCHM;
   } else if (tier == 'CHM' && currentTrainingScenario == 'ALLCHORDS') {
     progress = clamp(
@@ -211,7 +211,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = sumOfChordsMastered;
+    persistentValue = sumOfChordsMastered;
     inMaxValue = defaultProgressBarValues.CHM.ALLCHM;
   } else if (tier == 'CPM' && currentTrainingScenario == 'ALPHABET') {
     /* eslint-disable */
@@ -220,7 +220,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = parseInt(
+    persistentValue = parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     );
     inMaxValue = defaultProgressBarValues.CPM.ALPHABET;
@@ -233,7 +233,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = parseInt(
+    persistentValue = parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     );
     inMaxValue = defaultProgressBarValues.CPM.TRIGRAMS;
@@ -246,7 +246,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = parseInt(
+    persistentValue = parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     );
     inMaxValue = defaultProgressBarValues.CPM.LEXICAL;
@@ -259,7 +259,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = parseInt(
+    persistentValue = parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     );
 
