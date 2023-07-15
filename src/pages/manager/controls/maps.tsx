@@ -3729,7 +3729,7 @@ const actionMap = [
   '˜', //152, Small Tilde
   '™', //153, Trademark
   'š', //154, Small s Carson
-  '›', //155, Right Guillement
+  '›', //155, Right Guillemet
   'œ', //156, Small Ligature oe
   '', //157, Operating System Command
   'ž', //158, Small Z Caron
@@ -3745,7 +3745,7 @@ const actionMap = [
   '¨', //168, Diaresis
   '©', //169, Copyright
   'ª', //170, Feminine Ordinal
-  '«', //171, Double Left Guillement
+  '«', //171, Double Left Guillemet
   '¬', //172, Not
   '­', //173, Soft Hyphen
   '®', //174, Registered
@@ -3761,7 +3761,7 @@ const actionMap = [
   '¸', //184, Cedilla
   '¹', //185, Superscript One
   'º', //186, Masculine Ordinal
-  '»', //187, Double Right Guillement
+  '»', //187, Double Right Guillemet
   '¼', //188, One Quarter Fraction
   '½', //189, One Half Fraction
   '¾', //190, Three Quarters Fraction
