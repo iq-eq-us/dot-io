@@ -164,8 +164,7 @@ function ModuleCompleteModal(): ReactElement {
           <p className=" font-bold mr-64">Download Your Chords!</p>
           <p className=" ml-10 mr-10" id="statusDiv" />
           <p className=" ml-10 mr-10 text-white">
-            Or press &lsquo;X&rsquo; to continue practicing. Or press
-            &lsquo;X&rsquo; to conti.
+            Or press &lsquo;X&rsquo; to continue practicing.
           </p>
           <img
             src={IQEQLogoImage}
