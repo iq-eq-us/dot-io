@@ -76,10 +76,6 @@ export const useWordsPerMinute = (): number => {
   const charactersTypedCorrectlyPerMinute =
     charactersTypedCorrectly / timeDifferenceInMinutes;
 
-  const trainingScenario = useStoreState(
-    (store) => store.currentTrainingScenario,
-  );
-
   if (trainingSettings.isAutoWrite) {
     if (typeof trainingScenario === 'string') {
       let averageSpeed = 0;
