@@ -697,7 +697,7 @@ export async function calculateStatisticsForTargetChord(
       chordStats.speedOfLastTen.push(chordStats.lastSpeed);
     }
 
-    //Need to aggregate the speeds in speedOfLastTen array and divide by the number if speeds in that array to derrive the avg speed
+    //Need to aggregate the speeds in speedOfLastTen array and divide by the number if speeds in that array to derive the avg speed
     chordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(
       chordStats.speedOfLastTen,
     );
