@@ -279,7 +279,7 @@ export const generateChords = (
       (a, b) => b.averageSpeed - a.averageSpeed,
     );
     const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
-    allCharacters.shift(); // This removes the first letter in the array so that in the alphabetic tier we only show the first 8 letters on the intial data set load
+    allCharacters.shift(); // This removes the first letter in the array so that in the alphabetic tier we only show the first 8 letters on the initial data set load
     for (let i = 0; i < theCondensedChordStat.length; i++) {
       if (
         theCondensedChordStat[i].averageSpeed > parameters.speedGoal &&
