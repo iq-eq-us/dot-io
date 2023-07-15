@@ -455,7 +455,7 @@ export function TextPrompt(): ReactElement {
       indexOfTargetChord != allTypedText.length &&
       conditionalValue < 1
     ) {
-      //console.log('This is exactly what Im stoing ' + setS)
+      //console.log('This is exactly what Im storing ' + setS)
       storeAllTypedText(setS);
       setTypedTrainingText('');
       arr = [];
