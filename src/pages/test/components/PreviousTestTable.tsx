@@ -372,7 +372,7 @@ function returnStatisticsColumnHeader(data: Data) {
   });
 
   //Need to change the average of chords I think I may need to multiply the avg out and then add
-  // In the neew speed to the multiplied avg and then divide
+  // In the new speed to the multiplied avg and then divide
 
   let sumOfLWPM = 0;
   let sumOfAWPM = 0;
