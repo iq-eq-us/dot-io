@@ -45,7 +45,7 @@ let pageAccessedByReload =
     .map((nav) => nav.type)
     .includes('reload');
 //Method to remove session value and set refresh constant back to false
-function removeSessionValueAndSettoFalse() {
+function removeSessionValueAndSetToFalse() {
   sessionStorage.removeItem('tempTestDeIncrement');
 
   pageAccessedByReload = false;
@@ -63,7 +63,7 @@ export const generateChords = (
     parameters.wordTestNumberValue != undefined
   ) {
     const wordTestValue = parseInt(parameters.wordTestNumberValue);
-    pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
+    pageAccessedByReload ? removeSessionValueAndSetToFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
 
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
 
@@ -124,7 +124,7 @@ export const generateChords = (
     const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
     const wordTestValue = chordLibraryCharacters.length;
-    pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
+    pageAccessedByReload ? removeSessionValueAndSetToFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
     const checkVal = sessionStorage.getItem('tempTestDeIncrement');
     if (
       sessionStorage.getItem('tempTestDeIncrement') == undefined ||
