@@ -633,7 +633,7 @@ function replaceOldAsciiKeys(inputKey) {
     if (oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])) {
       // eslint-disable-line no-use-before-define
       finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]]; // eslint-disable-line no-use-before-define
-      console.log('Oldasciireplacement ' + finishedInputKey);
+      console.log('OldAsciiReplacement ' + finishedInputKey);
     } else {
       finishedInputKey += inputKey[i];
     }
