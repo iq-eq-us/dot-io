@@ -573,7 +573,7 @@ export async function calculateStatisticsForTargetChord(
 
   let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
-  let numberOfOccurences = 0;
+  let numberOfOccurrences = 0;
 
   // Don't penalize the user if this is the first character they type
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
@@ -648,7 +648,7 @@ export async function calculateStatisticsForTargetChord(
 
   if (userIsTypingFirstChord) {
     timeTakenToTypeChord = 0;
-    numberOfOccurences = -1;
+    numberOfOccurrences = -1;
     store.startTimer = true;
   }
   if (!userIsTypingFirstChord && !store.userIsEditingPreviousWord) {
@@ -708,7 +708,7 @@ export async function calculateStatisticsForTargetChord(
       else chordStats.numberOfOccurrences = chordStats.numberOfOccurrences = 0;
     } else {
       chordStats.numberOfOccurrences =
-        chordStats.numberOfOccurrences + numberOfOccurences;
+        chordStats.numberOfOccurrences + numberOfOccurrences;
       store.userIsEditingPreviousWord === false
         ? chordStats.numberOfOccurrences++
         : '';
@@ -809,7 +809,7 @@ export async function calculateStatisticsForTargetChord(
         }
       } else {
         chordStatsFromDevice.numberOfOccurrences =
-          chordStatsFromDevice.numberOfOccurrences + numberOfOccurences;
+          chordStatsFromDevice.numberOfOccurrences + numberOfOccurrences;
         store.userIsEditingPreviousWord === false
           ? chordStatsFromDevice.numberOfOccurrences++
           : '';

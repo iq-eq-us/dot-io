@@ -43,7 +43,7 @@ export const getCumulativeAverageChordTypeTimeFromDevice = (
   return (isNaN(average) ? '0' : average?.toFixed()) || '0';
 };
 
-export const getCumulativeOccurence = (stats: ChordStatistics[]): string => {
+export const getCumulativeOccurrence = (stats: ChordStatistics[]): string => {
   const occur = stats.filter((stat) => stat.numberOfOccurrences != 0);
   return String(occur);
 };
