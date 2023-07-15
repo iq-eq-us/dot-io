@@ -245,7 +245,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    moveIndiciesOfTargetChord(state);
+    moveIndicesOfTargetChord(state);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -899,7 +899,7 @@ export function savedStoredChordStats(state: TrainingStoreModel) {
     ); //Store downloaded chords in local storage
 }
 
-function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
+function moveIndicesOfTargetChord(state: TrainingStoreModel): void {
   const isReadyToAdvanceToNextLineOfTrainingText =
     state.currentSubindexInTrainingText + 1 >=
     state.trainingText[state.currentLineOfTrainingText].length;
