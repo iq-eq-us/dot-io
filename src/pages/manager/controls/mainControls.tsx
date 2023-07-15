@@ -1553,7 +1553,7 @@ export function convertHumanChordToHexadecimalChord(humanChord) {
 
   decChordParts.sort(function (a, b) {
     return b - a;
-  }); // This sorts the parts of the chod in decensing order
+  }); // This sorts the parts of the chord in decensing order
 
   const chainIndex = 0; //to be developed later
   let binChord = pad(Dec2Bin(chainIndex), 8); //convert the chain index to binary and zero fill up to 8-bits
