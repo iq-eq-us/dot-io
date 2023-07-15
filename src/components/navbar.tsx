@@ -264,7 +264,7 @@ const NavLinksImage = styled.img<{ open: boolean }>`
   }
 `;
 
-const NavLinksImageTransparant = styled.img`
+const NavLinksImageTransparent = styled.img`
   color: #fff;
   display: flex;
   opacity: 0.5;
