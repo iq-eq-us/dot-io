@@ -579,7 +579,7 @@ export async function calculateStatisticsForTargetChord(
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
   // So if this is their very first chord, we give them a very short time for it
 
-  // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
+  // Never let the last speed go above 500 milliseconds so the user's times don't get ruined if the walk away from their desk
 
   //This logic handles local Chord stats merge
   localChordStats.lastSpeed = Math.min(
@@ -682,7 +682,7 @@ export async function calculateStatisticsForTargetChord(
     }
   }
 
-  // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
+  // Never let the last speed go above 500 milliseconds so the user's times don't get ruined if the walk away from their desk
   if (store.currentTrainingScenario != 'ALLCHORDS' && !userIsTypingFirstChord) {
     chordStats.lastSpeed = Math.min(
       timeTakenToTypeChord,
