@@ -341,7 +341,7 @@ export function TextPrompt(): ReactElement {
             displayArray.push(<div className="text-white">{sd}</div>);
           }
 
-          //This peice of code handles the experience while your typing in real time
+          //This piece of code handles the experience while your typing in real time
           if (arr.length != 0) {
             const tempVal =
               storedTestTextData[
