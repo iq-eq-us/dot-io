@@ -1547,7 +1547,7 @@ export function convertHumanChordToHexadecimalChord(humanChord) {
 
     //const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
     actionCode == -1
-      ? console.log('ActionCode does not exisit')
+      ? console.log('ActionCode does not exist')
       : decChordParts.push(actionCode);
   });
 
