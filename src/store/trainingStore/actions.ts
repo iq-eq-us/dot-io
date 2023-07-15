@@ -176,7 +176,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       localStorage?.getItem(state.trainingLevel + '_' + payload[0]),
     );
 
-    //  console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
+    //  console.log('Is this the current training scenario ' + state.currentTrainingScenario);
     // Pull the chord library from memory if it's there, otherwise pull it from defaults
     if (state.currentTrainingScenario === 'ALLCHORDS') {
       //console.log('stored chord rep '+ state.storedChordsRepresentation)
