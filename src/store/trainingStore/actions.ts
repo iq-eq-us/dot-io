@@ -333,8 +333,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     store.trainingText = [];
     store.currentLineOfTrainingText = 0;
     store.currentSubindexInTrainingText = 0;
-    generateNextLineOfInputdata(store as unknown as TrainingStoreStateModel);
-    generateNextLineOfInputdata(store as unknown as TrainingStoreStateModel);
+    generateNextLineOfInputData(store as unknown as TrainingStoreStateModel);
+    generateNextLineOfInputData(store as unknown as TrainingStoreStateModel);
   }),
   setTypedTrainingText: action((state, payload) => {
     state.typedTrainingText = payload;
@@ -906,7 +906,7 @@ function moveIndicesOfTargetChord(state: TrainingStoreModel): void {
   if (isReadyToAdvanceToNextLineOfTrainingText) {
     state.currentLineOfTrainingText += 1;
     state.currentSubindexInTrainingText = 0;
-    generateNextLineOfInputdata(state);
+    generateNextLineOfInputData(state);
   } else {
     state.currentSubindexInTrainingText += 1;
   }
@@ -940,7 +940,7 @@ function generateTestTrainingData(
   return fullTestData;
 }
 
-function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
+function generateNextLineOfInputData(state: TrainingStoreStateModel) {
   const lineLength =
     state.currentTrainingScenario === 'ALPHABET'
       ? ALPHABET_LINE_LENGTH
