@@ -80,7 +80,7 @@ export function storeData(data: any, dateData: any) {
 export function storeAverageData(
   avgData: number,
   dateD: Date,
-  inChordMasterdValue: number,
+  inChordMasteredValue: number,
   inAvgChordCount: string | number | null | undefined,
 ) {
   const avgGraphWPM = [];
@@ -300,11 +300,11 @@ export function storeAverageData(
   }
 }
 
-export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
+export function storeMasteredData(dateD: Date, inChordMasteredValue: number) {
   const storeMasteredData = [];
   const storeMasteredDate = [];
   const masteredCounterArray: any = [];
-  // console.log(inChordMasterdValue)
+  // console.log(inChordMasteredValue)
 
   const currentDate = new Date();
   const date = currentDate.getDate();
@@ -319,10 +319,10 @@ export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
   const prevStoredAVGDate = JSON.parse(localStorage.getItem('avgGraphDate'));
   const prevStoredWPMWPM = JSON.parse(localStorage.getItem('wpmGraphWPM'));
   if (
-    inChordMasterdValue >= 100 &&
-    inChordMasterdValue !=
+    inChordMasteredValue >= 100 &&
+    inChordMasteredValue !=
       JSON.parse(localStorage.getItem('prevMasteredChordVal')) &&
-    inChordMasterdValue != 6276
+    inChordMasteredValue != 6276
   ) {
     if (
       (prevStoredWPMWPM != null || prevStoredAVGWPM != null) &&
@@ -330,7 +330,7 @@ export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
     ) {
       storeMasteredData.push(0);
       //console.log('here');
-      //console.log(inChordMasterdValue);
+      //console.log(inChordMasteredValue);
       storeMasteredDate.push(prevStoredAVGDate[0]);
 
       localStorage.setItem(
@@ -376,7 +376,7 @@ export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
 
       //console.log(storedMData);
       //console.log(storedMDate);
-      storedPValue = inChordMasterdValue;
+      storedPValue = inChordMasteredValue;
       storedMCount = storedMCount + 1;
 
       storedMData.splice(storedMData.length - 1, 1, storedMCount);
@@ -409,7 +409,7 @@ export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
       storedMCount = storedMCount + 1;
       storedMData.push(storedMCount);
       storedMDate.push(dateD);
-      storedPValue = inChordMasterdValue;
+      storedPValue = inChordMasteredValue;
       storedMCount = storedMCount + 1;
 
       localStorage.setItem('storedMasterData', JSON.stringify(storedMData));
