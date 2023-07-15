@@ -91,7 +91,7 @@ export async function downloadChordsForAllChordsModule() {
       //ascii_to_hexa(arrValue);
       const strValue = arrValue;
       let hexChordString = '';
-      hexChordString = strValue[3]; //Should be 32 chacters at all times
+      hexChordString = strValue[3]; //Should be 32 characters at all times
       let hexAsciiString = '';
       hexAsciiString = strValue[4];
       //console.log('StrValue '+convertHexadecimalChordToHumanChord(hexChordString));
