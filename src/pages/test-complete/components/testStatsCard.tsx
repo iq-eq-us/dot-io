@@ -13,7 +13,7 @@ export function TestStatsCard(): ReactElement {
   const beginTraining = useStoreActions(
     (store: any) => store.beginTrainingMode,
   );
-  const trainingSceneario = useStoreState(
+  const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
   const currentWordTestNumber = useStoreState((store) => store.wordTestNumber);
@@ -41,7 +41,7 @@ export function TestStatsCard(): ReactElement {
   const numberOfWordsChorded = useStoreState(
     (state: any) => state.numberOfWordsChorded,
   );
-  payload.push(trainingSceneario);
+  payload.push(trainingScenario);
   payload.push(currentWordTestNumber);
 
   currentTrainingSetting.statistics.forEach((d) => {

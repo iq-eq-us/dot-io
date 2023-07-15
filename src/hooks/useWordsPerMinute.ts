@@ -10,7 +10,7 @@ export const useWordsPerMinute = (): number => {
     (store) => store.timeAtTrainingStart,
   );
 
-  const trainingSceneario = useStoreState(
+  const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
   const trainingSettings = useStoreState((store) => store.trainingSettings);
@@ -85,7 +85,7 @@ export const useWordsPerMinute = (): number => {
       let averageSpeed = 0;
       let averageSpeedCount = 0;
 
-      if (trainingSceneario == 'ALPHABET') {
+      if (trainingScenario == 'ALPHABET') {
         if (totalNumberOfCharactersTyped == 0) {
           wpm = 0;
         } else {
