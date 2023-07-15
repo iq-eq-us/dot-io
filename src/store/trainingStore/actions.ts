@@ -272,12 +272,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       // If the user is in "Auto" or "Goal Driven" mode, then the following properties are updated automatically on level change
       //    Speed goal is set to (1 - slowestChord.averageSpeed)
       //    Number of target chords is set to the number of existing chords whose average speed is greater than the new speed goal
-      const speedThesholdToCompleteLevel = state.trainingSettings.speedGoal;
+      const speedThresholdToCompleteLevel = state.trainingSettings.speedGoal;
       const hasCompletedLevel =
         state.trainingStatistics.statistics.filter(
           (s) =>
             s.averageSpeed === 0 ||
-            s.averageSpeed > speedThesholdToCompleteLevel,
+            s.averageSpeed > speedThresholdToCompleteLevel,
         ).length === 0;
       const isSettingsSetToAuto =
         state.trainingSettings.autoOrCustom === 'AUTO';
