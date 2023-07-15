@@ -48,7 +48,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
       'How many chords do you want to target to get better at through practice?',
     );
 
-  const { parentProps: speedGoalProps, Popper: SpeelGoalPopover } = usePopover(
+  const { parentProps: speedGoalProps, Popper: SpeedGoalPopover } = usePopover(
     'How fast do you want to type each chord? This is measured in hundredths of a second, so a speed goal of 100 would equate to 1 second.',
   );
 
@@ -100,7 +100,7 @@ export function CustomTrainingSettingsBox(props: SettingsProps): JSX.Element {
         <Label {...speedGoalProps}>
           Speed Goal
           <HelpCircleIcon />
-          {SpeelGoalPopover}
+          {SpeedGoalPopover}
         </Label>
         <Input
           onBlur={(e) => {
