@@ -1442,7 +1442,7 @@ async function readDeviceId(){
 
     if(value == "chordmaps loaded and ready"){
       console.log("received: chordmaps loaded and ready, so the chord headers are enabled; turning this off");
-      await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00"); //disable chordmap outout
+      await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00"); //disable chordmap output
       await sendCommandString("ID");
       await readDeviceId();
     }else{
