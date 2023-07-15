@@ -4125,7 +4125,7 @@ const actionMap = [
   'KM_1_L', //548, Primary Keymap (left key)
   'KM_1_R', //549, Primary Keymap (right key)
   'KM_2_L', //550, Secondary Keymap [Num-shift] (left key)
-  'KM_2_R', //551, Secondary Keymap [Num-shift] (rightkey)
+  'KM_2_R', //551, Secondary Keymap [Num-shift] (right key)
   'KM_3_L', //552, Tertiary Keymap (left key)
   'KM_3_R', //553, Tertiary Keymap (left key)
   '', //554,
