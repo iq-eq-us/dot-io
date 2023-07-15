@@ -3924,7 +3924,7 @@ const actionMap = [
   'KP_3', //347, Keypad 3 and Page Down
   'KP_4', //348, Keypad 4 and Left Arrow
   'KP_5', //349, Keypad 5
-  'KP_6', //350, Keypad 6 and Rigth Arrow
+  'KP_6', //350, Keypad 6 and Right Arrow
   'KP_7', //351, Keypad 7 and Home
   'KP_8', //352, Keypad 8 and Up Arrow
   'KP_9', //353, Keypad 9 and Page Up
