@@ -39,9 +39,9 @@ export function TrainingModeSelector(): ReactElement {
     beginTraining(payload);
   }
   function allChords() {
-    const doesLibrayExist = localStorage.getItem('chordsReadFromDevice');
+    const doesLibraryExist = localStorage.getItem('chordsReadFromDevice');
     const id = getId();
-    if ((id != null && doesLibrayExist == undefined) || null) {
+    if ((id != null && doesLibraryExist == undefined) || null) {
       connectDeviceAndPopUp();
       setDownloadModuleModalToggle(true as boolean);
     } else {
