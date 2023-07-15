@@ -341,7 +341,7 @@ export function ProgressBar(): ReactElement {
                 </ProgressBarInner>
               </ProgressBarOuter>
             </BottomProgressBar>
-            <Trapazoid>
+            <Trapezoid>
               <RightTerms>
                 {timeTakenToTypeEachWordInOrder?.length == 0 ? 0 : Accuracy}%
                 acc
@@ -371,7 +371,7 @@ export function ProgressBar(): ReactElement {
                   rWPM
                 </div>
               </LeftTerms>
-            </Trapazoid>
+            </Trapezoid>
           </Container>
           {!trainingSettings.isProgressBarDynamic && (
             <input
@@ -452,7 +452,7 @@ const DataText = styled.div.attrs({
   className: `text-white font-semibold flex flex-row items-center`,
 })``;
 
-const Trapazoid = styled.div.attrs({
+const Trapezoid = styled.div.attrs({
   className: `ml-auto mr-auto justify-items-center grid grid-cols-3 gap-x-[.5] h-[12px] w-[220px]  border-b-[35px] border-b-[#333] border-x-[25px] border-x-transparent border-solid rotate-180
   `,
 })``;
