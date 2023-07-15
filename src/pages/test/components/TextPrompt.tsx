@@ -207,7 +207,7 @@ export function TextPrompt(): ReactElement {
       ) {
         const tempArray = [];
         let tempValue = '';
-        let tempBufferInThefront = '';
+        let tempBufferInTheFront = '';
         let tempBufferInTheBack = '';
         let y = 0;
 
@@ -219,11 +219,11 @@ export function TextPrompt(): ReactElement {
           tempBufferInTheBack += '.';
         }
         for (let g = 0; g < targetCharacterIndex; g++) {
-          tempBufferInThefront += '.';
+          tempBufferInTheFront += '.';
         }
         tempArray.push(
           <React.Fragment>
-            <span className="text-white m-0 flex">{tempBufferInThefront}</span>
+            <span className="text-white m-0 flex">{tempBufferInTheFront}</span>
             <div className="text-gray-500">{arr}</div>
             <span className="text-white m-0 flex">{tempBufferInTheBack}</span>
           </React.Fragment>,
