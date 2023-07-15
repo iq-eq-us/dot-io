@@ -710,12 +710,12 @@ export function noteId_to_chord(note: any): bigint {
 export async function readGetOneChordmap() {
   console.log('readGetOneChordmap()');
   const { value } = await MainControls.lineReader.read();
-  const spliter = value.split(' ');
-  console.log(spliter);
+  const splitter = value.split(' ');
+  console.log(splitter);
   const strValues = ['', '', '', ''];
 
   if (value) {
-    const arrValue = [...spliter];
+    const arrValue = [...splitter];
     //ascii_to_hexa(arrValue);
     const strValue = arrValue;
     let hexChordString = '';

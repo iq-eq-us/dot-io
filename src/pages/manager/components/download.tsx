@@ -81,13 +81,13 @@ export async function downloadChordsForAllChordsModule() {
     // await readGetOneChordmap();
 
     const { value } = await MainControls.lineReader.read();
-    const spliter = value.split(' ');
+    const splitter = value.split(' ');
     const tempCurrentChord = [];
     let phrase = '';
     let chord: string[] = [];
-    console.log(spliter);
+    console.log(splitter);
     if (value) {
-      const arrValue = [...spliter];
+      const arrValue = [...splitter];
       //ascii_to_hexa(arrValue);
       const strValue = arrValue;
       let hexChordString = '';
