@@ -3612,7 +3612,7 @@ const actionMap = [
   '#', //35, Hash Symbol
   '$', //36, Dollar Sign
   '%', //37, Percent
-  '&', //38, Amperstand
+  '&', //38, Ampersand
   "'", //39, Single Quote
   '(', //40, Left Parenthesis
   ')', //41, Right Parenthesis
