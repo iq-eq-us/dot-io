@@ -23,6 +23,7 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "importsNotUsedAsValues": "error",
+    "sourceMap": true
   }
-  
+
 }
