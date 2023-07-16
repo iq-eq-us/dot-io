@@ -80,7 +80,7 @@ export function storeData(data: any, dateData: any) {
 export function storeAverageData(
   avgData: number,
   dateD: Date,
-  inChordMasterdValue: number,
+  inChordMasteredValue: number,
   inAvgChordCount: string | number | null | undefined,
 ) {
   const avgGraphWPM = [];
@@ -183,7 +183,7 @@ export function storeAverageData(
       localStorage.setItem('avgGraphDate', JSON.stringify(avgDData));
       localStorage.setItem('dailyWPMAVG', JSON.stringify(dailyWPM));
     } else if (date - parseInt(localStorage.getItem('theDate')) == 1) {
-      //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasnt completed in 1 decisecond
+      //Checks if the wpm is over 100, if the current value is not equal to the previous to prevent double counting and ensures this wasn't completed in 1 decisecond
       if (inAvgChordCount != localStorage.getItem('prevAverageChordCounter')) {
         let avgCount = JSON.parse(localStorage.getItem('averageChordCounter'));
         let prevAvgCount = JSON.parse(
@@ -300,11 +300,11 @@ export function storeAverageData(
   }
 }
 
-export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
+export function storeMasteredData(dateD: Date, inChordMasteredValue: number) {
   const storeMasteredData = [];
   const storeMasteredDate = [];
   const masteredCounterArray: any = [];
-  // console.log(inChordMasterdValue)
+  // console.log(inChordMasteredValue)
 
   const currentDate = new Date();
   const date = currentDate.getDate();
@@ -314,15 +314,15 @@ export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
 
   const storedMasterData = JSON.parse(localStorage.getItem('storedMasterData'));
   const storedMasterDate = JSON.parse(localStorage.getItem('storedMasterDate'));
-  //We get this information to check if users already have this data to make the graph flush, This is only neccesary because we introduced this later
+  //We get this information to check if users already have this data to make the graph flush, This is only necessary because we introduced this later
   const prevStoredAVGWPM = JSON.parse(localStorage.getItem('avgGraphWPM'));
   const prevStoredAVGDate = JSON.parse(localStorage.getItem('avgGraphDate'));
   const prevStoredWPMWPM = JSON.parse(localStorage.getItem('wpmGraphWPM'));
   if (
-    inChordMasterdValue >= 100 &&
-    inChordMasterdValue !=
+    inChordMasteredValue >= 100 &&
+    inChordMasteredValue !=
       JSON.parse(localStorage.getItem('prevMasteredChordVal')) &&
-    inChordMasterdValue != 6276
+    inChordMasteredValue != 6276
   ) {
     if (
       (prevStoredWPMWPM != null || prevStoredAVGWPM != null) &&
@@ -330,7 +330,7 @@ export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
     ) {
       storeMasteredData.push(0);
       //console.log('here');
-      //console.log(inChordMasterdValue);
+      //console.log(inChordMasteredValue);
       storeMasteredDate.push(prevStoredAVGDate[0]);
 
       localStorage.setItem(
@@ -376,7 +376,7 @@ export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
 
       //console.log(storedMData);
       //console.log(storedMDate);
-      storedPValue = inChordMasterdValue;
+      storedPValue = inChordMasteredValue;
       storedMCount = storedMCount + 1;
 
       storedMData.splice(storedMData.length - 1, 1, storedMCount);
@@ -409,7 +409,7 @@ export function storeMasteredData(dateD: Date, inChordMasterdValue: number) {
       storedMCount = storedMCount + 1;
       storedMData.push(storedMCount);
       storedMDate.push(dateD);
-      storedPValue = inChordMasterdValue;
+      storedPValue = inChordMasteredValue;
       storedMCount = storedMCount + 1;
 
       localStorage.setItem('storedMasterData', JSON.stringify(storedMData));
@@ -448,7 +448,7 @@ export function storeCharactersPerMinute(
   //console.log(storedCharactersPerMinuteData);
   //console.log(storedCharactersPerMinuteDate);
 
-  //We get this information to check if users already have this data to make the graph flush, This is only neccesary because we introduced this later
+  //We get this information to check if users already have this data to make the graph flush, This is only necessary because we introduced this later
   const prevStoredW = JSON.parse(localStorage.getItem('wpmGraphDate'));
   const prevStoredAVGDate = JSON.parse(localStorage.getItem('avgGraphDate'));
   const prevStoredWPMWPM = JSON.parse(localStorage.getItem('wpmGraphWPM'));
@@ -977,7 +977,7 @@ function generateDayWiseTimeSeries2() {
   const series = [];
 
   const currentDate = new Date();
-  //If this is called and the expressiton is true this means the user has not attempted a training session. So we add the previously stored data to make the graph flush
+  //If this is called and the expression is true this means the user has not attempted a training session. So we add the previously stored data to make the graph flush
   if (parseInt(localStorage.getItem('theDate')) == null) {
     storeAverageData(0, currentDate, 0, 0);
   }

@@ -3612,7 +3612,7 @@ const actionMap = [
   '#', //35, Hash Symbol
   '$', //36, Dollar Sign
   '%', //37, Percent
-  '&', //38, Amperstand
+  '&', //38, Ampersand
   "'", //39, Single Quote
   '(', //40, Left Parenthesis
   ')', //41, Right Parenthesis
@@ -3712,11 +3712,11 @@ const actionMap = [
   '‡', //135, Double Dagger
   'ˆ', //136, Circumflex
   '‰', //137, Per Mile
-  'Š', //138, Captial S Caron
+  'Š', //138, Capital S Caron
   '‹', //139, Left Guillemet
-  'Œ', //140, Captial Ligature OE
+  'Œ', //140, Capital Ligature OE
   '', //141, RI (Reverse Index)
-  'Ž', //142, Captial Z Caron
+  'Ž', //142, Capital Z Caron
   '', //143, SS3 (Single-Shift G3)
   '', //144, DCS (Device Control String)
   '‘', //145, Single Quote Left
@@ -3729,11 +3729,11 @@ const actionMap = [
   '˜', //152, Small Tilde
   '™', //153, Trademark
   'š', //154, Small s Carson
-  '›', //155, Right Guillement
+  '›', //155, Right Guillemet
   'œ', //156, Small Ligature oe
   '', //157, Operating System Command
   'ž', //158, Small Z Caron
-  'Ÿ', //159, Capital Y Diaresis
+  'Ÿ', //159, Capital Y Diaeresis
   ' ', //160, No Break Space
   '¡', //161, Inverted Exclamation
   '¢', //162, Cent
@@ -3742,10 +3742,10 @@ const actionMap = [
   '¥', //165, Yen
   '¦', //166, Broken Bar
   '§', //167, Section
-  '¨', //168, Diaresis
+  '¨', //168, Diaeresis
   '©', //169, Copyright
   'ª', //170, Feminine Ordinal
-  '«', //171, Double Left Guillement
+  '«', //171, Double Left Guillemet
   '¬', //172, Not
   '­', //173, Soft Hyphen
   '®', //174, Registered
@@ -3761,12 +3761,12 @@ const actionMap = [
   '¸', //184, Cedilla
   '¹', //185, Superscript One
   'º', //186, Masculine Ordinal
-  '»', //187, Double Right Guillement
+  '»', //187, Double Right Guillemet
   '¼', //188, One Quarter Fraction
   '½', //189, One Half Fraction
   '¾', //190, Three Quarters Fraction
   '¿', //191, Inverted Question
-  'À', //192, Captial A Grave
+  'À', //192, Capital A Grave
   'Á', //193,
   'Â', //194,
   'Ã', //195,
@@ -3924,7 +3924,7 @@ const actionMap = [
   'KP_3', //347, Keypad 3 and Page Down
   'KP_4', //348, Keypad 4 and Left Arrow
   'KP_5', //349, Keypad 5
-  'KP_6', //350, Keypad 6 and Rigth Arrow
+  'KP_6', //350, Keypad 6 and Right Arrow
   'KP_7', //351, Keypad 7 and Home
   'KP_8', //352, Keypad 8 and Up Arrow
   'KP_9', //353, Keypad 9 and Page Up
@@ -4125,7 +4125,7 @@ const actionMap = [
   'KM_1_L', //548, Primary Keymap (left key)
   'KM_1_R', //549, Primary Keymap (right key)
   'KM_2_L', //550, Secondary Keymap [Num-shift] (left key)
-  'KM_2_R', //551, Secondary Keymap [Num-shift] (rightkey)
+  'KM_2_R', //551, Secondary Keymap [Num-shift] (right key)
   'KM_3_L', //552, Tertiary Keymap (left key)
   'KM_3_R', //553, Tertiary Keymap (left key)
   '', //554,

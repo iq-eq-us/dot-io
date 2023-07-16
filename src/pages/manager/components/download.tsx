@@ -7,7 +7,7 @@ import {
   sendCommandString,
   selectBase,
   readGetOneChordmap,
-  convertHexadecimalChordToHumanChordForAllChordsTeir,
+  convertHexadecimalChordToHumanChordForAllChordsTier,
   convertHexadecimalPhraseToAsciiString,
 } from '../controls/mainControls';
 import { resetDataTable } from '../../manager/components/resetDataTable';
@@ -81,26 +81,26 @@ export async function downloadChordsForAllChordsModule() {
     // await readGetOneChordmap();
 
     const { value } = await MainControls.lineReader.read();
-    const spliter = value.split(' ');
+    const splitter = value.split(' ');
     const tempCurrentChord = [];
     let phrase = '';
     let chord: string[] = [];
-    console.log(spliter);
+    console.log(splitter);
     if (value) {
-      const arrValue = [...spliter];
+      const arrValue = [...splitter];
       //ascii_to_hexa(arrValue);
       const strValue = arrValue;
       let hexChordString = '';
-      hexChordString = strValue[3]; //Should be 32 chacters at all times
+      hexChordString = strValue[3]; //Should be 32 characters at all times
       let hexAsciiString = '';
       hexAsciiString = strValue[4];
       //console.log('StrValue '+convertHexadecimalChordToHumanChord(hexChordString));
       tempCurrentChord[0] =
-        convertHexadecimalChordToHumanChordForAllChordsTeir(hexChordString);
+        convertHexadecimalChordToHumanChordForAllChordsTier(hexChordString);
       tempCurrentChord[1] =
         convertHexadecimalPhraseToAsciiString(hexAsciiString);
       chord =
-        convertHexadecimalChordToHumanChordForAllChordsTeir(hexChordString);
+        convertHexadecimalChordToHumanChordForAllChordsTier(hexChordString);
       phrase = convertHexadecimalPhraseToAsciiString(hexAsciiString);
     }
     const newStat: ChordStatisticsFromDevice =

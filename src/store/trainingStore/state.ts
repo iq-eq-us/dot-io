@@ -49,8 +49,8 @@ const trainingStoreState: TrainingStoreStateModel = {
   timeTakenToTypeEachWordInOrder: [],
   trainingLevel: 'CPM' as TrainingLevels,
   moduleCompleteModalToggle: false,
-  downloadModulModalToggle: false,
-  passwordModulModalToggle: false,
+  downloadModuleModalToggle: false,
+  passwordModuleModalToggle: false,
   wasModuleShown: false,
   moduleNumber: 1,
   numberOfWordsTypedCorrectly: 0,
@@ -71,7 +71,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   currentLevel: 0,
   timeAtTrainingStart: 0,
   numberOfChordsForTrainingLevel: 0,
-  testTeirHighestWPM: 0,
+  testTierHighestWPM: 0,
   storedChordsRepresentation: removeDups(
     generateNewChordRecordForAllChordsModule(
       JSON?.parse(localStorage?.getItem('chordsReadFromDevice')),

@@ -11,12 +11,12 @@ export function TestControlRow(): ReactElement {
           <NextTestButton />
         </ItemsContainer>
       </RowContainer>
-      <TeirSelector />
+      <TierSelector />
     </React.Fragment>
   );
 }
 
-const TeirSelector = styled.div`
+const TierSelector = styled.div`
   background-color: #181818;
   height: 60px;
   min-width: 100%;

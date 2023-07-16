@@ -7,7 +7,7 @@ import { defaultStoreState } from '../../store/store';
 const ALPHABET_CHORDS = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 describe('<App>', () => {
-  let timer: IMockPerfomance | null;
+  let timer: IMockPerformance | null;
 
   beforeEach(() => {
     timer = mockPerformance();
@@ -364,12 +364,12 @@ describe('<App>', () => {
  * It will then essentially freeze time until you manually call the `tick` function, to advance by `amount` milliseconds.
  * When you are done with the mock performance object, call `uninstall` to hand control back over to the browser.
  */
-interface IMockPerfomance {
+interface IMockPerformance {
   tick: (arg0: number) => void;
   uninstall: () => void;
 }
 
-const mockPerformance = (): IMockPerfomance => {
+const mockPerformance = (): IMockPerformance => {
   const oldPerformance = performance.now;
   let oldTime = performance.now();
 
@@ -389,7 +389,7 @@ function trainAlphabet(
   actions: () => Actions<CompleteStoreModel>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   state: any,
-  timer: IMockPerfomance | null,
+  timer: IMockPerformance | null,
 ) {
   actions().beginTrainingMode('ALPHABET');
 

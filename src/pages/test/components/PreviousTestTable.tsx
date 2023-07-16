@@ -314,7 +314,7 @@ function returnHeader(tier: string) {
     return (
       <React.Fragment>
         <HeaderItemRow helpText="The type of test associated with these metrics." />
-        <HeaderItemRow helpText="Your typing accuracy for this teir is representative of your typing accuracy all time for a given word.">
+        <HeaderItemRow helpText="Your typing accuracy for this tier is representative of your typing accuracy all time for a given word.">
           Accuracy
         </HeaderItemRow>
         <HeaderItemRow helpText="Your Average WPM for this test is based or your last 10 attempts at the given word.">
@@ -371,8 +371,8 @@ function returnStatisticsColumnHeader(data: Data) {
         : wpmMethodCalculator(d.averageSpeed, d.scenario) / 100;
   });
 
-  //Need to change the avgeraging of chords I trink I may need to multip;y the avg out and then add
-  // In the neew speed to the multiplied avg and then divide
+  //Need to change the average of chords I think I may need to multiply the avg out and then add
+  // In the new speed to the multiplied avg and then divide
 
   let sumOfLWPM = 0;
   let sumOfAWPM = 0;

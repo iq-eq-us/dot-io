@@ -45,7 +45,7 @@ let pageAccessedByReload =
     .map((nav) => nav.type)
     .includes('reload');
 //Method to remove session value and set refresh constant back to false
-function removeSessionValueAndSettoFalse() {
+function removeSessionValueAndSetToFalse() {
   sessionStorage.removeItem('tempTestDeIncrement');
 
   pageAccessedByReload = false;
@@ -63,7 +63,7 @@ export const generateChords = (
     parameters.wordTestNumberValue != undefined
   ) {
     const wordTestValue = parseInt(parameters.wordTestNumberValue);
-    pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
+    pageAccessedByReload ? removeSessionValueAndSetToFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
 
     const chordLibraryCharacters1 = Object.keys(parameters.chordsToChooseFrom);
 
@@ -124,7 +124,7 @@ export const generateChords = (
     const chordLibraryCharacters = Object.keys(parameters.chordsToChooseFrom);
 
     const wordTestValue = chordLibraryCharacters.length;
-    pageAccessedByReload ? removeSessionValueAndSettoFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
+    pageAccessedByReload ? removeSessionValueAndSetToFalse() : ''; // Call this incase user refreshed the page mid test to reset the session Variable
     const checkVal = sessionStorage.getItem('tempTestDeIncrement');
     if (
       sessionStorage.getItem('tempTestDeIncrement') == undefined ||
@@ -139,7 +139,10 @@ export const generateChords = (
         JSON.stringify(chordLibraryCharacters),
       );
     }
-    sessionStorage.setItem('CutomTierTestValue', JSON.stringify(wordTestValue));
+    sessionStorage.setItem(
+      'CustomTierTestValue',
+      JSON.stringify(wordTestValue),
+    );
     let tempDeIncrementValue = parseInt(
       sessionStorage.getItem('tempTestDeIncrement'),
     );
@@ -279,7 +282,7 @@ export const generateChords = (
       (a, b) => b.averageSpeed - a.averageSpeed,
     );
     const allCharacters: string[] = [chordToFeed].filter((a) => !!a);
-    allCharacters.shift(); // This removes the first letter in the array so that in the alphabetic tier we only show the first 8 letters on the intial data set load
+    allCharacters.shift(); // This removes the first letter in the array so that in the alphabetic tier we only show the first 8 letters on the initial data set load
     for (let i = 0; i < theCondensedChordStat.length; i++) {
       if (
         theCondensedChordStat[i].averageSpeed > parameters.speedGoal &&

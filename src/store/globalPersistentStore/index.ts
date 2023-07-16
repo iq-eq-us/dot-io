@@ -1,4 +1,4 @@
-import type { GlobalStore } from '../../../src/models/globalStorage';
+import type { GlobalStore } from '../../models/globalStorage';
 import globalStoreState from './state';
 import globalStorageStoreActions from './actions';
 

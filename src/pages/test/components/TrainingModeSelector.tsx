@@ -23,8 +23,8 @@ export function TrainingModeSelector(): ReactElement {
   const setModuleNumber = useStoreActions(
     (store: any) => store.setModuleNumber,
   );
-  const setDownloadModulModalToggle = useStoreActions(
-    (store: any) => store.setDownloadModulModalToggle,
+  const setDownloadModuleModalToggle = useStoreActions(
+    (store: any) => store.setDownloadModuleModalToggle,
   );
   const wpm = useWordsPerMinute();
 
@@ -39,11 +39,11 @@ export function TrainingModeSelector(): ReactElement {
     beginTraining(payload);
   }
   function allChords() {
-    const doesLibrayExist = localStorage.getItem('chordsReadFromDevice');
+    const doesLibraryExist = localStorage.getItem('chordsReadFromDevice');
     const id = getId();
-    if ((id != null && doesLibrayExist == undefined) || null) {
+    if ((id != null && doesLibraryExist == undefined) || null) {
       connectDeviceAndPopUp();
-      setDownloadModulModalToggle(true as boolean);
+      setDownloadModuleModalToggle(true as boolean);
     } else {
       LearnPageFunction('ALLCHORDS', trainingLevel);
     }

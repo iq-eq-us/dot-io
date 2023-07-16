@@ -107,7 +107,7 @@ function EditChordsModal(): ReactElement {
   };
 
   const confirmEditing = async () => {
-    sessionStorage.removeItem('CutomTierTestValue');
+    sessionStorage.removeItem('CustomTierTestValue');
     sessionStorage.removeItem('tempTestDeIncrement');
     //console.log('Here is where this is being called');
 
@@ -304,7 +304,7 @@ export const generateNewChordRecordForAllChordsModule = (
 
 export const getChordLibraryForTrainingScenario = (
   scenario?: TrainingScenario | undefined,
-  chordRepresention?: ChordLibraryRecord | undefined,
+  chordRepresentation?: ChordLibraryRecord | undefined,
 ): Record<string, string[]> | undefined => {
   const allChord = JSON?.parse(localStorage?.getItem('chordsReadFromDevice'));
   if (scenario === 'ALPHABET') return chordLibrary.letters;
@@ -319,8 +319,8 @@ export const getChordLibraryForTrainingScenario = (
   else if (scenario === 'LEXICALSENTENCES')
     return chordLibrary.lexicalSentences;
   else if (scenario === 'ALLCHORDS') {
-    console.log(chordRepresention);
-    return chordRepresention;
+    console.log(chordRepresentation);
+    return chordRepresentation;
   }
 
   return undefined;

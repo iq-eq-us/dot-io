@@ -76,13 +76,13 @@ const AggregateRow = ({ data }: { data: any }) => {
     const temp = parseInt(sessionStorage.getItem('tempTestDeIncrement'));
     if (tempCounter == -100) {
       setTempCounter(temp);
-      sessionStorage.getItem('CutomTierTestValue');
+      sessionStorage.getItem('CustomTierTestValue');
     }
 
     if (currentTrainingScenario == 'CUSTOMTIER') {
       if (
         sumOccurrences + 1 >=
-        parseInt(sessionStorage.getItem('CutomTierTestValue'))
+        parseInt(sessionStorage.getItem('CustomTierTestValue'))
       ) {
         setIsDisplaying(true); //Set the testcomplete page variable to true which fires the completed page
         setPopUpDisplayValue(true);
@@ -137,16 +137,16 @@ float-left
 const RowStatItem = styled.button.attrs({
   className: `
   hover:color-[#1e90ff]
-  whitespace-nowrap 
-  text-sm w-1/4 
+  whitespace-nowrap
+  text-sm w-1/4
   font-semibold`,
 })``;
 
 const RowStatItemName = styled.button.attrs({
   className: `
   float-left
-  whitespace-nowrap 
-  text-sm w-1/4 
+  whitespace-nowrap
+  text-sm w-1/4
   font-semibold`,
 })``;
 

@@ -8,7 +8,7 @@ function RefreshButton(): ReactElement {
   const beginTraining = useStoreActions(
     (store: any) => store.beginTrainingMode,
   );
-  const trainingSceneario = useStoreState(
+  const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
   const currentWordTestNumber = useStoreState((store) => store.wordTestNumber);
@@ -18,11 +18,11 @@ function RefreshButton(): ReactElement {
   const mode = useStoreState((store) => store.restartTestMode);
 
   const payload = [];
-  payload.push(trainingSceneario);
+  payload.push(trainingScenario);
   payload.push(currentWordTestNumber);
   function letsGoAgain() {
     sessionStorage.setItem('Refresh', JSON.stringify(1));
-    sessionStorage.removeItem('CutomTierTestValue');
+    sessionStorage.removeItem('CustomTierTestValue');
     sessionStorage.removeItem('tempTestDeIncrement');
     setRestartTestMode(true);
     beginTraining(payload);

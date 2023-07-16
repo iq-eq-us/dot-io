@@ -144,7 +144,7 @@ export function ProgressBar(): ReactElement {
     }
   }
   const [minValue, setMinValue] = useState<number>(0);
-  let persistantValue = 0;
+  let persistentValue = 0;
 
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
 
@@ -203,7 +203,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = sumOfChordsMastered;
+    persistentValue = sumOfChordsMastered;
     inMaxValue = defaultProgressBarValues.CHM.ALLCHM;
   } else if (tier == 'CHM' && currentTrainingScenario == 'ALLCHORDS') {
     progress = clamp(
@@ -211,7 +211,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = sumOfChordsMastered;
+    persistentValue = sumOfChordsMastered;
     inMaxValue = defaultProgressBarValues.CHM.ALLCHM;
   } else if (tier == 'CPM' && currentTrainingScenario == 'ALPHABET') {
     /* eslint-disable */
@@ -220,7 +220,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = parseInt(
+    persistentValue = parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     );
     inMaxValue = defaultProgressBarValues.CPM.ALPHABET;
@@ -233,7 +233,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = parseInt(
+    persistentValue = parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     );
     inMaxValue = defaultProgressBarValues.CPM.TRIGRAMS;
@@ -246,7 +246,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = parseInt(
+    persistentValue = parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     );
     inMaxValue = defaultProgressBarValues.CPM.LEXICAL;
@@ -259,7 +259,7 @@ export function ProgressBar(): ReactElement {
       0,
       100,
     );
-    persistantValue = parseInt(
+    persistentValue = parseInt(
       Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
     );
 
@@ -284,7 +284,7 @@ export function ProgressBar(): ReactElement {
     }
   }
 
-  const { parentProps: progresAllTimeWPMsProps, Popper: AllTimePopper } =
+  const { parentProps: progressAllTimeWPMsProps, Popper: AllTimePopper } =
     usePopover(
       'Typing Speed of the Last 10 words = ' +
         rWPM.toFixed(0) +
@@ -300,7 +300,7 @@ export function ProgressBar(): ReactElement {
   return (
     <React.Fragment>
       {trainingSettings.isDisplayingHUD && (
-        <ProgresBarContainer>
+        <ProgressBarContainer>
           {AllTimePopper}
           {!trainingSettings.isProgressBarDynamic && (
             <input
@@ -319,7 +319,7 @@ export function ProgressBar(): ReactElement {
             {Popper}
             {RemainingPopover}
             <TopDataRow />
-            <TopProgressBar {...progresAllTimeWPMsProps}>
+            <TopProgressBar {...progressAllTimeWPMsProps}>
               <MultiRangeSlider
                 className="w-full"
                 label="true"
@@ -341,7 +341,7 @@ export function ProgressBar(): ReactElement {
                 </ProgressBarInner>
               </ProgressBarOuter>
             </BottomProgressBar>
-            <Trapazoid>
+            <Trapezoid>
               <RightTerms>
                 {timeTakenToTypeEachWordInOrder?.length == 0 ? 0 : Accuracy}%
                 acc
@@ -371,7 +371,7 @@ export function ProgressBar(): ReactElement {
                   rWPM
                 </div>
               </LeftTerms>
-            </Trapazoid>
+            </Trapezoid>
           </Container>
           {!trainingSettings.isProgressBarDynamic && (
             <input
@@ -385,7 +385,7 @@ export function ProgressBar(): ReactElement {
               }
             />
           )}
-        </ProgresBarContainer>
+        </ProgressBarContainer>
       )}
     </React.Fragment>
   );
@@ -410,7 +410,7 @@ const SessionSpeed = styled.div.attrs<ProgressBarProgress>({
   width: ${(props) => props.progress?.toString()}%;
 `;
 
-const ProgresBarContainer = styled.div.attrs({
+const ProgressBarContainer = styled.div.attrs({
   className: `float-left flex flex-row inline-block`,
 })``;
 
@@ -452,7 +452,7 @@ const DataText = styled.div.attrs({
   className: `text-white font-semibold flex flex-row items-center`,
 })``;
 
-const Trapazoid = styled.div.attrs({
+const Trapezoid = styled.div.attrs({
   className: `ml-auto mr-auto justify-items-center grid grid-cols-3 gap-x-[.5] h-[12px] w-[220px]  border-b-[35px] border-b-[#333] border-x-[25px] border-x-transparent border-solid rotate-180
   `,
 })``;

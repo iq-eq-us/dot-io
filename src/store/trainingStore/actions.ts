@@ -115,11 +115,11 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setModuleCompleteModalToggle: action((state, payload) => {
     state.moduleCompleteModalToggle = payload as boolean;
   }),
-  setDownloadModulModalToggle: action((state, payload) => {
-    state.downloadModulModalToggle = payload as boolean;
+  setDownloadModuleModalToggle: action((state, payload) => {
+    state.downloadModuleModalToggle = payload as boolean;
   }),
-  setPasswordModulModalToggle: action((state, payload) => {
-    state.passwordModulModalToggle = payload as boolean;
+  setPasswordModuleModalToggle: action((state, payload) => {
+    state.passwordModuleModalToggle = payload as boolean;
   }),
   setChmTierPasswordBypass: action((state, payload) => {
     localStorage.setItem('chmTierPasswordBypass', JSON.stringify(true));
@@ -176,7 +176,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       localStorage?.getItem(state.trainingLevel + '_' + payload[0]),
     );
 
-    //  console.log('Is this the current traing scenario ' + state.currentTrainingScenario);
+    //  console.log('Is this the current training scenario ' + state.currentTrainingScenario);
     // Pull the chord library from memory if it's there, otherwise pull it from defaults
     if (state.currentTrainingScenario === 'ALLCHORDS') {
       //console.log('stored chord rep '+ state.storedChordsRepresentation)
@@ -245,7 +245,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     // TODO: Figure out the correct typing for these function calls so eslint and ts stop complaining
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    moveIndiciesOfTargetChord(state);
+    moveIndicesOfTargetChord(state);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -272,12 +272,12 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       // If the user is in "Auto" or "Goal Driven" mode, then the following properties are updated automatically on level change
       //    Speed goal is set to (1 - slowestChord.averageSpeed)
       //    Number of target chords is set to the number of existing chords whose average speed is greater than the new speed goal
-      const speedThesholdToCompleteLevel = state.trainingSettings.speedGoal;
+      const speedThresholdToCompleteLevel = state.trainingSettings.speedGoal;
       const hasCompletedLevel =
         state.trainingStatistics.statistics.filter(
           (s) =>
             s.averageSpeed === 0 ||
-            s.averageSpeed > speedThesholdToCompleteLevel,
+            s.averageSpeed > speedThresholdToCompleteLevel,
         ).length === 0;
       const isSettingsSetToAuto =
         state.trainingSettings.autoOrCustom === 'AUTO';
@@ -333,8 +333,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     store.trainingText = [];
     store.currentLineOfTrainingText = 0;
     store.currentSubindexInTrainingText = 0;
-    generateNextLineOfInputdata(store as unknown as TrainingStoreStateModel);
-    generateNextLineOfInputdata(store as unknown as TrainingStoreStateModel);
+    generateNextLineOfInputData(store as unknown as TrainingStoreStateModel);
+    generateNextLineOfInputData(store as unknown as TrainingStoreStateModel);
   }),
   setTypedTrainingText: action((state, payload) => {
     state.typedTrainingText = payload;
@@ -342,8 +342,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setIsProgressBarDynamic: action((state, payload) => {
     state.isProgressBarDynamic = payload;
   }),
-  setTestTeirHighestWPM: action((state, payload) => {
-    state.testTeirHighestWPM = payload as number;
+  setTestTierHighestWPM: action((state, payload) => {
+    state.testTierHighestWPM = payload as number;
   }),
   // This needs to be a thunkOn so that we can dispatch multiple actions
   // when the target word matches the word the user has entered
@@ -568,18 +568,18 @@ export async function calculateStatisticsForTargetChord(
     store.currentSubindexInTrainingText === 1; // We use 1 here because this value has already been incremented by the time chord statistics are calculated.
   // if (userIsTypingFirstChord) timeTakenToTypeChord = 1;
 
-  //This if state increments the error stat if a user types a word inccorectly
+  //This if state increments the error stat if a user types a word incorrectly
   //But if the user got a word wrong and went back to correct and the correction was incorrect we do not add another error to the stat
 
   let timeTakenToTypeChord =
     (performance.now() - store.timeOfLastChordStarted) / 10;
-  let numberOfOccurences = 0;
+  let numberOfOccurrences = 0;
 
   // Don't penalize the user if this is the first character they type
   // It can take time for them to get their hands on the keyboard, adjust their settings, etc.
   // So if this is their very first chord, we give them a very short time for it
 
-  // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
+  // Never let the last speed go above 500 milliseconds so the user's times don't get ruined if the walk away from their desk
 
   //This logic handles local Chord stats merge
   localChordStats.lastSpeed = Math.min(
@@ -648,7 +648,7 @@ export async function calculateStatisticsForTargetChord(
 
   if (userIsTypingFirstChord) {
     timeTakenToTypeChord = 0;
-    numberOfOccurences = -1;
+    numberOfOccurrences = -1;
     store.startTimer = true;
   }
   if (!userIsTypingFirstChord && !store.userIsEditingPreviousWord) {
@@ -682,7 +682,7 @@ export async function calculateStatisticsForTargetChord(
     }
   }
 
-  // Never let the last speed go above 500 milliseconds so the user's times dont get ruined if the walk away from their desk
+  // Never let the last speed go above 500 milliseconds so the user's times don't get ruined if the walk away from their desk
   if (store.currentTrainingScenario != 'ALLCHORDS' && !userIsTypingFirstChord) {
     chordStats.lastSpeed = Math.min(
       timeTakenToTypeChord,
@@ -697,7 +697,7 @@ export async function calculateStatisticsForTargetChord(
       chordStats.speedOfLastTen.push(chordStats.lastSpeed);
     }
 
-    //Need to aggregate the speeds in speedOfLastTen array and divide by the number if speeds in that array to derrive the avg speed
+    //Need to aggregate the speeds in speedOfLastTen array and divide by the number if speeds in that array to derive the avg speed
     chordStats.averageSpeed = avgCalculatorForTheSpeedOfLastTen(
       chordStats.speedOfLastTen,
     );
@@ -708,7 +708,7 @@ export async function calculateStatisticsForTargetChord(
       else chordStats.numberOfOccurrences = chordStats.numberOfOccurrences = 0;
     } else {
       chordStats.numberOfOccurrences =
-        chordStats.numberOfOccurrences + numberOfOccurences;
+        chordStats.numberOfOccurrences + numberOfOccurrences;
       store.userIsEditingPreviousWord === false
         ? chordStats.numberOfOccurrences++
         : '';
@@ -809,7 +809,7 @@ export async function calculateStatisticsForTargetChord(
         }
       } else {
         chordStatsFromDevice.numberOfOccurrences =
-          chordStatsFromDevice.numberOfOccurrences + numberOfOccurences;
+          chordStatsFromDevice.numberOfOccurrences + numberOfOccurrences;
         store.userIsEditingPreviousWord === false
           ? chordStatsFromDevice.numberOfOccurrences++
           : '';
@@ -852,13 +852,13 @@ export async function calculateStatisticsForTargetChord(
       window.addEventListener(
         'beforeunload',
         function () {
-          // number of miliseconds to hold before unloading page
+          // number of milliseconds to hold before unloading page
           const x = 500;
           const a = new Date().getTime() + x;
 
           localStorage.setItem('chordsReadFromDevice', JSON.stringify(value)); //Store downloaded chords in local storage
 
-          // browser will hold with unloading your page for X miliseconds, letting
+          // browser will hold with unloading your page for X milliseconds, letting
           // your localStorage call to finish
           while (new Date().getTime() < a) {
             //Not an Empty block statement en-list
@@ -899,14 +899,14 @@ export function savedStoredChordStats(state: TrainingStoreModel) {
     ); //Store downloaded chords in local storage
 }
 
-function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
+function moveIndicesOfTargetChord(state: TrainingStoreModel): void {
   const isReadyToAdvanceToNextLineOfTrainingText =
     state.currentSubindexInTrainingText + 1 >=
     state.trainingText[state.currentLineOfTrainingText].length;
   if (isReadyToAdvanceToNextLineOfTrainingText) {
     state.currentLineOfTrainingText += 1;
     state.currentSubindexInTrainingText = 0;
-    generateNextLineOfInputdata(state);
+    generateNextLineOfInputData(state);
   } else {
     state.currentSubindexInTrainingText += 1;
   }
@@ -940,7 +940,7 @@ function generateTestTrainingData(
   return fullTestData;
 }
 
-function generateNextLineOfInputdata(state: TrainingStoreStateModel) {
+function generateNextLineOfInputData(state: TrainingStoreStateModel) {
   const lineLength =
     state.currentTrainingScenario === 'ALPHABET'
       ? ALPHABET_LINE_LENGTH

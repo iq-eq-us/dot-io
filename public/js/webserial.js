@@ -641,17 +641,17 @@ let _actionMap = [
 
 let _keyMapDefaults = {
   'CHARACHORDER':[
-    0x0000, // 0, 
+    0x0000, // 0,
     0x013E, // 1, mouse right button press-and-release
     ('!').charCodeAt(0), // 2, !
     0x0187, // 3, right gui
     0x003F, // 4, ?
-    0x0000, // 5, 
+    0x0000, // 5,
     ('b').charCodeAt(0), // 6, b
     ('q').charCodeAt(0), // 7, q
     0x0115, // 8, previous phrase
     ('x').charCodeAt(0), // 9, x
-    0x0000, //10, 
+    0x0000, //10,
     ('f').charCodeAt(0), //11, f
     ('d').charCodeAt(0), //12, d
     ('h').charCodeAt(0), //13, h
@@ -661,37 +661,37 @@ let _keyMapDefaults = {
     0x0113, //17, num-shift right
     0x0186, //18, alt right
     0x0185, //19, shift right
-    0x0000, //20, 
+    0x0000, //20,
     0x0149, //21, mouse left hand down
     0x014A, //22, mouse left hand right
     0x014B, //23, mouse left hand up
     0x014C, //24, mouse left hand left
-    0x0000, //25, 
+    0x0000, //25,
     ('s').charCodeAt(0), //26, s
     (';').charCodeAt(0), //27, ;
     0x0184, //28, ctrl right
     ('y').charCodeAt(0), //29, y
-    0x0000, //30, 
+    0x0000, //30,
     0x01A0, //31, arrow down
     0x019E, //32, arrow right
     0x01A1, //33, arrow up
     0x019F, //34, arrow left
-    0x0000, //35, 
+    0x0000, //35,
     ('n').charCodeAt(0), //36, n
     ('j').charCodeAt(0), //37, j
     0x0009, //38, tab horizontal
     ('l').charCodeAt(0), //39, l
-    0x0000, //40, 
+    0x0000, //40,
     ('t').charCodeAt(0), //41, t
     (' ').charCodeAt(0), //42,  (space)
     0x000A, //43, enter (line feed)
     ('a').charCodeAt(0), //44, a
-    0x0000, //45, 
+    0x0000, //45,
     ('/').charCodeAt(0), //46, /
     ('-').charCodeAt(0), //47, -
     0x0183, //48, left gui
     0x001B, //49, escape
-    0x0000, //50, 
+    0x0000, //50,
     ('w').charCodeAt(0), //51, w
     0x013D, //52, mouse left button press-and-release
     ('g').charCodeAt(0), //53, g
@@ -701,32 +701,32 @@ let _keyMapDefaults = {
     ('v').charCodeAt(0), //57, v
     ('m').charCodeAt(0), //58, m
     ('c').charCodeAt(0), //59, c
-    0x0000, //60, 
+    0x0000, //60,
     0x0110, //61, ambi throw left
     0x0181, //62, shift left
     0x0182, //63, alt left
     0x0110, //64, num-shift left
-    0x0000, //65, 
+    0x0000, //65,
     0x0149, //66, mouse right hand down
     0x014A, //67, mouse right hand right
     0x014B, //68, mouse right hand up
     0x014C, //69, mouse right hand left
-    0x0000, //70, 
+    0x0000, //70,
     ('u').charCodeAt(0), //71, u
     ('\\').charCodeAt(0), //72, \
     0x0180, //73, left ctrl
     (',').charCodeAt(0), //74, ,
-    0x0000, //75, 
+    0x0000, //75,
     0x01A0, //76, arrow down
     0x019E, //77, arrow right
     0x01A1, //78, arrow up
     0x019F, //79, arrow left
-    0x0000, //80, 
+    0x0000, //80,
     ('o').charCodeAt(0), //81, o
     ('i').charCodeAt(0), //82, i
     0x007F, //83, del forward
     ('.').charCodeAt(0), //84, .
-    0x0000, //85, 
+    0x0000, //85,
     ('e').charCodeAt(0), //86, e
     ('r').charCodeAt(0), //87, r
     0x0008, //88, backspace
@@ -903,13 +903,13 @@ let abortController2 = new AbortController();
 async function disconnectSerialConnection(){
   console.log('disconnectSerialConnection()');
   if(serialPort){
- 
+
     console.log('closing serial port');
     lineReader.releaseLock();
 
     console.log(serialPort.readable);
     await abortController1.abort();
-    await lineReaderDone.catch(() => { /* Ingore the error */});
+    await lineReaderDone.catch(() => { /* Ignore the error */});
     await serialPort.close();
 
     console.log('serial port is closed');
@@ -933,10 +933,10 @@ async function openSerialPort(){
 
 async function setupLineReader(){
   if(serialPort){
-    console.log('setupLineRader()');
+    console.log('setupLineReader()');
     let decoder = new TextDecoderStream();
-    abortController1 = new AbortController(); //reset abortControler1
-    abortController2 = new AbortController(); //reset abortControler2
+    abortController1 = new AbortController(); //reset abortController1
+    abortController2 = new AbortController(); //reset abortController2
     //preventAbort:true,
     lineReaderDone = serialPort.readable.pipeTo(decoder.writable, {signal:abortController1.signal});//throws error here
     let inputStream = decoder.readable.pipeThrough(
@@ -995,7 +995,7 @@ async function cancelReader(){
         console.log(abortController1);
         await abortController1.abort();
         console.log(serialPort.readable);
-        await lineReaderDone.catch(() => {/* Ingore the error */}); //this frees up the serialPort.readable after the abortControl1.abort() signal
+        await lineReaderDone.catch(() => {/* Ignore the error */}); //this frees up the serialPort.readable after the abortControl1.abort() signal
         // await serialPort.readable.cancel();
       // }
     }
@@ -1011,7 +1011,7 @@ async function resetReader(){
         await lineReader.releaseLock();
       }
       await lineReader.cancel().then(()=>{console.log('cleared line reader')});
-      await lineReaderDone.catch(() => { /* Ingore the error */});
+      await lineReaderDone.catch(() => { /* Ignore the error */});
     }
     await setupLineReader ();
   }
@@ -1167,7 +1167,7 @@ function exportChordMapLibrary(){
 
   console.log(_chordMaps);
   const csvRows = [];
-  
+
   //TODO, pull from table
   for(const chordMap of _chordMaps){
     csvRows.push(chordMap.join(','))
@@ -1185,7 +1185,7 @@ function exportChordMapLibrary(){
   document.body.removeChild(a);
 }
 
-document.addEventListener("DOMContentLoaded", function(event) { 
+document.addEventListener("DOMContentLoaded", function(event) {
   document.getElementById('file-input').addEventListener('input', importChordMapLibrary);
 });
 
@@ -1209,17 +1209,17 @@ function importChordMapLibrary(e){
       let humanPhrase = strAllValues.join(','); //handles if there's a comma in the phrase
       let hexChordString = convertHumanStringToHexadecimalChord(humanChord);
       let hexPhraseString = convertHumanStringToHexadecimalPhrase(humanPhrase);
-      
-      
+
+
       strValues = ["","","",""];
       strValues[0] = humanChord;
       strValues[1] = humanPhrase;
       strValues[2] = hexChordString;
       strValues[3] = hexPhraseString;
       console.log(strValues);
-  
+
       _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
-  
+
       appendToRow(strValues,true);
     });
   }
@@ -1259,7 +1259,7 @@ async function convertHumanStringToBigNum(humanString){
       }else{
         keyId = actionId-0x0200; //using the physical key position
       }
-      
+
       console.log(keyId);
       bigNum = await(bigNum,BigInt(noteId_to_chord(keyId)));
       // bigNum+= BigInt(noteId_to_chord(keyId));
@@ -1290,7 +1290,7 @@ function convertHumanStringToHexadecimalChord(humanString){
       }else{
         keyId = actionId-0x0200; //using the physical key position
       }
-      
+
       console.log(keyId);
       bigNum+= BigInt(noteId_to_chord(keyId));
       console.log(bigNum);
@@ -1300,7 +1300,7 @@ function convertHumanStringToHexadecimalChord(humanString){
   });
   console.log(bigNum);
 
-  
+
   let hexString = bigNum.toString(16).toUpperCase();
   hexString = "0".repeat(16-hexString.length)+hexString; //add leading zeros up to 16 characters
   console.log(hexString);
@@ -1318,7 +1318,7 @@ function convertHexadecimalChordToHumanString(hexString){
     hexString = "00";
   }
   let bigNum = BigInt("0x"+hexString);
-  
+
 
   if(_chordmapId=="CHARACHORDER"){ //charachorder original uses different key map structure
     let decString = String(bigNum).split(''); //no left zeros; that's ok
@@ -1354,7 +1354,7 @@ function convertHexadecimalChordToHumanString(hexString){
             actionId = 0x0200+noteId;
           }
           humanString+=_actionMap[actionId];
-          
+
           humanString += " + ";
 
           noteId = chord_to_noteId(1*10**(decString.length-i-1));
@@ -1380,7 +1380,7 @@ function convertHexadecimalChordToHumanString(hexString){
       }
     }
   }
-  
+
 
 
   console.log(humanString);
@@ -1389,7 +1389,7 @@ function convertHexadecimalChordToHumanString(hexString){
 
 function convertHumanStringToHexadecimalPhrase(humanString){
   let hexString = "";
-	for (let i = 0; i<humanString.length; i ++) 
+	for (let i = 0; i<humanString.length; i ++)
   {
 		let hex = Number(humanString.charCodeAt(i)).toString(16);
     hexString+=hex;
@@ -1438,11 +1438,11 @@ async function readDeviceId(){
   // await inputDone;
   const { value, done } = await lineReader.read();
   if(value){
-    
-    
+
+
     if(value == "chordmaps loaded and ready"){
       console.log("received: chordmaps loaded and ready, so the chord headers are enabled; turning this off");
-      await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00"); //disable chordmap outout
+      await sendCommandString("SET "+CONFIG_ID_ENABLE_SERIAL_CHORD+" 00"); //disable chordmap output
       await sendCommandString("ID");
       await readDeviceId();
     }else{
@@ -1475,7 +1475,7 @@ async function readGetChordmapCount(){
 async function readGetHexChord(){
   let hexChordString = "";
   if(serialPort){
-    
+
     // let decoder = new TextDecoderStream();
     // let inputDone = port.readable.pipeTo(decoder.writable);//throws error here
     // console.log(inputDone);
@@ -1494,8 +1494,8 @@ async function readGetHexChord(){
       // await reader.cancel().then(()=>{console.log(['value',value]);console.log('then cancelled reader');});
       // await inputDone.catch(() => {});
       // reader.releaseLock();
-  
-      
+
+
       if(value){
         let arrValue = [...value];
         strValue = String(arrValue.join(''));
@@ -1504,7 +1504,7 @@ async function readGetHexChord(){
         await readGetOneAndToss(); //the "processing chord:" decimal output
       }
     }
-    
+
   }
   return hexChordString;
 }
@@ -1564,7 +1564,7 @@ async function readGetSomeChordmaps(expectedLineCount=100){
       //ascii_to_hexa(arrValue);
       let strValue = String(arrValue.join(''));
       console.log(strValue);
- 
+
       hexChordString = strValue.substr(0, 16);
       hexAsciiString = strValue.substr(17, strValue.length);
       strValues = ["","","",""];
@@ -1573,12 +1573,12 @@ async function readGetSomeChordmaps(expectedLineCount=100){
       strValues[2] = hexChordString;
       strValues[3] = hexAsciiString;
       console.log(strValues);
- 
+
       //appendToList(strValues);
       // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
       _chordMaps.push([convertHexadecimalChordToHumanString(hexChordString),strValues[1]]); //this ultimately isn't used
-      
- 
+
+
       appendToRow(strValues);
     }
     if(i>=expectedLineCount){
@@ -1666,7 +1666,7 @@ function addHeadersToDataTable(){
   cells[9].innerHTML = "Chord Hexadecimal (debug)";
   cells.push(row.insertCell(-1)); //10 orig hex phrase
   cells[10].innerHTML = "Phrase Hexadecimal (debug)";
-  
+
 }
 
 function appendToRow(data,isFromFile=false){
@@ -1696,7 +1696,7 @@ function appendToRow(data,isFromFile=false){
   let btnDelete = document.createElement('input');
   let btnRevert = document.createElement('input');
   let btnCommit = document.createElement('input');
-  
+
 
   let virtualId = _chordMapIdCounter;
   cells[0].innerHTML = virtualId; //local id number
@@ -1710,9 +1710,9 @@ function appendToRow(data,isFromFile=false){
   btnEdit.onclick = async function(){
     var btn = document.getElementById(virtualId.toString()+"-edit");
     if(btn.value == "edit chord"){
-      btn.value = "listening";  
+      btn.value = "listening";
       await enableSerialChordOutput(true); //TODO include code to enable raw inputs and detect chord or else timeout
-      
+
       let hexChord = await readGetHexChord(); //TODO enable a timeout to stop listening to read serial
       console.log(convertHexadecimalChordToHumanString(hexChord)); //TODO take this hexchord and do something with it
       if(hexChord!=null){
@@ -1750,7 +1750,7 @@ function appendToRow(data,isFromFile=false){
   chordTextNew.id = virtualId.toString()+"-chordnew";
   chordTextNew.innerHTML = "";
   cells[4].appendChild(chordTextNew);
-  
+
   phraseTextInput.id = virtualId.toString()+"-phraseinput";
   phraseTextInput.setAttribute("type", "text");
   phraseTextInput.value = "";

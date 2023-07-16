@@ -192,7 +192,7 @@ export async function cancelReader() {
       await MainControls.abortController1.abort();
       console.log(MainControls.serialPort.readable);
       await MainControls.lineReaderDone.catch(() => {
-        /* Ingore the error */
+        /* Ignore the error */
       }); //this frees up the serialPort.readable after the abortControl1.abort() signal
       // await serialPort.readable.cancel();
       // }
@@ -476,7 +476,7 @@ function Hex2Dec(n) {
   return parseInt(n, 16).toString(10);
 }
 
-export function convertHexadecimalChordToHumanChordForAllChordsTeir(hexChord) {
+export function convertHexadecimalChordToHumanChordForAllChordsTier(hexChord) {
   //console.log("convertHexadecimalChordToHumanChord()");
   //console.log(hexChord);
   const humanChord = [];
@@ -559,10 +559,10 @@ export function chord_to_noteId(chord: number) {
 
 export async function setupLineReader() {
   if (MainControls.serialPort) {
-    console.log('setupLineRader()');
+    console.log('setupLineReader()');
     const decoder = new TextDecoderStream();
-    MainControls.abortController1 = new AbortController(); //reset abortControler1
-    MainControls.abortController2 = new AbortController(); //reset abortControler2
+    MainControls.abortController1 = new AbortController(); //reset abortController1
+    MainControls.abortController2 = new AbortController(); //reset abortController2
     //preventAbort:true,
     MainControls.lineReaderDone = MainControls.serialPort.readable.pipeTo(
       decoder.writable,
@@ -633,7 +633,7 @@ function replaceOldAsciiKeys(inputKey) {
     if (oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])) {
       // eslint-disable-line no-use-before-define
       finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]]; // eslint-disable-line no-use-before-define
-      console.log('Oldasciireplacement ' + finishedInputKey);
+      console.log('OldAsciiReplacement ' + finishedInputKey);
     } else {
       finishedInputKey += inputKey[i];
     }
@@ -710,16 +710,16 @@ export function noteId_to_chord(note: any): bigint {
 export async function readGetOneChordmap() {
   console.log('readGetOneChordmap()');
   const { value } = await MainControls.lineReader.read();
-  const spliter = value.split(' ');
-  console.log(spliter);
+  const splitter = value.split(' ');
+  console.log(splitter);
   const strValues = ['', '', '', ''];
 
   if (value) {
-    const arrValue = [...spliter];
+    const arrValue = [...splitter];
     //ascii_to_hexa(arrValue);
     const strValue = arrValue;
     let hexChordString = '';
-    hexChordString = strValue[3]; //Should be 32 chacters at all times
+    hexChordString = strValue[3]; //Should be 32 characters at all times
     let hexAsciiString = '';
     hexAsciiString = strValue[4];
     convertHumanStringToHexadecimalChord;
@@ -1505,7 +1505,7 @@ export function pressCommitButton(virtualId: { toString: () => string }) {
   const commitButton = document.getElementById(
     virtualId.toString() + '-commit',
   );
-  //onst myTimeout = await setTimeout(pressCommitButton,virtualId*10000,virtualId);//Fiddle with this
+  //const myTimeout = await setTimeout(pressCommitButton,virtualId*10000,virtualId);//Fiddle with this
   //myTimeout.
   clickCommit(virtualId);
   //clearTimeout(myTimeout);
@@ -1547,13 +1547,13 @@ export function convertHumanChordToHexadecimalChord(humanChord) {
 
     //const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
     actionCode == -1
-      ? console.log('ActionCode does not exisit')
+      ? console.log('ActionCode does not exist')
       : decChordParts.push(actionCode);
   });
 
   decChordParts.sort(function (a, b) {
     return b - a;
-  }); // This sorts the parts of the chod in decensing order
+  }); // This sorts the parts of the chord in descending order
 
   const chainIndex = 0; //to be developed later
   let binChord = pad(Dec2Bin(chainIndex), 8); //convert the chain index to binary and zero fill up to 8-bits
@@ -1586,7 +1586,7 @@ export function convertHumanPhraseToHexadecimalPhrase(humanPhrase) {
     const hexPhrasePart = pad(Dec2Hex(actionCode), 2); //convert the actionCode to a hex string and pad with zeros
     hexPhrase += hexPhrasePart; //append to final hexadecimal string
   }
-  hexPhrase = hexPhrase.toUpperCase(); //conver to uppercase
+  hexPhrase = hexPhrase.toUpperCase(); //convert to uppercase
   console.log('This is the hex human phrase ' + hexPhrase);
   return hexPhrase;
 }
