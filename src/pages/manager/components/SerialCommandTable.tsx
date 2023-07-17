@@ -1,7 +1,4 @@
 import React, { ReactElement, useEffect } from 'react';
-import styled from 'styled-components';
-import { useStoreState } from '../../../store/store';
-import { ChordMapCard } from './ChordMapCard';
 
 const data = [
   { name: 'CMD', desc: 'Lists available commands.', example: 'CMD' },
@@ -56,7 +53,3 @@ export function SerialCommandTable(): ReactElement {
     </React.Fragment>
   );
 }
-
-const CardColumn = styled.div.attrs({
-  className: `flex flex-wrap flex-col items-center center justify-center`,
-})``;

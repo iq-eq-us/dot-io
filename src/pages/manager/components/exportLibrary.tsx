@@ -1,9 +1,4 @@
 import React, { ReactElement } from 'react';
-import {
-  sendCommandString,
-  readGetChordmapCount,
-  MainControls,
-} from '../controls/mainControls';
 import { _chordMaps } from '../controls/maps';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 

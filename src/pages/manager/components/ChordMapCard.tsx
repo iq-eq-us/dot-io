@@ -1,7 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
-import type { ChordStatistics } from '../../../models/trainingStatistics';
-import { useStoreActions, useStoreState } from '../../../store/store';
+import { useStoreActions } from '../../../store/store';
 
 import {
   CardEditButton,
@@ -15,9 +13,6 @@ import {
   CardConfirmDeleteButton,
   CardCancelDeleteButton,
 } from './ChordMapCardColumn.styled';
-
-import usePopover from '../../../hooks/usePopover';
-import { values } from 'lodash';
 
 export interface CardProps {
   currentChord: string;
@@ -81,33 +76,6 @@ export function ChordMapCard(props: any, index: number): ReactElement {
   const onClickConfirmDeleteButton = () => {
     deleteDownloadedChordsData(payloadArray);
   };
-
-  function showModal() {
-    console.log('show modal');
-    return (
-      <div className="flex-row relative border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white">
-        <button
-          className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818]`}
-          onClick={() => [
-            //setPasswordModuleModalToggle(!passwordModuleModalToggle),
-          ]}
-        >
-          &times;
-        </button>
-        <p className="pt-2 m-10 font-bold mr-64">Enter the secret phrase!</p>
-        <p className={`pt-2 m-10 font-bold mr-64 text-red-500 `}>
-          Wrong phrase!
-        </p>
-        <input type="password" className="border-black border-2 ml-16 w-3/4" />
-        <button
-          className={`drop-shadow-2xl right-arrow text-white rounded inline-block p-2 ml-48 mt-4 focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]`}
-          //  onClick={() => [passwordUnlock(inputRef)]}
-        >
-          Unlock
-        </button>
-      </div>
-    );
-  }
 
   function change(event) {
     if (
