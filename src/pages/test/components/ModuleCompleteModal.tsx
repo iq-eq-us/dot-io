@@ -130,11 +130,9 @@ function ModuleCompleteModal(): ReactElement {
           </button>
           <p className=" font-bold ">Congratulations!</p>
           <p className=" ml-10 mr-10">You have completed the current module!</p>
-          <p className=" ml-10 mr-10 ">
-            Press &lsquo;Continue&rsquo; below to move on to the next Module,
-          </p>
           <p className=" ml-10 mr-10 mb-10">
-            Or press &lsquo;X&rsquo; to continue practicing.
+            If you want to stay and keep practicing this module, press
+            &lsquo;X&lsquo;.
           </p>
           <button
             className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 mr-auto ml-auto focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
