@@ -1,5 +1,4 @@
-import { useStoreState, useStoreActions } from '../store/store';
-import { getCumulativeAverageChordTypeTime } from '../helpers/aggregation';
+import { useStoreState } from '../store/store';
 
 export const useSessionWordsPerMinute = (): number => {
   const timeAtTrainingStart = useStoreState(

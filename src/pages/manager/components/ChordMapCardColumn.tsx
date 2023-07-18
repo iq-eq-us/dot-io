@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import { ChordMapCard } from './ChordMapCard';

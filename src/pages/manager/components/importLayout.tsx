@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { appendLayoutToRow, sendCommandString } from '../controls/mainControls';
+import { sendCommandString } from '../controls/mainControls';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { createChordLayout } from '../../../models/managerModels';
 

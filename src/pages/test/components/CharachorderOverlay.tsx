@@ -4,7 +4,6 @@ import SectorGroup from './SectorGroup';
 import charachorderBackground from '../../../assets/charachorder_background_feathered_no_center.png';
 import styled from 'styled-components';
 import useWindowSize from '../../../hooks/useWindowSize';
-import charachorderLiteBackground from '../../../assets/CharaChorder_Lite.png';
 
 interface OverlayProps {
   overrideBottom?: boolean;

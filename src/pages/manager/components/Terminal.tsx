@@ -9,7 +9,6 @@ import {
 } from './Terminal.styled';
 import { SerialCommandTable } from './SerialCommandTable';
 
-import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import styled from 'styled-components';
 

@@ -1,7 +1,6 @@
 import ApexCharts from 'apexcharts';
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import {
   getCumulativeAverageChordTypeTime,

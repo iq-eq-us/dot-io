@@ -2,7 +2,6 @@ import React, { ReactElement, useRef, useState } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import type { TrainingStoreModel } from '../../../../src/models/trainingStore';
 
 function ChordTextInput(): ReactElement {
   const setStoreText = useStoreActions(

@@ -3,8 +3,6 @@ import { useStoreState } from '../../store/store';
 import type { Position } from '../keyHighlightPositionsCharachorderLite';
 import type { Row } from '../keyHighlightPositionsCharachorderLite';
 
-import { RowGroupSpecifier } from '../sectorGroupCharachorderLite';
-
 export function Light(): ReactElement {
   const styleValue = false;
   const keysToHighlight = useStoreState(

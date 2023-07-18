@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState, useEffect } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import { Portal } from 'react-portal';
 import styled from 'styled-components';
 import { chordLibrary, ChordLibraryRecord } from '../../../data/chordLibrary';
@@ -17,7 +17,6 @@ import {
   pickerV1,
   pickerLite,
 } from '../../../models/keyboardDropDownFolder/keyboardDropDown';
-import type { ChordStatisticsFromDevice } from '../../../models/trainingStatistics';
 
 export const triggerResizeForChordModal = () => {
   // This is done to make sure that the popover elements are in the correct position

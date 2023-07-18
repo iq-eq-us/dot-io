@@ -4,9 +4,7 @@ import type {
   ChordStatisticsFromDevice,
 } from '../models/trainingStatistics';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
-import { useEffect, useRef, useState } from 'react';
 import type { TrainingScenario } from '../models/trainingScenario';
-import { useStoreActions, useStoreState } from 'easy-peasy';
 import { wpmMethodCalculatorForStoredChords } from './aggregation';
 
 const getRandomElementFromArray = <T>(list: T[]): T =>

@@ -1,10 +1,6 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { FixedSizeList } from 'react-window';
-import type { ChordStatistics } from '../../../models/trainingStatistics';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
-import useContainerDimensions from '../../../hooks/useContainerDimensions';
-import { TestControlRow } from './testControlsRow';
 import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
 import { wpmMethodCalculator } from '../../../helpers/aggregation';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';

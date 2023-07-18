@@ -1,9 +1,6 @@
 import type { KeyHighlightPositionLite } from '../models/keyHighlightPositionsCharachorderLite';
 import { chordLibrary } from '../data/chordLibrary';
-import {
-  keyPositions,
-  keyPositionsByLetter,
-} from '../data/keyPositionsCharachorderLite';
+import { keyPositions } from '../data/keyPositionsCharachorderLite';
 import type { TrainingScenario } from '../models/trainingScenario';
 import {
   pickerV1,

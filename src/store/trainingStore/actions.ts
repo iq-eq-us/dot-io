@@ -8,10 +8,7 @@ import {
   defaultTrigramsTestTraining,
   defaultTrainingSettingsState,
 } from '../../models/trainingSettingsStateModel';
-import {
-  oldAsciiKeyReplacementDictionary,
-  _keyMapDefaults,
-} from '../../pages/manager/controls/maps';
+
 import {
   ChordStatistics,
   createEmptyChordStatistics,
@@ -27,7 +24,6 @@ import type {
 import { getChordLibraryForTrainingScenario } from '../../pages/test/components/EditChordModal';
 import type { WordTrainingValues } from 'src/models/wordTrainingValues';
 import type { TrainingLevels } from 'src/models/trainingLevels';
-import store from '../store';
 import type { ChordStatisticsFromDevice } from 'src/models/trainingStatisticsFromDevice';
 import { oneTimeCreateStoredChordStats } from '../../pages/test/components/TrainingModeSelector';
 import { chordLibrary } from '../../data/chordLibrary';
