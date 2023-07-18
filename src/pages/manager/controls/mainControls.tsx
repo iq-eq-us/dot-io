@@ -218,43 +218,6 @@ export function convertHexadecimalPhraseToAsciiString(hexString: string) {
   return asciiString;
 }
 
-async function readGetSomeChordmaps(expectedLineCount = 100) {
-  console.log('readGetSome(' + expectedLineCount + ')');
-  let i = 0;
-  const checker = true;
-  while (checker) {
-    const { value } = await MainControls.lineReader.read();
-    i++;
-    if (value) {
-      const arrValue = [...value];
-      //ascii_to_hexa(arrValue);
-      const strValue = String(arrValue.join(''));
-      console.log(strValue);
-
-      const hexChordString = strValue[2]; // Should return 32 characters at all times
-      const hexAsciiString = strValue.substr(17, strValue.length);
-      const strValues = ['', '', '', ''];
-      strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
-      strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
-      strValues[2] = hexChordString;
-      strValues[3] = hexAsciiString;
-      console.log(strValues);
-
-      //appendToList(strValues);
-      // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
-      _chordMaps.push([
-        convertHexadecimalChordToHumanString(hexChordString),
-        strValues[1],
-      ]); //this ultimately isn't used
-
-      appendToRow(strValues);
-    }
-    if (i >= expectedLineCount) {
-      break;
-    }
-  }
-}
-
 export async function readGetHexChord() {
   let hexChordString = '';
   if (MainControls.serialPort) {
