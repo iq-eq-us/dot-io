@@ -627,36 +627,20 @@ export function noteId_to_chord(note: any): bigint {
 }
 
 export async function readGetOneChordmap() {
-  console.log('readGetOneChordmap()');
   const { value } = await MainControls.lineReader.read();
   const splitter = value.split(' ');
-  console.log(splitter);
-  const strValues = ['', '', '', ''];
+  console.debug(`readGetOneChordmap - splitter: ${splitter}`);
 
   if (value) {
-    const arrValue = [...splitter];
-    //ascii_to_hexa(arrValue);
-    const strValue = arrValue;
-    let hexChordString = '';
-    hexChordString = strValue[3]; //Should be 32 characters at all times
-    let hexAsciiString = '';
-    hexAsciiString = strValue[4];
-    convertHumanStringToHexadecimalChord;
-    strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
-    strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
-    strValues[2] = hexChordString;
-    strValues[3] = hexAsciiString;
+    const strValue = [...splitter];
+    const hexChordString = strValue[3]; //Should be 32 characters at all times
+    const hexAsciiString = strValue[4];
+    const chord = convertHexadecimalChordToHumanChord(hexChordString);
+    const phrase = convertHexadecimalPhraseToAsciiString(hexAsciiString);
+    _chordMaps.push([chord, phrase]);
 
-    //appendToList(strValues);
-    // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
-    _chordMaps.push([
-      convertHexadecimalChordToHumanChord(hexChordString),
-      strValues[1],
-    ]); //this ultimately isn't used
-
-    //appendToRow(strValues);
-  }
-  return strValues;
+    return [chord, phrase, hexChordString, hexAsciiString];
+  } else return ['', '', '', ''];
 }
 
 export async function commitChordLayout() {
