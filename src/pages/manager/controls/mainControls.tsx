@@ -625,23 +625,17 @@ export function convertHumanStringToHexadecimalPhrase(
   console.log(hexString);
   return hexString;
 }
+
 /*eslint-disable */
-function replaceOldAsciiKeys(inputKey) {
-  inputKey = inputKey.split(' + ');
-  let finishedInputKey = '';
-  for (let i = 0; i < inputKey.length; i++) {
-    if (oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])) {
-      // eslint-disable-line no-use-before-define
-      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]]; // eslint-disable-line no-use-before-define
-      console.log('OldAsciiReplacement ' + finishedInputKey);
-    } else {
-      finishedInputKey += inputKey[i];
-    }
-    if (inputKey.length - 1 > 0 && i != inputKey.length - 1) {
-      finishedInputKey += ' + ';
-    }
-  }
-  return finishedInputKey;
+function replaceOldAsciiKeys(inputKey: string) {
+  return inputKey
+    .split(' + ')
+    .map((key: string) => {
+      if (oldAsciiKeyReplacementDictionary.hasOwnProperty(key))
+        return oldAsciiKeyReplacementDictionary[key];
+      else return key;
+    })
+    .join(' + ');
 }
 /*eslint-enable */
 
