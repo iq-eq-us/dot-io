@@ -476,72 +476,34 @@ function Hex2Dec(n) {
   return parseInt(n, 16).toString(10);
 }
 
-export function convertHexadecimalChordToHumanChordForAllChordsTier(hexChord) {
-  //console.log("convertHexadecimalChordToHumanChord()");
-  //console.log(hexChord);
+export function convertHexadecimalChordToHumanChordForAllChordsTier(
+  hexChord: string,
+) {
+  const binSize = 10;
+  const chainIndexSize = 8;
+
   const humanChord = [];
   const binChord = pad(hex2Bin(hexChord), 128);
-  console.log(hexChord);
-  console.log(binChord);
-  const chainIndex = binChord.substring(0, 8); //unused right now; this is used for phrases that have more than 192 bytes
-
+  const chainIndex = binChord.substring(0, chainIndexSize); //unused right now; this is used for phrases that have more than 192 bytes
   for (let i = 0; i < 12; i++) {
-    const binAction = binChord.substring(8 + i * 10, 8 + (i + 1) * 10); //take 10 bits at a time
+    const binStart = chainIndexSize + i * binSize;
+    const binAction = binChord.substring(binStart, binStart + binSize);
     const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
-    if (actionCode != 0) {
-      //replaceOldAsciiKeys()
-      console.log(
-        'this is actionMap output ' + actionMap[actionCode as number],
-      );
-      const humanStringPart = replaceOldAsciiKeys(
-        actionMap[actionCode as number],
-      ); //returns the ASCII string output from the actionMap
-      //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
-      //console.log('Old Ascii '+ humanStringPart)
-      humanChord.push(humanStringPart); //Replace when new action codes arrive
-      //console.log('Human string part in the loop '+ humanChord)
-    } else {
-      break; //we can exit the for loop early
-    }
+    if (actionCode == 0) break;
+    console.debug(`actionMap output: ${actionMap[actionCode as number]}`);
+    const humanStringPart = replaceOldAsciiKeys(
+      actionMap[actionCode as number],
+    );
+    humanChord.push(humanStringPart);
   }
-  console.log('final humanChord ' + humanChord);
-  //console.log(humanChord);
+  console.debug(`humanChord[] ${humanChord}`);
   return humanChord;
 }
 
-export function convertHexadecimalChordToHumanChord(hexChord) {
-  //console.log("convertHexadecimalChordToHumanChord()");
-  //console.log(hexChord);
-  let humanChord = '';
-  const binChord = pad(hex2Bin(hexChord), 128);
-  console.log(hexChord);
-  console.log(binChord);
-  const chainIndex = binChord.substring(0, 8); //unused right now; this is used for phrases that have more than 192 bytes
-
-  for (let i = 0; i < 12; i++) {
-    const binAction = binChord.substring(8 + i * 10, 8 + (i + 1) * 10); //take 10 bits at a time
-    const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
-    if (actionCode != 0) {
-      if (humanChord.length > 0) {
-        humanChord += ' + '; //add this + between action ids; put here so we don't have to remove it at end of for-loop
-      }
-
-      console.log(
-        'this is actionMap output ' + actionMap[actionCode as number],
-      );
-      const humanStringPart = replaceOldAsciiKeys(
-        actionMap[actionCode as number],
-      ); //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
-      //console.log('Old Ascii '+ humanStringPart)
-      humanChord += humanStringPart; //Replace when new action codes arrive
-      //console.log('Human string part in the loop '+ humanChord)
-    } else {
-      break; //we can exit the for loop early
-    }
-  }
-  console.log('final humanChord ' + humanChord);
-  //console.log(humanChord);
-  return humanChord;
+export function convertHexadecimalChordToHumanChord(hexChord: string) {
+  return convertHexadecimalChordToHumanChordForAllChordsTier(hexChord).join(
+    ' + ',
+  );
 }
 
 export function chord_to_noteId(chord: number) {
