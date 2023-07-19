@@ -261,9 +261,8 @@ export async function readGetHexChord() {
   return hexChordString;
 }
 
-export function convertHexadecimalChordToHumanString(
-  hexString: string | any[],
-) {
+// TODO: rewrite and condense
+export function convertHexadecimalChordToHumanString(hexString: string) {
   let humanString = '';
   //let num = parseInt(hexString, 16);
   //humanString = String(num);
@@ -390,51 +389,51 @@ export function convertHexadecimalChordToHumanString(
   return humanString;
 }
 
-function checkBin(n) {
+function checkBin(n: string) {
   return /^[01]{1,64}$/.test(n);
 }
-function checkDec(n) {
+function checkDec(n: string) {
   return /^[0-9]{1,64}$/.test(n);
 }
-function checkHex(n) {
+function checkHex(n: string) {
   return /^[0-9A-Fa-f]{1,64}$/.test(n);
 }
-function pad(s, z) {
+function pad(s: string, z: number): string {
   s = '' + s;
   return s.length < z ? pad('0' + s, z) : s;
 }
-function unpad(s) {
+function unpad(s: string): string {
   s = '' + s;
   return s.replace(/^0+/, '');
 }
-function backpad(s, z) {
+function backpad(s: string, z: number): string {
   s = '' + s;
   return s.length < z ? backpad(s + '0', z) : s;
 }
 
 //Decimal operations
-function Dec2Bin(n) {
+function Dec2Bin(n: number) {
   if (!checkDec(n) || n < 0) return 0;
   return n.toString(2);
 }
-function Dec2Hex(n) {
+function Dec2Hex(n: number) {
   if (!checkDec(n) || n < 0) return 0;
   return n.toString(16);
 }
 
 //Binary Operations
-function Bin2Dec(n) {
+function Bin2Dec(n: string) {
   if (!checkBin(n)) return 0;
   return parseInt(n, 2).toString(10);
 }
-function Bin2Hex(n) {
+function Bin2Hex(n: string) {
   if (!checkBin(n)) return 0;
   return parseInt(n, 2).toString(16);
 }
 
 //Hexadecimal Operations
 //function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)} do not use
-function Hex2Dec(n) {
+function Hex2Dec(n: string) {
   if (!checkHex(n)) return 0;
   return parseInt(n, 16).toString(10);
 }
@@ -529,7 +528,7 @@ export function appendToList(str: any) {
   const li = document.createElement('li');
 
   li.appendChild(document.createTextNode(str[0] + ' ' + str[1]));
-  ul.appendChild(li);
+  ul?.appendChild(li);
 }
 
 export function ascii_to_hexa(arr: any) {
