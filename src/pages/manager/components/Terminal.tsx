@@ -53,7 +53,6 @@ export function Terminal(): ReactElement {
           <SendButton onClick={handleSendClick}>Send</SendButton>
         </InputAndButtonRow>
       </TerminalContainer>
-      <SerialCommandTable />
     </CardColumn>
   );
 }

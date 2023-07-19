@@ -33,6 +33,7 @@ export default {
     tailwindConfig: './tailwind.config.js',
   },
   buildOptions: {
+    sourcemap: true
     /* ... */
   },
 };

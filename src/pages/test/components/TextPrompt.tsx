@@ -3,6 +3,7 @@ import { FaBorderStyle } from 'react-icons/fa';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
+import type { TrainingScenario } from '../../../../src/models/trainingScenario';
 
 const r = Math.random;
 
@@ -42,6 +43,9 @@ export function TextPrompt(): ReactElement {
   );
   const secondLineOfTargetText = useStoreState(
     (store: any) => store.targetTextLineTwo,
+  );
+  const thirdLineOfTargetText = useStoreState(
+    (store: any) => store.targetTextLineThree,
   );
   const isError = useStoreState(
     (store: any) => store.errorOccurredWhileAttemptingToTypeTargetChord,
@@ -565,7 +569,8 @@ export function TextPrompt(): ReactElement {
       setTextPromptUnFocused(false);
     }
   }
-
+  //const targetCompareText = setS.slice(setS?.length - firstLineOfTargetText?.length)\
+  let tempText = [];
   return (
     <React.Fragment>
       <div className="text-red-500" />
@@ -574,17 +579,18 @@ export function TextPrompt(): ReactElement {
         {textPromptUnFocused ? isFocused() : isFocused()}
         {previousTargetTextLineOne != null && (
           <React.Fragment>
-            <PreviousChordRow>
+            <PreviousChordRow scenario={currentTrainingScenario}>
               {(previousTargetTextLineOne || [])?.map((chord) => (
                 <Chord key={r()}>{chord}</Chord>
               ))}
             </PreviousChordRow>
-
-            <Spacer></Spacer>
+            <ChordRow scenario={currentTrainingScenario}>
+              <Spacer></Spacer>
+            </ChordRow>
           </React.Fragment>
         )}
 
-        <ChordRow>
+        <ChordRow scenario={currentTrainingScenario}>
           {(colorTargetLine(firstLineOfTargetText) || [])?.map(
             (chord: any, i: any) => {
               if (characterEntryMode === 'CHORD' || i !== indexOfTargetChord) {
@@ -613,7 +619,7 @@ export function TextPrompt(): ReactElement {
             },
           )}
         </ChordRow>
-        <ChordRow>
+        <ChordRow scenario={currentTrainingScenario}>
           {letsFix(
             firstLineOfTargetText,
             targetCharacterIndex,
@@ -621,12 +627,22 @@ export function TextPrompt(): ReactElement {
             setS,
           )}
         </ChordRow>
-
-        <ChordRow>
+        <ChordRow scenario={currentTrainingScenario}>
           {(secondLineOfTargetText || [])?.map((chord) => (
             <Chord key={r()}>{chord}</Chord>
           ))}
         </ChordRow>
+
+        {previousTargetTextLineOne == null && (
+          <React.Fragment>
+            <Spacer></Spacer>
+            <ChordRow scenario={currentTrainingScenario}>
+              {(thirdLineOfTargetText || [])?.map((chord) => (
+                <Chord key={r()}>{chord}</Chord>
+              ))}
+            </ChordRow>
+          </React.Fragment>
+        )}
       </TextPromptContainer>
     </React.Fragment>
   );
@@ -680,20 +696,29 @@ const Chord = styled.span.attrs<ChordProps>((props) => ({
   }`,
 }))<ChordProps>``;
 
-const ChordRow = styled.div.attrs({
-  className: `flex flex-row gap-[1vw] whitespace-nowrap justify-center w-full`,
-})``;
+export const ChordRow = styled.div.attrs(
+  (props: { scenario: TrainingScenario }) => ({
+    className: `flex flex-row whitespace-nowrap justify-center font-mono w-full ${
+      props.scenario == 'ALPHABET' ? '' : 'gap-[1vw]'
+    }`,
+  }),
+)``;
+
 const Spacer = styled.div.attrs({
-  className: `  flex-row gap-[1vw]  w-full h-6`,
+  className: `  flex-row gap-[1vw]  w-full h-7`,
 })``;
 
-const PreviousChordRow = styled.div.attrs({
-  className: `flex flex-row gap-[1vw] whitespace-nowrap justify-center w-full text-black`,
-})``;
+export const PreviousChordRow = styled.div.attrs(
+  (props: { scenario: TrainingScenario }) => ({
+    className: `flex flex-row whitespace-nowrap justify-center w-full text-black    ${
+      props.scenario == 'ALPHABET' ? '' : 'gap-[1vw]'
+    }`,
+  }),
+)``;
 
 const TextPromptContainer = styled.div.attrs({
   className: `
     flex text-md font-bold flex flex-col items-center w-full justify-center text-gray-400
-    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-10 h-50 	m-auto font-mono
+    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-4 h-50 	m-auto font-mono
   `,
 })``;

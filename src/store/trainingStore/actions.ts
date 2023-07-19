@@ -1190,7 +1190,11 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
       trainingLevel: state.trainingLevel,
       moduleNumber: state.moduleNumber,
     });
-  state.trainingText = [generateOneLineOfChords(), generateOneLineOfChords()];
+  state.trainingText = [
+    generateOneLineOfChords(),
+    generateOneLineOfChords(),
+    generateOneLineOfChords(),
+  ];
   document.getElementById('txt_Name')?.focus();
 };
 

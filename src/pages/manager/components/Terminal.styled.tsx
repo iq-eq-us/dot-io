@@ -5,7 +5,7 @@ export const TerminalItem = styled.div.attrs((props: { value: string }) => ({
   value: `${props.value}`,
 }))``;
 export const TerminalContainer = styled.h1.attrs({
-  className: `md:flex  flex-col m-2 px-6 py-4 bg-[#333] h-96 w-6/12 rounded-md shadow-sm shadow-neutral-700
+  className: `md:flex  flex-col m-2 px-6 py-4 bg-[#333] h-96 w-7/12 rounded-md shadow-sm shadow-neutral-700
     `,
 })``;
 

@@ -57,10 +57,6 @@ const trainingStoreState: TrainingStoreStateModel = {
   trainingSessionAggregatedTime: 0,
   startTimer: false,
   trainingIsDone: false,
-  previousPreviousTargetTextLineOneIndex: 2,
-  previousTargetTextLineOneIndex: 1,
-  targetTextLineOneIndex: 0,
-  targetTextLineTwoIndex: 1,
   trainingStatistics: {
     statistics: [],
     stmStatistics: [],
@@ -176,25 +172,19 @@ const trainingStoreState: TrainingStoreStateModel = {
   chordsToPullFrom: {},
   isShowingPlusIcon: false,
   previousPreviousTargetTextLineOne: computed((state) => {
-    return state?.trainingText[
-      state?.currentLineOfTrainingText -
-        state.previousPreviousTargetTextLineOneIndex
-    ];
+    return state?.trainingText[state?.currentLineOfTrainingText - 2];
   }),
   previousTargetTextLineOne: computed((state) => {
-    return state?.trainingText[
-      state?.currentLineOfTrainingText - state.previousTargetTextLineOneIndex
-    ];
+    return state?.trainingText[state?.currentLineOfTrainingText - 1];
   }),
   targetTextLineOne: computed((state) => {
-    return state.trainingText[
-      state.currentLineOfTrainingText + state.targetTextLineOneIndex
-    ];
+    return state.trainingText[state.currentLineOfTrainingText];
   }),
   targetTextLineTwo: computed((state) => {
-    return state.trainingText[
-      state.currentLineOfTrainingText + state.targetTextLineTwoIndex
-    ];
+    return state.trainingText[state.currentLineOfTrainingText + 1];
+  }),
+  targetTextLineThree: computed((state) => {
+    return state.trainingText[state.currentLineOfTrainingText + 2];
   }),
 };
 
