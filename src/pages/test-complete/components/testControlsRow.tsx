@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import NextTestButton from './NextTestButton';
+import RefreshButton from '../../../../src/pages/test/components/RefreshButton';
 
 export function TestControlRow(): ReactElement {
   return (

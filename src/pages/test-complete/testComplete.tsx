@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { TestControlRow } from './components/testControlsRow';
 import { TestStatsCard } from './components/testStatsCard';
 import { TestCompleteGraph } from './components/testCompleteGraph';
@@ -9,6 +9,7 @@ import {
 } from '../test-complete/testComplete.styled';
 import ImageSlider from '../test/components/imageSlider';
 import { useStoreState, useStoreActions } from '../../store/store';
+import { ProgressBar } from '../test/components/ProgressBar';
 
 /**
  * This is the main Test Complete page.

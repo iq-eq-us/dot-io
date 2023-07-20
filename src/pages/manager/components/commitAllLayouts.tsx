@@ -1,6 +1,11 @@
 import React, { ReactElement } from 'react';
-import { sendCommandString } from '../controls/mainControls';
-import { useStoreState } from 'easy-peasy';
+import {
+  MainControls,
+  pressCommitButton,
+  sendCommandString,
+  readGetOneChordLayout,
+} from '../controls/mainControls';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export async function commitAll() {
   await sendCommandString('VAR B0');

@@ -2,6 +2,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 import './multirangeslider.css';
 import './multirangesliderblack.css';
+import usePopover from '../../../hooks/usePopover';
 import { useStoreState } from 'easy-peasy';
 
 /* eslint-disable */

@@ -7,7 +7,11 @@ import type {
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
-import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+import {
+  getCumulativeAverageChordTypeTime,
+  getCumulativeAverageChordTypeTimeFromDevice,
+} from '../../../helpers/aggregation';
+import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
 import {

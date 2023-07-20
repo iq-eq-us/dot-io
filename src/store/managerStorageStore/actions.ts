@@ -1,5 +1,6 @@
 import { action, thunk } from 'easy-peasy';
 import type { ManagerStoreActions } from '../../models/managerStorage';
+import type { ManagerStore } from '../../models/managerStorage';
 import {
   sendCommandString,
   readGetOneAndReturnOne,

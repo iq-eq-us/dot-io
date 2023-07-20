@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import StaticSector from './StaticSector';
 import StaticSectorLite from './StaticSectorCharachorderLite';
 
 import {

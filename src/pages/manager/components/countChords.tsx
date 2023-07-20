@@ -1,5 +1,9 @@
 import React, { ReactElement } from 'react';
-import { sendCommandString, MainControls } from '../controls/mainControls';
+import {
+  sendCommandString,
+  readGetChordmapCount,
+  MainControls,
+} from '../controls/mainControls';
 
 export async function getCount() {
   await sendCommandString('CML C0');

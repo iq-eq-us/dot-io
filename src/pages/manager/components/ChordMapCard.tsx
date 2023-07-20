@@ -1,5 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { useStoreActions } from '../../../store/store';
+import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+import type { ChordStatistics } from '../../../models/trainingStatistics';
+import { useStoreActions, useStoreState } from '../../../store/store';
 
 import {
   CardEditButton,
@@ -13,6 +15,9 @@ import {
   CardConfirmDeleteButton,
   CardCancelDeleteButton,
 } from './ChordMapCardColumn.styled';
+
+import usePopover from '../../../hooks/usePopover';
+import { values } from 'lodash';
 
 export interface CardProps {
   currentChord: string;

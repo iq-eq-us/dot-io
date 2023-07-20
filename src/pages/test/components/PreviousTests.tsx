@@ -1,10 +1,12 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
+import useScreenSizeBoundary from '../../../hooks/useScreenSizeBoundary';
 import useWindowSize from '../../../hooks/useWindowSize';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import { StatisticsColumnContainer } from './StatisticsColumnContainer';
 import { PreviousTestTableContainer } from './PreviousTestTableContainer';
 import { PreviousTestTableTitle } from './PreviousTestTableTitle';
 import PreviousTestTable from './PreviousTestTable';
+import { EditChordsButton } from './EditChordsButton';
 import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingScenario';
 import styled from 'styled-components';
 

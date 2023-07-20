@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { sendCommandString, readGetNone } from '../controls/mainControls';
+import { startSerialConnection } from '../../manager/components/connect';
 export async function reboot() {
   //Sends the restart command to the charachorder via the serial API
   await sendCommandString('RESTART');

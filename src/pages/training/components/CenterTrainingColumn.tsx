@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
+import CharachorderOverlay from './CharachorderOverlay';
 import CharachorderOverlayLite from './CharachorderOverlayCharachorderLite';
 import { FullWidthFullHeightContainer } from './FullWidthFullHeightContainer';
 import { GearIcon } from './GearIcon';

@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import RefreshIcon from './RefreshIcon';
 import ForwardIcon from '../../../../src/pages/test/components/ForwardIcon';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 

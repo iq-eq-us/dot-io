@@ -1,11 +1,19 @@
 import React, { ReactElement } from 'react';
-import { useStoreActions } from 'easy-peasy';
-import { createChord, ChordStructure } from '../../../models/managerModels';
+import { _chordMaps } from '../controls/maps';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import {
+  createChord,
+  ChordStructure,
+  Chords,
+} from '../../../models/managerModels';
 
 import {
   convertHumanStringToHexadecimalChord,
   convertHumanStringToHexadecimalPhrase,
+  appendToRow,
+  convertHexadecimalChordToHumanString,
 } from '../controls/mainControls';
+import { resetDataTable } from '../../manager/components/resetDataTable';
 
 const checkElement = async (selector) => {
   while (document.querySelector(selector) === null) {

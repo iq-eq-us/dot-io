@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import { useStoreActions } from '../../../store/store';
+import React, { ReactElement, useState } from 'react';
+import { FaBorderStyle } from 'react-icons/fa';
+import styled from 'styled-components';
+import { useStoreState, useStoreActions } from '../../../store/store';
+import { TrainingStoreModel } from '../../../../src/models/trainingStore';
 
 const [bestKeyTime, setBestKeyTime] = useState([]);
 const [letterPressed, setLetterPressed] = useState([]);
