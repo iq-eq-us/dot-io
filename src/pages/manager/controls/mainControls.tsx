@@ -233,12 +233,8 @@ export async function readGetHexChord() {
       compare(MainControls._firmwareVersion, '0.9.0') == -1
     ) {
       await readGetOneAndToss(); //this is added for the latest firmware with customers, where decimal version
-      console.log('i did indeed enter here');
     }
 
-    //console.log(MainControls._firmwareVersion);
-    //console.log(parseInt(MainControls._firmwareVersion))
-    //console.log('Compare for version method :' + compare(MainControls._firmwareVersion, "0.9.0"));
     const { value, done } = await MainControls.lineReader.read();
     if (done) {
       console.log('reader is done');
@@ -275,8 +271,12 @@ export function convertHexadecimalChordToHumanString(hexString: string) {
   if (MainControls._chordmapId == 'CHARACHORDER') {
     //charachorder original uses different key map structure
     const decString = String(bigNum).split(''); //no left zeros; that's ok
-    console.log(decString);
-    console.log(MainControls._chordmapId);
+    console.debug(
+      `convertHexadecimalChordToHumanString decString: ${decString}`,
+    );
+    console.debug(
+      `convertHexadecimalChordToHumanString _chordmapID: ${MainControls._chordmapId}`,
+    );
     for (let i = 0; i < decString.length; i++) {
       if (decString[i] != '0') {
         if (humanString.length > 0) {
