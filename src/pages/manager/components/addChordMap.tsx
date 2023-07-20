@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
-import { appendToRow } from '../../manager/controls/mainControls';
 import { createChord } from '../../../models/managerModels';
-import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 
 export function AddChordMap(): ReactElement {
   const setDownloadedChords = useStoreActions(

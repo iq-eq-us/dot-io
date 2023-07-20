@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import {
   CardLayoutContainer,
   KeyMapTextBox,
@@ -6,8 +6,6 @@ import {
   KeyMapInputIdentifiers,
   KeyMapValueTextBox,
 } from './ChordLayoutColumn.styled';
-
-import usePopover from '../../../hooks/usePopover';
 
 export function ChordLayoutCard(props: any): ReactElement {
   const keyMap: string = props.keyMap;

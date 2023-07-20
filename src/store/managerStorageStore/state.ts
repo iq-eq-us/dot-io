@@ -1,5 +1,4 @@
 import type { ManagerStoreState } from '../../models/managerStorage';
-import type { Chords, ChordLayout } from '../../models/managerModels';
 
 const managerStoreState: ManagerStoreState = {
   downloadedChords: {

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import useWindowSize from '../../../hooks/useWindowSize';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import { AutoCustomSetting } from './AutoCustomSetting';
@@ -15,7 +15,6 @@ import { SettingsForm } from './SettingsForm';
 import { SettingsHeader } from './SettingsHeader';
 import { CustomTrainingSettingsBox } from './CustomTrainingSettingsBox';
 import TrainingControls from './TrainingControls';
-import styled from 'styled-components';
 
 const HIDDEN_BREAKPOINT = 1280;
 

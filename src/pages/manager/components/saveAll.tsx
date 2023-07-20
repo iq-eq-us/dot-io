@@ -1,11 +1,5 @@
 import React, { ReactElement } from 'react';
-import {
-  commitTo,
-  MainControls,
-  pressCommitButton,
-  clickCommit,
-  asyncCallWithTimeout,
-} from '../controls/mainControls';
+import { asyncCallWithTimeout } from '../controls/mainControls';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
   convertHumanChordToHexadecimalChord,

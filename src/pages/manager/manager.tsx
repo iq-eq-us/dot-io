@@ -7,13 +7,11 @@ import { BootLoaderButton } from '../manager/components/bootLoader';
 import { RebootButton } from '../manager/components/reboot';
 import { AddHeaders } from '../manager/components/addHeaders';
 import { Download } from '../manager/components/download';
-import { Clear } from '../manager/components/resetDataTable';
 import { Export } from '../manager/components/exportLibrary';
 import { AddChordMap } from '../manager/components/addChordMap';
 import { PressCommit } from './components/saveAll';
 import { ImportChordLayout } from './components/importLayout';
 import { ExportChordLayout } from './components/exportLayout';
-import { AddLayoutHeaders } from './components/addHeadersLayout';
 import { CommitAllLayoutChanges } from './components/commitAllLayouts';
 import { ChordMapColumn } from './components/ChordMapCardColumn';
 import { ChordLayoutColumn } from './components/ChordLayoutCardColumn';
@@ -22,12 +20,10 @@ import { Terminal } from './components/Terminal';
 import {
   ManagerPageContainer,
   Table,
-  RightTable,
   ChordContainer,
   PageContainer,
   TopSectionContainer,
 } from '../manager/manager.styled';
-import { ChordMapCard } from './components/ChordMapCard';
 
 const Manager = (): ReactElement => {
   React.useEffect(() => {

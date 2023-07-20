@@ -2,14 +2,9 @@ import React, { ReactElement } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
   sendCommandString,
-  readGetChordmapCount,
-  MainControls,
-  readGetNone,
-  readGetOneAndToss,
   readGetOneChordLayout,
-  readGetOneChordmap,
 } from '../controls/mainControls';
-import { _chordLayout, _chordMaps } from '../controls/maps';
+import { _chordLayout } from '../controls/maps';
 import { createChordLayout } from '../../../models/managerModels';
 
 export function ExportChordLayout(): ReactElement {

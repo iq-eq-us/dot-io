@@ -8,7 +8,6 @@ import {
   createEmptyChordStatistics,
   TrainingStatistics,
 } from '../../models/trainingStatistics';
-import store from '../store';
 import { SAVED_FASTEST_WPM_KEY } from './state';
 
 const SAVED_STATS_STORAGE_KEY = 'SAVED_STATS_STORAGE_KEY';

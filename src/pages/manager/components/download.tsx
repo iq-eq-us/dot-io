@@ -5,20 +5,17 @@ import { createChord } from '../../../models/managerModels';
 import {
   MainControls,
   sendCommandString,
-  selectBase,
   readGetOneChordmap,
   convertHexadecimalChordToHumanChordForAllChordsTier,
   convertHexadecimalPhraseToAsciiString,
 } from '../controls/mainControls';
 import { resetDataTable } from '../../manager/components/resetDataTable';
-import { ChordMapColumn } from './ChordMapCardColumn';
 
 import {
   ChordStatisticsFromDevice,
   createEmptyChordStatisticsFromDevice,
 } from '../../../models/trainingStatistics';
 import { asyncCallForDownloadChords } from '../controls/mainControls';
-import { render } from 'react-dom';
 
 export async function getGetAll() {
   const tab = [];

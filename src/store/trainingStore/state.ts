@@ -4,14 +4,10 @@ import {
   CharacterEntryMode,
 } from '../../helpers/convertStringToKeyHighlightPositions';
 import { ConvertStringToKeyHighlightPositionsLite } from '../../helpers/convertStringToKeyHighlightPositionsCharachorderLite';
-import {
-  defaultTrainingSettings,
-  defaultAlphabeticTestTraining,
-} from '../../models/trainingSettingsStateModel';
+import { defaultAlphabeticTestTraining } from '../../models/trainingSettingsStateModel';
 import type { TrainingStoreStateModel } from '../../models/trainingStore';
 import type { TrainingLevels } from '../..//models/trainingLevels';
 import { generateNewChordRecordForAllChordsModule } from '../../pages/test/components/EditChordModal';
-import { TimerModel } from '../../models/timerModel';
 
 /**
  * Here is the training store state, which contains the majority of the application state

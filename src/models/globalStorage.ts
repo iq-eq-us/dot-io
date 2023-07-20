@@ -1,4 +1,4 @@
-import type { Action, Computed } from 'easy-peasy';
+import type { Action } from 'easy-peasy';
 
 export interface GlobalStoreState {
   isUsingChordingEnabledDevice: boolean;
