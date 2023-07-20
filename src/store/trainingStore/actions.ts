@@ -209,6 +209,10 @@ const trainingStoreActions: TrainingStoreActionsModel = {
         state.trainingStatistics = JSON.parse(
           trainingStatisticsFromLocalStorage,
         );
+      } else {
+        state.trainingStatistics = {
+          statistics: [],
+        };
       }
     } else state.trainingStatistics = state.storedChordsFromDevice;
     if (
