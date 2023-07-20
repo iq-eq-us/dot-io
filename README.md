@@ -9,6 +9,8 @@ Dot I/O features some cutting-edge capabilities especially designed for the next
 
 # How to Support
 
+NOTICE: You need to sign your commits or your PR will be blocked. See [this article](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification) for the steps.
+
 In general, we follow the "fork-and-pull" Git workflow.
 
 
@@ -25,7 +27,7 @@ To join our active discord please click here: https://discord.gg/rWBuHeR9yU. To 
 
 # Dependency Installation
 
-After you have successfully downloaded the source code for the Launchpad project, navigate to the root directory in your preferred terminal application. I prefer to use the integrated terminal inside of VSCode, the recommended IDE for working with this project. Once there, run the `npm install` command to install all of the required dependencies for Launchpad to run. The output should look something similar to this:
+After you have successfully downloaded the source code for the Dot I/O project, navigate to the root directory in your preferred terminal application. I prefer to use the integrated terminal inside of VSCode, the recommended IDE for working with this project. Once there, run the `npm install` command to install all of the required dependencies for Dot I/O to run. The output should look something similar to this:
 
 ```bash
 $ npm install
@@ -72,7 +74,7 @@ $ npm start
 ⠸ watching for file changes...
 ```
 
-Snowpack will automatically open the local development version of the site in your preferred browser. However, if Launchpad is not opened automatically, the site can also be found at the url posted in your terminal by snowpack, most likely http://localhost:8080.
+Snowpack will automatically open the local development version of the site in your preferred browser. However, if Dot I/O is not opened automatically, the site can also be found at the url posted in your terminal by snowpack, most likely http://localhost:8080.
 
 Anytime you update a file in your IDE or text editor, snowpack will pick up on your change and update the site automatically, through a feature called "Hot Reload." However, Hot Reload can be finicky at times, so it can be worth doing a manual refresh of the browser if the site is not behaving like you expect.
 
