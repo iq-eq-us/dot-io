@@ -15,12 +15,12 @@ const data = [
   {
     name: 'CML',
     desc: 'Used for getting, setting (adding or overwriting), and deleting chordmaps.',
-    example: 'VAR B1 2E',
+    example: 'CML C1 0',
   },
   {
     name: 'VAR',
     desc: 'Used for getting and settings parameters. This includes setting custom chordmaps.',
-    example: 'CML C1 0',
+    example: 'VAR B1 2E',
   },
   {
     name: 'RST',
