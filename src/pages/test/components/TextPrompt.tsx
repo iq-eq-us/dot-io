@@ -570,7 +570,6 @@ export function TextPrompt(): ReactElement {
     }
   }
   //const targetCompareText = setS.slice(setS?.length - firstLineOfTargetText?.length)\
-  let tempText = [];
   return (
     <React.Fragment>
       <div className="text-red-500" />
