@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import Intro1 from '../../../assets/IntroductionPages/Welcome1.png';
 import Intro2 from '../../../assets/IntroductionPages/Welcome2.png';
 import Intro3 from '../../../assets/IntroductionPages/Welcome3.png';

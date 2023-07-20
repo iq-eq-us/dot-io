@@ -17,7 +17,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint', 'unused-imports'],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
     'react/self-closing-comp': [
       'warn',
@@ -26,9 +26,6 @@ module.exports = {
         html: true,
       },
     ],
-    '@typescript-eslint/no-unused-vars': 'off',
-    'unused-imports/no-unused-imports': 'error',
-    'unused-imports/no-unused-vars': 'error',
   },
   settings: {
     react: {

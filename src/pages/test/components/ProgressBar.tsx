@@ -1,8 +1,13 @@
 import React, { ReactElement, useState } from 'react';
 import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
-import { useTotalChordsToConquer } from '../../../hooks/useChordsNotConquered';
+import useNumberOfChordsConquered from '../../../hooks/useChordsConquered';
+import useChordsNotConquered, {
+  useTotalChordsToConquer,
+} from '../../../hooks/useChordsNotConquered';
+import useCurrentLevel from '../../../hooks/useCurrentLevel';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
+import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
 import Timer from './timer';
 import MultiRangeSlider from './Range';
@@ -16,6 +21,7 @@ import {
   avgCalculatorForTheSpeedOfLastTen,
 } from '../../../helpers/aggregation';
 import { defaultProgressBarValues } from '../../../models/trainingSettingsStateModel';
+import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 
 function clamp(number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));

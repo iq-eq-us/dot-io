@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { _actionMap, _keyMapDefaults } from '../controls/maps';
 import {
   MainControls,
   sendCommandString,

@@ -1,4 +1,4 @@
-import type { Action, Thunk } from 'easy-peasy';
+import type { Action, Computed, Thunk } from 'easy-peasy';
 import type { Chords, ChordLayout } from './managerModels';
 
 export interface ManagerStoreState {

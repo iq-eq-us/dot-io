@@ -8,7 +8,10 @@ import {
   oldAsciiKeyReplacementDictionary,
 } from './maps';
 import hex2Bin from 'hex-to-bin';
+import { replace } from 'lodash';
+import { commitAllWithStart } from '../components/saveAll';
 import React from 'react';
+import ReactApexChart from 'react-apexcharts';
 
 export class MainControls {
   public static serialPort: any;

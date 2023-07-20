@@ -10,7 +10,7 @@ import NextTestButton from './NextTestButton';
 import RefreshButton from './RefreshButton';
 import { TrainingModeSelector } from './TrainingModeSelector';
 import { ProgressBar } from './ProgressBar';
-import { useStoreState } from '../../../store/store';
+import { useStoreState, useStoreActions } from '../../../store/store';
 import ModuleCompleteModal from './ModuleCompleteModal';
 
 function CenterTrainingColumn(): ReactElement {

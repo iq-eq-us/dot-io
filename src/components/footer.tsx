@@ -1,6 +1,9 @@
 import React, { ReactElement } from 'react';
+import { Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import CharachorderLogoImage from '../assets/cc_logo_transparent.png';
+import BackButton from '../pages/dashboard/components/BackButton';
 import { ROUTER_PATHS } from './router';
 import IQEQLogoImage from '../assets/iq-eq_logo_copy.png';
 

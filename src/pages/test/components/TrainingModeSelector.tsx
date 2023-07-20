@@ -1,11 +1,14 @@
 import React, { ReactElement, useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import styled from 'styled-components';
+import { isNumber } from 'lodash';
 import type { TrainingLevels } from 'src/models/trainingLevels';
 import { connectDeviceAndPopUp } from '../../../../src/pages/manager/components/connect';
 import { getId } from '../../../../src/pages/manager/components/getID';
 import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 import { createEmptyChordStatistics } from '../../../models/trainingStatistics';
+import { chordLibrary } from '../../../data/chordLibrary';
+import EditChordsModal from './EditChordModal';
 
 export function TrainingModeSelector(): ReactElement {
   const beginTraining = useStoreActions(

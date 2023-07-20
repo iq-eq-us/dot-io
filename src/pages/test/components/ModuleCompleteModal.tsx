@@ -1,6 +1,9 @@
 import React, { useState, ReactElement, useRef } from 'react';
 import { useStoreState, useStoreActions } from '../../../store/store';
+import { _chordMaps } from '../../../../src/pages/manager/controls/maps';
 import { downloadChordsForAllChordsModule } from '../../../../src/pages/manager/components/download';
+import { MainControls } from '../../.././../src/pages/manager/controls/mainControls';
+import { ProgressBar } from './ProgressBar';
 import IQEQLogoImage from './assets/iqeq.png';
 import { generateNewChordRecordForAllChordsModule } from './EditChordModal';
 

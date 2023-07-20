@@ -1,11 +1,20 @@
 import React, { ReactElement } from 'react';
+import { LaunchpadHeader } from './components/LaunchpadHeader';
+import { TrainingCardColumn } from './components/TrainingCardColumn';
 import {
   DashboardPageContainer,
   TopSectionContainer,
   Column,
+  HorizontalRule,
+  ComingSoonContainer,
+  ComingSoonTitle,
+  ComingSoonText,
 } from './dashboard.styled';
 import { CardDataRowDisplay } from './components/CardDataRowDisplay';
+import { BrandingMaterial } from './components/BrandingMaterial';
+import { CopyrightNotice } from './components/CopyrightNotice';
 import { Graph } from '../../pages/manager/components/chordGraphs';
+import CardData from './components/dataCard';
 
 // Change this variable to true to display Improving, Code Authority, and Code Launch branding material at the bottom of the dashboard screen
 const SHOULD_DISPLAY_BRANDING_MATERIAL = true;

@@ -1,6 +1,8 @@
 import React, { ReactElement, useState } from 'react';
+import { FaBorderStyle } from 'react-icons/fa';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
+import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 
 const r = Math.random;
 

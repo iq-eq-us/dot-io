@@ -1,5 +1,10 @@
 import React, { ReactElement } from 'react';
-import { MainControls } from '../controls/mainControls';
+import {
+  MainControls,
+  sendCommandString,
+  selectBase,
+  selectConfig,
+} from '../controls/mainControls';
 import { getId } from '../components/getID';
 import { getCount } from '../../manager/components/countChords';
 

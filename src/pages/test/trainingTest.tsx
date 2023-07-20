@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import SettingsColumn from './components/SettingsColumn';
 import CenterTrainingColumn from './components/CenterTrainingColumn';
+import { StatisticsColumn } from './components/StatisticsColumn';
 import { useContrast } from '../../hooks/useContrast';
 import EditChordsModal from './components/EditChordModal';
 import { PageContainer } from './trainingTest.styled';

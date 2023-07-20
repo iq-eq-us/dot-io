@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 function Timer() {
