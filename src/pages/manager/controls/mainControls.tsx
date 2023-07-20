@@ -218,43 +218,6 @@ export function convertHexadecimalPhraseToAsciiString(hexString: string) {
   return asciiString;
 }
 
-async function readGetSomeChordmaps(expectedLineCount = 100) {
-  console.log('readGetSome(' + expectedLineCount + ')');
-  let i = 0;
-  const checker = true;
-  while (checker) {
-    const { value } = await MainControls.lineReader.read();
-    i++;
-    if (value) {
-      const arrValue = [...value];
-      //ascii_to_hexa(arrValue);
-      const strValue = String(arrValue.join(''));
-      console.log(strValue);
-
-      const hexChordString = strValue[2]; // Should return 32 characters at all times
-      const hexAsciiString = strValue.substr(17, strValue.length);
-      const strValues = ['', '', '', ''];
-      strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
-      strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
-      strValues[2] = hexChordString;
-      strValues[3] = hexAsciiString;
-      console.log(strValues);
-
-      //appendToList(strValues);
-      // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
-      _chordMaps.push([
-        convertHexadecimalChordToHumanString(hexChordString),
-        strValues[1],
-      ]); //this ultimately isn't used
-
-      appendToRow(strValues);
-    }
-    if (i >= expectedLineCount) {
-      break;
-    }
-  }
-}
-
 export async function readGetHexChord() {
   let hexChordString = '';
   if (MainControls.serialPort) {
@@ -270,12 +233,8 @@ export async function readGetHexChord() {
       compare(MainControls._firmwareVersion, '0.9.0') == -1
     ) {
       await readGetOneAndToss(); //this is added for the latest firmware with customers, where decimal version
-      console.log('i did indeed enter here');
     }
 
-    //console.log(MainControls._firmwareVersion);
-    //console.log(parseInt(MainControls._firmwareVersion))
-    //console.log('Compare for version method :' + compare(MainControls._firmwareVersion, "0.9.0"));
     const { value, done } = await MainControls.lineReader.read();
     if (done) {
       console.log('reader is done');
@@ -298,9 +257,8 @@ export async function readGetHexChord() {
   return hexChordString;
 }
 
-export function convertHexadecimalChordToHumanString(
-  hexString: string | any[],
-) {
+// TODO: rewrite and condense
+export function convertHexadecimalChordToHumanString(hexString: string) {
   let humanString = '';
   //let num = parseInt(hexString, 16);
   //humanString = String(num);
@@ -313,8 +271,12 @@ export function convertHexadecimalChordToHumanString(
   if (MainControls._chordmapId == 'CHARACHORDER') {
     //charachorder original uses different key map structure
     const decString = String(bigNum).split(''); //no left zeros; that's ok
-    console.log(decString);
-    console.log(MainControls._chordmapId);
+    console.debug(
+      `convertHexadecimalChordToHumanString decString: ${decString}`,
+    );
+    console.debug(
+      `convertHexadecimalChordToHumanString _chordmapID: ${MainControls._chordmapId}`,
+    );
     for (let i = 0; i < decString.length; i++) {
       if (decString[i] != '0') {
         if (humanString.length > 0) {
@@ -427,121 +389,83 @@ export function convertHexadecimalChordToHumanString(
   return humanString;
 }
 
-function checkBin(n) {
+function checkBin(n: string) {
   return /^[01]{1,64}$/.test(n);
 }
-function checkDec(n) {
+function checkDec(n: string) {
   return /^[0-9]{1,64}$/.test(n);
 }
-function checkHex(n) {
+function checkHex(n: string) {
   return /^[0-9A-Fa-f]{1,64}$/.test(n);
 }
-function pad(s, z) {
+function pad(s: string, z: number): string {
   s = '' + s;
   return s.length < z ? pad('0' + s, z) : s;
 }
-function unpad(s) {
+function unpad(s: string): string {
   s = '' + s;
   return s.replace(/^0+/, '');
 }
-function backpad(s, z) {
+function backpad(s: string, z: number): string {
   s = '' + s;
   return s.length < z ? backpad(s + '0', z) : s;
 }
 
 //Decimal operations
-function Dec2Bin(n) {
+function Dec2Bin(n: number) {
   if (!checkDec(n) || n < 0) return 0;
   return n.toString(2);
 }
-function Dec2Hex(n) {
+function Dec2Hex(n: number) {
   if (!checkDec(n) || n < 0) return 0;
   return n.toString(16);
 }
 
 //Binary Operations
-function Bin2Dec(n) {
+function Bin2Dec(n: string) {
   if (!checkBin(n)) return 0;
   return parseInt(n, 2).toString(10);
 }
-function Bin2Hex(n) {
+function Bin2Hex(n: string) {
   if (!checkBin(n)) return 0;
   return parseInt(n, 2).toString(16);
 }
 
 //Hexadecimal Operations
 //function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)} do not use
-function Hex2Dec(n) {
+function Hex2Dec(n: string) {
   if (!checkHex(n)) return 0;
   return parseInt(n, 16).toString(10);
 }
 
-export function convertHexadecimalChordToHumanChordForAllChordsTier(hexChord) {
-  //console.log("convertHexadecimalChordToHumanChord()");
-  //console.log(hexChord);
+export function convertHexadecimalChordToHumanChordForAllChordsTier(
+  hexChord: string,
+) {
+  const binSize = 10;
+  const chainIndexSize = 8;
+
   const humanChord = [];
   const binChord = pad(hex2Bin(hexChord), 128);
-  console.log(hexChord);
-  console.log(binChord);
-  const chainIndex = binChord.substring(0, 8); //unused right now; this is used for phrases that have more than 192 bytes
-
+  const chainIndex = binChord.substring(0, chainIndexSize); //unused right now; this is used for phrases that have more than 192 bytes
   for (let i = 0; i < 12; i++) {
-    const binAction = binChord.substring(8 + i * 10, 8 + (i + 1) * 10); //take 10 bits at a time
+    const binStart = chainIndexSize + i * binSize;
+    const binAction = binChord.substring(binStart, binStart + binSize);
     const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
-    if (actionCode != 0) {
-      //replaceOldAsciiKeys()
-      console.log(
-        'this is actionMap output ' + actionMap[actionCode as number],
-      );
-      const humanStringPart = replaceOldAsciiKeys(
-        actionMap[actionCode as number],
-      ); //returns the ASCII string output from the actionMap
-      //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
-      //console.log('Old Ascii '+ humanStringPart)
-      humanChord.push(humanStringPart); //Replace when new action codes arrive
-      //console.log('Human string part in the loop '+ humanChord)
-    } else {
-      break; //we can exit the for loop early
-    }
+    if (actionCode == 0) break;
+    console.debug(`actionMap output: ${actionMap[actionCode as number]}`);
+    const humanStringPart = replaceOldAsciiKeys(
+      actionMap[actionCode as number],
+    );
+    humanChord.push(humanStringPart);
   }
-  console.log('final humanChord ' + humanChord);
-  //console.log(humanChord);
+  console.debug(`humanChord[] ${humanChord}`);
   return humanChord;
 }
 
-export function convertHexadecimalChordToHumanChord(hexChord) {
-  //console.log("convertHexadecimalChordToHumanChord()");
-  //console.log(hexChord);
-  let humanChord = '';
-  const binChord = pad(hex2Bin(hexChord), 128);
-  console.log(hexChord);
-  console.log(binChord);
-  const chainIndex = binChord.substring(0, 8); //unused right now; this is used for phrases that have more than 192 bytes
-
-  for (let i = 0; i < 12; i++) {
-    const binAction = binChord.substring(8 + i * 10, 8 + (i + 1) * 10); //take 10 bits at a time
-    const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
-    if (actionCode != 0) {
-      if (humanChord.length > 0) {
-        humanChord += ' + '; //add this + between action ids; put here so we don't have to remove it at end of for-loop
-      }
-
-      console.log(
-        'this is actionMap output ' + actionMap[actionCode as number],
-      );
-      const humanStringPart = replaceOldAsciiKeys(
-        actionMap[actionCode as number],
-      ); //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
-      //console.log('Old Ascii '+ humanStringPart)
-      humanChord += humanStringPart; //Replace when new action codes arrive
-      //console.log('Human string part in the loop '+ humanChord)
-    } else {
-      break; //we can exit the for loop early
-    }
-  }
-  console.log('final humanChord ' + humanChord);
-  //console.log(humanChord);
-  return humanChord;
+export function convertHexadecimalChordToHumanChord(hexChord: string) {
+  return convertHexadecimalChordToHumanChordForAllChordsTier(hexChord).join(
+    ' + ',
+  );
 }
 
 export function chord_to_noteId(chord: number) {
@@ -604,7 +528,7 @@ export function appendToList(str: any) {
   const li = document.createElement('li');
 
   li.appendChild(document.createTextNode(str[0] + ' ' + str[1]));
-  ul.appendChild(li);
+  ul?.appendChild(li);
 }
 
 export function ascii_to_hexa(arr: any) {
@@ -625,23 +549,17 @@ export function convertHumanStringToHexadecimalPhrase(
   console.log(hexString);
   return hexString;
 }
+
 /*eslint-disable */
-function replaceOldAsciiKeys(inputKey) {
-  inputKey = inputKey.split(' + ');
-  let finishedInputKey = '';
-  for (let i = 0; i < inputKey.length; i++) {
-    if (oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])) {
-      // eslint-disable-line no-use-before-define
-      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]]; // eslint-disable-line no-use-before-define
-      console.log('OldAsciiReplacement ' + finishedInputKey);
-    } else {
-      finishedInputKey += inputKey[i];
-    }
-    if (inputKey.length - 1 > 0 && i != inputKey.length - 1) {
-      finishedInputKey += ' + ';
-    }
-  }
-  return finishedInputKey;
+function replaceOldAsciiKeys(inputKey: string) {
+  return inputKey
+    .split(' + ')
+    .map((key: string) => {
+      if (oldAsciiKeyReplacementDictionary.hasOwnProperty(key))
+        return oldAsciiKeyReplacementDictionary[key];
+      else return key;
+    })
+    .join(' + ');
 }
 /*eslint-enable */
 
@@ -708,36 +626,20 @@ export function noteId_to_chord(note: any): bigint {
 }
 
 export async function readGetOneChordmap() {
-  console.log('readGetOneChordmap()');
   const { value } = await MainControls.lineReader.read();
   const splitter = value.split(' ');
-  console.log(splitter);
-  const strValues = ['', '', '', ''];
+  console.debug(`readGetOneChordmap - splitter: ${splitter}`);
 
   if (value) {
-    const arrValue = [...splitter];
-    //ascii_to_hexa(arrValue);
-    const strValue = arrValue;
-    let hexChordString = '';
-    hexChordString = strValue[3]; //Should be 32 characters at all times
-    let hexAsciiString = '';
-    hexAsciiString = strValue[4];
-    convertHumanStringToHexadecimalChord;
-    strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
-    strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
-    strValues[2] = hexChordString;
-    strValues[3] = hexAsciiString;
+    const strValue = [...splitter];
+    const hexChordString = strValue[3]; //Should be 32 characters at all times
+    const hexAsciiString = strValue[4];
+    const chord = convertHexadecimalChordToHumanChord(hexChordString);
+    const phrase = convertHexadecimalPhraseToAsciiString(hexAsciiString);
+    _chordMaps.push([chord, phrase]);
 
-    //appendToList(strValues);
-    // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
-    _chordMaps.push([
-      convertHexadecimalChordToHumanChord(hexChordString),
-      strValues[1],
-    ]); //this ultimately isn't used
-
-    //appendToRow(strValues);
-  }
-  return strValues;
+    return [chord, phrase, hexChordString, hexAsciiString];
+  } else return ['', '', '', ''];
 }
 
 export async function commitChordLayout() {

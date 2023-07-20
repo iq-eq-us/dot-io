@@ -138,7 +138,7 @@ export function Download(): ReactElement {
     );
 
     for (let i = 0; i < chordCountParsedValue; i++) {
-      console.log(MainControls._chordmapCountOnDevice);
+      console.log(`chord map count: ${MainControls._chordmapCountOnDevice}`);
       //wait sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
       await sendCommandString('CML C1 ' + i);
       //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
