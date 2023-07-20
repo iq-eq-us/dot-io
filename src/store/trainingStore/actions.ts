@@ -144,8 +144,8 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   beginTrainingMode: action((state, payload) => {
     savedStoredChordStats(state);
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
-    state.currentTrainingScenario = payload[0] as TrainingScenario;
-    state.wordTestNumber = payload[1] as WordTrainingValues;
+    state.currentTrainingScenario = payload[0];
+    state.wordTestNumber = payload[1];
     state.allTypedCharactersStore = [];
     state.compareText = [];
     state.isProgressBarDynamic = false;
@@ -201,13 +201,16 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     state.trainingSettings = generateTrainingSettings(
       state as unknown as TrainingStoreStateModel,
     );
-    if (state.currentTrainingScenario != 'ALLCHORDS')
-      state.trainingStatistics = JSON.parse(
-        localStorage.getItem(
-          state.trainingLevel + '_' + state.currentTrainingScenario,
-        ),
+    if (state.currentTrainingScenario != 'ALLCHORDS') {
+      const trainingStatisticsFromLocalStorage = localStorage.getItem(
+        state.trainingLevel + '_' + state.currentTrainingScenario,
       );
-    else state.trainingStatistics = state.storedChordsFromDevice;
+      if (trainingStatisticsFromLocalStorage) {
+        state.trainingStatistics = JSON.parse(
+          trainingStatisticsFromLocalStorage,
+        );
+      }
+    } else state.trainingStatistics = state.storedChordsFromDevice;
     if (
       state.currentTrainingScenario == 'LEXICAL' &&
       state.wordTestNumber != undefined &&

@@ -15,7 +15,10 @@ export interface TrainingStoreActionsModel {
   setTrainingSettings: Action<TrainingStoreModel, TrainingSettingsState>;
   setIsDisplayingStatisticsModal: Action<TrainingStoreModel, boolean>;
   setIsDisplayingTestComplete: Action<TrainingStoreModel, boolean>;
-  beginTrainingMode: Action<TrainingStoreModel, TrainingScenario>;
+  beginTrainingMode: Action<
+    TrainingStoreModel,
+    [TrainingScenario] | [TrainingScenario, WordTrainingValues]
+  >;
   proceedToNextWord: Action<TrainingStoreModel>;
   setRestartTestMode: Action<TrainingStoreModel, boolean>;
   setErrorOccurredWhileAttemptingToTypeTargetChord: Action<

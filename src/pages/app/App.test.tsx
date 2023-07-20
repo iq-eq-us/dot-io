@@ -45,16 +45,16 @@ describe('<App>', () => {
     };
 
     checkThatTrainingTextIsNotEmptyForMode(() =>
-      actions().beginTrainingMode('ALPHABET'),
+      actions().beginTrainingMode(['ALPHABET']),
     );
     checkThatTrainingTextIsNotEmptyForMode(() =>
-      actions().beginTrainingMode('LEXICAL'),
+      actions().beginTrainingMode(['LEXICAL']),
     );
     checkThatTrainingTextIsNotEmptyForMode(() =>
-      actions().beginTrainingMode('TRIGRAM'),
+      actions().beginTrainingMode(['TRIGRAM']),
     );
     checkThatTrainingTextIsNotEmptyForMode(() =>
-      actions().beginTrainingMode('CHORDING'),
+      actions().beginTrainingMode(['CHORDING']),
     );
   });
 
@@ -63,7 +63,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
     const firstChord = state().targetWord;
 
     expect(firstChord).to.exist;
@@ -79,7 +79,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
     const firstLineLength =
       state().trainingText[state().currentLineOfTrainingText].length;
 
@@ -95,7 +95,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
     const firstLineLength =
       state().trainingText[state().currentLineOfTrainingText].length;
 
@@ -131,16 +131,16 @@ describe('<App>', () => {
       expect(state().currentSubindexInTrainingText).to.equal(1);
     };
 
-    actions().beginTrainingMode('CHORDING');
+    actions().beginTrainingMode(['CHORDING']);
     testForCorrectSpacebarBehavior();
 
-    actions().beginTrainingMode('LEXICAL');
+    actions().beginTrainingMode(['LEXICAL']);
     testForCorrectSpacebarBehavior();
 
-    actions().beginTrainingMode('TRIGRAM');
+    actions().beginTrainingMode(['TRIGRAM']);
     testForCorrectSpacebarBehavior();
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
     const firstAlphabetChord = state().targetWord as string;
 
     actions().setTypedTrainingText(firstAlphabetChord);
@@ -154,7 +154,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
 
     actions().UNSAFE_setTrainingText([ALPHABET_CHORDS]);
 
@@ -171,7 +171,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
     actions().UNSAFE_setTrainingText([ALPHABET_CHORDS]);
 
     expect(state().errorOccurredWhileAttemptingToTypeTargetChord).to.be.false;
@@ -184,7 +184,7 @@ describe('<App>', () => {
 
     expect(state().errorOccurredWhileAttemptingToTypeTargetChord).to.be.false;
 
-    actions().beginTrainingMode('CHORDING');
+    actions().beginTrainingMode(['CHORDING']);
     actions().UNSAFE_setTrainingText([['testing', 'fake']]);
 
     actions().setTypedTrainingText('');
@@ -205,7 +205,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
 
     const firstChord = state().targetWord + '';
     actions().setTypedTrainingText(firstChord);
@@ -223,7 +223,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
     actions().UNSAFE_setTrainingText([ALPHABET_CHORDS]);
 
     for (let i = 0; i < ALPHABET_CHORDS.length; i++) {
@@ -247,7 +247,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
     expect(state().trainingSettings.recursionRate).to.equal(0);
 
     timer?.tick(100);
@@ -271,7 +271,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('LEXICAL');
+    actions().beginTrainingMode(['LEXICAL']);
     testRecursionRatePercentageInMode(actions, state);
   });
 
@@ -280,7 +280,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('CHORDING');
+    actions().beginTrainingMode(['CHORDING']);
     testRecursionRatePercentageInMode(actions, state);
   });
 
@@ -289,7 +289,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('TRIGRAM');
+    actions().beginTrainingMode(['TRIGRAM']);
     testRecursionRatePercentageInMode(actions, state);
   });
 
@@ -298,7 +298,7 @@ describe('<App>', () => {
     const actions = store.getActions;
     const state = store.getState;
 
-    actions().beginTrainingMode('ALPHABET');
+    actions().beginTrainingMode(['ALPHABET']);
 
     actions().setTrainingSettings({
       ...state().trainingSettings,
@@ -391,7 +391,7 @@ function trainAlphabet(
   state: any,
   timer: IMockPerformance | null,
 ) {
-  actions().beginTrainingMode('ALPHABET');
+  actions().beginTrainingMode(['ALPHABET']);
 
   const numberOfKeysBeforeTraining = parseFloat(
     getCumulativeValueByPropertyName(
