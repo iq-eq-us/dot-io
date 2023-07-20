@@ -9,6 +9,8 @@ Dot I/O features some cutting-edge capabilities especially designed for the next
 
 # How to Support
 
+NOTICE: You need to sign your commits or your PR will be blocked. See [this article](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification) for the steps.
+
 In general, we follow the "fork-and-pull" Git workflow.
 
 
