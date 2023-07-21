@@ -8,7 +8,7 @@ function Circle(): ReactElement {
         cy="30"
         r="33"
         stroke="white"
-        stroke-width="3"
+        strokeWidth="3"
         fill="none"
         className="absolute"
       />
