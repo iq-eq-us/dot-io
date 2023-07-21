@@ -15,7 +15,7 @@ export interface ChordLibrary {
   customtier: ChordLibraryRecord;
   allChords: ChordLibraryRecord;
   specialCharacters: ChordLibraryRecord;
-  //sentences: ChordLibraryRecord;
+  sentences: ChordLibraryRecord;
 }
 
 // This chord library maps to the key positions in the keyPositions.ts file
@@ -67,18 +67,26 @@ export const chordLibrary: ChordLibrary = {
       'I love': [],
       'love to': [],
       'to explore': [],
+      'explore new': [],
       'new places': [],
+      'places and': [],
       'and create': [],
+      'create lasting': [],
       'lasting memories.': [],
     },
     SentenceTwo: {
       'The sunsets': [],
+      'sunsets on': [],
       'on the': [],
+      'the beach': [],
       'beach are': [],
+      'are simply': [],
       'simply breathtaking': [],
+      'breathtaking and': [],
       'and leave': [],
+      'leave me': [],
       'me in': [],
-      'awe.': [],
+      'in awe.': [],
     },
     SentenceThree: {
       'She practiced': [],
@@ -96,6 +104,7 @@ export const chordLibrary: ChordLibrary = {
   lexicalSentencesTrios: {
     SentenceOne: {
       'I love to': [],
+      'to new places': [],
       'explore new places': [],
       'and create lasting': [],
       'memories.': [],
@@ -119,15 +128,14 @@ export const chordLibrary: ChordLibrary = {
       'graceful movements.': [],
     },
   },
-  /*
+
   sentences: {
     'I love to explore new places and create lasting memories.': [],
     'The sunsets on the beach are simply breathtaking and always leave me in awe.':
       [],
     "Family is the foundation that supports us through all of life's challenges and triumphs.":
       [],
-    'We should always strive to be kind and compassionate towards others.':
-      [],
+    'We should always strive to be kind and compassionate towards others.': [],
     'Learning is a lifelong journey that never fails to expand our horizons.':
       [],
     'Laughter is the best medicine; it has the power to heal and bring joy.':
@@ -166,8 +174,7 @@ export const chordLibrary: ChordLibrary = {
     'Dream big, work hard, and never stop believing in yourself.': [],
     'The greatest gift we can give others is our undivided attention and genuine presence.':
       [],
-    'Gratitude is a powerful force that can transform our outlook on life.':
-      [],
+    'Gratitude is a powerful force that can transform our outlook on life.': [],
     'Embrace change and adaptability, for they are the stepping stones to growth and progress.':
       [],
     'Love is a verb that requires constant action and nurturing.': [],
@@ -286,8 +293,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'The power of a positive mindset can turn setbacks into stepping stones towards success.':
       [],
-    'A genuine apology can mend even the deepest wounds and rebuild trust.':
-      [],
+    'A genuine apology can mend even the deepest wounds and rebuild trust.': [],
     'The beauty of a sunset reminds us to pause and appreciate the simple pleasures in life.':
       [],
     'True friendship is built on trust, loyalty, and a deep understanding of one another.':
@@ -363,8 +369,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'The power of determination and perseverance can overcome even the most daunting of obstacles.':
       [],
-    'Change is inevitable, and embracing it allows us to grow and evolve.':
-      [],
+    'Change is inevitable, and embracing it allows us to grow and evolve.': [],
     'The world is full of beauty, but it is our perception that determines what we see.':
       [],
     'True success is not just about personal achievements but about lifting others up along the way.':
@@ -373,8 +378,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'The power of a positive mindset can turn setbacks into stepping stones towards success.':
       [],
-    'A genuine apology can mend even the deepest wounds and rebuild trust.':
-      [],
+    'A genuine apology can mend even the deepest wounds and rebuild trust.': [],
     'The beauty of a sunset reminds us to pause and appreciate the simple pleasures in life.':
       [],
     'True friendship is built on trust, loyalty, and a deep understanding of one another.':
@@ -467,8 +471,7 @@ export const chordLibrary: ChordLibrary = {
     'Gratitude is the gateway to abundance and a fulfilling life.': [],
     'Courage is not the absence of fear, but the ability to take action despite it.':
       [],
-    'Childhood is a time of innocence, wonder, and endless possibilities.':
-      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.': [],
     'True happiness comes from within, independent of external circumstances.':
       [],
     'A true leader empowers others to discover their full potential and achieve greatness.':
@@ -483,8 +486,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
       [],
-    'Moments may be fleeting, but the memories we create last a lifetime.':
-      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.': [],
     'Love transcends language barriers and is understood by the heart.': [],
     'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
       [],
@@ -566,8 +568,7 @@ export const chordLibrary: ChordLibrary = {
     'Gratitude is the gateway to abundance and a fulfilling life.': [],
     'Courage is not the absence of fear, but the ability to take action despite it.':
       [],
-    'Childhood is a time of innocence, wonder, and endless possibilities.':
-      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.': [],
     'True happiness comes from within, independent of external circumstances.':
       [],
     'A true leader empowers others to discover their full potential and achieve greatness.':
@@ -582,8 +583,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
       [],
-    'Moments may be fleeting, but the memories we create last a lifetime.':
-      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.': [],
     'Love transcends language barriers and is understood by the heart.': [],
     'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
       [],
@@ -665,8 +665,7 @@ export const chordLibrary: ChordLibrary = {
     'Gratitude is the gateway to abundance and a fulfilling life.': [],
     'Courage is not the absence of fear, but the ability to take action despite it.':
       [],
-    'Childhood is a time of innocence, wonder, and endless possibilities.':
-      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.': [],
     'True happiness comes from within, independent of external circumstances.':
       [],
     'A true leader empowers others to discover their full potential and achieve greatness.':
@@ -681,8 +680,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
       [],
-    'Moments may be fleeting, but the memories we create last a lifetime.':
-      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.': [],
     'Love transcends language barriers and is understood by the heart.': [],
     'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
       [],
@@ -764,8 +762,7 @@ export const chordLibrary: ChordLibrary = {
     'Gratitude is the gateway to abundance and a fulfilling life.': [],
     'Courage is not the absence of fear, but the ability to take action despite it.':
       [],
-    'Childhood is a time of innocence, wonder, and endless possibilities.':
-      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.': [],
     'True happiness comes from within, independent of external circumstances.':
       [],
     'A true leader empowers others to discover their full potential and achieve greatness.':
@@ -780,8 +777,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
       [],
-    'Moments may be fleeting, but the memories we create last a lifetime.':
-      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.': [],
     'Love transcends language barriers and is understood by the heart.': [],
     'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
       [],
@@ -863,8 +859,7 @@ export const chordLibrary: ChordLibrary = {
     'Gratitude is the gateway to abundance and a fulfilling life.': [],
     'Courage is not the absence of fear, but the ability to take action despite it.':
       [],
-    'Childhood is a time of innocence, wonder, and endless possibilities.':
-      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.': [],
     'True happiness comes from within, independent of external circumstances.':
       [],
     'A true leader empowers others to discover their full potential and achieve greatness.':
@@ -879,8 +874,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
       [],
-    'Moments may be fleeting, but the memories we create last a lifetime.':
-      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.': [],
     'Love transcends language barriers and is understood by the heart.': [],
     'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
       [],
@@ -962,8 +956,7 @@ export const chordLibrary: ChordLibrary = {
     'Gratitude is the gateway to abundance and a fulfilling life.': [],
     'Courage is not the absence of fear, but the ability to take action despite it.':
       [],
-    'Childhood is a time of innocence, wonder, and endless possibilities.':
-      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.': [],
     'True happiness comes from within, independent of external circumstances.':
       [],
     'A true leader empowers others to discover their full potential and achieve greatness.':
@@ -978,8 +971,7 @@ export const chordLibrary: ChordLibrary = {
       [],
     'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
       [],
-    'Moments may be fleeting, but the memories we create last a lifetime.':
-      [],
+    'Moments may be fleeting, but the memories we create last a lifetime.': [],
     'Love transcends language barriers and is understood by the heart.': [],
     'Determination and perseverance are the driving forces behind achieving our goals and dreams.':
       [],
@@ -1061,8 +1053,7 @@ export const chordLibrary: ChordLibrary = {
     'Gratitude is the gateway to abundance and a fulfilling life.': [],
     'Courage is not the absence of fear, but the ability to take action despite it.':
       [],
-    'Childhood is a time of innocence, wonder, and endless possibilities.':
-      [],
+    'Childhood is a time of innocence, wonder, and endless possibilities.': [],
     'True happiness comes from within, independent of external circumstances.':
       [],
     'A true leader empowers others to discover their full potential and achieve greatness.':
@@ -1078,7 +1069,6 @@ export const chordLibrary: ChordLibrary = {
     'Our choices shape the trajectory of our lives, and it is up to us to steer it towards success.':
       [],
   },
-  */
 
   allChords: {
     CharaChorder: [],
@@ -2461,6 +2451,7 @@ export const chordLibrary: ChordLibrary = {
       ...this.specialCharacters,
       ...this.lexicalSentencesDuos,
       ...this.lexicalSentencesTrios,
+      ...this.sentences,
     };
   },
 };

@@ -15,7 +15,7 @@ export function TextBluredScreen() {
 
   return (
     <div
-      className="wi from-green-800 bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black"
+      className="wi from-green-800 bg-zinc-300 absolute w-full h-48 rounded-3xl pt-16 text-black"
       onClick={() => [
         document.getElementById('txt_Name')?.focus(),
         setTextPromptUnFocused(false),
@@ -704,7 +704,7 @@ export const ChordRow = styled.div.attrs(
 )``;
 
 const Spacer = styled.div.attrs({
-  className: `  flex-row gap-[1vw]  w-full h-7`,
+  className: `  flex-row gap-[1vw]  w-full h-8`,
 })``;
 
 export const PreviousChordRow = styled.div.attrs(

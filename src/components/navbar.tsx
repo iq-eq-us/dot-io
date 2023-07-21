@@ -16,6 +16,7 @@ import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
 import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
 import type { TrainingLevels } from '../../src/models/trainingLevels';
+import Circle from './CircleHighlight';
 
 const Navbar = (): ReactElement => {
   const history = useHistory();
@@ -29,6 +30,7 @@ const Navbar = (): ReactElement => {
   const setTrainingLevel = useStoreActions(
     (store: any) => store.setTrainingLevel,
   );
+  const trainingLevel = useStoreState((store: any) => store.trainingLevel);
   const setModuleNumber = useStoreActions(
     (store: any) => store.setModuleNumber,
   );
@@ -110,6 +112,7 @@ const Navbar = (): ReactElement => {
         </MobileIcon>
         <NavMenu>
           <NavMenuLink aria-current="page">
+            {trainingLevel == 'CPM' ? <Circle /> : ''}
             <div className="text-white font-mono">CPM</div>
             <NavLinksImage
               open={true}
@@ -122,6 +125,7 @@ const Navbar = (): ReactElement => {
             aria-current="page"
             onClick={() => triggerPasswordModal()}
           >
+            {trainingLevel == 'CHM' ? <Circle /> : ''}
             <div className="text-white font-mono">
               {maxWPM || chmTierPasswordBypass ? (
                 'ChM'
@@ -139,14 +143,15 @@ const Navbar = (): ReactElement => {
             />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
+            {trainingLevel == 'sWPM' ? <Circle /> : ''}
             <LockIconStyle>
               <LockIconWhite />
             </LockIconStyle>
             <NavLinksImage open={false} src={DumbellImage} alt="" />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
+            {trainingLevel == 'StM' ? <Circle /> : ''}
             <div className="text-white font-mono">StM</div>
-
             <NavLinksImage
               open={true}
               src={StM_Icon}
@@ -219,7 +224,7 @@ const NavI = styled.nav`
 const NavbarContainer = styled.div`
 display: flex;
 justify-content: space-between;
-height: 60px;
+height: 63px;
 z-index: 1;
 width: 100%;
 padding 0 24px;
@@ -266,7 +271,7 @@ const NavMenu = styled.ul`
 
 const NavLinksImage = styled.img<{ open: boolean }>`
   color: #fff;
-  display: flex;
+  display: relative;
   align-items: center;
   ${(p) => (p.open == false ? [{ opacity: 0.5 }, { cursor: 'none' }] : '')}
   text-decoration: none;
