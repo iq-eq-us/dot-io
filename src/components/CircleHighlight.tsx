@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 function Circle(): ReactElement {
   return (
-    <svg height="100" width="100" className="absolute overflow-visible mt-1">
+    <svg height="50%" width="50%" className="absolute overflow-visible mt-1">
       <circle
         cx="35"
         cy="30"
