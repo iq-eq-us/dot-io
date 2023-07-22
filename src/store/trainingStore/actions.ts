@@ -561,7 +561,6 @@ function checkIfShouldProceedToNextTargetChord(
   storeState: TrainingStoreStateModel,
   actions: Actions<TrainingStoreModel>,
 ) {
-  console.log('Should I proceed');
   const wordValue = document.getElementById('txt_Name')?.value;
   const wordToCompare = isInAlphabetMode
     ? storeState.targetWord
@@ -1052,7 +1051,18 @@ function moveIndiciesOfTargetChord(state: TrainingStoreModel): void {
   const isReadyToAdvanceToNextLineOfTrainingText =
     state.currentSubindexInTrainingText + 1 >=
     state.trainingText[state.currentLineOfTrainingText].length;
-  if (isReadyToAdvanceToNextLineOfTrainingText) {
+  if (
+    isReadyToAdvanceToNextLineOfTrainingText &&
+    state.targetTextLineFour != null
+  ) {
+    //This implemented to check if the user backspaced into the previous line and does not generate another line of text
+    state.currentLineOfTrainingText += 1;
+    state.currentSubindexInTrainingText = 0;
+  } else if (
+    isReadyToAdvanceToNextLineOfTrainingText &&
+    state.targetTextLineFour == null
+  ) {
+    //Cehck if the user did backspace
     state.currentLineOfTrainingText += 1;
     state.currentSubindexInTrainingText = 0;
     generateNextLineOfInputdata(state);

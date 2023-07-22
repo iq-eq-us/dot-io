@@ -520,10 +520,10 @@ export function TextPrompt(): ReactElement {
     for (let i = 0; i < firstLineValue?.length; i++) {
       const coloredWordToPush = [];
       if (i < indexOfTargetChord) {
-        for (let t = 0; t < firstLineOfTargetText[i]?.length; t++) {
+        for (let t = 0; t < firstLineValue[i]?.length; t++) {
           const tempCompareValue =
             allTypedText[i + targetIndexForWhatErrorTextToShow];
-          const tempTargetWord = firstLineOfTargetText[i];
+          const tempTargetWord = firstLineValue[i];
           // bevause the length og the gitdy line is larger than second we run into issues
           if (tempCompareValue != undefined) {
             tempCompareValue[t] ==
@@ -559,7 +559,7 @@ export function TextPrompt(): ReactElement {
         newTargetLine.push(firstLineValue[i]);
       }
     }
-
+    //console.log('colored word to push was called')
     return newTargetLine;
   }
   //This function Handles the focus panel
