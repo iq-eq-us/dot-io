@@ -119,10 +119,7 @@ export interface TrainingStoreStateModel {
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineThree: Computed<TrainingStoreModel, string[] | undefined>;
   previousTargetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
-  previousPreviousTargetTextLineOne: Computed<
-    TrainingStoreModel,
-    string[] | undefined
-  >;
+  targetTextLineFour: Computed<TrainingStoreModel, string[] | undefined>;
   storedTestTextData: Computed<TrainingStoreModel, string[]>;
   numberOfChordsForTrainingLevel: number;
   characterEntryMode: Computed<

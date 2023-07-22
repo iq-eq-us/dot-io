@@ -47,6 +47,9 @@ export function TextPrompt(): ReactElement {
   const thirdLineOfTargetText = useStoreState(
     (store: any) => store.targetTextLineThree,
   );
+  const fourthLineOfTargetText = useStoreState(
+    (store: any) => store.targetTextLineFour,
+  );
   const isError = useStoreState(
     (store: any) => store.errorOccurredWhileAttemptingToTypeTargetChord,
   );
@@ -569,7 +572,20 @@ export function TextPrompt(): ReactElement {
       setTextPromptUnFocused(false);
     }
   }
-  //const targetCompareText = setS.slice(setS?.length - firstLineOfTargetText?.length)\
+  //const targetCompareText = setS.slice(setS?.length - firstLineOfTargetText?.length);
+  const currentPos =
+    storedTestTextData?.length -
+    ((previousTargetTextLineOne == null
+      ? thirdLineOfTargetText?.length
+      : previousTargetTextLineOne?.length + thirdLineOfTargetText?.length) +
+      firstLineOfTargetText?.length +
+      secondLineOfTargetText?.length +
+      (fourthLineOfTargetText == null ? 0 : fourthLineOfTargetText?.length));
+
+  {
+    console.log('Output of conditional ' + fourthLineOfTargetText);
+  }
+
   return (
     <React.Fragment>
       <div className="text-red-500" />
@@ -579,16 +595,30 @@ export function TextPrompt(): ReactElement {
         {previousTargetTextLineOne != null && (
           <React.Fragment>
             <PreviousChordRow scenario={currentTrainingScenario}>
-              {(previousTargetTextLineOne || [])?.map((chord) => (
-                <Chord key={r()}>{chord}</Chord>
-              ))}
+              {(colorTargetLine(previousTargetTextLineOne) || [])?.map(
+                (chord, index) => (
+                  <Chord
+                    key={r()}
+                    error={
+                      !(
+                        allTypedText[currentPos + index]?.slice(0, -1) ===
+                        storedTestTextData[currentPos + index]
+                      )
+                    }
+                  >
+                    {storedTestTextData[currentPos + index]}
+                  </Chord>
+                  // <Chord key={r()}>{allTypedText[index]}</Chord>
+                ),
+              )}
             </PreviousChordRow>
             <ChordRow scenario={currentTrainingScenario}>
-              <Spacer></Spacer>
+              <ChordRow scenario={currentTrainingScenario}>
+                <Spacer />
+              </ChordRow>
             </ChordRow>
           </React.Fragment>
         )}
-
         <ChordRow scenario={currentTrainingScenario}>
           {(colorTargetLine(firstLineOfTargetText) || [])?.map(
             (chord: any, i: any) => {
