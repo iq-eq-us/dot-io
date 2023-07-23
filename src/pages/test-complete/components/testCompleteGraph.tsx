@@ -204,7 +204,9 @@ export function TestCompleteGraph(): ReactElement {
   const testTierHighestWPM = useStoreActions(
     (store) => store.setTestTierHighestWPM,
   );
-  //trainingLevel == 'CPM'
+  const averageOfLocalStats = wpmMethodCalculator(
+    getCumulativeAverageChordTypeTime(localTrainingStatistics.statistics),
+  );
   const tier = useStoreState((store) => store.trainingLevel);
 
   let wordNames: any = [];
@@ -252,10 +254,10 @@ export function TestCompleteGraph(): ReactElement {
   wordOccurrences = numberOfErrorsArrayForTestMode;
   wordNames = wordsPracticedInOrder;
 
-  if (wordTestNumber == undefined) {
+  if (wordTestNumber == undefined && averageOfLocalStats != undefined) {
     if (tier == 'CPM') {
       wordPerMinute.pop();
-      wordPerMinute.push(averageOfLocalStats.toFixed(0) * 5);
+      wordPerMinute.push(averageOfLocalStats?.toFixed(0) * 5);
     } else {
       //  wordPerMinute.pop();
       // wordPerMinute.push(averageOfLocalStats.toFixed(0));
