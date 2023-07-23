@@ -312,7 +312,7 @@ export function convertHexadecimalChordToHumanString(
 
   if (MainControls._chordmapId == 'CHARACHORDER') {
     //charachorder original uses different key map structure
-    const decString = String(bigNum).split(''); //no left zeros; that's ok
+    const decString: any = String(bigNum).split(''); //no left zeros; that's ok
     console.log(decString);
     console.log(MainControls._chordmapId);
     for (let i = 0; i < decString.length; i++) {
@@ -332,8 +332,8 @@ export function convertHexadecimalChordToHumanString(
             decString[i] * 10 ** (decString.length - i - 1),
           ),
         });
-        let noteId: number;
-        let actionId: number;
+        let noteId;
+        let actionId;
         if (decString[i] % 2 == 1) {
           //if it is odd, then it is simple
           noteId = chord_to_noteId(
@@ -490,12 +490,8 @@ export function convertHexadecimalChordToHumanChordForAllChordsTier(hexChord) {
     const actionCode = Bin2Dec(binAction); //convert 10-bit binary to an action id
     if (actionCode != 0) {
       //replaceOldAsciiKeys()
-      console.log(
-        'this is actionMap output ' + actionMap[actionCode as number],
-      );
-      const humanStringPart = replaceOldAsciiKeys(
-        actionMap[actionCode as number],
-      ); //returns the ASCII string output from the actionMap
+      console.log('this is actionMap output ' + actionMap[actionCode]);
+      const humanStringPart = replaceOldAsciiKeys(actionMap[actionCode]); //returns the ASCII string output from the actionMap
       //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
       //console.log('Old Ascii '+ humanStringPart)
       humanChord.push(humanStringPart); //Replace when new action codes arrive
@@ -526,12 +522,8 @@ export function convertHexadecimalChordToHumanChord(hexChord) {
         humanChord += ' + '; //add this + between action ids; put here so we don't have to remove it at end of for-loop
       }
 
-      console.log(
-        'this is actionMap output ' + actionMap[actionCode as number],
-      );
-      const humanStringPart = replaceOldAsciiKeys(
-        actionMap[actionCode as number],
-      ); //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
+      console.log('this is actionMap output ' + actionMap[actionCode]);
+      const humanStringPart = replaceOldAsciiKeys(actionMap[actionCode]); //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
       //console.log('Old Ascii '+ humanStringPart)
       humanChord += humanStringPart; //Replace when new action codes arrive
       //console.log('Human string part in the loop '+ humanChord)

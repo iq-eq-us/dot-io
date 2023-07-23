@@ -40,6 +40,7 @@ export const useWordsPerMinute = (): number => {
   const numberOfWordsChorded = useStoreState(
     (state: any) => state.numberOfWordsChorded,
   );
+
   const trainingSessionErrors = useStoreState(
     (store) => store.trainingSessionErrors,
   );

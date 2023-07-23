@@ -3,6 +3,7 @@ import { FaBorderStyle } from 'react-icons/fa';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
+import type { TrainingScenario } from '../../../../src/models/trainingScenario';
 
 const r = Math.random;
 
@@ -14,7 +15,7 @@ export function TextBlurredScreen() {
 
   return (
     <div
-      className="wi from-green-800 bg-zinc-300 absolute w-full h-40 rounded-3xl pt-16 text-black"
+      className="wi from-green-800 bg-zinc-300 absolute w-full h-48 rounded-3xl pt-16 text-black"
       onClick={() => [
         document.getElementById('txt_Name')?.focus(),
         setTextPromptUnFocused(false),
@@ -34,12 +35,20 @@ export function TextPrompt(): ReactElement {
   const setTextPromptUnFocused = useStoreActions(
     (store) => store.setTextPromptUnFocused,
   );
-
+  const previousTargetTextLineOne = useStoreState(
+    (store: any) => store.previousTargetTextLineOne,
+  );
   const firstLineOfTargetText = useStoreState(
     (store: any) => store.targetTextLineOne,
   );
   const secondLineOfTargetText = useStoreState(
     (store: any) => store.targetTextLineTwo,
+  );
+  const thirdLineOfTargetText = useStoreState(
+    (store: any) => store.targetTextLineThree,
+  );
+  const fourthLineOfTargetText = useStoreState(
+    (store: any) => store.targetTextLineFour,
   );
   const isError = useStoreState(
     (store: any) => store.errorOccurredWhileAttemptingToTypeTargetChord,
@@ -48,7 +57,6 @@ export function TextPrompt(): ReactElement {
   const textPromptUnFocused = useStoreState(
     (store) => store.textPromptUnFocused,
   );
-
   const targetCharacterIndex = useStoreState(
     (store: any) => store.targetCharacterIndex,
   );
@@ -184,15 +192,12 @@ export function TextPrompt(): ReactElement {
     indexOfCharacterInTargetChord: any,
     arr: any,
   ) {
-    // console.log(storedTestTextData)
-
     let displayArray = [];
     if (allTypedText.length >= 0 && storedTestTextData != undefined) {
       indexOfTargetChord - 1 == 0 &&
       targetIndexForWhatErrorTextToShow != allTypedText.length - 1
         ? setTargetIndexForWhatErrorTextToShow(allTypedText.length - 1)
         : '';
-      //console.log('This is the stored test wordsasdasdj njk ajks djkm akdasd ' + setS)
 
       if (targetIndexForWhatErrorTextToShow > allTypedText.length) {
         setTargetIndexForWhatErrorTextToShow(0);
@@ -329,7 +334,7 @@ export function TextPrompt(): ReactElement {
           const y = allTypedText.length;
           for (
             let d = y;
-            d < targetTextLineOne.length + targetIndexForWhatErrorTextToShow;
+            d < targetTextLineOne?.length + targetIndexForWhatErrorTextToShow;
             d++
           ) {
             let sd = '';
@@ -346,7 +351,7 @@ export function TextPrompt(): ReactElement {
             const tempVal =
               storedTestTextData[
                 indexOfTargetChord + targetIndexForWhatErrorTextToShow
-              ].length - arr.length;
+              ]?.length - arr.length;
             let tempBufferValues = '';
             let frontBufferValues = '';
 
@@ -515,11 +520,11 @@ export function TextPrompt(): ReactElement {
     for (let i = 0; i < firstLineValue?.length; i++) {
       const coloredWordToPush = [];
       if (i < indexOfTargetChord) {
-        for (let t = 0; t < firstLineOfTargetText[i]?.length; t++) {
+        for (let t = 0; t < firstLineValue[i]?.length; t++) {
           const tempCompareValue =
             allTypedText[i + targetIndexForWhatErrorTextToShow];
-          const tempTargetWord = firstLineOfTargetText[i];
-          // because the length of the first line is larger than second we run into issues
+          const tempTargetWord = firstLineValue[i];
+          // bevause the length og the gitdy line is larger than second we run into issues
           if (tempCompareValue != undefined) {
             tempCompareValue[t] ==
             (tempTargetWord[t] == undefined ? '' : tempTargetWord[t])
@@ -554,7 +559,7 @@ export function TextPrompt(): ReactElement {
         newTargetLine.push(firstLineValue[i]);
       }
     }
-
+    //console.log('colored word to push was called')
     return newTargetLine;
   }
   //This function Handles the focus panel
@@ -567,6 +572,19 @@ export function TextPrompt(): ReactElement {
       setTextPromptUnFocused(false);
     }
   }
+  //const targetCompareText = setS.slice(setS?.length - firstLineOfTargetText?.length);
+  const currentPos =
+    storedTestTextData?.length -
+    ((previousTargetTextLineOne == null
+      ? thirdLineOfTargetText?.length
+      : previousTargetTextLineOne?.length + thirdLineOfTargetText?.length) +
+      firstLineOfTargetText?.length +
+      secondLineOfTargetText?.length +
+      (fourthLineOfTargetText == null ? 0 : fourthLineOfTargetText?.length));
+
+  {
+    console.log('Output of conditional ' + fourthLineOfTargetText);
+  }
 
   return (
     <React.Fragment>
@@ -574,7 +592,35 @@ export function TextPrompt(): ReactElement {
 
       <TextPromptContainer>
         {textPromptUnFocused ? isFocused() : isFocused()}
-        <ChordRow>
+        {previousTargetTextLineOne != null && (
+          <React.Fragment>
+            <PreviousChordRow scenario={currentTrainingScenario}>
+              {(colorTargetLine(previousTargetTextLineOne) || [])?.map(
+                (chord, index) => (
+                  <Chord
+                    key={r()}
+                    error={
+                      !(currentTrainingScenario != 'ALPHABET'
+                        ? allTypedText[currentPos + index]?.slice(0, -1) ===
+                          storedTestTextData[currentPos + index]
+                        : allTypedText[currentPos + index] ===
+                          storedTestTextData[currentPos + index])
+                    }
+                  >
+                    {storedTestTextData[currentPos + index]}
+                  </Chord>
+                  // <Chord key={r()}>{allTypedText[index]}</Chord>
+                ),
+              )}
+            </PreviousChordRow>
+            <ChordRow scenario={currentTrainingScenario}>
+              <ChordRow scenario={currentTrainingScenario}>
+                <Spacer />
+              </ChordRow>
+            </ChordRow>
+          </React.Fragment>
+        )}
+        <ChordRow scenario={currentTrainingScenario}>
           {(colorTargetLine(firstLineOfTargetText) || [])?.map(
             (chord: any, i: any) => {
               if (characterEntryMode === 'CHORD' || i !== indexOfTargetChord) {
@@ -603,7 +649,7 @@ export function TextPrompt(): ReactElement {
             },
           )}
         </ChordRow>
-        <ChordRow>
+        <ChordRow scenario={currentTrainingScenario}>
           {letsFix(
             firstLineOfTargetText,
             targetCharacterIndex,
@@ -611,12 +657,22 @@ export function TextPrompt(): ReactElement {
             setS,
           )}
         </ChordRow>
-
-        <ChordRow>
+        <ChordRow scenario={currentTrainingScenario}>
           {(secondLineOfTargetText || [])?.map((chord) => (
             <Chord key={r()}>{chord}</Chord>
           ))}
         </ChordRow>
+
+        {previousTargetTextLineOne == null && (
+          <React.Fragment>
+            <Spacer></Spacer>
+            <ChordRow scenario={currentTrainingScenario}>
+              {(thirdLineOfTargetText || [])?.map((chord) => (
+                <Chord key={r()}>{chord}</Chord>
+              ))}
+            </ChordRow>
+          </React.Fragment>
+        )}
       </TextPromptContainer>
     </React.Fragment>
   );
@@ -670,13 +726,29 @@ const Chord = styled.span.attrs<ChordProps>((props) => ({
   }`,
 }))<ChordProps>``;
 
-const ChordRow = styled.div.attrs({
-  className: `flex flex-row gap-[1vw] whitespace-nowrap justify-center w-full`,
+export const ChordRow = styled.div.attrs(
+  (props: { scenario: TrainingScenario }) => ({
+    className: `flex flex-row whitespace-nowrap justify-center font-mono w-full ${
+      props.scenario == 'ALPHABET' ? '' : 'gap-[1vw]'
+    }`,
+  }),
+)``;
+
+const Spacer = styled.div.attrs({
+  className: `  flex-row gap-[1vw]  w-full h-8`,
 })``;
+
+export const PreviousChordRow = styled.div.attrs(
+  (props: { scenario: TrainingScenario }) => ({
+    className: `flex flex-row whitespace-nowrap justify-center w-full text-black    ${
+      props.scenario == 'ALPHABET' ? '' : 'gap-[1vw]'
+    }`,
+  }),
+)``;
 
 const TextPromptContainer = styled.div.attrs({
   className: `
-    flex text-md font-bold flex flex-col items-center w-full	 justify-center text-gray-400
-    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-10 h-40	m-auto font-mono
+    flex text-md font-bold flex flex-col items-center w-11/12	 justify-center text-gray-400
+    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-4 h-50 	m-auto font-mono
   `,
 })``;

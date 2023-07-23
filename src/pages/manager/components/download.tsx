@@ -136,6 +136,9 @@ export function Download(): ReactElement {
     const chordCountParsedValue = parseInt(
       chordCountSplit[chordCountSplit.length - 1],
     );
+    const element: HTMLElement = document.getElementById(
+      'downloadCompletionPercentage',
+    ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
 
     for (let i = 0; i < chordCountParsedValue; i++) {
       console.log(MainControls._chordmapCountOnDevice);
@@ -152,8 +155,15 @@ export function Download(): ReactElement {
         inValue[2],
         inValue[3],
       );
-      setDownloadedChords(tempCreated);
+      tab.push(tempCreated);
+      element.innerHTML =
+        'Chord Download Progress: ' +
+        ((i / chordCountParsedValue) * 100).toFixed(0) +
+        '%';
+      console.log('download progress ' + element.value);
+      //setDownloadedChords(tempCreated);
     }
+    setDownloadedChords(tab);
   }
   return (
     <React.Fragment>

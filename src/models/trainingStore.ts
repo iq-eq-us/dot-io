@@ -6,7 +6,10 @@ import type { KeyHighlightPositionLite } from './keyHighlightPositionsCharachord
 
 import type { TrainingScenario } from './trainingScenario';
 import type { TrainingSettingsState } from './trainingSettingsStateModel';
-import type { TrainingStatistics } from './trainingStatistics';
+import type {
+  TrainingStatistics,
+  StoredStMStatistics,
+} from './trainingStatistics';
 import type { WordTrainingValues } from './wordTrainingValues';
 import type { TrainingLevels } from './trainingLevels';
 import type { TimerModel } from './timerModel';
@@ -55,7 +58,9 @@ export interface TrainingStoreActionsModel {
   setTrainingSessionErrors: Action<TrainingStoreActionsModel, number>;
   setTrainingIsDone: Action<TrainingStoreActionsModel, boolean>;
   setTimerValue: Action<TrainingStoreActionsModel, string>;
-  setIsProgressBarDynamic: Action<TrainingStoreActionsModel, boolean>;
+  setLexicalSentencesIndex: Action<TrainingStoreActionsModel, string>;
+  setGenerateThePreviousLine: Action<TrainingStoreActionsModel, boolean>;
+
   /**
    * This action allows you to manually update the chords used in a particular training mode
    * For example, if you were in Lexical training, you can use the top right "View/Edit" chords box
@@ -103,7 +108,7 @@ export interface TrainingStoreStateModel {
   typedTrainingText: string;
   trainingLevel: TrainingLevels | undefined;
   currentTrainingScenario: TrainingScenario | undefined;
-  wordTestNumber: WordTrainingValues | undefined;
+  wordTestNumber: number | undefined;
   isTestDone: boolean;
   isDisplayingChordEditModal: boolean;
   compareText: string[] | undefined;
@@ -112,6 +117,9 @@ export interface TrainingStoreStateModel {
   isShowingPlusIcon: boolean;
   targetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
   targetTextLineTwo: Computed<TrainingStoreModel, string[] | undefined>;
+  targetTextLineThree: Computed<TrainingStoreModel, string[] | undefined>;
+  previousTargetTextLineOne: Computed<TrainingStoreModel, string[] | undefined>;
+  targetTextLineFour: Computed<TrainingStoreModel, string[] | undefined>;
   storedTestTextData: Computed<TrainingStoreModel, string[]>;
   numberOfChordsForTrainingLevel: number;
   characterEntryMode: Computed<
@@ -144,7 +152,8 @@ export interface TrainingStoreStateModel {
   trainingIsDone: boolean;
   timerValue: string;
   timeTakenToTypeEachWordInOrder: number[];
-  isProgressBarDynamic: boolean;
+  lexicalSentencesIndex: any;
+  generateThePreviousLine: boolean;
 }
 
 export type TrainingStoreModel = TrainingStoreStateModel &

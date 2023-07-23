@@ -1,25 +1,27 @@
 import React, { ReactElement } from 'react';
 import RefreshIcon from './RefreshIcon';
-import ForwardIcon from './ForwardIcon';
+import EditIcon from './EditIcon';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
-function RefreshButton(): ReactElement {
-  const wordTestNumber = useStoreState((store: any) => store.wordTestNumber);
+function OpenEditChordModal(): ReactElement {
   const beginTraining = useStoreActions(
     (store: any) => store.beginTrainingMode,
   );
   const trainingSceneario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
+  const currentWordTestNumber = useStoreState((store) => store.wordTestNumber);
   const setRestartTestMode = useStoreActions(
     (store) => store.setRestartTestMode,
   );
+  const mode = useStoreState((store) => store.restartTestMode);
 
   const payload = [];
   payload.push(trainingSceneario);
+  payload.push(currentWordTestNumber);
   function letsGoAgain() {
     sessionStorage.setItem('Refresh', JSON.stringify(1));
-    sessionStorage.removeItem('CustomTierTestValue');
+    sessionStorage.removeItem('CutomTierTestValue');
     sessionStorage.removeItem('tempTestDeIncrement');
     setRestartTestMode(true);
     beginTraining(payload);
@@ -32,9 +34,9 @@ function RefreshButton(): ReactElement {
         letsGoAgain();
       }}
     >
-      <RefreshIcon />
+      <EditIcon />
     </button>
   );
 }
 
-export default RefreshButton;
+export default OpenEditChordModal;

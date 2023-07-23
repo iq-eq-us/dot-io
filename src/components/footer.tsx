@@ -56,10 +56,6 @@ const FooterWrap = styled.div`
 const FooterLinksContainer = styled.div`
   display: flex;
   justify-content: center;
-
-  @media screen and (max-width: 820px) {
-    padding-top: 32px;
-  }
 `;
 
 const FooterLinksWrapper = styled.div`
@@ -89,19 +85,13 @@ color #fff
 
 const FooterLinkTitle = styled.h1`
   font-size: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 `;
 
-const FooterLink = styled.a`
+const FooterLink = styled.div`
   color: #fff;
   text-decoration: none;
-  margin-bottom: 0.5rem;
   font-size: 14px;
-
-  &:hover {
-    color: #01bf71;
-    transition: 0.3s ease out;
-  }
 `;
 
 const FooterLinkLogo = styled.img`

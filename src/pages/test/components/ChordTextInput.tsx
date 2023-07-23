@@ -10,6 +10,13 @@ function ChordTextInput(): ReactElement {
   );
 
   const textTyped = useStoreState((store: any) => store.typedTrainingText);
+  const allTypedCharactersStore = useStoreState(
+    (store: any) => store.allTypedCharactersStore,
+  );
+  const storedTestTextData = useStoreState(
+    (store: any) => store.storedTestTextData,
+  );
+
   const inputRef = useRef<HTMLInputElement>(null);
   const regenerateTrainingText = useStoreActions(
     (store: any) => store.resetTrainingText,
@@ -35,6 +42,13 @@ function ChordTextInput(): ReactElement {
   );
 
   const set = useStoreActions((store: any) => store.setCompareText);
+  const setGenerateThePreviousLine = useStoreActions(
+    (store: any) => store.setGenerateThePreviousLine,
+  );
+  const generateThePreviousLine = useStoreActions(
+    (store: any) => store.generateThePreviousLine,
+  );
+
   const setS = useStoreState((store: any) => store.compareText);
   const currentLineOfTrainingText = useStoreState(
     (store: any) => store.currentLineOfTrainingText,
@@ -42,7 +56,9 @@ function ChordTextInput(): ReactElement {
   const currentSubindexInTrainingText = useStoreState(
     (store: any) => store.currentSubindexInTrainingText,
   );
-
+  const currentTrainingScenario = useStoreState(
+    (store: any) => store.currentTrainingScenario,
+  );
   const targetCharacterIndex = useStoreState(
     (store: any) => store.targetCharacterIndex,
   );
@@ -58,8 +74,17 @@ function ChordTextInput(): ReactElement {
     currentSubindexInTrainingText === 0 &&
     targetCharacterIndex === 0;
 
+  const wasPreviousTextIncorrect =
+    currentTrainingScenario == 'ALPHABET'
+      ? allTypedCharactersStore[allTypedCharactersStore.length - 1] !=
+        storedTestTextData[allTypedCharactersStore.length - 1]
+      : allTypedCharactersStore[allTypedCharactersStore.length - 1]?.slice(
+          0,
+          -1,
+        ) != storedTestTextData[allTypedCharactersStore.length - 1];
+
   return (
-    <div className="w-full flex flex-row items-end mt-6 justify-center">
+    <div className="w-full flex flex-row items-end justify-center">
       {Popper}
       <span
         className={`mb-2 mr-2 text-white font-semibold ${
@@ -70,7 +95,7 @@ function ChordTextInput(): ReactElement {
       <input
         autoCorrect="off"
         autoCapitalize="none"
-        className="relative bg-transparent caret-transparent focus:outline-none w-0  text-white font-bold text-center max-w-[60vw] border-b-2 border-solid border-transparent"
+        className="relative bg-transparent caret-transparent focus:outline-none w-0 text-white font-bold text-center max-w-[60vw] border-b-2 border-solid border-transparent"
         ref={inputRef}
         id="txt_Name"
         autoFocus
@@ -99,6 +124,19 @@ function ChordTextInput(): ReactElement {
           {
             e.target.value[0] == ' ' ? '' : set(e.target.value);
           }
+        }}
+        //This code below triggers the go back
+        onKeyDownCapture={(e) => {
+          if (
+            e.target.value.length == 0 &&
+            currentSubindexInTrainingText == 0 &&
+            targetCharacterIndex == 0 &&
+            e.key === 'Backspace' &&
+            currentLineOfTrainingText != 0 &&
+            wasPreviousTextIncorrect
+          )
+            setGenerateThePreviousLine(true as boolean);
+          console.log('I should go back ' + generateThePreviousLine);
         }}
       />
     </div>

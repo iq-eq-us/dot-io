@@ -17,6 +17,7 @@ import { truncateString } from '../../../helpers/truncateString';
 import {
   wpmMethodCalculatorForStoredChords,
   wpmMethodCalculator,
+  stmCalculator,
 } from '../../../helpers/aggregation';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
@@ -27,6 +28,7 @@ function StatisticsTable(): ReactElement {
   const stats = useStoreState(
     (state) => state.trainingStatistics,
   ).statistics.sort((a, b) => b.numberOfOccurrences - a.numberOfOccurrences);
+
   const trainingSettings = useStoreState((store) => store.trainingSettings);
   const inTrainingLevel = useStoreState((store: any) => store.trainingLevel);
   const inStoredChordsFromDevice = useStoreState(
@@ -40,8 +42,8 @@ function StatisticsTable(): ReactElement {
     (state) => state.storedChordsFromDevice,
   )?.statistics?.sort(
     (a, b) =>
-      wpmMethodCalculatorForStoredChords(a.chordsMastered) -
-      wpmMethodCalculatorForStoredChords(b.chordsMastered),
+      wpmMethodCalculatorForStoredChords(a.chordsMastered, a.id.length) -
+      wpmMethodCalculatorForStoredChords(b.chordsMastered, b.id.length),
   );
 
   const numberOfChordsConquered = stats.filter(
@@ -157,7 +159,11 @@ const Row = ({ index, style, data }: RowData) => {
     index - LIST_LENGTH_OFFSET,
   );
 
-  const wpmValue = wpmMethodCalculator(item?.averageSpeed, item.scenario);
+  const wpmValue = wpmMethodCalculator(
+    item?.averageSpeed,
+    item.id.length,
+    item.scenario,
+  );
   return (
     <div
       onClick={(e) => {
@@ -174,16 +180,22 @@ const Row = ({ index, style, data }: RowData) => {
 
 function returnStatisticsColumnContent(data: Data, index: number) {
   const item = data?.stats?.[index - LIST_LENGTH_OFFSET];
-  const wpmValue = wpmMethodCalculator(item?.averageSpeed, item.scenario);
+  const wpmValue = wpmMethodCalculator(
+    item?.averageSpeed,
+    item.id.length,
+    item.scenario,
+  );
   const itemFromStoredChords =
     data?.storedChordsFromDevice?.statistics?.[index - LIST_LENGTH_OFFSET];
 
   const cpmValue = wpmMethodCalculatorForStoredChords(
     itemFromStoredChords?.chordsMastered,
+    item.displayTitle.length,
   );
   const tier = data.trainingLevel;
   const lastTypedSpeed = wpmMethodCalculator(
     itemFromStoredChords?.lastSpeed,
+    item.id.length,
     item.scenario,
   );
   if (
@@ -238,16 +250,51 @@ function returnStatisticsColumnContent(data: Data, index: number) {
               ).toFixed(2)}
         </RowItem>
         <RowItem>
-          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
-          'Infinity'
+          {wpmValue.toFixed() == 'Infinity' ? '0' : wpmValue.toFixed()}
+        </RowItem>
+        <RowItem>
+          {wpmValue.toFixed() == 'Infinity' ? '0' : (wpmValue / 100).toFixed(2)}
+        </RowItem>
+      </React.Fragment>
+    );
+  } else if (tier == 'StM') {
+    const wpm =
+      wpmMethodCalculator(
+        item?.averageSpeed,
+        item.id.length,
+        item.scenario,
+      ).toFixed() == 'Infinity'
+        ? '0'
+        : (wpmValue / 100).toFixed(2);
+    return (
+      <React.Fragment>
+        <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
+        <RowItem>
+          {wpmMethodCalculator(
+            item?.averageSpeed,
+            item.id.length,
+            item.scenario,
+          ).toFixed() == 'Infinity'
             ? '0'
             : wpmValue.toFixed()}
         </RowItem>
         <RowItem>
-          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
-          'Infinity'
+          {isNaN(
+            (item?.numberOfOccurrences - item?.numberOfErrors) /
+              item?.numberOfOccurrences,
+          )
             ? '0'
-            : (wpmValue / 100).toFixed(2)}
+            : (
+                ((item?.numberOfOccurrences - item?.numberOfErrors) /
+                  item?.numberOfOccurrences) *
+                100
+              ).toFixed(2)}
+        </RowItem>
+
+        <RowItem>
+          {isNaN(stmCalculator(wpm, item?.speedOfLastTen?.length).toFixed(2))
+            ? '0'
+            : stmCalculator(wpm, item?.speedOfLastTen?.length).toFixed(2)}
         </RowItem>
       </React.Fragment>
     );
@@ -256,8 +303,11 @@ function returnStatisticsColumnContent(data: Data, index: number) {
       <React.Fragment>
         <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
         <RowItem>
-          {wpmMethodCalculator(item?.averageSpeed, item.scenario).toFixed() ==
-          'Infinity'
+          {wpmMethodCalculator(
+            item?.averageSpeed,
+            item.id.length,
+            item.scenario,
+          ).toFixed() == 'Infinity'
             ? '0 / 0'
             : wpmValue.toFixed() * 5 + '/' + wpmValue.toFixed()}
         </RowItem>
@@ -325,6 +375,21 @@ function returnHeader(tier: string) {
         </HeaderItemRow>
       </React.Fragment>
     );
+  } else if (tier == 'StM') {
+    return (
+      <React.Fragment>
+        <HeaderItemRow helpText="The type of test associated with these metrics." />
+        <HeaderItemRow helpText="Your typing accuracy for this teir is representative of your typing accuracy all time for a given word.">
+          Speed
+        </HeaderItemRow>
+        <HeaderItemRow helpText="Your Average WPM for this test is based or your last 10 attempts at the given word.">
+          %
+        </HeaderItemRow>
+        <HeaderItemRow helpText="Your CHM for this test this is based on your last 10 attempts at the given word.">
+          StM
+        </HeaderItemRow>
+      </React.Fragment>
+    );
   } else {
     return (
       <React.Fragment>
@@ -361,33 +426,49 @@ function returnStatisticsColumnHeader(data: Data) {
   let sumErrors = 0;
   let sumOccurrences = 0;
   let sumOfAverages = 0;
+  let sumOfLastTenOccurences = 0;
+  let sumOfCHM = 0;
 
   data.stats.forEach((d) => {
+    const tempWpm =
+      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
+        ? 0
+        : wpmMethodCalculator(d.averageSpeed, d.id.length) *
+          d.speedOfLastTen?.length;
     sumErrors += d.numberOfErrors;
     sumOccurrences += d.numberOfOccurrences;
-    sumOfAverages +=
-      wpmMethodCalculator(d.averageSpeed) == 'Infinity'
+    sumOfLastTenOccurences += d.speedOfLastTen?.length;
+    sumOfAverages += tempWpm;
+    sumOfCHM +=
+      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
         ? 0
-        : wpmMethodCalculator(d.averageSpeed, d.scenario) / 100;
+        : tempWpm / d.speedOfLastTen?.length / 100;
   });
-
-  //Need to change the average of chords I think I may need to multiply the avg out and then add
-  // In the new speed to the multiplied avg and then divide
 
   let sumOfLWPM = 0;
   let sumOfAWPM = 0;
   let sumErrorsFromStoredDevice = 0;
   let sumOccurrencesFromStoredDevice = 0;
+  let sumOfAveragesFromStoredDevice = 0;
+  let sumOfLastTenOccurencesFromStoredDevice = 0;
 
   data.storedChordsFromDevice?.statistics?.forEach((d) => {
+    sumOfAveragesFromStoredDevice +=
+      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
+        ? 0
+        : wpmMethodCalculator(d.averageSpeed, d.id.length) *
+          d.speedOfLastTen?.length;
+    sumOfLastTenOccurencesFromStoredDevice += d.speedOfLastTen?.length;
     sumOfAWPM +=
       d.chordsMastered[d?.chordsMastered.length - 1] == null ||
       d?.chordsMastered.length == 0 ||
       (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
         ? 0
-        : wpmMethodCalculatorForStoredChords(d?.chordsMastered);
+        : wpmMethodCalculatorForStoredChords(d?.chordsMastered, d.id.length);
     sumOfLWPM +=
-      d.lastSpeed == 0 ? 0 : wpmMethodCalculator(d?.lastSpeed, d.scenario);
+      d.lastSpeed == 0
+        ? 0
+        : wpmMethodCalculator(d?.lastSpeed, d.id.length, d.scenario);
     sumErrorsFromStoredDevice += d.numberOfErrors;
     sumOccurrencesFromStoredDevice += d.numberOfOccurrences;
   });
@@ -426,9 +507,6 @@ function returnStatisticsColumnHeader(data: Data) {
                 ).toFixed(2) + '%'
             : ''}
         </RowStatItem>
-        {
-          //<RowStatItem>{data.displayHUD ? ((sumOfLWPM) == 0 ? '0' :  ((sumOfLWPM/totalChordsPracticed)).toFixed(2)): ''}</RowStatItem>
-        }
         <RowStatItem>
           {isNaN(sumOfAWPM / (numberOfChordsConquered - numberOfChord))
             ? '0'
@@ -458,11 +536,38 @@ function returnStatisticsColumnHeader(data: Data) {
           {data.displayHUD
             ? average == 0
               ? '0'
-              : wpmMethodCalculator(average, data.trainingScenario).toFixed()
+              : (sumOfAverages / sumOfLastTenOccurences).toFixed()
+            : ''}
+        </RowStatItem>
+        <RowStatItem>{data.displayHUD ? sumOfCHM.toFixed(2) : ''}</RowStatItem>
+      </React.Fragment>
+    );
+  } else if (tier == 'StM') {
+    return (
+      <React.Fragment>
+        <RowStatItem>Total</RowStatItem>
+        <RowStatItem>
+          {data.displayHUD
+            ? average == 0
+              ? '0'
+              : (sumOfAverages / sumOfLastTenOccurences).toFixed()
             : ''}
         </RowStatItem>
         <RowStatItem>
-          {data.displayHUD ? sumOfAverages.toFixed(2) : ''}
+          {data.displayHUD
+            ? isNaN((sumOccurrences - sumErrors) / sumOccurrences)
+              ? '0'
+              : (((sumOccurrences - sumErrors) / sumOccurrences) * 100).toFixed(
+                  2,
+                ) + '%'
+            : ''}
+        </RowStatItem>
+        <RowStatItem>
+          {isNaN(
+            stmCalculator(sumOfAverages, sumOfLastTenOccurences).toFixed(2),
+          )
+            ? '0'
+            : stmCalculator(sumOfAverages, sumOfLastTenOccurences).toFixed(2)}
         </RowStatItem>
       </React.Fragment>
     );
@@ -474,11 +579,9 @@ function returnStatisticsColumnHeader(data: Data) {
           {data.displayHUD
             ? average == 0
               ? '0 / 0'
-              : (
-                  wpmMethodCalculator(average, data.trainingScenario) * 5
-                ).toFixed() +
+              : ((sumOfAverages / sumOfLastTenOccurences) * 5).toFixed() +
                 '/' +
-                wpmMethodCalculator(average, data.trainingScenario).toFixed()
+                (sumOfAverages / sumOfLastTenOccurences).toFixed()
             : ''}
         </RowStatItem>
         <RowStatItem>{sumErrors}</RowStatItem>

@@ -11,7 +11,7 @@ export const SettingsColumnContainer = styled.div.attrs<SettingsColumnContainerP
             fixed inset-0 bg-[#121212E5]
       min-w-[324px] max-h-full rounded-lg
       lg:block lg:bg-transparent lg:relative
-       lg:ml-16
+       lg:ml-16 overflow-y-auto
       ${props.isDisplayingModal ? 'visible' : 'invisible'}
     `,
     };

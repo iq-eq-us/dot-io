@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { TestControlRow } from './testControlsRow';
-import { useSessionWordsPerMinute } from '../../../hooks/useSessionWPM';
 import { wpmMethodCalculator } from '../../../helpers/aggregation';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 
@@ -28,8 +27,6 @@ export function TestStatsCard(): ReactElement {
 
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
 
-  const wpm = useSessionWordsPerMinute();
-
   const testTierHighestWPM = useStoreState((store) => store.testTierHighestWPM);
   const numberOfWordsTypedCorrectly = useStoreState(
     (store) => store.numberOfWordsTypedCorrectly,
@@ -44,7 +41,7 @@ export function TestStatsCard(): ReactElement {
   payload.push(trainingScenario);
   payload.push(currentWordTestNumber);
 
-  currentTrainingSetting.statistics.forEach((d) => {
+  currentTrainingSetting.statistics?.forEach((d) => {
     thisVal += d.numberOfErrors;
     sumOccurrences += d.displayTitle.length * d.numberOfOccurrences;
     //console.log(d.displayTitle.length * d.numberOfOccurrences);
@@ -79,7 +76,16 @@ export function TestStatsCard(): ReactElement {
       else return averageOfLocalStats.toFixed(0);
     }
   }
-
+  let sumOfLastTenOccurences = 0;
+  let averageOfLocalStats2 = 0;
+  localTrainingStatistics?.forEach((d) => {
+    sumOfLastTenOccurences += d.speedOfLastTen?.length;
+    averageOfLocalStats2 +=
+      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
+        ? 0
+        : wpmMethodCalculator(d.averageSpeed, d.id.length) *
+          d.speedOfLastTen?.length;
+  });
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
@@ -99,9 +105,7 @@ export function TestStatsCard(): ReactElement {
               ? (testTierHighestWPM / 5)?.toFixed(0) != 'Infinity'
                 ? (testTierHighestWPM / 5)?.toFixed(0)
                 : '0'
-              : averageOfLocalStats?.toFixed(0) != 'Infinity'
-              ? averageOfLocalStats?.toFixed(0)
-              : '0'}
+              : (averageOfLocalStats2 / sumOfLastTenOccurences)?.toFixed(0)}
           </div>
           <h1 className="text-lg">WPM</h1>
         </StatsCardContainer>
@@ -117,7 +121,7 @@ export function TestStatsCard(): ReactElement {
           <div className="text-4xl">
             {(numberOfWordsChorded.toFixed(0) / 25) * 100 + '%'}
           </div>
-          <h1 className="text-lg">Percent Chorded</h1>
+          <h1 className="text-lg">Chorded</h1>
         </StatsCardContainer>
         <StatsCardContainer>
           <div className="text-4xl">{timerValue}</div>
@@ -128,7 +132,7 @@ export function TestStatsCard(): ReactElement {
         className="items-center absolute text-lg text-red-500 ml-16 mt-2"
         style={
           (Accuracy < 95 || (numberOfWordsChorded.toFixed(0) / 25) * 100 > 5) &&
-          !trainingIsDone
+          trainingIsDone
             ? { display: '' }
             : { display: 'none' }
         }

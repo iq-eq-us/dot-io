@@ -16,6 +16,8 @@ import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
 import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
 import type { TrainingLevels } from '../../src/models/trainingLevels';
+import Circle from './CircleHighlight';
+import HamburgerMenu from './hamburgerMenu';
 
 const Navbar = (): ReactElement => {
   const history = useHistory();
@@ -29,12 +31,15 @@ const Navbar = (): ReactElement => {
   const setTrainingLevel = useStoreActions(
     (store: any) => store.setTrainingLevel,
   );
-
-  const passwordModuleModalToggle = useStoreState(
-    (store: any) => store.passwordModuleModalToggle,
+  const trainingLevel = useStoreState((store: any) => store.trainingLevel);
+  const setModuleNumber = useStoreActions(
+    (store: any) => store.setModuleNumber,
   );
   const setPasswordModuleModalToggle = useStoreActions(
     (store: any) => store.setPasswordModuleModalToggle,
+  );
+  const passwordModuleModalToggle = useStoreActions(
+    (store: any) => store.passwordModuleModalToggle,
   );
   const chmTierPasswordBypass = useStoreState(
     (store: any) => store.chmTierPasswordBypass,
@@ -57,6 +62,7 @@ const Navbar = (): ReactElement => {
   function TrainingPageFunction(level: TrainingLevels, allowOnClick: boolean) {
     if (allowOnClick || chmTierPasswordBypass) {
       if (level == 'CPM') {
+        setModuleNumber(1);
         const payload: any[] = [];
         payload.push('ALPHABET');
         sessionStorage.removeItem('tempTestDeIncrement');
@@ -66,10 +72,21 @@ const Navbar = (): ReactElement => {
           history.push(ROUTER_PATHS.home);
         }
       } else if (level == 'CHM') {
+        setModuleNumber(1);
         const payload: any[] = [];
         payload.push('LEXICAL');
         sessionStorage.removeItem('tempTestDeIncrement');
         setTrainingLevel('CHM');
+        beginTraining(payload);
+        if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
+          history.push(ROUTER_PATHS.home);
+        }
+      } else if (level == 'StM') {
+        setModuleNumber(1);
+        const payload: any[] = [];
+        payload.push('LEXICALSENTENCES');
+        sessionStorage.removeItem('tempTestDeIncrement');
+        setTrainingLevel('StM');
         beginTraining(payload);
         if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
           history.push(ROUTER_PATHS.home);
@@ -91,10 +108,11 @@ const Navbar = (): ReactElement => {
           </NavLogo>
         </LogoLink>
         <MobileIcon>
-          <FaBars />
+          <HamburgerMenu />
         </MobileIcon>
         <NavMenu>
           <NavMenuLink aria-current="page">
+            {trainingLevel == 'CPM' ? <Circle /> : ''}
             <div className="text-white font-mono">CPM</div>
             <NavLinksImage
               open={true}
@@ -107,6 +125,7 @@ const Navbar = (): ReactElement => {
             aria-current="page"
             onClick={() => triggerPasswordModal()}
           >
+            {trainingLevel == 'CHM' ? <Circle /> : ''}
             <div className="text-white font-mono">
               {maxWPM || chmTierPasswordBypass ? (
                 'ChM'
@@ -124,16 +143,24 @@ const Navbar = (): ReactElement => {
             />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
+            {trainingLevel == 'sWPM' ? <Circle /> : ''}
             <LockIconStyle>
               <LockIconWhite />
             </LockIconStyle>
             <NavLinksImage open={false} src={DumbellImage} alt="" />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
+            {trainingLevel == 'StM' ? <Circle /> : ''}
+            <div className="text-white font-mono"></div>
             <LockIconStyle>
               <LockIconWhite />
             </LockIconStyle>
-            <NavLinksImage open={false} src={StM_Icon} alt="" />
+            <NavLinksImage
+              open={false}
+              src={StM_Icon}
+              alt=""
+              // onClick={() => TrainingPageFunction('StM', maxWPM)}
+            />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
             <LockIconStyle>
@@ -153,14 +180,16 @@ const Navbar = (): ReactElement => {
           <NavMenuLink aria-current="page">
             <NavLinksImage open={false} src={Crown_Icon} alt="" />
           </NavMenuLink>
-          <NavBtnLink href="#/manager">Connect</NavBtnLink>
+          <NavBtnLink href="#/manager" onClick={() => setTrainingLevel('')}>
+            Connect
+          </NavBtnLink>
           <NavMenuLink aria-current="page" href="#/dashboard">
             <NavLinksImage open={true} src={profileImage} alt="" />
           </NavMenuLink>
+          <button onClick={() => setIsDisplayingIntroductionModal(true)}>
+            <InfoIcon />
+          </button>
         </NavBtn>
-        <button onClick={() => setIsDisplayingIntroductionModal(true)}>
-          <InfoIcon />
-        </button>
       </NavbarContainer>
     </NavI>
   );
@@ -182,7 +211,7 @@ const NavMenuLink = styled.a.attrs({
 
 const NavI = styled.nav`
   background-color: #181818;
-  height: 63px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -200,7 +229,7 @@ const NavI = styled.nav`
 const NavbarContainer = styled.div`
 display: flex;
 justify-content: space-between;
-height: 60px;
+height: 63px;
 z-index: 1;
 width: 100%;
 padding 0 24px;
@@ -247,7 +276,7 @@ const NavMenu = styled.ul`
 
 const NavLinksImage = styled.img<{ open: boolean }>`
   color: #fff;
-  display: flex;
+  display: relative;
   align-items: center;
   ${(p) => (p.open == false ? [{ opacity: 0.5 }, { cursor: 'none' }] : '')}
   text-decoration: none;
@@ -283,7 +312,7 @@ const NavLinksImageTransparent = styled.img`
   }
 `;
 
-const NavBtn = styled.a`
+const NavBtn = styled.button`
   display: flex;
   align-items: center;
   @media screen and (max-width: 1000px) {
@@ -303,4 +332,10 @@ const NavBtnLink = styled.a`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
+
+  &:hover {
+    color: #ffff;
+    background: #32cd32;
+    transition: 0.3s ease out;
+  }
 `;

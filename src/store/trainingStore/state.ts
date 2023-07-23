@@ -59,6 +59,7 @@ const trainingStoreState: TrainingStoreStateModel = {
   trainingIsDone: false,
   trainingStatistics: {
     statistics: [],
+    stmStatistics: [],
   },
   localTrainingStatistics: {
     statistics: [],
@@ -78,6 +79,7 @@ const trainingStoreState: TrainingStoreStateModel = {
     ),
   ),
   numberOfErrorsArrayForTestMode: [],
+  lexicalSentencesIndex: 'SentenceOne',
 
   chmTierPasswordBypass: JSON?.parse(
     localStorage?.getItem('chmTierPasswordBypass'),
@@ -105,6 +107,8 @@ const trainingStoreState: TrainingStoreStateModel = {
       state.currentTrainingScenario === 'LEXICAL' ||
       state.currentTrainingScenario === 'TRIGRAM' ||
       state.currentTrainingScenario === 'LEXICALSENTENCES' ||
+      state.currentTrainingScenario === 'LEXICALSENTENCESDUOS' ||
+      state.currentTrainingScenario === 'LEXICALSENTENCESTRIOS' ||
       state.currentTrainingScenario === 'ALLCHORDS' ||
       state.currentTrainingScenario === 'CUSTOMTIER'
         ? 'CHARACTER'
@@ -167,11 +171,20 @@ const trainingStoreState: TrainingStoreStateModel = {
   isDisplayingChordEditModal: false,
   chordsToPullFrom: {},
   isShowingPlusIcon: false,
+  previousTargetTextLineOne: computed((state) => {
+    return state?.trainingText[state?.currentLineOfTrainingText - 1];
+  }),
   targetTextLineOne: computed((state) => {
     return state.trainingText[state.currentLineOfTrainingText];
   }),
   targetTextLineTwo: computed((state) => {
     return state.trainingText[state.currentLineOfTrainingText + 1];
+  }),
+  targetTextLineThree: computed((state) => {
+    return state.trainingText[state.currentLineOfTrainingText + 2];
+  }),
+  targetTextLineFour: computed((state) => {
+    return state.trainingText[state.currentLineOfTrainingText + 3];
   }),
 };
 

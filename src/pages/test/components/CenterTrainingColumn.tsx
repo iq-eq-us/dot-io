@@ -12,10 +12,14 @@ import { TrainingModeSelector } from './TrainingModeSelector';
 import { ProgressBar } from './ProgressBar';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import ModuleCompleteModal from './ModuleCompleteModal';
-
+import { EditChordsButton } from './EditChordsButton';
 function CenterTrainingColumn(): ReactElement {
   const currentTrainingScenario = useStoreState(
     (store: any) => store.currentTrainingScenario,
+  );
+  const trainingLevel = useStoreState((store: any) => store.trainingLevel);
+  const openChordEditModal = useStoreActions(
+    (store) => store.toggleChordEditModal,
   );
   const wordTestNumber = useStoreState((store: any) => store.wordTestNumber);
   return (
@@ -29,12 +33,18 @@ function CenterTrainingColumn(): ReactElement {
         <ModuleCompleteModal />
 
         <ItemsContainer>
+          {trainingLevel == 'StM' || undefined ? (
+            <EditChordsButton openChordEditModal={openChordEditModal} />
+          ) : (
+            ''
+          )}
           {(currentTrainingScenario == 'LEXICAL' && wordTestNumber != null) ||
           undefined ? (
             ''
           ) : (
             <RefreshButton />
           )}
+
           <NextTestButton />
         </ItemsContainer>
         <FullWidthFullHeightContainer>

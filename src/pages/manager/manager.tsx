@@ -65,6 +65,11 @@ const Manager = (): ReactElement => {
             <ChordLayoutColumn />
             <div className="h-1 w-6/12 mt-6 bg-green-500 rounded mb-10" />
             <div className="font-mono text-xl ml-2">Library</div>
+            <div
+              id="downloadCompletionPercentage"
+              className="text-white mb-4 inline-block ml-2"
+            />
+
             <div id="commitAllProgress" />
             <ImportChords />
             <Export />
