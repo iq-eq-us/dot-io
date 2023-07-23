@@ -177,7 +177,9 @@ const Navbar = (): ReactElement => {
           <NavMenuLink aria-current="page">
             <NavLinksImage open={false} src={Crown_Icon} alt="" />
           </NavMenuLink>
-          <NavBtnLink href="#/manager">Connect</NavBtnLink>
+          <NavBtnLink href="#/manager" onClick={() => setTrainingLevel('')}>
+            Connect
+          </NavBtnLink>
           <NavMenuLink aria-current="page" href="#/dashboard">
             <NavLinksImage open={true} src={profileImage} alt="" />
           </NavMenuLink>
@@ -206,7 +208,7 @@ const NavMenuLink = styled.a.attrs({
 
 const NavI = styled.nav`
   background-color: #181818;
-  height: 63px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -307,7 +309,7 @@ const NavLinksImageTransparant = styled.img`
   }
 `;
 
-const NavBtn = styled.a`
+const NavBtn = styled.button`
   display: flex;
   align-items: center;
   @media screen and (max-width: 1000px) {
@@ -327,4 +329,10 @@ const NavBtnLink = styled.a`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
+
+  &:hover {
+    color: #ffff;
+    background: #32cd32;
+    transition: 0.3s ease out;
+  }
 `;

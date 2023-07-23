@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const height = 'height: calc(100vh - 64px);';
+const height = 'height: calc(98vh - 64px);';
 
 interface PageContainerProps {
   contrast: string;

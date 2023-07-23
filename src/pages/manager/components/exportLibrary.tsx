@@ -11,9 +11,6 @@ export function Export(): ReactElement {
   const clearDownloadedChords = useStoreActions(
     (store) => store.clearDownloadedChords,
   );
-  const setDownloadedChords = useStoreActions(
-    (store) => store.setDownloadedChords,
-  );
   const downloadedChords = useStoreState(
     (store) => store.downloadedChords.chords,
   );
