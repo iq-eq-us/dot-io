@@ -158,7 +158,9 @@ export default function HamburgerMenu() {
                 </a>
               </li>
               <li className="my-4 uppercase text-[#808080] hover:text-white">
-                <a href="/portfolio">Profile</a>
+                <a href="#/dashboard" onClick={() => setIsNavOpen(false)}>
+                  Profile
+                </a>
               </li>
             </ul>
           </div>
