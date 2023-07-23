@@ -17,6 +17,7 @@ import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
 import type { TrainingLevels } from '../../src/models/trainingLevels';
 import Circle from './CircleHighlight';
+import HamburgerMenu from './hamburgerMenu';
 
 const Navbar = (): ReactElement => {
   const history = useHistory();
@@ -80,17 +81,16 @@ const Navbar = (): ReactElement => {
         if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
           history.push(ROUTER_PATHS.home);
         }
-      }
-    }
-    if (level == 'StM') {
-      setModuleNumber(1);
-      const payload: any[] = [];
-      payload.push('LEXICALSENTENCES');
-      sessionStorage.removeItem('tempTestDeIncrement');
-      setTrainingLevel('StM');
-      beginTraining(payload);
-      if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
-        history.push(ROUTER_PATHS.home);
+      } else if (level == 'StM') {
+        setModuleNumber(1);
+        const payload: any[] = [];
+        payload.push('LEXICALSENTENCES');
+        sessionStorage.removeItem('tempTestDeIncrement');
+        setTrainingLevel('StM');
+        beginTraining(payload);
+        if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
+          history.push(ROUTER_PATHS.home);
+        }
       }
     }
   }
@@ -108,7 +108,7 @@ const Navbar = (): ReactElement => {
           </NavLogo>
         </LogoLink>
         <MobileIcon>
-          <FaBars />
+          <HamburgerMenu />
         </MobileIcon>
         <NavMenu>
           <NavMenuLink aria-current="page">
@@ -183,10 +183,10 @@ const Navbar = (): ReactElement => {
           <NavMenuLink aria-current="page" href="#/dashboard">
             <NavLinksImage open={true} src={profileImage} alt="" />
           </NavMenuLink>
+          <button onClick={() => setIsDisplayingIntroductionModal(true)}>
+            <InfoIcon />
+          </button>
         </NavBtn>
-        <button onClick={() => setIsDisplayingIntroductionModal(true)}>
-          <InfoIcon />
-        </button>
       </NavbarContainer>
     </NavI>
   );

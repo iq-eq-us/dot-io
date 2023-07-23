@@ -223,12 +223,11 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       ) as ChordLibraryRecord;
     } else if (
       typeof state.currentTrainingScenario === 'string' &&
-      globalDictionaries[state.currentTrainingScenario] !== undefined
+      globalDictionaries[state.currentTrainingScenario] != undefined
     ) {
       state.chordsToPullFrom = globalDictionaries[
         state.currentTrainingScenario
       ] as ChordLibraryRecord;
-      console.log('stored chord rep ' + state.storedChordsRepresentation);
     } else {
       state.chordsToPullFrom = getChordLibraryForTrainingScenario(
         state.currentTrainingScenario,
@@ -249,7 +248,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
       );
     else if (state.trainingLevel == 'StM') {
       state.trainingStatistics = generateEmptyChordStatistics(
-        state.chordsToPullFrom[state?.lexicalSentencesIndex],
+        state?.chordsToPullFrom[state?.lexicalSentencesIndex],
         payload[0] as TrainingScenario,
       );
     } else state.trainingStatistics = state.storedChordsFromDevice;
