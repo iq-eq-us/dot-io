@@ -33,6 +33,7 @@ export default function HamburgerMenu() {
     (store: any) => store.chmTierPasswordBypass,
   );
 
+  /* eslint-disable */
   const maxWPM = useStoreState(
     (store) =>
       parseInt(
@@ -43,6 +44,7 @@ export default function HamburgerMenu() {
         5 >
       200,
   );
+  /* eslint-enable */
 
   function TrainingPageFunction(level: TrainingLevels, allowOnClick: boolean) {
     if (allowOnClick || chmTierPasswordBypass) {
