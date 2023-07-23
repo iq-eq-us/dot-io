@@ -2,7 +2,7 @@ import { createStore, createTypedHooks } from 'easy-peasy';
 import type { CompleteStoreModel } from '../models/storeModel';
 import { TrainingStorageStore } from './statisticsStorageStore';
 import { TrainingStore } from './trainingStore';
-import { GlobalStorageStore } from './globalPersistantStore';
+import { GlobalStorageStore } from './globalPersistentStore';
 import { ManagerStorageStore } from './managerStorageStore';
 /**
  * This is the main application store.

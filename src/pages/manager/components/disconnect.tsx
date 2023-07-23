@@ -12,7 +12,7 @@ export async function disconnectSerialConnection() {
     console.log(MainControls.serialPort.readable);
     await MainControls.abortController1.abort();
     await MainControls.lineReaderDone.catch(() => {
-      /* Ingore the error */
+      /* Ignore the error */
     });
     await MainControls.serialPort.close();
     MainControls.abortController1 = new AbortController();

@@ -201,11 +201,11 @@ export function TestCompleteGraph(): ReactElement {
     (store) => store.allTypedCharactersStore,
   );
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
-  const testTeirHighestWPM = useStoreActions(
-    (store) => store.setTestTeirHighestWPM,
+  const testTierHighestWPM = useStoreActions(
+    (store) => store.setTestTierHighestWPM,
   );
   //trainingLevel == 'CPM'
-  const teir = useStoreState((store) => store.trainingLevel);
+  const tier = useStoreState((store) => store.trainingLevel);
 
   let wordNames: any = [];
   let wordOccurrences: any = [];
@@ -221,13 +221,8 @@ export function TestCompleteGraph(): ReactElement {
   const finalRawWPM = [];
   let aggregate = 0;
   const timeTakenArray = [];
-  console.log(
-    'Console length ' +
-      timeTakenToTypeEachWordInOrder +
-      ' ' +
-      wordsPracticedInOrder,
-  );
-  if (teir == 'CPM') {
+
+  if (tier == 'CPM') {
     for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
       const tempWPM = wpmMethodCalculator(
         timeTakenToTypeEachWordInOrder[i],
@@ -238,7 +233,7 @@ export function TestCompleteGraph(): ReactElement {
       aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
       finalWPMArray.push(aggregate.toFixed(0));
     }
-    testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1] * 5);
+    testTierHighestWPM(wordPerMinute[wordPerMinute.length - 1] * 5);
   } else {
     for (let i = 0; i < timeTakenToTypeEachWordInOrder.length; i++) {
       const tempWPM = wpmMethodCalculator(
@@ -250,7 +245,7 @@ export function TestCompleteGraph(): ReactElement {
       aggregate = avgCalculatorForTheSpeedOfLastTen(timeTakenArray);
       finalWPMArray.push(aggregate.toFixed(0));
     }
-    testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1]);
+    testTierHighestWPM(wordPerMinute[wordPerMinute.length - 1]);
   }
   wordPerMinute = finalWPMArray;
   rawSpeedOfCurrentWord = finalRawWPM;
@@ -258,7 +253,7 @@ export function TestCompleteGraph(): ReactElement {
   wordNames = wordsPracticedInOrder;
 
   if (wordTestNumber == undefined) {
-    if (teir == 'CPM') {
+    if (tier == 'CPM') {
       wordPerMinute.pop();
       wordPerMinute.push(averageOfLocalStats.toFixed(0) * 5);
     } else {
@@ -268,7 +263,7 @@ export function TestCompleteGraph(): ReactElement {
   }
 
   const handleEvent = () => {
-    testTeirHighestWPM(wordPerMinute[wordPerMinute.length - 1]);
+    testTierHighestWPM(wordPerMinute[wordPerMinute.length - 1]);
     myGraph(wordNames, wordOccurrences, wordPerMinute, rawSpeedOfCurrentWord);
   };
 

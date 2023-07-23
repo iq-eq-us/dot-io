@@ -72,7 +72,7 @@ async function readDeviceId() {
       );
       await sendCommandString(
         'SET ' + MainControls.CONFIG_ID_ENABLE_SERIAL_CHORD + ' 00',
-      ); //disable chordmap outout
+      ); //disable chordmap output
       await sendCommandString('ID');
       await readDeviceId();
     } else {

@@ -38,8 +38,8 @@ const Navbar = (): ReactElement => {
   const passwordModulModalToggle = useStoreState(
     (store: any) => store.passwordModulModalToggle,
   );
-  const setPasswordModulModalToggle = useStoreActions(
-    (store: any) => store.setPasswordModulModalToggle,
+  const setPasswordModuleModalToggle = useStoreActions(
+    (store: any) => store.setPasswordModuleModalToggle,
   );
   const chmTierPasswordBypass = useStoreState(
     (store: any) => store.chmTierPasswordBypass,
@@ -96,7 +96,7 @@ const Navbar = (): ReactElement => {
   }
   function triggerPasswordModal() {
     if (maxWPM == false && !chmTierPasswordBypass) {
-      setPasswordModulModalToggle(!passwordModulModalToggle);
+      setPasswordModuleModalToggle(!passwordModuleModalToggle);
     }
   }
   return (
@@ -290,7 +290,7 @@ const NavLinksImage = styled.img<{ open: boolean }>`
   }
 `;
 
-const NavLinksImageTransparant = styled.img`
+const NavLinksImageTransparent = styled.img`
   color: #fff;
   display: flex;
   opacity: 0.5;

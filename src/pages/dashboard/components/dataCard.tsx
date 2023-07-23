@@ -582,7 +582,7 @@ function calculateActualValue(
   const currentDate = new Date();
   const date1 = new Date(firstVal);
   const date2 = new Date(currentDate);
-  let tempHighestRetunVal = 0;
+  let tempHighestReturnVal = 0;
 
   // To calculate the time difference of two dates
   const Difference_In_Time = date2.getTime() - date1.getTime();
@@ -625,22 +625,22 @@ function calculateActualValue(
             localStorage.getItem('wpmGraphWPM'),
           )[i];
           //console.log('In if '+ tempInHighestVal);
-          tempHighestRetunVal =
-            tempHighestRetunVal == null ||
-            tempInHighestVal > tempHighestRetunVal
+          tempHighestReturnVal =
+            tempHighestReturnVal == null ||
+            tempInHighestVal > tempHighestReturnVal
               ? tempInHighestVal
-              : tempHighestRetunVal;
-          //return tempHighestRetunVal;
-          //console.log(tempHighestRetunVal);
+              : tempHighestReturnVal;
+          //return tempHighestReturnVal;
+          //console.log(tempHighestReturnVal);
           //console.log('Idk if i made it here or not isl')
         }
 
-        // return tempHighestRetunVal;
+        // return tempHighestReturnVal;
       }
-      //console.log((tempHighestRetunVal == 'undefined') ? tempHighestRetunVal:'-' );
+      //console.log((tempHighestReturnVal == 'undefined') ? tempHighestReturnVal:'-' );
       //console.log('I think I made it to the return');
-      //console.log(tempHighestRetunVal);
-      return tempHighestRetunVal == 'undefined' ? '-' : tempHighestRetunVal;
+      //console.log(tempHighestReturnVal);
+      return tempHighestReturnVal == 'undefined' ? '-' : tempHighestReturnVal;
     } else if (
       getHighestWPM() <
       JSON.parse(localStorage.getItem('storedGoalWPM'))[secondArrayNum]
@@ -706,7 +706,7 @@ function calculateActualValueChM(
   const currentDate = new Date();
   const date1 = new Date(firstVal);
   const date2 = new Date(currentDate);
-  let tempHighestRetunVal = 0;
+  let tempHighestReturnVal = 0;
 
   // To calculate the time difference of two dates
   const Difference_In_Time = date2.getTime() - date1.getTime();
@@ -749,22 +749,22 @@ function calculateActualValueChM(
             localStorage.getItem('storedMasterData'),
           )[i];
           //console.log('In if '+ tempInHighestVal);
-          tempHighestRetunVal =
-            tempHighestRetunVal == null ||
-            tempInHighestVal > tempHighestRetunVal
+          tempHighestReturnVal =
+            tempHighestReturnVal == null ||
+            tempInHighestVal > tempHighestReturnVal
               ? tempInHighestVal
-              : tempHighestRetunVal;
-          //return tempHighestRetunVal;
-          //console.log(tempHighestRetunVal);
+              : tempHighestReturnVal;
+          //return tempHighestReturnVal;
+          //console.log(tempHighestReturnVal);
           //console.log('Idk if i made it here or not isl')
         }
 
-        // return tempHighestRetunVal;
+        // return tempHighestReturnVal;
       }
-      //console.log((tempHighestRetunVal == 'undefined') ? tempHighestRetunVal:'-' );
+      //console.log((tempHighestReturnVal == 'undefined') ? tempHighestReturnVal:'-' );
       //console.log('I think I made it to the return');
-      //console.log(tempHighestRetunVal);
-      return tempHighestRetunVal == 'undefined' ? '-' : tempHighestRetunVal;
+      //console.log(tempHighestReturnVal);
+      return tempHighestReturnVal == 'undefined' ? '-' : tempHighestReturnVal;
     } else if (
       getHighestWPM() <
       JSON.parse(localStorage.getItem('storedGoalChM'))[secondArrayNum]
@@ -830,7 +830,7 @@ function calculateActualValueCPM(
   const currentDate = new Date();
   const date1 = new Date(firstVal);
   const date2 = new Date(currentDate);
-  let tempHighestRetunVal = 0;
+  let tempHighestReturnVal = 0;
 
   // To calculate the time difference of two dates
   const Difference_In_Time = date2.getTime() - date1.getTime();
@@ -873,21 +873,21 @@ function calculateActualValueCPM(
             localStorage.getItem('storedCharactersPerMinuteData'),
           )[i];
           //console.log('In if '+ tempInHighestVal);
-          tempHighestRetunVal =
-            tempHighestRetunVal == null ||
-            tempInHighestVal > tempHighestRetunVal
+          tempHighestReturnVal =
+            tempHighestReturnVal == null ||
+            tempInHighestVal > tempHighestReturnVal
               ? tempInHighestVal
-              : tempHighestRetunVal;
-          //return tempHighestRetunVal;
-          //console.log(tempHighestRetunVal);
+              : tempHighestReturnVal;
+          //return tempHighestReturnVal;
+          //console.log(tempHighestReturnVal);
           //console.log('Idk if i made it here or not isl')
         }
 
-        // return tempHighestRetunVal;
+        // return tempHighestReturnVal;
       }
-      // console.log((tempHighestRetunVal == 'undefined') ? tempHighestRetunVal:'-' );
+      // console.log((tempHighestReturnVal == 'undefined') ? tempHighestReturnVal:'-' );
       //console.log('I think I made it to the return');
-      return tempHighestRetunVal == 'undefined' ? '-' : tempHighestRetunVal;
+      return tempHighestReturnVal == 'undefined' ? '-' : tempHighestReturnVal;
     } else if (
       getHighestWPM() <
       JSON.parse(localStorage.getItem('storedGoalWPM'))[secondArrayNum]
@@ -952,7 +952,7 @@ function calculateActualValueAWPM(
   const currentDate = new Date();
   const date1 = new Date(firstVal);
   const date2 = new Date(currentDate);
-  let tempHighestRetunVal = 0;
+  let tempHighestReturnVal = 0;
 
   // To calculate the time difference of two dates
   const Difference_In_Time = date2.getTime() - date1.getTime();
@@ -994,21 +994,21 @@ function calculateActualValueAWPM(
             localStorage.getItem('avgGraphWPM'),
           )[i];
           //console.log('In if '+ tempInHighestVal);
-          tempHighestRetunVal =
-            tempHighestRetunVal == null ||
-            tempInHighestVal > tempHighestRetunVal
+          tempHighestReturnVal =
+            tempHighestReturnVal == null ||
+            tempInHighestVal > tempHighestReturnVal
               ? tempInHighestVal
-              : tempHighestRetunVal;
-          //return tempHighestRetunVal;
-          //console.log(tempHighestRetunVal);
+              : tempHighestReturnVal;
+          //return tempHighestReturnVal;
+          //console.log(tempHighestReturnVal);
           //console.log('Idk if i made it here or not isl')
         }
 
-        // return tempHighestRetunVal;
+        // return tempHighestReturnVal;
       }
-      //console.log((tempHighestRetunVal == 'undefined') ? tempHighestRetunVal:'-' );
+      //console.log((tempHighestReturnVal == 'undefined') ? tempHighestReturnVal:'-' );
       //console.log('I think I made it to the return');
-      return tempHighestRetunVal == 'undefined' ? '-' : tempHighestRetunVal;
+      return tempHighestReturnVal == 'undefined' ? '-' : tempHighestReturnVal;
     } else if (
       getHighestWPM() <
       JSON.parse(localStorage.getItem('storedGoalAWPM'))[secondArrayNum]

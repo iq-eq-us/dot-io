@@ -11,7 +11,7 @@ function Timer() {
     setIsRunning(!startTimer);
   };
 
-  const alltypedText = useStoreState((store) => store.allTypedCharactersStore);
+  const allTypedText = useStoreState((store) => store.allTypedCharactersStore);
   const startTimer = useStoreState((store) => store.startTimer);
   const trainingIsDone = useStoreState((store) => store.trainingIsDone);
   const textPromptUnFocused = useStoreState(
@@ -28,25 +28,25 @@ function Timer() {
   const userIsTypingFirstChord =
     currentLineOfTrainingText === 0 && currentSubindexInTrainingText === 1;
 
-  if (startTimer == true && alltypedText.length > 0) {
+  if (startTimer == true && allTypedText.length > 0) {
     () => setIsRunning(true);
   }
 
   useEffect(() => {
     let intervalId;
 
-    if (startTimer && alltypedText.length >= 1) {
+    if (startTimer && allTypedText.length >= 1) {
       //startAndStop.click();
-      // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
+      // setting time from 0 to 1 every 10 millisecond using javascript setInterval method
       intervalId = setInterval(() => setTime(time + 1), 10);
-    } else if (alltypedText.length == 0) {
+    } else if (allTypedText.length == 0) {
       setTime(0);
     } else if (!startTimer && textPromptUnFocused && !userIsTypingFirstChord) {
       setTime(time);
     }
 
     return () => clearInterval(intervalId);
-  }, [startTimer, time, alltypedText, userIsTypingFirstChord]);
+  }, [startTimer, time, allTypedText, userIsTypingFirstChord]);
 
   // Hours calculation
   const hours = Math.floor(time / 360000);

@@ -8,7 +8,7 @@ export let pickerLite = false;
 export let pickerV1 = false;
 export let pickerNone = false;
 
-const options = ['None', 'CharaChorder Lite', 'CharaChorder One'];
+const options = ['No Device Preview', 'CharaChorder Lite', 'CharaChorder One'];
 
 const triggerResize = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -51,7 +51,7 @@ function DropDown(): ReactElement {
       pickerV1 = true;
       pickerLite = false;
       pickerNone = true;
-    } else if (val == 'None') {
+    } else if (val == 'No Device Preview') {
       pickerNone = false;
       pickerV1 = false;
       pickerLite = false;
@@ -99,8 +99,11 @@ function DropDown(): ReactElement {
         ref={ref}
       >
         <DropDownContainer>
-          <DropDownHeader onClick={toggling}>
-            {selectedOption || 'Show Device'}
+          <DropDownHeader
+            className="cursor-pointer hover:text-black hover:bg-white"
+            onClick={toggling}
+          >
+            {selectedOption || 'Show Device'} &#9660;
           </DropDownHeader>
 
           {isOpen && (
@@ -108,6 +111,7 @@ function DropDown(): ReactElement {
               <DropDownList>
                 {options.map((option) => (
                   <ListItem
+                    className="cursor-pointer"
                     onClick={onOptionClicked(option)}
                     key={Math.random()}
                   >
@@ -157,10 +161,9 @@ const Arrow = styled('div')`
 `;
 
 const DropDownHeader = styled('div')`
-  padding: 0.6em 1.7em 0em 1em;
+  padding: 0.6em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
   font-weight: 500;
-  width: 100%;
   font-size: 1rem;
   color: #FFFFF;
   border-top-right-radius: 10px;

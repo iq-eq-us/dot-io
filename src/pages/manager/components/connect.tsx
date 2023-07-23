@@ -52,7 +52,7 @@ async function openSerialPort() {
 
 async function setupLineReader() {
   if (MainControls.serialPort) {
-    console.log('setupLineRader()');
+    console.log('setupLineReader()');
     const decoder = new TextDecoderStream();
 
     //preventAbort:true,

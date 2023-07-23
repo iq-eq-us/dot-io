@@ -13,25 +13,18 @@ export default function HamburgerMenu() {
   const beginTraining = useStoreActions(
     (store: any) => store.beginTrainingMode,
   );
-  const setIsDisplayingIntroductionModal = useStoreActions(
-    (store: any) => store.setIsDisplayingIntroductionModal,
-  );
+  /* eslint-disable */
+
   const setTrainingLevel = useStoreActions(
     (store: any) => store.setTrainingLevel,
   );
-  const trainingLevel = useStoreState((store: any) => store.trainingLevel);
   const setModuleNumber = useStoreActions(
     (store: any) => store.setModuleNumber,
-  );
-  const passwordModulModalToggle = useStoreState(
-    (store: any) => store.passwordModulModalToggle,
-  );
-  const setPasswordModulModalToggle = useStoreActions(
-    (store: any) => store.setPasswordModulModalToggle,
   );
   const chmTierPasswordBypass = useStoreState(
     (store: any) => store.chmTierPasswordBypass,
   );
+  /* eslint-enable */
 
   /* eslint-disable */
   const maxWPM = useStoreState(

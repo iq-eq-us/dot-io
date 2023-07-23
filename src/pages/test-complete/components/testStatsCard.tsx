@@ -9,21 +9,28 @@ import { wpmMethodCalculator } from '../../../helpers/aggregation';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
 
 export function TestStatsCard(): ReactElement {
-  const trainingSceneario = useStoreState(
+  const beginTraining = useStoreActions(
+    (store: any) => store.beginTrainingMode,
+  );
+  const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
   const currentWordTestNumber = useStoreState((store) => store.wordTestNumber);
   const currentTrainingSetting = useStoreState(
     (store: any) => store.trainingStatistics,
   );
-  const teir = useStoreState((store) => store.trainingLevel);
+  const tier = useStoreState((store) => store.trainingLevel);
+  const testNumber = useStoreState((store) => store.wordTestNumber);
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics.statistics,
   );
 
   const wordTestNumber = useStoreState((store) => store.wordTestNumber);
 
-  const testTeirHighestWPM = useStoreState((store) => store.testTeirHighestWPM);
+  const testTierHighestWPM = useStoreState((store) => store.testTierHighestWPM);
+  const numberOfWordsTypedCorrectly = useStoreState(
+    (store) => store.numberOfWordsTypedCorrectly,
+  );
 
   const payload = [];
   let thisVal = 0;
@@ -31,7 +38,7 @@ export function TestStatsCard(): ReactElement {
   const numberOfWordsChorded = useStoreState(
     (state: any) => state.numberOfWordsChorded,
   );
-  payload.push(trainingSceneario);
+  payload.push(trainingScenario);
   payload.push(currentWordTestNumber);
 
   currentTrainingSetting.statistics?.forEach((d) => {
@@ -60,11 +67,11 @@ export function TestStatsCard(): ReactElement {
     getCumulativeAverageChordTypeTime(localTrainingStatistics),
   );
 
-  function returnValueBasedOnTeir() {
-    if (teir == 'CPM') {
+  function returnValueBasedOnTier() {
+    if (tier == 'CPM') {
       if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
       else return averageOfLocalStats.toFixed(0) * 5;
-    } else if (teir == 'CHM') {
+    } else if (tier == 'CHM') {
       if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
       else return averageOfLocalStats.toFixed(0);
     }
@@ -82,21 +89,21 @@ export function TestStatsCard(): ReactElement {
   return (
     <React.Fragment>
       <TrainingStatsColumnContainer>
-        {teir == 'CPM' && (
+        {tier == 'CPM' && (
           <StatsCardContainer>
             <div className="text-6xl">
               {wordTestNumber != undefined
-                ? testTeirHighestWPM
-                : returnValueBasedOnTeir()}
+                ? testTierHighestWPM
+                : returnValueBasedOnTier()}
             </div>
-            <h1 className="text-2xl">{teir}</h1>
+            <h1 className="text-2xl">{tier}</h1>
           </StatsCardContainer>
         )}
         <StatsCardContainer>
           <div className="text-4xl">
             {wordTestNumber != undefined
-              ? (testTeirHighestWPM / 5)?.toFixed(0) != 'Infinity'
-                ? (testTeirHighestWPM / 5)?.toFixed(0)
+              ? (testTierHighestWPM / 5)?.toFixed(0) != 'Infinity'
+                ? (testTierHighestWPM / 5)?.toFixed(0)
                 : '0'
               : (averageOfLocalStats2 / sumOfLastTenOccurences)?.toFixed(0)}
           </div>
@@ -114,7 +121,7 @@ export function TestStatsCard(): ReactElement {
           <div className="text-4xl">
             {(numberOfWordsChorded.toFixed(0) / 25) * 100 + '%'}
           </div>
-          <h1 className="text-lg">Percent Chorded</h1>
+          <h1 className="text-lg">Chorded</h1>
         </StatsCardContainer>
         <StatsCardContainer>
           <div className="text-4xl">{timerValue}</div>
@@ -125,7 +132,7 @@ export function TestStatsCard(): ReactElement {
         className="items-center absolute text-lg text-red-500 ml-16 mt-2"
         style={
           (Accuracy < 95 || (numberOfWordsChorded.toFixed(0) / 25) * 100 > 5) &&
-          !trainingIsDone
+          trainingIsDone
             ? { display: '' }
             : { display: 'none' }
         }

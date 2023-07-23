@@ -89,7 +89,7 @@ export function ChordMapCard(props: any, index: number): ReactElement {
         <button
           className={`close absolute ml-96 text-5xl pl-8 pt-4 text-[#181818]`}
           onClick={() => [
-            //setPasswordModulModalToggle(!passwordModulModalToggle),
+            //setPasswordModuleModalToggle(!passwordModuleModalToggle),
           ]}
         >
           &times;

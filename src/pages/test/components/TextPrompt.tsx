@@ -7,7 +7,7 @@ import type { TrainingScenario } from '../../../../src/models/trainingScenario';
 
 const r = Math.random;
 
-export function TextBluredScreen() {
+export function TextBlurredScreen() {
   const setTextPromptUnFocused = useStoreActions(
     (store) => store.setTextPromptUnFocused,
   );
@@ -97,7 +97,7 @@ export function TextPrompt(): ReactElement {
   const setChordingEnabled = useStoreActions(
     (store: any) => store.setIsUsingChordingEnabledDevice,
   );
-  const setnumberOfWordsChorded = useStoreActions(
+  const setNumberOfWordsChorded = useStoreActions(
     (store: any) => store.setNumberOfWordsChorded,
   );
   const numberOfWordsChorded = useStoreState(
@@ -141,7 +141,7 @@ export function TextPrompt(): ReactElement {
       }
       if (numberOfBestTimesUnderTen >= 2) {
         setChordingEnabled(true);
-        setnumberOfWordsChorded();
+        setNumberOfWordsChorded();
         // console.log("setChordingEnabled "+ numberOfWordsChorded)
       }
       setBestKeyTime([]);
@@ -212,7 +212,7 @@ export function TextPrompt(): ReactElement {
       ) {
         const tempArray = [];
         let tempValue = '';
-        let tempBufferInThefront = '';
+        let tempBufferInTheFront = '';
         let tempBufferInTheBack = '';
         let y = 0;
 
@@ -224,11 +224,11 @@ export function TextPrompt(): ReactElement {
           tempBufferInTheBack += '.';
         }
         for (let g = 0; g < targetCharacterIndex; g++) {
-          tempBufferInThefront += '.';
+          tempBufferInTheFront += '.';
         }
         tempArray.push(
           <React.Fragment>
-            <span className="text-white m-0 flex">{tempBufferInThefront}</span>
+            <span className="text-white m-0 flex">{tempBufferInTheFront}</span>
             <div className="text-gray-500">{arr}</div>
             <span className="text-white m-0 flex">{tempBufferInTheBack}</span>
           </React.Fragment>,
@@ -296,7 +296,7 @@ export function TextPrompt(): ReactElement {
               }
               const thisNewArray = [];
 
-              //This for loop returns after a word is complete. It checks if word the user typed is inccorect and if it is shows the incorrect words at the bottom of the word
+              //This for loop returns after a word is complete. It checks if word the user typed is incorrect and if it is shows the incorrect words at the bottom of the word
               for (let t = 0; t < storedTestTextData[i]?.length; t++) {
                 const tempCompareValue = allTypedText[i];
                 const tempTargetWord = storedTestTextData[i];
@@ -346,7 +346,7 @@ export function TextPrompt(): ReactElement {
             displayArray.push(<div className="text-white">{sd}</div>);
           }
 
-          //This peice of code handles the experience while your typing in real time
+          //This piece of code handles the experience while your typing in real time
           if (arr.length != 0) {
             const tempVal =
               storedTestTextData[
@@ -460,7 +460,7 @@ export function TextPrompt(): ReactElement {
       indexOfTargetChord != allTypedText.length &&
       conditionalValue < 1
     ) {
-      //console.log('This is exactly what Im stoing ' + setS)
+      //console.log('This is exactly what Im storing ' + setS)
       storeAllTypedText(setS);
       setTypedTrainingText('');
       arr = [];
@@ -567,7 +567,7 @@ export function TextPrompt(): ReactElement {
     const inputValue = document.getElementById('txt_Name') as HTMLInputElement;
     const isFocused = document.activeElement === inputValue;
     if (!isFocused) {
-      return TextBluredScreen();
+      return TextBlurredScreen();
     } else {
       setTextPromptUnFocused(false);
     }

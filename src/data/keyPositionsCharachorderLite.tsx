@@ -134,9 +134,9 @@ export const keyPositions: Record<string, KeyHighlightPositionLite> = {
     position: 3,
   },
   '101-35': {
-    //Y I thinkk
-    rowGroup: 2,
-    position: 7,
+    // '
+    rowGroup: 3,
+    position: 12,
   },
   '243-121': {
     // K

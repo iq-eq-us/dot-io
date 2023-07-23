@@ -19,7 +19,7 @@ function RefreshButton(): ReactElement {
   payload.push(trainingSceneario);
   function letsGoAgain() {
     sessionStorage.setItem('Refresh', JSON.stringify(1));
-    sessionStorage.removeItem('CutomTierTestValue');
+    sessionStorage.removeItem('CustomTierTestValue');
     sessionStorage.removeItem('tempTestDeIncrement');
     setRestartTestMode(true);
     beginTraining(payload);
