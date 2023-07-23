@@ -151,12 +151,15 @@ const Navbar = (): ReactElement => {
           </NavMenuLink>
           <NavMenuLink aria-current="page">
             {trainingLevel == 'StM' ? <Circle /> : ''}
-            <div className="text-white font-mono">StM</div>
+            <div className="text-white font-mono"></div>
+            <LockIconStyle>
+              <LockIconWhite />
+            </LockIconStyle>
             <NavLinksImage
-              open={true}
+              open={false}
               src={StM_Icon}
               alt=""
-              onClick={() => TrainingPageFunction('StM', maxWPM)}
+              // onClick={() => TrainingPageFunction('StM', maxWPM)}
             />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
