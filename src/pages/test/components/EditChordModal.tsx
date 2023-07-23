@@ -471,7 +471,7 @@ export const getChordLibraryForTrainingScenario = (
   else if (scenario === 'LEXICALSENTENCESTRIOS')
     return chordLibrary.lexicalSentencesTrios;
   else if (scenario === 'ALLCHORDS') {
-    return chordRepresention;
+    return chordRepresentation;
   }
 
   return undefined;

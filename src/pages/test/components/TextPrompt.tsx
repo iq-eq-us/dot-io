@@ -600,10 +600,11 @@ export function TextPrompt(): ReactElement {
                   <Chord
                     key={r()}
                     error={
-                      !(
-                        allTypedText[currentPos + index]?.slice(0, -1) ===
-                        storedTestTextData[currentPos + index]
-                      )
+                      !(currentTrainingScenario != 'ALPHABET'
+                        ? allTypedText[currentPos + index]?.slice(0, -1) ===
+                          storedTestTextData[currentPos + index]
+                        : allTypedText[currentPos + index] ===
+                          storedTestTextData[currentPos + index])
                     }
                   >
                     {storedTestTextData[currentPos + index]}

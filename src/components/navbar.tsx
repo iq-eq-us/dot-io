@@ -35,11 +35,11 @@ const Navbar = (): ReactElement => {
   const setModuleNumber = useStoreActions(
     (store: any) => store.setModuleNumber,
   );
-  const passwordModulModalToggle = useStoreState(
-    (store: any) => store.passwordModulModalToggle,
-  );
   const setPasswordModuleModalToggle = useStoreActions(
     (store: any) => store.setPasswordModuleModalToggle,
+  );
+  const passwordModuleModalToggle = useStoreActions(
+    (store: any) => store.passwordModuleModalToggle,
   );
   const chmTierPasswordBypass = useStoreState(
     (store: any) => store.chmTierPasswordBypass,

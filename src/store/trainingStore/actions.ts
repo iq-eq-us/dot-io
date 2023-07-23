@@ -132,11 +132,11 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   setModuleCompleteModalToggle: action((state, payload) => {
     state.moduleCompleteModalToggle = payload as boolean;
   }),
-  setDownloadModulModalToggle: action((state, payload) => {
-    state.downloadModulModalToggle = payload as boolean;
+  setDownloadModuleModalToggle: action((state, payload) => {
+    state.downloadModuleModalToggle = payload as boolean;
   }),
-  setPasswordModulModalToggle: action((state, payload) => {
-    state.passwordModulModalToggle = payload as boolean;
+  setPasswordModuleModalToggle: action((state, payload) => {
+    state.passwordModuleModalToggle = payload as boolean;
   }),
   setChmTierPasswordBypass: action((state, payload) => {
     localStorage.setItem('chmTierPasswordBypass', JSON.stringify(true));
