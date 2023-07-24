@@ -176,7 +176,7 @@ export function Download(): ReactElement {
         color="pink"
         onClick={() => getGet()}
       >
-        Populate Table
+        Read chords from device
       </button>
     </React.Fragment>
   );
