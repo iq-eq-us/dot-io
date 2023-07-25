@@ -136,7 +136,7 @@ function ChordTextInput(): ReactElement {
             wasPreviousTextIncorrect
           )
             setGenerateThePreviousLine(true as boolean);
-          console.log('I should go back ' + generateThePreviousLine);
+          //console.log('I should go back ' + generateThePreviousLine + ' ' + currentSubindexInTrainingText + ' ' + targetCharacterIndex + ' ' + currentLineOfTrainingText);
         }}
       />
     </div>
