@@ -50,7 +50,7 @@ export function CommitAllLayoutChanges(): ReactElement {
         color="pink"
         onClick={() => commitAll()}
       >
-        Save Changes{' '}
+        Save to device{' '}
       </button>
     </React.Fragment>
   );
