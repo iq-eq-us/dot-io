@@ -12,6 +12,7 @@ export interface ManagerStoreState {
 
 export interface ManagerStoreActions {
   setDownloadedChords: Action<ManagerStore, Chords>;
+  setSingleDownloadedChord: Action<ManagerStore, Chords>;
   deleteDownloadedChordsData: Action<ManagerStore, Chords>;
   saveDownloadedChordsData: Action<ManagerStore, Chords>;
   setDownloadedChordLayout: Action<ManagerStore, ChordLayout>;
