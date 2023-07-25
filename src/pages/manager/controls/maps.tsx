@@ -3360,7 +3360,7 @@ const CHARACHORDER = [
   'h'.charCodeAt(0), //13, h
   'p'.charCodeAt(0), //14, p
   0x0000, //15, //'fed' is using this
-  0x0111, //16, ambi throw right
+  0x0111, //16, mirror right
   0x0113, //17, num-shift right
   0x0186, //18, alt right
   0x0185, //19, shift right
@@ -3405,7 +3405,7 @@ const CHARACHORDER = [
   'm'.charCodeAt(0), //58, m
   'c'.charCodeAt(0), //59, c
   0x0000, //60,
-  0x0110, //61, ambi throw left
+  0x0110, //61, mirror left
   0x0181, //62, shift left
   0x0182, //63, alt left
   0x0110, //64, num-shift left

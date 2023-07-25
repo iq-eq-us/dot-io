@@ -4,7 +4,7 @@ import {
   AltKey,
   NumShiftKey,
   ShiftKey,
-  AmbiThrowKey,
+  MirrorKey,
   CtrlKey,
 } from './keyboardKeysMap';
 import type { SectorGroupData, SectorGroupSpecifier } from './sectorGroup';
@@ -21,7 +21,7 @@ export const SectorGroupMap: Record<SectorGroupSpecifier, SectorGroupData> = {
     topKey: AltKey,
     leftKey: NumShiftKey,
     rightKey: ShiftKey,
-    bottomKey: AmbiThrowKey,
+    bottomKey: MirrorKey,
   },
   2: {
     topKey: CtrlKey,
@@ -93,7 +93,7 @@ export const SectorGroupMap: Record<SectorGroupSpecifier, SectorGroupData> = {
     topKey: AltKey,
     leftKey: ShiftKey,
     rightKey: NumShiftKey,
-    bottomKey: AmbiThrowKey,
+    bottomKey: MirrorKey,
   },
   14: {
     topKey: KeyboardKeysMap[49],
