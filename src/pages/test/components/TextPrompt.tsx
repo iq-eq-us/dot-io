@@ -433,8 +433,11 @@ export function TextPrompt(): ReactElement {
               input.value = tt;
               allTypedText.pop();
             }
+            //  console.log('Did I enter the space to edit the previous word 1')
           }
+          //   console.log('Did I enter the space to edit the previous word 2')
         }
+        //  console.log('Did I enter the space to edit the previous word 3: ' + indexOfTargetChord + ' '+ targetIndexForWhatErrorTextToShow +' '+allTypedText.length + ((indexOfTargetChord + targetIndexForWhatErrorTextToShow) ==allTypedText.length))
       };
 
       // displayArray = firstWordOrCharacter ? <div className='text-white'>[</div>: displayArray;
@@ -581,10 +584,6 @@ export function TextPrompt(): ReactElement {
       firstLineOfTargetText?.length +
       secondLineOfTargetText?.length +
       (fourthLineOfTargetText == null ? 0 : fourthLineOfTargetText?.length));
-
-  {
-    console.log('Output of conditional ' + fourthLineOfTargetText);
-  }
 
   return (
     <React.Fragment>

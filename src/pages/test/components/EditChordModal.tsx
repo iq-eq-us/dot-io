@@ -59,11 +59,12 @@ function EditChordsModal(): ReactElement {
       chordsToPullFrom,
     ),
   );
+  const [clearChordsState, setClearChords] = useState(false);
 
-  const [tempChords, setTempChords] = useState(chords); //need to add and if for StM trainingLevel
+  const [tempChords, setTempChords] = useState(chords);
 
   {
-    tempChords.length == 0 && isShowingPortal
+    tempChords.length == 0 && isShowingPortal && !clearChordsState
       ? [
           setTempChords(
             getDefaultChords(
@@ -129,6 +130,7 @@ function EditChordsModal(): ReactElement {
   };
 
   const clearChords = () => {
+    setClearChords(true);
     setTempChords([]);
   };
 
@@ -158,7 +160,6 @@ function EditChordsModal(): ReactElement {
   const confirmEditing = async () => {
     sessionStorage.removeItem('CustomTierTestValue');
     sessionStorage.removeItem('tempTestDeIncrement');
-    //console.log('Here is where this is being called');
 
     if (typeof trainingScenario === 'string')
       setGlobalDictionaries({
@@ -177,7 +178,6 @@ function EditChordsModal(): ReactElement {
       trainingScenario == 'ALLCHORDS';
 
     if (hasChangeBeenMade) {
-      setStoredTestTextData([]);
       const newChordLibraryRecord = generateNewChordRecord(chordsToUse);
       updateChordsUsedInStore(newChordLibraryRecord);
       setChords(tempChords);
@@ -440,7 +440,7 @@ export const generateNewChordRecordForAllChordsModule = (
   chords,
 ): ChordLibraryRecord => {
   const chordStats = chords?.statistics;
-  console.log(chordStats?.length);
+  //console.log(chordStats?.length);
   const newChordLibraryRecord: ChordLibraryRecord = {};
   for (let i = 0; i < chordStats?.length; i++) {
     if (chordLibrary?.all[chordStats[i]?.id])

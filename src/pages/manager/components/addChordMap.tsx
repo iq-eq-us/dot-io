@@ -4,12 +4,12 @@ import { createChord } from '../../../models/managerModels';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
 export function AddChordMap(): ReactElement {
-  const setDownloadedChords = useStoreActions(
-    (store) => store.setDownloadedChords,
+  const setSingleDownloadedChord = useStoreActions(
+    (store) => store.setSingleDownloadedChord,
   );
   function addChordMap() {
     const newChordMap = createChord('', '', '', '');
-    setDownloadedChords(newChordMap);
+    setSingleDownloadedChord(newChordMap);
   }
   return (
     <React.Fragment>
