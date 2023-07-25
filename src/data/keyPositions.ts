@@ -1,6 +1,6 @@
 import type { KeyHighlightPosition } from '../models/keyHighlightPositions';
 
-//SectorGroup 1 includes: Alt, Shift, Ambi Throw, Num Shift
+//SectorGroup 1 includes: Alt, Shift, Mirror, Num Shift
 //SectorGroup 2 includes: U, , , ', Ctrl
 //SectorGroup 3 includes: O, I, ., Del
 //SectorGroup 4 includes: E, BS, Space, R
@@ -8,7 +8,7 @@ import type { KeyHighlightPosition } from '../models/keyHighlightPositions';
 //SectorGroup 6 includes: Click, W, Z, G
 //SectorGroup 7 includes:
 //SectorGroup 8 includes:
-//SectorGroup 9 includes: A, Enter, T, _
+//SectorGroup 9 includes: A, Enter, T, Space
 //SectorGroup 10 includes:
 //SectorGroup 11 includes: Tab, L, N, J
 //SectorGroup 12 includes: S, Y, ;, Ctrl
