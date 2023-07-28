@@ -45,10 +45,12 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   6: {
     title: ',',
     id: 6,
+    titleTransformOverride: 'rotate(-135deg) scale(1.5)',
   },
   7: {
     title: "'",
     id: 7,
+    titleTransformOverride: 'rotate(-315deg) scale(1.5)',
   },
   8: {
     title: 'U',
@@ -62,6 +64,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   10: {
     title: '.',
     id: 10,
+    titleTransformOverride: 'rotate(-135deg) scale(1.5)',
   },
   11: {
     title: 'I',
