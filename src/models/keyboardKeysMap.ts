@@ -123,9 +123,9 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
     id: 24,
   },
   25: {
-    title: '_',
+    title: '-',
     id: 25,
-    titleTransformOverride: 'translate(8px, 10px) rotate(135deg)',
+    titleTransformOverride: 'rotate(135deg) translate(5px, 5px) scale(2)',
   },
   26: {
     title: '/',
