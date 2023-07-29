@@ -103,6 +103,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   19: {
     title: 'K',
     id: 19,
+    titleTransformOverride: 'rotate(-315deg) translate(0px, 4px)',
   },
   20: {
     title: 'C',
@@ -116,6 +117,7 @@ export const KeyboardKeysMap: Record<number, KeyboardKey> = {
   22: {
     title: 'W',
     id: 22,
+    titleTransformOverride: 'rotate(-315deg) translate(0px, 6px)',
   },
   23: {
     title: 'Z',
