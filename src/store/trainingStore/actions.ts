@@ -164,6 +164,7 @@ const trainingStoreActions: TrainingStoreActionsModel = {
   beginTrainingMode: action((state, payload) => {
     savedStoredChordStats(state);
     resetTrainingStore(state as unknown as TrainingStoreStateModel);
+
     state.currentTrainingScenario = payload[0] as TrainingScenario;
     state.wordTestNumber = payload[1] as number;
     state.allTypedCharactersStore = [];
@@ -254,7 +255,6 @@ const trainingStoreActions: TrainingStoreActionsModel = {
     } else state.trainingStatistics = state.storedChordsFromDevice;
 
     state.trainingStatistics.stmStatistics = getStMStats();
-
     if (
       state.currentTrainingScenario == 'LEXICAL' &&
       state.wordTestNumber != undefined &&
