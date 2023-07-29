@@ -9,7 +9,7 @@ export const AltKey: KeyboardKey = {
 export const NumShiftKey: KeyboardKey = {
   title: 'Num Shift',
   id: 2,
-  titleTransformOverride: 'rotate(135deg) translate(8px, 17px) scale(0.8)',
+  titleTransformOverride: 'rotate(135deg) translate(6px, 13px) scale(0.8)',
 };
 
 export const MirrorKey: KeyboardKey = {
