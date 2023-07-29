@@ -26,7 +26,14 @@ export function TrainingModeSelector(): ReactElement {
   const setDownloadModuleModalToggle = useStoreActions(
     (store: any) => store.setDownloadModuleModalToggle,
   );
-  const wpm = useWordsPerMinute();
+  const trainingSettings = useStoreState(
+    (store: any) => store.trainingSettings,
+  );
+  const updateTrainingSetting = (newProperty: Record<string, unknown>) =>
+    setTrainingSettings({ ...trainingSettings, ...newProperty });
+  const setTrainingSettings = useStoreActions(
+    (store: any) => store.setTrainingSettings,
+  );
 
   const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState(
     'CPM' as TrainingLevels,
@@ -74,8 +81,8 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
-              LearnPageFunction('ALPHABET', trainingLevel),
               setModuleNumber(1),
+              LearnPageFunction('ALPHABET', trainingLevel),
             ]}
           >
             Letters
@@ -86,9 +93,9 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
+              setModuleNumber(2),
               LearnPageFunction('TRIGRAM', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
-              setModuleNumber(2),
             ]}
           >
             Trigrams
@@ -99,9 +106,9 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
+              setModuleNumber(3),
               LearnPageFunction('LEXICAL', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
-              setModuleNumber(3),
             ]}
           >
             Words
@@ -112,9 +119,9 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
+              setModuleNumber(4),
               TestPageFunction('LEXICAL', 26),
               document.getElementById('txt_Name')?.focus(),
-              setModuleNumber(4),
             ]}
           >
             Test
@@ -129,9 +136,9 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
+              setModuleNumber(1),
               LearnPageFunction('LEXICAL', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
-              setModuleNumber(1),
             ]}
           >
             English 200
@@ -142,9 +149,9 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
+              setModuleNumber(2),
               allChords(),
               document.getElementById('txt_Name')?.focus(),
-              setModuleNumber(2),
             ]}
           >
             All Chords
@@ -155,12 +162,68 @@ export function TrainingModeSelector(): ReactElement {
               ? { className: ' text-white m-2 font-mono' }
               : { className: ' text-neutral-400 m-2 font-mono' })}
             onClick={() => [
+              setModuleNumber(3),
               LearnPageFunction('LEXICOGRAPHIC', trainingLevel),
               document.getElementById('txt_Name')?.focus(),
-              setModuleNumber(3),
             ]}
           >
             Custom
+          </button>
+        </React.Fragment>
+      );
+    } else if (trainingLevel == 'StM') {
+      return (
+        <React.Fragment>
+          <button
+            {...(moduleNumber == 1
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              setModuleNumber(1),
+              LearnPageFunction('LEXICALSENTENCES', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+            ]}
+          >
+            Chords
+          </button>
+          <div>/</div>
+          <button
+            {...(moduleNumber == 2
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              setModuleNumber(2),
+              LearnPageFunction('LEXICALSENTENCESDUOS', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+            ]}
+          >
+            Duos
+          </button>
+          <div>/</div>
+          <button
+            {...(moduleNumber == 3
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              setModuleNumber(3),
+              LearnPageFunction('LEXICALSENTENCESTRIOS', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+            ]}
+          >
+            Trios
+          </button>
+          <div>/</div>
+          <button
+            {...(moduleNumber == 4
+              ? { className: ' text-white m-2 font-mono' }
+              : { className: ' text-neutral-400 m-2 font-mono' })}
+            onClick={() => [
+              setModuleNumber(4),
+              LearnPageFunction('LEXICALSENTENCES', trainingLevel),
+              document.getElementById('txt_Name')?.focus(),
+            ]}
+          >
+            Test
           </button>
         </React.Fragment>
       );
@@ -181,13 +244,35 @@ export async function oneTimeCreateStoredChordStats(
   const check = localStorage?.getItem(tier + '_' + value);
   if (check == null || undefined) {
     const storedChordStatArray = [];
-    for (let i = 0; i < Object.keys(library).length; i++) {
+    for (let i = 0; i < Object?.keys(library)?.length; i++) {
       storedChordStatArray.push(
-        createEmptyChordStatistics(Object.keys(library)[i], value),
+        createEmptyChordStatistics(Object?.keys(library)[i], value),
       );
     }
     localStorage.setItem(
       tier + '_' + value,
+      JSON.stringify({ statistics: storedChordStatArray }),
+    );
+  }
+}
+export async function oneTimeCreateLexicalStoredSentences(
+  value: any,
+  tier: any,
+) {
+  const check = localStorage?.getItem(tier + '_Scores');
+  const ItemArray = [];
+  if (check == null || undefined) {
+    Object.keys(chordLibrary.lexicalSentences).forEach((key, index) => {
+      ItemArray.push(key);
+    });
+    const storedChordStatArray = [];
+    for (let i = 0; i < ItemArray.length; i++) {
+      storedChordStatArray.push(
+        createEmptyLexicalSentenceStatistics(ItemArray[i], value),
+      );
+    }
+    localStorage.setItem(
+      tier + '_Scores',
       JSON.stringify({ statistics: storedChordStatArray }),
     );
   }

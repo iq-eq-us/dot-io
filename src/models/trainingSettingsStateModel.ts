@@ -1,3 +1,29 @@
+export interface CPMStats {
+  ALPHABET: number;
+  TRIGRAMS: number;
+  LEXICAL: number;
+}
+
+export interface CHMStats {
+  ALLCHM: number;
+}
+
+export interface ProgressState {
+  CPM: CPMStats;
+  CHM: CHMStats;
+}
+
+export const defaultProgressBarValues: ProgressState = {
+  CPM: {
+    ALPHABET: 20,
+    TRIGRAMS: 40,
+    LEXICAL: 60,
+  },
+  CHM: {
+    ALLCHM: 150,
+  },
+};
+
 type AutoOrCustom = 'AUTO' | 'CUSTOM';
 
 export interface TrainingSettingsState {
@@ -52,32 +78,6 @@ export const defaultTrigramsTestTraining: TrainingSettingsState = {
   isTestDone: false,
   restartTestMode: false,
   isProgressBarDynamic: true,
-};
-
-export interface CPMStats {
-  ALPHABET: number;
-  TRIGRAMS: number;
-  LEXICAL: number;
-}
-
-export interface CHMStats {
-  ALLCHM: number;
-}
-
-export interface ProgressState {
-  CPM: CPMStats;
-  CHM: CHMStats;
-}
-
-export const defaultProgressBarValues: ProgressState = {
-  CPM: {
-    ALPHABET: 20,
-    TRIGRAMS: 40,
-    LEXICAL: 60,
-  },
-  CHM: {
-    ALLCHM: 150,
-  },
 };
 
 export const defaultAlphabeticTestTraining: TrainingSettingsState = {

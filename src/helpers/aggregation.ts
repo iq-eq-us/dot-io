@@ -47,32 +47,46 @@ export const getCumulativeOccurrence = (stats: ChordStatistics[]): string => {
   const occur = stats.filter((stat) => stat.numberOfOccurrences != 0);
   return String(occur);
 };
-export const wpmMethodCalculator = (value: number, scenario?) => {
+export const wpmMethodCalculator = (
+  value: number,
+  inputLength?: number,
+  scenario?,
+) => {
   const avgSpeedMilliseconds = value * 10;
-  const millisecondsPerCharacter =
-    avgSpeedMilliseconds / (scenario == 'ALPHABET' ? 1 : 5);
+  const millisecondsPerCharacter = avgSpeedMilliseconds / (inputLength + 1);
   const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
   const wpm = averageCharacterPerMin / 5;
 
   return wpm;
 };
 
-export const wpmMethodCalculatorForStoredChords = (value: number[]) => {
+export const wpmMethodCalculatorForStoredChords = (
+  value: number[],
+  inputLength?: number,
+) => {
   const sum = value?.reduce((a, b) => a + b, 0);
   const avg = sum / value?.length || 0;
 
   const avgSpeedMilliseconds = avg * 10;
-  const millisecondsPerCharacter = avgSpeedMilliseconds / 5;
+  const millisecondsPerCharacter = avgSpeedMilliseconds / (inputLength + 1);
   const averageCharacterPerMin = 60000 / millisecondsPerCharacter;
   const wpm = averageCharacterPerMin / 5;
 
   return wpm;
+};
+
+export const averageCalculator = (inValue: number, divisor: number) => {
+  return inValue / divisor;
 };
 
 export const avgCalculatorForTheSpeedOfLastTen = (value: number[]) => {
   const sum = value?.reduce((a, b) => a + b, 0);
   const avg = sum / value?.length || 0;
   return avg;
+};
+
+export const stmCalculator = (inWPM, numberOfChords) => {
+  return inWPM / 250 / (numberOfChords / 10);
 };
 
 export const getCumulativeValueByPropertyName = <T>(

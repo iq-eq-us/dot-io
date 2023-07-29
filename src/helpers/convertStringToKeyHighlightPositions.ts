@@ -26,7 +26,7 @@ export const ConvertStringToKeyHighlightPositions = (
 ): KeyHighlightPosition[] => {
   if (highlightMode === 'CHORD') {
     return getHighlightPositionForString(text, scenario, trainingLevel);
-  } else if (trainingLevel == 'CHM') {
+  } else if (trainingLevel == 'CHM' || trainingLevel == 'StM') {
     return getHighlightPositionForString(text, scenario, trainingLevel);
   } else {
     if (characterIndex === -1) return [SPACE_KEY_LOCATION];
@@ -80,14 +80,24 @@ const getHighlightPositionForString = (
     chord = parseChord(text);
   } else if (scenario == 'LEXICOGRAPHIC' && pickerLite) {
     chord = parseChord(text);
+  } else if (scenario == 'LEXICALSENTENCES' && pickerLite) {
+    chord = parseChord(text);
   } else if (scenario == 'LEXICALSENTENCES' && pickerV1) {
-    chord = chordLibrary.lexicalSentences[text];
+    chord = parseChord(text);
+  } else if (scenario == 'LEXICALSENTENCESDUOS' && pickerV1) {
+    chord = parseChord(text);
+  } else if (scenario == 'LEXICALSENTENCESDUOS' && pickerLite) {
+    chord = parseChord(text);
+  } else if (scenario == 'LEXICALSENTENCESTRIOS' && pickerV1) {
+    chord = parseChord(text);
+  } else if (scenario == 'LEXICALSENTENCESTRIOS' && pickerLite) {
+    chord = parseChord(text);
   } else {
     chord = chordLibrary?.all?.[text];
   }
 
   if (chord) {
-    const keyHighlightPositionsBeforeTransformation = chord.map(
+    const keyHighlightPositionsBeforeTransformation = chord?.map(
       (nonTransformedKeyPosition) => keyPositions?.[nonTransformedKeyPosition],
     );
     return keyHighlightPositionsBeforeTransformation;

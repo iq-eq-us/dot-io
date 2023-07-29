@@ -9,7 +9,6 @@ import {
 } from './Terminal.styled';
 import { SerialCommandTable } from './SerialCommandTable';
 
-import usePopover from '../../../hooks/usePopover';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import styled from 'styled-components';
 
@@ -54,7 +53,6 @@ export function Terminal(): ReactElement {
           <SendButton onClick={handleSendClick}>Send</SendButton>
         </InputAndButtonRow>
       </TerminalContainer>
-      <SerialCommandTable />
     </CardColumn>
   );
 }

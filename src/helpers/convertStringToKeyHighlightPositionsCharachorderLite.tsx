@@ -81,9 +81,21 @@ const getHighlightPositionForString = (
   } else if (scenario == 'ALLCHORDS') {
     //const filteredList = storedLibrary.filter( (e: any) => (e.find(text)));
     chord = parseChord(text);
-    //console.log('Is this all chords' + newFunc(text))
+  } else if (scenario == 'LEXICALSENTENCES' && pickerLite) {
+    chord = parseChord(text);
+    console.log('this is the chord lexSentence' + chord);
+  } else if (scenario == 'LEXICALSENTENCES' && pickerV1) {
+    chord = parseChord(text);
+    console.log('this is the chord ' + chord);
+  } else if (scenario == 'LEXICALSENTENCESDUOS' && pickerV1) {
+    chord = parseChord(text);
+  } else if (scenario == 'LEXICALSENTENCESDUOS' && pickerLite) {
+    chord = parseChord(text);
+  } else if (scenario == 'LEXICALSENTENCESTRIOS' && pickerV1) {
+    chord = parseChord(text);
+  } else if (scenario == 'LEXICALSENTENCESTRIOS' && pickerLite) {
+    chord = parseChord(text);
   }
-  //console.log('this is the chord '+ chord)
   if (chord) {
     const keyHighlightPositionsBeforeTransformation = chord.map(
       (nonTransformedKeyPosition) => keyPositions?.[nonTransformedKeyPosition],

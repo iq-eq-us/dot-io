@@ -9,7 +9,10 @@ export function EditChordsButton({
   openChordEditModal,
 }: EditChordProps): ReactElement {
   return (
-    <button className="rounded mt-4 mr-4" onClick={() => openChordEditModal()}>
+    <button
+      className="p-2 bg-[#333] flex w-10 rounded mt-4 m-2 cursor-pointer hover:bg-[#444] active:bg-[#222]"
+      onClick={() => openChordEditModal()}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

@@ -17,6 +17,9 @@ import {
 
 const managerStorageStoreActions: ManagerStoreActions = {
   setDownloadedChords: action((state, payload) => {
+    state.downloadedChords.chords = payload;
+  }),
+  setSingleDownloadedChord: action((state, payload) => {
     state.downloadedChords.chords.push(payload);
   }),
   deleteDownloadedChordsData: action((state, payload) => {

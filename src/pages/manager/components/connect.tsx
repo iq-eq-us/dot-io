@@ -8,12 +8,16 @@ import {
 import { getId } from '../components/getID';
 import { getCount } from '../../manager/components/countChords';
 
+const CC_VENDOR_IDS = [0x239a, 0x303a]; // CharaChorder Vendor ID
+
 export async function startSerialConnection() {
   console.log('startSerialConnection()');
   try {
     // Prompt user to select any serial port.
 
-    MainControls.serialPort = await navigator?.serial?.requestPort();
+    MainControls.serialPort = await navigator?.serial?.requestPort({
+      filters: CC_VENDOR_IDS.map((id) => ({ usbVendorId: id })),
+    });
     console.log('requestPort()');
     // Wait for the serial port to open.
     await openSerialPort();

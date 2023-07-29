@@ -9,6 +9,8 @@ import type { TrainingScenario } from '../models/trainingScenario';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { wpmMethodCalculatorForStoredChords } from './aggregation';
 
+let checkIt = 0;
+
 const getRandomElementFromArray = <T>(list: T[]): T =>
   list[Math.floor(Math.random() * list.length)];
 
@@ -20,10 +22,17 @@ interface ChordGenerationParameters {
   chordsToChooseFrom: ChordLibraryRecord;
   recursionIsEnabledGlobally: boolean;
   speedGoal: number;
-  wordTestNumberValue?: WordTrainingValues;
+  wordTestNumberValue?: number;
   scenario?: TrainingScenario;
   storedTestData?: any[];
   storedChordsFromDevice?: ChordStatisticsFromDevice[];
+  lexicalSentenceToChoose: any;
+  indexOfTrainingText: number;
+  allTypedText: string[];
+  subIndexOfTrainingText: number;
+  trainingLevel: any;
+  continueSentenceFlow: boolean;
+  moduleNumber: number;
 }
 
 //const [internalWordCountState, setinternalWordCountState] = useState<number | null>(null);
@@ -47,7 +56,7 @@ let pageAccessedByReload =
 //Method to remove session value and set refresh constant back to false
 function removeSessionValueAndSetToFalse() {
   sessionStorage.removeItem('tempTestDeIncrement');
-
+  checkIt = 0;
   pageAccessedByReload = false;
 }
 
@@ -58,6 +67,7 @@ function hasWhiteSpace(s) {
 export const generateChords = (
   parameters: ChordGenerationParameters,
 ): string[] => {
+  parameters.storedTestData.length == 0 ? (checkIt = 0) : '';
   if (
     parameters.scenario == 'LEXICAL' &&
     parameters.wordTestNumberValue != undefined
@@ -193,7 +203,10 @@ export const generateChords = (
 
     const numberOfChordsNotMastered = parameters.storedChordsFromDevice.filter(
       (s) =>
-        (wpmMethodCalculatorForStoredChords(s.chordsMastered).toFixed(0) /
+        (wpmMethodCalculatorForStoredChords(
+          s.chordsMastered,
+          s.id.length,
+        ).toFixed(0) /
           100 >=
           1 &&
           s.chordsMastered.length >= 10) ||
@@ -202,8 +215,8 @@ export const generateChords = (
 
     const chordsSortedByMastered = parameters.storedChordsFromDevice.sort(
       (a, b) =>
-        wpmMethodCalculatorForStoredChords(a.chordsMastered) -
-        wpmMethodCalculatorForStoredChords(b.chordsMastered),
+        wpmMethodCalculatorForStoredChords(a.chordsMastered, a.id.length) -
+        wpmMethodCalculatorForStoredChords(b.chordsMastered, b.id.length),
     );
     //The follow code removes any duplicate words from the data set
     const seen = new Set();
@@ -240,6 +253,83 @@ export const generateChords = (
         allCharacters.push(getRandomElementFromArray(finalChordsToUse));
       } else
         allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
+    }
+    for (let i = 0; i < allCharacters.length; i++) {
+      parameters.storedTestData?.push(allCharacters[i]);
+    }
+    return allCharacters;
+  } else if (parameters.trainingLevel == 'StM') {
+    parameters.storedTestData.length == 0 && parameters.wordTestNumberValue == 4
+      ? (checkIt = 0)
+      : '';
+    // * Uncomment the next two lines to use just the alphabet to test with
+    // const IS_TESTING = true;
+    // if (IS_TESTING) return [...'abcdefghijklmnopqrstuvwxyz'.split('')];
+    const allCharacters: string[] = [];
+
+    if (parameters.moduleNumber == 4) {
+      const tempChords: string[] = Object.keys(
+        parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
+      );
+
+      let i = 0;
+      let increment = 0;
+
+      // console.log('Stored Characters length '+ parameters.numberOfTargetChords + ' ' + parameters.indexOfTrainingText + ' ' + checkIt + ' ' + tempChords.length + ' ' + parameters.allTypedText.length + ' AllCharacters '+ allCharacters.length + ' '+ parameters.subIndexOfTrainingText + ' '+ increment + ' ' + i);
+      // (checkIt != 0 && parameters.allTypedText.length == 0 && parameters.subIndexOfTrainingText == 0)  ? checkIt = 0: '';
+
+      //This ensures the typed text does not generate more even after the first sentence is created
+      if (
+        parameters.allTypedText.length > 0 &&
+        checkIt == 0 &&
+        !parameters.continueSentenceFlow
+      ) {
+        return allCharacters;
+      }
+
+      while (allCharacters.join('').length < parameters.lineLength) {
+        if (checkIt <= tempChords.length - 1) {
+          allCharacters.push(tempChords[checkIt]);
+          checkIt++;
+          increment++;
+        } else {
+          break;
+        }
+        i++;
+      }
+      //This sets the count to zero once the entire sentence has been generated
+      if (checkIt >= tempChords.length) {
+        checkIt = 0;
+      }
+    } else {
+      const chordsSortedByTypingSpeed = parameters.stats.sort(
+        (a, b) => b.averageSpeed - a.averageSpeed,
+      );
+
+      const chordToFeed = '';
+      const numberOfChordsNotConquered = parameters.stats.filter(
+        (s) => s.averageSpeed > parameters.speedGoal || s.averageSpeed === 0,
+      ).length;
+      if (numberOfChordsNotConquered > 0) {
+        // Check for one remaining chord with zero speed
+        // This happens on the first pass through the chord library
+        const chordsWithZeroSpeed = parameters.stats.filter(
+          (stat) => stat.averageSpeed === 0,
+        );
+      }
+
+      //allCharacters = [];
+
+      const chordLibraryCharacters = Object.keys(
+        parameters.chordsToChooseFrom[parameters.lexicalSentenceToChoose],
+      );
+
+      while (allCharacters.join('').length < parameters.lineLength) {
+        const shouldChooseBasedOnSpeed =
+          parameters.recursionRate > Math.random() * 100;
+
+        allCharacters.push(getRandomElementFromArray(chordLibraryCharacters));
+      }
     }
     for (let i = 0; i < allCharacters.length; i++) {
       parameters.storedTestData?.push(allCharacters[i]);

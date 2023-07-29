@@ -15,15 +15,18 @@ function NextTestButton(): ReactElement {
   const setRestartTestMode = useStoreActions(
     (store) => store.setRestartTestMode,
   );
+  const setModuleNumber = useStoreActions((store) => store.setModuleNumber);
+  const moduleNumber = useStoreState((store) => store.moduleNumber);
 
   return (
     <button
       className="p-2 bg-[#333] flex w-10 rounded mt-4 m-2 cursor-pointer hover:bg-[#444] active:bg-[#222]"
-      onClick={() => {
-        sessionStorage.removeItem('tempTestDeIncrement');
-        setRestartTestMode(false);
-        beginTraining(payload);
-      }}
+      onClick={() => [
+        sessionStorage.removeItem('tempTestDeIncrement'),
+        setRestartTestMode(false),
+        setModuleNumber(4),
+        beginTraining(payload),
+      ]}
     >
       <ForwardIcon />
     </button>
