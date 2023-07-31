@@ -239,14 +239,20 @@ export async function cancelReader() {
     }
   }
 }
-const replaceValueFunction = function (arr, index, replacement) {
+function ReplaceAt(input, search, replace, start, end) {
   return (
-    arr.substring(0, index) +
-    replacement +
-    arr.substring(index + replacement.length)
+    input.slice(0, start) +
+    input.slice(start, end).replace(search, replace) +
+    input.slice(end)
   );
-};
-
+}
+function replaceAt(index, replacement) {
+  return (
+    this.substring(0, index) +
+    replacement +
+    this.substring(index + replacement.length)
+  );
+}
 export function convertHexadecimalPhraseToAsciiString(hexString: string) {
   let asciiString = '';
   const tempCharacterSet = [];
@@ -292,44 +298,73 @@ export function convertHexadecimalPhraseToAsciiString(hexString: string) {
 
   //Logic to handle modifiers
   if (
-    tempCharacterSet.includes('KSC_E1') ||
-    tempCharacterSet.includes('KSC_E5')
+    tempCharacterSet.includes('LEFT_SHIFT') ||
+    tempCharacterSet.includes('RIGHT_SHIFT')
   ) {
     const numberOfShiftOccurences = tempCharacterSet
       .map((element, index) =>
-        element === ('KSC_E1' || 'KSC_E5') ? index : -1,
+        element === ('LEFT_SHIFT' || 'RIGHT_SHIFT') ? index : -1,
       )
       .filter((element) => element !== -1);
-    //console.log(numberOfShiftOccurences);
-
     if (numberOfShiftOccurences.length >= 2) {
-      //loop though the length of index occurences
-      for (let i = 0; i < tempCharacterSet.length - 1; i += 2) {
-        //loop through the number of characters that need to be changed
-        let characterToStartWith = numberOfShiftOccurences[0] + 1;
-        for (
-          let y = characterToStartWith;
-          numberOfShiftOccurences[1] - numberOfShiftOccurences[0];
-          characterToStartWith++
+      let startModifierWork = false;
+      let changedSection = '';
+      numberOfShiftOccurences;
+      let nextShiftPositionIncrement = 0;
+      for (let y = 0; y < tempCharacterSet.length; y++) {
+        //Should check the boolean for false or true
+        if (
+          tempCharacterSet[y] == ('LEFT_SHIFT' || 'RIGHT_SHIFT') &&
+          !startModifierWork
         ) {
-          if (
-            ModifierCharactersLibrary[tempCharacterSet[characterToStartWith]] ==
-            undefined
+          //If this is the fist shift set start modifer to true
+          startModifierWork = true;
+          tempCharacterSet.splice(y, 1); //Remove the shift
+          nextShiftPositionIncrement++;
+          console.log('Entered the first shift i, Y-index' + y);
+        } else if (
+          tempCharacterSet[y] == ('LEFT_SHIFT' || 'RIGHT_SHIFT') &&
+          startModifierWork &&
+          y ==
+            numberOfShiftOccurences[nextShiftPositionIncrement] -
+              nextShiftPositionIncrement
+        ) {
+          //If this is the last shift set it to false
+          startModifierWork = false;
+          tempCharacterSet.splice(y, 1); //Remove the shift
+          console.log('Entered the first shift else if');
+          nextShiftPositionIncrement++;
+        }
+        //Begin working around this boolean
+        if (startModifierWork) {
+          if (ModifierCharactersLibrary[tempCharacterSet[y]] == undefined) {
+            changedSection += tempCharacterSet[y]
+              ?.split('_')
+              ?.pop()
+              .toUpperCase();
+          } else if (
+            ModifierCharactersLibrary[tempCharacterSet[y]] != undefined
           ) {
-            asciiString.charAt(characterToStartWith).toUpperCase() +
-              asciiString.slice(characterToStartWith + 1);
-          } else {
-            asciiString = replaceValueFunction(
-              asciiString,
-              characterToStartWith,
-              ModifierCharactersLibrary[tempCharacterSet[characterToStartWith]],
-            );
+            changedSection += ModifierCharactersLibrary[tempCharacterSet[y]];
           }
         }
+        if (!startModifierWork && tempCharacterSet[y] != undefined) {
+          changedSection += tempCharacterSet[y]
+            ?.split('_')
+            ?.pop()
+            .toLocaleLowerCase();
+        }
+        console.log(
+          'Position values at each step ' +
+            changedSection.split(',') +
+            ' TempCharacter Set ' +
+            tempCharacterSet,
+        );
       }
+      console.log('new stuff ' + changedSection.split(','));
+      asciiString = changedSection.split(',');
     }
   }
-
   console.log(asciiString);
   return asciiString;
 }
