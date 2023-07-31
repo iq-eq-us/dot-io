@@ -8,7 +8,7 @@ import {
   oldAsciiKeyReplacementDictionary,
 } from './maps';
 import hex2Bin from 'hex-to-bin';
-import { replace, split } from 'lodash';
+import { replace, split, toUpper } from 'lodash';
 import { commitAllWithStart } from '../components/saveAll';
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -46,6 +46,46 @@ export class MainControls {
   public static CONFIG_ID_CHAR_KILLER_TOGGLE = '29';
   public static CONFIG_ID_CHAR_COUNTER_KILLER = '2A';
 }
+const BaseLevelSpecialCharactersLibrary = {
+  '2D': '-', //301, Keyboard - and _ (US English)
+  '2E': '=', //302, Keyboard = and + (US English)
+  '2F': '[', //303, Keyboard [ and { (US English)
+  '30': ']', //304, Keyboard ] and } (US English)
+  '31': "'", //305, Keyboard \ and | (US English)
+  '32': '#', //306, Keyboard Non-US # and ~ (US English)
+  '33': ';', //307, Keyboard ; and : (US English)
+  '34': "'", //308, Keyboard ' and " (US English)
+  '35': '`', //309, Keyboard ` and ~ (US English)
+  '36': ',', //310, Keyboard , and < (US English)
+  '37': '.', //311, Keyboard . and > (US English)
+  '38': '/', //312, Keyboard / and ? (US English)
+};
+
+const ModifierCharactersLibrary = {
+  KEY_1: '!', //286, Keyboard 1 and ! (US English)
+  KEY_2: '@', //287, Keyboard 2 and @ (US English)
+  KEY_3: '#', //288, Keyboard 3 and # (US English)
+  KEY_4: '$', //289, Keyboard 4 and $ (US English)
+  KEY_5: '%', //290, Keyboard 5 and % (US English)
+  KEY_6: '^', //291, Keyboard 6 and ^ (US English)
+  KEY_7: '&', //292, Keyboard 7 and & (US English)
+  KEY_8: '*', //293, Keyboard 8 and * (US English)
+  KEY_9: '(', //294, Keyboard 9 and ( (US English)
+  KEY_0: ')', //295, Keyboard 0 and ) (US English)
+  KSC_2C: 'Space', //300, Keyboard Space (US English)
+  KSC_2D: '_', //301, Keyboard - and _ (US English)
+  KSC_2E: '+', //302, Keyboard = and + (US English)
+  KSC_2F: '{', //303, Keyboard [ and { (US English)
+  KSC_30: '}', //304, Keyboard ] and } (US English)
+  KSC_31: '|', //305, Keyboard \ and | (US English)
+  KSC_32: '~', //306, Keyboard Non-US # and ~ (US English)
+  KSC_33: ':', //307, Keyboard ; and : (US English)
+  KSC_34: '"', //308, Keyboard ' and " (US English)
+  KSC_35: '~', //309, Keyboard ` and ~ (US English)
+  KSC_36: '<', //310, Keyboard , and < (US English)
+  KSC_37: '>', //311, Keyboard . and > (US English)
+  KSC_38: '?', //312, Keyboard / and ? (US English)
+};
 
 function compare(a: any, b: any) {
   if (a === b) {
@@ -199,6 +239,13 @@ export async function cancelReader() {
     }
   }
 }
+const replaceValueFunction = function (arr, index, replacement) {
+  return (
+    arr.substring(0, index) +
+    replacement +
+    arr.substring(index + replacement.length)
+  );
+};
 
 export function convertHexadecimalPhraseToAsciiString(hexString: string) {
   let asciiString = '';
@@ -225,6 +272,7 @@ export function convertHexadecimalPhraseToAsciiString(hexString: string) {
       //Handles 1 byte string outputs
     }
     asciiString = asciiString.toLocaleLowerCase();
+    console.log('tempCharacterSet array 1 ' + tempCharacterSet);
   } else {
     for (let i = 0; i < hexString.length; i += 2) {
       const tempASI = actionMap[parseInt(hexString.substr(i, 2), 16)]
@@ -232,64 +280,62 @@ export function convertHexadecimalPhraseToAsciiString(hexString: string) {
         ?.pop();
       if (BaseLevelSpecialCharactersLibrary[tempASI] == undefined) {
         asciiString += tempASI;
+        tempCharacterSet.push(actionMap[parseInt(hexString.substr(i, 2), 16)]);
       } else {
         asciiString += BaseLevelSpecialCharactersLibrary[tempASI];
+        tempCharacterSet.push(actionMap[parseInt(hexString.substr(i, 2), 16)]);
       }
       console.log(actionMap[parseInt(hexString.substr(i, 2), 16)]);
-      tempCharacterSet.push(actionMap[parseInt(hexString.substr(i, 2), 16)]);
-      //asciiString += String.fromCharCode("0x"+hexString.substr(i, 2));
     }
+    console.log('tempCharacterSet array 2 ' + tempCharacterSet);
   }
 
-  console.log('tempCharacterSet array ' + tempCharacterSet);
+  //Logic to handle modifiers
+  if (
+    tempCharacterSet.includes('KSC_E1') ||
+    tempCharacterSet.includes('KSC_E5')
+  ) {
+    const numberOfShiftOccurences = tempCharacterSet
+      .map((element, index) =>
+        element === ('KSC_E1' || 'KSC_E5') ? index : -1,
+      )
+      .filter((element) => element !== -1);
+    //console.log(numberOfShiftOccurences);
 
-  tempCharacterSet;
-
+    if (numberOfShiftOccurences.length >= 2) {
+      //loop though the length of index occurences
+      for (let i = 0; i < tempCharacterSet.length - 1; i += 2) {
+        //loop through the number of characters that need to be changed
+        let characterToStartWith = numberOfShiftOccurences[0] + 1;
+        for (
+          let y = characterToStartWith;
+          numberOfShiftOccurences[1] - numberOfShiftOccurences[0];
+          i++
+        ) {
+          if (
+            ModifierCharactersLibrary[tempCharacterSet[characterToStartWith]] ==
+            undefined
+          ) {
+            asciiString.charAt(characterToStartWith).toUpperCase() +
+              asciiString.slice(characterToStartWith + 1);
+          } else {
+            asciiString = replaceValueFunction(
+              asciiString,
+              characterToStartWith,
+              ModifierCharactersLibrary[tempCharacterSet[characterToStartWith]],
+            );
+          }
+        }
+      }
+    }
+  }
   // if(asciiString.contains('KSC_E1') || asciiString.contains('KSC_E5'))
-
+  if (tempCharacterSet.includes('E1') || tempCharacterSet.includes('E5')) {
+  } else {
+  }
   console.log(asciiString);
   return asciiString;
 }
-const BaseLevelSpecialCharactersLibrary = {
-  '2D': '-', //301, Keyboard - and _ (US English)
-  '2E': '=', //302, Keyboard = and + (US English)
-  '2F': '[', //303, Keyboard [ and { (US English)
-  '30': ']', //304, Keyboard ] and } (US English)
-  '31': "'", //305, Keyboard \ and | (US English)
-  '32': '#', //306, Keyboard Non-US # and ~ (US English)
-  '33': ';', //307, Keyboard ; and : (US English)
-  '34': "'", //308, Keyboard ' and " (US English)
-  '35': '`', //309, Keyboard ` and ~ (US English)
-  '36': ',', //310, Keyboard , and < (US English)
-  '37': '.', //311, Keyboard . and > (US English)
-  '38': '/', //312, Keyboard / and ? (US English)
-};
-
-const ModifierCharactersLibrary = {
-  '1': '!', //286, Keyboard 1 and ! (US English)
-  '2': '@', //287, Keyboard 2 and @ (US English)
-  '3': '#', //288, Keyboard 3 and # (US English)
-  '4': '$', //289, Keyboard 4 and $ (US English)
-  '5': '%', //290, Keyboard 5 and % (US English)
-  '6': '^', //291, Keyboard 6 and ^ (US English)
-  '7': '&', //292, Keyboard 7 and & (US English)
-  '8': '*', //293, Keyboard 8 and * (US English)
-  '9': '(', //294, Keyboard 9 and ( (US English)
-  '0': ')', //295, Keyboard 0 and ) (US English)
-  '2C': 'Space', //300, Keyboard Space (US English)
-  '2D': '_', //301, Keyboard - and _ (US English)
-  '2E': '+', //302, Keyboard = and + (US English)
-  '2F': '{', //303, Keyboard [ and { (US English)
-  '30': '}', //304, Keyboard ] and } (US English)
-  '31': '|', //305, Keyboard \ and | (US English)
-  '32': '~', //306, Keyboard Non-US # and ~ (US English)
-  '33': ':', //307, Keyboard ; and : (US English)
-  '34': '"', //308, Keyboard ' and " (US English)
-  '35': '~', //309, Keyboard ` and ~ (US English)
-  '36': '<', //310, Keyboard , and < (US English)
-  '37': '>', //311, Keyboard . and > (US English)
-  '38': '?', //312, Keyboard / and ? (US English)
-};
 
 async function readGetSomeChordmaps(expectedLineCount = 100) {
   console.log('readGetSome(' + expectedLineCount + ')');

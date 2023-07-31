@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const InputIdentifiers = styled.div.attrs({
-  className: `text-white  pl-6 mb-2  `,
+  className: `text-white pl-6 mb-2  `,
 })``;
 
 export const InputIdentifiersForPhrase = styled.div.attrs({
@@ -63,7 +63,7 @@ export const ChordTextBox = styled.input.attrs(
   (props: { placeholder: string; disabled: boolean; value: string }) => ({
     className: `${
       props.disabled ? 'placeholder:text-white' : ''
-    } block h-4 sm:h-6 rounded-xs mx-auto shadow-sm shadow-black mb-4 sm:mb-0 sm:mr-4 sm:ml-0 text-black text-center overflow-y-auto rounded ${
+    } block h-4 sm:h-6 rounded-xs mx-auto shadow-sm overflow-x-scroll shadow-black mb-4 sm:mb-0 sm:mr-4 sm:ml-0 text-black text-center overflow-y-auto rounded ${
       props.disabled ? 'disabled' : ''
     }`,
     type: 'text',
@@ -75,7 +75,7 @@ export const PhraseTextBox = styled.input.attrs(
   (props: { placeholder: string; disabled: boolean }) => ({
     className: `${
       props.disabled ? 'placeholder:text-white' : ''
-    } block h-4 sm:h-6 rounded-xs mx-auto shadow-sm shadow-black sm:mb-0 sm:mr-4 sm:ml-0 text-black text-center rounded ${
+    } block h-4 sm:h-6 rounded-xs mx-auto overflow-x-scroll shadow-sm shadow-black sm:mb-0 sm:mr-4 sm:ml-0 text-black text-center rounded ${
       props.disabled ? 'disabled' : ''
     } `,
     type: 'text',
