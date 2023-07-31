@@ -1,6 +1,6 @@
 # Introduction
 
-Dot I/O is a free, open source, web based training tool designed to forever change the way we learn to type.
+[Dot I/O](https://www.iq-eq.io/#/) is a free, open source, web based training tool designed to forever change the way we learn to type.
 
 Instead of measuring digital literacy with a single, all encompassing metric (words per minute), Dot I/O will measure your progress via six multivariate metrics: (tWPM, sWPM, ChM, CPM, StM, CM). These complementary metrics are designed to allow you to calibrate and track progress in a way that is meaningful to your specific goals, and to help you build a custom HCI profile that's just as unique as you are. With Dot I/O, you're more than just a number :crashWave: 
 dot i/o is a testing/training tool for Keyboard users. It allows these users to practicing their typing, trigrams, and chording.
