@@ -186,7 +186,10 @@ const Navbar = (): ReactElement => {
           <NavMenuLink aria-current="page" href="#/dashboard">
             <NavLinksImage open={true} src={profileImage} alt="" />
           </NavMenuLink>
-          <button onClick={() => setIsDisplayingIntroductionModal(true)}>
+          <button
+            className="hover:bg-[#333] rounded"
+            onClick={() => setIsDisplayingIntroductionModal(true)}
+          >
             <InfoIcon />
           </button>
         </NavBtn>
@@ -210,7 +213,7 @@ const NavMenuLink = styled.a.attrs({
 })``;
 
 const NavI = styled.nav`
-  background-color: #181818;
+  background-color: #222424;
   height: 80px;
   display: flex;
   justify-content: center;
@@ -325,7 +328,7 @@ const NavBtnLink = styled.a`
   background: rgb(34 197 94);
   white-space: nowrap;
   padding: 10px 22px;
-  color: #181818;
+  color: #222424;
   font-size: 16px;
   outline: none;
   border: none;

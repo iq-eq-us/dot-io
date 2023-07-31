@@ -59,7 +59,7 @@ function CenterTrainingColumn(): ReactElement {
 
 const CenterTrainingColumnContainer = styled.div.attrs({
   className:
-    'flex flex-col text-center align-center w-full xl:w-5/6 ml-auto mr-auto lgml-36 relative bg-[#181818]',
+    'flex flex-col text-center align-center w-full xl:w-5/6 ml-auto mr-auto lgml-36 relative bg-[#222424]',
 })``;
 
 const ItemsContainer = styled.div`

@@ -10,13 +10,13 @@ export function ChordMapColumn(): ReactElement {
 
   return (
     <CardColumn>
-      {downloadedChords.map((allProps) => (
-        <ChordMapCard key={Math.random()} {...allProps} />
+      {downloadedChords.map((allProps, index) => (
+        <ChordMapCard key={Math.random()} {...allProps} index={index} />
       ))}
     </CardColumn>
   );
 }
 
 const CardColumn = styled.div.attrs({
-  className: `flex flex-wrap flex-col items-center center justify-center`,
+  className: `flex flex-wrap flex-row items-center center justify-center`,
 })``;

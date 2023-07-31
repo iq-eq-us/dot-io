@@ -32,13 +32,9 @@ export async function getGetAll() {
   );
 
   for (let i = 0; i < chordCountParsedValue; i++) {
-    console.log(MainControls._chordmapCountOnDevice);
-    //wait sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
+    //console.log(MainControls._chordmapCountOnDevice);
     await sendCommandString('CML C1 ' + i);
-    //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
 
-    //console.log("MapID");
-    //console.log(MainControls._chordmapId);
     await readGetOneChordmap();
   }
 }
@@ -53,8 +49,6 @@ const wontTimeout = async (func) => {
 };
 
 export async function downloadChordsForAllChordsModule() {
-  //resetDataTable();
-  //await selectBase(); //select BASE
   await sendCommandString('CML C0');
   const { value } = await MainControls.lineReader.read();
   const chordCountSplit = value.split(' ');
@@ -70,15 +64,8 @@ export async function downloadChordsForAllChordsModule() {
 
   for (let i = 0; i < chordCountParsedValue; i++) {
     console.log(MainControls._chordmapCountOnDevice);
-    //wait sendCommandString("GETSOME "+(i+0).toString()+" "+(i+1).toString());
 
-    // await sendCommandString('CML C1 ' + i);
     await wontTimeout(sendCommandString('CML C1 ' + i), i);
-    //await sendCommandString('VAR '+'B3 '+'A '+element.innerHTML+" "+ s[0] + ' '+ s[1]);
-
-    //console.log("MapID");
-    //console.log(MainControls._chordmapId);
-    // await readGetOneChordmap();
 
     const { value } = await MainControls.lineReader.read();
     const splitter = value.split(' ');
@@ -125,8 +112,6 @@ export function Download(): ReactElement {
   const setDownloadedChords = useStoreActions(
     (store) => store.setDownloadedChords,
   );
-  const downloadedChords = useStoreState((store) => store.downloadedChords);
-
   async function getGet() {
     const tab = [];
     //await selectBase(); //select BASE

@@ -41,7 +41,7 @@ const Footer = (): ReactElement => {
 export default Footer;
 
 const FooterContainer = styled.footer`
-  background-color: #181818;
+  background-color: #222424;
 `;
 
 const FooterWrap = styled.div`
@@ -91,7 +91,7 @@ const FooterLinkTitle = styled.h1`
 const FooterLink = styled.div`
   color: #fff;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 10px;
 `;
 
 const FooterLinkLogo = styled.img`
@@ -99,7 +99,7 @@ const FooterLinkLogo = styled.img`
   text-decoration: none;
   margin-bottom: 0.5rem;
   font-size: 14px;
-  height: 40px;
+  height: 30px;
   display: block;
   margin-left: auto;
   margin-right: auto;

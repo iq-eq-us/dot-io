@@ -102,6 +102,6 @@ const ChordRow = styled.div.attrs({
 const TextPromptContainer = styled.div.attrs({
   className: `
     text-md font-bold mt-12 flex flex-col items-center w-full justify-center text-white
-    sm:text-xl md:text-2xl xl:mt-12
+    sm:text-xl md:text-2xl xl:mt-12 
   `,
 })``;

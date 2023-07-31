@@ -9,7 +9,7 @@ import {
   readGetOneChordLayout,
   readGetOneChordmap,
 } from '../controls/mainControls';
-import { _chordLayout, _chordMaps } from '../controls/maps';
+import { _chordLayout, _chordMaps, actionMap } from '../controls/maps';
 import { createChordLayout } from '../../../models/managerModels';
 
 export function ExportChordLayout(): ReactElement {
@@ -26,10 +26,11 @@ export function ExportChordLayout(): ReactElement {
       for (let t = 0; t < 90; t++) {
         await sendCommandString('VAR B3 A' + i + ' ' + t);
         const inChordLayout = await readGetOneChordLayout();
+        //const act = acti
         const tempCreated = createChordLayout(
           inChordLayout[1],
           inChordLayout[2],
-          inChordLayout[3],
+          actionMap[inChordLayout[3]],
         );
         setDownloadedChordLayout(tempCreated);
         tempHere.push(tempCreated);

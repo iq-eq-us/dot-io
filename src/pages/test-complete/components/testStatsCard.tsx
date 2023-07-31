@@ -145,11 +145,11 @@ export function TestStatsCard(): ReactElement {
 }
 
 const TrainingStatsColumnContainer = styled.div.attrs({
-  className: 'flex flex-row text-center align-center pl-36 bg-[#181818]',
+  className: 'flex flex-row text-center align-center pl-36 bg-[#222424]',
 })``;
 const StatsCardContainer = styled.div.attrs({
   className:
-    'flex flex-row text-center align-center w-full  ml-auto mr-auto  bg-[#181818]',
+    'flex flex-row text-center align-center w-full  ml-auto mr-auto  bg-[#222424]',
 })``;
 
 const TextPromptContainer = styled.div`

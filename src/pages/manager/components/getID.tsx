@@ -20,13 +20,6 @@ export async function getId() {
 
   await sendCommandString('VERSION');
   MainControls._firmwareVersion = await readGetOneAndReturnOne();
-
-  console.log(
-    'Just got here ' +
-      MainControls._chordmapId +
-      ' ' +
-      MainControls._firmwareVersion,
-  );
   const element: HTMLElement = document.getElementById(
     'statusDiv',
   ) as HTMLInputElement; //.innerHTML = "status: opened serial port";

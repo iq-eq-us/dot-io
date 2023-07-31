@@ -8,7 +8,7 @@ import {
   oldAsciiKeyReplacementDictionary,
 } from './maps';
 import hex2Bin from 'hex-to-bin';
-import { replace } from 'lodash';
+import { replace, split } from 'lodash';
 import { commitAllWithStart } from '../components/saveAll';
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -202,21 +202,97 @@ export async function cancelReader() {
 
 export function convertHexadecimalPhraseToAsciiString(hexString: string) {
   let asciiString = '';
-  console.log('convertHexadecimalPhraseToAsciiString()');
+  const tempCharacterSet = [];
   //let actionId = actionMap.indexOf(part); //returns the position of the first occurrence of a value in a string.; returns -1 if not found
-
   //let humanStringPart = actionMap[actionId]; //returns the ASCII string output from the actionMap
   //assume 2x size
   //get every 2 characters
   //TODO covert to byte array and account for non-ascii inputs like mouse moves
-  for (let i = 0; i < hexString.length; i += 2) {
-    asciiString += actionMap[parseInt(hexString.substr(i, 2), 16)];
-    //console.log("0x"+hexString.substr(i, 2));
-    //asciiString += String.fromCharCode("0x"+hexString.substr(i, 2));
+  if (Hex2Dec(hexString.substr(0, 2)) <= 32) {
+    for (let i = 0; i < hexString.length; i += 4) {
+      const tempASI = actionMap[parseInt(hexString.substr(i, 4), 16)]
+        ?.split('_')
+        ?.pop();
+      if (BaseLevelSpecialCharactersLibrary[tempASI] == undefined) {
+        asciiString += tempASI;
+      } else {
+        asciiString += BaseLevelSpecialCharactersLibrary[tempASI];
+      }
+      //asciiString += ;
+      console.log(actionMap[parseInt(hexString.substr(i, 4), 16)]);
+      tempCharacterSet.push(actionMap[parseInt(hexString.substr(i, 4), 16)]);
+      //asciiString += String.fromCharCode("0x"+hexString.substr(i, 2));
+      //Handles 1 byte string outputs
+    }
+    asciiString = asciiString.toLocaleLowerCase();
+  } else {
+    for (let i = 0; i < hexString.length; i += 2) {
+      const tempASI = actionMap[parseInt(hexString.substr(i, 2), 16)]
+        ?.split('_')
+        ?.pop();
+      if (BaseLevelSpecialCharactersLibrary[tempASI] == undefined) {
+        asciiString += tempASI;
+      } else {
+        asciiString += BaseLevelSpecialCharactersLibrary[tempASI];
+      }
+      console.log(actionMap[parseInt(hexString.substr(i, 2), 16)]);
+      tempCharacterSet.push(actionMap[parseInt(hexString.substr(i, 2), 16)]);
+      //asciiString += String.fromCharCode("0x"+hexString.substr(i, 2));
+    }
+  }
+
+  console.log('tempCharacterSet array ' + tempCharacterSet);
+
+  tempCharacterSet;
+
+  // if(asciiString.contains('KSC_E1') || asciiString.contains('KSC_E5'))
+  if (tempCharacterSet.includes('E1') || tempCharacterSet.includes('E5')) {
+  } else {
   }
   console.log(asciiString);
   return asciiString;
 }
+const BaseLevelSpecialCharactersLibrary = {
+  '2D': '-', //301, Keyboard - and _ (US English)
+  '2E': '=', //302, Keyboard = and + (US English)
+  '2F': '[', //303, Keyboard [ and { (US English)
+  '30': ']', //304, Keyboard ] and } (US English)
+  '31': "'", //305, Keyboard \ and | (US English)
+  '32': '#', //306, Keyboard Non-US # and ~ (US English)
+  '33': ';', //307, Keyboard ; and : (US English)
+  '34': "'", //308, Keyboard ' and " (US English)
+  '35': '`', //309, Keyboard ` and ~ (US English)
+  '36': ',', //310, Keyboard , and < (US English)
+  '37': '.', //311, Keyboard . and > (US English)
+  '38': '/', //312, Keyboard / and ? (US English)
+};
+const ModifierCharactersLibrary = {};
+
+const SpecialCharactersLibrary = {
+  '1': '!', //286, Keyboard 1 and ! (US English)
+  '2': '@', //287, Keyboard 2 and @ (US English)
+  '3': '#', //288, Keyboard 3 and # (US English)
+  '4': '$', //289, Keyboard 4 and $ (US English)
+  '5': '%', //290, Keyboard 5 and % (US English)
+  '6': '^', //291, Keyboard 6 and ^ (US English)
+  '7': '&', //292, Keyboard 7 and & (US English)
+  '8': '*', //293, Keyboard 8 and * (US English)
+  '9': '(', //294, Keyboard 9 and ( (US English)
+  '0': ')', //295, Keyboard 0 and ) (US English)
+  '2C': 'Space', //300, Keyboard Space (US English)
+  '2D': '_', //301, Keyboard - and _ (US English)
+  '2E': '+', //302, Keyboard = and + (US English)
+  '2F': '{', //303, Keyboard [ and { (US English)
+  '30': '}', //304, Keyboard ] and } (US English)
+  '31': '|', //305, Keyboard \ and | (US English)
+  '32': '~', //306, Keyboard Non-US # and ~ (US English)
+  '33': ':', //307, Keyboard ; and : (US English)
+  '34': '"', //308, Keyboard ' and " (US English)
+  '35': '~', //309, Keyboard ` and ~ (US English)
+  '36': '<', //310, Keyboard , and < (US English)
+  '37': '>', //311, Keyboard . and > (US English)
+  '38': '?', //312, Keyboard / and ? (US English)
+};
 
 async function readGetSomeChordmaps(expectedLineCount = 100) {
   console.log('readGetSome(' + expectedLineCount + ')');
@@ -610,7 +686,7 @@ export function convertHumanStringToHexadecimalPhrase(
 ): string {
   let hexString = '';
   for (let i = 0; i < humanString.length; i++) {
-    const hex = Number(humanString.charCodeAt(i)).toString(16);
+    const hex = actionMap[Number(humanString.charCodeAt(i)).toString(16)];
     hexString += hex;
   }
   hexString = hexString.toUpperCase();
@@ -624,7 +700,8 @@ function replaceOldAsciiKeys(inputKey) {
   for (let i = 0; i < inputKey.length; i++) {
     if (oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])) {
       // eslint-disable-line no-use-before-define
-      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]]; // eslint-disable-line no-use-before-define
+      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]];
+      // eslint-disable-line no-use-before-define
       console.log('OldAsciiReplacement ' + finishedInputKey);
     } else {
       finishedInputKey += inputKey[i];
@@ -650,7 +727,7 @@ export function convertHumanStringToHexadecimalChord(
     //console.log('this is the part in the convert '+part + ' '+ replaceOldAsciiKeys(part));
     part = replaceOldAsciiKeys(part);
     console.log('This is the part ' + part);
-    const actionId = _actionMap.indexOf(part);
+    const actionId = actionMap.indexOf(part);
 
     console.log('ActionID: ' + actionId);
     if (MainControls._chordmapId == 'CHARACHORDER') {
@@ -670,7 +747,7 @@ export function convertHumanStringToHexadecimalChord(
       let keyId: number;
       if (actionId < 0x0200) {
         console.log('I am here');
-        keyId = _keyMapDefaults[1].indexOf(_actionMap[actionId]);
+        keyId = _keyMapDefaults[1].indexOf(actionMap[actionId]);
         console.log(keyId);
       } else {
         keyId = actionId - 0x0200; //using the physical key position
@@ -714,7 +791,6 @@ export async function readGetOneChordmap() {
     hexChordString = strValue[3]; //Should be 32 characters at all times
     let hexAsciiString = '';
     hexAsciiString = strValue[4];
-    convertHumanStringToHexadecimalChord;
     strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
     strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
     strValues[2] = hexChordString;
@@ -723,9 +799,9 @@ export async function readGetOneChordmap() {
     //appendToList(strValues);
     // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
     _chordMaps.push([
-      convertHexadecimalChordToHumanChord(hexChordString),
+      convertHexadecimalPhraseToAsciiString(hexChordString),
       strValues[1],
-    ]); //this ultimately isn't used
+    ]);
 
     //appendToRow(strValues);
   }
@@ -819,14 +895,10 @@ export function appendLayoutToRow(data: string[], isFromFile = false): any {
     // cells[9].innerHTML = data[2];
     // cells[10].innerHTML = data[3];
 
-    const btnEdit = document.createElement('div');
     const chordTextOrig = document.createElement('div');
     const phraseTextOrig = document.createElement('div');
     const chordTextNew = document.createElement('div');
     const phraseTextInput = document.createElement('div');
-    const btnDelete = document.createElement('input');
-    const btnRevert = document.createElement('input');
-    const btnCommit = document.createElement('input');
 
     const virtualId = MainControls._chordMapIdCounter;
     console.log('ChordMap Counter: ' + virtualId);

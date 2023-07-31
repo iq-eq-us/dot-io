@@ -1,5 +1,5 @@
 import React, { ReactElement, useLayoutEffect, useRef, useState } from 'react';
-import SectorGroup from './SectorGroup';
+import SectorGroup from '../../../../src/pages/training/components/SectorGroup';
 import charachorderBackground from '../../../assets/charachorder_background_feathered_no_center.png';
 import styled from 'styled-components';
 import useWindowSize from '../../../hooks/useWindowSize';
@@ -31,9 +31,10 @@ const triggerResize = () => {
   window.dispatchEvent(new Event('resize'));
 };
 
-function CharachorderOverlayLite({
-  overrideBottom,
-}: OverlayProps): ReactElement {
+function ManagersDeviceOverlay(
+  { overrideBottom }: OverlayProps,
+  lettersToHighlight: string,
+): ReactElement {
   const [hasLoadedBackgroundImage, setHasLoadedBackgroundImage] =
     useState(pickerV1);
   const setHasLoadedToTrue = () => setHasLoadedBackgroundImage(pickerV1);
@@ -50,6 +51,7 @@ function CharachorderOverlayLite({
     (store: any) => store.currentlyHighlightedKeysLite,
   );
   const compare2 = (rowGroup: Row, position: Position): boolean => {
+    console.log('keys to highlight ' + JSON.stringify(keysToHighlightLite));
     return JSON.stringify(keysToHighlightLite).includes(
       JSON.stringify({ rowGroup, position }),
     );
@@ -59,10 +61,10 @@ function CharachorderOverlayLite({
     <React.Fragment>
       <OverlayContainer
         ref={overlayRef}
-        scaleWidth={overlayScale?.width || 1}
+        scaleWidth={1}
         onLoad={triggerResize}
-        scaleHeight={overlayScale?.height || 1}
-        scale={overlayScale?.scale || 1}
+        scaleHeight={1}
+        scale={1}
         {...{ overrideBottom }}
       >
         {true && (
@@ -77,7 +79,7 @@ function CharachorderOverlayLite({
                 <div
                   style={compare2(1, 2) ? highlightedButtonStyle : buttonStyle}
                 >
-                  1 !
+                  {'1 !'}
                 </div>
                 <div
                   style={compare2(1, 3) ? highlightedButtonStyle : buttonStyle}
@@ -368,7 +370,7 @@ function CharachorderOverlayLite({
             </div>
           </div>
         )}{' '}
-        {pickerV1 && pickerNone && (
+        {false && (
           <React.Fragment>
             <img
               onLoad={setHasLoadedToTrue}
@@ -502,14 +504,13 @@ interface Props {
 }
 
 const OverlayContainer = styled.div.attrs<Props>({})<Props>`
-  position: absolute;
+  position: relative;
 
-  ${(props) => `transform: scale(${Math.min(1, props.scale)})`};
-  ${(props) => `top: ${(-(1 - props.scaleHeight) * 532) / 2}px`};
-  ${(props) => `left: ${(-(1 - props.scaleWidth) * 1000) / 2}px`};
+  ${(props) => `transform: scale(${0.2})`};
 
-  width: 1000px;
-  height: 532px;
+  width: 100px;
+  height: 150px;
+  margin-left: 60px;
 `;
 
 const keyboardBodyStyle = {
@@ -519,7 +520,6 @@ const keyboardBodyStyle = {
   alignItems: 'center' as const,
   color: '#999',
   fontFamily: 'system-ui, sans-serif' as const,
-  marginTop: '80px',
 };
 
 const keyboardStyle = {
@@ -537,7 +537,6 @@ const keyboardStyle = {
   boxShadow:
     'inset 0 1rem 1rem rgb(0 0 0 / 50%), 0 2rem 3rem -0.5rem rgb(0 0 0 / 55%)',
   //backgroundImage: "radial-gradient(#111, #222)",
-  padding: '0.25rem',
   font: 'inherit',
   //verticalAlign: "baseline",
   margin: '0',
@@ -790,4 +789,4 @@ function fitToParent(element: HTMLElement | null) {
   };
 }
 
-export default CharachorderOverlayLite;
+export default ManagersDeviceOverlay;

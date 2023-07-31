@@ -3606,7 +3606,7 @@ const actionMap = [
   '', //29, 10-bit Action Codes 0x1D
   '', //30, 10-bit Action Codes 0x1E
   '', //31, 10-bit Action Codes 0x1F
-  ' ', //32, Space
+  'Space', //32, Space
   '!', //33, Exclamation Point
   '"', //34, Double Quote
   '#', //35, Hash Symbol

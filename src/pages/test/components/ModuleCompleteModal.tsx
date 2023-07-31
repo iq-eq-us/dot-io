@@ -121,7 +121,7 @@ function ModuleCompleteModal(): ReactElement {
       {moduleCompleteModalToggle && trainingLevelIsCPM ? (
         <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[40%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
           <button
-            className="close ml-96 text-5xl pt-4 text-[#181818]"
+            className="close ml-96 text-5xl pt-4 text-[#222424]"
             onClick={() => [
               setModuleCompleteModalToggle(!moduleCompleteModalToggle),
             ]}
@@ -150,7 +150,7 @@ function ModuleCompleteModal(): ReactElement {
       {downloadModuleModalToggle ? (
         <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[40%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
           <button
-            className={`close  ml-96 text-5xl pl-8 pt-4 text-[#181818] ${
+            className={`close  ml-96 text-5xl pl-8 pt-4 text-[#222424] ${
               value == true ? `hidden` : ``
             }`}
             onClick={() => [
@@ -184,7 +184,7 @@ function ModuleCompleteModal(): ReactElement {
       {passwordModuleModalToggle ? (
         <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[40%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
           <button
-            className={`close ml-96 relative text-5xl pl-8 pt-4 text-[#181818]`}
+            className={`close ml-96 relative text-5xl pl-8 pt-4 text-[#222424]`}
             onClick={() => [
               setPasswordModuleModalToggle(!passwordModuleModalToggle),
               console.log('x out out out'),
