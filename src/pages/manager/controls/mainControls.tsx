@@ -676,7 +676,7 @@ export function convertHexadecimalChordToHumanChord(hexChord) {
       console.log('this is actionMap output ' + actionMap[actionCode]);
       const humanStringPart = replaceOldAsciiKeys(actionMap[actionCode]); //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
       //console.log('Old Ascii '+ humanStringPart)
-      humanChord += humanStringPart; //Replace when new action codes arrive
+      humanChord += humanStringPart?.split('_')?.pop(); //Replace when new action codes arrive
       //console.log('Human string part in the loop '+ humanChord)
     } else {
       break; //we can exit the for loop early
