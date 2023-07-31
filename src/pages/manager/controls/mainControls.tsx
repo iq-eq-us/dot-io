@@ -310,7 +310,7 @@ export function convertHexadecimalPhraseToAsciiString(hexString: string) {
         for (
           let y = characterToStartWith;
           numberOfShiftOccurences[1] - numberOfShiftOccurences[0];
-          i++
+          characterToStartWith++
         ) {
           if (
             ModifierCharactersLibrary[tempCharacterSet[characterToStartWith]] ==
@@ -329,10 +329,7 @@ export function convertHexadecimalPhraseToAsciiString(hexString: string) {
       }
     }
   }
-  // if(asciiString.contains('KSC_E1') || asciiString.contains('KSC_E5'))
-  if (tempCharacterSet.includes('E1') || tempCharacterSet.includes('E5')) {
-  } else {
-  }
+
   console.log(asciiString);
   return asciiString;
 }
