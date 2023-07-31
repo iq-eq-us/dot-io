@@ -246,9 +246,7 @@ export function convertHexadecimalPhraseToAsciiString(hexString: string) {
   tempCharacterSet;
 
   // if(asciiString.contains('KSC_E1') || asciiString.contains('KSC_E5'))
-  if (tempCharacterSet.includes('E1') || tempCharacterSet.includes('E5')) {
-  } else {
-  }
+
   console.log(asciiString);
   return asciiString;
 }
@@ -266,9 +264,8 @@ const BaseLevelSpecialCharactersLibrary = {
   '37': '.', //311, Keyboard . and > (US English)
   '38': '/', //312, Keyboard / and ? (US English)
 };
-const ModifierCharactersLibrary = {};
 
-const SpecialCharactersLibrary = {
+const ModifierCharactersLibrary = {
   '1': '!', //286, Keyboard 1 and ! (US English)
   '2': '@', //287, Keyboard 2 and @ (US English)
   '3': '#', //288, Keyboard 3 and # (US English)
