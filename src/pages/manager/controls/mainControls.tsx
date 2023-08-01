@@ -1011,7 +1011,6 @@ function Dec2Hex(n) {
   if (!checkDec(n) || n < 0) return 0;
   return n.toString(16);
 }
-
 //Binary Operations
 function Bin2Dec(n) {
   if (!checkBin(n)) return 0;
@@ -1214,7 +1213,7 @@ function DecimalHexTwosComplement(decimal) {
       hexadecimal = '' + 0 + hexadecimal;
     }
 
-    var output = '';
+    let output = '';
     for (let i = 0; i < hexadecimal.length; i++) {
       output += (0x0f - parseInt(hexadecimal[i], 16)).toString(16);
     }
