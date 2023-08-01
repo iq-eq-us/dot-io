@@ -65,7 +65,7 @@ function CharachorderOverlayLite({
         scale={overlayScale?.scale || 1}
         {...{ overrideBottom }}
       >
-        {true && (
+        {pickerLite && pickerNone && (
           <div className="body" style={keyboardBodyStyle}>
             <div className="keyboard" style={keyboardStyle}>
               <div className="row" style={rowStyle}>
