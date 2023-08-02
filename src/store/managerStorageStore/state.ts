@@ -1,5 +1,4 @@
 import type { ManagerStoreState } from '../../models/managerStorage';
-import type { Chords, ChordLayout } from '../../models/managerModels';
 
 const managerStoreState: ManagerStoreState = {
   downloadedChords: {
@@ -12,6 +11,17 @@ const managerStoreState: ManagerStoreState = {
   serialApiRequests: [],
   commitAllCounterForChords: 0,
   commitAllCounterForChordLayout: 0,
+  serialPort: '',
+  portReader: '',
+  lineReader: '',
+  lineReaderDone: '',
+  abortController1: new AbortController(),
+  abortController2: new AbortController(),
+  _chordmapId: 'Default',
+  _chordmapCountOnDevice: 50,
+  _firmwareVersion: '0',
+  _chordMapIdCounter: 0,
+  count: 0,
 };
 
 export default managerStoreState;

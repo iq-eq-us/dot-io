@@ -98,7 +98,7 @@ const ReverseModifierCharactersLibrary = {
   '*': 293,
   '(': 294,
   ')': 295,
-  Space: 300,
+  ' ': 300,
   _: 301,
   '-': 301,
   '+': 302,
@@ -183,6 +183,13 @@ const ReverseLookUpTable = {
   CAPSLOCK: 313,
   F1: 314,
   F2: 315,
+  LEFT_CTRL: 512,
+  LEFT_SHIFT: 513,
+  LEFT_ALT: 514,
+  LEFT_GUI: 515,
+  RIGHT_CTRL: 516,
+  RIGHT_SHIFT: 517,
+  RIGHT_ALT: 518,
   /*
   'F3', //316, Keyboard F3
   'F4', //317, Keyboard F4
@@ -1159,13 +1166,12 @@ export function ascii_to_hexa(arr: any) {
 
 function tryItAll(character) {
   const variations: string[] = ['KEY_', 'KSC_', 'ARROW_', 'KP_', 'VOL_'];
+  let doesOneShiftExist = false;
   if (ReverseLookUpTable[character] != undefined) {
     return actionMap.indexOf(character);
   } else if (ReverseModifierCharactersLibrary[character] != undefined) {
     return ReverseModifierCharactersLibrary[character];
-  }
-  // need an else if here to see if this is equal to a modifier use the modifier library and sent in the 'KSC_'+ [0-9] and see if that modifier value equals a modifier
-  else {
+  } else {
     for (let y = 0; y < variations.length; y++) {
       if (ReverseLookUpTable[variations[y] + character]) {
         return ReverseLookUpTable[variations[y] + character];
@@ -1181,10 +1187,66 @@ export function convertHumanStringToHexadecimalPhrase(
 ): string {
   let hexString = '';
   if (MainControls._chordmapId == 'ID CHARACHORDER X S2') {
-    humanString = humanString.toUpperCase();
+    humanString = humanString;
+    const variations: string[] = ['KEY_', 'KSC_', 'ARROW_', 'KP_', 'VOL_'];
+    let shouldModBeTrue = false; //Only true if shift is already in it
+    const leftShiftValue = DecimalHexTwosComplement(
+      ReverseLookUpTable['LEFT_SHIFT'],
+    );
     for (let i = 0; i < humanString.length; i++) {
-      const hex = DecimalHexTwosComplement(tryItAll(humanString[i]));
-      hexString += hex;
+      console.log('THis is an upperCase shouldModBeTrue ' + shouldModBeTrue);
+
+      if (
+        ReverseLookUpTable[humanString[i].toUpperCase()] != undefined &&
+        humanString[i] != humanString[i].toUpperCase()
+      ) {
+        !shouldModBeTrue
+          ? [(shouldModBeTrue = true), (hexString += leftShiftValue)]
+          : '';
+        hexString += DecimalHexTwosComplement(
+          actionMap.indexOf(humanString[i].toUpperCase()),
+        );
+      } else if (humanString[i] == humanString[i].toUpperCase()) {
+        console.log('THis is an upperCase');
+        !shouldModBeTrue
+          ? [(shouldModBeTrue = true), (hexString += leftShiftValue)]
+          : '';
+
+        for (let y = 0; y < variations.length; y++) {
+          if (
+            ReverseLookUpTable[variations[y] + humanString[i].toUpperCase()]
+          ) {
+            hexString += DecimalHexTwosComplement(
+              ReverseLookUpTable[variations[y] + humanString[i].toUpperCase()],
+            );
+          }
+        }
+      } else if (
+        ReverseModifierCharactersLibrary[humanString[i].toUpperCase()] !=
+        undefined
+      ) {
+        //Handles special characters
+
+        !shouldModBeTrue
+          ? [(shouldModBeTrue = false), (hexString += leftShiftValue)]
+          : '';
+        hexString += DecimalHexTwosComplement(
+          actionMap.indexOf(humanString[i].toUpperCase()),
+        );
+      } else {
+        for (let y = 0; y < variations.length; y++) {
+          if (
+            ReverseLookUpTable[variations[y] + humanString[i].toUpperCase()]
+          ) {
+            shouldModBeTrue
+              ? [(shouldModBeTrue = false), (hexString += leftShiftValue)]
+              : '';
+            hexString += DecimalHexTwosComplement(
+              ReverseLookUpTable[variations[y] + humanString[i].toUpperCase()],
+            );
+          }
+        }
+      }
     }
   } else {
     for (let i = 0; i < humanString.length; i++) {
