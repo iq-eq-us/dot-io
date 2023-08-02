@@ -1248,7 +1248,7 @@ export function convertHumanStringToHexadecimalPhrase(
     }
   } else {
     for (let i = 0; i < humanString.length; i++) {
-      const hex = actionMap[Number(humanString.charCodeAt(i)).toString(16)];
+      const hex = Number(humanString.charCodeAt(i)).toString(16);
       hexString += hex;
     }
     hexString = hexString.toUpperCase();
