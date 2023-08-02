@@ -34,6 +34,7 @@ export function TrainingModeSelector(): ReactElement {
   const setTrainingSettings = useStoreActions(
     (store: any) => store.setTrainingSettings,
   );
+  const wpm = useWordsPerMinute();
 
   const [checkIfUserChangedLevels, setCheckIfUserChangedLevels] = useState(
     'CPM' as TrainingLevels,
