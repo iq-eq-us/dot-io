@@ -1166,7 +1166,6 @@ export function ascii_to_hexa(arr: any) {
 
 function tryItAll(character) {
   const variations: string[] = ['KEY_', 'KSC_', 'ARROW_', 'KP_', 'VOL_'];
-  let doesOneShiftExist = false;
   if (ReverseLookUpTable[character] != undefined) {
     return actionMap.indexOf(character);
   } else if (ReverseModifierCharactersLibrary[character] != undefined) {
@@ -1187,7 +1186,6 @@ export function convertHumanStringToHexadecimalPhrase(
 ): string {
   let hexString = '';
   if (MainControls._chordmapId == 'ID CHARACHORDER X S2') {
-    humanString = humanString;
     const variations: string[] = ['KEY_', 'KSC_', 'ARROW_', 'KP_', 'VOL_'];
     let shouldModBeTrue = false; //Only true if shift is already in it
     const leftShiftValue = DecimalHexTwosComplement(
