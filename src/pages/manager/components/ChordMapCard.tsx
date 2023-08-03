@@ -90,7 +90,7 @@ export function ChordMapCard(props: any, index: number): ReactElement {
       event.key != 'Backspace'
     ) {
       let chord = '';
-      let splitChord = chordTextInput.split(' + ').join('');
+      const splitChord = chordTextInput.split(' + ').join('');
 
       for (let i = 0; i < splitChord.length; i++) {
         if (splitChord.substring(i, i + 11) == 'RIGHT_SHIFT') {
@@ -107,7 +107,6 @@ export function ChordMapCard(props: any, index: number): ReactElement {
         chord += 'RIGHT_SHIFT';
       } else if (event.code == 'ShiftLeft') {
         chord += 'LEFT_SHIFT';
-      } else {
       }
 
       return chord;
