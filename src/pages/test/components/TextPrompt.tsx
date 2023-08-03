@@ -747,7 +747,7 @@ export const PreviousChordRow = styled.div.attrs(
 
 const TextPromptContainer = styled.div.attrs({
   className: `
-    flex text-md font-bold flex flex-col items-center w-11/12	 justify-center text-gray-400
-    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-4 h-50 	m-auto font-mono
+    flex text-md font-bold flex flex-col items-center w-full	justify-center text-gray-400
+    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-4 h-50 m-auto font-mono
   `,
 })``;

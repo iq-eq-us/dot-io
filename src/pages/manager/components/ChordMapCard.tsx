@@ -83,15 +83,31 @@ export function ChordMapCard(props: any, index: number): ReactElement {
 
   function change(event) {
     if (
-      chordTextInput != '' &&
+      (chordTextInput != '' ||
+        event.code == 'ShiftRight' ||
+        event.code == 'ShiftLeft') &&
       event.key != 'Delete' &&
       event.key != 'Backspace'
     ) {
       let chord = '';
-      const splitChord = chordTextInput.split(' + ').join('');
-      console.log(splitChord);
+      let splitChord = chordTextInput.split(' + ').join('');
+
       for (let i = 0; i < splitChord.length; i++) {
-        chord += splitChord[i] + ' + ';
+        if (splitChord.substring(i, i + 11) == 'RIGHT_SHIFT') {
+          chord += 'RIGHT_SHIFT + ';
+          i += 10;
+        } else if (splitChord.substring(i, i + 10) == 'LEFT_SHIFT') {
+          chord += 'LEFT_SHIFT + ';
+          i += 9;
+        } else {
+          chord += splitChord[i] + ' + ';
+        }
+      }
+      if (event.code == 'ShiftRight') {
+        chord += 'RIGHT_SHIFT';
+      } else if (event.code == 'ShiftLeft') {
+        chord += 'LEFT_SHIFT';
+      } else {
       }
 
       return chord;

@@ -183,9 +183,6 @@ const Navbar = (): ReactElement => {
           <NavBtnLink href="#/manager" onClick={() => setTrainingLevel('')}>
             Connect
           </NavBtnLink>
-          <NavMenuLink aria-current="page" href="#/dashboard">
-            <NavLinksImage open={true} src={profileImage} alt="" />
-          </NavMenuLink>
           <button
             className="hover:bg-[#333] rounded"
             onClick={() => setIsDisplayingIntroductionModal(true)}
