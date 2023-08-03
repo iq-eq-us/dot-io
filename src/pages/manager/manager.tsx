@@ -46,9 +46,6 @@ const Manager = (): ReactElement => {
             <DisconnectButton />
             <BootLoaderButton />
             <RebootButton />
-            {console.log(
-              'This is the main controls ' + MainControls._chordmapId,
-            )}
             <div className="h-1 w-6/12 bg-[#3A5A42] rounded mb-10 mt-10" />
             <div className="font-mono text-xl ml-2">
               Layout{' '}

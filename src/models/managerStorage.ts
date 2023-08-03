@@ -14,7 +14,7 @@ export interface ManagerStoreState {
   lineReaderDone: any;
   abortController1: AbortController;
   abortController2: AbortController;
-  _chordmapId: any;
+  deviceId: any;
   _chordmapCountOnDevice: any;
   _firmwareVersion: any;
   _chordMapIdCounter: 0;
@@ -58,6 +58,7 @@ export interface ManagerStoreActions {
   setCommitAllCounterForChords: Action<ManagerStore, number>;
   setCommitAllCounterForChordLayout: Action<ManagerStore, number>;
   updateSerialAPiDataThunk: Thunk<ManagerStore>;
+  setDeviceId: Action<ManagerStore, string>;
 }
 
 export type ManagerStore = ManagerStoreState & ManagerStoreActions;

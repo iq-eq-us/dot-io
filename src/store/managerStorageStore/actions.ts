@@ -50,6 +50,9 @@ const managerStorageStoreActions: ManagerStoreActions = {
   setSerialApiResponses: action((state, payload) => {
     state.serialApiResponses.push(payload);
   }),
+  setDeviceId: action((state, payload) => {
+    state.deviceId = payload;
+  }),
   updateSerialAPiDataThunk: thunk(async (state, payload) => {
     sendCommandString(payload);
     state.setSerialApiRequests(payload);

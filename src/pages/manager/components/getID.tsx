@@ -6,6 +6,7 @@ import {
   readGetOneAndToss,
   readGetOneAndReturnOne,
 } from '../controls/mainControls';
+import { useStoreActions } from 'easy-peasy';
 
 export async function getId() {
   await sendCommandString('CML C0');
@@ -76,12 +77,19 @@ async function readDeviceId() {
   }
 }
 export function GetID(): ReactElement {
+  const setDeviceId = useStoreActions((store) => store.setDeviceId);
+  const storeId = () => {
+    setDeviceId();
+  };
+
+  function storeActions() {}
+
   return (
     <React.Fragment>
       <button
         className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
         color="pink"
-        onClick={() => getId()}
+        onClick={() => [getId(), setDeviceId()]}
       >
         Get ID{' '}
       </button>
