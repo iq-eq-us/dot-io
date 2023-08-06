@@ -58,7 +58,7 @@ export interface ManagerStoreActions {
   setCommitAllCounterForChords: Action<ManagerStore, number>;
   setCommitAllCounterForChordLayout: Action<ManagerStore, number>;
   updateSerialAPiDataThunk: Thunk<ManagerStore>;
-  setDeviceId: Action<ManagerStore, string>;
+  setDeviceId: Action<ManagerStore, any>;
 }
 
 export type ManagerStore = ManagerStoreState & ManagerStoreActions;

@@ -30,7 +30,7 @@ const managerStorageStoreActions: ManagerStoreActions = {
     saveEditedChordInManager(state, payload);
   }),
   setDownloadedChordLayout: action((state, payload) => {
-    state.downloadedChordLayout.chordLayout.push(payload);
+    state.downloadedChordLayout.chordLayout = payload;
   }),
   setImportedChords: action((state, payload) => {
     state.downloadedChords.chords = payload;

@@ -60,8 +60,10 @@ export const CardDeleteButton = styled.button.attrs(
   }),
 )``;
 export const KeyMapPositionTextBox = styled.input.attrs(
-  (props: { placeholder: string }) => ({
-    className: `block h-4 sm:h-6 rounded-xs mx-auto shadow-sm shadow-black mb-4 sm:mb-0 sm:mr-4 sm:ml-0 text-black text-center overflow-y-auto rounded `,
+  (props: { placeholder: string; disabled: boolean }) => ({
+    className: `${props.disabled ? 'disabled' : ''}
+      ${props.disabled ? 'placeholder:text-white' : ''}
+      block h-4 sm:h-6 rounded-xs mx-auto shadow-sm shadow-black mb-4 sm:mb-0 sm:mr-4 sm:ml-0 text-black text-center overflow-y-auto rounded }`,
     type: 'text',
     placeholder: `${props.placeholder}`,
   }),

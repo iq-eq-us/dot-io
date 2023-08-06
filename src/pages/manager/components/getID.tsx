@@ -30,6 +30,8 @@ export async function getId() {
     MainControls._chordmapId +
     ' --- CCOS ' +
     MainControls._firmwareVersion;
+
+  return MainControls._chordmapId;
 }
 
 async function readVersion() {

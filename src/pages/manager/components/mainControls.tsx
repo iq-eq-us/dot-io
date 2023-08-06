@@ -190,32 +190,32 @@ const ReverseLookUpTable = {
   RIGHT_CTRL: 516,
   RIGHT_SHIFT: 517,
   RIGHT_ALT: 518,
-  F3: 316,
-  F4: 317,
-  F5: 318,
-  F6: 319,
-  F7: 320,
-  F8: 321,
-  F9: 322,
-  F10: 323,
-  F11: 324,
-  F12: 325,
-  PRTSCN: 326,
-  SCRLK: 327,
-  PAUSE: 328,
-  INSERT: 329,
-  HOME: 330,
-  PGUP: 331,
-  DELETE: 332,
-  END: 333,
-  PGDN: 334,
-  ARROW_RT: 335,
-  ARROW_LF: 336,
-  ARROW_DN: 337,
-  ARROW_UP: 338,
-  NUMLOCK: 339,
-  KP_SLASH: 340,
   /*
+  'F3', //316, Keyboard F3
+  'F4', //317, Keyboard F4
+  'F5', //318, Keyboard F5
+  'F6', //319, Keyboard F6
+  'F7', //320, Keyboard F7
+  'F8', //321, Keyboard F8
+  'F9', //322, Keyboard F9
+  'F10', //323, Keyboard F10
+  'F11', //324, Keyboard F11
+  'F12', //325, Keyboard F12
+  'PRTSCN', //326, Keyboard Print Screen
+  'SCRLK', //327, Keyboard Scroll Lock
+  'PAUSE', //328, Keyboard Pause
+  'INSERT', //329, Keyboard Insert
+  'HOME', //330, Keyboard Home
+  'PGUP', //331, Keyboard Page Up
+  'DELETE', //332, Keyboard Delete Forward
+  'END', //333, Keyboard End
+  'PGDN', //334, Keyboard Page Down
+  'ARROW_RT', //335, Keyboard Right Arrow
+  'ARROW_LF', //336, Keyboard Left Arrow
+  'ARROW_DN', //337, Keyboard Down Arrow
+  'ARROW_UP', //338, Keyboard Up Arrow
+  'NUMLOCK', //339, Keyboard Num Lock and Clear
+  'KP_SLASH', //340, Keypad /
   'KP_ASTER', //341, Keypad *
   'KP_MINUS', //342, Keypad -
   'KP_PLUS', //343, Keypad +
@@ -1163,13 +1163,10 @@ export function ascii_to_hexa(arr: any) {
     arr[i] = Number(arr[i].charCodeAt(0)).toString(16);
   }
 }
-export function convertKeyPostionsHumanPosition(inPosition: string) {
-  return inPosition?.split('_')?.pop();
+function convertKeyPostionsHumanPosition(inPostion: string) {
+  return inPostion.split('_').pop();
 }
-export function convertHumanPositionToScanCodeKeyPosition(inPosition: string) {
-  return tryItAll(inPosition);
-}
-export function tryItAll(character) {
+function tryItAll(character) {
   const variations: string[] = ['KEY_', 'KSC_', 'ARROW_', 'KP_', 'VOL_'];
   if (ReverseLookUpTable[character] != undefined) {
     return actionMap.indexOf(character);

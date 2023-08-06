@@ -13,6 +13,7 @@ import {
   CardConfirmDeleteButton,
   CardCancelButton,
 } from './ChordLayoutColumn.styled';
+import { convertKeyPostionsHumanPosition } from '../controls/mainControls';
 
 export function ChordLayoutCard(props: any): ReactElement {
   const keyMap: string = props.keyMap;
@@ -67,23 +68,29 @@ export function ChordLayoutCard(props: any): ReactElement {
     <CardLayoutContainer>
       <FirstKeyMapInputIdentifiers>
         Key Map
-        <KeyMapTextBox placeholder={keyMap} />
+        <KeyMapTextBox placeholder={keyMap} disabled={lockInputs} />
       </FirstKeyMapInputIdentifiers>
-      <div
+
+      <KeyMapInputIdentifiers>
+        Key Map Position
+        <KeyMapPositionTextBox
+          placeholder={keyMapPosition}
+          disabled={lockInputs}
+        />
+      </KeyMapInputIdentifiers>
+      <KeyMapInputIdentifiers>
+        Key Map Value
+        <KeyMapValueTextBox placeholder={keyMapValue} disabled={lockInputs} />
+      </KeyMapInputIdentifiers>
+      {/*
+            <div
         className={`mx-auto h-full border-b-[60px] ${
           props.index % 2 == 0
             ? ' rotate-360 border-r-[25px] border-l-[0px]'
             : 'rotate-180 border-r-[0px] border-l-[25px]'
         }  border-r-transparent border-l-transparent border-b-[#778D83]`}
       />
-      <KeyMapInputIdentifiers>
-        Key Map Position
-        <KeyMapPositionTextBox placeholder={keyMapPosition} />
-      </KeyMapInputIdentifiers>
-      <KeyMapInputIdentifiers>
-        Key Map Value
-        <KeyMapValueTextBox placeholder={keyMapValue} />
-      </KeyMapInputIdentifiers>
+      On hold until I have time to build this out
       <CardEditButton
         onClick={onClick}
         cancelled={lockInputs}
@@ -123,6 +130,7 @@ export function ChordLayoutCard(props: any): ReactElement {
       >
         Confirm
       </CardConfirmDeleteButton>
+      */}
     </CardLayoutContainer>
   );
 }

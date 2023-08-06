@@ -30,12 +30,20 @@ export function ExportChordLayout(): ReactElement {
         const tempCreated = createChordLayout(
           inChordLayout[1],
           inChordLayout[2],
-          actionMap[inChordLayout[3]],
+          inChordLayout[3],
         );
-        setDownloadedChordLayout(tempCreated);
         tempHere.push(tempCreated);
+        console.log(
+          'What am I seeing here ' +
+            inChordLayout[1] +
+            ' ' +
+            inChordLayout[2] +
+            ' ' +
+            inChordLayout[3],
+        );
       }
     }
+    setDownloadedChordLayout(tempHere);
 
     //iterate through table from bottom to top to capture all the chords and phrases
     let csvRows = [];

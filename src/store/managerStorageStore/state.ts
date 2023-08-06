@@ -17,7 +17,6 @@ const managerStoreState: ManagerStoreState = {
   lineReaderDone: '',
   abortController1: new AbortController(),
   abortController2: new AbortController(),
-  _chordmapId: 'Default',
   _chordmapCountOnDevice: 50,
   _firmwareVersion: '0',
   _chordMapIdCounter: 0,
