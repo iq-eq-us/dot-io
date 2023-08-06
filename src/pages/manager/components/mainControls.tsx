@@ -6,10 +6,9 @@ import {
   _chordLayout,
   actionMap,
   oldAsciiKeyReplacementDictionary,
-} from './maps';
+} from '../controls/maps';
 import hex2Bin from 'hex-to-bin';
 import { replace, split, toUpper } from 'lodash';
-import { commitAllWithStart } from '../components/saveAll';
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
