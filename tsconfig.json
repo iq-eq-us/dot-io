@@ -1,5 +1,5 @@
 {
-  "include": ["src", "types", "backend"],
+  "include": ["src", "types", "backend", "public/sw.tsx"],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
