@@ -24,7 +24,7 @@ if (import.meta.hot) {
 }
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
-    .register('./service-worker.tsx')
+    .register('/#/service-worker.tsx')
     .then((e) => console.log('Service worker registered', e))
     .catch((e) => console.log('service worker failed', e));
 }
