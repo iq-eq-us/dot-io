@@ -50,9 +50,9 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html'),
+  createHandlerBoundToURL(window.location.href + '/index.html'),
 );
-console.log('this is the ine in public'+ process.env.PUBLIC_URL)
+console.log('this is the ine in public'+ window.location.href)
 
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
