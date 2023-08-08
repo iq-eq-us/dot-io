@@ -23,7 +23,7 @@ if (import.meta.hot) {
 }
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
-    .register('#/serviceworker.js')
+    .register('/src/serviceworker.js')
     .then((e) => console.log('Service worker registered', e))
     .catch((e) => console.log('service worker failed', e));
 }
