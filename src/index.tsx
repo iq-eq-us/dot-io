@@ -22,7 +22,8 @@ if (import.meta.hot) {
   import.meta.hot.accept();
 }
 if ('serviceWorker' in navigator) {
-  self.addEventListener('fetch', (e) => {
-    console.log(`intercepting ${e.request.method} to ${e.request.url}`);
-  });
+  navigator.serviceWorker
+    .register('./serviceworker.js')
+    .then((e) => console.log('Service worker registered', e))
+    .catch((e) => console.log('service worker failed', e));
 }
