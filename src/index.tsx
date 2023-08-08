@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './pages/app/App';
 import './assets/global.css';
+//import * as '../public/service-worker'
 
 // This is the entry point to the React application
 // All pages, components, and functionality lives under this umbrella
@@ -23,7 +24,7 @@ if (import.meta.hot) {
 }
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
-    .register('/src/serviceworker.js')
+    .register('./service-worker.tsx')
     .then((e) => console.log('Service worker registered', e))
     .catch((e) => console.log('service worker failed', e));
 }
