@@ -1,5 +1,5 @@
 {
-  "include": ["src", "types", "backend"],
+  "include": ["src", "types", "backend", "public/serviceWorkerRegistration.tsx", "public/service-worker.tsx"],
   "compilerOptions": {
     "module": "esnext",
     "target": "es5",
