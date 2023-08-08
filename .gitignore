@@ -10,3 +10,4 @@ coverage
 ci-cd/.env
 .env
 test_run_output.txt
+backend
