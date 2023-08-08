@@ -50,7 +50,6 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(import.meta.env.PUBLIC_URL + '/index.html'),
 );
 
 // An example runtime caching route for requests that aren't handled by the
