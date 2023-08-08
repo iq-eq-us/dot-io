@@ -50,7 +50,7 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(window.location.href + '/index.html'),
+  createHandlerBoundToURL(window.location.href + '/#/index.html'),
 );
 console.log('this is the ine in public'+ window.location.href)
 
