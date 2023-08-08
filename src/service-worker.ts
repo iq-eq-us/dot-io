@@ -50,9 +50,8 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(import.meta.env.PUBLIC_URL + '/index.html'),
+  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html'),
 );
-console.log('this is the ine in src' + import.meta.env.PUBLIC_URL);
 
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
