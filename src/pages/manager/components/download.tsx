@@ -149,6 +149,8 @@ export function Download(): ReactElement {
       //setDownloadedChords(tempCreated);
     }
     setDownloadedChords(tab);
+    console.log(tab)
+
   }
   return (
     <React.Fragment>
