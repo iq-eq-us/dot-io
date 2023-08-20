@@ -94,6 +94,8 @@ export async function downloadChordsForAllChordsModule() {
       createEmptyChordStatisticsFromDevice(phrase, 'ALLCHORDS', [], chord);
 
     statisticsFromDevice.push(newStat);
+    console.log('empty stuff:');
+
     //strValues.push(tempCurrentChord);
     element.innerHTML =
       'Chord Download Progress: ' +
@@ -149,6 +151,7 @@ export function Download(): ReactElement {
       //setDownloadedChords(tempCreated);
     }
     setDownloadedChords(tab);
+    console.log(tab);
   }
   return (
     <React.Fragment>

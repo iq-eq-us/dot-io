@@ -25,7 +25,7 @@ export function PressCommit(): ReactElement {
     const element: HTMLElement = document.getElementById(
       'commitAllProgress',
     ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
-    for (let i = 0; i < downloadedChords.length - 1; i++) {
+    for (let i = 0; i < downloadedChords.length; i++) {
       const card = downloadedChords[i];
       const hexChord = convertHumanChordToHexadecimalChord(card.currentChord);
       const hexPhrase = convertHumanStringToHexadecimalPhrase(

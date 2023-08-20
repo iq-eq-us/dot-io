@@ -183,13 +183,6 @@ const ReverseLookUpTable = {
   CAPSLOCK: 313,
   F1: 314,
   F2: 315,
-  LEFT_CTRL: 512,
-  LEFT_SHIFT: 513,
-  LEFT_ALT: 514,
-  LEFT_GUI: 515,
-  RIGHT_CTRL: 516,
-  RIGHT_SHIFT: 517,
-  RIGHT_ALT: 518,
   F3: 316,
   F4: 317,
   F5: 318,
@@ -215,40 +208,42 @@ const ReverseLookUpTable = {
   ARROW_UP: 338,
   NUMLOCK: 339,
   KP_SLASH: 340,
+  KP_ASTER: 341,
+  KP_MINUS: 342,
+  KP_PLUS: 343,
+  KP_ENTER: 344,
+  KP_1: 345,
+  KP_2: 346,
+  KP_3: 347,
+  KP_4: 348,
+  KP_5: 349,
+  KP_6: 350,
+  KP_7: 351,
+  KP_8: 352,
+  KP_9: 353,
+  KP_0: 354,
+  KP_DOT: 355,
   /*
-  'KP_ASTER', //341, Keypad *
-  'KP_MINUS', //342, Keypad -
-  'KP_PLUS', //343, Keypad +
-  'KP_ENTER', //344, Keypad Enter
-  'KP_1', //345, Keypad 1 and End
-  'KP_2', //346, Keypad 2 and Down Arrow
-  'KP_3', //347, Keypad 3 and Page Down
-  'KP_4', //348, Keypad 4 and Left Arrow
-  'KP_5', //349, Keypad 5
-  'KP_6', //350, Keypad 6 and Right Arrow
-  'KP_7', //351, Keypad 7 and Home
-  'KP_8', //352, Keypad 8 and Up Arrow
-  'KP_9', //353, Keypad 9 and Page Up
-  'KP_0', //354, Keypad 0 and Insert
-  'KP_DOT', //355, Keypad . and Delete
   'KSC_64', //356, Keyboard Non-US \ and | (US English)
   'COMPOSE', //357, Keyboard Application
   'POWER', //358, Keyboard Power
   'KP_EQUAL', //359, Keypad =
-  'F13', //360, Keyboard F13
-  'F14', //361, Keyboard F14
-  'F15', //362, Keyboard F15
-  'F16', //363, Keyboard F16
-  'F17', //364, Keyboard F17
-  'F18', //365, Keyboard F18
-  'F19', //366, Keyboard F19
-  'F20', //367, Keyboard F20
-  'F21', //368, Keyboard F21
-  'F22', //369, Keyboard F22
-  'F23', //370, Keyboard F23
-  'F24', //371, Keyboard F24
-  'EXECUTE', //372, Keyboard Execute
-  'HELP', //373, Keyboard Help
+  */
+  F13: 360,
+  F14: 361,
+  F15: 362,
+  F16: 363,
+  F17: 364,
+  F18: 365,
+  F19: 366,
+  F20: 367,
+  F21: 368,
+  F22: 369,
+  F23: 370,
+  F24: 371,
+  EXECUTE: 372,
+  HELP: 373,
+  /*
   'MENU', //374, Keyboard Menu
   'SELECT', //375, Keyboard Select
   'STOP', //376, Keyboard Stop
@@ -265,7 +260,9 @@ const ReverseLookUpTable = {
   'KSC_83', //387, Keyboard Locking Num Lock
   'KSC_84', //388, Keyboard Locking Scroll Lock
   'KP_COMMA', //389, Keypad Comma
-  'KSC_86', //390, Keypad Equals Sign - intepret this
+  */
+  KSC_86: 390,
+  /*
   'INTL1', //391, Keyboard International1
   'INTL2', //392, Keyboard International2
   'INTL3', //393, Keyboard International3
@@ -307,7 +304,9 @@ const ReverseLookUpTable = {
   'KSC_AD', //429,
   'KSC_AE', //430,
   'KSC_AF', //431,
-  'KSC_B0', //432, Keypad 00
+  */
+  KSC_B0: 432,
+  /*
   'KSC_B1', //433, Keypad 000
   'KSC_B2', //434, Thousands Separator
   'KSC_B3', //435, Decimal Separator
@@ -387,14 +386,16 @@ const ReverseLookUpTable = {
   'KSC_FD', //509,
   'KSC_FE', //510,
   'KSC_FF', //511,
-  'LEFT_CTRL', //512, Left Control Keyboard Modifier
-  'LEFT_SHIFT', //513, Left Shift Keyboard Modifier
-  'LEFT_ALT', //514, Left Alt Keyboard Modifier
-  'LEFT_GUI', //515, Left GUI Keyboard Modifier
-  'RIGHT_CTRL', //516, Right Control Keyboard Modifier
-  'RIGHT_SHIFT', //517, Right Shift Keyboard Modifier
-  'RIGHT_ALT', //518, Right Alt Keyboard Modifier
-  'RIGHT_GUI', //519, Right GUI Keyboard Modifier
+  */
+  LEFT_CTRL: 512,
+  LEFT_SHIFT: 513,
+  LEFT_ALT: 514,
+  LEFT_GUI: 515,
+  RIGHT_CTRL: 516,
+  RIGHT_SHIFT: 517,
+  RIGHT_ALT: 518,
+  RIGHT_GUI: 519,
+  /*
   'RELEASE_MOD', //520, Release all keyboard modifiers
   'RELEASE_ALL', //521, Release all keys and keyboard modifiers
   'RELEASE_KEYS', //522, Release all keys, but not keyboard modifiers
@@ -411,7 +412,9 @@ const ReverseLookUpTable = {
   '', //533,
   'IMPULSE', //534, Toggle Impulse
   '', //535,
-  'DUP', //536, Repeat Last Note
+  */
+  DUP: 536,
+  /*
   '', //537,
   'SPUR', //538, Spur Toggle
   '', //539,
@@ -1081,7 +1084,7 @@ export function convertHexadecimalChordToHumanChord(hexChord) {
         humanChord += ' + '; //add this + between action ids; put here so we don't have to remove it at end of for-loop
       }
 
-      console.log('this is actionMap output ' + actionMap[actionCode]);
+      //console.log('this is actionMap output ' + actionMap[actionCode]);
       const humanStringPart = replaceOldAsciiKeys(actionMap[actionCode]); //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
       //console.log('Old Ascii '+ humanStringPart)
       humanChord += humanStringPart?.split('_')?.pop(); //Replace when new action codes arrive
@@ -1196,19 +1199,23 @@ export function convertHumanStringToHexadecimalPhrase(
     const leftShiftValue = DecimalHexTwosComplement(
       ReverseLookUpTable['LEFT_SHIFT'],
     );
+    const numberOfshifts = (
+      humanString.match(new RegExp(leftShiftValue, 'g')) || []
+    ).length;
+    //console.log('human string length ' +     (humanString.match(new RegExp(leftShiftValue, "g")) || []).length)
     for (let i = 0; i < humanString.length; i++) {
       if (
         ReverseLookUpTable[humanString[i].toUpperCase()] != undefined &&
         humanString[i] != humanString[i].toUpperCase()
       ) {
-        !shouldModBeTrue
+        !shouldModBeTrue && numberOfshifts
           ? [(shouldModBeTrue = true), (hexString += leftShiftValue)]
           : '';
         hexString += DecimalHexTwosComplement(
           actionMap.indexOf(humanString[i].toUpperCase()),
         );
       } else if (humanString[i] == humanString[i].toUpperCase()) {
-        !shouldModBeTrue
+        !shouldModBeTrue && numberOfshifts
           ? [(shouldModBeTrue = true), (hexString += leftShiftValue)]
           : '';
 
@@ -1259,7 +1266,7 @@ export function convertHumanStringToHexadecimalPhrase(
   return hexString;
 }
 function DecimalHexTwosComplement(decimal) {
-  const size = 8;
+  const size = 2;
 
   if (decimal >= 0) {
     let hexadecimal = decimal.toString(16);
