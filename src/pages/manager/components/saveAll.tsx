@@ -12,6 +12,9 @@ import {
   convertHumanStringToHexadecimalPhrase,
   sendCommandString,
 } from '../controls/mainControls';
+function greet() {
+  console.log('trigger timeout');
+}
 
 export function PressCommit(): ReactElement {
   const downloadedChords = useStoreState(
@@ -44,6 +47,8 @@ export function PressCommit(): ReactElement {
         sendCommandString('CML C3 ' + hexChord + ' ' + hexPhrase),
         i,
       );
+
+      setTimeout(greet, 3000);
 
       element.innerHTML =
         'Commit Progress: ' +
