@@ -183,14 +183,12 @@ const Navbar = (): ReactElement => {
           <NavBtnLink href="#/manager" onClick={() => setTrainingLevel('')}>
             Connect
           </NavBtnLink>
-          {history.location.pathname.endsWith(ROUTER_PATHS.home) && (
-            <button
-              className="hover:bg-[#333] rounded"
-              onClick={() => setIsDisplayingIntroductionModal(true)}
-            >
-              <InfoIcon />
-            </button>
-          )}
+          <button
+            className="hover:bg-[#333] rounded"
+            onClick={() => setIsDisplayingIntroductionModal(true)}
+          >
+            <InfoIcon />
+          </button>
         </NavBtn>
       </NavbarContainer>
     </NavI>
