@@ -47,8 +47,7 @@ export function PressCommit(): ReactElement {
         sendCommandString('CML C3 ' + hexChord + ' ' + hexPhrase),
         i,
       );
-
-      setTimeout(greet, 3000);
+      await sleep();
 
       element.innerHTML =
         'Commit Progress: ' +
@@ -58,7 +57,13 @@ export function PressCommit(): ReactElement {
       //rows would be accessed using the "row" variable assigned in the for loop
     }
   }
-
+  function timeout(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  async function sleep() {
+    await timeout(1000);
+    return greet;
+  }
   const wontTimeout = async (func, virtualId) => {
     try {
       const { data } = await asyncCallWithTimeout(func, 10000, virtualId);
