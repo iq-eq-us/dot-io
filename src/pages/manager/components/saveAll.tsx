@@ -62,7 +62,7 @@ export function PressCommit(): ReactElement {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   async function sleep() {
-    await timeout(200);
+    await timeout(1);
     return greet;
   }
   const wontTimeout = async (func, virtualId) => {
