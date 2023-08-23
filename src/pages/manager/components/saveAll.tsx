@@ -5,6 +5,7 @@ import {
   pressCommitButton,
   clickCommit,
   asyncCallWithTimeout,
+  readGetOneAndReturnOne,
 } from '../controls/mainControls';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
@@ -71,6 +72,7 @@ export function PressCommit(): ReactElement {
     } catch (err) {
       await asyncCallWithTimeout(func, 10000, virtualId);
     }
+    await readGetOneAndReturnOne();
   };
 
   return (

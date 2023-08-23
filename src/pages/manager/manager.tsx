@@ -72,7 +72,10 @@ const Manager = (): ReactElement => {
 
             <div id="commitAllProgress" />
 
+            <ImportChords />
+            <Export />
             <Download />
+            <PressCommit />
           </Table>
           <PageContainer>
             <ChordMapColumn />

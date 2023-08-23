@@ -588,6 +588,7 @@ export async function readGetOneAndReturnOne() {
     .catch(console.error);
   //throw away the value
   if (value) {
+    console.log('RESPONSE ' + value);
     return value;
   } else {
     console.log('value is null');
