@@ -69,9 +69,7 @@ const Manager = (): ReactElement => {
               id="downloadCompletionPercentage"
               className="text-white mb-4 inline-block ml-2"
             />
-
             <div id="commitAllProgress" />
-
             <ImportChords />
             <Export />
             <Download />
