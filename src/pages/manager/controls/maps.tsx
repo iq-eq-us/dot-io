@@ -3606,7 +3606,7 @@ const actionMap = [
   '', //29, 10-bit Action Codes 0x1D
   '', //30, 10-bit Action Codes 0x1E
   '', //31, 10-bit Action Codes 0x1F
-  ' ', //32, Space
+  'Space', //32, Space
   '!', //33, Exclamation Point
   '"', //34, Double Quote
   '#', //35, Hash Symbol
@@ -3874,7 +3874,7 @@ const actionMap = [
   'ESC', //297, Keyboard Escape (US English)
   'BKSP', //298, Keyboard Backspace (US English)
   'TAB', //299, Keyboard Tab (US English)
-  'KSC_2C', //300, Keyboard Space (US English)
+  ' ', //300, Keyboard Space (US English)
   'KSC_2D', //301, Keyboard - and _ (US English)
   'KSC_2E', //302, Keyboard = and + (US English)
   'KSC_2F', //303, Keyboard [ and { (US English)
@@ -3964,7 +3964,7 @@ const actionMap = [
   'KSC_83', //387, Keyboard Locking Num Lock
   'KSC_84', //388, Keyboard Locking Scroll Lock
   'KP_COMMA', //389, Keypad Comma
-  'KSC_86', //390, Keypad Equals Sign
+  'KSC_86', //390, Keypad Equals Sign - intepret this
   'INTL1', //391, Keyboard International1
   'INTL2', //392, Keyboard International2
   'INTL3', //393, Keyboard International3

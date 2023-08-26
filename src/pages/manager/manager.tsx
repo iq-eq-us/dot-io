@@ -13,12 +13,10 @@ import { AddChordMap } from '../manager/components/addChordMap';
 import { PressCommit } from './components/saveAll';
 import { ImportChordLayout } from './components/importLayout';
 import { ExportChordLayout } from './components/exportLayout';
-import { AddLayoutHeaders } from './components/addHeadersLayout';
 import { CommitAllLayoutChanges } from './components/commitAllLayouts';
 import { ChordMapColumn } from './components/ChordMapCardColumn';
 import { ChordLayoutColumn } from './components/ChordLayoutCardColumn';
 import { Terminal } from './components/Terminal';
-
 import {
   ManagerPageContainer,
   Table,
@@ -27,7 +25,9 @@ import {
   PageContainer,
   TopSectionContainer,
 } from '../manager/manager.styled';
-import { ChordMapCard } from './components/ChordMapCard';
+import { DeviceNavigationBar } from './components/DeviceNavigationBar';
+import ManagersDeviceOverlay from './components/ManagersDeviceOverlay';
+import { MainControls } from './controls/mainControls';
 
 const Manager = (): ReactElement => {
   React.useEffect(() => {
@@ -46,7 +46,7 @@ const Manager = (): ReactElement => {
             <DisconnectButton />
             <BootLoaderButton />
             <RebootButton />
-            <div className="h-1 w-6/12 bg-green-500 rounded mb-10 mt-10" />
+            <div className="h-1 w-6/12 bg-[#3A5A42] rounded mb-10 mt-10" />
             <div className="font-mono text-xl ml-2">
               Layout{' '}
               <a
@@ -63,15 +63,17 @@ const Manager = (): ReactElement => {
             <ExportChordLayout />
             <CommitAllLayoutChanges />
             <ChordLayoutColumn />
-            <div className="h-1 w-6/12 mt-6 bg-green-500 rounded mb-10" />
+            <div className="h-1 w-6/12 mt-6 bg-[#3A5A42] rounded mb-10" />
             <div className="font-mono text-xl ml-2">Library</div>
             <div
               id="downloadCompletionPercentage"
               className="text-white mb-4 inline-block ml-2"
             />
-
             <div id="commitAllProgress" />
+            <ImportChords />
+            <Export />
             <Download />
+            <PressCommit />
           </Table>
           <PageContainer>
             <ChordMapColumn />
@@ -81,7 +83,7 @@ const Manager = (): ReactElement => {
               <AddHeaders />
               <AddChordMap />
             </ChordContainer>
-            <div className="h-1 w-6/12 mt-16 bg-green-500 rounded mb-10" />
+            <div className="h-1 w-6/12 mt-16 bg-[#3A5A42] rounded mb-10" />
 
             <Terminal />
           </PageContainer>

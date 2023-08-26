@@ -136,7 +136,7 @@ const modal = {
 };
 
 const modal_content = {
-  backgroundColor: '#181818' as const,
+  backgroundColor: '#222424' as const,
   position: 'absolute' as const,
   top: '20%' as const,
   left: '20%' as const,

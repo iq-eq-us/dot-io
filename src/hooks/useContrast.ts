@@ -4,6 +4,6 @@ export const useContrast = (): string => {
   const trainingSettings = useStoreState((store) => store.trainingSettings);
 
   const alphaValue = trainingSettings.contrastPercentage / 100;
-  return `[#181818]
+  return `[#222424]
   })`;
 };

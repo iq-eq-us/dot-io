@@ -125,7 +125,7 @@ const AggregateRow = ({ data }: { data: any }) => {
 
 const TrainingStatsColumnContainer = styled.div.attrs({
   className:
-    'flex flex-col text-center align-center w-full  ml-auto mr-auto relative bg-[#181818]',
+    'flex flex-col text-center align-center w-full  ml-auto mr-auto relative bg-[#222424]',
 })``;
 
 const WordRowContainer = styled.div`

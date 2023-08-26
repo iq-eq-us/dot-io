@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { appendLayoutToRow, sendCommandString } from '../controls/mainControls';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { createChordLayout } from '../../../models/managerModels';
+import { _actionMap, actionMap, _keyMap } from '../controls/maps';
 
 export function ImportChordLayout(): ReactElement {
   const clearDownloadedChordLayout = useStoreActions(
@@ -61,11 +62,15 @@ export function ImportChordLayout(): ReactElement {
 
         //await appendLayoutToRow(strValues, true);
         // thisArray.push("VAR B4 "+strAllValues[0] +" "+strAllValues[1] +" "+strAllValues[2]);
+        actionMap[strAllValues[2]] == null
+          ? 'KSC_00'
+          : actionMap[strAllValues[2]];
         const temp = createChordLayout(
           strAllValues[0],
           strAllValues[1],
-          strAllValues[2],
+          strAllValues[2] == null ? 'KSC_00' : actionMap[strAllValues[2]],
         );
+        //console.log('STR Values '+ strAllValues[2]
         thisArray.push(temp);
         newArray.push(
           'VAR B4 ' +

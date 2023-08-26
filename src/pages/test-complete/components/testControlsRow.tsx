@@ -17,7 +17,7 @@ export function TestControlRow(): ReactElement {
 }
 
 const TierSelector = styled.div`
-  background-color: #181818;
+  background-color: #222424;
   height: 60px;
   min-width: 100%;
 `;
@@ -31,7 +31,7 @@ const ItemsContainer = styled.div`
   align-items: center;
 `;
 const RowContainer = styled.div`
-  background-color: #181818;
+  background-color: #222424;
   height: 60px;
   display: flex;
   justify-content: center;

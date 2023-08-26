@@ -1,8 +1,13 @@
 {
-  "include": ["src", "types"],
+  "include": ["src", "types", "backend"],
   "compilerOptions": {
     "module": "esnext",
-    "target": "esnext",
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "moduleResolution": "node",
     "jsx": "preserve",
     "baseUrl": "./",
@@ -17,7 +22,7 @@
     "noEmit": true,
     /* Additional Options */
     "skipLibCheck": false,
-    "types": ["mocha", "snowpack-env", "chai"],
+    "types": ["mocha", "snowpack-env", "chai", "node"],
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,

@@ -5,6 +5,7 @@ import {
   pressCommitButton,
   clickCommit,
   asyncCallWithTimeout,
+  readGetOneAndReturnOne,
 } from '../controls/mainControls';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
@@ -12,6 +13,9 @@ import {
   convertHumanStringToHexadecimalPhrase,
   sendCommandString,
 } from '../controls/mainControls';
+function greet() {
+  console.log('trigger timeout');
+}
 
 export function PressCommit(): ReactElement {
   const downloadedChords = useStoreState(
@@ -25,7 +29,7 @@ export function PressCommit(): ReactElement {
     const element: HTMLElement = document.getElementById(
       'commitAllProgress',
     ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
-    for (let i = 0; i < downloadedChords.length - 1; i++) {
+    for (let i = 0; i < downloadedChords.length; i++) {
       const card = downloadedChords[i];
       const hexChord = convertHumanChordToHexadecimalChord(card.currentChord);
       const hexPhrase = convertHumanStringToHexadecimalPhrase(
@@ -44,6 +48,7 @@ export function PressCommit(): ReactElement {
         sendCommandString('CML C3 ' + hexChord + ' ' + hexPhrase),
         i,
       );
+      await sleep();
 
       element.innerHTML =
         'Commit Progress: ' +
@@ -53,7 +58,13 @@ export function PressCommit(): ReactElement {
       //rows would be accessed using the "row" variable assigned in the for loop
     }
   }
-
+  function timeout(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  async function sleep() {
+    await timeout(1);
+    return greet;
+  }
   const wontTimeout = async (func, virtualId) => {
     try {
       const { data } = await asyncCallWithTimeout(func, 10000, virtualId);
@@ -61,6 +72,7 @@ export function PressCommit(): ReactElement {
     } catch (err) {
       await asyncCallWithTimeout(func, 10000, virtualId);
     }
+    await readGetOneAndReturnOne();
   };
 
   return (

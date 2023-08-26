@@ -10,13 +10,13 @@ export function ChordLayoutColumn(): ReactElement {
 
   return (
     <CardLayoutColumn>
-      {downloadedChordLayout.map((props) => (
-        <ChordLayoutCard key={Math.random()} {...props} />
+      {downloadedChordLayout.map((props, index) => (
+        <ChordLayoutCard key={Math.random()} {...props} index={index} />
       ))}
     </CardLayoutColumn>
   );
 }
 
 const CardLayoutColumn = styled.div.attrs({
-  className: `flex flex-wrap flex-col items-center center justify-center`,
+  className: `flex flex-wrap flex-row items-center center justify-center`,
 })``;

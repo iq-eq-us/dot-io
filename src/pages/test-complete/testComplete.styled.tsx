@@ -25,7 +25,7 @@ export const ComingSoonContainer = styled.div.attrs({
 })``;
 
 export const ManagerPageContainer = styled.section.attrs({
-  className: `text-white body-font pt-24 w-screen min-h-screen bg-[#181818]`,
+  className: `text-white body-font pt-24 w-screen min-h-screen bg-[#222424]`,
 })``;
 
 export const GManagerPageContainer = styled.section.attrs({

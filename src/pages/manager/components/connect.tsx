@@ -7,36 +7,9 @@ import {
 } from '../controls/mainControls';
 import { getId } from '../components/getID';
 import { getCount } from '../../manager/components/countChords';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const CC_VENDOR_IDS = [0x239a, 0x303a]; // CharaChorder Vendor ID
-
-export async function startSerialConnection() {
-  console.log('startSerialConnection()');
-  try {
-    // Prompt user to select any serial port.
-
-    MainControls.serialPort = await navigator?.serial?.requestPort({
-      filters: CC_VENDOR_IDS.map((id) => ({ usbVendorId: id })),
-    });
-    console.log('requestPort()');
-    // Wait for the serial port to open.
-    await openSerialPort();
-    await setupLineReader();
-    await setCharaChorderToTypicalFunctionality();
-    await getId();
-    await getCount();
-  } catch (error) {
-    console.log(error);
-
-    const element: HTMLInputElement = document?.getElementById(
-      'statusDiv',
-    ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
-    if (element != null) {
-      element.innerHTML =
-        'status: failed to open serial port; may already be open elsewhere';
-    }
-  }
-}
 
 async function openSerialPort() {
   console.log('openSerialPort()');
@@ -109,16 +82,32 @@ class LineBreakTransformer {
 async function setCharaChorderToTypicalFunctionality() {
   console.log('setCharaChorderToTypicalFunctionality()');
 }
-export async function allFunc() {
-  await startSerialConnection();
-  await getCount();
-  await getId();
-  window.dispatchEvent(new Event('resize'));
+export async function exportableStartSerialConnection() {
+  console.log('startSerialConnection()');
+  try {
+    // Prompt user to select any serial port.
 
-  const manager: HTMLElement = document.getElementById(
-    'manager',
-  ) as HTMLElement;
-  manager.classList.add('connected');
+    MainControls.serialPort = await navigator?.serial?.requestPort({
+      filters: CC_VENDOR_IDS.map((id) => ({ usbVendorId: id })),
+    });
+    console.log('requestPort()');
+    // Wait for the serial port to open.
+    await openSerialPort();
+    await setupLineReader();
+    await setCharaChorderToTypicalFunctionality();
+    await getId();
+    await getCount();
+  } catch (error) {
+    console.log(error);
+
+    const element: HTMLInputElement = document?.getElementById(
+      'statusDiv',
+    ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
+    if (element != null) {
+      element.innerHTML =
+        'status: failed to open serial port; may already be open elsewhere';
+    }
+  }
 }
 
 export async function connectDeviceAndPopUp() {
@@ -127,8 +116,7 @@ export async function connectDeviceAndPopUp() {
     className="flex-row border-zinc-400 border-4	left-56 rounded-xl absolute ml-80 mt-24 justify-center h-2/5 bg-white"
   />;
 
-  await startSerialConnection();
-
+  await exportableStartSerialConnection();
   await getId();
   await getCount();
   //window.dispatchEvent(new Event('resize'));
@@ -136,7 +124,54 @@ export async function connectDeviceAndPopUp() {
   //const manager: HTMLElement = document.getElementById("manager") as HTMLElement;
   //manager.classList.add("connected");
 }
+
 export function ConnectButton(): ReactElement {
+  const setDeviceId = useStoreActions((store: any) => store.setDeviceId);
+
+  const deviceId = useStoreState((store: any) => store.deviceId);
+
+  async function startSerialConnection() {
+    console.log('startSerialConnection()');
+    try {
+      // Prompt user to select any serial port.
+
+      MainControls.serialPort = await navigator?.serial?.requestPort({
+        filters: CC_VENDOR_IDS.map((id) => ({ usbVendorId: id })),
+      });
+      console.log('requestPort()');
+      // Wait for the serial port to open.
+      await openSerialPort();
+      await setupLineReader();
+      await setCharaChorderToTypicalFunctionality();
+      const id = await getId();
+      setDeviceId(id);
+      console.log('this is the id' + id + ' ' + deviceId);
+      await getCount();
+    } catch (error) {
+      console.log(error);
+
+      const element: HTMLInputElement = document?.getElementById(
+        'statusDiv',
+      ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
+      if (element != null) {
+        element.innerHTML =
+          'status: failed to open serial port; may already be open elsewhere';
+      }
+    }
+  }
+
+  async function allFunc() {
+    await startSerialConnection();
+    await getCount();
+    await getId();
+    window.dispatchEvent(new Event('resize'));
+
+    const manager: HTMLElement = document.getElementById(
+      'manager',
+    ) as HTMLElement;
+    manager.classList.add('connected');
+  }
+
   return (
     <React.Fragment>
       <div id="statusDiv" />
