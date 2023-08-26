@@ -46,6 +46,8 @@ export function ProgressBar(): ReactElement {
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics?.statistics,
   );
+  const wpm = useWordsPerMinute();
+
   const wordsPracticedInOrder = useStoreState(
     (store) => store.wordsPracticedInOrder,
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './pages/app/App';
 import './assets/global.css';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 // This is the entry point to the React application
 // All pages, components, and functionality lives under this umbrella
@@ -21,3 +22,4 @@ ReactDOM.render(
 if (import.meta.hot) {
   import.meta.hot.accept();
 }
+serviceWorkerRegistration.register();

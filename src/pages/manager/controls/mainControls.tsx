@@ -8,7 +8,7 @@ import {
   oldAsciiKeyReplacementDictionary,
 } from './maps';
 import hex2Bin from 'hex-to-bin';
-import { replace } from 'lodash';
+import { replace, split, toUpper } from 'lodash';
 import { commitAllWithStart } from '../components/saveAll';
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -46,6 +46,458 @@ export class MainControls {
   public static CONFIG_ID_CHAR_KILLER_TOGGLE = '29';
   public static CONFIG_ID_CHAR_COUNTER_KILLER = '2A';
 }
+const BaseLevelSpecialCharactersLibrary = {
+  '2D': '-', //301, Keyboard - and _ (US English)
+  '2E': '=', //302, Keyboard = and + (US English)
+  '2F': '[', //303, Keyboard [ and { (US English)
+  '30': ']', //304, Keyboard ] and } (US English)
+  '31': "'", //305, Keyboard \ and | (US English)
+  '32': '#', //306, Keyboard Non-US # and ~ (US English)
+  '33': ';', //307, Keyboard ; and : (US English)
+  '34': "'", //308, Keyboard ' and " (US English)
+  '35': '`', //309, Keyboard ` and ~ (US English)
+  '36': ',', //310, Keyboard , and < (US English)
+  '37': '.', //311, Keyboard . and > (US English)
+  '38': '/', //312, Keyboard / and ? (US English)
+};
+
+const ModifierCharactersLibrary = {
+  KEY_1: '!', //286, Keyboard 1 and ! (US English)
+  KEY_2: '@', //287, Keyboard 2 and @ (US English)
+  KEY_3: '#', //288, Keyboard 3 and # (US English)
+  KEY_4: '$', //289, Keyboard 4 and $ (US English)
+  KEY_5: '%', //290, Keyboard 5 and % (US English)
+  KEY_6: '^', //291, Keyboard 6 and ^ (US English)
+  KEY_7: '&', //292, Keyboard 7 and & (US English)
+  KEY_8: '*', //293, Keyboard 8 and * (US English)
+  KEY_9: '(', //294, Keyboard 9 and ( (US English)
+  KEY_0: ')', //295, Keyboard 0 and ) (US English)
+  KSC_2C: 'Space', //300, Keyboard Space (US English)
+  KSC_2D: '_', //301, Keyboard - and _ (US English)
+  KSC_2E: '+', //302, Keyboard = and + (US English)
+  KSC_2F: '{', //303, Keyboard [ and { (US English)
+  KSC_30: '}', //304, Keyboard ] and } (US English)
+  KSC_31: '|', //305, Keyboard \ and | (US English)
+  KSC_32: '~', //306, Keyboard Non-US # and ~ (US English)
+  KSC_33: ':', //307, Keyboard ; and : (US English)
+  KSC_34: '"', //308, Keyboard ' and " (US English)
+  KSC_35: '~', //309, Keyboard ` and ~ (US English)
+  KSC_36: '<', //310, Keyboard , and < (US English)
+  KSC_37: '>', //311, Keyboard . and > (US English)
+  KSC_38: '?', //312, Keyboard / and ? (US English)
+};
+
+const ReverseModifierCharactersLibrary = {
+  '!': 286,
+  '@': 287,
+  '#': 288,
+  $: 289,
+  '%': 290,
+  '^': 291,
+  '&': 292,
+  '*': 293,
+  '(': 294,
+  ')': 295,
+  ' ': 300,
+  _: 301,
+  '-': 301,
+  '+': 302,
+  '=': 302,
+  '{': 303,
+  '[': 303,
+  ']': 304,
+  '}': 304,
+  //"\'": 305,
+  '|': 305,
+  ':': 307,
+  ';': 307,
+  '"': 308,
+  "'": 308,
+  '~': 309,
+  '`': 309,
+  '<': 310,
+  ',': 310,
+  '>': 311,
+  '.': 311,
+  '?': 312,
+};
+
+const ReverseLookUpTable = {
+  KSC_00: 256,
+  KSC_01: 257,
+  KSC_02: 258,
+  KSC_03: 259,
+  KEY_A: 260,
+  KEY_B: 261,
+  KEY_C: 262,
+  KEY_D: 263,
+  KEY_E: 264,
+  KEY_F: 265,
+  KEY_G: 266,
+  KEY_H: 267,
+  KEY_I: 268,
+  KEY_J: 269,
+  KEY_K: 270,
+  KEY_L: 271,
+  KEY_M: 272,
+  KEY_N: 273,
+  KEY_O: 274,
+  KEY_P: 275,
+  KEY_Q: 276,
+  KEY_R: 277,
+  KEY_S: 278,
+  KEY_T: 279,
+  KEY_U: 280,
+  KEY_V: 281,
+  KEY_W: 282,
+  KEY_X: 283,
+  KEY_Y: 284,
+  KEY_Z: 285,
+  KEY_1: 286,
+  KEY_2: 287,
+  KEY_3: 288,
+  KEY_4: 289,
+  KEY_5: 290,
+  KEY_6: 291,
+  KEY_7: 292,
+  KEY_8: 293,
+  KEY_9: 294,
+  KEY_0: 295,
+  ENTER: 296,
+  ESC: 297,
+  BKSP: 298,
+  TAB: 299,
+  ' ': 300,
+  KSC_2D: 301,
+  KSC_2E: 302,
+  KSC_2F: 303,
+  KSC_30: 304,
+  KSC_31: 305,
+  KSC_32: 306,
+  KSC_33: 307,
+  KSC_34: 308,
+  KSC_35: 309,
+  KSC_36: 310,
+  KSC_37: 311,
+  KSC_38: 312,
+  CAPSLOCK: 313,
+  F1: 314,
+  F2: 315,
+  F3: 316,
+  F4: 317,
+  F5: 318,
+  F6: 319,
+  F7: 320,
+  F8: 321,
+  F9: 322,
+  F10: 323,
+  F11: 324,
+  F12: 325,
+  PRTSCN: 326,
+  SCRLK: 327,
+  PAUSE: 328,
+  INSERT: 329,
+  HOME: 330,
+  PGUP: 331,
+  DELETE: 332,
+  END: 333,
+  PGDN: 334,
+  ARROW_RT: 335,
+  ARROW_LF: 336,
+  ARROW_DN: 337,
+  ARROW_UP: 338,
+  NUMLOCK: 339,
+  KP_SLASH: 340,
+  KP_ASTER: 341,
+  KP_MINUS: 342,
+  KP_PLUS: 343,
+  KP_ENTER: 344,
+  KP_1: 345,
+  KP_2: 346,
+  KP_3: 347,
+  KP_4: 348,
+  KP_5: 349,
+  KP_6: 350,
+  KP_7: 351,
+  KP_8: 352,
+  KP_9: 353,
+  KP_0: 354,
+  KP_DOT: 355,
+  /*
+  'KSC_64', //356, Keyboard Non-US \ and | (US English)
+  'COMPOSE', //357, Keyboard Application
+  'POWER', //358, Keyboard Power
+  'KP_EQUAL', //359, Keypad =
+  */
+  F13: 360,
+  F14: 361,
+  F15: 362,
+  F16: 363,
+  F17: 364,
+  F18: 365,
+  F19: 366,
+  F20: 367,
+  F21: 368,
+  F22: 369,
+  F23: 370,
+  F24: 371,
+  EXECUTE: 372,
+  HELP: 373,
+  /*
+  'MENU', //374, Keyboard Menu
+  'SELECT', //375, Keyboard Select
+  'STOP', //376, Keyboard Stop
+  'AGAIN', //377, Keyboard Again
+  'UNDO', //378, Keyboard Undo
+  'CUT', //379, Keyboard Cut
+  'COPY', //380, Keyboard Copy
+  'PASTE', //381, Keyboard Paste
+  'FIND', //382, Keyboard Find
+  'MUTE', //383, Keyboard Mute
+  'VOL_UP', //384, Keyboard Volume Up
+  'VOL_DN', //385, Keyboard Volume Down
+  'KSC_82', //386, Keyboard Locking Caps Lock
+  'KSC_83', //387, Keyboard Locking Num Lock
+  'KSC_84', //388, Keyboard Locking Scroll Lock
+  'KP_COMMA', //389, Keypad Comma
+  */
+  KSC_86: 390,
+  /*
+  'INTL1', //391, Keyboard International1
+  'INTL2', //392, Keyboard International2
+  'INTL3', //393, Keyboard International3
+  'INTL4', //394, Keyboard International4
+  'INTL5', //395, Keyboard International5
+  'INTL6', //396, Keyboard International6
+  'INTL7', //397, Keyboard International7
+  'INTL8', //398, Keyboard International8
+  'INTL9', //399, Keyboard International9
+  'LANG1', //400, Keyboard LANG1
+  'LANG2', //401, Keyboard LANG2
+  'LANG3', //402, Keyboard LANG3
+  'LANG4', //403, Keyboard LANG4
+  'LANG5', //404, Keyboard LANG5
+  'LANG6', //405, Keyboard LANG6
+  'LANG7', //406, Keyboard LANG7
+  'LANG8', //407, Keyboard LANG8
+  'LANG9', //408, Keyboard LANG9
+  'KSC_99', //409, Keyboard Alternate Erase
+  'KSC_9A', //410, Keyboard SysReq/Attention
+  'KSC_9B', //411, Keyboard Cancel
+  'KSC_9C', //412, Keyboard Clear
+  'KSC_9D', //413, Keyboard Prior
+  'KSC_9E', //414, Keyboard Return
+  'KSC_9F', //415, Keyboard Separator
+  'KSC_A0', //416, Keyboard Out
+  'KSC_A1', //417, Keyboard Oper
+  'KSC_A2', //418, Keyboard Clear/Again
+  'KSC_A3', //419, Keyboard CrSel/Props
+  'KSC_A4', //420, Keyboard ExSel
+  'KSC_A5', //421,
+  'KSC_A6', //422,
+  'KSC_A7', //423,
+  'KSC_A8', //424,
+  'KSC_A9', //425,
+  'KSC_AA', //426,
+  'KSC_AB', //427,
+  'KSC_AC', //428,
+  'KSC_AD', //429,
+  'KSC_AE', //430,
+  'KSC_AF', //431,
+  */
+  KSC_B0: 432,
+  /*
+  'KSC_B1', //433, Keypad 000
+  'KSC_B2', //434, Thousands Separator
+  'KSC_B3', //435, Decimal Separator
+  'KSC_B4', //436, Currency Unit
+  'KSC_B5', //437, Currency Sub-unit
+  'KSC_B6', //438, Keypad (
+  'KSC_B7', //439, Keypad )
+  'KSC_B8', //440, Keypad {
+  'KSC_B9', //441, Keypad }
+  'KSC_BA', //442, Keypad Tab
+  'KSC_BB', //443, Keypad Backspace
+  'KSC_BC', //444, Keypad A
+  'KSC_BD', //445, Keypad B
+  'KSC_BE', //446, Keypad C
+  'KSC_BF', //447, Keypad D
+  'KSC_C0', //448, Keypad E
+  'KSC_C1', //449, Keypad F
+  'KSC_C2', //450, Keypad XOR
+  'KSC_C3', //451, Keypad ^
+  'KSC_C4', //452, Keypad %
+  'KSC_C5', //453, Keypad <
+  'KSC_C6', //454, Keypad >
+  'KSC_C7', //455, Keypad &
+  'KSC_C8', //456, Keypad &&
+  'KSC_C9', //457, Keypad |
+  'KSC_CA', //458, Keypad ||
+  'KSC_CB', //459, Keypad :
+  'KSC_CC', //460, Keypad #
+  'KSC_CD', //461, Keypad Space
+  'KSC_CE', //462, Keypad @
+  'KSC_CF', //463, Keypad !
+  'KSC_D0', //464, Keypad Memory Store
+  'KSC_D1', //465, Keypad Memory Recall
+  'KSC_D2', //466, Keypad Memory Clear
+  'KSC_D3', //467, Keypad Memory Add
+  'KSC_D4', //468, Keypad Memory Subtract
+  'KSC_D5', //469, Keypad Memory Multiply
+  'KSC_D6', //470, Keypad Memory Divide
+  'KSC_D7', //471, Keypad +/-
+  'KSC_D8', //472, Keypad Clear
+  'KSC_D9', //473, Keypad Clear Entry
+  'KSC_DA', //474, Keypad Binary
+  'KSC_DB', //475, Keypad Octal
+  'KSC_DC', //476, Keypad Decimal
+  'KSC_DD', //477, Keypad Hexadecimal
+  'KSC_DE', //478,
+  'KSC_DF', //479,
+  'KSC_E0', //480, Keyboard Left Control
+  'KSC_E1', //481, Keyboard Left Shift
+  'KSC_E2', //482, Keyboard Left Alt
+  'KSC_E3', //483, Keyboard Left GUI
+  'KSC_E4', //484, Keyboard Right Control
+  'KSC_E5', //485, Keyboard Right Shift
+  'KSC_E6', //486, Keyboard Right Alt
+  'KSC_E7', //487, Keyboard Right GUI
+  'KSC_E8', //488, Media Play Pause
+  'KSC_E9', //489, Media Stop CD
+  'KSC_EA', //490, Media Previous Song
+  'KSC_EB', //491, Media Next Song
+  'KSC_EC', //492, Media Eject CD
+  'KSC_ED', //493, Media Volume Up
+  'KSC_EE', //494, Media Volume Down
+  'KSC_EF', //495, Media Mute
+  'KSC_F0', //496, Media www
+  'KSC_F1', //497, Media Back
+  'KSC_F2', //498, Media Forward
+  'KSC_F3', //499, Media Stop
+  'KSC_F4', //500, Media Find
+  'KSC_F5', //501, Media Scroll Up
+  'KSC_F6', //502, Media Scroll Down
+  'KSC_F7', //503, Media Edit
+  'KSC_F8', //504, Media Sleep
+  'KSC_F9', //505, Media Coffee
+  'KSC_FA', //506, Media Refresh
+  'KSC_FB', //507, Media Calc
+  'KSC_FC', //508,
+  'KSC_FD', //509,
+  'KSC_FE', //510,
+  'KSC_FF', //511,
+  */
+  LEFT_CTRL: 512,
+  LEFT_SHIFT: 513,
+  LEFT_ALT: 514,
+  LEFT_GUI: 515,
+  RIGHT_CTRL: 516,
+  RIGHT_SHIFT: 517,
+  RIGHT_ALT: 518,
+  RIGHT_GUI: 519,
+  /*
+  'RELEASE_MOD', //520, Release all keyboard modifiers
+  'RELEASE_ALL', //521, Release all keys and keyboard modifiers
+  'RELEASE_KEYS', //522, Release all keys, but not keyboard modifiers
+  '', //523,
+  '', //524,
+  '', //525,
+  '', //526,
+  '', //527,
+  'RESTART', //528, Restart Device
+  '', //529,
+  'BOOT', //530, Bootloader Mode
+  '', //531,
+  'GTM', //532, Toggle GTM
+  '', //533,
+  'IMPULSE', //534, Toggle Impulse
+  '', //535,
+  */
+  DUP: 536,
+  /*
+  '', //537,
+  'SPUR', //538, Spur Toggle
+  '', //539,
+  'AMBILEFT', //540, AmbiThrow (left)
+  '', //541,
+  'AMBIRIGHT', //542, AmbiThrow (right)
+  '', //543,
+  'SPACERIGHT', //544, Right Spacebar (eg CC Lite)
+  '', //545,
+  '', //546,
+  '', //547,
+  'KM_1_L', //548, Primary Keymap (left key)
+  'KM_1_R', //549, Primary Keymap (right key)
+  'KM_2_L', //550, Secondary Keymap [Num-shift] (left key)
+  'KM_2_R', //551, Secondary Keymap [Num-shift] (right key)
+  'KM_3_L', //552, Tertiary Keymap (left key)
+  'KM_3_R', //553, Tertiary Keymap (left key)
+  '', //554,
+  '', //555,
+  '', //556,
+  '', //557,
+  '', //558,
+  '', //559,
+  '', //560,
+  '', //561,
+  'MS_CLICK_LF', //562, Mouse Left Button Press and Release
+  'MS_CLICK_RT', //563, Mouse Right Button Press and Release
+  'MS_CLICK_MD', //564, Mouse Middle Button Press and Release
+  'MS_MOVE_RT', //565, Mouse Move Right
+  'MS_MOVE_LF', //566, Mouse Move Left
+  'MS_MOVE_DN', //567, Mouse Move Down
+  'MS_MOVE_UP', //568, Mouse Move Up
+  'MS_SCRL_RT', //569, Mouse Scroll Coast Right
+  'MS_SCRL_LF', //570, Mouse Scroll Coast Left
+  'MS_SCRL_DN', //571, Mouse Scroll Coast Down
+  'MS_SCRL_UP', //572, Mouse Scroll Coast Up
+  '', //573,
+  '', //574,
+  '', //575,
+  '', //576,
+  '', //577,
+  '', //578,
+  '', //579,
+  '', //580,
+  '', //581,
+  '', //582,
+  '', //583,
+  '', //584,
+  '', //585,
+  '', //586,
+  '', //587,
+  '', //588,
+  '', //589,
+  '', //590,
+  '', //591,
+  '', //592,
+  '', //593,
+  '', //594,
+  '', //595,
+  '', //596,
+  '', //597,
+  '', //598,
+  '', //599,
+  'LH_THUMB_3_3D', //600
+  'LH_THUMB_2_3D', //601
+  'LH_THUMB_1_3D', //602
+  'LH_INDEX_3D', //603
+  'LH_MID_1_3D', //604
+  'LH_RING_1_3D', //605
+  'LH_PINKY_3D', //606
+  'LH_MID_2_3D', //607
+  'LH_RING_2_3D', //608
+  'RH_THUMB_3_3D', //609
+  'RH_THUMB_2_3D', //610
+  'RH_THUMB_1_3D', //611
+  'RH_INDEX_3D', //612
+  'RH_MID_1_3D', //613
+  'RH_RING_1_3D', //614
+  'RH_PINKY_3D', //615
+  'RH_MID_2_3D', //616
+  'RH_RING_2_3D', //617
+  */
+};
 
 function compare(a: any, b: any) {
   if (a === b) {
@@ -136,6 +588,7 @@ export async function readGetOneAndReturnOne() {
     .catch(console.error);
   //throw away the value
   if (value) {
+    console.log('RESPONSE ' + value);
     return value;
   } else {
     console.log('value is null');
@@ -199,20 +652,131 @@ export async function cancelReader() {
     }
   }
 }
-
+function ReplaceAt(input, search, replace, start, end) {
+  return (
+    input.slice(0, start) +
+    input.slice(start, end).replace(search, replace) +
+    input.slice(end)
+  );
+}
+function replaceAt(index, replacement) {
+  return (
+    this.substring(0, index) +
+    replacement +
+    this.substring(index + replacement.length)
+  );
+}
 export function convertHexadecimalPhraseToAsciiString(hexString: string) {
   let asciiString = '';
-  console.log('convertHexadecimalPhraseToAsciiString()');
+  const tempCharacterSet = [];
   //let actionId = actionMap.indexOf(part); //returns the position of the first occurrence of a value in a string.; returns -1 if not found
-
   //let humanStringPart = actionMap[actionId]; //returns the ASCII string output from the actionMap
   //assume 2x size
   //get every 2 characters
   //TODO covert to byte array and account for non-ascii inputs like mouse moves
-  for (let i = 0; i < hexString.length; i += 2) {
-    asciiString += actionMap[parseInt(hexString.substr(i, 2), 16)];
-    //console.log("0x"+hexString.substr(i, 2));
-    //asciiString += String.fromCharCode("0x"+hexString.substr(i, 2));
+  if (Hex2Dec(hexString.substr(0, 2)) <= 32) {
+    for (let i = 0; i < hexString.length; i += 4) {
+      const tempASI = actionMap[parseInt(hexString.substr(i, 4), 16)]
+        ?.split('_')
+        ?.pop();
+      if (BaseLevelSpecialCharactersLibrary[tempASI] == undefined) {
+        asciiString += tempASI;
+      } else {
+        asciiString += BaseLevelSpecialCharactersLibrary[tempASI];
+      }
+      //asciiString += ;
+      console.log(actionMap[parseInt(hexString.substr(i, 4), 16)]);
+      tempCharacterSet.push(actionMap[parseInt(hexString.substr(i, 4), 16)]);
+      //asciiString += String.fromCharCode("0x"+hexString.substr(i, 2));
+      //Handles 1 byte string outputs
+    }
+    asciiString = asciiString.toLocaleLowerCase();
+    console.log('tempCharacterSet array 1 ' + tempCharacterSet);
+  } else {
+    for (let i = 0; i < hexString.length; i += 2) {
+      const tempASI = actionMap[parseInt(hexString.substr(i, 2), 16)]
+        ?.split('_')
+        ?.pop();
+      if (BaseLevelSpecialCharactersLibrary[tempASI] == undefined) {
+        asciiString += tempASI;
+        tempCharacterSet.push(actionMap[parseInt(hexString.substr(i, 2), 16)]);
+      } else {
+        asciiString += BaseLevelSpecialCharactersLibrary[tempASI];
+        tempCharacterSet.push(actionMap[parseInt(hexString.substr(i, 2), 16)]);
+      }
+      console.log(actionMap[parseInt(hexString.substr(i, 2), 16)]);
+    }
+    console.log('tempCharacterSet array 2 ' + tempCharacterSet);
+  }
+
+  //Logic to handle modifiers
+  if (
+    tempCharacterSet.includes('LEFT_SHIFT') ||
+    tempCharacterSet.includes('RIGHT_SHIFT')
+  ) {
+    const numberOfShiftOccurences = tempCharacterSet
+      .map((element, index) =>
+        element === ('LEFT_SHIFT' || 'RIGHT_SHIFT') ? index : -1,
+      )
+      .filter((element) => element !== -1);
+    if (numberOfShiftOccurences.length >= 2) {
+      let startModifierWork = false;
+      let changedSection = '';
+      numberOfShiftOccurences;
+      let nextShiftPositionIncrement = 0;
+      for (let y = 0; y < tempCharacterSet.length; y++) {
+        //Should check the boolean for false or true
+        if (
+          tempCharacterSet[y] == ('LEFT_SHIFT' || 'RIGHT_SHIFT') &&
+          !startModifierWork
+        ) {
+          //If this is the fist shift set start modifer to true
+          startModifierWork = true;
+          tempCharacterSet.splice(y, 1); //Remove the shift
+          nextShiftPositionIncrement++;
+          console.log('Entered the first shift i, Y-index' + y);
+        } else if (
+          tempCharacterSet[y] == ('LEFT_SHIFT' || 'RIGHT_SHIFT') &&
+          startModifierWork &&
+          y ==
+            numberOfShiftOccurences[nextShiftPositionIncrement] -
+              nextShiftPositionIncrement
+        ) {
+          //If this is the last shift set it to false
+          startModifierWork = false;
+          tempCharacterSet.splice(y, 1); //Remove the shift
+          console.log('Entered the first shift else if');
+          nextShiftPositionIncrement++;
+        }
+        //Begin working around this boolean
+        if (startModifierWork) {
+          if (ModifierCharactersLibrary[tempCharacterSet[y]] == undefined) {
+            changedSection += tempCharacterSet[y]
+              ?.split('_')
+              ?.pop()
+              .toUpperCase();
+          } else if (
+            ModifierCharactersLibrary[tempCharacterSet[y]] != undefined
+          ) {
+            changedSection += ModifierCharactersLibrary[tempCharacterSet[y]];
+          }
+        }
+        if (!startModifierWork && tempCharacterSet[y] != undefined) {
+          changedSection += tempCharacterSet[y]
+            ?.split('_')
+            ?.pop()
+            .toLocaleLowerCase();
+        }
+        console.log(
+          'Position values at each step ' +
+            changedSection.split(',') +
+            ' TempCharacter Set ' +
+            tempCharacterSet,
+        );
+      }
+      console.log('new stuff ' + changedSection.split(','));
+      asciiString = changedSection.split(',');
+    }
   }
   console.log(asciiString);
   return asciiString;
@@ -458,7 +1022,6 @@ function Dec2Hex(n) {
   if (!checkDec(n) || n < 0) return 0;
   return n.toString(16);
 }
-
 //Binary Operations
 function Bin2Dec(n) {
   if (!checkBin(n)) return 0;
@@ -522,10 +1085,10 @@ export function convertHexadecimalChordToHumanChord(hexChord) {
         humanChord += ' + '; //add this + between action ids; put here so we don't have to remove it at end of for-loop
       }
 
-      console.log('this is actionMap output ' + actionMap[actionCode]);
+      //console.log('this is actionMap output ' + actionMap[actionCode]);
       const humanStringPart = replaceOldAsciiKeys(actionMap[actionCode]); //humanStringPart = oldAsciiKeyReplacementDictionary[humanStringPart];
       //console.log('Old Ascii '+ humanStringPart)
-      humanChord += humanStringPart; //Replace when new action codes arrive
+      humanChord += humanStringPart?.split('_')?.pop(); //Replace when new action codes arrive
       //console.log('Human string part in the loop '+ humanChord)
     } else {
       break; //we can exit the for loop early
@@ -604,18 +1167,130 @@ export function ascii_to_hexa(arr: any) {
     arr[i] = Number(arr[i].charCodeAt(0)).toString(16);
   }
 }
+export function convertKeyPostionsHumanPosition(inPosition: string) {
+  return inPosition?.split('_')?.pop();
+}
+export function convertHumanPositionToScanCodeKeyPosition(inPosition: string) {
+  return tryItAll(inPosition);
+}
+export function tryItAll(character) {
+  const variations: string[] = ['KEY_', 'KSC_', 'ARROW_', 'KP_', 'VOL_'];
+  if (ReverseLookUpTable[character] != undefined) {
+    return actionMap.indexOf(character);
+  } else if (ReverseModifierCharactersLibrary[character] != undefined) {
+    return ReverseModifierCharactersLibrary[character];
+  } else {
+    for (let y = 0; y < variations.length; y++) {
+      if (ReverseLookUpTable[variations[y] + character]) {
+        return ReverseLookUpTable[variations[y] + character];
+      }
+    }
+    return;
+  }
+}
 
+//Need to handle modifiers and shifts
 export function convertHumanStringToHexadecimalPhrase(
   humanString: string,
 ): string {
   let hexString = '';
-  for (let i = 0; i < humanString.length; i++) {
-    const hex = Number(humanString.charCodeAt(i)).toString(16);
-    hexString += hex;
+  if (MainControls._chordmapId == 'ID CHARACHORDER X S2') {
+    const variations: string[] = ['KEY_', 'KSC_', 'ARROW_', 'KP_', 'VOL_'];
+    let shouldModBeTrue = false; //Only true if shift is already in it
+    const leftShiftValue = DecimalHexTwosComplement(
+      ReverseLookUpTable['LEFT_SHIFT'],
+    );
+    const numberOfshifts = (
+      humanString.match(new RegExp(leftShiftValue, 'g')) || []
+    ).length;
+    //console.log('human string length ' +     (humanString.match(new RegExp(leftShiftValue, "g")) || []).length)
+    for (let i = 0; i < humanString.length; i++) {
+      if (
+        ReverseLookUpTable[humanString[i].toUpperCase()] != undefined &&
+        humanString[i] != humanString[i].toUpperCase()
+      ) {
+        !shouldModBeTrue && numberOfshifts
+          ? [(shouldModBeTrue = true), (hexString += leftShiftValue)]
+          : '';
+        hexString += DecimalHexTwosComplement(
+          actionMap.indexOf(humanString[i].toUpperCase()),
+        );
+      } else if (humanString[i] == humanString[i].toUpperCase()) {
+        !shouldModBeTrue && numberOfshifts
+          ? [(shouldModBeTrue = true), (hexString += leftShiftValue)]
+          : '';
+
+        for (let y = 0; y < variations.length; y++) {
+          if (
+            ReverseLookUpTable[variations[y] + humanString[i].toUpperCase()]
+          ) {
+            hexString += DecimalHexTwosComplement(
+              ReverseLookUpTable[variations[y] + humanString[i].toUpperCase()],
+            );
+          }
+        }
+      } else if (
+        ReverseModifierCharactersLibrary[humanString[i].toUpperCase()] !=
+        undefined
+      ) {
+        //Handles special characters
+
+        !shouldModBeTrue
+          ? [(shouldModBeTrue = false), (hexString += leftShiftValue)]
+          : '';
+        hexString += DecimalHexTwosComplement(
+          actionMap.indexOf(humanString[i].toUpperCase()),
+        );
+      } else {
+        for (let y = 0; y < variations.length; y++) {
+          if (
+            ReverseLookUpTable[variations[y] + humanString[i].toUpperCase()]
+          ) {
+            shouldModBeTrue
+              ? [(shouldModBeTrue = false), (hexString += leftShiftValue)]
+              : '';
+            hexString += DecimalHexTwosComplement(
+              ReverseLookUpTable[variations[y] + humanString[i].toUpperCase()],
+            );
+          }
+        }
+      }
+    }
+  } else {
+    for (let i = 0; i < humanString.length; i++) {
+      const hex = Number(humanString.charCodeAt(i)).toString(16);
+      hexString += hex;
+    }
+    hexString = hexString.toUpperCase();
   }
-  hexString = hexString.toUpperCase();
   console.log(hexString);
   return hexString;
+}
+function DecimalHexTwosComplement(decimal) {
+  const size = 2;
+
+  if (decimal >= 0) {
+    let hexadecimal = decimal.toString(16);
+
+    while (hexadecimal.length % size != 0) {
+      hexadecimal = '' + 0 + hexadecimal;
+    }
+
+    return hexadecimal;
+  } else {
+    let hexadecimal = Math.abs(decimal).toString(16);
+    while (hexadecimal.length % size != 0) {
+      hexadecimal = '' + 0 + hexadecimal;
+    }
+
+    let output = '';
+    for (let i = 0; i < hexadecimal.length; i++) {
+      output += (0x0f - parseInt(hexadecimal[i], 16)).toString(16);
+    }
+
+    output = (0x01 + parseInt(output, 16)).toString(16);
+    return output;
+  }
 }
 /*eslint-disable */
 function replaceOldAsciiKeys(inputKey) {
@@ -624,7 +1299,8 @@ function replaceOldAsciiKeys(inputKey) {
   for (let i = 0; i < inputKey.length; i++) {
     if (oldAsciiKeyReplacementDictionary.hasOwnProperty(inputKey[i])) {
       // eslint-disable-line no-use-before-define
-      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]]; // eslint-disable-line no-use-before-define
+      finishedInputKey += oldAsciiKeyReplacementDictionary[inputKey[i]];
+      // eslint-disable-line no-use-before-define
       console.log('OldAsciiReplacement ' + finishedInputKey);
     } else {
       finishedInputKey += inputKey[i];
@@ -650,7 +1326,7 @@ export function convertHumanStringToHexadecimalChord(
     //console.log('this is the part in the convert '+part + ' '+ replaceOldAsciiKeys(part));
     part = replaceOldAsciiKeys(part);
     console.log('This is the part ' + part);
-    const actionId = _actionMap.indexOf(part);
+    const actionId = actionMap.indexOf(part);
 
     console.log('ActionID: ' + actionId);
     if (MainControls._chordmapId == 'CHARACHORDER') {
@@ -670,7 +1346,7 @@ export function convertHumanStringToHexadecimalChord(
       let keyId: number;
       if (actionId < 0x0200) {
         console.log('I am here');
-        keyId = _keyMapDefaults[1].indexOf(_actionMap[actionId]);
+        keyId = _keyMapDefaults[1].indexOf(actionMap[actionId]);
         console.log(keyId);
       } else {
         keyId = actionId - 0x0200; //using the physical key position
@@ -714,7 +1390,6 @@ export async function readGetOneChordmap() {
     hexChordString = strValue[3]; //Should be 32 characters at all times
     let hexAsciiString = '';
     hexAsciiString = strValue[4];
-    convertHumanStringToHexadecimalChord;
     strValues[0] = convertHexadecimalChordToHumanChord(hexChordString);
     strValues[1] = convertHexadecimalPhraseToAsciiString(hexAsciiString);
     strValues[2] = hexChordString;
@@ -723,9 +1398,9 @@ export async function readGetOneChordmap() {
     //appendToList(strValues);
     // _chordMaps.push(["0x"+hexChordString,strValues[1]]);
     _chordMaps.push([
-      convertHexadecimalChordToHumanChord(hexChordString),
+      convertHexadecimalPhraseToAsciiString(hexChordString),
       strValues[1],
-    ]); //this ultimately isn't used
+    ]);
 
     //appendToRow(strValues);
   }
@@ -819,14 +1494,10 @@ export function appendLayoutToRow(data: string[], isFromFile = false): any {
     // cells[9].innerHTML = data[2];
     // cells[10].innerHTML = data[3];
 
-    const btnEdit = document.createElement('div');
     const chordTextOrig = document.createElement('div');
     const phraseTextOrig = document.createElement('div');
     const chordTextNew = document.createElement('div');
     const phraseTextInput = document.createElement('div');
-    const btnDelete = document.createElement('input');
-    const btnRevert = document.createElement('input');
-    const btnCommit = document.createElement('input');
 
     const virtualId = MainControls._chordMapIdCounter;
     console.log('ChordMap Counter: ' + virtualId);
@@ -1532,17 +2203,32 @@ export function convertHumanChordToHexadecimalChord(humanChord) {
   console.log(humanChord);
   let hexChord = '';
 
-  const humanChordParts = humanChord.split(' + '); //somewhat assumes plus isn't being used; bc default is = for the +/= key
   const decChordParts = [];
-  humanChordParts.forEach((part) => {
-    const actionCode = actionMap.indexOf(part);
 
-    //const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
-    actionCode == -1
-      ? console.log('ActionCode does not exist')
-      : decChordParts.push(actionCode);
-  });
+  if (MainControls._chordmapId == 'ID CHARACHORDER X S2') {
+    humanChord = humanChord.toUpperCase();
+    const humanChordParts = humanChord.split(' + '); //somewhat assumes plus isn't being used; bc default is = for the +/= key
+    humanChordParts.forEach((part) => {
+      const actionCode = tryItAll(part);
 
+      //const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
+      actionCode == -1
+        ? console.log('ActionCode does not exist')
+        : decChordParts.push(actionCode);
+    });
+  } else {
+    const humanChordParts = humanChord.split(' + '); //somewhat assumes plus isn't being used; bc default is = for the +/= key
+    humanChordParts.forEach((part) => {
+      const actionCode = actionMap.indexOf(part);
+
+      //const actionCode = part.charCodeAt(0); //TODO pull from actionCodesMap instead of ASCII
+      actionCode == -1
+        ? console.log('ActionCode does not exist')
+        : decChordParts.push(actionCode);
+    });
+  }
+
+  console.log('decoded ' + decChordParts);
   decChordParts.sort(function (a, b) {
     return b - a;
   }); // This sorts the parts of the chord in descending order

@@ -181,7 +181,7 @@ export default function HamburgerMenu() {
         height: 95vh;
         right: -20px;
         top: 0;
-        background: #181818;
+        background: #222424;
         z-index: 10;
         display: flex;
         flex-direction: column;

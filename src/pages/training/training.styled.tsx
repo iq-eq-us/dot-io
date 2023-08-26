@@ -9,6 +9,6 @@ interface PageContainerProps {
 export const PageContainer = styled.div.attrs<PageContainerProps>({
   className: 'text-gray-600 body-font flex flex-row',
 })<PageContainerProps>`
-  background-color: #181818;
+  background-color: #222424;
   ${height}
 `;

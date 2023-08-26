@@ -9,15 +9,13 @@ export const useWordsPerMinute = (): number => {
   const timeAtTrainingStart = useStoreState(
     (store) => store.timeAtTrainingStart,
   );
+  const trainingIsDone = useStoreState((store) => store.trainingIsDone);
 
   const trainingScenario = useStoreState(
     (store) => store.currentTrainingScenario,
   );
   const trainingSettings = useStoreState((store) => store.trainingSettings);
-  const currentTrainingSetting = useStoreState(
-    (store: any) => store.trainingSettings,
-  );
-  const isTrainingTestDone = currentTrainingSetting.isTestDone;
+
   const testTierHighestWPM = useStoreState((store) => store.testTierHighestWPM);
 
   const fastestRecordedWPM = useStoreState(
@@ -67,9 +65,6 @@ export const useWordsPerMinute = (): number => {
   let currentChordSpeed = y[y?.length - 1]?.lastSpeed;
   const average = getCumulativeAverageChordTypeTime(y); //This field gets the speed of the current typed word
   const averageDailyCount = y.length;
-  console.log('trainingSession avg' + average);
-
-  const chordLength = totalNumberOfCharactersTyped / 5;
 
   // According to Riley, the equation for WPM is equal to (characters per minute typed correctly / 5)
   // I believe the constant 5 is chosen to represent average word length
@@ -133,10 +128,9 @@ export const useWordsPerMinute = (): number => {
           }
         }
       }
-      if (isTrainingTestDone) {
+      if (trainingIsDone) {
         const currentDate = new Date();
 
-        const testNum = parseInt(testNumber);
         if (
           6 > (numberOfWordsChorded.toFixed(0) / 25) * 100 &&
           Accuracy >= 95 &&

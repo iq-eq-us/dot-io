@@ -7,7 +7,7 @@ interface PageContainerProps {
 }
 
 export const PageContainer = styled.div.attrs<PageContainerProps>({
-  className: 'text-gray-600 body-font flex flex-row bg-[#181818]',
+  className: 'text-gray-600 body-font flex flex-row bg-[#222424]',
 })<PageContainerProps>`
   background-color: ${(props) => props.contrast};
   ${height}

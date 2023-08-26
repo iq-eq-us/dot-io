@@ -51,5 +51,5 @@ const CLLogo = styled.img.attrs({
 })``;
 
 const BrandingContainer = styled.div.attrs({
-  className: `flex flex-col gap-y-8 lg:flex-row justify-around w-full items-center py-12 px-8 bg-[#181818]`,
+  className: `flex flex-col gap-y-8 lg:flex-row justify-around w-full items-center py-12 px-8 bg-[#222424]`,
 })``;

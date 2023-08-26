@@ -30,7 +30,7 @@ const managerStorageStoreActions: ManagerStoreActions = {
     saveEditedChordInManager(state, payload);
   }),
   setDownloadedChordLayout: action((state, payload) => {
-    state.downloadedChordLayout.chordLayout.push(payload);
+    state.downloadedChordLayout.chordLayout = payload;
   }),
   setImportedChords: action((state, payload) => {
     state.downloadedChords.chords = payload;
@@ -49,6 +49,9 @@ const managerStorageStoreActions: ManagerStoreActions = {
   }),
   setSerialApiResponses: action((state, payload) => {
     state.serialApiResponses.push(payload);
+  }),
+  setDeviceId: action((state, payload) => {
+    state.deviceId = payload;
   }),
   updateSerialAPiDataThunk: thunk(async (state, payload) => {
     sendCommandString(payload);

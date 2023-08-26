@@ -10,6 +10,8 @@ const ImageSlider = () => {
     slides = SliderDataForCHMTier;
   } else if (trainingLevel == 'CPM') {
     slides = SliderData;
+  } else {
+    slides = SliderData;
   }
 
   const [current, setCurrent] = useState(0);

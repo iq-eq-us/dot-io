@@ -25,5 +25,5 @@ export const ComingSoonContainer = styled.div.attrs({
 })``;
 
 export const DashboardPageContainer = styled.section.attrs({
-  className: `text-gray-600 body-font min-h-screen bg-[#181818]`,
+  className: `text-gray-600 body-font min-h-screen bg-[#222424]`,
 })``;

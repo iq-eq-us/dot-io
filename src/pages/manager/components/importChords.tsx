@@ -64,14 +64,9 @@ export function ImportChords(): ReactElement {
           strValues[4],
         );
         importedChords.push(tempCreated); //this ultimately isn't used
-
-        //setDownloadedChords(tempCreated);
       });
       setImportedChords(importedChords);
     };
-    //console.log(_chordMaps);
-    //open file dialog box with only csv allowed
-    //parse
   }
 
   function click() {
