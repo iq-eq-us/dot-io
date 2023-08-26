@@ -11,43 +11,6 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const CC_VENDOR_IDS = [0x239a, 0x303a]; // CharaChorder Vendor ID
 
-export async function startSerialConnection() {
-  console.log('startSerialConnection()');
-  try {
-    // Prompt user to select any serial port.
-
-    MainControls.serialPort = await navigator?.serial?.requestPort({
-      filters: CC_VENDOR_IDS.map((id) => ({ usbVendorId: id })),
-    });
-    console.log('requestPort()');
-    // Wait for the serial port to open.
-    await openSerialPort();
-    await setupLineReader();
-    await setCharaChorderToTypicalFunctionality();
-    await getId();
-    await getCount();
-  } catch (error) {
-    console.log(error);
-    const element: HTMLInputElement = document?.getElementById(
-      'statusDiv',
-    ) as HTMLInputElement;
-
-    if ('serial' in navigator) {
-      // Browser supports Serial API
-      element.innerHTML =
-        'status: failed to open serial port; may already be open elsewhere';
-    } else {
-      // Browser does not support Serial API
-      const element = document.getElementById('statusDiv') as HTMLInputElement;
-      if (element != null) {
-        element.innerHTML =
-          'Your browser does not support the Serial API. <br /> Please use Google Chrome, Microsoft Edge, or another <a class="underline" href=https://caniuse.com/web-serial">browser that supports the Serial API.</a>';
-      }
-      return;
-    }
-  }
-}
-
 async function openSerialPort() {
   console.log('openSerialPort()');
   await MainControls.serialPort.open({ baudRate: 115200 });
@@ -136,7 +99,6 @@ export async function exportableStartSerialConnection() {
     await getCount();
   } catch (error) {
     console.log(error);
-
     const element: HTMLInputElement = document?.getElementById(
       'statusDiv',
     ) as HTMLInputElement;
@@ -196,7 +158,6 @@ export function ConnectButton(): ReactElement {
       await getCount();
     } catch (error) {
       console.log(error);
-
       const element: HTMLInputElement = document?.getElementById(
         'statusDiv',
       ) as HTMLInputElement;
