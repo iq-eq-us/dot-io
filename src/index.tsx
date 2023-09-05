@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './pages/app/App';
 import './assets/global.css';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import './polyfills/tauri-serial';
 
 // This is the entry point to the React application
 // All pages, components, and functionality lives under this umbrella
