@@ -48,13 +48,15 @@ export function Export(): ReactElement {
 
   return (
     <React.Fragment>
-      <button
-        className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
-        color="pink"
-        onClick={() => exportChordMapLibrary()}
-      >
-        Export Library{' '}
-      </button>
+      {downloadedChords.length > 0 && (
+        <button
+          className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
+          color="pink"
+          onClick={() => exportChordMapLibrary()}
+        >
+          Export Library{' '}
+        </button>
+      )}
     </React.Fragment>
   );
 }
