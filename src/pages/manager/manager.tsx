@@ -24,6 +24,7 @@ import {
   ChordContainer,
   PageContainer,
   TopSectionContainer,
+  Column,
 } from '../manager/manager.styled';
 import { DeviceNavigationBar } from './components/DeviceNavigationBar';
 import ManagersDeviceOverlay from './components/ManagersDeviceOverlay';
@@ -76,15 +77,16 @@ const Manager = (): ReactElement => {
             <PressCommit />
           </Table>
           <PageContainer>
-            <ChordMapColumn />
-            <ChordContainer>
-              <div />
-              <div />
-              <AddHeaders />
-              <AddChordMap />
-            </ChordContainer>
+            <Column>
+              <ChordContainer>
+                <div />
+                <div />
+                <AddHeaders />
+                <AddChordMap />
+              </ChordContainer>
+              <ChordMapColumn />
+            </Column>
             <div className="h-1 w-6/12 mt-16 bg-[#3A5A42] rounded mb-10" />
-
             <Terminal />
           </PageContainer>
         </TopSectionContainer>
