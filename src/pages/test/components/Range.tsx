@@ -238,7 +238,10 @@ export const MultiRangeSlider = (
         <div
           className="thumb thumb-left absolute"
           style={{
-            backgroundColor: props.minValue > props.maxValue ? 'red' : 'blue',
+            //dc is red and 05 is green
+            //backgroundColor: props.minValue > props.maxValue ? '#dc2626' : '#059669',
+            backgroundColor:
+              props.minValue > props.maxValue ? '#ef4444' : '#38bdf8',
           }}
         ></div>
         <div
@@ -260,7 +263,10 @@ export const MultiRangeSlider = (
         <div
           className="thumb thumb-right absolute"
           style={{
-            backgroundColor: props.minValue > props.maxValue ? 'blue' : 'red',
+            //dc is red and 05 is green
+            //backgroundColor: props.minValue > props.maxValue ? '#059669' : '#dc2626',
+            backgroundColor:
+              props.minValue > props.maxValue ? '#38bdf8' : '#ef4444',
           }}
         ></div>
 

@@ -372,7 +372,13 @@ export function ProgressBar(): ReactElement {
               <RightTerms>
                 {timeTakenToTypeEachWordInOrder?.length == 0 ? 0 : Accuracy}%
                 acc
-                <div>
+                {/* <div>
+                  {isNaN(averageOfLocalStats.toFixed(0))
+                    ? '0'
+                    : averageOfLocalStats.toFixed(0)}{' '}
+                  lWPM
+                </div> */}
+                <div className="text-[#38bdf8]">
                   {isNaN(averageOfLocalStats.toFixed(0))
                     ? '0'
                     : averageOfLocalStats.toFixed(0)}{' '}
@@ -384,7 +390,7 @@ export function ProgressBar(): ReactElement {
                 {wordsPracticedInOrder.length > 999
                   ? '999+Terms'
                   : wordsPracticedInOrder.length + ' Terms'}
-                <div>
+                <div className="text-[#ef4444]">
                   {timeTakenToTypeEachWordInOrder?.length == 0
                     ? 0
                     : timeTakenToTypeEachWordInOrder?.length < 11
