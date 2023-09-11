@@ -142,7 +142,7 @@ export function TrainingModeSelector(): ReactElement {
               document.getElementById('txt_Name')?.focus(),
             ]}
           >
-            English 300
+            English 400
           </button>
           <div>/</div>
           <button
