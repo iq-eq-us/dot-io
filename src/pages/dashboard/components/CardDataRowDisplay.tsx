@@ -58,7 +58,7 @@ export const RefreshButton = styled.button.attrs({
 })``;
 
 export const MaxWPMBadge = styled.span.attrs({
-  className: `bg-green-500 text-white rounded p-2 px-4 mb-4 inline-block`,
+  className: `bg-green-500 text-black rounded p-2 px-4 mb-4 inline-block`,
 })``;
 
 export const CardDataRow = styled.div.attrs({
