@@ -99,13 +99,22 @@ export async function exportableStartSerialConnection() {
     await getCount();
   } catch (error) {
     console.log(error);
-
     const element: HTMLInputElement = document?.getElementById(
       'statusDiv',
-    ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
-    if (element != null) {
+    ) as HTMLInputElement;
+
+    if ('serial' in navigator) {
+      // Browser supports Serial API
       element.innerHTML =
         'status: failed to open serial port; may already be open elsewhere';
+    } else {
+      // Browser does not support Serial API
+      const element = document.getElementById('statusDiv') as HTMLInputElement;
+      if (element != null) {
+        element.innerHTML =
+          'Your browser does not support the Serial API. <br /> Please use Google Chrome, Microsoft Edge, or another <a class="underline" href=https://caniuse.com/web-serial">browser that supports the Serial API.</a>';
+      }
+      return;
     }
   }
 }
@@ -149,13 +158,24 @@ export function ConnectButton(): ReactElement {
       await getCount();
     } catch (error) {
       console.log(error);
-
       const element: HTMLInputElement = document?.getElementById(
         'statusDiv',
-      ) as HTMLInputElement; //.innerHTML = "status: opened serial port";
-      if (element != null) {
+      ) as HTMLInputElement;
+
+      if ('serial' in navigator) {
+        // Browser supports Serial API
         element.innerHTML =
           'status: failed to open serial port; may already be open elsewhere';
+      } else {
+        // Browser does not support Serial API
+        const element = document.getElementById(
+          'statusDiv',
+        ) as HTMLInputElement;
+        if (element != null) {
+          element.innerHTML =
+            'Your browser does not support the Serial API. <br /> Please use Google Chrome, Microsoft Edge, or another <a class="underline" href=https://caniuse.com/web-serial">browser that supports the Serial API.</a>';
+        }
+        return;
       }
     }
   }
