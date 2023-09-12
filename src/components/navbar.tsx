@@ -181,7 +181,7 @@ const Navbar = (): ReactElement => {
             <NavLinksImage open={false} src={Crown_Icon} alt="" />
           </NavMenuLink>
           <NavBtnLink href="#/manager" onClick={() => setTrainingLevel('')}>
-            Connect
+            <div className="text-white">Manager</div>
           </NavBtnLink>
           <button
             className="hover:bg-[#333] rounded"
@@ -322,20 +322,19 @@ const NavBtn = styled.button`
 
 const NavBtnLink = styled.a`
   border-radius: 50px;
-  background: rgb(34 197 94);
   white-space: nowrap;
   padding: 10px 22px;
   color: #222424;
   font-size: 16px;
   outline: none;
-  border: none;
+  border: 1px solid white;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
 
   &:hover {
     color: #ffff;
-    background: #32cd32;
+    background: #01a049;
     transition: 0.3s ease out;
   }
 `;
