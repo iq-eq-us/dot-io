@@ -20,7 +20,7 @@ const managerStorageStoreActions: ManagerStoreActions = {
     state.downloadedChords.chords = payload;
   }),
   setSingleDownloadedChord: action((state, payload) => {
-    state.downloadedChords.chords.push(payload);
+    state.downloadedChords.chords.unshift(payload);
   }),
   deleteDownloadedChordsData: action((state, payload) => {
     const tempV = deleteChordInManager(state, payload);
