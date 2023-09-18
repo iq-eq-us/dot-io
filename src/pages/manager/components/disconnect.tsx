@@ -33,6 +33,14 @@ export async function disconnectSerialConnection() {
   }
 }
 
+function successfulDisconnect() {
+  if (MainControls.serialPort != null) {
+    alert('Successfully disconnected from serial port!');
+  } else {
+    alert('There is no serial connection to disconnect from at this moment.');
+  }
+}
+
 export function DisconnectButton(): ReactElement {
   return (
     <React.Fragment>
@@ -44,6 +52,7 @@ export function DisconnectButton(): ReactElement {
         className="sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-absolute"
         color="pink"
         onClick={() => disconnectSerialConnection()}
+        onClickCapture={() => successfulDisconnect()}
       >
         Disconnect{' '}
       </button>
