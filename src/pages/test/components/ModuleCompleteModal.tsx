@@ -129,20 +129,20 @@ function ModuleCompleteModal(): ReactElement {
             &times;
           </button>
           <p className=" font-bold ">Congratulations!</p>
-          <p className=" ml-10 mr-10">You have completed the current module!</p>
+          <p className=" ml-10 mr-10">You have completed the current tier!</p>
           <p className=" ml-10 mr-10 mb-10">
             If you want to stay and keep practicing this module, press
             &lsquo;X&lsquo;.
           </p>
           <button
-            className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 mr-auto ml-auto focus bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222]"
+            className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 mr-auto ml-auto focus bg-[#333] hover:bg-[#01a049] active:bg-[#222]"
             onClick={() => [
               selectTheTrainingMode(),
               setModuleCompleteModalToggle(!moduleCompleteModalToggle),
             ]}
           >
             {' '}
-            Move To Next Module
+            Move To Next Tier
           </button>
         </div>
       ) : null}
