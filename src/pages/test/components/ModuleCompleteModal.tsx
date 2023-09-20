@@ -131,7 +131,7 @@ function ModuleCompleteModal(): ReactElement {
           <p className=" font-bold ">Congratulations!</p>
           <p className=" ml-10 mr-10">You have completed the current tier!</p>
           <p className=" ml-10 mr-10 mb-10">
-            If you want to stay and keep practicing this module, press
+            If you want to stay and keep practicing this tier, press
             &lsquo;X&lsquo;.
           </p>
           <button
