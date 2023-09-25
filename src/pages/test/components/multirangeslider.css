@@ -119,6 +119,7 @@
 }
 .multi-range-slider .ruler .ruler-rule {
 	border-left: solid 1px;
+	/* border-color: white; */
 	border-color: #525252;
 
 	display: flex;
@@ -127,14 +128,18 @@
 	padding: 5px 0px;
 }
 .multi-range-slider .ruler .ruler-rule:last-child {
-	border-right: solid 1px;
-	border-color: #525252;
+	/* border-right: solid 1px; */
+	/* border-color: #525252; */
+	border-color: white;
+	width: 20px;
+	border-style: solid;
 
 }
 
 .multi-range-slider .ruler .ruler-sub-rule {
-	border-left: solid 1px;
-	border-color: #525252;
+	border-left: solid 8px;
+	/* border-color: #525252; */
+	border-color: white;
 
 	/* border-bottom: solid 1px; */
 	display: flex;

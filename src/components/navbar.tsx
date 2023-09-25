@@ -13,6 +13,7 @@ import Crown_Icon from '../assets/Crown_icon.png';
 import StM_Icon from '../assets/StM.png';
 import tWPM_Icon from '../assets/tWPM.png';
 import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
+import ConstructionIconWhite from '../../src/pages/test/components/ConstructionIconWhite';
 import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
 import type { TrainingLevels } from '../../src/models/trainingLevels';
@@ -95,9 +96,12 @@ const Navbar = (): ReactElement => {
     }
   }
   function triggerPasswordModal() {
-    if (maxWPM == false && !chmTierPasswordBypass) {
-      setPasswordModuleModalToggle(!passwordModuleModalToggle);
-    }
+    console.log('here:');
+    console.log({ chmTierPasswordBypass });
+    console.log(chmTierPasswordBypass);
+    // if (maxWPM == false && !chmTierPasswordBypass) {
+    //   setPasswordModuleModalToggle(!passwordModuleModalToggle);
+    // }
   }
   return (
     <NavI>
@@ -123,7 +127,7 @@ const Navbar = (): ReactElement => {
           </NavMenuLink>
           <NavMenuLink
             aria-current="page"
-            onClick={() => triggerPasswordModal()}
+            onClick={() => TrainingPageFunction('CHM', true)}
           >
             {trainingLevel == 'CHM' ? <Circle /> : ''}
             <div className="text-white font-mono">
@@ -144,17 +148,17 @@ const Navbar = (): ReactElement => {
           </NavMenuLink>
           <NavMenuLink aria-current="page">
             {trainingLevel == 'sWPM' ? <Circle /> : ''}
-            <LockIconStyle>
-              <LockIconWhite />
-            </LockIconStyle>
+            <ConstructionIconStyle>
+              <ConstructionIconWhite />
+            </ConstructionIconStyle>
             <NavLinksImage open={false} src={DumbellImage} alt="" />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
             {trainingLevel == 'StM' ? <Circle /> : ''}
             <div className="text-white font-mono"></div>
-            <LockIconStyle>
-              <LockIconWhite />
-            </LockIconStyle>
+            <ConstructionIconStyle>
+              <ConstructionIconWhite />
+            </ConstructionIconStyle>
             <NavLinksImage
               open={false}
               src={StM_Icon}
@@ -163,15 +167,15 @@ const Navbar = (): ReactElement => {
             />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
-            <LockIconStyle>
-              <LockIconWhite />
-            </LockIconStyle>
+            <ConstructionIconStyle>
+              <ConstructionIconWhite />
+            </ConstructionIconStyle>
             <NavLinksImage open={false} src={tWPM_Icon} alt="" />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
-            <LockIconStyle>
-              <LockIconWhite />
-            </LockIconStyle>
+            <ConstructionIconStyle>
+              <ConstructionIconWhite />
+            </ConstructionIconStyle>
             <NavLinksImage open={false} src={CM_Icon} alt="" />
           </NavMenuLink>
         </NavMenu>
@@ -199,6 +203,10 @@ export default Navbar;
 
 const LockIconStyle = styled.div.attrs({
   className: `items-center justify-center pl-6`,
+})``;
+
+const ConstructionIconStyle = styled.div.attrs({
+  className: `border-2 border-transparent rounded-full items-center justify-center pl-6`,
 })``;
 
 const LogoLink = styled.a.attrs({
