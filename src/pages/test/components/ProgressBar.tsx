@@ -451,11 +451,11 @@ const ProgressBarOuter = styled.div.attrs({
 })``;
 
 const LeftTerms = styled.div.attrs({
-  className: `rotate-180 float-left text-xs text-neutral-400`,
+  className: `rotate-180 float-left text-xs text-neutral-400 w-20`,
 })``;
 
 const RightTerms = styled.div.attrs({
-  className: `rotate-180  text-xs text-neutral-400`,
+  className: `rotate-180  text-xs text-neutral-400 w-20`,
 })``;
 
 const WPMText = styled.div.attrs({
