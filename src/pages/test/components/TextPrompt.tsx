@@ -236,7 +236,6 @@ export function TextPrompt(): ReactElement {
 
         for (let f = 1; f < targetTextLineOne.length; f++) {
           tempValue = targetTextLineOne[f] + ' ';
-
           tempArray.push(<div className="text-white">{tempValue}</div>);
         }
 
@@ -300,7 +299,7 @@ export function TextPrompt(): ReactElement {
               for (let t = 0; t < storedTestTextData[i]?.length; t++) {
                 const tempCompareValue = allTypedText[i];
                 const tempTargetWord = storedTestTextData[i];
-                //console.log(allTypedText)
+                //console.log("All Typed" + allTypedText[i])
                 //console.log('Compare T value '+ tempCompareValue[t]);
                 //console.log('Temporary target value '+ tempTargetWord[t]);
                 if (tempCompareValue != undefined) {
@@ -354,7 +353,7 @@ export function TextPrompt(): ReactElement {
               ]?.length - arr.length;
             let tempBufferValues = '';
             let frontBufferValues = '';
-
+            console.log('Targer Character Index: ' + tempVal);
             for (let y = 0; y < tempVal - targetCharacterIndex; y++) {
               tempBufferValues += '.';
             }
@@ -408,7 +407,6 @@ export function TextPrompt(): ReactElement {
           if (allTypedText[indexOfTargetChord - 1] != undefined) {
             input.innerHTML = allTypedText[indexOfTargetChord - 1];
             const tt = allTypedText[allTypedText.length - 1];
-
             const canIPressBackspaceForAlphabet =
               allTypedText[
                 indexOfTargetChord - 1 + targetIndexForWhatErrorTextToShow
@@ -439,10 +437,9 @@ export function TextPrompt(): ReactElement {
         }
         //  console.log('Did I enter the space to edit the previous word 3: ' + indexOfTargetChord + ' '+ targetIndexForWhatErrorTextToShow +' '+allTypedText.length + ((indexOfTargetChord + targetIndexForWhatErrorTextToShow) ==allTypedText.length))
       };
-
       // displayArray = firstWordOrCharacter ? <div className='text-white'>[</div>: displayArray;
     }
-    //console.log('Check if the array is empty '+ arr);
+    //console.log('Check if the array is empty: '+ arr + ' and the lenght: ' + arr.length);
     return displayArray;
   }
 
@@ -487,6 +484,7 @@ export function TextPrompt(): ReactElement {
           counter < setS.length;
           counter++
         ) {
+          console.log('Set s: ' + setS);
           arr.push(setS[counter]);
         }
       }
@@ -499,13 +497,15 @@ export function TextPrompt(): ReactElement {
         setS[setS.length - 1] == ' ' ||
         (currentTrainingScenario == 'ALPHABET' &&
           setS[setS.length - 1] ==
-            firstLineOfTargetText[indexOfTargetChord - 1]) ||
+            firstLineOfTargetText[indexOfTargetChord - 1] &&
+          setS[setS.length - 1] == firstLineOfTargetText[indexOfTargetChord]) ||
         (currentTrainingScenario == 'ALPHABET' &&
           firstLineOfTargetText.length - 1 == indexOfTargetChord &&
           setS[setS.length - 1] == firstLineOfTargetText[indexOfTargetChord]) ||
         (indexOfTargetChord == 1 && input?.value.length == 0) ||
         (indexOfTargetChord == 0 && input?.value.length == 0)
       ) {
+        console.log('reseting the arr' + indexOfTargetChord);
         arr = [];
       }
     }

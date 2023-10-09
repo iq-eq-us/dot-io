@@ -621,7 +621,7 @@ function checkIfErrorExistsInUserEnteredText(
   isInAlphabetMode: boolean,
   actions: Actions<TrainingStoreActionsModel>,
 ) {
-  console.log(`"${storeState.targetWord}"`);
+  //console.log(`"${storeState.targetWord}"`);
   if (!storeState.targetWord) return;
 
   if (isInAlphabetMode) {
