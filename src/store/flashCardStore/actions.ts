@@ -1,4 +1,4 @@
-import { action, computed } from 'easy-peasy';
+import { action, computed, thunk, thunkOn } from 'easy-peasy';
 import type {
   flashCardSet,
   flashCardActionModel,
@@ -113,6 +113,84 @@ const flashCardStoreActions: flashCardActionModel = {
     }
     return allNames;
   }),
+
+  // Actions to load and unload flash card sets
+
+  importFlashCardSetCSV: thunk(async (actions, payload) => {
+    const newFlashCardSet: flashCardSet = await uploadCSV(payload);
+    actions.addFlashCardSet(newFlashCardSet);
+  }),
+
+  exportActiveFlashCardSetCSV: action((state) => {
+    const activeSet = state.activeFlashCardSetIndex;
+    if (activeSet != -1) {
+      downloadCSV(state.allFlashCardSets[activeSet]);
+    } else {
+      console.error('No active flash card set');
+    }
+  }),
 };
 
 export default flashCardStoreActions;
+
+const uploadCSV = async (filename: File) => {
+  // Makes an empty flash card set
+  const flashCardSet: flashCardSet = {
+    name: filename.toString(),
+    flashCards: [],
+  };
+
+  const blobtoData = (blob: Blob) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsText(blob);
+    });
+  };
+  blobtoData(filename).then((data) => {
+    const lines = (<string>data).split('\n');
+    for (const line of lines.slice(1)) {
+      const flashCard = line.split(',');
+      flashCardSet.flashCards.push({
+        question: flashCard[0],
+        answer: flashCard[1],
+        tags: flashCard[2].split(', '),
+        url: flashCard[3],
+        image: flashCard[4] == 'TRUE',
+      });
+    }
+  });
+
+  return flashCardSet;
+};
+
+const downloadCSV = (cardSet: flashCardSet) => {
+  // Makes a csv string from the flash card set
+  const csvString = [
+    ['question', 'answer', 'tags', 'url', 'image'],
+    ...cardSet.flashCards.map((flashcard) => [
+      flashcard.question,
+      flashcard.answer,
+      flashcard.tags,
+      flashcard.url,
+      flashcard.image,
+    ]),
+  ]
+    .map((e) => e.join(','))
+    .join('\n');
+
+  // Downloads the csv file
+  const element = document.createElement('a');
+  element.setAttribute(
+    'href',
+    'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString),
+  );
+  element.setAttribute('download', cardSet.name);
+  element.style.display = 'none';
+
+  document.body.appendChild(element);
+  element.click();
+
+  // Clean up the element
+  document.body.removeChild(element);
+};

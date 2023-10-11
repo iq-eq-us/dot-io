@@ -1,4 +1,4 @@
-import type { Action, ActionOn, Computed, ThunkOn } from 'easy-peasy';
+import type { Action, ActionOn, Computed, Thunk } from 'easy-peasy';
 
 export interface flashCard {
   image: boolean;
@@ -38,6 +38,10 @@ export interface flashCardActionModel {
     (index: number) => string
   >;
   getAllFlashCardSetNames: Computed<flashCardStoreStateModel, string[]>;
+
+  // Actions to transition between csv and redux
+  importFlashCardSetCSV: Thunk<flashCardStoreStateModel, File>;
+  exportActiveFlashCardSetCSV: Action<flashCardStoreStateModel>;
 }
 
 export interface flashCardStoreStateModel {
@@ -46,6 +50,8 @@ export interface flashCardStoreStateModel {
 
   // All current flash card sets
   allFlashCardSets: flashCardSet[];
+
+  addFlashCardSet: Action<flashCardStoreStateModel, flashCardSet>;
 }
 
 export type FlashCardStoreModel = flashCardStoreStateModel &
