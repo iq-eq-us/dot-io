@@ -12,12 +12,14 @@ import CPM_Icon from '../assets/CPM_icon.png';
 import Crown_Icon from '../assets/Crown_icon.png';
 import StM_Icon from '../assets/StM.png';
 import tWPM_Icon from '../assets/tWPM.png';
+import analytic_DashIcon from '../assets/AnalyticalDashboard.png';
 import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
 import ConstructionIconWhite from '../../src/pages/test/components/ConstructionIconWhite';
 import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
 import type { TrainingLevels } from '../../src/models/trainingLevels';
 import Circle from './CircleHighlight';
+import AnalyticalDashboardButton from '../../src/pages/test/components/AnalyticalDashboardButton';
 import HamburgerMenu from './hamburgerMenu';
 
 const Navbar = (): ReactElement => {
@@ -177,6 +179,19 @@ const Navbar = (): ReactElement => {
           </NavMenuLink>
         </NavMenu>
         <ScoresComponent />
+
+        <NavMenuLink style={{ paddingTop: '10px' }}>
+          <NavLinksBtnImage
+            href="#/analyticalDashboard"
+            onClick={() => setTrainingLevel('')}
+          >
+            <img
+              src={analytic_DashIcon}
+              style={{ width: '40px', height: '40px' }}
+            ></img>
+          </NavLinksBtnImage>
+        </NavMenuLink>
+
         <NavBtn>
           <NavMenuLink aria-current="page">
             <NavLinksImage open={false} src={Crown_Icon} alt="" />
@@ -211,7 +226,7 @@ const LogoLink = styled.a.attrs({
 })``;
 
 const NavMenuLink = styled.a.attrs({
-  className: `py-1 rounded-md hover:bg-[#333]`,
+  className: `py-1 items-center relative rounded-md hover:bg-[#333] align-center`,
 })``;
 
 const NavI = styled.nav`
@@ -232,13 +247,13 @@ const NavI = styled.nav`
 `;
 
 const NavbarContainer = styled.div`
-display: flex;
-justify-content: space-between;
-height: 63px;
-z-index: 1;
-width: 100%;
-padding 0 24px;
-max-width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  height: 63px;
+  z-index: 1;
+  width: 100%;
+  padding 0 24px;
+  max-width: 1100px;
 `;
 
 const NavLogo = styled.div`
@@ -296,6 +311,16 @@ const NavLinksImage = styled.img<{ open: boolean }>`
   &.active {
     border-bottom: 3px solid #01bf71;
   }
+`;
+
+const NavLinksBtnImage = styled.a`
+  align-items: center;
+  color: #fff;
+  display: relative;
+  cursor: pointer;
+  color: #fff;
+  justify-content: center;
+  justify-self: flex-start;
 `;
 
 const NavLinksImageTransparent = styled.img`

@@ -4,6 +4,7 @@ import Dashboard from '../pages/dashboard/dashboard';
 import Manager from '../pages/manager/manager';
 import Navbar from './navbar';
 import TrainingTestPage from '../pages/test/trainingTest';
+import AnalyticalDashboard from '../pages/analyticalDashboard/analyticalDashboard';
 import TrainingPage from '../pages/training/training';
 import { ClosingPrompt } from './closingPrompt';
 import Piano from '../pages/piano/piano';
@@ -14,6 +15,7 @@ export const ROUTER_PATHS = {
   home: '/',
   training: '/training',
   manager: '/manager',
+  analyticalDashboard: '/analyticalDashboard',
   piano: '/piano',
   dashboard: '/dashboard',
   results: '/results',
@@ -60,6 +62,12 @@ const Router = (): ReactElement => {
         <Route path={ROUTER_PATHS.manager}>
           <Navbar />
           <Manager />
+        </Route>
+
+        {/* This is the route to the analytical dashbord page */}
+        <Route path={ROUTER_PATHS.analyticalDashboard}>
+          <Navbar />
+          <AnalyticalDashboard />
         </Route>
 
         {/* This is the route to the Chara Piano page. */}
