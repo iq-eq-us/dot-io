@@ -1,6 +1,7 @@
 import type { TrainingStoreModel } from 'src/store/trainingStore';
 import type { StatisticsStore } from './statisticsStorage';
 import type { ManagerStoreState } from './managerStorage';
+import type { SessionStatsAnalyticalStoreModel } from '../models/sessionStatisticsAnalytics';
 
 interface AppStoreModel {
   isDebug: boolean;
@@ -9,6 +10,7 @@ interface AppStoreModel {
 type CompleteStoreModel = AppStoreModel &
   TrainingStoreModel &
   StatisticsStore &
-  ManagerStoreState;
+  ManagerStoreState &
+  SessionStatsAnalyticalStoreModel;
 
 export { CompleteStoreModel };
