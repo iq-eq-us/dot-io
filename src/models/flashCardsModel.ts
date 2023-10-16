@@ -1,4 +1,4 @@
-import type { Action, ActionOn, Computed, Thunk } from 'easy-peasy';
+import type { Action, Computed, Thunk } from 'easy-peasy';
 
 export interface flashCard {
   image: boolean;
@@ -6,11 +6,14 @@ export interface flashCard {
   answer: string;
   url: string;
   tags: string[];
+  ebbinghausValue: number;
+  lastReinforcement: Date;
 }
 
 export interface flashCardSet {
   name: string;
   flashCards: flashCard[];
+  nextTrainingDate: Date;
 }
 
 export interface flashCardActionModel {
@@ -42,6 +45,14 @@ export interface flashCardActionModel {
   // Actions to transition between csv and redux
   importFlashCardSetCSV: Thunk<flashCardStoreStateModel, File>;
   exportActiveFlashCardSetCSV: Action<flashCardStoreStateModel>;
+
+  // Actions to get and set the last daily training date of a set
+  setNextDailyTraining: Action<flashCardStoreStateModel>;
+  getLastDailyTraining: Computed<flashCardStoreStateModel, Date>;
+  getLastDailyTrainingAll: Computed<flashCardStoreStateModel, Date[]>;
+
+  // Actions to generate training data
+  generateDailyData: Action<flashCardStoreStateModel>;
 }
 
 export interface flashCardStoreStateModel {
@@ -51,6 +62,14 @@ export interface flashCardStoreStateModel {
   // All current flash card sets
   allFlashCardSets: flashCardSet[];
 
+  // Number of flash cards to practice daily
+  numberOfDailyFlashCards: number;
+
+  // Array that represents random weights for each flash card
+  activeFlashCardLength: Computed<FlashCardStoreModel, number>;
+  activeFlashCardSetWeights: Computed<flashCardStoreStateModel, number[]>;
+
+  // Extra action for upload thunk
   addFlashCardSet: Action<flashCardStoreStateModel, flashCardSet>;
 }
 
