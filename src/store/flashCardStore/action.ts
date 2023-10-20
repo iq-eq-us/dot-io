@@ -1,8 +1,7 @@
-import { action, computed, thunk, thunkOn } from 'easy-peasy';
+import { action, computed, thunk } from 'easy-peasy';
 import type {
   flashCardSet,
   flashCardActionModel,
-  flashCard,
 } from '../../models/flashCardsModel';
 
 const flashCardStoreActions: flashCardActionModel = {
@@ -170,37 +169,40 @@ const flashCardStoreActions: flashCardActionModel = {
   }),
 
   // Actions to generate training data
-  generateDailyData: action((state) => {
-    const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      const selectedFlashCards = [];
-      const tempWeights = state.activeFlashCardSetWeights;
-
-      if (state.activeFlashCardLength < state.numberOfDailyFlashCards) {
-        return state.allFlashCardSets[activeSet].flashCards.filter(
-          (card) =>
-            card.lastReinforcement < new Date() && card.ebbinghausValue < 100,
-        );
-      }
-
-      while (selectedFlashCards.length < state.numberOfDailyFlashCards) {
-        // Gets a random flash card from the active set
-        const randomIndex = Math.floor(Math.random() * tempWeights.length);
-        const randomFlashCard =
-          state.allFlashCardSets[activeSet].flashCards[
-            tempWeights[randomIndex]
-          ];
-        tempWeights.splice(randomIndex, 1);
-
-        // Checks if the flash card is already selected
-        if (!selectedFlashCards.includes(randomFlashCard)) {
-          selectedFlashCards.push(randomFlashCard);
-        }
-      }
-    } else {
-      console.error('No active flash card set');
-    }
-  }),
+  //generateDailyData: action((state) => {
+  //  const activeSet = state.activeFlashCardSetIndex;
+  //  const selectedFlashCards: flashCard[] = [];
+  //  if (activeSet != -1) {
+  //    const tempWeights = state.activeFlashCardSetWeights;
+  //
+  //    if (state.activeFlashCardLength < state.numberOfDailyFlashCards) {
+  //      return state.allFlashCardSets[activeSet].flashCards.filter(
+  //        (card) =>
+  //          card.lastReinforcement < new Date() && card.ebbinghausValue < 100,
+  //      );
+  //    }
+  //
+  //    while (selectedFlashCards.length < state.numberOfDailyFlashCards) {
+  //      // Gets a random flash card from the active set
+  //      const randomIndex = Math.floor(Math.random() * tempWeights.length);
+  //      const randomFlashCard =
+  //        state.allFlashCardSets[activeSet].flashCards[
+  //          tempWeights[randomIndex]
+  //        ];
+  //      tempWeights.splice(randomIndex, 1);
+  //
+  //      // Checks if the flash card is already selected
+  //      if (!selectedFlashCards.includes(randomFlashCard)) {
+  //        selectedFlashCards.push(randomFlashCard);
+  //      }
+  //    }
+  //  } else {
+  //    console.error('No active flash card set');
+  //  }
+  //
+  //  return selectedFlashCards;
+  //
+  //}),
 };
 
 export default flashCardStoreActions;

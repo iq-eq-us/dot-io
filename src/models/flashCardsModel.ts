@@ -52,7 +52,7 @@ export interface flashCardActionModel {
   getLastDailyTrainingAll: Computed<flashCardStoreStateModel, Date[]>;
 
   // Actions to generate training data
-  generateDailyData: Action<flashCardStoreStateModel>;
+  //generateDailyData: Action<flashCardStoreStateModel, flashCard[]>;
 }
 
 export interface flashCardStoreStateModel {

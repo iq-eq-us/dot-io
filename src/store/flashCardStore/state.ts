@@ -10,10 +10,13 @@ const flashCardStoreState: flashCardStoreStateModel = {
   numberOfDailyFlashCards: 10,
 
   activeFlashCardLength: computed((state) => {
-    return state.getActiveFlashCardSet.filter(
-      (card) =>
-        card.lastReinforcement < new Date() && card.ebbinghausValue < 100,
-    ).length;
+    if (state.activeFlashCardSetIndex != -1) {
+      return state.getActiveFlashCardSet.filter(
+        (card) =>
+          card.lastReinforcement < new Date() && card.ebbinghausValue < 100,
+      ).length;
+    }
+    return 0;
   }),
 
   // Makes a weighted array of flash cards based on the ebbinghaus value
