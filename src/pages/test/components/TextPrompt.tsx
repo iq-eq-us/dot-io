@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/store';
 import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 import type { TrainingScenario } from '../../../../src/models/trainingScenario';
+import LoadAndSaveCSV from '../../concepts-mastered/downloadCSV';
 
 const r = Math.random;
 
@@ -116,6 +117,7 @@ export function TextPrompt(): ReactElement {
     setTargetIndexForWhatErrorTextToShow,
   ] = useState(0);
 
+  LoadAndSaveCSV();
   const ChordingEnabledAlgorithm = (chordValue: any) => {
     window.performance = window.performance || {};
     performance.now =

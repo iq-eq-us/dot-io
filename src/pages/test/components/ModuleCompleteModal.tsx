@@ -47,6 +47,8 @@ function ModuleCompleteModal(): ReactElement {
   );
 
   const trainingLevelIsCPM = trainingLevel == 'CPM';
+  const trainingLevelIsCHM = trainingLevel == 'CHM';
+
   const inputRef = useRef(null);
 
   const [value, setValue] = useState(false);
@@ -118,35 +120,39 @@ function ModuleCompleteModal(): ReactElement {
 
   return (
     <React.Fragment>
-      {moduleCompleteModalToggle && trainingLevelIsCPM ? (
-        <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[40%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
-          <button
-            className="close ml-96 text-5xl pt-4 text-[#222424]"
-            onClick={() => [
-              setModuleCompleteModalToggle(!moduleCompleteModalToggle),
-            ]}
-          >
-            &times;
-          </button>
-          <p className=" font-bold ">Congratulations!</p>
-          <p className=" ml-10 mr-10">You have completed the current tier!</p>
-          <p className=" ml-10 mr-10 mb-10">
-            If you want to stay and keep practicing this tier, press
-            &lsquo;X&lsquo;.
-          </p>
-          <button
-            className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 mr-auto ml-auto focus bg-[#333] hover:bg-[#01a049] active:bg-[#222]"
-            onClick={() => [
-              selectTheTrainingMode(),
-              setModuleCompleteModalToggle(!moduleCompleteModalToggle),
-            ]}
-          >
-            {' '}
-            Move To Next Tier
-          </button>
-        </div>
-      ) : null}
-
+      {moduleCompleteModalToggle && trainingLevel
+        ? (console.log('training level' + trainingLevel),
+          console.log('moduleCompleteModalToggle' + moduleCompleteModalToggle),
+          console.log('moduleNumber' + moduleNumber),
+          (
+            <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[40%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
+              <button
+                className="close ml-96 text-5xl pt-4 text-[#222424]"
+                onClick={() => [setModuleCompleteModalToggle()]}
+              >
+                &times;
+              </button>
+              <p className=" font-bold ">Congratulations!</p>
+              <p className=" ml-10 mr-10">
+                You have completed the current tier!
+              </p>
+              <p className=" ml-10 mr-10 mb-10">
+                If you want to stay and keep practicing this tier, press
+                &lsquo;X&lsquo;.
+              </p>
+              <button
+                className="drop-shadow-2xl right-arrow text-white rounded inline-block p-2 mr-auto ml-auto focus bg-[#333] hover:bg-[#01a049] active:bg-[#222]"
+                onClick={() => [
+                  selectTheTrainingMode(),
+                  setModuleCompleteModalToggle(!moduleCompleteModalToggle),
+                ]}
+              >
+                {' '}
+                Move To Next Tier
+              </button>
+            </div>
+          ))
+        : null}
       {downloadModuleModalToggle ? (
         <div className="flex-row border-zinc-400 border-4 rounded-xl left-[50%] top-[40%] mt-[-250px] ml-[-250px] absolute m-auto justify-center h-2/5 bg-white">
           <button
