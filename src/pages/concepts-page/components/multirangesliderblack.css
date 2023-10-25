@@ -1,0 +1,180 @@
+.multi-range-slider-black * {
+	box-sizing: border-box;
+	padding: 0px;
+	margin: 0px;
+}
+.multi-range-slider-black {
+	display: flex;
+	position: relative;
+	background-color: black;
+	border: solid 1px gray;
+	padding: 30px 10px 25px 10px;
+	flex-direction: column;
+	color: white;
+	-webkit-touch-callout: none; /* iOS Safari*/
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge,*/
+}
+.multi-range-slider-black .bar {
+	display: flex;
+}
+.multi-range-slider-black .bar.active * {
+	transition: none;
+}
+.multi-range-slider-black .bar-left {
+	width: 25%;
+	background-color: gray;
+	border-radius: 10px 0px 0px 10px;
+	box-shadow: inset 0px 0px 5px black;
+	border: solid 1px black;
+	padding: 5px 0px;
+}
+.multi-range-slider-black .bar-right {
+	width: 25%;
+	background-color: gray;
+	border-radius: 0px 10px 10px 0px;
+	box-shadow: inset 0px 0px 5px black;
+	border: solid 1px black;
+}
+.multi-range-slider-black .bar-inner {
+	background-color: lime;
+	display: flex;
+	flex-grow: 1;
+	flex-shrink: 1;
+	justify-content: space-between;
+	position: relative;
+	border: solid 1px black;
+	justify-content: space-between;
+	box-shadow: inset 0px 0px 5px black;
+}
+.multi-range-slider-black .bar-inner-left {
+	width: 50%;
+}
+.multi-range-slider-black .bar-inner-right {
+	width: 50%;
+}
+.multi-range-slider-black .thumb {
+	background-color: white;
+	position: relative;
+	z-index: 1;
+	cursor: pointer;
+	width: 25px;
+	height: 25px;
+}
+.multi-range-slider-black .thumb::before {
+	content: '';
+	background-color: inherit;
+	position: absolute;
+	width: 20px;
+	height: 30px;
+	border: solid 1px black;
+	width: 5px;
+	height: 5px;
+	z-index: 1;
+	margin: -10px -12px;
+	cursor: pointer;
+}
+.multi-range-slider-black .input-type-range:focus + .thumb::after {
+	content: '';
+	position: absolute;
+	top: -6px;
+	left: -8px;
+	width: 12px;
+	height: 22px;
+	z-index: 2;
+	border-radius: 7px;
+	border: dotted 1px black;
+	box-shadow: 0px 0px 5px white, inset 0px 0px 10px black;
+}
+.multi-range-slider-black .caption {
+	position: absolute;
+	bottom: 45px;
+	width: 2px;
+	height: 2px;
+	left: 1px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: visible;
+	/* display: none; */
+}
+.multi-range-slider-black .thumb .caption * {
+	position: absolute;
+	min-width: 30px;
+	height: 30px;
+	font-size: 75%;
+	text-align: center;
+	line-height: 30px;
+	background-color: blue;
+	border-radius: 15px;
+	color: white;
+	box-shadow: 0px 0px 5px black;
+	padding: 0px 5px;
+	white-space: nowrap;
+}
+.multi-range-slider-black .thumb:active .caption {
+	display: flex;
+}
+.multi-range-slider-black .input-type-range:focus + .thumb .caption {
+	display: flex;
+}
+
+.multi-range-slider-black .input-type-range {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	opacity: 0;
+	pointer-events: none;
+}
+.multi-range-slider-black .ruler {
+	margin: 10px 0px -5px 0px;
+	display: flex;
+	overflow: hidden;
+}
+.multi-range-slider-black .ruler .ruler-rule {
+	border-left: solid 1px;
+	border-bottom: solid 1px;
+	display: flex;
+	flex-grow: 1;
+	flex-shrink: 1;
+	padding: 5px 0px;
+}
+.multi-range-slider-black .ruler .ruler-rule:last-child {
+	border-right: solid 1px;
+}
+
+.multi-range-slider-black .ruler .ruler-sub-rule {
+	border-left: solid 1px;
+	/* border-bottom: solid 1px; */
+	display: flex;
+	flex-grow: 1;
+	flex-shrink: 1;
+	padding: 3px 0px;
+	bottom: 0px;
+	margin-bottom: -5px;
+}
+.multi-range-slider-black .ruler .ruler-sub-rule:first-child {
+	border-left: none;
+}
+
+.multi-range-slider-black .labels {
+	display: flex;
+	justify-content: space-between;
+	padding: 0px;
+	margin-top: 10px;
+	margin-bottom: -20px;
+	/* display:none; */
+}
+.multi-range-slider-black .label {
+	font-size: 80%;
+}
+.multi-range-slider-black.zero-range-margin .thumb-left {
+	right: 12px;
+}
+.multi-range-slider-black.zero-range-margin .thumb-right {
+	left: 8px;
+}

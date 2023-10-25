@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import type { flashCard } from 'src/models/flashCardsModel';
 import styled from 'styled-components';
-import ChordTextInput from '../test/components/ChordTextInput';
+import { useStoreState } from '../../../store/store';
+import ChordTextInput from './ChordTextInput';
 
-const TrainingBox = () => {
+export function TextPrompt() {
   const [mounted, setMounted] = useState(false);
   const [trainingData, setTrainingData] = useState([]);
   const [userInput, setUserInput] = useState([]);
@@ -36,6 +36,8 @@ const TrainingBox = () => {
     if (!mounted) {
       setTrainingData(exampleFlashCard);
       setMounted(true);
+    } else {
+      setFocused(true);
     }
   }, [mounted, userInput]);
 
@@ -44,10 +46,10 @@ const TrainingBox = () => {
     document.getElementById('txt_Name')?.focus();
   }
 
-  function checkInput(e: React.KeyboardEvent) {
-    if (e.key === 'Backspace' && inputValue.length > 0) {
+  function checkInput(input: string) {
+    if (input === 'Backspace' && inputValue.length > 0) {
       setInputValue(inputValue.slice(0, -1));
-    } else if (e.key === 'Enter' && inputValue.length > 0) {
+    } else if (input === 'Enter' && inputValue.length > 0) {
       // Checks to see if input is correct
       if (inputValue === trainingData[userInput.length]) {
         // TODO - Do something that implies the input is correct
@@ -57,31 +59,33 @@ const TrainingBox = () => {
         // TODO - Do something that implies the input is incorrect
       }
     } else {
-      setInputValue(inputValue + e.key);
+      setInputValue(inputValue + input);
     }
   }
 
   return (
-    <div>
+    <TextPromptContainer>
       {focused ? (
         <div>
           <TextPromptContainer onClick={() => focusTextBox()}>
-            hi
+            hello
           </TextPromptContainer>
-          <ChordTextInput />
+          <ChordTextInput onKeyDown={checkInput} value={inputValue} />
         </div>
       ) : (
         <div onClick={() => focusTextBox()}>not focused</div>
       )}
-    </div>
+    </TextPromptContainer>
   );
-};
-
-export default TrainingBox;
+}
 
 const TextPromptContainer = styled.div.attrs({
   className: `
-      text-md font-bold mt-12 flex flex-col items-center w-full justify-center text-white
-      sm:text-xl md:text-2xl xl:mt-12 content:center 
-    `,
+    text-md font-bold mt-12 flex flex-col items-center w-full justify-center text-white
+    sm:text-xl md:text-2xl xl:mt-12 content:center 
+  `,
+})``;
+
+const TextPromptSpacingContainer = styled.div.attrs({
+  className: `position-center  left-0 right-0 bottom-0 w-full h-full z-10`,
 })``;
