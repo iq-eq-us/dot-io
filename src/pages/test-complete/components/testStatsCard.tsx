@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import type { ChordStatistics } from '../../../models/trainingStatistics';
 import styled from 'styled-components';
-import { useStoreState, useStoreActions } from '../../../store/store';
+import store, { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { TestControlRow } from './testControlsRow';
 import { wpmMethodCalculator } from '../../../helpers/aggregation';
@@ -60,12 +60,25 @@ export function TestStatsCard(): ReactElement {
       (allTypedText.length - 1)) *
     100;
 
+  console.log('Errors ' + trainingSessionErrors);
+  //console.log("CPM: " + testTierHighestWPM);
+  //store.getActions().addTestCPM([testTierHighestWPM]);
+
   const timerValue = useStoreState((store) => store.timerValue);
   const trainingIsDone = useStoreState((store) => store.trainingIsDone);
 
   const averageOfLocalStats = wpmMethodCalculator(
     getCumulativeAverageChordTypeTime(localTrainingStatistics),
   );
+
+  useEffect(() => {
+    let date = new Date().toLocaleDateString();
+    console.log(date);
+    // Add the accuracy value to the store when the component mounts
+    store.getActions().addAccuracy([Accuracy]);
+    store.getActions().addTestDate([date]);
+    store.getActions().addTestErrors([trainingSessionErrors]);
+  }, []);
 
   function returnValueBasedOnTier() {
     if (tier == 'CPM') {

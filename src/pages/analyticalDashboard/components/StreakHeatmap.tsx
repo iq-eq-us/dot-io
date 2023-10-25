@@ -7,9 +7,5 @@ import sessionStatHistoryTest from '../components/testSessionStats';
 sessionStatHistoryTest();
 
 export function StreakHeatmap(): ReactElement {
-  return (
-    <div>
-      <p>Streak Heatmap</p>
-    </div>
-  );
+  return <div></div>;
 }
