@@ -1,14 +1,9 @@
 import type { Action, ActionOn, Computed, ThunkOn } from 'easy-peasy';
 
-// individual session
+// each session consists of a date and number of chords mastered
 export interface sessionStatsAnalytical {
+  sessionDate: string; // Date of session
   numberOfChordsMastered: number; // In a session, how many chords mastered
-}
-
-// history of sessions
-export interface sessionStatsAnalyticalHistory {
-  name: string;
-  sessionStatsHistory: sessionStatsAnalytical[];
 }
 
 // set of actions
@@ -16,12 +11,12 @@ export interface sessionStatsAnalyticalActionModel {
   addSessionStatsAnalytical: Action<
     sessionStatsAnalyticalStoreStateModel,
     number
-  >;
+  >; // don't need to pass in the date, it will be generated
 }
 
 // set of state stores
 export interface sessionStatsAnalyticalStoreStateModel {
-  currNumberOfChordsMastered: number;
+  sessionStatsHistory: sessionStatsAnalytical[];
 }
 
 export type SessionStatsAnalyticalStoreModel =
