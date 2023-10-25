@@ -2,7 +2,9 @@ import React, { ReactElement, useRef, useState } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import { ForgotPassword } from './ForgotPassword';
+import { ForgotAnswer } from './ForgotAnswer';
+import EditFlashcard from './EditFlashcard';
+import EditIcon from './EditIcon';
 function ChordTextInput(): ReactElement {
   const setStoreText = useStoreActions((store) => store.setTypedTrainingText);
   const textTyped = useStoreState((store) => store.typedTrainingText);
@@ -37,7 +39,7 @@ function ChordTextInput(): ReactElement {
   payload.push(currentTrainingScenario);
 
   const { parentProps, Popper } = usePopover(
-    'Forgot the password, press here to move to next question.',
+    'Forgot the answer, press here to move to next question.',
   );
 
   return (
@@ -65,7 +67,20 @@ function ChordTextInput(): ReactElement {
         }}
         {...parentProps}
       >
-        <ForgotPassword />
+        <ForgotAnswer />
+      </div>
+
+      <div
+        className="p-2 text-white flex items-center rounded mb-4 ml-6 hover:text-gray-400"
+        onClick={() => {
+          //setStoreText('');
+          //regenerateTrainingText();
+          //setIsDisplaying(true);
+          //updateTrainingSetting({ isDisplayingSettingsModal: true });
+          //inputRef.current?.focus();
+        }}
+      >
+        <EditFlashcard />
       </div>
     </div>
   );
