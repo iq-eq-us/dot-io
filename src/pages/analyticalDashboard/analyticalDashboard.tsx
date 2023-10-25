@@ -5,8 +5,10 @@ import {
 } from './analyticalDashboard.styled';
 import { AnalyticalDashboardHeader } from './components/AnalyticalDashboardHeader';
 import styled from 'styled-components';
-import { StreakHeatmap } from './components/StreakHeatmap';
 import { AnalyticalDashboardAccAndConOverall } from './components/AnalyticalDashboardAccAndConOverall';
+// import { AnalyticalDashboardPageToggle } from './components/AnalyticalDashboardPageToggle';
+import { StreakHeatmap } from './components/StreakHeatmap';
+import { Hexbin } from './components/Hexbin';
 
 /**
  * This is the analytical dashboard page. It is responsible for displaying all user-specific stats.
@@ -57,6 +59,7 @@ const AnalyticalDashboard = (): ReactElement => {
         {currentPage === 'overall' && (
           <TopSectionContainer>
             <AnalyticalDashboardHeader />
+            <Hexbin />
             <StreakHeatmap />
           </TopSectionContainer>
         )}

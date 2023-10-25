@@ -5,7 +5,7 @@ import useChordsNotConquered, {
 } from '../../../hooks/useChordsNotConquered';
 import useCurrentLevel from '../../../hooks/useCurrentLevel';
 import styled from 'styled-components';
-import { useStoreState } from '../../../store/store';
+import store, { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
 import Timer from './timer';
@@ -324,6 +324,10 @@ export function ProgressBar(): ReactElement {
           : averageOfLocalStats.toFixed(0)) +
         ' lWPM',
     );
+
+  // added to store the number of chords mastered
+  // this is the number in "<number> Terms" in the trapezoid
+  store.getActions().addSessionStatsAnalytical(numberOfChordsMastered);
 
   return (
     <React.Fragment>

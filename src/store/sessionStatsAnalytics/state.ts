@@ -3,7 +3,7 @@ import type { sessionStatsAnalyticalStoreStateModel } from '../../../src/models/
 // default state for sessionStatsAnalyticalStore
 const sessionStatsAnalyticalStoreState: sessionStatsAnalyticalStoreStateModel =
   {
-    currNumberOfChordsMastered: 0,
+    sessionStatsHistory: [],
   };
 
 export default sessionStatsAnalyticalStoreState;
