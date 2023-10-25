@@ -2,7 +2,39 @@ import React, { ReactElement, useRef, useState } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import { ForgotPassword } from './ForgotPassword';
+
+import { ForgotAnswer } from './ForgotAnswer';
+import EditFlashcard from './EditFlashcard';
+import EditIcon from './EditIcon';
+function ChordTextInput(): ReactElement {
+  const setStoreText = useStoreActions((store) => store.setTypedTrainingText);
+  const textTyped = useStoreState((store) => store.typedTrainingText);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const regenerateTrainingText = useStoreActions(
+    (store) => store.resetTrainingText,
+  );
+  const timeTakenToTypePreviousChord = useStoreState(
+    (store) => store.timeTakenToTypePreviousChord,
+  );
+  const displayHUD = useHUD();
+
+  const beginTraining = useStoreActions(
+    (store: any) => store.beginTrainingMode,
+  );
+
+  const currentTrainingScenario = useStoreState(
+    (store: any) => store.currentTrainingScenario,
+  );
+  const setIsDisplaying = useStoreActions(
+    (store) => store.setIsDisplayingStatisticsModal,
+  );
+  const setTrainingSettings = useStoreActions(
+    (store: any) => store.setTrainingSettings,
+  );
+  const trainingSettings = useStoreState((store) => store.trainingSettings);
+
+  const updateTrainingSetting = (newProperty: Record<string, unknown>) =>
+    setTrainingSettings({ ...trainingSettings, ...newProperty });
 
 interface TextInputProps {
   onKeyDown: (input: string) => void;
@@ -16,7 +48,7 @@ function ChordTextInput({
   value,
 }: TextInputProps): ReactElement {
   const { parentProps, Popper } = usePopover(
-    'Forgot the password, press here to move to next question.',
+    'Forgot the answer, press here to move to next question.',
   );
 
   const inputBox = useRef<HTMLInputElement>(null);
@@ -44,7 +76,20 @@ function ChordTextInput({
         }}
         {...parentProps}
       >
-        <ForgotPassword />
+        <ForgotAnswer />
+      </div>
+
+      <div
+        className="p-2 text-white flex items-center rounded mb-4 ml-6 hover:text-gray-400"
+        onClick={() => {
+          //setStoreText('');
+          //regenerateTrainingText();
+          //setIsDisplaying(true);
+          //updateTrainingSetting({ isDisplayingSettingsModal: true });
+          //inputRef.current?.focus();
+        }}
+      >
+        <EditFlashcard />
       </div>
     </div>
   );

@@ -103,8 +103,8 @@ const Navbar = (): ReactElement => {
         if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
           history.push(ROUTER_PATHS.home);
         }
-        //ConceptsPage();
       }
+      console.log('training level: ', trainingLevel);
     }
   }
   function triggerPasswordModal() {
@@ -188,7 +188,7 @@ const Navbar = (): ReactElement => {
               open={true}
               src={CM_Icon}
               alt=""
-              onClick={() => TrainingPageFunction('CM', true)}
+              onClick={() => (window.location.href = '#/concepts-page')}
             />
           </NavMenuLink>
         </NavMenu>
