@@ -20,7 +20,6 @@ export function ConceptsMasteredColumn(): ReactElement {
       <HelperContainer>Concepts Mastered</HelperContainer>
       <ProgressBar />
       <TextPrompt />
-      <ChordTextInput />
       <FullWidthFullHeightContainer />
     </ConceptsMasteredColumnContainer>
   );

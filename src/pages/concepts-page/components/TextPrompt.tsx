@@ -1,108 +1,74 @@
-import React, { ReactElement } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
-
-const r = Math.random;
-/*
-export function TextPrompt(): ReactElement {
-  const indexOfTargetChord = useStoreState(
-    (store) => store.currentSubindexInTrainingText,
-  );
-  const firstLineOfTargetText = useStoreState(
-    (store) => store.targetTextLineOne,
-  );
-  const secondLineOfTargetText = useStoreState(
-    (store) => store.targetTextLineTwo,
-  );
-  const isError = useStoreState(
-    (store) => store.errorOccurredWhileAttemptingToTypeTargetChord,
-  );
-  const targetCharacterIndex = useStoreState(
-    (store) => store.targetCharacterIndex,
-  );
-  const characterEntryMode = useStoreState((store) => store.characterEntryMode);
-
-  return (
-    <TextPromptContainer>
-      <ChordRow>
-        {(firstLineOfTargetText || [])?.map((chord, i) => {
-          if (characterEntryMode === 'CHORD' || i !== indexOfTargetChord)
-            return (
-              <Chord
-                key={r()}
-                active={i === indexOfTargetChord}
-                error={isError && i === indexOfTargetChord}
-              >
-                {chord}
-              </Chord>
-            );
-          else
-            return (
-              <CharacterEntryChord word={chord} index={targetCharacterIndex} />
-            );
-        })}
-      </ChordRow>
-
-      <ChordRow>
-        {(secondLineOfTargetText || [])?.map((chord) => (
-          <Chord key={r()}>{chord}</Chord>
-        ))}
-      </ChordRow>
-    </TextPromptContainer>
-  );
-}
-
-export default function CharacterEntryChord({
-  word,
-  index,
-}: {
-  word: string;
-  index: number | undefined;
-}): ReactElement {
-  if (index === undefined || index === null)
-    return (
-      <span className="text-green-500" key={Math.random()}>
-        {word}
-      </span>
-    );
-
-  const wordSplit = word.split('');
-  return (
-    <div style={{ display: 'flex', flexDirection: 'row', color: 'red' }}>
-      {wordSplit.slice(0, index).map((char) => (
-        <span className="text-green-500" key={Math.random()}>
-          {char}
-        </span>
-      ))}
-      <span className="text-blue-500">{wordSplit[index]}</span>
-      {wordSplit.slice(index + 1).map((char) => (
-        <span className="text-white" key={Math.random()}>
-          {char}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-interface ChordProps {
-  active?: boolean;
-  error?: boolean;
-}*/
+import ChordTextInput from './ChordTextInput';
+import RenderQuestion from './RenderQuestion';
+import generateTrainingData from '../util/generateTrainingData';
 
 export function TextPrompt() {
-  /*const setTextPromptUnFocused = useStoreActions(
-    (store) => store.setTextPromptUnFocused,
-  );
-  const setStartTimer = useStoreActions((store) => store.setStartTimer);*/
+  const [trainingData, setTrainingData] = useState([]);
+  const [userInput, setUserInput] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [focused, setFocused] = useState(false);
+
+  const currentTrainingValue = trainingData[userInput.length];
+
+  useEffect(() => {
+    // Use as condition in future - || trainingData.length - userInput.length <  5
+    if (trainingData.length - userInput.length < 5) {
+      const newTrainingData = generateTrainingData();
+      setTrainingData([...trainingData, ...newTrainingData]);
+    }
+
+    setFocused(true);
+  }, [mounted, userInput]);
+
+  function focusTextBox() {
+    setFocused(true);
+    document.getElementById('txt_Name')?.focus();
+  }
+
+  function unfocusTextBox() {
+    setFocused(false);
+  }
+
+  const regex = new RegExp('^[a-zA-Z ]{1}$');
+
+  function checkInput(input: string) {
+    if (input === 'Backspace' && inputValue.length > 0) {
+      setInputValue(inputValue.slice(0, -1));
+    } else if (input === 'Enter' && inputValue.length > 0) {
+      // Checks to see if input is correct
+      if (inputValue === currentTrainingValue.answer) {
+        // TODO - Do something that implies the input is correct
+        setUserInput([...userInput, inputValue]);
+        console.log(userInput);
+        console.log(trainingData);
+        setInputValue('');
+      } else {
+        // TODO - Do something that implies the input is incorrect
+      }
+    } else if (regex.test(input)) {
+      setInputValue(inputValue + input);
+    }
+  }
 
   return (
     <TextPromptContainer>
-      <div
-        className="wi from-green-800 bg-zinc-300  w-100 h-60 rounded-3xl pt-16 text-black text-center "
-        onClick={() => [document.getElementById('txt_Name')?.focus()]}
-      >
-        CONCEPT MASTERING IS CURRENTLY UNDER DEVELOPMENT
-      </div>
+      {focused ? (
+        <div>
+          <TextPromptContainer onClick={() => focusTextBox()}>
+            <RenderQuestion flashCard={currentTrainingValue} />
+          </TextPromptContainer>
+          <ChordTextInput
+            onKeyDown={checkInput}
+            onBlur={unfocusTextBox}
+            value={inputValue}
+          />
+        </div>
+      ) : (
+        <div onClick={() => focusTextBox()}>not focused</div>
+      )}
     </TextPromptContainer>
   );
 }
