@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-export function ForgotPassword(): ReactElement {
+export function ForgotAnswer(): ReactElement {
   /*const addFlashCardSet = useStoreActions(
         (store) => store.flashCardActionModel.,
       );*/

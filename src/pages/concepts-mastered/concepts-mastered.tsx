@@ -37,7 +37,7 @@ const Concepts = (): ReactElement => {
           <HorizontalRule />
           <Table>
             <ConceptsRow>
-              <ImportFlashCards />
+              <AddFlashCards />
               <SaveFlashCards />
             </ConceptsRow>
           </Table>
@@ -47,8 +47,7 @@ const Concepts = (): ReactElement => {
               <ChordContainer>
                 <div />
                 <div />
-                <AddHeaders />
-                <AddFlashCards />
+                <ImportFlashCards />
               </ChordContainer>
               <FlashcardMapCardColumn />
             </Column>
