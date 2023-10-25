@@ -4,12 +4,17 @@ import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import { ForgotPassword } from './ForgotPassword';
 
-interface Props {
+interface TextInputProps {
   onKeyDown: (input: string) => void;
+  onBlur: () => void;
   value: string;
 }
 
-function ChordTextInput({ onKeyDown, value }: Props): ReactElement {
+function ChordTextInput({
+  onKeyDown,
+  onBlur,
+  value,
+}: TextInputProps): ReactElement {
   const { parentProps, Popper } = usePopover(
     'Forgot the password, press here to move to next question.',
   );
@@ -28,6 +33,8 @@ function ChordTextInput({ onKeyDown, value }: Props): ReactElement {
         autoFocus
         value={value}
         onKeyDown={(e) => onKeyDown(e.key)}
+        readOnly={true}
+        onBlur={() => onBlur()}
       />
 
       <div

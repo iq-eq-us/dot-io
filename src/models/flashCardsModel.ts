@@ -68,6 +68,7 @@ export interface flashCardStoreStateModel {
   // Array that represents random weights for each flash card
   activeFlashCardLength: Computed<FlashCardStoreModel, number>;
   activeFlashCardSetWeights: Computed<flashCardStoreStateModel, number[]>;
+  dailyTrainingSet: Computed<flashCardStoreStateModel, flashCard[]>;
 
   // Extra action for upload thunk
   addFlashCardSet: Action<flashCardStoreStateModel, flashCardSet>;
