@@ -7,38 +7,25 @@ import type {
 const flashCardStoreActions: flashCardActionModel = {
   // Actions to add and remove cards from the active flash card set
   addFlashCard: action((state, payload) => {
-    // Gets the active Flash Card Set and adds the new flash card to it
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      state.allFlashCardSets[activeSet].flashCards.push(payload);
-    } else {
-      console.error('No active flash card set');
-    }
+    state.allFlashCardSets[activeSet].flashCards.push(payload);
   }),
 
   removeFlashCard: action((state, payload) => {
     // Gets the active Flash Card Set and removes the flash card from it
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      state.allFlashCardSets[activeSet].flashCards.splice(payload, 1);
-    } else {
-      console.error('No active flash card set');
-    }
+    state.allFlashCardSets[activeSet].flashCards.splice(payload, 1);
   }),
 
   editFlashCard: action((state, payload) => {
     // Gets the active Flash Card Set and edits the flash card from it
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      state.allFlashCardSets[activeSet].flashCards[payload.index] =
-        payload.newFlashCard;
-    } else {
-      console.error('No active flash card set');
-    }
+    state.allFlashCardSets[activeSet].flashCards[payload.index] =
+      payload.newFlashCard;
   }),
 
   // Actions to set and use the active flash card set
-  setActiveFlashIndex: action((state, payload) => {
+  setActiveFlashCardSetIndex: action((state, payload) => {
     // Checks the number of flash Card sets then replaces if valid
     const numberOfSets = state.allFlashCardSets.length;
     if (payload > 0 && payload < numberOfSets) {
@@ -55,8 +42,8 @@ const flashCardStoreActions: flashCardActionModel = {
     if (activeSet != -1) {
       return state.allFlashCardSets[activeSet].flashCards;
     } else {
-      return undefined;
       console.error('No active flash card set');
+      return undefined;
     }
   }),
 
@@ -96,10 +83,18 @@ const flashCardStoreActions: flashCardActionModel = {
       nextTrainingDate: currentDate,
     };
     state.allFlashCardSets.push(emptyFlashCardSet);
+    state.activeFlashCardSetIndex = state.allFlashCardSets.length - 1;
   }),
 
   removeFlashCardSet: action((state, payload) => {
     // Removes a flash card set from the list of sets
+    if (state.allFlashCardSets.length == 1) {
+      state.allFlashCardSets[0] = {
+        name: 'UnnamedSet-0',
+        flashCards: [],
+        nextTrainingDate: new Date(),
+      };
+    }
     state.allFlashCardSets.splice(payload, 1);
   }),
 
@@ -126,11 +121,7 @@ const flashCardStoreActions: flashCardActionModel = {
 
   exportActiveFlashCardSetCSV: action((state) => {
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      downloadCSV(state.allFlashCardSets[activeSet]);
-    } else {
-      console.error('No active flash card set');
-    }
+    downloadCSV(state.allFlashCardSets[activeSet]);
   }),
 
   // Actions to get and set the last daily training date of card sets
@@ -142,21 +133,13 @@ const flashCardStoreActions: flashCardActionModel = {
 
     // Sets the next date for the next training date
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      state.allFlashCardSets[activeSet].nextTrainingDate = currentDate;
-    } else {
-      console.error('No active flash card set');
-    }
+    state.allFlashCardSets[activeSet].nextTrainingDate = currentDate;
   }),
 
   getLastDailyTraining: computed((state) => {
     // Gets the last daily training date of the active set
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      return state.allFlashCardSets[activeSet].nextTrainingDate;
-    } else {
-      console.error('No active flash card set');
-    }
+    return state.allFlashCardSets[activeSet].nextTrainingDate;
   }),
 
   getLastDailyTrainingAll: computed((state) => {
@@ -206,44 +189,6 @@ const flashCardStoreActions: flashCardActionModel = {
 };
 
 export default flashCardStoreActions;
-
-const uploadCSV = async (filename: File) => {
-  // Sets the current date for the next training date
-  const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-
-  // Makes an empty flash card set
-  const flashCardSet: flashCardSet = {
-    name: filename.toString(),
-    flashCards: [],
-    nextTrainingDate: currentDate,
-  };
-
-  const blobtoData = (blob: Blob) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsText(blob);
-    });
-  };
-  blobtoData(filename).then((data) => {
-    const lines = (<string>data).split('\n');
-    for (const line of lines.slice(1)) {
-      const flashCard = line.split(',');
-      flashCardSet.flashCards.push({
-        question: flashCard[0],
-        answer: flashCard[1],
-        tags: flashCard[2].split(', '),
-        url: flashCard[3],
-        image: flashCard[4] == 'TRUE',
-        ebbinghausValue: parseFloat(flashCard[5]),
-        lastReinforcement: new Date(flashCard[6]),
-      });
-    }
-  });
-
-  return flashCardSet;
-};
 
 const downloadCSV = (cardSet: flashCardSet) => {
   // Makes a csv string from the flash card set

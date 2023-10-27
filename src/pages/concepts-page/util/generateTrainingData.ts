@@ -4,7 +4,6 @@ import { useStoreState } from '../../../store/store';
 const numberItemsToGenerate = 20;
 
 const generateTrainingData = () => {
-  //const activeTrainingSet = useStoreState(state => state.dailyTrainingSet);
   const activeTrainingSet: flashCard[] = [
     {
       image: false,

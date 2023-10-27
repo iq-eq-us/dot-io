@@ -16,6 +16,12 @@ export interface flashCardSet {
   nextTrainingDate: Date;
 }
 
+export interface sessionTrainingData {
+  flashCard: flashCard;
+  numberOfTimesWritten: number;
+  numberOfTimesWrittenFast: number;
+}
+
 export interface flashCardActionModel {
   // Actions to add and remove cards from the active flash card set
   addFlashCard: Action<flashCardStoreStateModel, flashCard>;
@@ -26,7 +32,7 @@ export interface flashCardActionModel {
   >;
 
   // Actions to set and use the active flash card set
-  setActiveFlashIndex: Action<flashCardStoreStateModel, number>;
+  setActiveFlashCardSetIndex: Action<flashCardStoreStateModel, number>;
   getActiveFlashCardSet: Computed<flashCardStoreStateModel, flashCard[]>;
   getActiveFlashCardsName: Computed<flashCardStoreStateModel, string>;
   getActiveFlashCardSetLength: Computed<flashCardStoreStateModel, number>;
@@ -43,7 +49,7 @@ export interface flashCardActionModel {
   getAllFlashCardSetNames: Computed<flashCardStoreStateModel, string[]>;
 
   // Actions to transition between csv and redux
-  importFlashCardSetCSV: Thunk<flashCardStoreStateModel, File>;
+  importFlashCardSetCSV: Thunk<Action<flashCardStoreStateModel>, File>;
   exportActiveFlashCardSetCSV: Action<flashCardStoreStateModel>;
 
   // Actions to get and set the last daily training date of a set
@@ -62,16 +68,13 @@ export interface flashCardStoreStateModel {
   // All current flash card sets
   allFlashCardSets: flashCardSet[];
 
+  sessionTrainingData: sessionTrainingData[];
+
   // Number of flash cards to practice daily
   numberOfDailyFlashCards: number;
 
-  // Array that represents random weights for each flash card
-  activeFlashCardLength: Computed<FlashCardStoreModel, number>;
-  activeFlashCardSetWeights: Computed<flashCardStoreStateModel, number[]>;
-  dailyTrainingSet: Computed<flashCardStoreStateModel, flashCard[]>;
-
-  // Extra action for upload thunk
-  addFlashCardSet: Action<flashCardStoreStateModel, flashCardSet>;
+  activeFlashCards: Computed<flashCardStoreStateModel, flashCard[]>;
+  //dailyTrainingSet: Computed<flashCardStoreStateModel, flashCard[]>;
 }
 
 export type FlashCardStoreModel = flashCardStoreStateModel &

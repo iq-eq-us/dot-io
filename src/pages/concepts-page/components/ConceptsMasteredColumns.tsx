@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import CharachorderOverlay from './CharachorderOverlay';
 import CharachorderOverlayLite from './CharachorderOverlayCharachorderLite';
@@ -11,6 +11,8 @@ import { TextPrompt } from './TextPrompt';
 import ChordTextInput from './ChordTextInput';
 
 export function ConceptsMasteredColumn(): ReactElement {
+  const [focused, setFocused] = React.useState(false);
+
   return (
     <ConceptsMasteredColumnContainer>
       <SmallScreenButtons>
@@ -26,7 +28,7 @@ export function ConceptsMasteredColumn(): ReactElement {
 }
 
 const ConceptsMasteredColumnContainer = styled.div.attrs({
-  className: 'flex flex-col align-center w-full xl:w-1/2 m-8 lgml-36 relative',
+  className: 'flex flex-col align-center w-full',
 })``;
 
 const SmallScreenButtons = styled.div.attrs({

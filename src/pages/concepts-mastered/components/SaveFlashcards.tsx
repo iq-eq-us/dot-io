@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import { getCount } from '../../manager/components/countChords';
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import { FlashCardStore } from '../../../store/flashCardStore';
-
-const CC_VENDOR_IDS = [0x239a, 0x303a]; // CharaChorder Vendor ID
+import { useStoreActions } from '../../../store/store';
 
 export function SaveFlashCards(): ReactElement {
+  const exportActiveFlashCardSetCSV = useStoreActions(
+    (store) => store.exportActiveFlashCardSetCSV,
+  );
+
   return (
     <React.Fragment>
       <div id="statusDiv" />
@@ -14,7 +14,7 @@ export function SaveFlashCards(): ReactElement {
       <button
         className="import sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative"
         color="pink"
-        //onClick={() => }
+        onClick={() => exportActiveFlashCardSetCSV()}
       >
         Save Flashcards{' '}
       </button>

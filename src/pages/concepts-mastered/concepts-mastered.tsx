@@ -14,11 +14,7 @@ import { ConceptsMasteredHeader } from '../concepts-mastered/components/Concepts
 import { ImportFlashCards } from '../concepts-mastered/components/ImportFlashcards';
 import { SaveFlashCards } from '../concepts-mastered/components/SaveFlashcards';
 import { AddFlashCards } from '../concepts-mastered/components/AddFlashcards';
-import { ManagerColumn } from '../manager/manager.styled';
-import { AddHeaders } from './components/addHeaders';
-import { AddFlashCardMap } from './components/AddFlashcardMap';
-import { Terminal } from '../manager/components/Terminal';
-import { FlashcardMapCardColumn } from './components/FlashcardMapCardColumn';
+import { FlashCardColumn } from './components/FlashCardColumn';
 
 const Concepts = (): ReactElement => {
   React.useEffect(() => {
@@ -49,7 +45,7 @@ const Concepts = (): ReactElement => {
                 <div />
                 <ImportFlashCards />
               </ChordContainer>
-              <FlashcardMapCardColumn />
+              <FlashCardColumn />
             </Column>
             <div className="h-1 w-6/12 mt-16 bg-[#3A5A42] rounded mb-10" />
           </PageContainer>

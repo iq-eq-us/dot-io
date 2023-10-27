@@ -4,8 +4,14 @@ import { useStoreState } from '../../../store/store';
 import ChordTextInput from './ChordTextInput';
 import RenderQuestion from './RenderQuestion';
 import generateTrainingData from '../util/generateTrainingData';
+import EditFlashcard from './EditFlashcard';
 
 export function TextPrompt() {
+  const activeFlashCards = useStoreState((state) => state.activeFlashCards);
+
+  console.log('Active Training Set:');
+  console.log(activeFlashCards);
+
   const [trainingData, setTrainingData] = useState([]);
   const [userInput, setUserInput] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -14,14 +20,13 @@ export function TextPrompt() {
   const currentTrainingValue = trainingData[userInput.length];
 
   useEffect(() => {
-    // Use as condition in future - || trainingData.length - userInput.length <  5
     if (trainingData.length - userInput.length < 5) {
       const newTrainingData = generateTrainingData();
       setTrainingData([...trainingData, ...newTrainingData]);
     }
 
     setFocused(true);
-  }, [mounted, userInput]);
+  }, [userInput]);
 
   function focusTextBox() {
     setFocused(true);
@@ -67,7 +72,10 @@ export function TextPrompt() {
           />
         </div>
       ) : (
-        <div onClick={() => focusTextBox()}>not focused</div>
+        <>
+          <div onClick={() => focusTextBox()}>Click To Focus</div>
+          <EditFlashcard />
+        </>
       )}
     </TextPromptContainer>
   );
