@@ -1,4 +1,4 @@
-import type { Action, Computed, Thunk } from 'easy-peasy';
+import type { Action, Computed } from 'easy-peasy';
 
 export interface flashCard {
   image: boolean;
@@ -20,6 +20,12 @@ export interface sessionTrainingData {
   flashCard: flashCard;
   numberOfTimesWritten: number;
   numberOfTimesWrittenFast: number;
+  lastTenTimesSpeed: number[];
+}
+
+export interface generatedData {
+  flashCard: flashCard;
+  sessionTrainingIndex: number;
 }
 
 export interface flashCardActionModel {
@@ -49,7 +55,6 @@ export interface flashCardActionModel {
   getAllFlashCardSetNames: Computed<flashCardStoreStateModel, string[]>;
 
   // Actions to transition between csv and redux
-  importFlashCardSetCSV: Thunk<Action<flashCardStoreStateModel>, File>;
   exportActiveFlashCardSetCSV: Action<flashCardStoreStateModel>;
 
   // Actions to get and set the last daily training date of a set
@@ -57,8 +62,9 @@ export interface flashCardActionModel {
   getLastDailyTraining: Computed<flashCardStoreStateModel, Date>;
   getLastDailyTrainingAll: Computed<flashCardStoreStateModel, Date[]>;
 
-  // Actions to generate training data
-  //generateDailyData: Action<flashCardStoreStateModel, flashCard[]>;
+  setSessionTrainingData: Action<flashCardStoreStateModel>;
+
+  addTimeSessionTrainingData: Action<flashCardStoreStateModel, number[]>;
 }
 
 export interface flashCardStoreStateModel {
@@ -74,7 +80,6 @@ export interface flashCardStoreStateModel {
   numberOfDailyFlashCards: number;
 
   activeFlashCards: Computed<flashCardStoreStateModel, flashCard[]>;
-  //dailyTrainingSet: Computed<flashCardStoreStateModel, flashCard[]>;
 }
 
 export type FlashCardStoreModel = flashCardStoreStateModel &

@@ -1,61 +1,89 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useStoreState } from '../../../store/store';
+import { useStoreState, useStoreActions } from '../../../store/store';
 import ChordTextInput from './ChordTextInput';
 import RenderQuestion from './RenderQuestion';
 import generateTrainingData from '../util/generateTrainingData';
 import EditFlashcard from './EditFlashcard';
 
 export function TextPrompt() {
+  const sessionTrainingData = useStoreState(
+    (state) => state.sessionTrainingData,
+  );
+  const setSessionTrainingData = useStoreActions(
+    (state) => state.setSessionTrainingData,
+  );
   const activeFlashCards = useStoreState((state) => state.activeFlashCards);
-
-  console.log('Active Training Set:');
-  console.log(activeFlashCards);
+  const addTimeSessionTrainingData = useStoreActions(
+    (state) => state.addTimeSessionTrainingData,
+  );
 
   const [trainingData, setTrainingData] = useState([]);
   const [userInput, setUserInput] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [focused, setFocused] = useState(false);
+  const [startTime, setStartTime] = useState(null);
 
   const currentTrainingValue = trainingData[userInput.length];
 
   useEffect(() => {
-    if (trainingData.length - userInput.length < 5) {
-      const newTrainingData = generateTrainingData();
-      setTrainingData([...trainingData, ...newTrainingData]);
+    if (activeFlashCards.length != 0) {
+      if (trainingData.length === 0) {
+        setSessionTrainingData();
+        const newTrainingData = generateTrainingData(sessionTrainingData);
+        setTrainingData(newTrainingData);
+      }
+      if (trainingData.length - userInput.length < 5) {
+        const newTrainingData = generateTrainingData(sessionTrainingData);
+        setTrainingData([...trainingData, ...newTrainingData]);
+      }
+      setFocused(true);
+    } else {
+      setFocused(false);
     }
-
-    setFocused(true);
   }, [userInput]);
 
   function focusTextBox() {
     setFocused(true);
+    setStartTime(Date.now());
     document.getElementById('txt_Name')?.focus();
   }
 
   function unfocusTextBox() {
+    setStartTime(null);
     setFocused(false);
   }
 
   const regex = new RegExp('^[a-zA-Z ]{1}$');
 
   function checkInput(input: string) {
-    if (input === 'Backspace' && inputValue.length > 0) {
+    if (startTime === null) {
+      setStartTime(Date.now());
+    } else if (input === 'Backspace' && inputValue.length > 0) {
       setInputValue(inputValue.slice(0, -1));
     } else if (input === 'Enter' && inputValue.length > 0) {
       // Checks to see if input is correct
-      if (inputValue === currentTrainingValue.answer) {
-        // TODO - Do something that implies the input is correct
+      if (inputValue === currentTrainingValue.flashCard.answer) {
         setUserInput([...userInput, inputValue]);
         console.log(userInput);
         console.log(trainingData);
         setInputValue('');
+
+        addTime(Date.now() - startTime);
       } else {
-        // TODO - Do something that implies the input is incorrect
+        addTime(Date.now() - startTime + 1000);
       }
     } else if (regex.test(input)) {
       setInputValue(inputValue + input);
     }
+  }
+
+  function addTime(time: number) {
+    addTimeSessionTrainingData([
+      currentTrainingValue.sessionTrainingIndex,
+      time,
+    ]);
+    setStartTime(Date.now());
   }
 
   return (
@@ -63,7 +91,7 @@ export function TextPrompt() {
       {focused ? (
         <div>
           <TextPromptContainer onClick={() => focusTextBox()}>
-            <RenderQuestion flashCard={currentTrainingValue} />
+            <RenderQuestion flashCard={currentTrainingValue.flashCard} />
           </TextPromptContainer>
           <ChordTextInput
             onKeyDown={checkInput}

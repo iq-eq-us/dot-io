@@ -7,6 +7,7 @@ interface RenderQuestionProps {
 
 const RenderQuestion = ({ flashCard }: RenderQuestionProps) => {
   let ResultElement: ReactElement;
+  console.log(flashCard);
 
   if (flashCard.question === '') {
     ResultElement = <img src={flashCard.url} alt="Image" />;

@@ -25,26 +25,6 @@ const flashCardStoreState: flashCardStoreStateModel = {
         card.lastReinforcement <= new Date() && card.ebbinghausValue < 20,
     );
   }),
-
-  // Makes a weighted array of flash cards based on the ebbinghaus value
-  //activeFlashCardSetWeights: computed((state) => {
-  //  const activeSet = state.activeFlashCardSetIndex;
-  //  const weights: number[] = [];
-  //  if (activeSet != -1) {
-  //    const activeCardSet = state.allFlashCardSets[activeSet].flashCards;
-  //    for (let i = 0; i < activeCardSet.length; i++) {
-  //      if (
-  //        activeCardSet[i].lastReinforcement < new Date() &&
-  //        activeCardSet[i].ebbinghausValue < 100
-  //      )
-  //        weights.concat(
-  //          Array(Math.ceil(activeCardSet[i].ebbinghausValue / 2)).fill(i),
-  //        );
-  //    }
-  //  }
-  //
-  //  return weights;
-  //}),
 };
 
 export default flashCardStoreState;

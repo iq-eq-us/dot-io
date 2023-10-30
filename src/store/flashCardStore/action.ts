@@ -1,7 +1,8 @@
-import { action, computed, thunk } from 'easy-peasy';
+import { action, computed } from 'easy-peasy';
 import type {
   flashCardSet,
   flashCardActionModel,
+  sessionTrainingData,
 } from '../../models/flashCardsModel';
 
 const flashCardStoreActions: flashCardActionModel = {
@@ -28,7 +29,7 @@ const flashCardStoreActions: flashCardActionModel = {
   setActiveFlashCardSetIndex: action((state, payload) => {
     // Checks the number of flash Card sets then replaces if valid
     const numberOfSets = state.allFlashCardSets.length;
-    if (payload > 0 && payload < numberOfSets) {
+    if (payload >= 0 && payload < numberOfSets) {
       state.activeFlashCardSetIndex = payload;
     } else {
       console.error('Invalid Flash Card Set Index: ' + payload);
@@ -39,34 +40,20 @@ const flashCardStoreActions: flashCardActionModel = {
   getActiveFlashCardSet: computed((state) => {
     // Gets the active Flash Card Set and returns it
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      return state.allFlashCardSets[activeSet].flashCards;
-    } else {
-      console.error('No active flash card set');
-      return undefined;
-    }
+    console.log(activeSet);
+    return state.allFlashCardSets[activeSet].flashCards;
   }),
 
   getActiveFlashCardsName: computed((state) => {
     // Gets the active Flash Card Set and returns it's name
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      return state.allFlashCardSets[activeSet].name;
-    } else {
-      return undefined;
-      console.error('No active flash card set');
-    }
+    return state.allFlashCardSets[activeSet].name;
   }),
 
   getActiveFlashCardSetLength: computed((state) => {
     // Gets the active Flash Card Set and returns it's length
     const activeSet = state.activeFlashCardSetIndex;
-    if (activeSet != -1) {
-      return state.allFlashCardSets[activeSet].flashCards.length;
-    } else {
-      return undefined;
-      console.error('No active flash card set');
-    }
+    return state.allFlashCardSets[activeSet].flashCards.length;
   }),
 
   // Actions to add and remove flash card sets
@@ -113,12 +100,6 @@ const flashCardStoreActions: flashCardActionModel = {
     return allNames;
   }),
 
-  // Actions to load and unload flash card sets
-  importFlashCardSetCSV: thunk(async (actions, payload) => {
-    const newFlashCardSet: flashCardSet = await uploadCSV(payload);
-    actions.addFlashCardSet(newFlashCardSet);
-  }),
-
   exportActiveFlashCardSetCSV: action((state) => {
     const activeSet = state.activeFlashCardSetIndex;
     downloadCSV(state.allFlashCardSets[activeSet]);
@@ -151,41 +132,60 @@ const flashCardStoreActions: flashCardActionModel = {
     return allDates;
   }),
 
-  // Actions to generate training data
-  //generateDailyData: action((state) => {
-  //  const activeSet = state.activeFlashCardSetIndex;
-  //  const selectedFlashCards: flashCard[] = [];
-  //  if (activeSet != -1) {
-  //    const tempWeights = state.activeFlashCardSetWeights;
-  //
-  //    if (state.activeFlashCardLength < state.numberOfDailyFlashCards) {
-  //      return state.allFlashCardSets[activeSet].flashCards.filter(
-  //        (card) =>
-  //          card.lastReinforcement < new Date() && card.ebbinghausValue < 100,
-  //      );
-  //    }
-  //
-  //    while (selectedFlashCards.length < state.numberOfDailyFlashCards) {
-  //      // Gets a random flash card from the active set
-  //      const randomIndex = Math.floor(Math.random() * tempWeights.length);
-  //      const randomFlashCard =
-  //        state.allFlashCardSets[activeSet].flashCards[
-  //          tempWeights[randomIndex]
-  //        ];
-  //      tempWeights.splice(randomIndex, 1);
-  //
-  //      // Checks if the flash card is already selected
-  //      if (!selectedFlashCards.includes(randomFlashCard)) {
-  //        selectedFlashCards.push(randomFlashCard);
-  //      }
-  //    }
-  //  } else {
-  //    console.error('No active flash card set');
-  //  }
-  //
-  //  return selectedFlashCards;
-  //
-  //}),
+  //Actions to generate training data
+  setSessionTrainingData: action((state) => {
+    const activeFlashCards = state.activeFlashCards;
+    console.log(activeFlashCards);
+
+    const sessionTrainingData: sessionTrainingData[] = [];
+
+    while (
+      sessionTrainingData.length < state.numberOfDailyFlashCards &&
+      activeFlashCards.length != 0
+    ) {
+      const randomIndex = Math.floor(Math.random() * activeFlashCards.length);
+      const randomFlashCard = activeFlashCards[randomIndex];
+
+      sessionTrainingData.push({
+        flashCard: randomFlashCard,
+        numberOfTimesWritten: 0,
+        numberOfTimesWrittenFast: 0,
+        lastTenTimesSpeed: [],
+      });
+
+      activeFlashCards.splice(randomIndex, 1);
+    }
+
+    state.sessionTrainingData = sessionTrainingData;
+  }),
+
+  addTimeSessionTrainingData: action((state, payload) => {
+    const index = payload[0];
+    const time = payload[1];
+
+    state.sessionTrainingData[index].lastTenTimesSpeed.push(time);
+    if (state.sessionTrainingData[index].lastTenTimesSpeed.length > 10) {
+      state.sessionTrainingData[index].lastTenTimesSpeed.shift();
+
+      let totalTime = 0;
+      for (const time of state.sessionTrainingData[index].lastTenTimesSpeed) {
+        totalTime += time;
+      }
+      const averageTime = totalTime / 10;
+
+      if (averageTime < 0.6) {
+        state.sessionTrainingData[index].numberOfTimesWrittenFast++;
+      }
+    }
+
+    state.sessionTrainingData[index].numberOfTimesWritten++;
+    if (
+      state.sessionTrainingData[index].numberOfTimesWritten >= 100 ||
+      state.sessionTrainingData[index].numberOfTimesWrittenFast >= 10
+    ) {
+      state.sessionTrainingData.splice(index, 1);
+    }
+  }),
 };
 
 export default flashCardStoreActions;
