@@ -1,28 +1,69 @@
-import React, { ReactElement } from 'react';
-//import SettingsColumn from './components/SettingsColumn';
-import { ConceptsMasteredColumn } from './components/ConceptsMasteredColumns';
-import StaticSector from './components/StaticSector';
-import { useContrast } from '../../hooks/useContrast';
-//import EditChordsModal from './components/EditChordModal';
-import { PageContainer } from './concepts-page.styled';
-//import useTrainingScenarioAsDocumentTitle from '../../hooks/useTrainingScenarioAsDocumentTitle';
-//import { useStoreState } from '../../store/store';
-import { Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import ConceptsTrainingPage from './concepts-training-page';
+import ConceptsManagerPage from './concepts-manager-page';
 
-/**
- * This is the main training page.
- * It will adapt its content depending on which training scenario is currently active in the trainingStore.
- * Be sure to check out the contents of the trainingStore to understand the application logic.
- */
+const ConceptsPage = () => {
+  const [currentTier, setCurrentTier] = useState(0);
 
-function ConceptsPage(): ReactElement {
-  //useTrainingScenarioAsDocumentTitle();
+  const viewCurrentTier = () => {
+    if (currentTier == 0) {
+      return <ConceptsTrainingPage />;
+    } else if (currentTier == 1) {
+      return <ConceptsTrainingPage />;
+    } else {
+      return <ConceptsManagerPage />;
+    }
+  };
+
+  const currentTierRender = viewCurrentTier();
 
   return (
-    <PageContainer>
-      <ConceptsMasteredColumn />
-    </PageContainer>
+    <>
+      <ItemsContainer>
+        <button
+          {...(currentTier == 0
+            ? { className: ' text-white m-2 font-mono' }
+            : { className: ' text-neutral-400 m-2 font-mono' })}
+          onClick={() => [setCurrentTier(0)]}
+        >
+          Daily
+        </button>
+        <div>/</div>
+        <button
+          {...(currentTier == 1
+            ? { className: ' text-white m-2 font-mono' }
+            : { className: ' text-neutral-400 m-2 font-mono' })}
+          onClick={() => [setCurrentTier(1)]}
+        >
+          Custom
+        </button>
+        <div>/</div>
+        <button
+          {...(currentTier == 2
+            ? { className: ' text-white m-2 font-mono' }
+            : { className: ' text-neutral-400 m-2 font-mono' })}
+          onClick={() => [setCurrentTier(2)]}
+        >
+          Manager
+        </button>
+      </ItemsContainer>
+      {currentTierRender}
+    </>
   );
-}
+};
 
 export default ConceptsPage;
+
+const ItemsContainer = styled.div`
+  height: 50px;
+  display: flex;
+  color: white;
+  position: relative;
+  flex-direction: row;
+  padding: '1rem';
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #222424;
+`;

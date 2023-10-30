@@ -180,7 +180,7 @@ const flashCardStoreActions: flashCardActionModel = {
 
     state.sessionTrainingData[index].numberOfTimesWritten++;
     if (
-      state.sessionTrainingData[index].numberOfTimesWritten >= 100 ||
+      state.sessionTrainingData[index].numberOfTimesWritten >= 10 ||
       state.sessionTrainingData[index].numberOfTimesWrittenFast >= 10
     ) {
       state.sessionTrainingData.splice(index, 1);

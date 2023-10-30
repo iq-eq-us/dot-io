@@ -9,14 +9,14 @@ import {
   TopSectionContainer,
   Column,
   ConceptsRow,
-} from '../concepts-mastered/concepts-mastered.style';
-import { ConceptsMasteredHeader } from '../concepts-mastered/components/ConceptsMasteredHeader';
-import { ImportFlashCards } from '../concepts-mastered/components/ImportFlashcards';
-import { SaveFlashCards } from '../concepts-mastered/components/SaveFlashcards';
-import { AddFlashCards } from '../concepts-mastered/components/AddFlashcards';
-import { FlashCardColumn } from './components/FlashCardColumn';
+} from './concepts-manager-page.style';
+import { ConceptsMasteredHeader } from './components-manager-page/ConceptsMasteredHeader';
+import { ImportFlashCards } from './components-manager-page/ImportFlashcards';
+import { SaveFlashCards } from './components-manager-page/SaveFlashcards';
+import { AddFlashCards } from './components-manager-page/AddFlashcards';
+import { FlashCardColumn } from './components-manager-page/FlashCardColumn';
 
-const Concepts = (): ReactElement => {
+const ConceptsManagerPage = (): ReactElement => {
   React.useEffect(() => {
     document.title = 'dot i/o Concepts Mastered';
   }, []);
@@ -55,4 +55,4 @@ const Concepts = (): ReactElement => {
   );
 };
 
-export default Concepts;
+export default ConceptsManagerPage;

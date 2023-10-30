@@ -25,6 +25,7 @@ export function TextPrompt() {
   const [startTime, setStartTime] = useState(null);
 
   const currentTrainingValue = trainingData[userInput.length];
+  console.log(sessionTrainingData);
 
   useEffect(() => {
     if (activeFlashCards.length != 0) {

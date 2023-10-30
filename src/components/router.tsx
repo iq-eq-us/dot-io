@@ -9,7 +9,6 @@ import { ClosingPrompt } from './closingPrompt';
 import Piano from '../pages/piano/piano';
 import Footer from './footer';
 import TestCompletePage from '../../src/pages/test-complete/testComplete';
-import Concepts from '../pages/concepts-mastered/concepts-mastered';
 import ConceptsPage from '../pages/concepts-page/concepts-page';
 
 export const ROUTER_PATHS = {
@@ -19,7 +18,6 @@ export const ROUTER_PATHS = {
   piano: '/piano',
   dashboard: '/dashboard',
   results: '/results',
-  concepts_mastered: '/concepts-mastered',
   concepts_page: '/concepts-page',
 };
 
@@ -64,12 +62,6 @@ const Router = (): ReactElement => {
         <Route path={ROUTER_PATHS.manager}>
           <Navbar />
           <Manager />
-        </Route>
-
-        {/* This is the route to the concepts manager page */}
-        <Route path={ROUTER_PATHS.concepts_mastered}>
-          <Navbar />
-          <Concepts />
         </Route>
 
         {/* This is the route to the concepts manager page */}

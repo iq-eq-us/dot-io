@@ -5,7 +5,7 @@ import usePopover from '../../../hooks/usePopover';
 import type { TrainingSettingsState } from '../../../models/trainingSettingsStateModel';
 import { useStoreState } from '../../../store/store';
 import HelpCircleIcon from './HelpCircleIcon';
-import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
+import { wpmMethodCalculator } from '../../../helpers/aggregation';
 
 export interface SettingsProps {
   trainingSettings: TrainingSettingsState;
