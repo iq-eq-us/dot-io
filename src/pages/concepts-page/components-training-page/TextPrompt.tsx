@@ -23,26 +23,25 @@ export function TextPrompt() {
   const [inputValue, setInputValue] = useState('');
   const [focused, setFocused] = useState(false);
   const [startTime, setStartTime] = useState(null);
+  const [availableSessionData, setAvailableSessionData] = useState(false);
 
   const currentTrainingValue = trainingData[userInput.length];
   console.log(sessionTrainingData);
+  console.log('Active FlashCards: ', activeFlashCards);
 
   useEffect(() => {
-    if (activeFlashCards.length != 0) {
-      if (trainingData.length === 0) {
-        setSessionTrainingData();
-        const newTrainingData = generateTrainingData(sessionTrainingData);
-        setTrainingData(newTrainingData);
-      }
+    if (activeFlashCards.length != 0 && availableSessionData) {
       if (trainingData.length - userInput.length < 5) {
         const newTrainingData = generateTrainingData(sessionTrainingData);
         setTrainingData([...trainingData, ...newTrainingData]);
       }
       setFocused(true);
-    } else {
+    } else if (activeFlashCards.length != 0 && !availableSessionData) {
+      setSessionTrainingData();
+      setAvailableSessionData(true);
       setFocused(false);
     }
-  }, [userInput]);
+  }, [userInput, availableSessionData]);
 
   function focusTextBox() {
     setFocused(true);
@@ -103,7 +102,6 @@ export function TextPrompt() {
       ) : (
         <>
           <div onClick={() => focusTextBox()}>Click To Focus</div>
-          <EditFlashcard />
         </>
       )}
     </TextPromptContainer>

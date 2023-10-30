@@ -1,9 +1,6 @@
-import React, { ReactElement, useRef, useState } from 'react';
-import { useHUD } from '../../../hooks/useHUD';
-import { useStoreActions, useStoreState } from '../../../store/store';
+import React, { ReactElement, useRef } from 'react';
 
 import ForgotAnswer from './ForgotAnswer';
-import EditFlashcard from './EditFlashcard';
 
 interface TextInputProps {
   onKeyDown: (input: string) => void;
@@ -32,8 +29,6 @@ function ChordTextInput({
         onBlur={() => onBlur()}
       />
       <ForgotAnswer />
-
-      <EditFlashcard />
     </div>
   );
 }

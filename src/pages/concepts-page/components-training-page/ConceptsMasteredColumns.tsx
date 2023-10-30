@@ -8,10 +8,9 @@ import EditIcon from './EditIcon';
 import { ProgressBar } from './ProgressBar';
 import { StatisticsIcon } from './StatisticsIcon';
 import { TextPrompt } from './TextPrompt';
-import ChordTextInput from './ChordTextInput';
 
 export function ConceptsMasteredColumn(): ReactElement {
-  const [focused, setFocused] = React.useState(false);
+  console.log('rednering');
 
   return (
     <ConceptsMasteredColumnContainer>
