@@ -7,6 +7,7 @@ import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { TestControlRow } from './testControlsRow';
 import { wpmMethodCalculator } from '../../../helpers/aggregation';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+import { stubString } from 'lodash';
 
 export function TestStatsCard(): ReactElement {
   const beginTraining = useStoreActions(
@@ -82,13 +83,23 @@ export function TestStatsCard(): ReactElement {
 
   function returnValueBasedOnTier() {
     if (tier == 'CPM') {
-      if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
-      else return averageOfLocalStats.toFixed(0) * 5;
+      if (averageOfLocalStats.toFixed(0) == 'Infinity') return 0;
+      else return parseFloat(averageOfLocalStats.toFixed(0) * 5);
     } else if (tier == 'CHM') {
-      if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
-      else return averageOfLocalStats.toFixed(0);
+      if (averageOfLocalStats.toFixed(0) == 'Infinity') return 0;
+      else return parseFloat(averageOfLocalStats.toFixed(0));
     }
   }
+
+  const numCPM =
+    wordTestNumber != undefined ? testTierHighestWPM : returnValueBasedOnTier();
+  useEffect(() => {
+    if (numCPM != 0 && numCPM != null) {
+      console.log('CPM with the correct value only: ' + numCPM);
+      store.getActions().addTestCPM([numCPM]);
+    }
+  }, [numCPM]);
+
   let sumOfLastTenOccurences = 0;
   let averageOfLocalStats2 = 0;
   localTrainingStatistics?.forEach((d) => {

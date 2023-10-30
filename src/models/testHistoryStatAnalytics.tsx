@@ -6,7 +6,8 @@ export interface testHistoryAnalytics {
   consistency: number[];
   testDate: string[];
   errors: number[];
-  //testCPM: number[];
+  testCPM: number[];
+  CPMTopSpeed: number;
 }
 
 // history of sessions
@@ -21,10 +22,8 @@ export interface testHistoryAnalyticsActionModel {
   addConsistency: Action<testHistoryAnalyticsStoreStateModel, number[]>;
   addTestDate: Action<testHistoryAnalyticsStoreStateModel, string[]>;
   addTestErrors: Action<testHistoryAnalyticsStoreStateModel, number[]>;
-  /* addTestCPM: Action<
-    testHistoryAnalyticsStoreStateModel,
-    number[]
-  >; */
+  addTestCPM: Action<testHistoryAnalyticsStoreStateModel, number[]>;
+  addCPMTopSpeed: Action<testHistoryAnalyticsStoreStateModel, number>;
 }
 
 // set of state stores
@@ -33,7 +32,8 @@ export interface testHistoryAnalyticsStoreStateModel {
   currConsistency: number[];
   currentTestDate: string[];
   currErrors: number[];
-  //currCPM: number[];
+  currCPM: number[];
+  currCPMTopSpeed: number;
 }
 
 export type TestHistoryAnalyticalStoreModel = testHistoryAnalyticsActionModel &

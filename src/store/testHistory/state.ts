@@ -6,7 +6,8 @@ const testHistoryAnalyticalStoreState: testHistoryAnalyticsStoreStateModel = {
   currConsistency: [],
   currentTestDate: [],
   currErrors: [],
-  //currCPM: [],
+  currCPM: [],
+  currCPMTopSpeed: 0,
 };
 
 export default testHistoryAnalyticalStoreState;

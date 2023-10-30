@@ -8,10 +8,10 @@ const testHistoryAnalyticalStoreActions: testHistoryAnalyticsActionModel = {
   addAccuracy: action((state, payload) => {
     console.log('PAYLOAD: ' + payload);
     const storedAccuracy = JSON.parse(
-      localStorage.getItem('TestAccuracy5') || '[]',
+      localStorage.getItem('TestAccuracy') || '[]',
     );
     localStorage.setItem(
-      'TestAccuracy5',
+      'TestAccuracy',
       JSON.stringify([...storedAccuracy, ...payload]),
     );
     state.currAccuracy = state.currAccuracy.concat(payload);
@@ -19,38 +19,43 @@ const testHistoryAnalyticalStoreActions: testHistoryAnalyticsActionModel = {
   addConsistency: action((state, payload) => {
     console.log('PAYLOAD: ' + payload);
     const storedCons = JSON.parse(
-      localStorage.getItem('TestConsistency5') || '[]',
+      localStorage.getItem('TestConsistency') || '[]',
     );
     localStorage.setItem(
-      'TestConsistency5',
+      'TestConsistency',
       JSON.stringify([...storedCons, ...payload]),
     );
     state.currConsistency = state.currConsistency.concat(payload);
   }),
   addTestDate: action((state, payload) => {
     console.log('PAYLOAD: ' + payload);
-    const storedDate = JSON.parse(localStorage.getItem('TestDate5') || '[]');
+    const storedDate = JSON.parse(localStorage.getItem('TestDate') || '[]');
     localStorage.setItem(
-      'TestDate5',
+      'TestDate',
       JSON.stringify([...storedDate, ...payload]),
     );
     state.currentTestDate = state.currentTestDate.concat(payload);
   }),
   addTestErrors: action((state, payload) => {
     console.log('PAYLOAD: ' + payload);
-    const storedErr = JSON.parse(localStorage.getItem('TestErrors5') || '[]');
+    const storedErr = JSON.parse(localStorage.getItem('TestErrors') || '[]');
     localStorage.setItem(
-      'TestErrors5',
+      'TestErrors',
       JSON.stringify([...storedErr, ...payload]),
     );
     state.currErrors = state.currErrors.concat(payload);
   }),
-  /* addTestCPM: action((state, payload) => {
+  addTestCPM: action((state, payload) => {
     console.log('PAYLOAD: ' + payload);
-    const storedCPM = JSON.parse(localStorage.getItem('TestCPM4') || '[]');
-    localStorage.setItem('TestCPM4', JSON.stringify([...storedCPM, ...payload]));
+    const storedCPM = JSON.parse(localStorage.getItem('TestCPM') || '[]');
+    localStorage.setItem('TestCPM', JSON.stringify([...storedCPM, ...payload]));
     state.currCPM = state.currCPM.concat(payload);
-  }) */
+  }),
+  addCPMTopSpeed: action((state, payload) => {
+    console.log('PAYLOAD: ' + payload);
+    localStorage.setItem('CPMTopSpeed', JSON.stringify(payload));
+    state.currCPMTopSpeed = payload;
+  }),
 }; // closing for testHistoryAnalyticalStoreActions
 
 export default testHistoryAnalyticalStoreActions;

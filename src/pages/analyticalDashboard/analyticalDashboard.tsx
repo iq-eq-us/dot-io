@@ -9,6 +9,7 @@ import { AnalyticalDashboardAccAndConOverall } from './components/AnalyticalDash
 // import { AnalyticalDashboardPageToggle } from './components/AnalyticalDashboardPageToggle';
 import { StreakHeatmap } from './components/StreakHeatmap';
 import { Hexbin } from './components/Hexbin';
+import { DashboardStaticStats } from './components/AnalyticalDashboardStaticStat';
 
 /**
  * This is the analytical dashboard page. It is responsible for displaying all user-specific stats.
@@ -68,6 +69,10 @@ const AnalyticalDashboard = (): ReactElement => {
             <div className="w-84 text-center leading-relaxed text-4xl text-gray-300 font-medium font-mono">
               CPM Dashboard
             </div>
+            <div className="pt-12 pl-56">
+              <DashboardStaticStats />
+            </div>
+
             <AnalyticalDashboardAccAndConOverall />
           </TopSectionContainer>
         )}

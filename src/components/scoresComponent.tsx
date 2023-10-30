@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from 'easy-peasy';
 import { wpmMethodCalculatorForStoredChords } from '../../src/helpers/aggregation';
+import store from '../store/store';
 
 export function ScoresComponent(): ReactElement {
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
@@ -26,6 +27,12 @@ export function ScoresComponent(): ReactElement {
     }
   `;
 
+  const CPMTSpeed = parseInt(
+    Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+  );
+  console.log('CPM Top Speed: ' + CPMTSpeed);
+  store.getActions().addCPMTopSpeed(CPMTSpeed);
+
   return (
     <React.Fragment>
       <HideWhenScreenGetSmallEnough>
@@ -33,7 +40,7 @@ export function ScoresComponent(): ReactElement {
           {
             //<div className="text-center">Hunt &#38; Pecker</div>
           }
-          <p>fjrieoajfeoiwjifawjeofjiawo</p>
+          <p>fjrieoajfeoiwjif</p>
           <table>
             <tr>
               <td>-</td>
