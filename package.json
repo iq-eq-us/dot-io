@@ -23,6 +23,7 @@
     "chart.js": "^3.9.1",
     "dotenv": "^16.3.1",
     "easy-peasy": "^5.0.4",
+    "gridjs": "^6.0.6",
     "hex-to-bin": "^1.0.1",
     "hex-to-binary": "^1.0.1",
     "midi-note": "^1.0.0",
