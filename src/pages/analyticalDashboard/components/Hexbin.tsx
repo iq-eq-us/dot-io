@@ -10,7 +10,13 @@ import {
 } from '../../../pages/manager/components/chordGraphs';
 import { ScoresComponent } from '../../../components/scoresComponent';
 import type { fromPairs } from 'lodash';
-
+import { CPMdashboardAnalytics } from './CPMdashboardAnalytics';
+import { CMdashboardAnalytics } from './CMdashboardAnalytics';
+import { ChMdashboardAnalytics } from './ChMdashboardAnalytics';
+import { AWPMdashboardAnalytics } from './AWPMdashboardAnalytics';
+import { TWPMdashboardAnalytics } from './TWPMdashboardAnalytics';
+import { StMdashboardAnalytics } from './StMdashboardAnalytics';
+import FadeIn from 'react-fade-in';
 import { useRef } from 'react';
 import {
   Chart as ChartJS,
@@ -21,7 +27,8 @@ import {
   RadialLinearScale,
   Filler,
 } from 'chart.js';
-import { Radar, getElementAtEvent } from 'react-chartjs-2';
+// import { ChartOptions } from 'chart.js';
+import { Radar, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2';
 ChartJS.register(
   LineElement,
   PointElement,
@@ -38,53 +45,22 @@ import styled from 'styled-components';
 export function Hexbin(): ReactElement {
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
 
-  const storedChordsFromDevice = useStoreState(
-    (store) => store.storedChordsFromDevice,
-  );
+  const [componentToShow, setComponentToShow] = useState('');
 
-  // let sumOfChordsMastered = 0;
-  // storedChordsFromDevice?.statistics?.forEach((d) => {
-  //   console.log("Hi")
-  //   // console.log("Chords mastered" + d.chordsMastered);
-  //   sumOfChordsMastered +=
-  //     d.chordsMastered[d?.chordsMastered.length - 1] == null ||
-  //     d?.chordsMastered.length == 0 ||
-  //     (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
-  //       ? 0
-  //       : wpmMethodCalculatorForStoredChords(d?.chordsMastered, d.id.length);
-  // });
+  // was following logic in
+  // will update with correct logic once logic is implemented
+  const ChM = 300;
+  const aWPM = 250;
+  const tWPM = 275;
+  const CM = 325;
+  const StM = 75;
+  let CPM = parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed());
 
-  // the vertices are flexibility (CPM), constitution (ChM), stamina (aWPM), power (tWPM), intelligence (CM), and technique (StM)
+  // const storedChordsFromDevice = useStoreState(
+  //   (store) => store.storedChordsFromDevice,
+  // );
 
-  const options = {
-    scale: {
-      ticks: {
-        beginAtZero: true,
-        min: 0,
-        max: 100,
-        stepSize: 20,
-        display: true,
-      },
-      pointLabels: {
-        fontSize: 20,
-        fontColor: 'white',
-        fontStyle: 'bold',
-      },
-      gridLines: {
-        color: 'white',
-      },
-      angleLines: {
-        color: 'white',
-      },
-    },
-    legend: {
-      display: true,
-    },
-    tooltips: {
-      enabled: false,
-    },
-  };
-
+  // data for hexbin visual
   const data = {
     labels: [
       'flexibility (CPM)',
@@ -96,71 +72,156 @@ export function Hexbin(): ReactElement {
     ],
     datasets: [
       {
-        label: '',
-        data: [50, 30, 30, 35, 40, 45],
-        backgroundColor: 'rgba(0, 246, 120, 0.38)',
-        borderColor: 'rgba(0, 246, 120, 0.38)',
+        data: [CPM, ChM, aWPM, tWPM, CM, StM],
+        backgroundColor: 'rgba(0, 246, 120, 0.38)', //green fill-in
+        borderColor: 'rgba(0, 246, 120, 0.38)', // border for green fill-in
         lineTension: -0.05,
         pointBackgroundColor: 'white',
         pointBorderColor: 'rgba(0, 246, 120, 0.38)',
         pointBorderWidth: 5,
-        pointRadius: 5,
+        pointRadius: 6,
         pointHoverBackgroundColor: 'rgba(0, 246, 120, 0.38)',
         pointHoverBorderColor: 'white',
         pointHoverRadius: 5,
-        link: ['https://www.google.com', 'https://yahoo.com'],
+        link: ['CPM', 'ChM', 'aWPM', 'tWPM', 'CM', 'StM'],
       },
     ],
   };
 
+  // making it where can click on verticies to activate components showing
   const chartRef = useRef();
   const onClick = (event) => {
     console.log('clicked');
-    console.log(getElementAtEvent(chartRef.current, event));
-    // console.log(getElementAtEvent(chartRef.current, event)[0].datasetIndex);
-    // console.log(getElementAtEvent(chartRef.current, event)[0].index);
-    // console.log(data.datasets[getElementAtEvent(chartRef.current, event)[0].datasetIndex].link[getElementAtEvent(chartRef.current, event)[0].index]);
-    window.open();
+    if (getElementAtEvent(chartRef.current, event).length > 0) {
+      console.log(getElementAtEvent(chartRef.current, event)[0].datasetIndex);
+      const datasetIndexNum = getElementAtEvent(chartRef.current, event)[0]
+        .datasetIndex;
+      const dataPoint = getElementAtEvent(chartRef.current, event)[0].index;
+      const componentToShowCurr =
+        data.datasets[datasetIndexNum].link[dataPoint];
+
+      console.log('Current component to show: ' + componentToShowCurr);
+
+      if (componentToShowCurr == 'CPM') {
+        setComponentToShow('CPM');
+      } else if (componentToShowCurr == 'ChM') {
+        setComponentToShow('ChM');
+      } else if (componentToShowCurr == 'aWPM') {
+        setComponentToShow('aWPM');
+      } else if (componentToShowCurr == 'tWPM') {
+        setComponentToShow('tWPM');
+      } else if (componentToShowCurr == 'CM') {
+        setComponentToShow('CM');
+      } else if (componentToShowCurr == 'StM') {
+        setComponentToShow('StM');
+      }
+    }
+  };
+
+  ChartJS.defaults.color = 'white';
+
+  const options = {
+    plugins: {
+      legend: {
+        labels: {
+          fontColor: 'white',
+        },
+        display: false,
+      },
+    },
+    scales: {
+      r: {
+        angleLines: {
+          display: true,
+          color: 'rgba(255, 255, 255, 0.25)',
+        },
+        grid: {
+          display: true,
+          color: 'rgba(255, 255, 255, 0.25)',
+        },
+        ticks: {
+          display: false,
+        },
+        pointLabels: {
+          font: {
+            size: 15,
+            weight: '500',
+          },
+          fontColor: 'blue',
+        },
+        legend: {
+          display: false,
+        },
+        // drawTicks: false,
+        suggestedMin: 0,
+        suggestedMax: 100,
+      },
+    },
   };
 
   return (
-    <div>
-      <HexbinContainer>
-        <Radar
-          data={data}
-          // options = {options}
-          onClick={onClick}
-          ref={chartRef}
-        />
-      </HexbinContainer>
+    // ...
+    <NavLinksBtnImage>
+      <div className="flex justify-center mb-1.5 border-1">
+        <HexbinContainer>
+          <Radar
+            data={data}
+            onClick={onClick}
+            options={options}
+            ref={chartRef}
+          />
+        </HexbinContainer>
+      </div>
+      <div className="flex align-center justify-center text-white mb-10">
+        <FadeIn transitionDuration={1000} delay={40}>
+          {componentToShow == 'CPM' ? <CPMdashboardAnalytics /> : null}
+        </FadeIn>
+        <FadeIn transitionDuration={1000} delay={40}>
+          {componentToShow == 'ChM' ? <ChMdashboardAnalytics /> : null}
+        </FadeIn>
+        <FadeIn transitionDuration={1000} delay={40}>
+          {componentToShow == 'aWPM' ? <AWPMdashboardAnalytics /> : null}
+        </FadeIn>
+        <FadeIn transitionDuration={1000} delay={40}>
+          {componentToShow == 'tWPM' ? <TWPMdashboardAnalytics /> : null}
+        </FadeIn>
+        <FadeIn transitionDuration={1000} delay={40}>
+          {componentToShow == 'CM' ? <CMdashboardAnalytics /> : null}
+        </FadeIn>
+        <FadeIn transitionDuration={1000} delay={40}>
+          {componentToShow == 'StM' ? <StMdashboardAnalytics /> : null}
+        </FadeIn>
+      </div>
 
-      <CardData />
-      <p>
-        Result of flexibility (CPM):
-        {parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed())}
-      </p>
-      <p>
-        Result of constitution (ChM):
-        {/* 100? */}
-      </p>
-      <p>Result of stamina (aWPM): {getAverageWPM()}</p>
-      <p>Result of power (tWPM): {getHighestWPM()}</p>
-      <p>Result of intelligence (CM): </p>
-      <p>Result of technique (StM): </p>
+      {/* <CardData /> */}
+      {/* <div>
+          <p>
+            Result of flexibility (CPM):
+            {parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed())}
+          </p>
+        <p>
+          Result of constitution (ChM):
+          {ChM} */}
+      {/* {(sumOfChordsMastered / 100)?.toFixed(2)} */}
+      {/* </p>
+        <p>Result of stamina (aWPM): {getAverageWPM()}</p>
+        <p>Result of power (tWPM): {getHighestWPM()}</p>
+        <p>Result of intelligence (CM): </p>
+        <p>Result of technique (StM): </p>
 
-      <br />
-      <p>ScoresComponent:</p>
-      {ScoresComponent}
-    </div>
+        <br />
+        <p>ScoresComponent:</p>
+        {ScoresComponent}
+        </div> */}
+    </NavLinksBtnImage>
   );
 }
 
-const HexbinContainer = styled.div.attrs({
-  className: `
-    text-white 
-    text-4xl 
-    font-normal 
-    font-mono 
-    border-4
-    max-w-5xl`,
-})``;
+const NavLinksBtnImage = styled.div``;
+
+const HexbinContainer = styled.a`
+  width: 50%;
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+  }
+`;

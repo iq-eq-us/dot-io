@@ -118,7 +118,7 @@ export function AnalyticalDashboardAccAndConOverall(): ReactElement {
   ]);
 
   return (
-    <div className="pl-16 pt-48">
+    <div className="pl-16">
       <Chart options={options} series={series} width={625} height={350}></Chart>
     </div>
   );

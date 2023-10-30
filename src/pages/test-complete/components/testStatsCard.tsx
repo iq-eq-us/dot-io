@@ -116,6 +116,8 @@ export function TestStatsCard(): ReactElement {
         {tier == 'CPM' && (
           <StatsCardContainer>
             <div className="text-6xl">
+              {console.log('here:')}
+              {console.log(wordTestNumber)}
               {wordTestNumber != undefined
                 ? testTierHighestWPM
                 : returnValueBasedOnTier()}

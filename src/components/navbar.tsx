@@ -180,18 +180,19 @@ const Navbar = (): ReactElement => {
         </NavMenu>
         <ScoresComponent />
 
-        <NavMenuLink style={{ paddingTop: '10px' }}>
-          <NavLinksBtnImage
-            href="#/analyticalDashboard"
-            onClick={() => setTrainingLevel('')}
-          >
-            <img
-              src={analytic_DashIcon}
-              style={{ width: '40px', height: '40px' }}
-            ></img>
-          </NavLinksBtnImage>
-        </NavMenuLink>
-
+        <div className="flex-row">
+          <NavMenuLink style={{ paddingTop: '100px' }}>
+            <NavLinksBtnImage
+              href="#/analyticalDashboard"
+              onClick={() => setTrainingLevel('')}
+            >
+              <img
+                src={analytic_DashIcon}
+                style={{ width: '40px', height: '50px', paddingTop: '10px' }}
+              ></img>
+            </NavLinksBtnImage>
+          </NavMenuLink>
+        </div>
         <NavBtn>
           <NavMenuLink aria-current="page">
             <NavLinksImage open={false} src={Crown_Icon} alt="" />
@@ -321,6 +322,10 @@ const NavLinksBtnImage = styled.a`
   color: #fff;
   justify-content: center;
   justify-self: flex-start;
+
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const NavLinksImageTransparent = styled.img`

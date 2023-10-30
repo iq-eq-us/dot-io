@@ -40,7 +40,6 @@ export function ScoresComponent(): ReactElement {
           {
             //<div className="text-center">Hunt &#38; Pecker</div>
           }
-          <p>fjrieoajfeoiwjif</p>
           <table>
             <tr>
               <td>-</td>

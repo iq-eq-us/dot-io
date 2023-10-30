@@ -3,6 +3,7 @@ import store, { useStoreState } from '../../../store/store';
 import sessionStatHistoryTest from '../components/testSessionStats';
 import HeatMap from '@uiw/react-heat-map';
 import Tooltip from '@uiw/react-tooltip';
+import styled from 'styled-components';
 
 // Streak heatmap is a visual representation of practice streak.
 export function StreakHeatmap(): ReactElement {
@@ -32,7 +33,7 @@ export function StreakHeatmap(): ReactElement {
   value = value.filter((session) => session.count > 0);
 
   return (
-    <div>
+    <div className="flex justify-center">
       {/* <p>Streak Heatmap</p> */}
       {/* set the color to white */}
       <div style={{ color: 'white' }}>
@@ -40,7 +41,6 @@ export function StreakHeatmap(): ReactElement {
           style={{ color: '#fff' }}
           value={value}
           width={600}
-          height={1000}
           rectSize={14}
           space={2}
           weekLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']}
@@ -57,9 +57,9 @@ export function StreakHeatmap(): ReactElement {
             return (
               <Tooltip
                 placement="top"
-                content={`number of terms: ${data.count || 0}, date: ${
-                  data.date || 0
-                }`}
+                content={`number of terms practiced: ${
+                  data.count || 0
+                }, date: ${data.date || 0}`}
               >
                 <rect {...props} />
               </Tooltip>
@@ -70,3 +70,10 @@ export function StreakHeatmap(): ReactElement {
     </div>
   );
 }
+
+// const HeatMap = styled.div.attrs({
+//   className: `
+//     border-4
+//     max-w-2xl
+//     max-h-2xl`,
+// })``;

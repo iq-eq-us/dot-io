@@ -29,53 +29,11 @@ const AnalyticalDashboard = (): ReactElement => {
 
   return (
     <React.Fragment>
-      <AnalyticalDashboardPageContainer>
-        <WordPageContainer>
-          <PageTextOverall
-            className={
-              currentPage === 'overall'
-                ? 'text-white text-4xl'
-                : 'text-gray-500 text-3xl'
-            }
-          >
-            <HoverOverall onClick={() => handlePageChange('overall')}>
-              Overall
-            </HoverOverall>
-          </PageTextOverall>
-          <PageTextMod
-            className={
-              currentPage === 'module'
-                ? 'text-white text-4xl'
-                : 'text-gray-500 text-3xl'
-            }
-          >
-            <HoverMod onClick={() => handlePageChange('module')}>
-              Module
-            </HoverMod>
-          </PageTextMod>
-        </WordPageContainer>
-        <div className="pl-48">
-          <div className="w-[1070px] h-px border-2 border-zinc-300"></div>
-        </div>
-        {currentPage === 'overall' && (
-          <TopSectionContainer>
-            <AnalyticalDashboardHeader />
-            <Hexbin />
-            <StreakHeatmap />
-          </TopSectionContainer>
-        )}
-        {currentPage === 'module' && (
-          <TopSectionContainer>
-            <div className="w-84 text-center leading-relaxed text-4xl text-gray-300 font-medium font-mono">
-              CPM Dashboard
-            </div>
-            <div className="pt-12 pl-56">
-              <DashboardStaticStats />
-            </div>
-
-            <AnalyticalDashboardAccAndConOverall />
-          </TopSectionContainer>
-        )}
+      <AnalyticalDashboardPageContainer className="h-full min-h-screen">
+        <TopSectionContainer>
+          <Hexbin />
+          <StreakHeatmap />
+        </TopSectionContainer>
       </AnalyticalDashboardPageContainer>
     </React.Fragment>
   );
@@ -119,3 +77,11 @@ const HoverMod = styled.div`
     transition: 0.3s ease in;
   }
 `;
+
+const AnalyticalDashboardPageContainer = styled.div`
+  background-color: #222424;
+`;
+
+// const AnalyticalDashboardPageContainer = styled.div.attrs({
+//   className: `border-4 border-red-500 flex items-center bg-transparent`,
+// })``;
