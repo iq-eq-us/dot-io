@@ -25,18 +25,24 @@ import {
 const LIST_LENGTH_OFFSET = 2;
 
 function StatisticsTable(): ReactElement {
+  console.log('INSIDE PREVIOUSTESTTABLE');
   const stats = useStoreState(
     (state) => state.trainingStatistics,
   ).statistics.sort((a, b) => b.numberOfOccurrences - a.numberOfOccurrences);
 
   const trainingSettings = useStoreState((store) => store.trainingSettings);
-  const inTrainingLevel = useStoreState((store: any) => store.trainingLevel);
+  const inTrainingLevel = useStoreState((store: any) => store.trainingLevel); // which tier
   const inStoredChordsFromDevice = useStoreState(
     (store: any) => store.storedChordsFromDevice,
   );
   const inTrainingScenario = useStoreState(
     (store: any) => store.currentTrainingScenario,
   );
+  console.log(inTrainingScenario);
+  console.log('LEVEL');
+  console.log(inTrainingLevel);
+  console.log('SCENARIO');
+  console.log(inTrainingScenario);
 
   const storedChordsFromDevice = useStoreState(
     (state) => state.storedChordsFromDevice,
@@ -303,6 +309,9 @@ function returnStatisticsColumnContent(data: Data, index: number) {
       <React.Fragment>
         <RowItem>{truncateString(item?.displayTitle || '', 12)}</RowItem>
         <RowItem>
+          {console.log('HERE')}
+          {console.log(item?.averageSpeed)}
+          {console.log(item.id.length)}
           {wpmMethodCalculator(
             item?.averageSpeed,
             item.id.length,
@@ -423,6 +432,8 @@ const AggregateRow = ({ data }: { data: Data }) => {
 
 function returnStatisticsColumnHeader(data: Data) {
   const average = getCumulativeAverageChordTypeTime(data.stats);
+  console.log('TEST');
+  console.log(average);
   let sumErrors = 0;
   let sumOccurrences = 0;
   let sumOfAverages = 0;
@@ -576,6 +587,7 @@ function returnStatisticsColumnHeader(data: Data) {
       <React.Fragment>
         <RowStatItem>SUM</RowStatItem>
         <RowStatItem>
+          {console.log(average)}
           {data.displayHUD
             ? average == 0
               ? '0 / 0'

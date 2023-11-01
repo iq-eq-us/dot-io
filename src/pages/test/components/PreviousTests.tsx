@@ -61,6 +61,9 @@ export function PreviousTest(): ReactElement {
     (store: any) => store.wordTestNumber == undefined,
   );
 
+  console.log('INSIDE PREVIOUSTEST');
+  console.log(wordTestNumber);
+
   return (
     <React.Fragment>
       <StatisticsColumnContainer
@@ -72,7 +75,9 @@ export function PreviousTest(): ReactElement {
           <Row>
             <PreviousTestTableTitle />
           </Row>
+          <p>jfeiwoafjioewajfoiwa</p>
           <PreviousTestTable />
+          <p>jfeiwoafjioewajfoiwa</p>
         </PreviousTestTableContainer>
       </StatisticsColumnContainer>
       <svg

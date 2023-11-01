@@ -2,11 +2,12 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import type { ChordStatistics } from '../../../models/trainingStatistics';
 import styled from 'styled-components';
-import { useStoreState, useStoreActions } from '../../../store/store';
+import store, { useStoreState, useStoreActions } from '../../../store/store';
 import useContainerDimensions from '../../../hooks/useContainerDimensions';
 import { TestControlRow } from './testControlsRow';
 import { wpmMethodCalculator } from '../../../helpers/aggregation';
 import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation';
+import { stubString } from 'lodash';
 
 export function TestStatsCard(): ReactElement {
   const beginTraining = useStoreActions(
@@ -60,6 +61,10 @@ export function TestStatsCard(): ReactElement {
       (allTypedText.length - 1)) *
     100;
 
+  console.log('Errors ' + trainingSessionErrors);
+  //console.log("CPM: " + testTierHighestWPM);
+  //store.getActions().addTestCPM([testTierHighestWPM]);
+
   const timerValue = useStoreState((store) => store.timerValue);
   const trainingIsDone = useStoreState((store) => store.trainingIsDone);
 
@@ -67,15 +72,34 @@ export function TestStatsCard(): ReactElement {
     getCumulativeAverageChordTypeTime(localTrainingStatistics),
   );
 
+  useEffect(() => {
+    let date = new Date().toLocaleDateString();
+    console.log(date);
+    // Add the accuracy value to the store when the component mounts
+    store.getActions().addAccuracy([Accuracy]);
+    store.getActions().addTestDate([date]);
+    store.getActions().addTestErrors([trainingSessionErrors]);
+  }, []);
+
   function returnValueBasedOnTier() {
     if (tier == 'CPM') {
-      if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
-      else return averageOfLocalStats.toFixed(0) * 5;
+      if (averageOfLocalStats.toFixed(0) == 'Infinity') return 0;
+      else return parseFloat(averageOfLocalStats.toFixed(0) * 5);
     } else if (tier == 'CHM') {
-      if (averageOfLocalStats.toFixed(0) == 'Infinity') return '0';
-      else return averageOfLocalStats.toFixed(0);
+      if (averageOfLocalStats.toFixed(0) == 'Infinity') return 0;
+      else return parseFloat(averageOfLocalStats.toFixed(0));
     }
   }
+
+  const numCPM =
+    wordTestNumber != undefined ? testTierHighestWPM : returnValueBasedOnTier();
+  useEffect(() => {
+    if (numCPM != 0 && numCPM != null) {
+      console.log('CPM with the correct value only: ' + numCPM);
+      store.getActions().addTestCPM([numCPM]);
+    }
+  }, [numCPM]);
+
   let sumOfLastTenOccurences = 0;
   let averageOfLocalStats2 = 0;
   localTrainingStatistics?.forEach((d) => {
@@ -92,6 +116,8 @@ export function TestStatsCard(): ReactElement {
         {tier == 'CPM' && (
           <StatsCardContainer>
             <div className="text-6xl">
+              {console.log('here:')}
+              {console.log(wordTestNumber)}
               {wordTestNumber != undefined
                 ? testTierHighestWPM
                 : returnValueBasedOnTier()}

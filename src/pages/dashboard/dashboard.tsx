@@ -31,12 +31,12 @@ const Dashboard = (): ReactElement => {
   return (
     <DashboardPageContainer>
       <TopSectionContainer>
-        <Column>
+        {/* <Column>
           <Graph />
 
-          <CardDataRowDisplay />
-          {/* This is the most important component in the dashboard. It includes the entire list of training module cards. */}
-        </Column>
+          <CardDataRowDisplay /> */}
+        {/* This is the most important component in the dashboard. It includes the entire list of training module cards. */}
+        {/* </Column> */}
       </TopSectionContainer>
     </DashboardPageContainer>
   );

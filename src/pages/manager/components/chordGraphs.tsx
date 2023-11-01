@@ -1,5 +1,5 @@
 import ApexCharts from 'apexcharts';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
 import { HorizontalRule } from '../manager.styled';
