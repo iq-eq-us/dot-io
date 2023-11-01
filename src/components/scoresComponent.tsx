@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from 'easy-peasy';
 import { wpmMethodCalculatorForStoredChords } from '../../src/helpers/aggregation';
+import store from '../store/store';
 
 export function ScoresComponent(): ReactElement {
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
@@ -25,6 +26,12 @@ export function ScoresComponent(): ReactElement {
       display: none;
     }
   `;
+
+  const CPMTSpeed = parseInt(
+    Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+  );
+  console.log('CPM Top Speed: ' + CPMTSpeed);
+  store.getActions().addCPMTopSpeed(CPMTSpeed);
 
   return (
     <React.Fragment>

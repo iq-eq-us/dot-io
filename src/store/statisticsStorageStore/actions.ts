@@ -148,7 +148,6 @@ export const handleStatsMerge = (
       if (existingStat) newStats.push(existingStat);
     }
   });
-
   return newStats;
 };
 

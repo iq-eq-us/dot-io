@@ -8,6 +8,10 @@ import CPMPage3 from '../../../assets/CPMPages/CPM3.png';
 import CHMPage1 from '../../../assets/CHMPages/ChM1.png';
 import CHMPage2 from '../../../assets/CHMPages/ChM2.png';
 import CHMPage3 from '../../../assets/CHMPages/ChM3.png';
+import AnalyticalDashboard1 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome1.png';
+import AnalyticalDashboard2 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome2.png';
+import AnalyticalDashboard3 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome3.png';
+import AnalyticalDashboard4 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome4.png';
 
 export const SliderData = [
   {
@@ -39,5 +43,20 @@ export const SliderDataForCHMTier = [
   },
   {
     image: CHMPage3,
+  },
+];
+
+export const SliderForAnalyticalDashboard = [
+  {
+    image: AnalyticalDashboard1,
+  },
+  {
+    image: AnalyticalDashboard2,
+  },
+  {
+    image: AnalyticalDashboard3,
+  },
+  {
+    image: AnalyticalDashboard4,
   },
 ];
