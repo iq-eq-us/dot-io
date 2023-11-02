@@ -1,8 +1,5 @@
-import React, { ReactElement, useState } from 'react';
-import { FaBorderStyle } from 'react-icons/fa';
-import styled from 'styled-components';
-import { useStoreState, useStoreActions } from '../../../store/store';
-import { TrainingStoreModel } from '../../../../src/models/trainingStore';
+import { useState } from 'react';
+import { useStoreActions } from '../../../store/store';
 
 const [bestKeyTime, setBestKeyTime] = useState([]);
 const [letterPressed, setLetterPressed] = useState([]);
@@ -23,7 +20,7 @@ export const ChordingEnabledAlgorithm = (chordValue) => {
     performance.webkitNow ||
     Date.now * 1.0; /*none found - fallback to browser default */
 
-  const body = document.getElementById('txt_Name');
+  const body = document.getElementById('chordsInput');
   let isKeyDown = false;
   if (
     sessionStorage.getItem('chordingEnabledDevice') == undefined ||

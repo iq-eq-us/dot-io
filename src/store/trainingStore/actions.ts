@@ -1,25 +1,29 @@
-import { action, actionOn, Actions, computed, thunkOn } from 'easy-peasy';
+import { action, actionOn, Actions, thunkOn } from 'easy-peasy';
+import type { TrainingLevels } from 'src/models/trainingLevels';
+import type { ChordStatisticsFromDevice } from 'src/models/trainingStatisticsFromDevice';
 import type { ChordLibraryRecord } from '../../data/chordLibrary';
+import { chordLibrary } from '../../data/chordLibrary';
+import {
+  avgCalculatorForTheSpeedOfLastTen,
+  getCumulativeAverageChordTypeTime,
+  wpmMethodCalculator,
+} from '../../helpers/aggregation';
 import { generateChords } from '../../helpers/generateTrainingData';
 import type { TrainingScenario } from '../../models/trainingScenario';
 import {
-  defaultTrainingSettings,
   defaultAlphabeticTestTraining,
-  defaultTrigramsTestTraining,
+  defaultTrainingSettings,
   defaultTrainingSettingsState,
+  defaultTrigramsTestTraining,
 } from '../../models/trainingSettingsStateModel';
-import {
-  oldAsciiKeyReplacementDictionary,
-  _keyMapDefaults,
-} from '../../pages/manager/controls/maps';
 import {
   ChordStatistics,
   createEmptyChordStatistics,
-  createEmptyLexicalStMStatistics,
   createEmptyChordStatisticsFromDevice,
+  createEmptyLexicalStMStatistics,
   MAXIMUM_ALLOWED_SPEED_FOR_CHORD_STATS,
-  TrainingStatistics,
   StoredStMStatistics,
+  TrainingStatistics,
 } from '../../models/trainingStatistics';
 import type {
   TrainingStoreActionsModel,
@@ -27,20 +31,7 @@ import type {
   TrainingStoreStateModel,
 } from '../../models/trainingStore';
 import { getChordLibraryForTrainingScenario } from '../../pages/test/components/EditChordModal';
-import type { WordTrainingValues } from 'src/models/wordTrainingValues';
-import type { TrainingLevels } from 'src/models/trainingLevels';
-import store from '../store';
-import type { ChordStatisticsFromDevice } from 'src/models/trainingStatisticsFromDevice';
-import {
-  oneTimeCreateStoredChordStats,
-  oneTimeCreateLexicalStoredSentences,
-} from '../../pages/test/components/TrainingModeSelector';
-import { chordLibrary } from '../../data/chordLibrary';
-import {
-  avgCalculatorForTheSpeedOfLastTen,
-  getCumulativeAverageChordTypeTime,
-  wpmMethodCalculator,
-} from '../../helpers/aggregation';
+import { oneTimeCreateStoredChordStats } from '../../pages/test/components/TrainingModeSelector';
 
 const CHORD_LINE_LENGTH = 30;
 const ALPHABET_LINE_LENGTH = 24;
@@ -560,7 +551,7 @@ function checkIfShouldProceedToNextTargetChord(
   storeState: TrainingStoreStateModel,
   actions: Actions<TrainingStoreModel>,
 ) {
-  const wordValue = document.getElementById('txt_Name')?.value;
+  const wordValue = document.getElementById('chordsInput')?.value;
   const wordToCompare = isInAlphabetMode
     ? storeState.targetWord
     : storeState.targetWord + ' ';
@@ -1204,7 +1195,7 @@ const generateStartingTrainingData = (state: TrainingStoreStateModel) => {
     generateOneLineOfChords(),
     generateOneLineOfChords(),
   ];
-  document.getElementById('txt_Name')?.focus();
+  document.getElementById('chordsInput')?.focus();
 };
 
 export default trainingStoreActions;

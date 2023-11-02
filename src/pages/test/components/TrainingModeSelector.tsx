@@ -1,14 +1,12 @@
 import React, { ReactElement, useState } from 'react';
-import { useStoreActions, useStoreState } from '../../../store/store';
-import styled from 'styled-components';
-import { isNumber } from 'lodash';
 import type { TrainingLevels } from 'src/models/trainingLevels';
+import styled from 'styled-components';
 import { connectDeviceAndPopUp } from '../../../../src/pages/manager/components/connect';
 import { getId } from '../../../../src/pages/manager/components/getID';
+import { chordLibrary } from '../../../data/chordLibrary';
 import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
 import { createEmptyChordStatistics } from '../../../models/trainingStatistics';
-import { chordLibrary } from '../../../data/chordLibrary';
-import EditChordsModal from './EditChordModal';
+import { useStoreActions, useStoreState } from '../../../store/store';
 
 export function TrainingModeSelector(): ReactElement {
   const beginTraining = useStoreActions(
@@ -96,7 +94,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(2),
               LearnPageFunction('TRIGRAM', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             Trigrams
@@ -109,7 +107,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(3),
               LearnPageFunction('LEXICAL', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             Words
@@ -122,7 +120,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(4),
               TestPageFunction('LEXICAL', 26),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             Test
@@ -139,7 +137,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(1),
               LearnPageFunction('LEXICAL', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             English 300
@@ -152,7 +150,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(2),
               allChords(),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             All Chords
@@ -165,7 +163,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(3),
               LearnPageFunction('LEXICOGRAPHIC', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             Custom
@@ -182,7 +180,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(1),
               LearnPageFunction('LEXICALSENTENCES', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             Chords
@@ -195,7 +193,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(2),
               LearnPageFunction('LEXICALSENTENCESDUOS', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             Duos
@@ -208,7 +206,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(3),
               LearnPageFunction('LEXICALSENTENCESTRIOS', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             Trios
@@ -221,7 +219,7 @@ export function TrainingModeSelector(): ReactElement {
             onClick={() => [
               setModuleNumber(4),
               LearnPageFunction('LEXICALSENTENCES', trainingLevel),
-              document.getElementById('txt_Name')?.focus(),
+              document.getElementById('chordsInput')?.focus(),
             ]}
           >
             Test

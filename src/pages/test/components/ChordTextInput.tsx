@@ -1,8 +1,7 @@
-import React, { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { useStoreActions, useStoreState } from '../../../store/store';
-import type { TrainingStoreModel } from '../../../../src/models/trainingStore';
 
 function ChordTextInput(): ReactElement {
   const setStoreText = useStoreActions(
@@ -97,7 +96,7 @@ function ChordTextInput(): ReactElement {
         autoCapitalize="none"
         className="relative bg-transparent caret-transparent focus:outline-none w-0 text-white font-bold text-center max-w-[60vw] border-b-2 border-solid border-transparent"
         ref={inputRef}
-        id="txt_Name"
+        id="chordsInput"
         autoFocus
         onBlurCapture={() => [
           setTextPromptUnFocused(true),
@@ -105,8 +104,8 @@ function ChordTextInput(): ReactElement {
         ]}
         onFocus={() =>
           isShowingPortal == true
-            ? document.getElementById('txt_Name')?.focus()
-            : document.getElementById('txt_Name')?.focus()
+            ? document.getElementById('chordsInput')?.focus()
+            : document.getElementById('chordsInput')?.focus()
         }
         value={textTyped}
         onChange={(e) => {
