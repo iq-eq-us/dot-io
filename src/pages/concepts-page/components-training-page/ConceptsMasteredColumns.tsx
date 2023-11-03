@@ -51,8 +51,11 @@ export function ConceptsMasteredColumn({
     console.log('startTraining');
   };
 
-  const generatedFlashCardSetView = allFlashCardSets.map(
-    (flashCardSet, index) => {
+  let generatedFlashCardSetView;
+
+  if (allFlashCardSets.length != 0) {
+    console.log('rendering');
+    generatedFlashCardSetView = allFlashCardSets.map((flashCardSet, index) => {
       return (
         <CardContainer key="index">
           <InputIdentifiersForPhrase>
@@ -73,7 +76,10 @@ export function ConceptsMasteredColumn({
             Idle Queue Size
             <ChordTextBox
               value={flashCardSet.flashCards
-                .filter((flashCard) => flashCard.lastReinforcement < new Date())
+                .filter((flashCard) => {
+                  flashCard.nextReinforcement > new Date();
+                  console.log(flashCard.nextReinforcement);
+                })
                 .length.toString()}
               style={{ pointerEvents: 'none' }}
             />
@@ -81,13 +87,24 @@ export function ConceptsMasteredColumn({
           <FlashCardEditButton onClick={() => editFlashCardSet(index)}>
             Edit Set
           </FlashCardEditButton>
-          <FlashCardSaveButton onClick={() => startTraining()}>
+          <FlashCardSaveButton
+            onClick={() => startTraining(index)}
+            style={{ marginRight: '.5rem' }}
+            disabled={flashCardSet.nextTrainingDate > new Date()}
+          >
             Begin Training
           </FlashCardSaveButton>
         </CardContainer>
       );
-    },
-  );
+    });
+  } else {
+    console.log('No Flashcard Sets');
+    generatedFlashCardSetView = (
+      <HelperContainer>
+        <h1>No Flashcard Sets</h1>
+      </HelperContainer>
+    );
+  }
 
   return (
     <ConceptsMasteredColumnContainer>
@@ -101,9 +118,13 @@ export function ConceptsMasteredColumn({
           <FullWidthFullHeightContainer />
         </>
       ) : (
-        <ConceptsMasteredManagerPageContainer>
-          <PageContainer>
-            <Column>{generatedFlashCardSetView}</Column>
+        <ConceptsMasteredManagerPageContainer
+          style={{ maxWidth: '1300px', alignSelf: 'center' }}
+        >
+          <PageContainer style={{ maxWidth: '1300px' }}>
+            <Column style={{ maxWidth: '1300px', alignItems: 'center' }}>
+              {generatedFlashCardSetView}
+            </Column>
           </PageContainer>
         </ConceptsMasteredManagerPageContainer>
       )}

@@ -16,6 +16,7 @@ import { SaveFlashCards } from './components-manager-page/SaveFlashcards';
 import { AddFlashCards } from './components-manager-page/AddFlashcards';
 import { FlashCardColumn } from './components-manager-page/FlashCardColumn';
 import { FlashCardSetSelection } from './components-manager-page/FlashCardSetSelection';
+import { DeleteFlashcards } from './components-manager-page/DeleteFlashcards';
 
 const ConceptsManagerPage = (): ReactElement => {
   const [rerender, setRerender] = useState<boolean>(false);
@@ -43,13 +44,14 @@ const ConceptsManagerPage = (): ReactElement => {
               <AddFlashCards />
               <SaveFlashCards />
               <FlashCardSetSelection forceRerender={reset} />
+              <DeleteFlashcards />
             </ConceptsRow>
           </Table>
 
           <PageContainer>
             <Column>
               <ChordContainer>
-                <ImportFlashCards />
+                <ImportFlashCards forceRerender={reset} />
               </ChordContainer>
               <FlashCardColumn />
             </Column>

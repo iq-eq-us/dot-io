@@ -1,4 +1,4 @@
-import type { Action, Computed } from 'easy-peasy';
+import type { Action, Computed, Thunk } from 'easy-peasy';
 
 export interface flashCard {
   image: boolean;
@@ -7,7 +7,7 @@ export interface flashCard {
   url: string;
   tags: string[];
   ebbinghausValue: number;
-  lastReinforcement: Date;
+  nextReinforcement: Date;
 }
 
 export interface flashCardSet {
@@ -29,6 +29,9 @@ export interface generatedData {
 }
 
 export interface flashCardActionModel {
+  setLoadedFromStorage: Action<flashCardStoreStateModel>;
+  updateLocalStorage: Action<flashCardStoreStateModel>;
+
   // Actions to add and remove cards from the active flash card set
   addFlashCard: Action<flashCardStoreStateModel, flashCard>;
   removeFlashCard: Action<flashCardStoreStateModel, number>;
@@ -45,7 +48,8 @@ export interface flashCardActionModel {
 
   // Actions to add and remove flash card sets
   addEmptyFlashCardSet: Action<flashCardStoreStateModel, string>;
-  removeFlashCardSet: Action<flashCardStoreStateModel, number>;
+  addFlashCardSet: Action<flashCardStoreStateModel, flashCardSet>;
+  removeActiveFlashCardSet: Action<flashCardStoreStateModel>;
 
   // Actions to get information about any flash card set
   getFlashCardSetNameAtIndex: Computed<
@@ -65,9 +69,13 @@ export interface flashCardActionModel {
   setSessionTrainingData: Action<flashCardStoreStateModel>;
 
   addTimeSessionTrainingData: Action<flashCardStoreStateModel, number[]>;
+
+  fetchUserData: Thunk<flashCardActionModel>;
 }
 
 export interface flashCardStoreStateModel {
+  loadedFromStorage: boolean;
+
   // The active flash card set is the set of flash cards that the user is currently training with
   activeFlashCardSetIndex: number;
 

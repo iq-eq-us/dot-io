@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ConceptsTrainingPage from './concepts-training-page';
 import ConceptsManagerPage from './concepts-manager-page';
+import { useStoreState, useStoreActions } from '../../store/store.js';
+import { PageContainer } from './concepts-training-page.styled';
 
 const ConceptsPage = () => {
+  const loadedFromStorage = useStoreState((state) => state.loadedFromStorage);
+
+  const fetchUserData = useStoreActions((actions) => actions.fetchUserData);
+
   const [currentTier, setCurrentTier] = useState(0);
+
+  useEffect(() => {
+    if (!loadedFromStorage) {
+      fetchUserData();
+    }
+  }, []);
 
   const viewCurrentTier = () => {
     if (currentTier == 0) {
@@ -48,7 +60,11 @@ const ConceptsPage = () => {
           Manager
         </button>
       </ItemsContainer>
-      {currentTierRender}
+      {loadedFromStorage ? (
+        <>{currentTierRender}</>
+      ) : (
+        <PageContainer>Loading...</PageContainer>
+      )}
     </>
   );
 };

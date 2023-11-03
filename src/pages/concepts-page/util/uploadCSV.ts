@@ -4,6 +4,7 @@ const uploadCSV = async (filename: File) => {
   // Sets the current date for the next training date
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
+  console.log('running');
 
   // Makes an empty flash card set
   let flashCardSet: flashCardSet = {
@@ -37,8 +38,9 @@ const uploadCSV = async (filename: File) => {
         url: flashCard[3],
         image: flashCard[4] == 'TRUE',
         ebbinghausValue: parseFloat(flashCard[5]),
-        lastReinforcement: new Date(flashCard[6]),
+        nextReinforcement: new Date(flashCard[6]),
       });
+      console.log('Flashcard date: ', Date.parse(flashCard[6]));
     }
     return flashCardSet;
   });

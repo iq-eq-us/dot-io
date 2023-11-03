@@ -25,6 +25,9 @@ interface FlashCardProps {
 const FlashCard = ({ flashCard, index, forceRerender }: FlashCardProps) => {
   const removeFlashCard = useStoreActions((actions) => actions.removeFlashCard);
   const editFlashCard = useStoreActions((actions) => actions.editFlashCard);
+  const updateLocalStorage = useStoreActions(
+    (actions) => actions.updateLocalStorage,
+  );
 
   const [lockInputs, setInputs] = React.useState<boolean>(true);
   const [deleteButtonProps, setDeleteButtonProps] = React.useState(false);
@@ -37,6 +40,7 @@ const FlashCard = ({ flashCard, index, forceRerender }: FlashCardProps) => {
   const onClickConfirmDeleteButton = () => {
     setDeleteButtonProps(!deleteButtonProps);
     removeFlashCard(index);
+    updateLocalStorage();
   };
 
   const onClickCancelDeleteButton = () => {
@@ -65,11 +69,11 @@ const FlashCard = ({ flashCard, index, forceRerender }: FlashCardProps) => {
       url: imageURL,
       tags: [],
       ebbinghausValue: 0,
-      lastReinforcement: new Date(),
+      nextReinforcement: new Date(),
     };
 
     editFlashCard({ newFlashCard: newFlashCard, index: index });
-    console.log('flashCard', flashCard);
+    updateLocalStorage();
   };
 
   return (

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import FlashCard from './FlashCard';
 import React, { ReactElement, useEffect } from 'react';
 import type { flashCard } from '../../../models/flashCardsModel';
@@ -19,7 +18,7 @@ export function FlashCardColumn(): ReactElement {
   );
 
   //mapping over the flashcards and returning the flashcard and index
-  const flashCardMap = activeFlashCards.flashCards.map((flashCard, index) => {
+  const flashCardMap = activeFlashCards?.flashCards.map((flashCard, index) => {
     return (
       <FlashCard
         key="index"
@@ -32,7 +31,3 @@ export function FlashCardColumn(): ReactElement {
 
   return <React.Fragment>{flashCardMap}</React.Fragment>;
 }
-
-const CardColumn = styled.div.attrs({
-  className: 'flex flex-wrap flex-row items-center center justify-center',
-})``;

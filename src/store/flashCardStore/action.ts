@@ -1,15 +1,41 @@
-import { action, computed } from 'easy-peasy';
+import { action, computed, thunk } from 'easy-peasy';
 import type {
   flashCardSet,
   flashCardActionModel,
   sessionTrainingData,
+  flashCard,
 } from '../../models/flashCardsModel';
 
 const flashCardStoreActions: flashCardActionModel = {
+  setLoadedFromStorage: action((state) => {
+    state.loadedFromStorage = true;
+  }),
+
+  updateLocalStorage: action((state) => {
+    localStorage.setItem(
+      'flashCardSets',
+      JSON.stringify(state.allFlashCardSets),
+    );
+  }),
+
   // Actions to add and remove cards from the active flash card set
   addFlashCard: action((state, payload) => {
     const activeSet = state.activeFlashCardSetIndex;
-    state.allFlashCardSets[activeSet].flashCards.push(payload);
+    if (activeSet === -1) {
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+
+      // Adds a new flash card set to the list of sets
+      const emptyFlashCardSet: flashCardSet = {
+        name: 'Default Set',
+        flashCards: [payload],
+        nextTrainingDate: currentDate,
+      };
+      state.allFlashCardSets.push(emptyFlashCardSet);
+      state.activeFlashCardSetIndex = state.allFlashCardSets.length - 1;
+    } else {
+      state.allFlashCardSets[activeSet].flashCards.push(payload);
+    }
   }),
 
   removeFlashCard: action((state, payload) => {
@@ -40,19 +66,19 @@ const flashCardStoreActions: flashCardActionModel = {
   getActiveFlashCardSet: computed((state) => {
     // Gets the active Flash Card Set and returns it
     const activeSet = state.activeFlashCardSetIndex;
-    return state.allFlashCardSets[activeSet].flashCards;
+    return state.allFlashCardSets[activeSet]?.flashCards;
   }),
 
   getActiveFlashCardsName: computed((state) => {
     // Gets the active Flash Card Set and returns it's name
     const activeSet = state.activeFlashCardSetIndex;
-    return state.allFlashCardSets[activeSet].name;
+    return state.allFlashCardSets[activeSet]?.name;
   }),
 
   getActiveFlashCardSetLength: computed((state) => {
     // Gets the active Flash Card Set and returns it's length
     const activeSet = state.activeFlashCardSetIndex;
-    return state.allFlashCardSets[activeSet].flashCards.length;
+    return state.allFlashCardSets[activeSet]?.flashCards.length;
   }),
 
   // Actions to add and remove flash card sets
@@ -72,16 +98,18 @@ const flashCardStoreActions: flashCardActionModel = {
     state.activeFlashCardSetIndex = state.allFlashCardSets.length - 1;
   }),
 
-  removeFlashCardSet: action((state, payload) => {
-    // Removes a flash card set from the list of sets
-    if (state.allFlashCardSets.length == 1) {
-      state.allFlashCardSets[0] = {
-        name: 'UnnamedSet-0',
-        flashCards: [],
-        nextTrainingDate: new Date(),
-      };
+  addFlashCardSet: action((state, payload) => {
+    state.allFlashCardSets.push(payload);
+    state.activeFlashCardSetIndex = state.allFlashCardSets.length - 1;
+  }),
+
+  removeActiveFlashCardSet: action((state) => {
+    const activeSet = state.activeFlashCardSetIndex;
+    console.log(activeSet);
+    state.allFlashCardSets.splice(activeSet, 1);
+    if (activeSet === state.allFlashCardSets.length - 1) {
+      state.activeFlashCardSetIndex--;
     }
-    state.allFlashCardSets.splice(payload, 1);
   }),
 
   // Actions to edit the flash card sets
@@ -119,7 +147,7 @@ const flashCardStoreActions: flashCardActionModel = {
   getLastDailyTraining: computed((state) => {
     // Gets the last daily training date of the active set
     const activeSet = state.activeFlashCardSetIndex;
-    return state.allFlashCardSets[activeSet].nextTrainingDate;
+    return state.allFlashCardSets[activeSet]?.nextTrainingDate;
   }),
 
   getLastDailyTrainingAll: computed((state) => {
@@ -178,11 +206,54 @@ const flashCardStoreActions: flashCardActionModel = {
 
     state.sessionTrainingData[index].numberOfTimesWritten++;
     if (
-      state.sessionTrainingData[index].numberOfTimesWritten >= 2 ||
+      state.sessionTrainingData[index].numberOfTimesWritten >= 100 ||
       state.sessionTrainingData[index].numberOfTimesWrittenFast >= 10
     ) {
-      state.sessionTrainingData.splice(index, 1);
+      const flashCard = state.sessionTrainingData.splice(index, 1)[0].flashCard;
+      const poppedFlashCard: string = JSON.stringify(flashCard);
+      for (
+        let i = 0;
+        i <
+        state.allFlashCardSets[state.activeFlashCardSetIndex].flashCards.length;
+        i++
+      ) {
+        if (
+          JSON.stringify(
+            state.allFlashCardSets[state.activeFlashCardSetIndex].flashCards[i],
+          ) === poppedFlashCard
+        ) {
+          const newDate = new Date();
+          newDate.setHours(0, 0, 0, 0);
+          newDate.setDate(
+            newDate.getDate() +
+              state.allFlashCardSets[state.activeFlashCardSetIndex].flashCards[
+                i
+              ].ebbinghausValue +
+              1,
+          );
+
+          state.allFlashCardSets[state.activeFlashCardSetIndex].flashCards[i]
+            .ebbinghausValue++;
+          state.allFlashCardSets[state.activeFlashCardSetIndex].flashCards[
+            i
+          ].nextReinforcement = newDate;
+          break;
+        }
+      }
     }
+  }),
+
+  fetchUserData: thunk(async (actions) => {
+    const flashCardSets: flashCardSet[] = await JSON.parse(
+      localStorage.getItem('flashCardSets'),
+    );
+    if (flashCardSets != null) {
+      flashCardSets.forEach((flashCardSet) => {
+        actions.addFlashCardSet(flashCardSet);
+      });
+      actions.setActiveFlashCardSetIndex(0);
+    }
+    actions.setLoadedFromStorage();
   }),
 };
 
@@ -198,7 +269,7 @@ const downloadCSV = (cardSet: flashCardSet) => {
       'url',
       'image',
       'ebbinghausValue',
-      'lastReinforcement',
+      'nextReinforcement',
     ],
     ...cardSet.flashCards.map((flashcard) => [
       flashcard.question,
@@ -207,7 +278,7 @@ const downloadCSV = (cardSet: flashCardSet) => {
       flashcard.url,
       flashcard.image,
       flashcard.ebbinghausValue,
-      flashcard.lastReinforcement,
+      flashcard.nextReinforcement,
     ]),
   ]
     .map((e) => e.join(','))

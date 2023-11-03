@@ -3,26 +3,24 @@ import type { flashCardStoreStateModel } from '../../models/flashCardsModel';
 
 // Default state for the flashCardStore
 const flashCardStoreState: flashCardStoreStateModel = {
-  activeFlashCardSetIndex: 0,
+  loadedFromStorage: false,
 
-  allFlashCardSets: [
-    {
-      name: 'Default Set',
-      flashCards: [],
-      nextTrainingDate: new Date(),
-    },
-  ],
+  activeFlashCardSetIndex: -1,
+
+  allFlashCardSets: [],
 
   sessionTrainingData: [],
 
   numberOfDailyFlashCards: 10,
 
   activeFlashCards: computed((state) => {
+    if (state.activeFlashCardSetIndex === -1) return [];
+    console.log('Active Flash Cards: ', state.activeFlashCardSetIndex);
     return state.allFlashCardSets[
       state.activeFlashCardSetIndex
-    ].flashCards.filter(
+    ]?.flashCards.filter(
       (card) =>
-        card.lastReinforcement <= new Date() && card.ebbinghausValue < 20,
+        card.nextReinforcement <= new Date() && card.ebbinghausValue < 20,
     );
   }),
 };
