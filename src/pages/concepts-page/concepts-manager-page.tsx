@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import {
   ConceptsMasteredManagerPageContainer,
   Table,
@@ -15,11 +15,18 @@ import { ImportFlashCards } from './components-manager-page/ImportFlashcards';
 import { SaveFlashCards } from './components-manager-page/SaveFlashcards';
 import { AddFlashCards } from './components-manager-page/AddFlashcards';
 import { FlashCardColumn } from './components-manager-page/FlashCardColumn';
+import { FlashCardSetSelection } from './components-manager-page/FlashCardSetSelection';
 
 const ConceptsManagerPage = (): ReactElement => {
+  const [rerender, setRerender] = useState<boolean>(false);
+
   React.useEffect(() => {
     document.title = 'dot i/o Concepts Mastered';
-  }, []);
+  }, [rerender]);
+
+  const reset = () => {
+    setRerender(!rerender);
+  };
 
   return (
     <React.Fragment>
@@ -35,14 +42,13 @@ const ConceptsManagerPage = (): ReactElement => {
             <ConceptsRow>
               <AddFlashCards />
               <SaveFlashCards />
+              <FlashCardSetSelection forceRerender={reset} />
             </ConceptsRow>
           </Table>
 
           <PageContainer>
             <Column>
               <ChordContainer>
-                <div />
-                <div />
                 <ImportFlashCards />
               </ChordContainer>
               <FlashCardColumn />

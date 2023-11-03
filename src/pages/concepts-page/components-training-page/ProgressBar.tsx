@@ -43,50 +43,6 @@ export function ProgressBar(): ReactElement {
   let inMaxValue;
   let stmValues = 0;
 
-  const localTrainingStatistics = useStoreState(
-    (store) => store.localTrainingStatistics?.statistics,
-  );
-  const wpm = useWordsPerMinute();
-
-  const wordsPracticedInOrder = useStoreState(
-    (store) => store.wordsPracticedInOrder,
-  );
-  const inStoredChordsFromDevice = useStoreState(
-    (store: any) => store.storedChordsFromDevice,
-  );
-  const stats = useStoreState((state) => state.trainingStatistics);
-  const currentTrainingScenario = useStoreState(
-    (store) => store.currentTrainingScenario,
-  );
-
-  const totalNumberOfChords = useTotalChordsToConquer();
-  const tier = useStoreState((store) => store.trainingLevel);
-
-  const allTypedText = useStoreState(
-    (store: any) => store.allTypedCharactersStore,
-  );
-  const storedTrainingStatistics = useStoreState(
-    (store) => store.storedChordsFromDevice?.statistics,
-  );
-
-  const trainingStatistics = useStoreState(
-    (store) => store.trainingStatistics.statistics,
-  );
-
-  const trainingSettings = useStoreState((store) => store.trainingSettings);
-
-  const trainingSessionErrors = useStoreState(
-    (store) => store.trainingSessionErrors,
-  );
-  const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
-
-  const storedChordsFromDevice = useStoreState(
-    (store) => store.storedChordsFromDevice,
-  );
-  const timeTakenToTypeEachWordInOrder = useStoreState(
-    (store: any) => store.timeTakenToTypeEachWordInOrder,
-  );
-
   let sumOfLastTenOccurences = 0;
 
   localTrainingStatistics.forEach((d) => {
@@ -162,18 +118,6 @@ export function ProgressBar(): ReactElement {
       : avgOfTheLastTenTyped;
 
   let sumOfChordsMastered = 0;
-  /* storedChordsFromDevice?.statistics?.forEach((d) => {
-    sumOfChordsMastered +=
-      d.chordsMastered[d?.chordsMastered.length - 1] == null ||
-      d?.chordsMastered.length == 0 ||
-      (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
-        ? 0
-        : wpmMethodCalculatorForStoredChords(
-            d?.chordsMastered,
-            d.id?.length,
-            currentTrainingScenario,
-          );
-  });*/
 
   const { parentProps, Popper } = usePopover(
     'The number of chords that you have typed faster than your speed goal.',
@@ -189,19 +133,6 @@ export function ProgressBar(): ReactElement {
   ).toFixed(0);
 
   sumOfAverages.toFixed(2);
-
-  /*const { parentProps: progressAllTimeWPMsProps, Popper: AllTimePopper } =
-    usePopover(
-      'Typing Speed of the Last 10 words = ' +
-        (isNaN(rWPM.toFixed(0)) ? 0 : rWPM.toFixed(0)) +
-        ' rWPM' +
-        '\r\n ' +
-        'Total typing Speed for this session = ' +
-        (isNaN(averageOfLocalStats.toFixed(0))
-          ? 0
-          : averageOfLocalStats.toFixed(0)) +
-        ' lWPM',
-    );*/
 
   return (
     <React.Fragment>

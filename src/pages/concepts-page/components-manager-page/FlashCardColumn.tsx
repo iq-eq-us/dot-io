@@ -1,23 +1,38 @@
-import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { useStoreState } from '../../../store/store';
-import { FlashCardManagerCard } from './FlashCardManagerCard';
+import FlashCard from './FlashCard';
+import React, { ReactElement, useEffect } from 'react';
+import type { flashCard } from '../../../models/flashCardsModel';
+import { useStoreActions, useStoreState } from '../../../store/store';
+import { Card, Dropdown } from 'react-bootstrap';
 
 export function FlashCardColumn(): ReactElement {
+  const [rerender, setRerender] = React.useState<boolean>(false);
+
+  useEffect(() => {}, [rerender]);
+
+  const reset = () => {
+    setRerender(!rerender);
+  };
+
   const activeFlashCards = useStoreState(
     (state) => state.allFlashCardSets[state.activeFlashCardSetIndex],
   );
-  console.log(activeFlashCards);
 
-  const renderedFlashCards = activeFlashCards.flashCards.map(
-    (flashCard, index) => {
-      return <FlashCardManagerCard flashCard={flashCard} key={index} />;
-    },
-  );
+  //mapping over the flashcards and returning the flashcard and index
+  const flashCardMap = activeFlashCards.flashCards.map((flashCard, index) => {
+    return (
+      <FlashCard
+        key="index"
+        flashCard={flashCard}
+        index={index}
+        forceRerender={reset}
+      />
+    );
+  });
 
-  return <CardColumn>{renderedFlashCards}</CardColumn>;
+  return <React.Fragment>{flashCardMap}</React.Fragment>;
 }
 
 const CardColumn = styled.div.attrs({
-  className: `flex flex-wrap flex-row items-center center justify-center`,
+  className: 'flex flex-wrap flex-row items-center center justify-center',
 })``;

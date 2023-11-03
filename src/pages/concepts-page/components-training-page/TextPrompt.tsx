@@ -4,44 +4,53 @@ import { useStoreState, useStoreActions } from '../../../store/store';
 import ChordTextInput from './ChordTextInput';
 import RenderQuestion from './RenderQuestion';
 import generateTrainingData from '../util/generateTrainingData';
-import EditFlashcard from './EditFlashcard';
 
-export function TextPrompt() {
+interface TextPromptProps {
+  setActiveTraining: (active: boolean) => void;
+}
+
+export function TextPrompt({ setActiveTraining }: TextPromptProps) {
   const sessionTrainingData = useStoreState(
     (state) => state.sessionTrainingData,
   );
-  const setSessionTrainingData = useStoreActions(
-    (state) => state.setSessionTrainingData,
-  );
-  const activeFlashCards = useStoreState((state) => state.activeFlashCards);
+
   const addTimeSessionTrainingData = useStoreActions(
     (state) => state.addTimeSessionTrainingData,
   );
+
+  console.log(sessionTrainingData);
 
   const [trainingData, setTrainingData] = useState([]);
   const [userInput, setUserInput] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [focused, setFocused] = useState(false);
   const [startTime, setStartTime] = useState(null);
-  const [availableSessionData, setAvailableSessionData] = useState(false);
+  const [itemsInSession, setItemsInSession] = useState(
+    sessionTrainingData.length,
+  );
 
   const currentTrainingValue = trainingData[userInput.length];
-  console.log(sessionTrainingData);
-  console.log('Active FlashCards: ', activeFlashCards);
 
   useEffect(() => {
-    if (activeFlashCards.length != 0 && availableSessionData) {
+    if (sessionTrainingData.length != 0) {
+      if (itemsInSession != sessionTrainingData.length) {
+        setTrainingData([
+          ...trainingData.slice(0, userInput.length),
+          ...generateTrainingData(sessionTrainingData),
+        ]);
+        setItemsInSession(sessionTrainingData.length);
+      }
       if (trainingData.length - userInput.length < 5) {
-        const newTrainingData = generateTrainingData(sessionTrainingData);
-        setTrainingData([...trainingData, ...newTrainingData]);
+        setTrainingData([
+          ...trainingData,
+          ...generateTrainingData(sessionTrainingData),
+        ]);
       }
       setFocused(true);
-    } else if (activeFlashCards.length != 0 && !availableSessionData) {
-      setSessionTrainingData();
-      setAvailableSessionData(true);
-      setFocused(false);
+    } else {
+      setActiveTraining(false);
     }
-  }, [userInput, availableSessionData]);
+  }, [userInput, itemsInSession]);
 
   function focusTextBox() {
     setFocused(true);
@@ -65,8 +74,6 @@ export function TextPrompt() {
       // Checks to see if input is correct
       if (inputValue === currentTrainingValue.flashCard.answer) {
         setUserInput([...userInput, inputValue]);
-        console.log(userInput);
-        console.log(trainingData);
         setInputValue('');
 
         addTime(Date.now() - startTime);
@@ -90,9 +97,12 @@ export function TextPrompt() {
     <TextPromptContainer>
       {focused ? (
         <div>
-          <TextPromptContainer onClick={() => focusTextBox()}>
+          <TextPromptBox
+            onClick={() => focusTextBox()}
+            style={{ height: '200px ' }}
+          >
             <RenderQuestion flashCard={currentTrainingValue.flashCard} />
-          </TextPromptContainer>
+          </TextPromptBox>
           <ChordTextInput
             onKeyDown={checkInput}
             onBlur={unfocusTextBox}
@@ -111,10 +121,13 @@ export function TextPrompt() {
 const TextPromptContainer = styled.div.attrs({
   className: `
     text-md font-bold mt-12 flex flex-col items-center w-full justify-center text-white
-    sm:text-xl md:text-2xl xl:mt-12 content:center 
+    sm:text-xl md:text-2xl xl:mt-12 content:center
   `,
 })``;
 
-const TextPromptSpacingContainer = styled.div.attrs({
-  className: `position-center  left-0 right-0 bottom-0 w-full h-full z-10`,
+const TextPromptBox = styled.div.attrs({
+  className: `
+    flex text-md font-bold flex flex-col items-center w-full	justify-center text-gray-400
+    sm:text-xl md:text-2xl bg-[#FFF] rounded-3xl p-4 h-50 m-auto font-mono
+  `,
 })``;

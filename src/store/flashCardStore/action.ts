@@ -40,7 +40,6 @@ const flashCardStoreActions: flashCardActionModel = {
   getActiveFlashCardSet: computed((state) => {
     // Gets the active Flash Card Set and returns it
     const activeSet = state.activeFlashCardSetIndex;
-    console.log(activeSet);
     return state.allFlashCardSets[activeSet].flashCards;
   }),
 
@@ -135,7 +134,6 @@ const flashCardStoreActions: flashCardActionModel = {
   //Actions to generate training data
   setSessionTrainingData: action((state) => {
     const activeFlashCards = state.activeFlashCards;
-    console.log(activeFlashCards);
 
     const sessionTrainingData: sessionTrainingData[] = [];
 
@@ -180,7 +178,7 @@ const flashCardStoreActions: flashCardActionModel = {
 
     state.sessionTrainingData[index].numberOfTimesWritten++;
     if (
-      state.sessionTrainingData[index].numberOfTimesWritten >= 10 ||
+      state.sessionTrainingData[index].numberOfTimesWritten >= 2 ||
       state.sessionTrainingData[index].numberOfTimesWrittenFast >= 10
     ) {
       state.sessionTrainingData.splice(index, 1);

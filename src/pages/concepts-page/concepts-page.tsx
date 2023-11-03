@@ -8,9 +8,9 @@ const ConceptsPage = () => {
 
   const viewCurrentTier = () => {
     if (currentTier == 0) {
-      return <ConceptsTrainingPage />;
+      return <ConceptsTrainingPage setTier={setCurrentTier} />;
     } else if (currentTier == 1) {
-      return <ConceptsTrainingPage />;
+      return <ConceptsTrainingPage setTier={setCurrentTier} />;
     } else {
       return <ConceptsManagerPage />;
     }
