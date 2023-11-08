@@ -94,8 +94,11 @@ const SessionSpeed = styled.div.attrs<ProgressBarProgress>({
 `;
 
 const ProgressBarContainer = styled.div.attrs({
-  className: `float-left flex flex-row inline-block`,
-})``;
+  className: `flex flex-row justify-center z-index` /* Center the content horizontally */,
+})`
+  width: 80%; /* Set the desired width */
+  padding: 0 10%; /* Adjust the left and right padding as needed */
+`;
 
 const SpeedGoalText = styled.span.attrs({
   className: ``,

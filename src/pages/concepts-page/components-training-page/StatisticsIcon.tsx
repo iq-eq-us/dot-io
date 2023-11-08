@@ -3,10 +3,6 @@ import { useStoreActions, useStoreState } from '../../../store/store';
 import StatisticsTable from './StatisticsTable';
 
 export function StatisticsIcon(): ReactElement {
-  const setTrainingSettings = useStoreActions(
-    (store) => store.setTrainingSettings,
-  );
-  const trainingSettings = useStoreState((store) => store.trainingSettings);
   const flashCards = useStoreState((store) => store.flashCards);
 
   // State to control the visibility of the statistics table
