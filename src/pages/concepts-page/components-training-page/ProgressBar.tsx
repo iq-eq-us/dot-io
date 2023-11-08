@@ -1,123 +1,47 @@
 import React, { ReactElement, useState } from 'react';
-import useNumberOfChordsConquered from '../../../hooks/useChordsConquered';
-import useChordsNotConquered, {
-  useTotalChordsToConquer,
-} from '../../../hooks/useChordsNotConquered';
-import useCurrentLevel from '../../../hooks/useCurrentLevel';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/store';
-import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
-import Timer from './timer';
 import MultiRangeSlider from './Range';
-import {
-  wpmMethodCalculatorForStoredChords,
-  wpmMethodCalculator,
-  getCumulativeAverageChordTypeTime,
-} from '../../../helpers/aggregation';
-import {
-  getCumulativeAverageChordTypeTimeFromDevice,
-  avgCalculatorForTheSpeedOfLastTen,
-  stmCalculator,
-} from '../../../helpers/aggregation';
-import { defaultProgressBarValues } from '../../../models/trainingSettingsStateModel';
-import { useWordsPerMinute } from '../../../hooks/useWordsPerMinute';
-
-function clamp(number: number, min: number, max: number) {
-  return Math.max(min, Math.min(number, max));
-}
 
 export function ProgressBar(): ReactElement {
-  // const average = getCumulativeAverageChordTypeTime(data.stats);
-  let sumOfLWPM = 0;
-  let sumOfAWPM = 0;
-  let sumErrorsFromStoredDevice = 0;
-  let sumOccurrencesFromStoredDevice = 0;
-  let sumErrors = 0;
-  let sumOccurrences = 0;
-  let numberOfChordsMastered = 0;
-  let sumOfAverages = 0;
-  let averageOfLocalStats = 0;
-  let allTimeWPM;
-  let progress;
-  let inMaxValue;
-  let stmValues = 0;
+  const sessionTrainingData = useStoreState(
+    (state) => state.sessionTrainingData,
+  );
+  console.log('rendering');
+  console.log(sessionTrainingData);
 
-  let sumOfLastTenOccurences = 0;
+  if (sessionTrainingData.length != 0) {
+    const sumOfLastTenOccurences =
+      sessionTrainingData[0].lastTenTimesSpeed.reduce(
+        (partial_sum, a) => partial_sum + a,
+        0,
+      );
+    const avgSpeed =
+      sumOfLastTenOccurences / sessionTrainingData[0].lastTenTimesSpeed.length;
+  }
 
-  localTrainingStatistics.forEach((d) => {
-    sumOfLastTenOccurences += d.speedOfLastTen?.length;
-    averageOfLocalStats +=
-      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
-        ? 0
-        : wpmMethodCalculator(d.averageSpeed, d.id.length) *
-          d.speedOfLastTen?.length;
-  });
-
-  averageOfLocalStats = averageOfLocalStats / sumOfLastTenOccurences;
-
-  stats.statistics.forEach((d) => {
-    sumErrors += d.numberOfErrors;
-    sumOccurrences += d.numberOfOccurrences;
-    const tempWpm =
-      wpmMethodCalculator(d.averageSpeed, d.id.length) == Infinity
-        ? 0
-        : wpmMethodCalculator(d.averageSpeed, d.id.length) *
-          d.speedOfLastTen?.length;
-    sumOfAverages += tempWpm / 100;
-    tempWpm >= 1 ? numberOfChordsMastered++ : '';
-  });
-
-  inStoredChordsFromDevice?.statistics?.forEach((d) => {
-    sumOfAWPM +=
-      d.chordsMastered[d?.chordsMastered.length - 1] == null ||
-      d?.chordsMastered.length == 0 ||
-      (d.chordsMastered.length == 1 && d.chordsMastered[0] == 0)
-        ? 0
-        : wpmMethodCalculatorForStoredChords(d?.chordsMastered, d?.id.length);
-    sumOfLWPM +=
-      d.lastSpeed == 0
-        ? 0
-        : wpmMethodCalculator(
-            d?.lastSpeed,
-            d.id.length,
-            currentTrainingScenario,
-          );
-    sumErrorsFromStoredDevice += d.numberOfErrors;
-    sumOccurrencesFromStoredDevice += d.numberOfOccurrences;
-  });
+  const totalIncorrect = sessionTrainingData.reduce(
+    (partial_sum, a) => partial_sum + a.numberOfTimesWrittenWrong,
+    0,
+  );
+  const totalWritten = sessionTrainingData.reduce(
+    (partial_sum, a) => partial_sum + a.numberOfTimesWritten,
+    0,
+  );
+  const accuracy = totalIncorrect / totalWritten;
+  const progress =
+    sessionTrainingData.reduce(
+      (partial_sum, a) =>
+        partial_sum +
+        (a.numberOfTimesWritten / 10 > a.numberOfTimesWrittenFast
+          ? a.numberOfTimesWritten
+          : a.numberOfTimesWrittenFast * 10),
+      0,
+    ) / 100;
 
   const [maxValue, setMaxValue] = useState<number>();
-
-  const numberOfChordsConquered = trainingStatistics.filter(
-    (s) =>
-      s.averageSpeed > trainingSettings.speedGoal &&
-      s.numberOfOccurrences >= 10,
-  ).length;
-
   const [minValue, setMinValue] = useState<number>(0);
-  let persistentValue = 0;
-
-  let avgOfTheLastTenTyped = 0;
-  const lastTenWords = wordsPracticedInOrder?.slice(-10);
-  const lastTenTWordsTime = timeTakenToTypeEachWordInOrder?.slice(-10);
-  for (let y = 0; y < 10; y++) {
-    avgOfTheLastTenTyped += isNaN(
-      wpmMethodCalculator(lastTenTWordsTime[y], lastTenWords[y]?.length),
-    )
-      ? 0
-      : wpmMethodCalculator(lastTenTWordsTime[y], lastTenWords[y]?.length);
-  }
-  avgOfTheLastTenTyped = avgOfTheLastTenTyped / 10;
-
-  const rWPM =
-    timeTakenToTypeEachWordInOrder?.length == 0
-      ? 0
-      : timeTakenToTypeEachWordInOrder?.length < 11
-      ? averageOfLocalStats
-      : avgOfTheLastTenTyped;
-
-  let sumOfChordsMastered = 0;
 
   const { parentProps, Popper } = usePopover(
     'The number of chords that you have typed faster than your speed goal.',
@@ -126,67 +50,26 @@ export function ProgressBar(): ReactElement {
   const { parentProps: remainingProps, Popper: RemainingPopover } = usePopover(
     'The number of chords that you have not typed faster than your speed goal.',
   );
-  const Accuracy = (
-    ((allTypedText.length - 1 - trainingSessionErrors) /
-      (allTypedText.length - 1)) *
-    100
-  ).toFixed(0);
-
-  sumOfAverages.toFixed(2);
 
   return (
     <React.Fragment>
-      {trainingSettings.isDisplayingHUD && (
-        <ProgressBarContainer>
-          {!trainingSettings.isProgressBarDynamic && (
-            <input
-              id="minInputValue"
-              className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 text-white font-semibold text-center"
-              value={minValue > (inMaxValue || maxValue) ? 0 : minValue}
-              placeholder="0"
-            />
-          )}
-          <Container>
-            {Popper}
-            {RemainingPopover}
-            <TopDataRow />
-            <TopProgressBar>
-              <MultiRangeSlider className="w-full" label="true" ruler="true" />
-            </TopProgressBar>
-            <BottomProgressBar>
-              <ProgressBarOuter>
-                <ProgressBarInner progress={progress}>
-                  {progress?.toFixed(1)}%{' '}
-                </ProgressBarInner>
-              </ProgressBarOuter>
-            </BottomProgressBar>
-            <Trapezoid>
-              <RightTerms></RightTerms>
-              <Timer />
-              <LeftTerms>
-                {wordsPracticedInOrder.length > 999
-                  ? '999+Terms'
-                  : wordsPracticedInOrder.length + ' Terms'}
-                <div className="text-[#ef4444]">
-                  {timeTakenToTypeEachWordInOrder?.length == 0
-                    ? 0
-                    : timeTakenToTypeEachWordInOrder?.length < 11
-                    ? averageOfLocalStats.toFixed(0)
-                    : rWPM.toFixed(0)}{' '}
-                  rWPM
-                </div>
-              </LeftTerms>
-            </Trapezoid>
-          </Container>
-          {!trainingSettings.isProgressBarDynamic && (
-            <input
-              id="maxInputValue"
-              className="w-10 h-10 mt-2 rounded bg-neutral-600 m-3 font-semibold text-white text-center"
-              value={maxValue || inMaxValue}
-            ></input>
-          )}
-        </ProgressBarContainer>
-      )}
+      <ProgressBarContainer>
+        <Container>
+          {Popper}
+          {RemainingPopover}
+          <TopDataRow />
+          <TopProgressBar>
+            <MultiRangeSlider className="w-full" label="true" ruler="true" />
+          </TopProgressBar>
+          <BottomProgressBar>
+            <ProgressBarOuter>
+              <ProgressBarInner progress={progress}>
+                {progress?.toFixed(1)}%{' '}
+              </ProgressBarInner>
+            </ProgressBarOuter>
+          </BottomProgressBar>
+        </Container>
+      </ProgressBarContainer>
     </React.Fragment>
   );
 }

@@ -7,10 +7,20 @@ interface RenderQuestionProps {
 
 const RenderQuestion = ({ flashCard }: RenderQuestionProps) => {
   let ResultElement: ReactElement;
-  console.log(flashCard);
 
   if (flashCard.question === '') {
-    ResultElement = <img src={flashCard.url} alt="Image" />;
+    ResultElement = (
+      <img
+        src={flashCard.imageSrc}
+        alt="Image"
+        style={{
+          maxHeight: '80%',
+          maxWidth: '80%',
+          minWidth: '40%',
+          minHeight: '40%',
+        }}
+      />
+    );
   } else {
     ResultElement = <p>{flashCard.question}</p>;
   }

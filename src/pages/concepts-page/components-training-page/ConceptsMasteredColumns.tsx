@@ -11,88 +11,23 @@ import {
   PageContainer,
   Column,
 } from '../concepts-manager-page.style';
-import {
-  CardContainer,
-  InputIdentifiersForPhrase,
-  InputIdentifiers,
-  FlashCardEditButton,
-  FlashCardSaveButton,
-  PhraseTextBox,
-  ChordTextBox,
-} from './FlashCardSetColumn.styled';
 
-interface FlashCardSetColumnProps {
-  setTier: (tier: number) => void;
-}
+export function ConceptsMasteredColumn(): ReactElement {
+  const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
 
-export function ConceptsMasteredColumn({
-  setTier,
-}: FlashCardSetColumnProps): ReactElement {
-  const allFlashCardSets = useStoreState((state) => state.allFlashCardSets);
-
-  const setActiveFlashCardSetIndex = useStoreActions(
-    (actions) => actions.setActiveFlashCardSetIndex,
-  );
   const setSessionTrainingData = useStoreActions(
     (state) => state.setSessionTrainingData,
   );
 
-  const [activeTraining, setActiveTraining] = useState(false);
-
-  const editFlashCardSet = (index: number) => {
-    setActiveFlashCardSetIndex(index);
-    setTier(2);
-  };
-
-  const startTraining = (index: number) => {
-    setActiveFlashCardSetIndex(index);
-    setSessionTrainingData();
-    setActiveTraining(true);
-    console.log('startTraining');
-  };
-
-  const generatedFlashCardSetView = allFlashCardSets.map(
-    (flashCardSet, index) => {
-      return (
-        <CardContainer key="index">
-          <InputIdentifiersForPhrase>
-            Set Name:
-            <PhraseTextBox
-              value={flashCardSet.name}
-              style={{ pointerEvents: 'none' }}
-            />
-          </InputIdentifiersForPhrase>
-          <InputIdentifiers>
-            # Cards
-            <ChordTextBox
-              value={flashCardSet.flashCards.length.toString()}
-              style={{ pointerEvents: 'none' }}
-            />
-          </InputIdentifiers>
-          <InputIdentifiers>
-            Idle Queue Size
-            <ChordTextBox
-              value={flashCardSet.flashCards
-                .filter((flashCard) => flashCard.lastReinforcement < new Date())
-                .length.toString()}
-              style={{ pointerEvents: 'none' }}
-            />
-          </InputIdentifiers>
-          <FlashCardEditButton onClick={() => editFlashCardSet(index)}>
-            Edit Set
-          </FlashCardEditButton>
-          <FlashCardSaveButton onClick={() => startTraining()}>
-            Begin Training
-          </FlashCardSaveButton>
-        </CardContainer>
-      );
-    },
+  const [activeTraining, setActiveTraining] = useState(
+    new Date() < nextTrainingDate,
   );
 
   return (
     <ConceptsMasteredColumnContainer>
       {activeTraining ? (
         <>
+          <ProgressBar />
           <SmallScreenButtons>
             <GearIcon />
             <StatisticsIcon />
@@ -101,9 +36,20 @@ export function ConceptsMasteredColumn({
           <FullWidthFullHeightContainer />
         </>
       ) : (
-        <ConceptsMasteredManagerPageContainer>
-          <PageContainer>
-            <Column>{generatedFlashCardSetView}</Column>
+        <ConceptsMasteredManagerPageContainer
+          style={{ maxWidth: '1300px', alignSelf: 'center' }}
+        >
+          <PageContainer style={{ maxWidth: '1300px' }}>
+            <Column style={{ maxWidth: '1300px', alignItems: 'center' }}>
+              <button
+                onClick={() => {
+                  setSessionTrainingData();
+                  setActiveTraining(true);
+                }}
+              >
+                start
+              </button>
+            </Column>
           </PageContainer>
         </ConceptsMasteredManagerPageContainer>
       )}

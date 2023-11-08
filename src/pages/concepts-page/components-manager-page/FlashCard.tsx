@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { flashCard } from '../../../models/flashCardsModel';
 import {
   FlashCardEditButton,
@@ -15,28 +15,37 @@ import {
 } from './FlashCardManagerCardColumn.styled';
 
 import { useStoreActions } from '../../../store/store';
+import Dropdown from './Dropdown';
+import { use } from 'chai';
+import { set } from 'lodash';
 
 interface FlashCardProps {
   flashCard: flashCard;
   index: number;
-  forceRerender: () => void;
 }
 
-const FlashCard = ({ flashCard, index, forceRerender }: FlashCardProps) => {
+const FlashCard = ({ flashCard, index }: FlashCardProps) => {
   const removeFlashCard = useStoreActions((actions) => actions.removeFlashCard);
   const editFlashCard = useStoreActions((actions) => actions.editFlashCard);
-
-  const [lockInputs, setInputs] = React.useState<boolean>(true);
-  const [deleteButtonProps, setDeleteButtonProps] = React.useState(false);
-  const [questionInput, setQuestionInput] = React.useState<string>(
-    flashCard.question,
+  const updateLocalStorage = useStoreActions(
+    (actions) => actions.updateLocalStorage,
   );
-  const [answerInput, setAnswerInput] = React.useState<string>('');
-  const [imageURL, setImageURL] = React.useState<string>('');
+
+  const [lockInputs, setInputs] = useState<boolean>(true);
+  const [deleteButtonProps, setDeleteButtonProps] = useState(false);
+  const [oldFlashCard, setOldFlashCard] = useState<flashCard>(flashCard);
+  const [newFlashCard, setNewFlashCard] = useState<flashCard>(flashCard);
+
+  useEffect(() => {
+    if (lockInputs && newFlashCard.type !== oldFlashCard.type) {
+      setInputs(false);
+    }
+  });
 
   const onClickConfirmDeleteButton = () => {
     setDeleteButtonProps(!deleteButtonProps);
     removeFlashCard(index);
+    updateLocalStorage();
   };
 
   const onClickCancelDeleteButton = () => {
@@ -47,61 +56,87 @@ const FlashCard = ({ flashCard, index, forceRerender }: FlashCardProps) => {
     setDeleteButtonProps(!deleteButtonProps);
   };
 
+  const onClickCancelButton = () => {
+    setNewFlashCard(oldFlashCard);
+    setInputs(!lockInputs);
+  };
+
   const onClick = () => {
     setInputs(!lockInputs);
-    setAnswerInput('');
-    setQuestionInput('');
-    setImageURL('');
+  };
+
+  const onSelectedChange = (selected: string) => {
+    if (selected === 'text') {
+      setNewFlashCard({ ...newFlashCard, type: 'text', imageSrc: '' });
+    } else if (selected === 'translation') {
+      setNewFlashCard({ ...newFlashCard, type: 'translation', imageSrc: '' });
+    } else if (selected === 'image') {
+      setNewFlashCard({ ...newFlashCard, type: 'image', question: '' });
+    }
   };
 
   const onClickSaveButton = () => {
-    setInputs(!lockInputs);
-
-    const ImagePresent = imageURL.length > 0 ? true : false;
-    const newFlashCard: flashCard = {
-      question: questionInput,
-      answer: answerInput,
-      image: ImagePresent,
-      url: imageURL,
-      tags: [],
-      ebbinghausValue: 0,
-      lastReinforcement: new Date(),
-    };
-
     editFlashCard({ newFlashCard: newFlashCard, index: index });
-    console.log('flashCard', flashCard);
+    updateLocalStorage();
+    setOldFlashCard(newFlashCard);
+    setInputs(!lockInputs);
+  };
+
+  const showCorrectInput = () => {
+    if (newFlashCard.type === 'text') {
+      return <InputIdentifiers style={{ width: '221px' }} />;
+    } else if (newFlashCard.type === 'translation') {
+      return (
+        <InputIdentifiers>
+          Translation
+          <ChordTextBox
+            placeholder={newFlashCard.question}
+            disabled={lockInputs}
+            onChange={(e) =>
+              setNewFlashCard({ ...newFlashCard, question: e.target.value })
+            }
+            value={newFlashCard.question}
+          />
+        </InputIdentifiers>
+      );
+    } else if (newFlashCard.type === 'image') {
+      return (
+        <InputIdentifiers>
+          URL
+          <ChordTextBox
+            placeholder={newFlashCard.imageSrc}
+            disabled={lockInputs}
+            onChange={(e) =>
+              setNewFlashCard({ ...newFlashCard, imageSrc: e.target.value })
+            }
+            value={newFlashCard.imageSrc}
+          />
+        </InputIdentifiers>
+      );
+    }
   };
 
   return (
     <CardContainer>
+      <Dropdown
+        name="hi"
+        options={['text', 'translation', 'image']}
+        selected={newFlashCard.type}
+        onSelectedChange={onSelectedChange}
+      />
       <InputIdentifiersForPhrase>
         Term
         <PhraseTextBox
-          placeholder={flashCard.question}
+          placeholder={newFlashCard.answer}
           disabled={lockInputs}
-          onChange={(e) => setQuestionInput(e.target.value)}
-          value={questionInput}
+          onChange={(e) =>
+            setNewFlashCard({ ...newFlashCard, answer: e.target.value })
+          }
+          value={newFlashCard.answer}
           //value = {questionInput}
         />
       </InputIdentifiersForPhrase>
-      <InputIdentifiers>
-        Definition
-        <ChordTextBox
-          placeholder={flashCard.answer}
-          disabled={lockInputs}
-          onChange={(e) => setAnswerInput(e.target.value)}
-          value={answerInput}
-        />
-      </InputIdentifiers>
-      <InputIdentifiers>
-        URL
-        <ChordTextBox
-          placeholder={flashCard.url}
-          disabled={lockInputs}
-          onChange={(e) => setImageURL(e.target.value)}
-          value={imageURL}
-        />
-      </InputIdentifiers>
+      {showCorrectInput()}
       <FlashCardEditButton
         onClick={onClick}
         cancelled={lockInputs}

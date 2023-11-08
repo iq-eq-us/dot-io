@@ -3,23 +3,27 @@ import { useStoreActions } from '../../../store/store';
 import uploadCSV from '../util/uploadCSV';
 
 export function ImportFlashCards(): ReactElement {
-  const addEmptyFlashCardSet = useStoreActions(
-    (actions) => actions.addEmptyFlashCardSet,
-  );
   const addFlashCard = useStoreActions((actions) => actions.addFlashCard);
+  const addTagFlashCard = useStoreActions((actions) => actions.addTagFlashCard);
+  const updateLocalStorage = useStoreActions(
+    (actions) => actions.updateLocalStorage,
+  );
 
   const hiddenFileInput = React.useRef(null);
 
   const handleFileUpload = async (event) => {
     const uploadedFile = event.target.files[0];
 
-    const uploadedSet = await uploadCSV(uploadedFile);
-
-    addEmptyFlashCardSet(uploadedSet.name);
-
-    uploadedSet.flashCards.forEach((flashCard) => {
-      console.log('working');
-      addFlashCard(flashCard);
+    uploadCSV(uploadedFile).then((flashCards) => {
+      console.log(flashCards);
+      flashCards.forEach((flashCard, index) => {
+        console.log(index);
+        addFlashCard(flashCard);
+        flashCard.tags.forEach((tag: string) => {
+          addTagFlashCard({ key: tag, index: index });
+        });
+      });
+      updateLocalStorage();
     });
   };
 
@@ -34,7 +38,10 @@ export function ImportFlashCards(): ReactElement {
       </button>
       <input
         type="file"
-        onChange={async (e) => await handleFileUpload(e)}
+        onChange={async (e) => {
+          await handleFileUpload(e);
+          e.target.value = '';
+        }}
         ref={hiddenFileInput}
         style={{ display: 'none' }}
       />
