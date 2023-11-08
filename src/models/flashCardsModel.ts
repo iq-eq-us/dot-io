@@ -6,6 +6,8 @@ export interface flashCard {
   answer: string;
   imageSrc: string;
   tags: string[];
+  url: string;
+  image: string;
   ebbinghausValue: number;
   nextReinforcement: number;
   timesTyped: number;
@@ -51,9 +53,8 @@ export interface flashCardActionModel {
   setNextDailyTraining: Action<flashCardStoreStateModel, Date>;
 
   setSessionTrainingData: Action<flashCardStoreStateModel>;
-
   addTimeSessionTrainingData: Action<flashCardStoreStateModel, number[]>;
-
+  
   fetchUserData: Thunk<flashCardActionModel>;
 }
 

@@ -77,6 +77,7 @@ const flashCardStoreActions: flashCardActionModel = {
     localStorage.setItem('nextDailyTraining', JSON.stringify(currentDate));
   }),
 
+  //Actions to generate training data
   setSessionTrainingData: action((state) => {
     const activeFlashCards = state.activeFlashCards;
     console.log(activeFlashCards);
