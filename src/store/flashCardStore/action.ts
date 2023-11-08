@@ -7,9 +7,19 @@ import type {
 
 const flashCardStoreActions: flashCardActionModel = {
   // Actions to add and remove cards from the active flash card set
-  addFlashCard: action((state, payload) => {
+  /*addFlashCard: action((state, payload) => {
     const activeSet = state.activeFlashCardSetIndex;
     state.allFlashCardSets[activeSet].flashCards.push(payload);
+  }),*/
+  addFlashCard: action((state, payload) => {
+    const activeSet = state.activeFlashCardSetIndex;
+    const newFlashCard = {
+      ...payload,
+      numberOfOccurrences: 0, // Initialize occurrences to 0
+      numberOfErrors: 0, // Initialize errors to 0
+      flashcardQuestion: payload.question, // Initialize question
+    };
+    state.allFlashCardSets[activeSet].flashCards.push(newFlashCard);
   }),
 
   removeFlashCard: action((state, payload) => {
@@ -129,6 +139,12 @@ const flashCardStoreActions: flashCardActionModel = {
       allDates.push(set.nextTrainingDate);
     }
     return allDates;
+  }),
+
+  setFlashCardProperties: action((state, payload) => {
+    const activeSet = state.getActiveFlashCardSet;
+
+    return state;
   }),
 
   //Actions to generate training data

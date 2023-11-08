@@ -1,13 +1,17 @@
 import type { Action, Computed } from 'easy-peasy';
 
 export interface flashCard {
-  image: boolean;
   question: string;
   answer: string;
-  url: string;
   tags: string[];
+  url: string;
+  image: string;
   ebbinghausValue: number;
-  lastReinforcement: Date;
+  lastReinforcement: string;
+  // Add new properties
+  numberOfOccurrences: number; // New property to track occurrences
+  numberOfErrors: number; // New property to track errors
+  flashcardQuestion: string; // New property to track question
 }
 
 export interface flashCardSet {
@@ -63,8 +67,8 @@ export interface flashCardActionModel {
   getLastDailyTrainingAll: Computed<flashCardStoreStateModel, Date[]>;
 
   setSessionTrainingData: Action<flashCardStoreStateModel>;
-
   addTimeSessionTrainingData: Action<flashCardStoreStateModel, number[]>;
+  setFlashCardProperties: Action<flashCardActionModel>;
 }
 
 export interface flashCardStoreStateModel {
