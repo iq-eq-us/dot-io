@@ -18,8 +18,6 @@ export function TextPrompt({ setActiveTraining }: TextPromptProps) {
     (state) => state.addTimeSessionTrainingData,
   );
 
-  console.log(sessionTrainingData);
-
   const [trainingData, setTrainingData] = useState([]);
   const [userInput, setUserInput] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -32,6 +30,7 @@ export function TextPrompt({ setActiveTraining }: TextPromptProps) {
   const currentTrainingValue = trainingData[userInput.length];
 
   useEffect(() => {
+    console.log('Session training data: ', sessionTrainingData);
     if (sessionTrainingData.length != 0) {
       if (itemsInSession != sessionTrainingData.length) {
         setTrainingData([
@@ -53,9 +52,9 @@ export function TextPrompt({ setActiveTraining }: TextPromptProps) {
   }, [userInput, itemsInSession]);
 
   function focusTextBox() {
+    document.getElementById('txt_Name')?.focus();
     setFocused(true);
     setStartTime(Date.now());
-    document.getElementById('txt_Name')?.focus();
   }
 
   function unfocusTextBox() {

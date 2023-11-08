@@ -1,13 +1,26 @@
 import React, { ReactElement } from 'react';
-import store, { useStoreActions } from '../../../store/store';
+import { useStoreActions } from '../../../store/store';
 
-export function DeleteFlashcards(): ReactElement {
-  const removeActiveFlashCardSet = useStoreActions(
-    (store) => store.removeActiveFlashCardSet,
-  );
+interface DeleteFlashcardsProps {
+  selectedFlashCards: boolean[];
+}
+
+export function DeleteFlashcards({
+  selectedFlashCards,
+}: DeleteFlashcardsProps): ReactElement {
   const updateLocalStorage = useStoreActions(
     (store) => store.updateLocalStorage,
   );
+  const removeFlashCard = useStoreActions((store) => store.removeFlashCard);
+
+  const deleteSelectedFlashCards = () => {
+    selectedFlashCards.forEach((selected, index) => {
+      if (selected) {
+        removeFlashCard(index);
+      }
+    });
+    updateLocalStorage();
+  };
 
   return (
     <React.Fragment>
@@ -18,8 +31,7 @@ export function DeleteFlashcards(): ReactElement {
         className="import sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative"
         color="pink"
         onClick={() => {
-          removeActiveFlashCardSet();
-          updateLocalStorage();
+          deleteSelectedFlashCards();
         }}
       >
         Delete Set

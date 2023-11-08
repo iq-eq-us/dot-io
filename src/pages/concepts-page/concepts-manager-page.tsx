@@ -1,32 +1,42 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import {
   ConceptsMasteredManagerPageContainer,
   Table,
   HorizontalRule,
-  RightTable,
   ChordContainer,
   PageContainer,
   TopSectionContainer,
   Column,
   ConceptsRow,
 } from './concepts-manager-page.style';
+import { useStoreState } from '../../store/store';
 import { ConceptsMasteredHeader } from './components-manager-page/ConceptsMasteredHeader';
 import { ImportFlashCards } from './components-manager-page/ImportFlashcards';
 import { SaveFlashCards } from './components-manager-page/SaveFlashcards';
-import { AddFlashCards } from './components-manager-page/AddFlashcards';
+import { AddFlashCard } from './components-manager-page/AddFlashcard';
 import { FlashCardColumn } from './components-manager-page/FlashCardColumn';
-import { FlashCardSetSelection } from './components-manager-page/FlashCardSetSelection';
-import { DeleteFlashcards } from './components-manager-page/DeleteFlashcards';
+import { DeleteFlashcards } from './components-manager-page/DeleteFlashcard';
 
 const ConceptsManagerPage = (): ReactElement => {
-  const [rerender, setRerender] = useState<boolean>(false);
+  const flashCards = useStoreState((state) => state.flashCards);
+  console.log(flashCards);
 
-  React.useEffect(() => {
-    document.title = 'dot i/o Concepts Mastered';
-  }, [rerender]);
+  const [selectedFlashCards, setSelectedFlashCards] = useState<boolean[]>(
+    new Array(flashCards.length).fill(false),
+  );
 
-  const reset = () => {
-    setRerender(!rerender);
+  useEffect(() => {
+    if (flashCards.length !== selectedFlashCards.length) {
+      setSelectedFlashCards(new Array(flashCards.length).fill(false));
+    }
+  }, [flashCards]);
+
+  const setSelected = (selected: number) => {
+    setSelectedFlashCards((prev) => {
+      const newSelected = [...prev];
+      newSelected[selected] = !prev[selected];
+      return newSelected;
+    });
   };
 
   return (
@@ -41,17 +51,16 @@ const ConceptsManagerPage = (): ReactElement => {
           <HorizontalRule />
           <Table>
             <ConceptsRow>
-              <AddFlashCards />
+              <AddFlashCard />
               <SaveFlashCards />
-              <FlashCardSetSelection forceRerender={reset} />
-              <DeleteFlashcards />
+              <DeleteFlashcards selectedFlashCards={selectedFlashCards} />
             </ConceptsRow>
           </Table>
 
           <PageContainer>
             <Column>
               <ChordContainer>
-                <ImportFlashCards forceRerender={reset} />
+                <ImportFlashCards />
               </ChordContainer>
               <FlashCardColumn />
             </Column>

@@ -2,17 +2,9 @@ import React, { ReactElement } from 'react';
 import { useStoreActions } from '../../../store/store';
 import uploadCSV from '../util/uploadCSV';
 
-interface ImportFlashCardsProps {
-  forceRerender: () => void;
-}
-
-export function ImportFlashCards({
-  forceRerender,
-}: ImportFlashCardsProps): ReactElement {
-  const addEmptyFlashCardSet = useStoreActions(
-    (actions) => actions.addEmptyFlashCardSet,
-  );
+export function ImportFlashCards(): ReactElement {
   const addFlashCard = useStoreActions((actions) => actions.addFlashCard);
+  const addTagFlashCard = useStoreActions((actions) => actions.addTagFlashCard);
   const updateLocalStorage = useStoreActions(
     (actions) => actions.updateLocalStorage,
   );
@@ -22,16 +14,17 @@ export function ImportFlashCards({
   const handleFileUpload = async (event) => {
     const uploadedFile = event.target.files[0];
 
-    const uploadedSet = await uploadCSV(uploadedFile);
-
-    addEmptyFlashCardSet(uploadedSet.name);
-
-    uploadedSet.flashCards.forEach((flashCard) => {
-      addFlashCard(flashCard);
+    uploadCSV(uploadedFile).then((flashCards) => {
+      console.log(flashCards);
+      flashCards.forEach((flashCard, index) => {
+        console.log(index);
+        addFlashCard(flashCard);
+        flashCard.tags.forEach((tag: string) => {
+          addTagFlashCard({ key: tag, index: index });
+        });
+      });
       updateLocalStorage();
     });
-    updateLocalStorage();
-    forceRerender();
   };
 
   return (

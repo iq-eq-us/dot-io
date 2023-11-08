@@ -19,10 +19,9 @@ import { useStoreActions } from '../../../store/store';
 interface FlashCardProps {
   flashCard: flashCard;
   index: number;
-  forceRerender: () => void;
 }
 
-const FlashCard = ({ flashCard, index, forceRerender }: FlashCardProps) => {
+const FlashCard = ({ flashCard, index }: FlashCardProps) => {
   const removeFlashCard = useStoreActions((actions) => actions.removeFlashCard);
   const editFlashCard = useStoreActions((actions) => actions.editFlashCard);
   const updateLocalStorage = useStoreActions(

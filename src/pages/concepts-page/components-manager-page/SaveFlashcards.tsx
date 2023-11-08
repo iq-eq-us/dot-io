@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
-import { useStoreActions } from '../../../store/store';
+import { useStoreState } from '../../../store/store';
+import downloadCSV from '../util/downloadCSV';
 
 export function SaveFlashCards(): ReactElement {
-  const exportActiveFlashCardSetCSV = useStoreActions(
-    (store) => store.exportActiveFlashCardSetCSV,
-  );
+  const flashCards = useStoreState((store) => store.flashCards);
 
   return (
     <React.Fragment>
@@ -14,7 +13,7 @@ export function SaveFlashCards(): ReactElement {
       <button
         className="import sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative"
         color="pink"
-        onClick={() => exportActiveFlashCardSetCSV()}
+        onClick={() => downloadCSV(flashCards)}
       >
         Save Flashcards{' '}
       </button>

@@ -16,19 +16,17 @@ const ConceptsPage = () => {
     if (!loadedFromStorage) {
       fetchUserData();
     }
-  }, []);
+  }, [loadedFromStorage]);
 
   const viewCurrentTier = () => {
     if (currentTier == 0) {
-      return <ConceptsTrainingPage setTier={setCurrentTier} />;
+      return <ConceptsTrainingPage />;
     } else if (currentTier == 1) {
-      return <ConceptsTrainingPage setTier={setCurrentTier} />;
+      return <ConceptsTrainingPage />;
     } else {
       return <ConceptsManagerPage />;
     }
   };
-
-  const currentTierRender = viewCurrentTier();
 
   return (
     <>
@@ -61,7 +59,7 @@ const ConceptsPage = () => {
         </button>
       </ItemsContainer>
       {loadedFromStorage ? (
-        <>{currentTierRender}</>
+        <>{viewCurrentTier()}</>
       ) : (
         <PageContainer>Loading...</PageContainer>
       )}

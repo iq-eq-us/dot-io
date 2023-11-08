@@ -5,20 +5,14 @@ import type { flashCardStoreStateModel } from '../../models/flashCardsModel';
 const flashCardStoreState: flashCardStoreStateModel = {
   loadedFromStorage: false,
 
-  activeFlashCardSetIndex: -1,
-
-  allFlashCardSets: [],
-
+  flashCards: [],
+  tags: {},
+  nextTrainingDate: new Date(),
   sessionTrainingData: [],
-
   numberOfDailyFlashCards: 10,
 
   activeFlashCards: computed((state) => {
-    if (state.activeFlashCardSetIndex === -1) return [];
-    console.log('Active Flash Cards: ', state.activeFlashCardSetIndex);
-    return state.allFlashCardSets[
-      state.activeFlashCardSetIndex
-    ]?.flashCards.filter(
+    return state.flashCards.filter(
       (card) =>
         card.nextReinforcement <= new Date() && card.ebbinghausValue < 20,
     );

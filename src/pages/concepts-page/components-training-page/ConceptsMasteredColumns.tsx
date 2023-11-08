@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FullWidthFullHeightContainer } from './FullWidthFullHeightContainer';
 import { GearIcon } from './GearIcon';
@@ -21,90 +21,22 @@ import {
   ChordTextBox,
 } from './FlashCardSetColumn.styled';
 
-interface FlashCardSetColumnProps {
-  setTier: (tier: number) => void;
-}
+export function ConceptsMasteredColumn(): ReactElement {
+  const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
 
-export function ConceptsMasteredColumn({
-  setTier,
-}: FlashCardSetColumnProps): ReactElement {
-  const allFlashCardSets = useStoreState((state) => state.allFlashCardSets);
-
-  const setActiveFlashCardSetIndex = useStoreActions(
-    (actions) => actions.setActiveFlashCardSetIndex,
-  );
   const setSessionTrainingData = useStoreActions(
     (state) => state.setSessionTrainingData,
   );
 
-  const [activeTraining, setActiveTraining] = useState(false);
+  const [activeTraining, setActiveTraining] = useState(
+    new Date() > nextTrainingDate,
+  );
 
-  const editFlashCardSet = (index: number) => {
-    setActiveFlashCardSetIndex(index);
-    setTier(2);
-  };
-
-  const startTraining = (index: number) => {
-    setActiveFlashCardSetIndex(index);
-    setSessionTrainingData();
-    setActiveTraining(true);
-    console.log('startTraining');
-  };
-
-  let generatedFlashCardSetView;
-
-  if (allFlashCardSets.length != 0) {
-    console.log('rendering');
-    generatedFlashCardSetView = allFlashCardSets.map((flashCardSet, index) => {
-      return (
-        <CardContainer key="index">
-          <InputIdentifiersForPhrase>
-            Set Name:
-            <PhraseTextBox
-              value={flashCardSet.name}
-              style={{ pointerEvents: 'none' }}
-            />
-          </InputIdentifiersForPhrase>
-          <InputIdentifiers>
-            # Cards
-            <ChordTextBox
-              value={flashCardSet.flashCards.length.toString()}
-              style={{ pointerEvents: 'none' }}
-            />
-          </InputIdentifiers>
-          <InputIdentifiers>
-            Idle Queue Size
-            <ChordTextBox
-              value={flashCardSet.flashCards
-                .filter((flashCard) => {
-                  flashCard.nextReinforcement > new Date();
-                  console.log(flashCard.nextReinforcement);
-                })
-                .length.toString()}
-              style={{ pointerEvents: 'none' }}
-            />
-          </InputIdentifiers>
-          <FlashCardEditButton onClick={() => editFlashCardSet(index)}>
-            Edit Set
-          </FlashCardEditButton>
-          <FlashCardSaveButton
-            onClick={() => startTraining(index)}
-            style={{ marginRight: '.5rem' }}
-            disabled={flashCardSet.nextTrainingDate > new Date()}
-          >
-            Begin Training
-          </FlashCardSaveButton>
-        </CardContainer>
-      );
-    });
-  } else {
-    console.log('No Flashcard Sets');
-    generatedFlashCardSetView = (
-      <HelperContainer>
-        <h1>No Flashcard Sets</h1>
-      </HelperContainer>
-    );
-  }
+  useEffect(() => {
+    if (activeTraining) {
+      setSessionTrainingData();
+    }
+  }, [activeTraining]);
 
   return (
     <ConceptsMasteredColumnContainer>
@@ -123,7 +55,7 @@ export function ConceptsMasteredColumn({
         >
           <PageContainer style={{ maxWidth: '1300px' }}>
             <Column style={{ maxWidth: '1300px', alignItems: 'center' }}>
-              {generatedFlashCardSetView}
+              <button onClick={() => setActiveTraining(true)}>start</button>
             </Column>
           </PageContainer>
         </ConceptsMasteredManagerPageContainer>
