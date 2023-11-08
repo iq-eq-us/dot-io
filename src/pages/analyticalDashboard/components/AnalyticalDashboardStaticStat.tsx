@@ -61,8 +61,8 @@ export function DashboardStaticStats() {
     colors: ['#253f4b'],
     plotOptions: {
       radialBar: {
-        startAngle: -135,
-        endAngle: 225,
+        startAngle: 0,
+        endAngle: 360,
         hollow: {
           margin: 0,
           size: '70%',
