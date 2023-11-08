@@ -13,18 +13,22 @@ import {
   FlashCardConfirmDeleteButton,
   FlashCardCancelDeleteButton,
 } from './FlashCardManagerCardColumn.styled';
-
 import { useStoreActions } from '../../../store/store';
 import Dropdown from './Dropdown';
-import { use } from 'chai';
-import { set } from 'lodash';
 
 interface FlashCardProps {
   flashCard: flashCard;
   index: number;
+  selected: boolean;
+  setSelected: (index: number) => void;
 }
 
-const FlashCard = ({ flashCard, index }: FlashCardProps) => {
+const FlashCard = ({
+  flashCard,
+  index,
+  selected,
+  setSelected,
+}: FlashCardProps) => {
   const removeFlashCard = useStoreActions((actions) => actions.removeFlashCard);
   const editFlashCard = useStoreActions((actions) => actions.editFlashCard);
   const updateLocalStorage = useStoreActions(
@@ -118,6 +122,11 @@ const FlashCard = ({ flashCard, index }: FlashCardProps) => {
 
   return (
     <CardContainer>
+      <input
+        type="checkbox"
+        checked={selected}
+        onClick={() => setSelected(!selected, index)}
+      />
       <Dropdown
         name="hi"
         options={['text', 'translation', 'image']}
@@ -145,7 +154,7 @@ const FlashCard = ({ flashCard, index }: FlashCardProps) => {
         Edit Flashcards
       </FlashCardEditButton>
       <FlashCardCancelButton
-        onClick={onClick}
+        onClick={() => onClickCancelButton()}
         cancelled={lockInputs}
         shouldDelete={deleteButtonProps}
       >
