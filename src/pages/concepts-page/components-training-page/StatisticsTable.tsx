@@ -9,17 +9,19 @@ import { getCumulativeAverageChordTypeTime } from '../../../helpers/aggregation'
 import { useHUD } from '../../../hooks/useHUD';
 import usePopover from '../../../hooks/usePopover';
 import { truncateString } from '../../../helpers/truncateString';
+import type { flashCard } from '../../../models/flashCardsModel';
 
 // This is used to account for the header row as well as the "aggregate" row that shows average speed and
 // a sum of errors and occurrences
 const LIST_LENGTH_OFFSET = 2;
 
 function StatisticsTable({
-  flashcardStats,
+  flashCards,
 }: {
-  flashcardStats: FlashcardStatistics[];
+  flashCards: flashCard[];
 }): ReactElement {
-  const stats = flashcardStats;
+  const stats = flashCards;
+  console.log(stats);
 
   const trainingSettings = useStoreState((store) => store.trainingSettings);
 
@@ -47,7 +49,7 @@ function StatisticsTable({
 }
 
 interface Data {
-  stats: FlashcardStatistics[];
+  stats: flashCard[];
   targetChords: number;
   isRecursionEnabled: boolean;
   displayHUD: boolean;
@@ -74,12 +76,12 @@ const getStyle = (
 };
 
 const Row = ({ index, style, data }: RowData) => {
-  const flashcardStats = data.stats;
+  const flashCards = data.stats;
   // Minus one to account for the title row and the aggregate row
-  const item = flashcardStats[index - LIST_LENGTH_OFFSET];
+  const item = flashCards[index - LIST_LENGTH_OFFSET];
 
   if (index === 0) return <Header />;
-  else if (index === 1) return <AggregateRow flashcardStats={flashcardStats} />;
+  else if (index === 1) return <AggregateRow flashCards={flashCards} />;
 
   const headerStyle = getStyle(
     data.targetChords,
@@ -95,10 +97,10 @@ const Row = ({ index, style, data }: RowData) => {
       style={style}
     >
       <NewStatisticsRow headerStyle={headerStyle}>
-        <RowItem>{item?.question.toString() || ''}</RowItem>
+        <RowItem>{item?.answer || ''}</RowItem>
         <RowStatItem />
-        <RowItem>{item?.numberOfErrors}</RowItem>
-        <RowItem>{item?.numberOfOccurrences}</RowItem>
+        <RowItem>{item?.timesTyped}</RowItem>
+        <RowItem>{item?.timesErrored}</RowItem>
       </NewStatisticsRow>
     </div>
   );
@@ -155,17 +157,13 @@ const Header = () => {
   );
 };
 
-const AggregateRow = ({
-  flashcardStats,
-}: {
-  flashcardStats: FlashcardStatistics[];
-}) => {
+const AggregateRow = ({ flashCards }: { flashCards: flashCard[] }) => {
   let sumErrors = 0;
   let sumOccurrences = 0;
 
-  flashcardStats.forEach((d) => {
-    sumErrors += d.numberOfErrors;
-    sumOccurrences += d.numberOfOccurrences;
+  flashCards.forEach((d) => {
+    sumErrors += d.timesTyped;
+    sumOccurrences += d.timesErrored;
   });
 
   return (

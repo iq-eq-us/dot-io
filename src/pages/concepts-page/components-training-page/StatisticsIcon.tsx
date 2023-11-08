@@ -1,13 +1,13 @@
 import React, { ReactElement, useState } from 'react';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import StatisticsTable from './StatisticsTable';
-import { flashcardStats } from '../../../models/flashCardStatistics';
 
 export function StatisticsIcon(): ReactElement {
   const setTrainingSettings = useStoreActions(
     (store) => store.setTrainingSettings,
   );
   const trainingSettings = useStoreState((store) => store.trainingSettings);
+  const flashCards = useStoreState((store) => store.flashCards);
 
   // State to control the visibility of the statistics table
   const [showStatisticsTable, setShowStatisticsTable] = useState(false);
@@ -48,9 +48,7 @@ export function StatisticsIcon(): ReactElement {
         <line x1="6" y1="20" x2="6" y2="14" />
       </svg>
 
-      {showStatisticsTable && (
-        <StatisticsTable flashcardStats={flashcardStats} />
-      )}
+      {showStatisticsTable && <StatisticsTable flashCards={flashCards} />}
     </div>
   );
 }

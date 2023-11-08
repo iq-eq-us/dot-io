@@ -2,7 +2,15 @@ import FlashCard from './FlashCard';
 import React, { ReactElement } from 'react';
 import { useStoreState } from '../../../store/store';
 
-export function FlashCardColumn(): ReactElement {
+interface FlashCardColumnProps {
+  selected: boolean[];
+  setSelected: (index: number) => void;
+}
+
+export function FlashCardColumn({
+  selected,
+  setSelected,
+}: FlashCardColumnProps): ReactElement {
   const flashCards = useStoreState((state) => state.flashCards);
 
   //mapping over the flashcards and returning the flashcard and index

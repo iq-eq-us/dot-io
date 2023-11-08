@@ -19,6 +19,8 @@ export function StatisticsColumn(): ReactElement {
   const setIsDisplaying = useStoreActions(
     (store) => store.setIsDisplayingStatisticsModal,
   );
+  const flashCards = useStoreState((store) => store.flashCards);
+  console.log(flashCards);
 
   // If the screen size changes from a small size to a large size, show this column
   // If the screen size changes from a large size to a small size, make sure this column is hidden (until the user presses the button to open it again)
@@ -38,26 +40,13 @@ export function StatisticsColumn(): ReactElement {
     if (windowSize.width < HIDDEN_BREAKPOINT) setIsDisplaying(false);
   };
 
-  const openChordEditModal = useStoreActions(
-    (store) => store.toggleChordEditModal,
-  );
-
-  const currentTrainingMode = useCurrentTrainingScenario();
-
-  const shouldDisplayEditChordsButton =
-    currentTrainingMode === 'LEXICAL' ||
-    currentTrainingMode === 'TRIGRAM' ||
-    currentTrainingMode === 'SUPERSONIC' ||
-    currentTrainingMode === 'LEXICOGRAPHIC' ||
-    currentTrainingMode === 'CUSTOMTIER';
-
   return (
     <StatisticsColumnContainer
       isDisplayingModal={trainingSettings.isDisplayingStatisticsModal}
       onClick={onClickOutside}
     >
       <StatisticsTableContainer transitionTransform={transitionTransform}>
-        <StatisticsTable flashcardStats={flashcardStats} />{' '}
+        <StatisticsTable flashCards={flashCards} />{' '}
         {/* Pass the FlashcardStatistics array */}
       </StatisticsTableContainer>
     </StatisticsColumnContainer>
