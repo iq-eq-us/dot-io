@@ -21,6 +21,7 @@ import type { TrainingLevels } from '../../src/models/trainingLevels';
 import Circle from './CircleHighlight';
 import AnalyticalDashboardButton from '../../src/pages/test/components/AnalyticalDashboardButton';
 import HamburgerMenu from './hamburgerMenu';
+//import ConceptsPage from 'src/pages/concepts-page/concepts-page';
 
 const Navbar = (): ReactElement => {
   const history = useHistory();
@@ -94,7 +95,18 @@ const Navbar = (): ReactElement => {
         if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
           history.push(ROUTER_PATHS.home);
         }
+      } else if (level == 'CM') {
+        setModuleNumber(1);
+        const payload: any[] = [];
+        payload.push('CONCEPTSMASTERED');
+        sessionStorage.removeItem('tempTestDeIncrement');
+        setTrainingLevel('CM');
+        beginTraining(payload);
+        if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
+          history.push(ROUTER_PATHS.home);
+        }
       }
+      console.log('training level: ', trainingLevel);
     }
   }
   function triggerPasswordModal() {
@@ -172,10 +184,14 @@ const Navbar = (): ReactElement => {
             <NavLinksImage open={false} src={tWPM_Icon} alt="" />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
-            <ConstructionIconStyle>
-              <ConstructionIconWhite />
-            </ConstructionIconStyle>
-            <NavLinksImage open={false} src={CM_Icon} alt="" />
+            {trainingLevel == 'CM' ? <Circle /> : ''}
+            <div className="text-white font-mono">CM</div>
+            <NavLinksImage
+              open={true}
+              src={CM_Icon}
+              alt=""
+              onClick={() => (window.location.href = '#/concepts-page')}
+            />
           </NavMenuLink>
         </NavMenu>
         <ScoresComponent />
@@ -197,6 +213,7 @@ const Navbar = (): ReactElement => {
           <NavMenuLink aria-current="page">
             <NavLinksImage open={false} src={Crown_Icon} alt="" />
           </NavMenuLink>
+
           <NavBtnLink href="#/manager" onClick={() => setTrainingLevel('')}>
             <div className="text-white">Manager</div>
           </NavBtnLink>
@@ -359,6 +376,24 @@ const NavBtnLink = styled.a`
   border-radius: 50px;
   white-space: nowrap;
   padding: 10px 22px;
+  color: #222424;
+  font-size: 16px;
+  outline: none;
+  border: 1px solid white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    color: #ffff;
+    background: #01a049;
+    transition: 0.3s ease out;
+  }
+`;
+
+const ConBtnLink = styled.a`
+  radius: 50px;
+  white-space: nowrap;
   color: #222424;
   font-size: 16px;
   outline: none;

@@ -71,6 +71,16 @@ export default function HamburgerMenu() {
         if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
           history.push(ROUTER_PATHS.home);
         }
+      } else if (level == 'CM') {
+        setModuleNumber(1);
+        const payload: any[] = [];
+        payload.push('');
+        sessionStorage.removeItem('tempTestDeIncrement');
+        setTrainingLevel('CM');
+        beginTraining(payload);
+        if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
+          history.push(ROUTER_PATHS.home);
+        }
       }
     }
   }
