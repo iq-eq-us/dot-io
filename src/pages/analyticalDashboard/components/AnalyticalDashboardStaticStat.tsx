@@ -50,15 +50,20 @@ import Chart from 'react-apexcharts';
 
 export function DashboardStaticStats() {
   const tSpeed = JSON.parse(localStorage.getItem('CPMTopSpeed') || '0');
-  const percentSpeed = ((tSpeed / 1250) * 100).toFixed(0);
-  console.log('Percent Speed' + percentSpeed);
-  const progressBar = (815 - 815 * (parseInt(percentSpeed) / 100)).toFixed(0);
-  const intProgBar = parseInt(percentSpeed);
-  console.log('Prg Bar: ' + progressBar);
+  //Get the current level you are on: 1250/50 = 25 levels so all levels are on 50 CPM intervals
+  const speedLevel = (tSpeed / 50).toFixed(0);
+  //percent of the level that you have completed
+  const speedLevelRemainder = (((tSpeed % 50) / 50) * 100).toFixed(0);
+  //remainder of the 50 cpm that need to be completed still
+  const speedUntilNextLevel = 50 - (tSpeed % 50);
+  //const percentSpeed = ((tSpeed / 1250) * 100).toFixed(0);
+  //const progressBar = (815 - 815 * (parseInt(speedLevelRemainder) / 100)).toFixed(0);
+  const intProgBar = parseInt(speedLevelRemainder);
 
   const [options, setOptions] = useState({
     labels: [`CPM Top Speed: ${tSpeed}`],
-    colors: ['#253f4b'],
+    //colors: ['#253f4b'],
+    colors: ['#1d6bc4'],
     plotOptions: {
       radialBar: {
         startAngle: 0,
@@ -95,7 +100,7 @@ export function DashboardStaticStats() {
         dataLabels: {
           show: true,
           name: {
-            offsetY: -10,
+            offsetY: 5,
             show: true,
             color: '#fff',
             fontSize: '17px',
@@ -117,11 +122,12 @@ export function DashboardStaticStats() {
         shade: 'dark',
         type: 'linear',
         shadeIntensity: 0.25,
-        gradientToColors: ['#acc8d7'],
-        inverseColors: true,
+        //gradientToColors: ['#acc8d7'],
+        gradientToColors: ['rgba(0,246,120,0.38)'],
+        inverseColors: false,
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 100],
+        stops: [0, 50, 51, 100],
       },
     },
     stroke: {
@@ -131,6 +137,10 @@ export function DashboardStaticStats() {
   const [series, setSeries] = useState([intProgBar]);
   return (
     <div className="radialbar pr-24">
+      <div className="flex flex-col text-center text-[15px] font-semibold	font-mono">
+        <div>Current Speed Level: {speedLevel}</div>
+        <div>Speed Until Next Level: {speedUntilNextLevel} CPM</div>
+      </div>
       <Chart options={options} series={series} type="radialBar" height="380" />
     </div>
   );

@@ -3,6 +3,7 @@ import Dropdown from 'react-dropdown';
 import { CMradialGraph } from './CMradialGraph';
 import styled from 'styled-components';
 import 'react-dropdown/style.css';
+import { CMEbbinghausGraph } from './CMEbbinhausGraph';
 
 export function CMdashboardAnalytics(): ReactElement {
   const options = [
@@ -33,7 +34,7 @@ export function CMdashboardAnalytics(): ReactElement {
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       <Dropdown
         options={options}
         onChange={updateFlashcardName}
@@ -41,6 +42,9 @@ export function CMdashboardAnalytics(): ReactElement {
         className="border rounded-md"
       />
       <CMradialGraph />
+      <div className="pt-42">
+        <CMEbbinghausGraph />
+      </div>
     </div>
   );
 }
