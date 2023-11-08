@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { FullWidthFullHeightContainer } from './FullWidthFullHeightContainer';
 import { GearIcon } from './GearIcon';
@@ -11,15 +11,6 @@ import {
   PageContainer,
   Column,
 } from '../concepts-manager-page.style';
-import {
-  CardContainer,
-  InputIdentifiersForPhrase,
-  InputIdentifiers,
-  FlashCardEditButton,
-  FlashCardSaveButton,
-  PhraseTextBox,
-  ChordTextBox,
-} from './FlashCardSetColumn.styled';
 
 export function ConceptsMasteredColumn(): ReactElement {
   const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
@@ -29,19 +20,14 @@ export function ConceptsMasteredColumn(): ReactElement {
   );
 
   const [activeTraining, setActiveTraining] = useState(
-    new Date() > nextTrainingDate,
+    new Date() < nextTrainingDate,
   );
-
-  useEffect(() => {
-    if (activeTraining) {
-      setSessionTrainingData();
-    }
-  }, [activeTraining]);
 
   return (
     <ConceptsMasteredColumnContainer>
       {activeTraining ? (
         <>
+          <ProgressBar />
           <SmallScreenButtons>
             <GearIcon />
             <StatisticsIcon />
@@ -55,7 +41,14 @@ export function ConceptsMasteredColumn(): ReactElement {
         >
           <PageContainer style={{ maxWidth: '1300px' }}>
             <Column style={{ maxWidth: '1300px', alignItems: 'center' }}>
-              <button onClick={() => setActiveTraining(true)}>start</button>
+              <button
+                onClick={() => {
+                  setSessionTrainingData();
+                  setActiveTraining(true);
+                }}
+              >
+                start
+              </button>
             </Column>
           </PageContainer>
         </ConceptsMasteredManagerPageContainer>

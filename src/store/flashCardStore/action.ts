@@ -29,7 +29,7 @@ const flashCardStoreActions: flashCardActionModel = {
       imageSrc: '',
       tags: [],
       ebbinghausValue: 0,
-      nextReinforcement: currentDate,
+      nextReinforcement: currentDate.getTime(),
       timesTyped: 0,
       timesErrored: 0,
     };
@@ -49,8 +49,10 @@ const flashCardStoreActions: flashCardActionModel = {
     if (!(payload.key in state.tags)) {
       state.tags[payload.key] = [];
     }
-    state.flashCards[payload.index].tags.push(payload.key);
-    state.tags[payload.key].push(payload.index);
+    if (payload.index != undefined) {
+      state.flashCards[payload.index].tags.push(payload.key);
+      state.tags[payload.key].push(payload.index);
+    }
   }),
 
   removeTagFlashCard: action((state, payload) => {
@@ -92,6 +94,7 @@ const flashCardStoreActions: flashCardActionModel = {
         flashCard: randomFlashCard,
         numberOfTimesWritten: 0,
         numberOfTimesWrittenFast: 0,
+        numberOfTimesWrittenWrong: 0,
         lastTenTimesSpeed: [],
       });
 
@@ -135,7 +138,7 @@ const flashCardStoreActions: flashCardActionModel = {
             newDate.getDate() + state.flashCards[i].ebbinghausValue + 1,
           );
           state.flashCards[i].ebbinghausValue++;
-          state.flashCards[i].nextReinforcement = newDate;
+          state.flashCards[i].nextReinforcement = newDate.getTime();
           break;
         }
       }

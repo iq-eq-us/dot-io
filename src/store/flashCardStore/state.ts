@@ -12,10 +12,9 @@ const flashCardStoreState: flashCardStoreStateModel = {
   numberOfDailyFlashCards: 10,
 
   activeFlashCards: computed((state) => {
-    return state.flashCards.filter(
-      (card) =>
-        card.nextReinforcement <= new Date() && card.ebbinghausValue < 20,
-    );
+    return state.flashCards.filter((card) => {
+      return card.nextReinforcement <= Date.now() && card.ebbinghausValue < 20;
+    });
   }),
 };
 

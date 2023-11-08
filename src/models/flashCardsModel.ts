@@ -7,7 +7,7 @@ export interface flashCard {
   imageSrc: string;
   tags: string[];
   ebbinghausValue: number;
-  nextReinforcement: Date;
+  nextReinforcement: number;
   timesTyped: number;
   timesErrored: number;
 }
@@ -16,6 +16,7 @@ export interface sessionTrainingData {
   flashCard: flashCard;
   numberOfTimesWritten: number;
   numberOfTimesWrittenFast: number;
+  numberOfTimesWrittenWrong: number;
   lastTenTimesSpeed: number[];
 }
 
@@ -26,7 +27,7 @@ export interface generatedData {
 
 export interface tag {
   key: string;
-  index: number;
+  index: number | undefined;
 }
 
 export interface flashCardActionModel {

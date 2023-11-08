@@ -20,14 +20,16 @@ const uploadCSV = async (filename: File): Promise<flashCard[]> => {
         flashCard[0] === 'translation' ||
         flashCard[0] === 'image'
       ) {
+        console.log(line);
+        console.log(parseInt(flashCard[6]));
         flashCards.push({
           type: flashCard[0],
           question: flashCard[1],
           answer: flashCard[2],
           imageSrc: flashCard[3],
           tags: [],
-          ebbinghausValue: parseFloat(flashCard[5]),
-          nextReinforcement: new Date(flashCard[6]),
+          ebbinghausValue: parseInt(flashCard[5]),
+          nextReinforcement: parseInt(flashCard[6]),
           timesTyped: parseInt(flashCard[7]),
           timesErrored: parseInt(flashCard[8]),
         });

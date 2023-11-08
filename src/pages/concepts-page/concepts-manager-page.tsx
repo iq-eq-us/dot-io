@@ -15,15 +15,16 @@ import { ImportFlashCards } from './components-manager-page/ImportFlashcards';
 import { SaveFlashCards } from './components-manager-page/SaveFlashcards';
 import { AddFlashCard } from './components-manager-page/AddFlashcard';
 import { FlashCardColumn } from './components-manager-page/FlashCardColumn';
-import { DeleteFlashcards } from './components-manager-page/DeleteFlashcard';
+import { DialogPortal } from './components-manager-page/DialogPortal';
+import { TagSetDropdown } from './components-manager-page/TagSetDropdown';
 
 const ConceptsManagerPage = (): ReactElement => {
   const flashCards = useStoreState((state) => state.flashCards);
-  console.log(flashCards);
 
   const [selectedFlashCards, setSelectedFlashCards] = useState<boolean[]>(
     new Array(flashCards.length).fill(false),
   );
+  const [selectedTag, setSelectedTag] = useState<string>('');
 
   useEffect(() => {
     if (flashCards.length !== selectedFlashCards.length) {
@@ -53,7 +54,11 @@ const ConceptsManagerPage = (): ReactElement => {
             <ConceptsRow>
               <AddFlashCard />
               <SaveFlashCards />
-              <DeleteFlashcards selectedFlashCards={selectedFlashCards} />
+              <DialogPortal />
+              <TagSetDropdown
+                selectedTag={selectedTag}
+                setSelectedTag={setSelectedTag}
+              />
             </ConceptsRow>
           </Table>
 
