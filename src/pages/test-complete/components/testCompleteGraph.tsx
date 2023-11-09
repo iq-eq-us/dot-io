@@ -1,8 +1,8 @@
 import ApexCharts from 'apexcharts';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import styled from 'styled-components';
 import usePopover from '../../../hooks/usePopover';
-import { useStoreState, useStoreActions } from '../../../store/store';
+import store, { useStoreState, useStoreActions } from '../../../store/store';
 import {
   getCumulativeAverageChordTypeTime,
   wpmMethodCalculator,
@@ -177,6 +177,29 @@ export function myGraph(
   chart.render();
 }
 
+function calculateStandardDeviationAndVariance(arr) {
+  // Step 1: Calculate the mean
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    sum += parseFloat(arr[i]);
+  }
+  console.log('Sum: ' + sum);
+  const mean = sum / arr.length;
+  console.log('Mean: ' + mean);
+  const squaredDifferences = arr.map((value) =>
+    Math.pow(parseFloat(value) - mean, 2),
+  );
+  const variance =
+    squaredDifferences.reduce((sum, value) => sum + parseFloat(value), 0) /
+    (arr.length - 1);
+  console.log('Variance: ' + variance);
+  const standardDeviation = Math.sqrt(variance);
+  console.log('standardDeviation: ' + standardDeviation);
+  const consist = standardDeviation / mean;
+  //standard deviation is equal to the consistency
+  return consist;
+}
+
 export function TestCompleteGraph(): ReactElement {
   const trainingStatistics = useStoreState(
     (store: any) => store.trainingStatistics,
@@ -253,6 +276,19 @@ export function TestCompleteGraph(): ReactElement {
   rawSpeedOfCurrentWord = finalRawWPM;
   wordOccurrences = numberOfErrorsArrayForTestMode;
   wordNames = wordsPracticedInOrder;
+  console.log('finalWPMArray: ' + rawSpeedOfCurrentWord);
+
+  const cons = (
+    (1 - calculateStandardDeviationAndVariance(rawSpeedOfCurrentWord)) *
+    100
+  ).toFixed(2);
+  console.log('Consistencty: ' + cons);
+  /* store.getActions().addConsistency([parseFloat(cons)]); */
+
+  useEffect(() => {
+    // Add the accuracy value to the store when the component mounts
+    store.getActions().addConsistency([parseFloat(cons)]);
+  }, []);
 
   if (wordTestNumber == undefined && averageOfLocalStats != undefined) {
     if (tier == 'CPM') {
