@@ -54,7 +54,7 @@ export interface flashCardActionModel {
 
   setSessionTrainingData: Action<flashCardStoreStateModel>;
   addTimeSessionTrainingData: Action<flashCardStoreStateModel, number[]>;
-  
+
   fetchUserData: Thunk<flashCardActionModel>;
 }
 
@@ -73,6 +73,8 @@ export interface flashCardStoreStateModel {
   numberOfDailyFlashCards: number;
 
   activeFlashCards: Computed<flashCardStoreStateModel, flashCard[]>;
+
+  percentageCompleted: Computed<flashCardStoreStateModel, number>;
 }
 
 export type FlashCardStoreModel = flashCardStoreStateModel &

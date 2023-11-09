@@ -20,7 +20,6 @@ const Dropdown = ({
       </option>
     );
   });
-  console.log(options);
 
   return (
     <select

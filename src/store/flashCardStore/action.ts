@@ -46,6 +46,7 @@ const flashCardStoreActions: flashCardActionModel = {
   }),
 
   addTagFlashCard: action((state, payload) => {
+    console.log(payload);
     if (!(payload.key in state.tags)) {
       state.tags[payload.key] = [];
     }

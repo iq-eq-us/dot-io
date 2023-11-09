@@ -23,7 +23,7 @@ export const DialogPortal = () => {
         color="pink"
         onClick={() => setShowModal(true)}
       >
-        Add Tag
+        Add New Tag
       </button>
       {showModal &&
         createPortal(

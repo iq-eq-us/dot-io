@@ -12,7 +12,7 @@ import {
 import { useStoreState } from '../../store/store';
 import { ConceptsMasteredHeader } from './components-manager-page/ConceptsMasteredHeader';
 import { ImportFlashCards } from './components-manager-page/ImportFlashcards';
-import { SaveFlashCards } from './components-manager-page/SaveFlashcards';
+import { ExportFlashCards } from './components-manager-page/ExportFlashcards';
 import { AddFlashCard } from './components-manager-page/AddFlashcard';
 import { FlashCardColumn } from './components-manager-page/FlashCardColumn';
 import { DialogPortal } from './components-manager-page/DialogPortal';
@@ -20,6 +20,8 @@ import { TagSetDropdown } from './components-manager-page/TagSetDropdown';
 
 const ConceptsManagerPage = (): ReactElement => {
   const flashCards = useStoreState((state) => state.flashCards);
+
+  const tags = useStoreState((state) => state.tags);
 
   const [selectedFlashCards, setSelectedFlashCards] = useState<boolean[]>(
     new Array(flashCards.length).fill(false),
@@ -52,8 +54,11 @@ const ConceptsManagerPage = (): ReactElement => {
           <HorizontalRule />
           <Table>
             <ConceptsRow>
+              <ImportFlashCards />
+              <ExportFlashCards />
+            </ConceptsRow>
+            <ConceptsRow>
               <AddFlashCard />
-              <SaveFlashCards />
               <DialogPortal />
               <TagSetDropdown
                 selectedTag={selectedTag}
@@ -61,13 +66,12 @@ const ConceptsManagerPage = (): ReactElement => {
               />
             </ConceptsRow>
           </Table>
-
           <PageContainer>
             <Column>
-              <ChordContainer>
-                <ImportFlashCards />
-              </ChordContainer>
-              <FlashCardColumn />
+              <FlashCardColumn
+                selected={selectedFlashCards}
+                setSelected={setSelected}
+              />
             </Column>
             <div className="h-1 w-6/12 mt-16 bg-[#3A5A42] rounded mb-10" />
           </PageContainer>

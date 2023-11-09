@@ -13,21 +13,16 @@ export const TagSetDropdown = ({
 }: TagSetDropdownProps) => {
   const tags = useStoreState((state) => state.tags);
 
-  const setNames = [];
+  const setNames = ['All'];
   for (const [key] of Object.entries(tags)) {
-    <option key={key} value={key}>
-      {key}
-    </option>;
-  }
-  if (setNames.length === 0) {
-    <option value="" />;
+    setNames.push(key);
   }
   console.log(setNames);
 
   return (
     <Dropdown
       name="Select Flash Card"
-      onSelectedChange={() => setSelectedTag(selectedTag)}
+      onSelectedChange={setSelectedTag}
       options={setNames}
       selected={selectedTag}
     />

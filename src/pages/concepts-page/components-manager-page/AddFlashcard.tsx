@@ -21,7 +21,7 @@ export function AddFlashCard(): ReactElement {
         color="pink"
         onClick={() => addNewFlashCard()}
       >
-        Add Flashcards
+        Add Empty Flashcard
       </button>
     </React.Fragment>
   );
