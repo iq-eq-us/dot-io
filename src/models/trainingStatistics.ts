@@ -1,6 +1,7 @@
 import type { TrainingScenario } from './trainingScenario';
 
 export interface ChordStatistics {
+  [x: string]: any;
   id: string;
   displayTitle: string;
   averageSpeed: number;

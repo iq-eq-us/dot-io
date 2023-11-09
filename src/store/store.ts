@@ -4,6 +4,9 @@ import { TrainingStorageStore } from './statisticsStorageStore';
 import { TrainingStore } from './trainingStore';
 import { GlobalStorageStore } from './globalPersistentStore';
 import { ManagerStorageStore } from './managerStorageStore';
+import { sessionStatsAnalyticalStore } from './sessionStatsAnalytics';
+import { testHistoryAnalyticalStore } from './testHistory';
+import { FlashCardStore } from './flashCardStore';
 /**
  * This is the main application store.
  * It contains all global state for the entire application.
@@ -16,6 +19,9 @@ export const defaultStoreState: CompleteStoreModel = {
   ...TrainingStore,
   ...GlobalStorageStore,
   ...ManagerStorageStore,
+  ...sessionStatsAnalyticalStore,
+  ...testHistoryAnalyticalStore,
+  ...FlashCardStore,
 };
 
 const store = createStore<CompleteStoreModel>(defaultStoreState);

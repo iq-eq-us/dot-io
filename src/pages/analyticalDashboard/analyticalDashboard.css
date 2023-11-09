@@ -1,0 +1,59 @@
+.skill{
+    width: 160px;
+    height: 160px;
+    position:relative;
+}
+
+.outer{
+    width: 280px;
+    height: 280px;
+    border-radius:50%;
+    border: 1px solid #222424;
+    padding: 20px;
+    box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15), -6px -6px 10px -1px rgba(255,255,255,0.7) 
+}
+
+.inner{
+   height: 245px;
+   width: 245px;
+   border-radius:50%;
+   align-items:center;
+   justify-content: center;
+   padding-top: 90px;
+   display: block;
+   border: 1px solid #c5c5c5;
+   box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+               inset -4px -4px 6px -1px rgba(255,255,255,0.7),
+               -0.5px -0.05px 0px rgba(255,255,255,1),
+               0.5px 0.05px 0px rgba(0,0,0,0.15),
+               0px 12px 10px -10px rgba(0,0,0,0.05); 
+}
+
+#circle1{
+    fill:none;
+    stroke: url(#GradientColor);
+    stroke-width: 20px;
+    padding-left: 10px;
+    padding-top: 10px;
+    stroke-dasharray: 815;
+    stroke-dashoffset: 815; 
+    /* animation: anim 2s linear forwards; */
+}
+
+#grad{
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.inner1{
+    align-items:center;
+   justify-content: center;
+   display: flex;
+}
+
+/* @keyframes anim{
+    100%{
+        stroke-dashoffset: var(--progressBar, 80);
+    }
+}  */

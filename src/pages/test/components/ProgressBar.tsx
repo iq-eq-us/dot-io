@@ -5,7 +5,7 @@ import useChordsNotConquered, {
 } from '../../../hooks/useChordsNotConquered';
 import useCurrentLevel from '../../../hooks/useCurrentLevel';
 import styled from 'styled-components';
-import { useStoreState } from '../../../store/store';
+import store, { useStoreState } from '../../../store/store';
 import { PlusIcon } from './PlusIcon';
 import usePopover from '../../../hooks/usePopover';
 import Timer from './timer';
@@ -42,6 +42,7 @@ export function ProgressBar(): ReactElement {
   let progress;
   let inMaxValue;
   let stmValues = 0;
+  let increasedNumberOfChordsMastered = 0; //flag
 
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics?.statistics,
@@ -324,6 +325,10 @@ export function ProgressBar(): ReactElement {
         ' lWPM',
     );
 
+  // added to store the number of chords mastered
+  // this is the number in "<number> Terms" in the trapezoid
+  store.getActions().addSessionStatsAnalytical(numberOfChordsMastered);
+
   return (
     <React.Fragment>
       {trainingSettings.isDisplayingHUD && (
@@ -383,7 +388,8 @@ export function ProgressBar(): ReactElement {
               <LeftTerms>
                 {wordsPracticedInOrder.length > 999
                   ? '999+Terms'
-                  : wordsPracticedInOrder.length + ' Terms'}
+                  : // : wordsPracticedInOrder.length + ' Terms'}
+                    numberOfChordsMastered + ' Terms'}
                 <div className="text-[#ef4444]">
                   {timeTakenToTypeEachWordInOrder?.length == 0
                     ? 0

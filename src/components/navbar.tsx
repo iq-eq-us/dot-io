@@ -12,13 +12,16 @@ import CPM_Icon from '../assets/CPM_icon.png';
 import Crown_Icon from '../assets/Crown_icon.png';
 import StM_Icon from '../assets/StM.png';
 import tWPM_Icon from '../assets/tWPM.png';
+import analytic_DashIcon from '../assets/AnalyticalDashboard.png';
 import LockIconWhite from '../../src/pages/test/components/LockIconWhite';
 import ConstructionIconWhite from '../../src/pages/test/components/ConstructionIconWhite';
 import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
 import type { TrainingLevels } from '../../src/models/trainingLevels';
 import Circle from './CircleHighlight';
+import AnalyticalDashboardButton from '../../src/pages/test/components/AnalyticalDashboardButton';
 import HamburgerMenu from './hamburgerMenu';
+//import ConceptsPage from 'src/pages/concepts-page/concepts-page';
 
 const Navbar = (): ReactElement => {
   const history = useHistory();
@@ -92,7 +95,18 @@ const Navbar = (): ReactElement => {
         if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
           history.push(ROUTER_PATHS.home);
         }
+      } else if (level == 'CM') {
+        setModuleNumber(1);
+        const payload: any[] = [];
+        payload.push('CONCEPTSMASTERED');
+        sessionStorage.removeItem('tempTestDeIncrement');
+        setTrainingLevel('CM');
+        beginTraining(payload);
+        if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
+          history.push(ROUTER_PATHS.home);
+        }
       }
+      console.log('training level: ', trainingLevel);
     }
   }
   function triggerPasswordModal() {
@@ -170,17 +184,36 @@ const Navbar = (): ReactElement => {
             <NavLinksImage open={false} src={tWPM_Icon} alt="" />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
-            <ConstructionIconStyle>
-              <ConstructionIconWhite />
-            </ConstructionIconStyle>
-            <NavLinksImage open={false} src={CM_Icon} alt="" />
+            {trainingLevel == 'CM' ? <Circle /> : ''}
+            <div className="text-white font-mono">CM</div>
+            <NavLinksImage
+              open={true}
+              src={CM_Icon}
+              alt=""
+              onClick={() => (window.location.href = '#/concepts-page')}
+            />
           </NavMenuLink>
         </NavMenu>
         <ScoresComponent />
+
+        <div className="flex-row">
+          <NavMenuLink style={{ paddingTop: '100px' }}>
+            <NavLinksBtnImage
+              href="#/analyticalDashboard"
+              onClick={() => setTrainingLevel('')}
+            >
+              <img
+                src={analytic_DashIcon}
+                style={{ width: '40px', height: '50px', paddingTop: '10px' }}
+              ></img>
+            </NavLinksBtnImage>
+          </NavMenuLink>
+        </div>
         <NavBtn>
           <NavMenuLink aria-current="page">
             <NavLinksImage open={false} src={Crown_Icon} alt="" />
           </NavMenuLink>
+
           <NavBtnLink href="#/manager" onClick={() => setTrainingLevel('')}>
             <div className="text-white">Manager</div>
           </NavBtnLink>
@@ -211,7 +244,7 @@ const LogoLink = styled.a.attrs({
 })``;
 
 const NavMenuLink = styled.a.attrs({
-  className: `py-1 rounded-md hover:bg-[#333]`,
+  className: `py-1 items-center relative rounded-md hover:bg-[#333] align-center`,
 })``;
 
 const NavI = styled.nav`
@@ -232,13 +265,13 @@ const NavI = styled.nav`
 `;
 
 const NavbarContainer = styled.div`
-display: flex;
-justify-content: space-between;
-height: 63px;
-z-index: 1;
-width: 100%;
-padding 0 24px;
-max-width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  height: 63px;
+  z-index: 1;
+  width: 100%;
+  padding 0 24px;
+  max-width: 1100px;
 `;
 
 const NavLogo = styled.div`
@@ -298,6 +331,20 @@ const NavLinksImage = styled.img<{ open: boolean }>`
   }
 `;
 
+const NavLinksBtnImage = styled.a`
+  align-items: center;
+  color: #fff;
+  display: relative;
+  cursor: pointer;
+  color: #fff;
+  justify-content: center;
+  justify-self: flex-start;
+
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+`;
+
 const NavLinksImageTransparent = styled.img`
   color: #fff;
   display: flex;
@@ -329,6 +376,24 @@ const NavBtnLink = styled.a`
   border-radius: 50px;
   white-space: nowrap;
   padding: 10px 22px;
+  color: #222424;
+  font-size: 16px;
+  outline: none;
+  border: 1px solid white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    color: #ffff;
+    background: #01a049;
+    transition: 0.3s ease out;
+  }
+`;
+
+const ConBtnLink = styled.a`
+  radius: 50px;
+  white-space: nowrap;
   color: #222424;
   font-size: 16px;
   outline: none;
