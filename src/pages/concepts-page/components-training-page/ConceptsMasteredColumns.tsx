@@ -27,13 +27,16 @@ export function ConceptsMasteredColumn(): ReactElement {
     <ConceptsMasteredColumnContainer>
       {activeTraining ? (
         <>
-          <ProgressBar />
-          <SmallScreenButtons>
-            <GearIcon />
-            <StatisticsIcon />
-          </SmallScreenButtons>
-          <TextPrompt setActiveTraining={setActiveTraining} />
-          <FullWidthFullHeightContainer />
+          <FullWidthFullHeightContainer>
+            <HelperContainer>
+              <ProgressBar />
+            </HelperContainer>
+            <SmallScreenButtons>
+              <GearIcon />
+              <StatisticsIcon />
+            </SmallScreenButtons>
+            <TextPrompt setActiveTraining={setActiveTraining} />
+          </FullWidthFullHeightContainer>
         </>
       ) : (
         <ConceptsMasteredManagerPageContainer
@@ -62,7 +65,7 @@ const ConceptsMasteredColumnContainer = styled.div.attrs({
 })``;
 
 const SmallScreenButtons = styled.div.attrs({
-  className: 'xl:hidden flex flex-row justify-between w-full mb-4',
+  className: 'flex flex-row justify-between w-full mb-4',
 })``;
 
 const ForgotPasswordButton = styled.div.attrs({
@@ -70,8 +73,7 @@ const ForgotPasswordButton = styled.div.attrs({
 })``;
 
 const HelperContainer = styled.div.attrs({
-  className:
-    'xl:hidden flex flex-row justify-center w-full mb-4 text-white font-mono',
+  className: 'flex flex-row justify-center w-full mb-4 text-white font-mono',
 })``;
 
 const NavBtnLink = styled.a`
