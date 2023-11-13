@@ -17,7 +17,7 @@ export const TagSetDropdown = ({
   for (const [key] of Object.entries(tags)) {
     setNames.push(key);
   }
-  console.log(setNames);
+  console.log(tags);
 
   return (
     <Dropdown

@@ -6,8 +6,6 @@ export interface flashCard {
   answer: string;
   imageSrc: string;
   tags: string[];
-  url: string;
-  image: string;
   ebbinghausValue: number;
   nextReinforcement: number;
   timesTyped: number;

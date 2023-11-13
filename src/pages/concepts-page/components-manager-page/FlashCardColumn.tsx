@@ -15,7 +15,15 @@ export function FlashCardColumn({
 
   //mapping over the flashcards and returning the flashcard and index
   const flashCardMap = flashCards.map((flashCard, index) => {
-    return <FlashCard key={index} flashCard={flashCard} index={index} />;
+    return (
+      <FlashCard
+        key={index}
+        flashCard={flashCard}
+        index={index}
+        selected={selected[index]}
+        setSelected={setSelected}
+      />
+    );
   });
 
   return <React.Fragment>{flashCardMap}</React.Fragment>;

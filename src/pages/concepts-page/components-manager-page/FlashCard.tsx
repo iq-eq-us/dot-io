@@ -125,7 +125,7 @@ const FlashCard = ({
       <input
         type="checkbox"
         checked={selected}
-        onClick={() => setSelected(!selected, index)}
+        onClick={() => setSelected(index)}
       />
       <Dropdown
         name="hi"

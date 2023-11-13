@@ -46,7 +46,6 @@ const flashCardStoreActions: flashCardActionModel = {
   }),
 
   addTagFlashCard: action((state, payload) => {
-    console.log(payload);
     if (!(payload.key in state.tags)) {
       state.tags[payload.key] = [];
     }
@@ -151,9 +150,13 @@ const flashCardStoreActions: flashCardActionModel = {
     const flashCards: flashCard[] = await JSON.parse(
       localStorage.getItem('flashCards'),
     );
+    console.log(flashCards);
     if (flashCards != null) {
-      flashCards.forEach((card) => {
+      flashCards.forEach((card, index) => {
         actions.addFlashCard(card);
+        card.tags.forEach((tag) => {
+          actions.addTagFlashCard({ key: tag, index: index });
+        });
       });
     }
     actions.setLoadedFromStorage();
