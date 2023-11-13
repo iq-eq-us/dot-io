@@ -3,9 +3,9 @@ import Chart from 'react-apexcharts';
 import store, { useStoreState, useStoreActions } from '../../../store/store';
 
 export function CMEbbinghausGraph(): ReactElement {
-  console.log(
-    'Getting stored accuracy list is: ' + store.getState().currConsistency,
-  );
+  // console.log(
+  //   'Getting stored accuracy list is: ' + store.getState().currConsistency,
+  // );
 
   const [options, setOptions] = useState({
     colors: ['#a855f7'],
