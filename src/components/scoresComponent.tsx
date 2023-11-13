@@ -33,6 +33,10 @@ export function ScoresComponent(): ReactElement {
   console.log('CPM Top Speed: ' + CPMTSpeed);
   store.getActions().addCPMTopSpeed(CPMTSpeed);
 
+  const ChMChordMastered = parseInt((sumOfChordsMastered / 100)?.toFixed(2));
+  console.log('ChM Chords Mastered: ' + ChMChordMastered);
+  store.getActions().addChMChordsMastered(ChMChordMastered);
+
   return (
     <React.Fragment>
       <HideWhenScreenGetSmallEnough>
