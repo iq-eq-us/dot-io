@@ -28,7 +28,9 @@ export function ScoresComponent(): ReactElement {
   `;
 
   const CPMTSpeed = parseInt(
+    /*eslint-disable*/
     Math.max.apply(Math, Object.values(maxWPM))?.toFixed(),
+    /*eslint-enable*/
   );
   console.log('CPM Top Speed: ' + CPMTSpeed);
   store.getActions().addCPMTopSpeed(CPMTSpeed);

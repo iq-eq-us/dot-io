@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useStoreState, useStoreActions } from '../../store/store.js';
 import { ManagerTier } from './manager-tier/ManagerTier.jsx';
-import { DailyTrainingPage } from './daily-training-tier/DailyTrainingPage.jsx';
+import { DailyTrainingTier } from './daily-training-tier/DailyTrainingTier.jsx';
 import { ItemsContainer, PageContainer } from './ConceptsPage.styled';
+import { CustomTrainingTier } from './custom-training-tier/CustomTrainingTier.jsx';
 
 const ConceptsPage = () => {
   const loadedFromStorage = useStoreState((state) => state.loadedFromStorage);
@@ -19,9 +20,9 @@ const ConceptsPage = () => {
 
   const viewCurrentTier = () => {
     if (currentTier == 0) {
-      return <DailyTrainingPage setCurrentTier={setCurrentTier} />;
+      return <DailyTrainingTier setCurrentTier={setCurrentTier} />;
     } else if (currentTier == 1) {
-      return <DailyTrainingPage setCurrentTier={setCurrentTier} />;
+      return <CustomTrainingTier setCurrentTier={setCurrentTier} />;
     } else {
       return <ManagerTier />;
     }

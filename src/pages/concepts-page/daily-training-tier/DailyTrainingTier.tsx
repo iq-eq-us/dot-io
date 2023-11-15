@@ -13,13 +13,13 @@ import {
   ConceptsMasteredManagerPageContainer,
   PageContainer,
   Column,
-} from './DailyTrainingPage.styled';
+} from './DailyTrainingTier.styled';
 
 interface DailyTrainingPageProps {
   setCurrentTier: (tier: number) => void;
 }
 
-export const DailyTrainingPage = ({
+export const DailyTrainingTier = ({
   setCurrentTier,
 }: DailyTrainingPageProps) => {
   const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
