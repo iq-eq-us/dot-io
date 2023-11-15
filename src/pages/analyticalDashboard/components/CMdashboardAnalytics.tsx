@@ -65,13 +65,21 @@ export function CMdashboardAnalytics(): ReactElement {
           />
         </div>
 
-        {show ? (
-          <CMradialGraph
-            name={options[componentToShow].name}
-            progress={currentProgress}
-          />
-        ) : null}
-        {show ? <CMEbbinghausGraph /> : null}
+        <div className="border min-h-300">
+          {show ? (
+            <div className="">
+              <CMradialGraph
+                name={options[componentToShow].name}
+                progress={currentProgress}
+              />
+            </div>
+          ) : null}
+          {show ? (
+            <div className="">
+              <CMEbbinghausGraph />
+            </div>
+          ) : null}
+        </div>
       </div>
     </FadeIn>
   );
