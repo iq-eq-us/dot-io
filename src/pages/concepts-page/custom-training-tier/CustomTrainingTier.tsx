@@ -1,4 +1,6 @@
 import React from 'react';
+import { CustomTrainingWelcome } from './CustomTrainingWelcome';
+import { FullWidthFullHeightContainer } from './CustomTrainingTier.styled';
 
 interface CustomTrainingTierProps {
   setCurrentTier: (tier: number) => void;
@@ -7,5 +9,11 @@ interface CustomTrainingTierProps {
 export const CustomTrainingTier = ({
   setCurrentTier,
 }: CustomTrainingTierProps) => {
-  return <React.Fragment>hi</React.Fragment>;
+  return (
+    <React.Fragment>
+      <FullWidthFullHeightContainer>
+        <CustomTrainingWelcome setCurrentTier={setCurrentTier} />
+      </FullWidthFullHeightContainer>
+    </React.Fragment>
+  );
 };
