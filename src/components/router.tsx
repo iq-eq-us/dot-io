@@ -10,7 +10,7 @@ import { ClosingPrompt } from './closingPrompt';
 import Piano from '../pages/piano/piano';
 import Footer from './footer';
 import TestCompletePage from '../../src/pages/test-complete/testComplete';
-import ConceptsPage from '../pages/concepts-page/concepts-page';
+import ConceptsPage from '../pages/concepts-page/ConceptsPage';
 
 export const ROUTER_PATHS = {
   home: '/',
