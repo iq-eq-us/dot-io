@@ -74,7 +74,7 @@ export interface flashCardStoreStateModel {
 
   percentageCompleted: Computed<
     flashCardStoreStateModel,
-    (tag: string | null) => void
+    (tag: string | null) => number
   >;
 }
 

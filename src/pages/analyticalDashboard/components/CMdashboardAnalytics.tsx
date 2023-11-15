@@ -6,31 +6,25 @@ import 'react-dropdown/style.css';
 import { CMEbbinghausGraph } from './CMEbbinhausGraph';
 import FadeIn from 'react-fade-in';
 import { Fade } from 'react-bootstrap';
+import { useStoreState } from '../../../store/store';
+// import { flashCardStoreActions } from 'src/store/flashCardStore'
 
 export function CMdashboardAnalytics(): ReactElement {
-  const components = [
-    {
-      name: 'tag 1',
-      progress: 50,
-    },
-    {
-      name: 'tag 2',
-      progress: 75,
-    },
-    {
-      name: 'tag 3',
-      progress: 25,
-    },
-    {
-      name: 'tag 4',
-      progress: 100,
-    },
-  ];
+  const tags = useStoreState((state) => state.tags);
+  const flashcard = useStoreState((state) => state.flashCards);
+  const percentageCompleted = useStoreState(
+    (state) => state.percentageCompleted,
+  );
+
+  const components = Object.keys(tags).map((tag) => {
+    return { name: tag, progress: percentageCompleted(tag) * 100 };
+  });
 
   const [show, setShow] = useState(false);
 
   // component to show is described by the index of the dropdown
   const [componentToShow, setComponentToShow] = useState(0);
+  const [componentName, setComponentName] = useState('');
 
   const updateFlashcardName = (e) => {
     // e is the event object, it has value = the name of the component
@@ -39,6 +33,7 @@ export function CMdashboardAnalytics(): ReactElement {
     components.forEach((component, index) => {
       if (component.name === e.value) {
         setComponentToShow(index);
+        setComponentName(component.name);
       }
     });
 
@@ -76,7 +71,7 @@ export function CMdashboardAnalytics(): ReactElement {
           ) : null}
           {show ? (
             <div className="">
-              <CMEbbinghausGraph />
+              <CMEbbinghausGraph tag={componentName} />
             </div>
           ) : null}
         </div>

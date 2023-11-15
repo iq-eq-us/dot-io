@@ -10,6 +10,7 @@ import { AnalyticalDashboardAccAndConOverall } from './components/AnalyticalDash
 import { StreakHeatmap } from './components/StreakHeatmap';
 import { Hexbin } from './components/Hexbin';
 import { DashboardStaticStats } from './components/AnalyticalDashboardStaticStat';
+import { useStoreActions } from '../../store/store';
 
 /**
  * This is the analytical dashboard page. It is responsible for displaying all user-specific stats.
@@ -17,8 +18,11 @@ import { DashboardStaticStats } from './components/AnalyticalDashboardStaticStat
  */
 
 const AnalyticalDashboard = (): ReactElement => {
+  const fetchUserData = useStoreActions((actions) => actions.fetchUserData);
+
   React.useEffect(() => {
     document.title = 'dot i/o Dashboard';
+    fetchUserData();
   }, []);
 
   const [currentPage, setCurrentPage] = useState('overall');

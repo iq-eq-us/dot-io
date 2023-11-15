@@ -21,6 +21,7 @@ import type { TrainingLevels } from '../../src/models/trainingLevels';
 import Circle from './CircleHighlight';
 import AnalyticalDashboardButton from '../../src/pages/test/components/AnalyticalDashboardButton';
 import HamburgerMenu from './hamburgerMenu';
+import { HexbinButton } from './HexbinButton';
 //import ConceptsPage from 'src/pages/concepts-page/concepts-page';
 
 const Navbar = (): ReactElement => {
@@ -202,6 +203,8 @@ const Navbar = (): ReactElement => {
               href="#/analyticalDashboard"
               onClick={() => setTrainingLevel('')}
             >
+              {/* <HexbinButton/> */}
+              {/* <p>fheiwoajfiow</p> */}
               <img
                 src={analytic_DashIcon}
                 style={{ width: '40px', height: '50px', paddingTop: '10px' }}
