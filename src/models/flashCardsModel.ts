@@ -72,7 +72,10 @@ export interface flashCardStoreStateModel {
 
   activeFlashCards: Computed<flashCardStoreStateModel, flashCard[]>;
 
-  percentageCompleted: Computed<flashCardStoreStateModel, number>;
+  percentageCompleted: Computed<
+    flashCardStoreStateModel,
+    (tag: string | null) => void
+  >;
 }
 
 export type FlashCardStoreModel = flashCardStoreStateModel &

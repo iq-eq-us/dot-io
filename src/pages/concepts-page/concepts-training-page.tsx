@@ -2,10 +2,16 @@ import React, { ReactElement } from 'react';
 import { ConceptsMasteredColumn } from './components-training-page/ConceptsMasteredColumns';
 import { PageContainer } from './concepts-training-page.styled';
 
-function ConceptsTrainingPage(): ReactElement {
+interface ConceptsTrainingPageProps {
+  setCurrentTier: (tier: number) => void;
+}
+
+function ConceptsTrainingPage({
+  setCurrentTier,
+}: ConceptsTrainingPageProps): ReactElement {
   return (
     <PageContainer>
-      <ConceptsMasteredColumn />
+      <ConceptsMasteredColumn setCurrentTier={setCurrentTier} />
     </PageContainer>
   );
 }

@@ -20,9 +20,9 @@ const ConceptsPage = () => {
 
   const viewCurrentTier = () => {
     if (currentTier == 0) {
-      return <ConceptsTrainingPage />;
+      return <ConceptsTrainingPage setCurrentTier={setCurrentTier} />;
     } else if (currentTier == 1) {
-      return <ConceptsTrainingPage />;
+      return <ConceptsTrainingPage setCurrentTier={setCurrentTier} />;
     } else {
       return <ConceptsManagerPage />;
     }
