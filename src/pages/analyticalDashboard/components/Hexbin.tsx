@@ -54,7 +54,9 @@ export function Hexbin(): ReactElement {
   const tWPM = 275;
   const CM = 325;
   const StM = 75;
-  let CPM = parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed());
+  /* eslint-disable */
+  const CPM = parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed());
+  /* eslint-enable */
 
   // const storedChordsFromDevice = useStoreState(
   //   (store) => store.storedChordsFromDevice,

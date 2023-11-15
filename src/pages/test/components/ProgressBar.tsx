@@ -42,8 +42,9 @@ export function ProgressBar(): ReactElement {
   let progress;
   let inMaxValue;
   let stmValues = 0;
+  /* eslint-disable */
   let increasedNumberOfChordsMastered = 0; //flag
-
+  /* eslint-enable */
   const localTrainingStatistics = useStoreState(
     (store) => store.localTrainingStatistics?.statistics,
   );
