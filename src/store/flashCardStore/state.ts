@@ -1,19 +1,24 @@
+// state.ts
+
 import { computed } from 'easy-peasy';
 import type { flashCardStoreStateModel } from '../../models/flashCardsModel';
 
-// Default state for the flashCardStore
 const flashCardStoreState: flashCardStoreStateModel = {
   loadedFromStorage: false,
-
   flashCards: [],
   tags: {},
   nextTrainingDate: new Date(),
   sessionTrainingData: [],
   numberOfDailyFlashCards: 10,
+  selectedTags: '', // Add this line
 
   activeFlashCards: computed((state) => {
     return state.flashCards.filter((card) => {
-      return card.nextReinforcement <= Date.now() && card.ebbinghausValue < 20;
+      return (
+        card.nextReinforcement <= Date.now() &&
+        card.ebbinghausValue < 20 &&
+        (state.selectedTags === '' || card.tags.includes(state.selectedTags))
+      );
     });
   }),
 

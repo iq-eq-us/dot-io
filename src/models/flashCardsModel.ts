@@ -27,7 +27,7 @@ export interface generatedData {
 
 export interface tag {
   key: string;
-  index: number | undefined;
+  index: number;
 }
 
 export interface flashCardActionModel {
@@ -47,6 +47,9 @@ export interface flashCardActionModel {
   addTagFlashCard: Action<flashCardStoreStateModel, tag>;
   removeTagFlashCard: Action<flashCardStoreStateModel, tag>;
 
+  // Actions to set and remove the selected tag
+  setSelectedTag: Action<flashCardStoreStateModel, string>;
+
   // Actions to get and set the last daily training date of a set
   setNextDailyTraining: Action<flashCardStoreStateModel, Date>;
 
@@ -62,7 +65,7 @@ export interface flashCardStoreStateModel {
   // All current flash card sets
   flashCards: flashCard[];
   tags: { [key: string]: number[] };
-
+  selectedTags: string;
   sessionTrainingData: sessionTrainingData[];
 
   nextTrainingDate: Date;

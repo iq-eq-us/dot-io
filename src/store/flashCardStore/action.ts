@@ -3,6 +3,7 @@ import type {
   flashCardActionModel,
   sessionTrainingData,
   flashCard,
+  tag,
 } from '../../models/flashCardsModel';
 
 const flashCardStoreActions: flashCardActionModel = {
@@ -45,7 +46,7 @@ const flashCardStoreActions: flashCardActionModel = {
     state.flashCards[payload.index] = payload.newFlashCard;
   }),
 
-  addTagFlashCard: action((state, payload) => {
+  /*addTagFlashCard: action((state, payload) => {
     if (!(payload.key in state.tags)) {
       state.tags[payload.key] = [];
     }
@@ -53,6 +54,21 @@ const flashCardStoreActions: flashCardActionModel = {
       state.flashCards[payload.index].tags.push(payload.key);
       state.tags[payload.key].push(payload.index);
     }
+  }),*/
+
+  addTagFlashCard: action((state, payload) => {
+    const { key, index } = payload;
+    state.flashCards[index].tags.push(key);
+    if (!(key in state.tags)) {
+      state.tags[key] = [];
+    }
+    if (index != undefined && !state.tags[key].includes(index)) {
+      state.tags[key].push(index);
+    }
+  }),
+
+  setSelectedTag: action((state, payload) => {
+    state.selectedTags = payload;
   }),
 
   removeTagFlashCard: action((state, payload) => {
