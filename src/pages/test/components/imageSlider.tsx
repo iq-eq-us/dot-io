@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { SliderData, SliderDataForCHMTier } from './SliderData';
+import {
+  SliderData,
+  SliderDataForCHMTier,
+  SliderForConceptsMastered,
+} from './SliderData';
 import { useStoreState, useStoreActions } from '../../../store/store';
 
 const ImageSlider = () => {
@@ -10,6 +14,8 @@ const ImageSlider = () => {
     slides = SliderDataForCHMTier;
   } else if (trainingLevel == 'CPM') {
     slides = SliderData;
+  } else if (trainingLevel === 'CM') {
+    slides = SliderForConceptsMastered;
   } else {
     slides = SliderData;
   }

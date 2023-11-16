@@ -19,7 +19,7 @@ export const TagSetDropdown = ({
     <Dropdown
       name="Select Flash Card"
       onSelectedChange={(selectedTag) => {
-        console.log('Selected Tag:', selectedTag);
+        //console.log('Selected Tag:', selectedTag);
         setSelectedTag(selectedTag);
       }}
       options={setNames}

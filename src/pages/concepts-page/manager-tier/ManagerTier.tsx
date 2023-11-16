@@ -8,6 +8,7 @@ import { FlashCardColumn } from './FlashCardColumn';
 import { DialogPortal } from './DialogPortal';
 import { TagSetDropdown } from './TagSetDropdown';
 import { useStoreActions } from '../../../store/store';
+import ImageSlider from '../imageSlider';
 import {
   ConceptsMasteredManagerPageContainer,
   Table,
@@ -54,10 +55,11 @@ export const ManagerTier = (): ReactElement => {
   );
 
   //filter tags
-  const filteredTags =
+  /*const filteredTags =
     selectedTag === 'All' || selectedTag === ''
       ? flashCards
       : flashCards.filter((flashCard) => flashCard.tags.includes(selectedTag));
+      console.log('filteredTags: ' + filteredTags);*/
 
   return (
     <React.Fragment>
@@ -88,7 +90,6 @@ export const ManagerTier = (): ReactElement => {
           <PageContainer>
             <Column>
               <FlashCardColumn
-                flashCard={filteredTags}
                 selected={selectedFlashCards}
                 setSelected={setSelected}
                 selectedTag={selectedTag}

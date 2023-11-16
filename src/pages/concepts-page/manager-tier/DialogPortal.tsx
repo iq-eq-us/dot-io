@@ -32,8 +32,6 @@ export const DialogPortal = ({
       addTagFlashCard({ key: input, index });
     });
 
-    // Assuming flashCards is the array of flashcards in your Redux store
-
     // Log flashcards and their tags
     updatedFlashCards.forEach((flashCard, index) => {
       console.log(`Flashcard ${index + 1}:`, flashCard);

@@ -25,12 +25,15 @@ export function FlashCardColumn({
       : flashCards.filter((flashCard) => flashCard.tags.includes(selectedTag));
 
   const flashCardMap = filteredFlashCards.map((flashCard, index) => {
+    const originalIndex = flashCards.findIndex(
+      (original) => original === flashCard,
+    );
     return (
       <FlashCard
-        key={index}
-        flashCard={flashCard}
+        key={originalIndex}
+        flashCard={flashCard} //flas
         index={index}
-        selected={selected[index]}
+        selected={selected[originalIndex]}
         setSelected={setSelected}
       />
     );
