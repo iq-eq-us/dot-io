@@ -90,14 +90,18 @@ const flashCardStoreActions: flashCardActionModel = {
 
     state.nextTrainingDate = currentDate;
 
-    localStorage.setItem('nextDailyTraining', JSON.stringify(currentDate));
+    console.log(currentDate.getTime());
+    localStorage.setItem('nextDailyTraining', currentDate.getTime().toString());
+  }),
+
+  loadNextDailyTraining: action((state, payload) => {
+    console.log(payload);
+    state.nextTrainingDate = payload;
   }),
 
   //Actions to generate training data
   setSessionTrainingData: action((state) => {
     const activeFlashCards = state.activeFlashCards;
-    console.log(activeFlashCards);
-
     const sessionTrainingData: sessionTrainingData[] = [];
 
     while (
@@ -105,19 +109,20 @@ const flashCardStoreActions: flashCardActionModel = {
       activeFlashCards.length != 0
     ) {
       const randomIndex = Math.floor(Math.random() * activeFlashCards.length);
-      const randomFlashCard = activeFlashCards[randomIndex];
+      const randomFlashCard = activeFlashCards[randomIndex].flashCard;
 
       sessionTrainingData.push({
         flashCard: randomFlashCard,
+        flashCardIndex: activeFlashCards[randomIndex].flashCardIndex,
         numberOfTimesWritten: 0,
         numberOfTimesWrittenFast: 0,
         numberOfTimesWrittenWrong: 0,
         lastTenTimesSpeed: [],
+        completed: false,
       });
 
       activeFlashCards.splice(randomIndex, 1);
     }
-
     state.sessionTrainingData = sessionTrainingData;
   }),
 
@@ -142,38 +147,41 @@ const flashCardStoreActions: flashCardActionModel = {
 
     state.sessionTrainingData[index].numberOfTimesWritten++;
     if (
-      state.sessionTrainingData[index].numberOfTimesWritten >= 100 ||
+      state.sessionTrainingData[index].numberOfTimesWritten >= 6 ||
       state.sessionTrainingData[index].numberOfTimesWrittenFast >= 10
     ) {
-      const flashCard = state.sessionTrainingData.splice(index, 1)[0].flashCard;
-      const poppedFlashCard: string = JSON.stringify(flashCard);
-      for (let i = 0; i < state.flashCards.length; i++) {
-        if (JSON.stringify(state.flashCards[i]) === poppedFlashCard) {
-          const newDate = new Date();
-          newDate.setHours(0, 0, 0, 0);
-          newDate.setDate(
-            newDate.getDate() + state.flashCards[i].ebbinghausValue + 1,
-          );
-          state.flashCards[i].ebbinghausValue++;
-          state.flashCards[i].nextReinforcement = newDate.getTime();
-          break;
-        }
-      }
+      state.sessionTrainingData[index].completed = true;
+      const flashCardIndex = state.sessionTrainingData[index].flashCardIndex;
+      const newDate = new Date();
+      newDate.setHours(0, 0, 0, 0);
+      newDate.setDate(
+        newDate.getDate() +
+          state.flashCards[flashCardIndex].ebbinghausValue +
+          1,
+      );
+      state.flashCards[flashCardIndex].ebbinghausValue++;
+      state.flashCards[flashCardIndex].nextReinforcement = newDate.getTime();
     }
   }),
 
   fetchUserData: thunk(async (actions) => {
-    const flashCards: flashCard[] = await JSON.parse(
-      localStorage.getItem('flashCards'),
-    );
-    console.log(flashCards);
-    if (flashCards != null) {
-      flashCards.forEach((card, index) => {
-        actions.addFlashCard(card);
-        card.tags.forEach((tag) => {
-          actions.addTagFlashCard({ key: tag, index: index });
+    const flashCardString = localStorage.getItem('flashCards');
+    if (flashCardString != null) {
+      const flashCards: flashCard[] = await JSON.parse(flashCardString);
+      if (flashCards != null) {
+        flashCards.forEach((card, index) => {
+          actions.addFlashCard(card);
+          card.tags.forEach((tag) => {
+            actions.addTagFlashCard({ key: tag, index: index });
+          });
         });
-      });
+      }
+    }
+    const nextDailyTrainingString = localStorage.getItem('nextDailyTraining');
+    if (nextDailyTrainingString != null) {
+      const nextDailyTraining = new Date(parseInt(nextDailyTrainingString));
+      console.log('Loaded date: ' + nextDailyTraining);
+      actions.loadNextDailyTraining(nextDailyTraining);
     }
     actions.setLoadedFromStorage();
   }),

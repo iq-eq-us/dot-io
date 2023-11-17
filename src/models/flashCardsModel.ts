@@ -14,10 +14,12 @@ export interface flashCard {
 
 export interface sessionTrainingData {
   flashCard: flashCard;
+  flashCardIndex: number;
   numberOfTimesWritten: number;
   numberOfTimesWrittenFast: number;
   numberOfTimesWrittenWrong: number;
   lastTenTimesSpeed: number[];
+  completed: boolean;
 }
 
 export interface generatedData {
@@ -28,6 +30,11 @@ export interface generatedData {
 export interface tag {
   key: string;
   index: number;
+}
+
+export interface activeFlashCard {
+  flashCard: flashCard;
+  flashCardIndex: number;
 }
 
 export interface flashCardActionModel {
@@ -51,7 +58,8 @@ export interface flashCardActionModel {
   setSelectedTag: Action<flashCardStoreStateModel, string>;
 
   // Actions to get and set the last daily training date of a set
-  setNextDailyTraining: Action<flashCardStoreStateModel, Date>;
+  setNextDailyTraining: Action<flashCardStoreStateModel>;
+  loadNextDailyTraining: Action<flashCardStoreStateModel, Date>;
 
   setSessionTrainingData: Action<flashCardStoreStateModel>;
   addTimeSessionTrainingData: Action<flashCardStoreStateModel, number[]>;
@@ -73,7 +81,7 @@ export interface flashCardStoreStateModel {
   // Number of flash cards to practice daily
   numberOfDailyFlashCards: number;
 
-  activeFlashCards: Computed<flashCardStoreStateModel, flashCard[]>;
+  activeFlashCards: Computed<flashCardStoreStateModel, activeFlashCard[]>;
 
   percentageCompleted: Computed<
     flashCardStoreStateModel,

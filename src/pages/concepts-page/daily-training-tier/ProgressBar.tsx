@@ -8,8 +8,6 @@ export function ProgressBar(): ReactElement {
   const sessionTrainingData = useStoreState(
     (state) => state.sessionTrainingData,
   );
-  console.log('rendering');
-  console.log(sessionTrainingData);
 
   if (sessionTrainingData.length != 0) {
     const sumOfLastTenOccurences =
@@ -38,7 +36,7 @@ export function ProgressBar(): ReactElement {
           ? a.numberOfTimesWritten
           : a.numberOfTimesWrittenFast * 10),
       0,
-    ) / 100;
+    ) / sessionTrainingData.length;
 
   const [maxValue, setMaxValue] = useState<number>();
   const [minValue, setMinValue] = useState<number>(0);

@@ -1,7 +1,10 @@
 // state.ts
 
 import { computed } from 'easy-peasy';
-import type { flashCardStoreStateModel } from '../../models/flashCardsModel';
+import type {
+  activeFlashCard,
+  flashCardStoreStateModel,
+} from '../../models/flashCardsModel';
 
 const flashCardStoreState: flashCardStoreStateModel = {
   loadedFromStorage: false,
@@ -13,14 +16,19 @@ const flashCardStoreState: flashCardStoreStateModel = {
   selectedTags: '', // Add this line
 
   activeFlashCards: computed((state) => {
-    return state.flashCards.filter((card) => {
-      return (
-        card.nextReinforcement <= Date.now() &&
-        card.ebbinghausValue < 20 &&
-        (state.selectedTags === '' || card.tags.includes(state.selectedTags))
-      );
+    const activeFlashCards: activeFlashCard[] = [];
+    state.flashCards.forEach((card, index) => {
+      if (card.nextReinforcement <= Date.now() && card.ebbinghausValue < 20) {
+        activeFlashCards.push({ flashCard: card, flashCardIndex: index });
+      }
     });
+    return activeFlashCards;
   }),
+      
+  filteredFlashCards: computer(state {
+     return state.flashCards.filter((card) => {
+      return state.selectedTags === '' || card.tags.includes(state.selectedTags);
+  });
 
   percentageCompleted: computed((state) => {
     return (tag: string | null) => {
