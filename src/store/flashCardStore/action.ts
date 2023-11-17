@@ -3,7 +3,6 @@ import type {
   flashCardActionModel,
   sessionTrainingData,
   flashCard,
-  tag,
 } from '../../models/flashCardsModel';
 
 const flashCardStoreActions: flashCardActionModel = {
@@ -58,7 +57,9 @@ const flashCardStoreActions: flashCardActionModel = {
 
   addTagFlashCard: action((state, payload) => {
     const { key, index } = payload;
-    state.flashCards[index].tags.push(key);
+    if (!state.flashCards[index].tags.includes(key)) {
+      state.flashCards[index].tags.push(key);
+    }
     if (!(key in state.tags)) {
       state.tags[key] = [];
     }
@@ -68,6 +69,7 @@ const flashCardStoreActions: flashCardActionModel = {
   }),
 
   setSelectedTag: action((state, payload) => {
+    console.log('Setting a tag');
     state.selectedTags = payload;
   }),
 
@@ -90,12 +92,10 @@ const flashCardStoreActions: flashCardActionModel = {
 
     state.nextTrainingDate = currentDate;
 
-    console.log(currentDate.getTime());
     localStorage.setItem('nextDailyTraining', currentDate.getTime().toString());
   }),
 
   loadNextDailyTraining: action((state, payload) => {
-    console.log(payload);
     state.nextTrainingDate = payload;
   }),
 
@@ -126,6 +126,39 @@ const flashCardStoreActions: flashCardActionModel = {
     state.sessionTrainingData = sessionTrainingData;
   }),
 
+  setInfiniteSessionTrainingData: action((state, payload) => {
+    const activeFlashCards = payload;
+    const sessionTrainingData: sessionTrainingData[] = [];
+
+    while (activeFlashCards.length != 0) {
+      const randomIndex = Math.floor(Math.random() * activeFlashCards.length);
+      const randomFlashCard = activeFlashCards[randomIndex].flashCard;
+
+      sessionTrainingData.push({
+        flashCard: randomFlashCard,
+        flashCardIndex: activeFlashCards[randomIndex].flashCardIndex,
+        numberOfTimesWritten: 0,
+        numberOfTimesWrittenFast: 0,
+        numberOfTimesWrittenWrong: 0,
+        lastTenTimesSpeed: [],
+        completed: null,
+      });
+
+      activeFlashCards.splice(randomIndex, 1);
+    }
+    state.sessionTrainingData = sessionTrainingData;
+  }),
+
+  mergeSessionTrainingData: action((state) => {
+    state.sessionTrainingData.forEach((card) => {
+      state.flashCards[card.flashCardIndex].timesTyped +=
+        card.numberOfTimesWritten;
+      state.flashCards[card.flashCardIndex].timesErrored +=
+        card.numberOfTimesWrittenWrong;
+    });
+    state.sessionTrainingData = [];
+  }),
+
   addTimeSessionTrainingData: action((state, payload) => {
     const index = payload[0];
     const time = payload[1];
@@ -147,8 +180,9 @@ const flashCardStoreActions: flashCardActionModel = {
 
     state.sessionTrainingData[index].numberOfTimesWritten++;
     if (
-      state.sessionTrainingData[index].numberOfTimesWritten >= 6 ||
-      state.sessionTrainingData[index].numberOfTimesWrittenFast >= 10
+      state.sessionTrainingData[index].completed != null &&
+      (state.sessionTrainingData[index].numberOfTimesWritten >= 6 ||
+        state.sessionTrainingData[index].numberOfTimesWrittenFast >= 10)
     ) {
       state.sessionTrainingData[index].completed = true;
       const flashCardIndex = state.sessionTrainingData[index].flashCardIndex;
