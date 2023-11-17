@@ -19,9 +19,6 @@ export const DailyTrainingWelcome = ({
   const flashCards = useStoreState((state) => state.flashCards);
   const activeFlashCards = useStoreState((state) => state.activeFlashCards);
   const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
-  const setNextDailyTraining = useStoreActions(
-    (actions) => actions.setNextDailyTraining,
-  );
 
   const idleFlashCards = flashCards.length - activeFlashCards.length;
 
