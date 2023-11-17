@@ -15,7 +15,6 @@ import {
   FlashCardConfirmDeleteButton,
   FlashCardCancelDeleteButton,
 } from './FlashCardManagerCardColumn.styled';
-import { set } from 'lodash';
 
 interface FlashCardProps {
   flashCard: flashCard;
