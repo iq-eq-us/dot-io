@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStoreState } from '../../../store/store';
+import { useStoreActions, useStoreState } from '../../../store/store';
 import {
   Fill,
   TrisplitScreen,
@@ -8,7 +8,7 @@ import {
 } from './DailyTrainingWelcome.styled';
 
 interface DailyTrainingWelcomeProps {
-  setActiveTraining: (active: boolean) => void;
+  setActiveTraining: () => void;
   setCurrentTier: (tier: number) => void;
 }
 
@@ -19,10 +19,13 @@ export const DailyTrainingWelcome = ({
   const flashCards = useStoreState((state) => state.flashCards);
   const activeFlashCards = useStoreState((state) => state.activeFlashCards);
   const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
+  const setNextDailyTraining = useStoreActions(
+    (actions) => actions.setNextDailyTraining,
+  );
 
   const idleFlashCards = flashCards.length - activeFlashCards.length;
 
-  const isTrainingAvailable = nextTrainingDate.getMilliseconds() < Date.now();
+  const isTrainingAvailable = nextTrainingDate.getTime() < Date.now();
   const isActiveFlashCards = activeFlashCards.length != 0;
 
   return (
@@ -46,7 +49,7 @@ export const DailyTrainingWelcome = ({
           {isActiveFlashCards ? (
             <LabeledAction>
               <h2>Daily training available:</h2>
-              <ActionButton onClick={() => setActiveTraining(true)}>
+              <ActionButton onClick={() => setActiveTraining()}>
                 Start Training
               </ActionButton>
             </LabeledAction>
@@ -61,7 +64,7 @@ export const DailyTrainingWelcome = ({
         </div>
       ) : (
         <LabeledAction>
-          <h2>Next Available Training is: {nextTrainingDate}</h2>
+          <h2>Next Available Training is: {nextTrainingDate.toDateString()}</h2>
           <ActionButton onClick={() => setCurrentTier(1)}>
             Train in custom
           </ActionButton>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useStoreState } from '../../../store/store';
-import { GearIcon } from './GearIcon';
+import { useStoreState, useStoreActions } from '../../../store/store';
+import { GearIcon } from '../trainingComponent/GearIcon';
 import { ProgressBar } from './ProgressBar';
-import { StatisticsIcon } from './StatisticsIcon';
-import { TextPrompt } from '../trainingComponent/TrainingComponent';
+import { StatisticsIcon } from '../trainingComponent/StatisticsIcon';
+import { TrainingComponent } from '../trainingComponent/TrainingComponent';
 import { DailyTrainingWelcome } from './DailyTrainingWelcome';
 import {
   DailyTrainingContainer,
@@ -23,10 +23,30 @@ export const DailyTrainingTier = ({
   setCurrentTier,
 }: DailyTrainingPageProps) => {
   const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
+  const setSessionTrainingData = useStoreActions(
+    (actions) => actions.setSessionTrainingData,
+  );
+  const setNextDailyTraining = useStoreActions(
+    (actions) => actions.setNextDailyTraining,
+  );
+  const updateLocalStorage = useStoreActions(
+    (actions) => actions.updateLocalStorage,
+  );
 
   const [activeTraining, setActiveTraining] = useState(
     new Date() < nextTrainingDate,
   );
+
+  const startTraining = () => {
+    setSessionTrainingData();
+    setActiveTraining(true);
+  };
+
+  const endTraining = () => {
+    setNextDailyTraining();
+    updateLocalStorage();
+    setActiveTraining(false);
+  };
 
   return (
     <DailyTrainingContainer>
@@ -40,7 +60,7 @@ export const DailyTrainingTier = ({
               <GearIcon />
               <StatisticsIcon />
             </SmallScreenButtons>
-            <TextPrompt setActiveTraining={setActiveTraining} />
+            <TrainingComponent setActiveTraining={endTraining} />
           </FullWidthFullHeightContainer>
         </>
       ) : (
@@ -50,7 +70,7 @@ export const DailyTrainingTier = ({
           <PageContainer style={{ maxWidth: '1300px' }}>
             <Column style={{ maxWidth: '1300px', alignItems: 'center' }}>
               <DailyTrainingWelcome
-                setActiveTraining={setActiveTraining}
+                setActiveTraining={startTraining}
                 setCurrentTier={setCurrentTier}
               />
             </Column>

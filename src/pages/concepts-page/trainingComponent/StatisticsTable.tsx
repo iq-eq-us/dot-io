@@ -16,7 +16,6 @@ function StatisticsTable({
   flashCards: flashCard[];
 }): ReactElement {
   const stats = flashCards;
-  console.log(stats);
 
   const trainingSettings = useStoreState((store) => store.trainingSettings);
 

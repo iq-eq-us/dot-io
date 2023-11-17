@@ -9,14 +9,15 @@ import {
   SplitRight,
   ArrowContainer,
   ActionButton,
+  BeginButton,
 } from './CustomTrainingWelcome.styled';
 
 interface CustomTrainingWelcomeProps {
-  setCurrentTier: (tier: number) => void;
+  setActiveTraining: () => void;
 }
 
 export const CustomTrainingWelcome = ({
-  setCurrentTier,
+  setActiveTraining,
 }: CustomTrainingWelcomeProps) => {
   const tags = useStoreState((state) => state.tags);
 
@@ -77,9 +78,9 @@ export const CustomTrainingWelcome = ({
             />
           </SplitRight>
         </TagContainer>
-        <ActionButton onClick={() => console.log('hello')}>
+        <BeginButton onClick={() => setActiveTraining()}>
           Begin Training
-        </ActionButton>
+        </BeginButton>
       </FlexContainer>
     </React.Fragment>
   );

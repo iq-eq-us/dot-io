@@ -1,5 +1,8 @@
 import { computed } from 'easy-peasy';
-import type { flashCardStoreStateModel } from '../../models/flashCardsModel';
+import type {
+  activeFlashCard,
+  flashCardStoreStateModel,
+} from '../../models/flashCardsModel';
 
 // Default state for the flashCardStore
 const flashCardStoreState: flashCardStoreStateModel = {
@@ -12,9 +15,13 @@ const flashCardStoreState: flashCardStoreStateModel = {
   numberOfDailyFlashCards: 10,
 
   activeFlashCards: computed((state) => {
-    return state.flashCards.filter((card) => {
-      return card.nextReinforcement <= Date.now() && card.ebbinghausValue < 20;
+    const activeFlashCards: activeFlashCard[] = [];
+    state.flashCards.forEach((card, index) => {
+      if (card.nextReinforcement <= Date.now() && card.ebbinghausValue < 20) {
+        activeFlashCards.push({ flashCard: card, flashCardIndex: index });
+      }
     });
+    return activeFlashCards;
   }),
 
   percentageCompleted: computed((state) => {

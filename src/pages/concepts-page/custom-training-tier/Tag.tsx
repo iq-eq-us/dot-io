@@ -1,4 +1,5 @@
 import React from 'react';
+import { TagWrapper, TagButton } from './Tag.styled';
 
 interface TagProps {
   tag: string;
@@ -7,8 +8,8 @@ interface TagProps {
 
 export const Tag = ({ tag, setSelectedTag }: TagProps) => {
   return (
-    <React.Fragment>
-      <button onClick={() => setSelectedTag(tag)}>{tag}</button>
-    </React.Fragment>
+    <TagWrapper>
+      <TagButton onClick={() => setSelectedTag(tag)}>{tag}</TagButton>
+    </TagWrapper>
   );
 };
