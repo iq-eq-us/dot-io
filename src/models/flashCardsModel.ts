@@ -19,7 +19,7 @@ export interface sessionTrainingData {
   numberOfTimesWrittenFast: number;
   numberOfTimesWrittenWrong: number;
   lastTenTimesSpeed: number[];
-  completed: boolean;
+  completed: boolean | null;
 }
 
 export interface generatedData {
@@ -62,6 +62,11 @@ export interface flashCardActionModel {
   loadNextDailyTraining: Action<flashCardStoreStateModel, Date>;
 
   setSessionTrainingData: Action<flashCardStoreStateModel>;
+  setInfiniteSessionTrainingData: Action<
+    flashCardStoreStateModel,
+    activeFlashCard[]
+  >;
+  mergeSessionTrainingData: Action<flashCardStoreStateModel>;
   addTimeSessionTrainingData: Action<flashCardStoreStateModel, number[]>;
 
   fetchUserData: Thunk<flashCardActionModel>;

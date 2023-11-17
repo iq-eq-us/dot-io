@@ -8,7 +8,7 @@ const numberItemsToGenerate = 20;
 const generateTrainingData = (sessionTrainingData: sessionTrainingData[]) => {
   const filteredSessionTrainingData: number[] = [];
   sessionTrainingData.forEach((card, index) => {
-    if (card.completed === false) {
+    if (card.completed === false || card.completed === null) {
       filteredSessionTrainingData.push(index);
     }
   });

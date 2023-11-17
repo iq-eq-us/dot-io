@@ -12,7 +12,6 @@ export const DialogPortal = ({
   selectedFlashcardIndices,
 }: DialogPortalProps) => {
   const addTagFlashCard = useStoreActions((state) => state.addTagFlashCard);
-  const tags = useStoreState((state) => state.tags);
   const updatedFlashCards = useStoreState((state) => state.flashCards);
 
   const [showModal, setShowModal] = useState(false);
@@ -27,6 +26,7 @@ export const DialogPortal = ({
 
   const handleAddTag = () => {
     console.log('Adding tag:', input);
+    console.log('happening');
 
     selectedFlashcardIndices.forEach((index) => {
       addTagFlashCard({ key: input, index });

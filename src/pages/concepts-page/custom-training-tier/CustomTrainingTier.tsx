@@ -6,7 +6,10 @@ import { TrainingComponent } from '../trainingComponent/TrainingComponent';
 import {
   FullWidthFullHeightContainer,
   SmallScreenButtons,
+  ButtonContainer,
+  FinishTrainingButton,
 } from './CustomTrainingTier.styled';
+import { useStoreActions } from '../../../store/store';
 
 interface CustomTrainingTierProps {
   setCurrentTier: (tier: number) => void;
@@ -15,15 +18,23 @@ interface CustomTrainingTierProps {
 export const CustomTrainingTier = ({
   setCurrentTier,
 }: CustomTrainingTierProps) => {
+  const mergeSessionTrainingData = useStoreActions(
+    (actions) => actions.mergeSessionTrainingData,
+  );
+
   const [activeTraining, setActiveTraining] = useState<boolean>(false);
 
   const startTraining = () => {
     setActiveTraining(true);
   };
 
+  const finishTraining = () => {
+    mergeSessionTrainingData();
+    setActiveTraining(false);
+  };
+
   return (
     <React.Fragment>
-      Under Construction
       {activeTraining ? (
         <>
           <FullWidthFullHeightContainer>
@@ -31,7 +42,12 @@ export const CustomTrainingTier = ({
               <GearIcon />
               <StatisticsIcon />
             </SmallScreenButtons>
-            <TrainingComponent setActiveTraining={setActiveTraining} />
+            <TrainingComponent setActiveTraining={startTraining} />
+            <ButtonContainer>
+              <FinishTrainingButton onClick={() => finishTraining()}>
+                Finish Training
+              </FinishTrainingButton>
+            </ButtonContainer>
           </FullWidthFullHeightContainer>
         </>
       ) : (
