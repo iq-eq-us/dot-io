@@ -24,11 +24,6 @@ const flashCardStoreState: flashCardStoreStateModel = {
     });
     return activeFlashCards;
   }),
-      
-  filteredFlashCards: computer(state {
-     return state.flashCards.filter((card) => {
-      return state.selectedTags === '' || card.tags.includes(state.selectedTags);
-  });
 
   percentageCompleted: computed((state) => {
     return (tag: string | null) => {
