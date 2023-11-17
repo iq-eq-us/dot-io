@@ -1,18 +1,19 @@
+// state.ts
+
 import { computed } from 'easy-peasy';
 import type {
   activeFlashCard,
   flashCardStoreStateModel,
 } from '../../models/flashCardsModel';
 
-// Default state for the flashCardStore
 const flashCardStoreState: flashCardStoreStateModel = {
   loadedFromStorage: false,
-
   flashCards: [],
   tags: {},
   nextTrainingDate: new Date(),
   sessionTrainingData: [],
   numberOfDailyFlashCards: 10,
+  selectedTags: '', // Add this line
 
   activeFlashCards: computed((state) => {
     const activeFlashCards: activeFlashCard[] = [];
@@ -23,6 +24,11 @@ const flashCardStoreState: flashCardStoreStateModel = {
     });
     return activeFlashCards;
   }),
+      
+  filteredFlashCards: computer(state {
+     return state.flashCards.filter((card) => {
+      return state.selectedTags === '' || card.tags.includes(state.selectedTags);
+  });
 
   percentageCompleted: computed((state) => {
     return (tag: string | null) => {

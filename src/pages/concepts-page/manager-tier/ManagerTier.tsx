@@ -7,6 +7,8 @@ import { AddFlashCard } from './AddFlashcard';
 import { FlashCardColumn } from './FlashCardColumn';
 import { DialogPortal } from './DialogPortal';
 import { TagSetDropdown } from './TagSetDropdown';
+import { useStoreActions } from '../../../store/store';
+import ImageSlider from '../imageSlider';
 import {
   ConceptsMasteredManagerPageContainer,
   Table,
@@ -19,13 +21,14 @@ import {
 
 export const ManagerTier = (): ReactElement => {
   const flashCards = useStoreState((state) => state.flashCards);
-
   const tags = useStoreState((state) => state.tags);
 
   const [selectedFlashCards, setSelectedFlashCards] = useState<boolean[]>(
     new Array(flashCards.length).fill(false),
   );
   const [selectedTag, setSelectedTag] = useState<string>('');
+
+  const setTag = useStoreActions((actions) => actions.setSelectedTag); // Add this line
 
   useEffect(() => {
     if (flashCards.length !== selectedFlashCards.length) {
@@ -40,6 +43,23 @@ export const ManagerTier = (): ReactElement => {
       return newSelected;
     });
   };
+
+  const selectedFlashcardIndices = selectedFlashCards.reduce(
+    (indices, isSelected, index) => {
+      if (isSelected) {
+        indices.push(index);
+      }
+      return indices;
+    },
+    [],
+  );
+
+  //filter tags
+  /*const filteredTags =
+    selectedTag === 'All' || selectedTag === ''
+      ? flashCards
+      : flashCards.filter((flashCard) => flashCard.tags.includes(selectedTag));
+      console.log('filteredTags: ' + filteredTags);*/
 
   return (
     <React.Fragment>
@@ -58,7 +78,9 @@ export const ManagerTier = (): ReactElement => {
             </ConceptsRow>
             <ConceptsRow>
               <AddFlashCard />
-              <DialogPortal />
+              <DialogPortal
+                selectedFlashcardIndices={selectedFlashcardIndices}
+              />
               <TagSetDropdown
                 selectedTag={selectedTag}
                 setSelectedTag={setSelectedTag}
@@ -70,6 +92,7 @@ export const ManagerTier = (): ReactElement => {
               <FlashCardColumn
                 selected={selectedFlashCards}
                 setSelected={setSelected}
+                selectedTag={selectedTag}
               />
             </Column>
             <div className="h-1 w-6/12 mt-16 bg-[#3A5A42] rounded mb-10" />

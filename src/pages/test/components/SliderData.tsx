@@ -12,6 +12,9 @@ import AnalyticalDashboard1 from '../../../assets/AnalyticalDashboardWelcomePage
 import AnalyticalDashboard2 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome2.png';
 import AnalyticalDashboard3 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome3.png';
 import AnalyticalDashboard4 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome4.png';
+import CMPage1 from '../../../assets/ConceptsMasteredIntroPages/CM1.png';
+import CMPage2 from '../../../assets/ConceptsMasteredIntroPages/CM2.png';
+import CMPage3 from '../../../assets/ConceptsMasteredIntroPages/CM3.png';
 
 export const SliderData = [
   {
@@ -43,6 +46,18 @@ export const SliderDataForCHMTier = [
   },
   {
     image: CHMPage3,
+  },
+];
+
+export const SliderForConceptsMastered = [
+  {
+    image: CMPage1,
+  },
+  {
+    image: CMPage2,
+  },
+  {
+    image: CMPage3,
   },
 ];
 
