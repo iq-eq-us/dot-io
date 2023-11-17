@@ -6,8 +6,6 @@ export interface flashCard {
   answer: string;
   imageSrc: string;
   tags: string[];
-  url: string;
-  image: string;
   ebbinghausValue: number;
   nextReinforcement: number;
   timesTyped: number;
@@ -16,10 +14,12 @@ export interface flashCard {
 
 export interface sessionTrainingData {
   flashCard: flashCard;
+  flashCardIndex: number;
   numberOfTimesWritten: number;
   numberOfTimesWrittenFast: number;
   numberOfTimesWrittenWrong: number;
   lastTenTimesSpeed: number[];
+  completed: boolean;
 }
 
 export interface generatedData {
@@ -29,7 +29,12 @@ export interface generatedData {
 
 export interface tag {
   key: string;
-  index: number | undefined;
+  index: number;
+}
+
+export interface activeFlashCard {
+  flashCard: flashCard;
+  flashCardIndex: number;
 }
 
 export interface flashCardActionModel {
@@ -49,8 +54,12 @@ export interface flashCardActionModel {
   addTagFlashCard: Action<flashCardStoreStateModel, tag>;
   removeTagFlashCard: Action<flashCardStoreStateModel, tag>;
 
+  // Actions to set and remove the selected tag
+  setSelectedTag: Action<flashCardStoreStateModel, string>;
+
   // Actions to get and set the last daily training date of a set
-  setNextDailyTraining: Action<flashCardStoreStateModel, Date>;
+  setNextDailyTraining: Action<flashCardStoreStateModel>;
+  loadNextDailyTraining: Action<flashCardStoreStateModel, Date>;
 
   setSessionTrainingData: Action<flashCardStoreStateModel>;
   addTimeSessionTrainingData: Action<flashCardStoreStateModel, number[]>;
@@ -64,7 +73,7 @@ export interface flashCardStoreStateModel {
   // All current flash card sets
   flashCards: flashCard[];
   tags: { [key: string]: number[] };
-
+  selectedTags: string;
   sessionTrainingData: sessionTrainingData[];
 
   nextTrainingDate: Date;
@@ -72,9 +81,12 @@ export interface flashCardStoreStateModel {
   // Number of flash cards to practice daily
   numberOfDailyFlashCards: number;
 
-  activeFlashCards: Computed<flashCardStoreStateModel, flashCard[]>;
+  activeFlashCards: Computed<flashCardStoreStateModel, activeFlashCard[]>;
 
-  percentageCompleted: Computed<flashCardStoreStateModel, number>;
+  percentageCompleted: Computed<
+    flashCardStoreStateModel,
+    (tag: string | null) => void
+  >;
 }
 
 export type FlashCardStoreModel = flashCardStoreStateModel &

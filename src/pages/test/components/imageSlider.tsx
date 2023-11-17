@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
-import { SliderData, SliderDataForCHMTier } from './SliderData';
+import React, { useState, useEffect } from 'react';
+import {
+  SliderData,
+  SliderDataForCHMTier,
+  SliderForConceptsMastered,
+  SliderForAnalyticalDashboard,
+} from './SliderData';
 import { useStoreState, useStoreActions } from '../../../store/store';
 
 const ImageSlider = () => {
   let slides: any = [];
   const trainingLevel = useStoreState((store: any) => store.trainingLevel);
 
-  if (trainingLevel == 'CHM') {
+  useEffect(() => {
+    // Reset current slide when training level changes
+    setCurrent(0);
+  }, [trainingLevel]);
+
+  if (trainingLevel === 'CHM') {
     slides = SliderDataForCHMTier;
-  } else if (trainingLevel == 'CPM') {
+  } else if (trainingLevel === 'CPM') {
     slides = SliderData;
+  } else if (trainingLevel === 'CM') {
+    slides = SliderForConceptsMastered;
+  } else if (trainingLevel === 'AnalyticalDashboard') {
+    slides = SliderForAnalyticalDashboard;
   } else {
     slides = SliderData;
   }
@@ -18,20 +32,15 @@ const ImageSlider = () => {
   const length = slides.length;
 
   const nextSlide = () => {
-    setCurrent(current === length - 1 ? 0 : current + 1);
-
-    if (current == length - 1) {
-      setIsDisplaying();
-      setIsDisplayingIntroductionModal(true as boolean);
-      setIsDisplayingIntroductionModal(false as boolean);
-
-      localStorage.setItem('FirstTimeViewingModal', JSON.stringify(true));
-      console.log('jsdns ' + isDisplayingIntroductionModal);
-    }
+    setCurrent((prevCurrent) =>
+      prevCurrent === length - 1 ? 0 : prevCurrent + 1,
+    );
   };
 
   const prevSlide = () => {
-    setCurrent(current === 0 ? length - 1 : current - 1);
+    setCurrent((prevCurrent) =>
+      prevCurrent === 0 ? length - 1 : prevCurrent - 1,
+    );
   };
 
   if (!Array.isArray(slides) || slides.length <= 0) {
@@ -45,10 +54,6 @@ const ImageSlider = () => {
     (store: any) => store.setIsDisplayingIntroductionModal,
   );
 
-  function setIsDisplaying() {
-    setIsDisplayingIntroductionModal(isDisplayingIntroductionModal as boolean);
-  }
-
   return (
     <section className="slider">
       {slides.map((slide, index) => {
@@ -60,7 +65,7 @@ const ImageSlider = () => {
             {index === current && (
               <img
                 src={slide.image}
-                alt="travel image"
+                alt="slide"
                 className="image max-w-full max-h-full center"
               />
             )}
@@ -69,7 +74,7 @@ const ImageSlider = () => {
       })}
       <button
         className={`right-arrow text-white rounded inline-block p-2 ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] ${
-          current === 0 || current == slides.length - 1 ? 'hidden' : ''
+          current === 0 || current === length - 1 ? 'hidden' : ''
         }`}
         onClick={prevSlide}
       >
@@ -81,8 +86,8 @@ const ImageSlider = () => {
         onClick={nextSlide}
       >
         {' '}
-        {current == slides.length - 1 ? (
-          [
+        {current === slides.length - 1 ? (
+          (trainingLevel === 'CHM' || trainingLevel === 'CPM') && [
             'Start Training',
             localStorage.setItem('FirstTimeViewingModal', JSON.stringify(true)),
           ]

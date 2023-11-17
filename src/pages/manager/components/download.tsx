@@ -18,7 +18,6 @@ import {
   createEmptyChordStatisticsFromDevice,
 } from '../../../models/trainingStatistics';
 import { asyncCallForDownloadChords } from '../controls/mainControls';
-import { render } from 'react-dom';
 
 export async function getGetAll() {
   const tab = [];

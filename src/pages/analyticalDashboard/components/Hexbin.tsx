@@ -16,7 +16,7 @@ import { ChMdashboardAnalytics } from './ChMdashboardAnalytics';
 import { AWPMdashboardAnalytics } from './AWPMdashboardAnalytics';
 import { TWPMdashboardAnalytics } from './TWPMdashboardAnalytics';
 import { StMdashboardAnalytics } from './StMdashboardAnalytics';
-import FadeIn from 'react-fade-in';
+import FadeIn from './FadeIn';
 import { useRef } from 'react';
 import {
   Chart as ChartJS,
@@ -54,7 +54,9 @@ export function Hexbin(): ReactElement {
   const tWPM = 275;
   const CM = 325;
   const StM = 75;
-  let CPM = parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed());
+  /* eslint-disable */
+  const CPM = parseInt(Math.max.apply(Math, Object.values(maxWPM))?.toFixed());
+  /* eslint-enable */
 
   // const storedChordsFromDevice = useStoreState(
   //   (store) => store.storedChordsFromDevice,

@@ -73,8 +73,9 @@ export function TestStatsCard(): ReactElement {
   );
 
   useEffect(() => {
+    /* eslint-disable */
     let date = new Date().toLocaleDateString();
-    console.log(date);
+    /* eslint-enable */
     // Add the accuracy value to the store when the component mounts
     store.getActions().addAccuracy([Accuracy]);
     store.getActions().addTestDate([date]);
