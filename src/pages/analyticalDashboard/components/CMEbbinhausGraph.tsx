@@ -118,7 +118,7 @@ export function CMEbbinghausGraph({ tag }): ReactElement {
     flashcard.forEach((card) => {
       card.tags.forEach((tagFromFlashcardSet) => {
         if (tagFromFlashcardSet == tag) {
-          levelSums[card.ebbinghausValue - 1] += 1;
+          levelSums[card.ebbinghausValue] += 1;
         }
       });
     });
@@ -156,7 +156,7 @@ export function CMEbbinghausGraph({ tag }): ReactElement {
         width: 4,
       },
       title: {
-        text: 'CM Ebbinghaus Forgetting Curve',
+        text: 'CM Mastery Levels',
         align: 'left',
         offsetY: 25,
         offsetX: 15,

@@ -18,11 +18,8 @@ import { useStoreActions } from '../../store/store';
  */
 
 const AnalyticalDashboard = (): ReactElement => {
-  const fetchUserData = useStoreActions((actions) => actions.fetchUserData);
-
   React.useEffect(() => {
     document.title = 'dot i/o Dashboard';
-    fetchUserData();
   }, []);
 
   const [currentPage, setCurrentPage] = useState('overall');

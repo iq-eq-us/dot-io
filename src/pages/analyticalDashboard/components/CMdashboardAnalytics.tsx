@@ -49,7 +49,7 @@ export function CMdashboardAnalytics(): ReactElement {
 
   return (
     <FadeIn className="w-full" transitionDuration={1000} delay={40}>
-      <div className="text-[15px] font-semibold	font-mono flex flex-col">
+      <div className="text-[15px] font-semibold	font-mono flex flex-col pr-2">
         <div className="">
           <p className="text-[22px] mb-3">Select flashcard tag... </p>
 
@@ -60,7 +60,7 @@ export function CMdashboardAnalytics(): ReactElement {
           />
         </div>
 
-        <div className="border min-h-300">
+        <div className="min-h-300 pr-2">
           {show ? (
             <div className="">
               <CMradialGraph

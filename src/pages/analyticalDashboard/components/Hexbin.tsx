@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import CardData from '../../dashboard/components/dataCard';
-import { useStoreState } from 'easy-peasy';
+//import { useStoreState } from 'easy-peasy';
+import { useStoreState } from '../../../store/store';
 import { wpmMethodCalculatorForStoredChords } from '../../src/helpers/aggregation';
 import {
   getChordsPerMinute,
@@ -44,6 +45,7 @@ import styled from 'styled-components';
 // the vertices are flexibility (CPM), constitution (ChM), stamina (aWPM), power (tWPM), intelligence (CM), and technique (StM)
 export function Hexbin(): ReactElement {
   const maxWPM = useStoreState((store) => store.fastestRecordedWordsPerMinute);
+  const flashcard = useStoreState((state) => state.flashCards);
 
   const [componentToShow, setComponentToShow] = useState('');
 
@@ -188,7 +190,12 @@ export function Hexbin(): ReactElement {
           {componentToShow == 'tWPM' ? <TWPMdashboardAnalytics /> : null}
         </FadeIn>
         <FadeIn transitionDuration={1000} delay={40}>
-          {componentToShow == 'CM' ? <CMdashboardAnalytics /> : null}
+          {componentToShow == 'CM' && flashcard.length > 0 ? (
+            <CMdashboardAnalytics />
+          ) : null}
+          {componentToShow == 'CM' && flashcard.length <= 0 ? (
+            <div>Please Import Flashcards</div>
+          ) : null}
         </FadeIn>
         <FadeIn transitionDuration={1000} delay={40}>
           {componentToShow == 'StM' ? <StMdashboardAnalytics /> : null}

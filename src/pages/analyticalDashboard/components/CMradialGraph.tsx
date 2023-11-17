@@ -9,7 +9,7 @@ interface Props {
 }
 
 const CMradialGraph = ({ name, progress }: Props): React.ReactElement => {
-  const progressNumber = progress;
+  const progressNumber = parseInt(progress.toFixed(0));
 
   // useEffect(() => {
   //     setSeries({...series});
