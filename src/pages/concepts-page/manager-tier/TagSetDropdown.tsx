@@ -3,7 +3,7 @@ import { useStoreState } from '../../../store/store';
 import { Dropdown } from './Dropdown';
 
 interface TagSetDropdownProps {
-  selectedTag: string;
+  selectedTag: string[];
   setSelectedTag: (selectedTag: string) => void;
 }
 
@@ -23,7 +23,7 @@ export const TagSetDropdown = ({
         setSelectedTag(selectedTag);
       }}
       options={setNames}
-      selected={selectedTag}
+      selectedTag={selectedTag}
     />
   );
 };
