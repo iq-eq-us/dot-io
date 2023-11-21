@@ -1,9 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { FaBorderStyle } from 'react-icons/fa';
 import styled from 'styled-components';
-import { useStoreState, useStoreActions } from '../../../store/store';
-import { wpmMethodCalculator } from '../../../../src/helpers/aggregation';
 import type { TrainingScenario } from '../../../../src/models/trainingScenario';
+import { useStoreActions, useStoreState } from '../../../store/store';
 
 const r = Math.random;
 
@@ -17,7 +15,7 @@ export function TextBlurredScreen() {
     <div
       className="wi from-green-800 bg-zinc-300 absolute w-full h-48 rounded-3xl pt-16 text-black"
       onClick={() => [
-        document.getElementById('txt_Name')?.focus(),
+        document.getElementById('chordsInput')?.focus(),
         setTextPromptUnFocused(false),
         setStartTimer(true),
       ]}
@@ -126,7 +124,7 @@ export function TextPrompt(): ReactElement {
       performance.webkitNow ||
       Date.now * 1.0; /*none found - fallback to browser default */
 
-    const body = document.getElementById('txt_Name');
+    const body = document.getElementById('chordsInput');
     let isKeyDown = false;
     //if(sessionStorage.getItem('chordingEnabledDevice') == undefined || sessionStorage.getItem('chordingEnabledDevice') == 'false'){
 
@@ -387,7 +385,7 @@ export function TextPrompt(): ReactElement {
 
     //This  code here handles the logic in the case the user back spaces to edit an errored word
     const input = document.getElementById(
-      'txt_Name',
+      'chordsInput',
     ) as unknown as HTMLInputElement;
     if (input != null) {
       input.onkeydown = (e) => {
@@ -455,7 +453,7 @@ export function TextPrompt(): ReactElement {
     let arr: string[] = [];
     const conditionalValue = allTypedText.length - indexOfTargetChord;
     const input = document.getElementById(
-      'txt_Name',
+      'chordsInput',
     ) as unknown as HTMLInputElement;
 
     if (
@@ -567,7 +565,9 @@ export function TextPrompt(): ReactElement {
   }
   //This function Handles the focus panel
   function isFocused() {
-    const inputValue = document.getElementById('txt_Name') as HTMLInputElement;
+    const inputValue = document.getElementById(
+      'chordsInput',
+    ) as HTMLInputElement;
     const isFocused = document.activeElement === inputValue;
     if (!isFocused) {
       return TextBlurredScreen();

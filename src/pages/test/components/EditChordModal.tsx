@@ -1,9 +1,17 @@
 import React, { ReactElement, useRef, useState } from 'react';
 import { Portal } from 'react-portal';
 import styled from 'styled-components';
-import { chordLibrary, ChordLibraryRecord } from '../../../data/chordLibrary';
+import {
+  avgCalculatorForTheSpeedOfLastTen,
+  stmCalculator,
+} from '../../../../src/helpers/aggregation';
+import { ChordLibraryRecord, chordLibrary } from '../../../data/chordLibrary';
 import { useCurrentTrainingScenario } from '../../../hooks/useCurrentTrainingScenario';
 import usePopover from '../../../hooks/usePopover';
+import {
+  pickerLite,
+  pickerV1,
+} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
 import type { TrainingScenario } from '../../../models/trainingScenario';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import {
@@ -13,14 +21,6 @@ import {
 import HelpCircleIcon from './HelpCircleIcon';
 import { ThirdButton } from './ThirdButton';
 import { XIcon } from './XIcon';
-import {
-  pickerV1,
-  pickerLite,
-} from '../../../models/keyboardDropDownFolder/keyboardDropDown';
-import {
-  avgCalculatorForTheSpeedOfLastTen,
-  stmCalculator,
-} from '../../../../src/helpers/aggregation';
 
 export const triggerResizeForChordModal = () => {
   // This is done to make sure that the popover elements are in the correct position
@@ -185,7 +185,7 @@ function EditChordsModal(): ReactElement {
     }
 
     togglePortal();
-    document.getElementById('txt_Name')?.focus();
+    document.getElementById('chordsInput')?.focus();
   };
 
   const generateNewChordRecord = (chords: string[]): ChordLibraryRecord => {
