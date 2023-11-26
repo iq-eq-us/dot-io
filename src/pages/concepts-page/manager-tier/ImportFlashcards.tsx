@@ -15,9 +15,7 @@ export const ImportFlashCards = () => {
     const uploadedFile = event.target.files[0];
 
     uploadCSV(uploadedFile).then((flashCards) => {
-      console.log(flashCards);
       flashCards.forEach((flashCard, index) => {
-        console.log(index);
         addFlashCard(flashCard);
         flashCard.tags.forEach((tag: string) => {
           addTagFlashCard({ key: tag, index: index });

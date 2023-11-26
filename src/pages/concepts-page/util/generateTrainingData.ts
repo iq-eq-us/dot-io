@@ -6,22 +6,25 @@ import type {
 const numberItemsToGenerate = 20;
 
 const generateTrainingData = (sessionTrainingData: sessionTrainingData[]) => {
+  const filteredSessionTrainingData: number[] = [];
+  sessionTrainingData.forEach((card, index) => {
+    if (card.completed === false || card.completed === null) {
+      filteredSessionTrainingData.push(index);
+    }
+  });
+  console.log(sessionTrainingData);
   const generatedData: generatedData[] = [];
 
-  let lastIndex = -1;
   for (let i = 0; i < numberItemsToGenerate; i++) {
-    let currentIndex = Math.floor(Math.random() * sessionTrainingData.length);
-    while (lastIndex === currentIndex && sessionTrainingData.length != 1) {
-      currentIndex = Math.floor(Math.random() * sessionTrainingData.length);
-    }
+    const currentIndex = Math.floor(
+      Math.random() * filteredSessionTrainingData.length,
+    );
+    const flashCardIndex = filteredSessionTrainingData[currentIndex];
+
     generatedData.push({
-      flashCard:
-        sessionTrainingData[
-          Math.floor(Math.random() * sessionTrainingData.length)
-        ].flashCard,
-      sessionTrainingIndex: currentIndex,
+      flashCard: sessionTrainingData[flashCardIndex].flashCard,
+      sessionTrainingIndex: flashCardIndex,
     });
-    lastIndex = currentIndex;
   }
 
   return generatedData;

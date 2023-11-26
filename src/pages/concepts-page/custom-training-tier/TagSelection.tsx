@@ -1,5 +1,10 @@
 import React from 'react';
 import { Tag } from './Tag';
+import {
+  TagSelectionWrapper,
+  TagSelectionHeader,
+  TagContainerWrapper,
+} from './TagSelection.styled';
 
 interface TagSelectionProps {
   tags: string[];
@@ -22,8 +27,14 @@ export const TagSelection = ({
 
   return (
     <React.Fragment>
-      {selected ? <h1>Selected Tags</h1> : <h1>Unselected Tags</h1>}
-      {renderedTags}
+      <TagSelectionWrapper>
+        {selected ? (
+          <TagSelectionHeader>Selected Tags</TagSelectionHeader>
+        ) : (
+          <TagSelectionHeader>Unselected Tags</TagSelectionHeader>
+        )}
+        <TagContainerWrapper>{renderedTags}</TagContainerWrapper>
+      </TagSelectionWrapper>
     </React.Fragment>
   );
 };

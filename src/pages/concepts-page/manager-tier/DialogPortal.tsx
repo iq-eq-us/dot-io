@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useStoreActions } from '../../../store/store';
+import { useStoreActions, useStoreState } from '../../../store/store';
+import type { flashCard } from '../../../models/flashCardsModel';
+import { FlashCard } from './FlashCard';
 
-export const DialogPortal = () => {
+interface DialogPortalProps {
+  selectedFlashcardIndices: number[];
+}
+
+export const DialogPortal = ({
+  selectedFlashcardIndices,
+}: DialogPortalProps) => {
   const addTagFlashCard = useStoreActions((state) => state.addTagFlashCard);
+  const updatedFlashCards = useStoreState((state) => state.flashCards);
 
   const [showModal, setShowModal] = useState(false);
   const [input, setInput] = useState('');
@@ -14,6 +23,24 @@ export const DialogPortal = () => {
   const modalWidth = 300;
   const modalTop = windowHeight / 2 - modalHeight / 2;
   const modalLeft = windowWidth / 2 - modalWidth / 2;
+
+  const handleAddTag = () => {
+    console.log('Adding tag:', input);
+    console.log('happening');
+
+    selectedFlashcardIndices.forEach((index) => {
+      addTagFlashCard({ key: input, index });
+    });
+
+    // Log flashcards and their tags
+    updatedFlashCards.forEach((flashCard, index) => {
+      console.log(`Flashcard ${index + 1}:`, flashCard);
+      console.log('Tags:', flashCard.tags);
+    });
+
+    setInput('');
+    setShowModal(false);
+  };
 
   return (
     <div>
@@ -63,8 +90,7 @@ export const DialogPortal = () => {
                 className="import sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative"
                 color="pink"
                 onClick={() => {
-                  addTagFlashCard({ key: input, index: undefined });
-                  setShowModal(false);
+                  handleAddTag();
                 }}
               >
                 Confirm

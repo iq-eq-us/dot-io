@@ -9,10 +9,12 @@ import {
 import generateTrainingData from '../util/generateTrainingData';
 
 interface TrainingComponentProps {
-  setActiveTraining: (active: boolean) => void;
+  setActiveTraining: () => void;
 }
 
-export function TextPrompt({ setActiveTraining }: TrainingComponentProps) {
+export function TrainingComponent({
+  setActiveTraining,
+}: TrainingComponentProps) {
   const sessionTrainingData = useStoreState(
     (state) => state.sessionTrainingData,
   );
@@ -33,24 +35,27 @@ export function TextPrompt({ setActiveTraining }: TrainingComponentProps) {
   const currentTrainingValue = trainingData[userInput.length];
 
   useEffect(() => {
-    console.log('Session training data: ', sessionTrainingData);
-    if (sessionTrainingData.length != 0) {
-      if (itemsInSession != sessionTrainingData.length) {
+    const filteredSessionData = sessionTrainingData.filter(
+      (item) => item.completed == false || item.completed == null,
+    );
+    console.log(trainingData);
+    if (filteredSessionData.length != 0) {
+      if (itemsInSession != filteredSessionData.length) {
         setTrainingData([
           ...trainingData.slice(0, userInput.length),
           ...generateTrainingData(sessionTrainingData),
         ]);
-        setItemsInSession(sessionTrainingData.length);
+        setItemsInSession(filteredSessionData.length);
       }
       if (trainingData.length - userInput.length < 5) {
         setTrainingData([
           ...trainingData,
-          ...generateTrainingData(sessionTrainingData),
+          ...generateTrainingData(filteredSessionData),
         ]);
       }
       setFocused(true);
     } else {
-      setActiveTraining(false);
+      setActiveTraining();
     }
   }, [userInput, itemsInSession]);
 

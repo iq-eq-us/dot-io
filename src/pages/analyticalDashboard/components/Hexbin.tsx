@@ -17,7 +17,7 @@ import { ChMdashboardAnalytics } from './ChMdashboardAnalytics';
 import { AWPMdashboardAnalytics } from './AWPMdashboardAnalytics';
 import { TWPMdashboardAnalytics } from './TWPMdashboardAnalytics';
 import { StMdashboardAnalytics } from './StMdashboardAnalytics';
-import FadeIn from 'react-fade-in';
+import FadeIn from './FadeIn';
 import { useRef } from 'react';
 import {
   Chart as ChartJS,

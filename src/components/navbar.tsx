@@ -97,17 +97,10 @@ const Navbar = (): ReactElement => {
           history.push(ROUTER_PATHS.home);
         }
       } else if (level == 'CM') {
-        setModuleNumber(1);
-        const payload: any[] = [];
-        payload.push('CONCEPTSMASTERED');
-        sessionStorage.removeItem('tempTestDeIncrement');
         setTrainingLevel('CM');
-        beginTraining(payload);
-        if (!history.location.pathname.endsWith(ROUTER_PATHS.home)) {
-          history.push(ROUTER_PATHS.home);
-        }
+        console.log('training level: ', trainingLevel);
       }
-      console.log('training level: ', trainingLevel);
+      //console.log('training level: ', trainingLevel);
     }
   }
   function triggerPasswordModal() {
@@ -191,7 +184,10 @@ const Navbar = (): ReactElement => {
               open={true}
               src={CM_Icon}
               alt=""
-              onClick={() => (window.location.href = '#/concepts-page')}
+              onClick={() =>
+                (window.location.href = '#/concepts-page') &&
+                TrainingPageFunction('CM', true)
+              }
             />
           </NavMenuLink>
         </NavMenu>

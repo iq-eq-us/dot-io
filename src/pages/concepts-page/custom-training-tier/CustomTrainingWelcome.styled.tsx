@@ -4,7 +4,6 @@ export const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
 `;
 
 export const Header = styled.h1`
@@ -49,5 +48,14 @@ export const ActionButton = styled.button.attrs({
 })`
   font-size: 1.2rem;
   width: 100px;
+  height: 50px;
+`;
+
+export const BeginButton = styled.button.attrs({
+  className:
+    'import sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative',
+})`
+  font-size: 1.2rem;
+  width: 150px;
   height: 50px;
 `;

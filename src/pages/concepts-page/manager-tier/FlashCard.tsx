@@ -71,9 +71,19 @@ export const FlashCard = ({
 
   const onSelectedChange = (selected: string) => {
     if (selected === 'text') {
-      setNewFlashCard({ ...newFlashCard, type: 'text', imageSrc: '' });
+      setNewFlashCard({
+        ...newFlashCard,
+        type: 'text',
+        question: newFlashCard.answer,
+        imageSrc: '',
+      });
     } else if (selected === 'translation') {
-      setNewFlashCard({ ...newFlashCard, type: 'translation', imageSrc: '' });
+      setNewFlashCard({
+        ...newFlashCard,
+        type: 'translation',
+        question: newFlashCard.answer,
+        imageSrc: '',
+      });
     } else if (selected === 'image') {
       setNewFlashCard({ ...newFlashCard, type: 'image', question: '' });
     }
@@ -138,9 +148,17 @@ export const FlashCard = ({
         <PhraseTextBox
           placeholder={newFlashCard.answer}
           disabled={lockInputs}
-          onChange={(e) =>
-            setNewFlashCard({ ...newFlashCard, answer: e.target.value })
-          }
+          onChange={(e) => {
+            if (newFlashCard.type === 'text') {
+              setNewFlashCard({
+                ...newFlashCard,
+                answer: e.target.value,
+                question: e.target.value,
+              });
+            } else {
+              setNewFlashCard({ ...newFlashCard, answer: e.target.value });
+            }
+          }}
           value={newFlashCard.answer}
           //value = {questionInput}
         />

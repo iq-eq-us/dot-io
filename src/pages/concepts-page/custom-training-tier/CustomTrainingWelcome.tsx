@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStoreState } from '../../../store/store';
+import { useStoreState, useStoreActions } from '../../../store/store';
 import { TagSelection } from './TagSelection';
 import {
   FlexContainer,
@@ -9,21 +9,46 @@ import {
   SplitRight,
   ArrowContainer,
   ActionButton,
+  BeginButton,
 } from './CustomTrainingWelcome.styled';
+import type { activeFlashCard } from 'src/models/flashCardsModel';
 
 interface CustomTrainingWelcomeProps {
-  setCurrentTier: (tier: number) => void;
+  setActiveTraining: () => void;
 }
 
 export const CustomTrainingWelcome = ({
-  setCurrentTier,
+  setActiveTraining,
 }: CustomTrainingWelcomeProps) => {
   const tags = useStoreState((state) => state.tags);
+  const setInfiniteSessionTrainingData = useStoreActions(
+    (actions) => actions.setInfiniteSessionTrainingData,
+  );
+  const flashCards = useStoreState((state) => state.flashCards);
 
   const [unSelectedTags, setUnSelectedTags] = useState<string[]>(
     Object.keys(tags),
   );
-  const [selectedTags, setSelectedTags] = useState<string[]>(['hello']);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const startTraining = () => {
+    if (selectedTags.length != 0) {
+      const filteredFlashCards: activeFlashCard[] = [];
+      flashCards.forEach((flashCard, index) => {
+        for (const tag of selectedTags) {
+          if (flashCard.tags.includes(tag)) {
+            filteredFlashCards.push({
+              flashCard: flashCard,
+              flashCardIndex: index,
+            });
+            break;
+          }
+        }
+      });
+      setInfiniteSessionTrainingData(filteredFlashCards);
+      setActiveTraining();
+    }
+  };
 
   const switchTag = (tag: string, selected: boolean) => {
     if (selected == true) {
@@ -77,9 +102,9 @@ export const CustomTrainingWelcome = ({
             />
           </SplitRight>
         </TagContainer>
-        <ActionButton onClick={() => console.log('hello')}>
+        <BeginButton onClick={() => startTraining()}>
           Begin Training
-        </ActionButton>
+        </BeginButton>
       </FlexContainer>
     </React.Fragment>
   );
