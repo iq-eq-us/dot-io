@@ -1,7 +1,7 @@
 import type { Action, Computed, Thunk } from 'easy-peasy';
 
 export interface flashCard {
-  type: 'text' | 'image' | 'translation';
+  //type: 'text' | 'image' | 'translation';
   question: string;
   answer: string;
   imageSrc: string;

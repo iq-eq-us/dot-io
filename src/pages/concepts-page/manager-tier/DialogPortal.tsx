@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useStoreActions, useStoreState } from '../../../store/store';
 import type { flashCard } from '../../../models/flashCardsModel';
 import { FlashCard } from './FlashCard';
+import CustomDropDown from './CustomDropDown';
 
 interface DialogPortalProps {
   selectedFlashcardIndices: number[];
@@ -15,21 +16,21 @@ export const DialogPortal = ({
   const updatedFlashCards = useStoreState((state) => state.flashCards);
 
   const [showModal, setShowModal] = useState(false);
-  const [input, setInput] = useState('');
+
+  const [customTag, setCustomTag] = useState('');
 
   const windowHeight = window.innerHeight;
   const windowWidth = window.innerWidth;
   const modalHeight = 150;
   const modalWidth = 300;
-  const modalTop = windowHeight / 2 - modalHeight / 2;
+  const modalTop = windowHeight / 1.5 + modalHeight / 1.5;
   const modalLeft = windowWidth / 2 - modalWidth / 2;
 
   const handleAddTag = () => {
-    console.log('Adding tag:', input);
-    console.log('happening');
+    console.log('Adding tag:', customTag);
 
     selectedFlashcardIndices.forEach((index) => {
-      addTagFlashCard({ key: input, index });
+      addTagFlashCard({ key: customTag, index });
     });
 
     // Log flashcards and their tags
@@ -38,7 +39,7 @@ export const DialogPortal = ({
       console.log('Tags:', flashCard.tags);
     });
 
-    setInput('');
+    setCustomTag('');
     setShowModal(false);
   };
 
@@ -49,7 +50,7 @@ export const DialogPortal = ({
         color="pink"
         onClick={() => setShowModal(true)}
       >
-        Add New Tag
+        Add Tag
       </button>
       {showModal &&
         createPortal(
@@ -69,19 +70,14 @@ export const DialogPortal = ({
             }}
           >
             <h1>New Tag: </h1>
-            <input
-              style={{ padding: '5px' }}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="New Tag"
-            />
+            <CustomDropDown setCustomTag={setCustomTag} />
             <div>
               <button
                 className="import sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative"
                 color="pink"
                 onClick={() => {
                   setShowModal(false);
-                  setInput('');
+                  setCustomTag('');
                 }}
               >
                 Cancel

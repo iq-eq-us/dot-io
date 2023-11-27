@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useStoreActions } from '../../../store/store';
 import type { flashCard } from '../../../models/flashCardsModel';
-import { Dropdown } from './Dropdown';
 import {
   FlashCardEditButton,
   FlashCardSaveButton,
@@ -19,7 +18,7 @@ import {
 interface FlashCardProps {
   flashCard: flashCard;
   index: number;
-  selected: boolean;
+  selected: boolean[];
   setSelected: (index: number) => void;
 }
 
@@ -39,12 +38,15 @@ export const FlashCard = ({
   const [deleteButtonProps, setDeleteButtonProps] = useState(false);
   const [oldFlashCard, setOldFlashCard] = useState<flashCard>(flashCard);
   const [newFlashCard, setNewFlashCard] = useState<flashCard>(flashCard);
+  const [showImageUrl, setShowImageUrl] = useState<boolean>(
+    !!newFlashCard.imageSrc,
+  );
 
   useEffect(() => {
-    if (lockInputs && newFlashCard.type !== oldFlashCard.type) {
+    if (lockInputs && newFlashCard !== oldFlashCard) {
       setInputs(false);
     }
-  });
+  }, [lockInputs, newFlashCard, oldFlashCard]);
 
   const onClickConfirmDeleteButton = () => {
     setDeleteButtonProps(!deleteButtonProps);
@@ -69,24 +71,15 @@ export const FlashCard = ({
     setInputs(!lockInputs);
   };
 
+  const onToggleImageUrlButtonClick = () => {
+    setShowImageUrl(!showImageUrl);
+  };
+
   const onSelectedChange = (selected: string) => {
-    if (selected === 'text') {
-      setNewFlashCard({
-        ...newFlashCard,
-        type: 'text',
-        question: newFlashCard.answer,
-        imageSrc: '',
-      });
-    } else if (selected === 'translation') {
-      setNewFlashCard({
-        ...newFlashCard,
-        type: 'translation',
-        question: newFlashCard.answer,
-        imageSrc: '',
-      });
-    } else if (selected === 'image') {
-      setNewFlashCard({ ...newFlashCard, type: 'image', question: '' });
-    }
+    const commonProps = {
+      question: newFlashCard.answer,
+      imageSrc: '',
+    };
   };
 
   const onClickSaveButton = () => {
@@ -96,52 +89,13 @@ export const FlashCard = ({
     setInputs(!lockInputs);
   };
 
-  const showCorrectInput = () => {
-    if (newFlashCard.type === 'text') {
-      return <InputIdentifiers style={{ width: '221px' }} />;
-    } else if (newFlashCard.type === 'translation') {
-      return (
-        <InputIdentifiers>
-          Translation
-          <ChordTextBox
-            placeholder={newFlashCard.question}
-            disabled={lockInputs}
-            onChange={(e) =>
-              setNewFlashCard({ ...newFlashCard, question: e.target.value })
-            }
-            value={newFlashCard.question}
-          />
-        </InputIdentifiers>
-      );
-    } else if (newFlashCard.type === 'image') {
-      return (
-        <InputIdentifiers>
-          URL
-          <ChordTextBox
-            placeholder={newFlashCard.imageSrc}
-            disabled={lockInputs}
-            onChange={(e) =>
-              setNewFlashCard({ ...newFlashCard, imageSrc: e.target.value })
-            }
-            value={newFlashCard.imageSrc}
-          />
-        </InputIdentifiers>
-      );
-    }
-  };
-
   return (
     <CardContainer>
       <input
         type="checkbox"
         checked={selected}
         onClick={() => setSelected(index)}
-      />
-      <Dropdown
-        name="hi"
-        options={['text', 'translation', 'image']}
-        selected={newFlashCard.type}
-        onSelectedChange={onSelectedChange}
+        style={{ marginRight: '4px', marginLeft: '2px' }}
       />
       <InputIdentifiersForPhrase>
         Term
@@ -149,21 +103,85 @@ export const FlashCard = ({
           placeholder={newFlashCard.answer}
           disabled={lockInputs}
           onChange={(e) => {
-            if (newFlashCard.type === 'text') {
-              setNewFlashCard({
-                ...newFlashCard,
-                answer: e.target.value,
-                question: e.target.value,
-              });
-            } else {
-              setNewFlashCard({ ...newFlashCard, answer: e.target.value });
-            }
+            setNewFlashCard({
+              ...newFlashCard,
+              answer: e.target.value,
+              question: e.target.value,
+            });
           }}
           value={newFlashCard.answer}
-          //value = {questionInput}
         />
       </InputIdentifiersForPhrase>
-      {showCorrectInput()}
+      <InputIdentifiers>
+        Translation
+        <ChordTextBox
+          placeholder={newFlashCard.question}
+          disabled={lockInputs}
+          onChange={(e) =>
+            setNewFlashCard({ ...newFlashCard, question: e.target.value })
+          }
+          value={newFlashCard.question}
+        />
+      </InputIdentifiers>
+      <InputIdentifiers>Image URL</InputIdentifiers>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: '10px',
+          marginTop: '5px',
+        }}
+      >
+        <span
+          style={{
+            marginRight: '5px',
+            color: showImageUrl ? '#2ecc71' : '#e74c3c',
+            fontWeight: 'bold',
+          }}
+        >
+          {showImageUrl ? 'ON' : 'OFF'}
+        </span>
+        <div
+          onClick={onToggleImageUrlButtonClick}
+          style={{
+            width: '40px',
+            height: '20px',
+            borderRadius: '10px',
+            backgroundColor: showImageUrl ? '#2ecc71' : '#e74c3c',
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
+            marginLeft: '10px', // Adjust the spacing as needed
+          }}
+        >
+          <div
+            style={{
+              width: '18px',
+              height: '18px',
+              borderRadius: '50%',
+              backgroundColor: '#fff',
+              transform: showImageUrl ? 'translateX(20px)' : 'translateX(2px)',
+              transition: 'transform 0.3s ease-in-out',
+            }}
+          />
+        </div>
+        {showImageUrl && (
+          <ChordTextBox
+            placeholder="URL"
+            disabled={lockInputs}
+            onChange={(e) =>
+              setNewFlashCard({
+                ...newFlashCard,
+                imageSrc: e.target.value,
+              })
+            }
+            value={newFlashCard.imageSrc}
+            style={{
+              marginLeft: '10px', // Adjust the spacing as needed
+            }}
+          />
+        )}
+      </div>
       <FlashCardEditButton
         onClick={onClick}
         cancelled={lockInputs}
