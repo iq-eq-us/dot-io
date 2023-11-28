@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import DumbellImage from '../assets/Dumbell.png';
 import BooksImage from '../assets/Books.png';
@@ -19,9 +19,8 @@ import { ScoresComponent } from './scoresComponent';
 import InfoIcon from '../../src/pages/test/components/InfoIcon';
 import type { TrainingLevels } from '../../src/models/trainingLevels';
 import Circle from './CircleHighlight';
-import AnalyticalDashboardButton from '../../src/pages/test/components/AnalyticalDashboardButton';
 import HamburgerMenu from './hamburgerMenu';
-//import ConceptsPage from 'src/pages/concepts-page/concepts-page';
+import { useEffect } from 'react';
 
 const Navbar = (): ReactElement => {
   const history = useHistory();
@@ -32,6 +31,7 @@ const Navbar = (): ReactElement => {
   const setIsDisplayingIntroductionModal = useStoreActions(
     (store: any) => store.setIsDisplayingIntroductionModal,
   );
+
   const setTrainingLevel = useStoreActions(
     (store: any) => store.setTrainingLevel,
   );
@@ -48,6 +48,28 @@ const Navbar = (): ReactElement => {
   const chmTierPasswordBypass = useStoreState(
     (store: any) => store.chmTierPasswordBypass,
   );
+  const isDisplayingIntroductionModal = useStoreState(
+    (store: any) => store.isDisplayingIntroductionModal,
+  );
+
+  const location = useLocation();
+
+  const handleClick = () => {
+    if (trainingLevel === 'CM') {
+      console.log('ENTERED');
+      setIsDisplayingIntroductionModal(true);
+      if (location.pathname === '/concepts-page') {
+        console.log('already set to concepts page');
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log(
+      'isDisplayingIntroductionModal after click:',
+      isDisplayingIntroductionModal,
+    );
+  }, [isDisplayingIntroductionModal]);
 
   /* eslint-disable */
   const maxWPM = useStoreState(
@@ -177,16 +199,16 @@ const Navbar = (): ReactElement => {
             <NavLinksImage open={false} src={tWPM_Icon} alt="" />
           </NavMenuLink>
           <NavMenuLink aria-current="page">
-            {trainingLevel == 'CM' ? <Circle /> : ''}
+            {trainingLevel === 'CM' ? <Circle /> : ''}
             <div className="text-white font-mono">CM</div>
             <NavLinksImage
               open={true}
               src={CM_Icon}
               alt=""
-              onClick={() =>
-                (window.location.href = '#/concepts-page') &&
-                TrainingPageFunction('CM', true)
-              }
+              onClick={() => {
+                history.push('/concepts-page');
+                TrainingPageFunction('CM', true);
+              }}
             />
           </NavMenuLink>
         </NavMenu>
@@ -215,7 +237,12 @@ const Navbar = (): ReactElement => {
           </NavBtnLink>
           <button
             className="hover:bg-[#333] rounded"
-            onClick={() => setIsDisplayingIntroductionModal(true)}
+            onClick={() => {
+              setIsDisplayingIntroductionModal(true);
+              if (trainingLevel === 'CM') {
+                handleClick();
+              }
+            }}
           >
             <InfoIcon />
           </button>

@@ -12,28 +12,28 @@ import AnalyticalDashboard1 from '../../../assets/AnalyticalDashboardWelcomePage
 import AnalyticalDashboard2 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome2.png';
 import AnalyticalDashboard3 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome3.png';
 import AnalyticalDashboard4 from '../../../assets/AnalyticalDashboardWelcomePages/Analytical_Dashboard_Welcome4.png';
-import CMPage1 from '../../../assets/ConceptsMasteredIntroPages/CM1.png';
-import CMPage2 from '../../../assets/ConceptsMasteredIntroPages/CM2.png';
-import CMPage3 from '../../../assets/ConceptsMasteredIntroPages/CM3.png';
+import CMPage1 from '../../../assets/CMPages/CM1.png';
+import CMPage2 from '../../../assets/CMPages/CM2.png';
+import CMPage3 from '../../../assets/CMPages/CM3.png';
 
 export const SliderData = [
   {
-    image: Intro1,
+    image: CMPage1,
   },
   {
-    image: Intro2,
+    image: CMPage2,
   },
   {
-    image: Intro3,
+    image: CMPage3,
   },
   {
-    image: CPMPage1,
+    image: CMPage1,
   },
   {
-    image: CPMPage2,
+    image: CMPage2,
   },
   {
-    image: CPMPage3,
+    image: CMPage3,
   },
 ];
 
