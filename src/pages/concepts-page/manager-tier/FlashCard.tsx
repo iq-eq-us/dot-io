@@ -123,65 +123,65 @@ export const FlashCard = ({
           value={newFlashCard.question}
         />
       </InputIdentifiers>
-      <InputIdentifiers>Image URL</InputIdentifiers>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '10px',
-          marginTop: '5px',
-        }}
-      >
-        <span
-          style={{
-            marginRight: '5px',
-            color: showImageUrl ? '#2ecc71' : '#e74c3c',
-            fontWeight: 'bold',
-          }}
-        >
-          {showImageUrl ? 'ON' : 'OFF'}
-        </span>
+      <InputIdentifiers>
+        Image URL
         <div
-          onClick={onToggleImageUrlButtonClick}
           style={{
-            width: '40px',
-            height: '20px',
-            borderRadius: '10px',
-            backgroundColor: showImageUrl ? '#2ecc71' : '#e74c3c',
             display: 'flex',
             alignItems: 'center',
-            cursor: 'pointer',
-            marginLeft: '10px', // Adjust the spacing as needed
+            marginBottom: '1px',
           }}
         >
+          <span
+            style={{
+              color: showImageUrl ? '#2ecc71' : '#e74c3c',
+              fontWeight: 'bold',
+            }}
+          ></span>
           <div
+            onClick={onToggleImageUrlButtonClick}
             style={{
-              width: '18px',
-              height: '18px',
-              borderRadius: '50%',
-              backgroundColor: '#fff',
-              transform: showImageUrl ? 'translateX(20px)' : 'translateX(2px)',
-              transition: 'transform 0.3s ease-in-out',
+              width: '40px',
+              height: '20px',
+              borderRadius: '10px',
+              backgroundColor: showImageUrl ? '#2ecc71' : '#e74c3c',
+              display: 'flex',
+              alignItems: 'center',
+              cursor: 'pointer',
             }}
-          />
+          >
+            <div
+              style={{
+                width: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                backgroundColor: '#fff',
+                transform: showImageUrl
+                  ? 'translateX(20px)'
+                  : 'translateX(2px)',
+                transition: 'transform 0.3s ease-in-out',
+              }}
+            />
+          </div>
+
+          {showImageUrl && (
+            <ChordTextBox
+              placeholder="URL"
+              disabled={lockInputs}
+              onChange={(e) =>
+                setNewFlashCard({
+                  ...newFlashCard,
+                  imageSrc: e.target.value,
+                })
+              }
+              value={newFlashCard.imageSrc}
+              style={{
+                marginLeft: '10px',
+              }}
+            />
+          )}
         </div>
-        {showImageUrl && (
-          <ChordTextBox
-            placeholder="URL"
-            disabled={lockInputs}
-            onChange={(e) =>
-              setNewFlashCard({
-                ...newFlashCard,
-                imageSrc: e.target.value,
-              })
-            }
-            value={newFlashCard.imageSrc}
-            style={{
-              marginLeft: '10px', // Adjust the spacing as needed
-            }}
-          />
-        )}
-      </div>
+      </InputIdentifiers>
       <FlashCardEditButton
         onClick={onClick}
         cancelled={lockInputs}
