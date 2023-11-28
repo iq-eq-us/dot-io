@@ -21,6 +21,8 @@ import type { TrainingLevels } from '../../src/models/trainingLevels';
 import Circle from './CircleHighlight';
 import HamburgerMenu from './hamburgerMenu';
 import { useEffect } from 'react';
+import ImageSlider from '../pages/test/components/imageSlider';
+import { useState } from 'react';
 
 const Navbar = (): ReactElement => {
   const history = useHistory();
@@ -51,6 +53,7 @@ const Navbar = (): ReactElement => {
   const isDisplayingIntroductionModal = useStoreState(
     (store: any) => store.isDisplayingIntroductionModal,
   );
+  const [toggleValue, setToggleValue] = useState(false);
 
   const location = useLocation();
 
@@ -213,7 +216,22 @@ const Navbar = (): ReactElement => {
           </NavMenuLink>
         </NavMenu>
         <ScoresComponent />
-
+        {trainingLevel === 'CM' && isDisplayingIntroductionModal && (
+          <div style={modal}>
+            <div style={modal_content}>
+              <button
+                className="close absolute ml-96 text-5xl text-white"
+                onClick={() => {
+                  setToggleValue(!toggleValue);
+                  setIsDisplayingIntroductionModal(false);
+                }}
+              >
+                &times;
+              </button>
+              <ImageSlider />
+            </div>
+          </div>
+        )}
         <div className="flex-row">
           <NavMenuLink style={{ paddingTop: '100px' }}>
             <NavLinksBtnImage
@@ -431,3 +449,20 @@ const ConBtnLink = styled.a`
     transition: 0.3s ease out;
   }
 `;
+const modal = {
+  position: 'absolute' as const,
+  zIndex: '1' as const,
+  left: '5%' as const,
+  width: '75%' as const,
+  textAlign: 'center' as const,
+  backgroundColor: 'rgba(0, 0, 0, 0.25)' as const,
+};
+
+const modal_content = {
+  backgroundColor: '#222424' as const,
+  position: 'absolute' as const,
+  top: '20%' as const,
+  left: '20%' as const,
+  borderRadius: '5px' as const,
+  border: '2px solid black' as const,
+};
