@@ -25,8 +25,10 @@ export const ComingSoonContainer = styled.div.attrs({
 })``;
 
 export const ConceptsMasteredManagerPageContainer = styled.section.attrs({
-  className: `text-white body-font min-h-screen bg-[#222424]`,
-})``;
+  className: `text-white body-font bg-[#222424]`,
+})`
+  height: 100%;
+`;
 
 export const GManagerPageContainer = styled.section.attrs({
   className: `body-font min-h-screen bg-[#121212]`,

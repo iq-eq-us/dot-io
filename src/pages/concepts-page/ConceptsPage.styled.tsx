@@ -13,11 +13,16 @@ export const ItemsContainer = styled.div`
   background-color: #222424;
 `;
 
-const height = 'height: calc(100vh - 64px);';
+const height = 'calc(100vh - 80px);';
 
 export const PageContainer = styled.div.attrs({
-  className: 'text-gray-600 body-font flex flex-row',
+  className: 'text-gray-600 body-font flex',
 })`
+  flex-direction: column;
   background-color: #222424;
+  height: calc(100% - 111px);
+`;
+
+export const ConceptsContainer = styled.div`
   min-height: ${height};
 `;

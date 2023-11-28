@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const FullWidthFullHeightContainer = styled.div.attrs({
-  className: 'relative h-full w-full',
-})``;
+  className: 'relative w-full',
+})`
+  height: calc(100vh - 191px);
+`;
 
 export const SmallScreenButtons = styled.div.attrs({
   className: 'flex flex-row justify-between w-full mb-4',

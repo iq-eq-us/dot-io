@@ -1,14 +1,16 @@
-import React from 'react';
-import { useStoreActions, useStoreState } from '../../../store/store';
+import React, { useState } from 'react';
+import { useStoreState } from '../../../store/store';
+import { Slider } from './Slider';
 import {
   Fill,
   TrisplitScreen,
   LabeledAction,
   ActionButton,
+  ExplanationHeader,
 } from './DailyTrainingWelcome.styled';
 
 interface DailyTrainingWelcomeProps {
-  setActiveTraining: () => void;
+  setActiveTraining: (setNumberSelected: number) => void;
   setCurrentTier: (tier: number) => void;
 }
 
@@ -18,11 +20,10 @@ export const DailyTrainingWelcome = ({
 }: DailyTrainingWelcomeProps) => {
   const flashCards = useStoreState((state) => state.flashCards);
   const activeFlashCards = useStoreState((state) => state.activeFlashCards);
-  const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
+
+  const [numberSelected, setNumberSelected] = useState(1);
 
   const idleFlashCards = flashCards.length - activeFlashCards.length;
-
-  const isTrainingAvailable = nextTrainingDate.getTime() < Date.now();
   const isActiveFlashCards = activeFlashCards.length != 0;
 
   return (
@@ -41,29 +42,36 @@ export const DailyTrainingWelcome = ({
           <h2>{idleFlashCards}</h2>
         </div>
       </TrisplitScreen>
-      {isTrainingAvailable ? (
-        <div>
-          {isActiveFlashCards ? (
-            <LabeledAction>
-              <h2>Daily training available:</h2>
-              <ActionButton onClick={() => setActiveTraining()}>
-                Start Training
-              </ActionButton>
-            </LabeledAction>
-          ) : (
-            <LabeledAction>
-              <h2>No active flash cards:</h2>
-              <ActionButton onClick={() => setCurrentTier(2)}>
-                Go to Manager
-              </ActionButton>
-            </LabeledAction>
-          )}
+      {isActiveFlashCards ? (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <ExplanationHeader>
+            How many flashcards would you like to train today?
+          </ExplanationHeader>
+          <Slider
+            max={activeFlashCards.length}
+            currentNumber={numberSelected}
+            setCurrentNumber={setNumberSelected}
+          />
+          <ExplanationHeader>
+            Currently set to {numberSelected} out of {activeFlashCards.length}
+          </ExplanationHeader>
+          <LabeledAction>
+            <ActionButton onClick={() => setActiveTraining(numberSelected)}>
+              Start Training
+            </ActionButton>
+          </LabeledAction>
         </div>
       ) : (
         <LabeledAction>
-          <h2>Next Available Training is: {nextTrainingDate.toDateString()}</h2>
-          <ActionButton onClick={() => setCurrentTier(1)}>
-            Train in custom
+          <h2>No active flash cards:</h2>
+          <ActionButton onClick={() => setCurrentTier(2)}>
+            Go to Manager
           </ActionButton>
         </LabeledAction>
       )}

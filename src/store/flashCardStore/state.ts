@@ -10,7 +10,6 @@ const flashCardStoreState: flashCardStoreStateModel = {
   loadedFromStorage: false,
   flashCards: [],
   tags: {},
-  nextTrainingDate: new Date(),
   sessionTrainingData: [],
   numberOfDailyFlashCards: 10,
   selectedTags: '', // Add this line

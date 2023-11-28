@@ -22,13 +22,13 @@ import {
 export const ManagerTier = (): ReactElement => {
   const flashCards = useStoreState((state) => state.flashCards);
   const tags = useStoreState((state) => state.tags);
+  console.log(tags);
+  console.log(flashCards);
 
   const [selectedFlashCards, setSelectedFlashCards] = useState<boolean[]>(
     new Array(flashCards.length).fill(false),
   );
   const [selectedTag, setSelectedTag] = useState<string>('');
-
-  const setTag = useStoreActions((actions) => actions.setSelectedTag); // Add this line
 
   useEffect(() => {
     if (flashCards.length !== selectedFlashCards.length) {

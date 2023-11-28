@@ -22,28 +22,23 @@ interface DailyTrainingPageProps {
 export const DailyTrainingTier = ({
   setCurrentTier,
 }: DailyTrainingPageProps) => {
-  const nextTrainingDate = useStoreState((state) => state.nextTrainingDate);
   const setSessionTrainingData = useStoreActions(
     (actions) => actions.setSessionTrainingData,
-  );
-  const setNextDailyTraining = useStoreActions(
-    (actions) => actions.setNextDailyTraining,
   );
   const updateLocalStorage = useStoreActions(
     (actions) => actions.updateLocalStorage,
   );
+  const activeFlashCards = useStoreState((state) => state.activeFlashCards);
+  console.log('Active Flashcards: ', activeFlashCards);
 
-  const [activeTraining, setActiveTraining] = useState(
-    new Date() < nextTrainingDate,
-  );
+  const [activeTraining, setActiveTraining] = useState(false);
 
-  const startTraining = () => {
-    setSessionTrainingData();
+  const startTraining = (numberSelected: number) => {
+    setSessionTrainingData(numberSelected);
     setActiveTraining(true);
   };
 
   const endTraining = () => {
-    setNextDailyTraining();
     updateLocalStorage();
     setActiveTraining(false);
   };
@@ -51,7 +46,7 @@ export const DailyTrainingTier = ({
   return (
     <DailyTrainingContainer>
       {activeTraining ? (
-        <>
+        <ConceptsMasteredManagerPageContainer>
           <FullWidthFullHeightContainer>
             <HelperContainer>
               <ProgressBar />
@@ -62,7 +57,7 @@ export const DailyTrainingTier = ({
             </SmallScreenButtons>
             <TrainingComponent setActiveTraining={endTraining} />
           </FullWidthFullHeightContainer>
-        </>
+        </ConceptsMasteredManagerPageContainer>
       ) : (
         <ConceptsMasteredManagerPageContainer
           style={{ maxWidth: '1300px', alignSelf: 'center' }}

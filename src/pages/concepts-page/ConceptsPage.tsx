@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useStoreState, useStoreActions } from '../../store/store.js';
 import { ManagerTier } from './manager-tier/ManagerTier.jsx';
 import { DailyTrainingTier } from './daily-training-tier/DailyTrainingTier.jsx';
-import { ItemsContainer, PageContainer } from './ConceptsPage.styled';
 import { CustomTrainingTier } from './custom-training-tier/CustomTrainingTier.jsx';
+import Footer from '../../components/footer.jsx';
+import {
+  ItemsContainer,
+  PageContainer,
+  ConceptsContainer,
+} from './ConceptsPage.styled';
 
 const ConceptsPage = () => {
   const loadedFromStorage = useStoreState((state) => state.loadedFromStorage);
@@ -29,7 +34,7 @@ const ConceptsPage = () => {
   };
 
   return (
-    <>
+    <ConceptsContainer>
       <ItemsContainer>
         <button
           {...(currentTier == 0
@@ -61,9 +66,10 @@ const ConceptsPage = () => {
       {loadedFromStorage ? (
         <PageContainer>{viewCurrentTier()}</PageContainer>
       ) : (
-        <PageContainer>Loading...</PageContainer>
+        <PageContainer />
       )}
-    </>
+      <Footer />
+    </ConceptsContainer>
   );
 };
 
