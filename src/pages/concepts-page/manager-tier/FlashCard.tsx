@@ -14,6 +14,7 @@ import {
   FlashCardConfirmDeleteButton,
   FlashCardCancelDeleteButton,
 } from './FlashCardManagerCardColumn.styled';
+import LazyImage from './LazyImage';
 
 interface FlashCardProps {
   flashCard: flashCard;
@@ -41,12 +42,18 @@ export const FlashCard = ({
   const [showImageUrl, setShowImageUrl] = useState<boolean>(
     !!newFlashCard.imageSrc,
   );
+  const [previewImage, setPreviewImage] = useState<boolean>(false);
 
   useEffect(() => {
     if (lockInputs && newFlashCard !== oldFlashCard) {
       setInputs(false);
     }
   }, [lockInputs, newFlashCard, oldFlashCard]);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = flashCard.imageSrc;
+  }, [flashCard.imageSrc]);
 
   const onClickConfirmDeleteButton = () => {
     setDeleteButtonProps(!deleteButtonProps);
@@ -73,6 +80,10 @@ export const FlashCard = ({
 
   const onToggleImageUrlButtonClick = () => {
     setShowImageUrl(!showImageUrl);
+  };
+
+  const onToggleImagePreviewButtonClick = () => {
+    setPreviewImage(!previewImage);
   };
 
   const onSelectedChange = (selected: string) => {
@@ -182,6 +193,55 @@ export const FlashCard = ({
           )}
         </div>
       </InputIdentifiers>
+      {flashCard.imageSrc != '' && (
+        <InputIdentifiers>
+          Preview
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginBottom: '1px',
+            }}
+          >
+            <div
+              onClick={onToggleImagePreviewButtonClick}
+              style={{
+                width: previewImage ? '50px' : '40px',
+                height: '20px',
+                borderRadius: '10px',
+                backgroundColor: previewImage ? '#2ecc71' : '#e74c3c',
+                display: 'flex',
+                alignItems: 'center',
+                cursor: 'pointer',
+                overflow: 'hidden',
+                transition: 'background-color 0.3s ease-in-out',
+              }}
+            >
+              <div
+                style={{
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '10px',
+                  backgroundColor: '#fff',
+                  transform: previewImage
+                    ? 'translateX(18px)'
+                    : 'translateX(2px)',
+                  transition: 'transform 0.3s ease-in-out',
+                }}
+              />
+            </div>
+            <div style={{ marginLeft: '15px' }}>
+              {flashCard.imageSrc !== '' && previewImage && (
+                <LazyImage
+                  src={flashCard.imageSrc}
+                  alt="Preview"
+                  fixedSize={undefined}
+                />
+              )}
+            </div>
+          </div>
+        </InputIdentifiers>
+      )}
       <FlashCardEditButton
         onClick={onClick}
         cancelled={lockInputs}
