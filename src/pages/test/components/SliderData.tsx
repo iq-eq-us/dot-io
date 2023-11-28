@@ -18,22 +18,22 @@ import CMPage3 from '../../../assets/CMPages/CM3.png';
 
 export const SliderData = [
   {
-    image: CMPage1,
+    image: Intro1,
   },
   {
-    image: CMPage2,
+    image: Intro2,
   },
   {
-    image: CMPage3,
+    image: Intro3,
   },
   {
-    image: CMPage1,
+    image: CPMPage1,
   },
   {
-    image: CMPage2,
+    image: CPMPage2,
   },
   {
-    image: CMPage3,
+    image: CPMPage3,
   },
 ];
 
