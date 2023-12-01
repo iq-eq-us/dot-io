@@ -57,6 +57,7 @@ const HashTagMap: React.FC<HashTagProps> = ({
 
   const handleTagClick = (tagName) => {
     if (tagName === 'All') {
+      return;
     } else {
       const newSelectedTags = selectedTags.includes(tagName)
         ? selectedTags.filter((tag) => tag !== tagName)
