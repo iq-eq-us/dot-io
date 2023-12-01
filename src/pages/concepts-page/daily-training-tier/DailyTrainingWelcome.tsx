@@ -26,6 +26,10 @@ export const DailyTrainingWelcome = ({
   const idleFlashCards = flashCards.length - activeFlashCards.length;
   const isActiveFlashCards = activeFlashCards.length != 0;
 
+  flashCards.forEach((card) => {
+    console.log('Card:', card);
+  });
+
   return (
     <Fill>
       <TrisplitScreen>

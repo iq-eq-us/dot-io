@@ -8,6 +8,7 @@ export interface testHistoryAnalytics {
   errors: number[];
   testCPM: number[];
   CPMTopSpeed: number;
+  ChMChordsMastered: number;
 }
 
 // history of sessions
@@ -24,6 +25,7 @@ export interface testHistoryAnalyticsActionModel {
   addTestErrors: Action<testHistoryAnalyticsStoreStateModel, number[]>;
   addTestCPM: Action<testHistoryAnalyticsStoreStateModel, number[]>;
   addCPMTopSpeed: Action<testHistoryAnalyticsStoreStateModel, number>;
+  addChMChordsMastered: Action<testHistoryAnalyticsStoreStateModel, number>;
 }
 
 // set of state stores
@@ -34,6 +36,7 @@ export interface testHistoryAnalyticsStoreStateModel {
   currErrors: number[];
   currCPM: number[];
   currCPMTopSpeed: number;
+  currChMChordsMastered: number;
 }
 
 export type TestHistoryAnalyticalStoreModel = testHistoryAnalyticsActionModel &

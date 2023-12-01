@@ -10,6 +10,7 @@ import { AnalyticalDashboardAccAndConOverall } from './components/AnalyticalDash
 import { StreakHeatmap } from './components/StreakHeatmap';
 import { Hexbin } from './components/Hexbin';
 import { DashboardStaticStats } from './components/AnalyticalDashboardStaticStat';
+import { useStoreActions } from '../../store/store';
 
 /**
  * This is the analytical dashboard page. It is responsible for displaying all user-specific stats.

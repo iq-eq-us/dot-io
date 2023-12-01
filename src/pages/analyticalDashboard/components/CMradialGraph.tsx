@@ -1,24 +1,23 @@
+import type { ApexOptions } from 'apexcharts';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
-import store, { useStoreState, useStoreActions } from '../../../store/store';
+import FadeIn from './FadeIn';
 
-export function CMradialGraph(): ReactElement {
-  const [componentToShow, setComponentToShow] = useState('');
-  const flashcardSetName = localStorage.getItem('dropdownFlashcardSetSelected');
-  const progressNumber = 100;
+interface Props {
+  name: string;
+  progress: number;
+}
 
-  const update = () => {
-    console.log('inside CMradialGraph');
-    console.log(
-      JSON.parse(localStorage.getItem('dropdownFlashcardSetSelectedUpdated')),
-    );
-    localStorage.setItem(
-      'dropdownFlashcardSetSelectedUpdated',
-      JSON.stringify(false),
-    );
-  };
+const CMradialGraph = ({ name, progress }: Props): React.ReactElement => {
+  const progressNumber = parseInt(progress.toFixed(0));
 
-  const [options, setOptions] = useState({
+  // useEffect(() => {
+  //     setSeries({...series});
+  // });
+
+  console.log(progressNumber);
+
+  const options: ApexOptions = {
     labels: [`${progressNumber}% Complete`],
     colors: ['#1d6bc4'],
     plotOptions: {
@@ -27,7 +26,7 @@ export function CMradialGraph(): ReactElement {
         endAngle: 90,
         track: {
           background: '#fff',
-          strokeWidth: '98%',
+          strokeWidth: '75%',
           margin: 15, // margin is in pixels
         },
 
@@ -63,14 +62,27 @@ export function CMradialGraph(): ReactElement {
     stroke: {
       lineCap: 'round',
     },
-  });
-
-  const [series, setSeries] = useState([progressNumber]);
+  };
 
   return (
-    <div>
-      <p onClick={update}>Progress towards flashcard set: {flashcardSetName}</p>
-      <Chart options={options} series={series} type="radialBar" height={350} />
-    </div>
+    <FadeIn
+      transitionDuration={1000}
+      delay={40}
+      className="flex flex items-center"
+    >
+      <div className="text-[17px] font-semibold font-mono flex flex-col text-center text-align-center">
+        <h3>Level Progression Towards {name}</h3>
+        {/* <h3>\\Quantifier\\ until next level!</h3> */}
+      </div>
+      <Chart
+        options={options}
+        series={[progress]}
+        type="radialBar"
+        height={400}
+        className="text-[17px] font-semibold font-mono flex flex-col text-center"
+      />
+    </FadeIn>
   );
-}
+};
+
+export default CMradialGraph;
