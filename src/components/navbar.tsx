@@ -20,6 +20,7 @@ import InfoIcon from '../../src/pages/test/components/InfoIcon';
 import type { TrainingLevels } from '../../src/models/trainingLevels';
 import Circle from './CircleHighlight';
 import HamburgerMenu from './hamburgerMenu';
+import { HexbinButton } from './HexbinButton';
 import { useEffect } from 'react';
 import ImageSlider from '../pages/test/components/imageSlider';
 import { useState } from 'react';
@@ -238,6 +239,8 @@ const Navbar = (): ReactElement => {
               href="#/analyticalDashboard"
               onClick={() => setTrainingLevel('')}
             >
+              {/* <HexbinButton/> */}
+              {/* <p>fheiwoajfiow</p> */}
               <img
                 src={analytic_DashIcon}
                 style={{ width: '40px', height: '50px', paddingTop: '10px' }}

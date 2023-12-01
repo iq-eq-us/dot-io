@@ -56,6 +56,11 @@ const testHistoryAnalyticalStoreActions: testHistoryAnalyticsActionModel = {
     localStorage.setItem('CPMTopSpeed', JSON.stringify(payload));
     state.currCPMTopSpeed = payload;
   }),
+  addChMChordsMastered: action((state, payload) => {
+    console.log('PAYLOAD: ' + payload);
+    localStorage.setItem('ChMChordsMastered', JSON.stringify(payload));
+    state.currChMChordsMastered = payload;
+  }),
 }; // closing for testHistoryAnalyticalStoreActions
 
 export default testHistoryAnalyticalStoreActions;

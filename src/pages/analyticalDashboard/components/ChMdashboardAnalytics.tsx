@@ -1,10 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { TopSectionContainer } from '../analyticalDashboard.styled';
-import { DashboardStaticStats } from './AnalyticalDashboardStaticStat';
-import VerticalStatsLetters from './VerticalStatsLetters';
-import VerticalStatsWords from './VerticalStatsWords';
-import VerticalStatsTrigrams from './VerticalStatsTrigrams';
+import { ChMStaticStat } from './ChMStaticStat';
+import VerticalStatsChMTier from './VeritcalStatsChMTier';
 
 export function ChMdashboardAnalytics(): ReactElement {
   const [currentPage, setCurrentPage] = useState('letters');
@@ -15,10 +12,10 @@ export function ChMdashboardAnalytics(): ReactElement {
   return (
     <div>
       <div className="flex">
-        <div className="pt-12 h-96 w-96">
-          <DashboardStaticStats />
+        <div className="pt-12 h-96 w-96 ">
+          <ChMStaticStat />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col pb-28">
           <WordPageContainer>
             <TierLetters
               className={
@@ -28,45 +25,13 @@ export function ChMdashboardAnalytics(): ReactElement {
               }
             >
               <HoverOverall onClick={() => handlePageChange('letters')}>
-                Letters
-              </HoverOverall>
-            </TierLetters>
-            <TierLetters
-              className={
-                currentPage === 'trigrams'
-                  ? 'text-white text-2xl font-semibold'
-                  : 'text-gray-500 text-xl'
-              }
-            >
-              <HoverOverall onClick={() => handlePageChange('trigrams')}>
-                Trigrams
-              </HoverOverall>
-            </TierLetters>
-            <TierLetters
-              className={
-                currentPage === 'words'
-                  ? 'text-white text-2xl font-semibold'
-                  : 'text-gray-500 text-xl'
-              }
-            >
-              <HoverOverall onClick={() => handlePageChange('words')}>
-                Words
+                English-300
               </HoverOverall>
             </TierLetters>
           </WordPageContainer>
           {currentPage === 'letters' && (
             <h1 className="h-96 w-96 text-center">
-              <VerticalStatsLetters />
-            </h1>
-          )}
-          {currentPage === 'words' && (
-            <h1 className="h-96 w-96 text-center">
-              <VerticalStatsWords />
-            </h1>
-          )}
-          {currentPage === 'trigrams' && (
-            <h1 className="h-96 w-96 text-center">
-              <VerticalStatsTrigrams />
+              <VerticalStatsChMTier />
             </h1>
           )}
         </div>
@@ -80,7 +45,7 @@ const WordPageContainer = styled.div.attrs({
 })``;
 
 const TierLetters = styled.div.attrs({
-  className: `text-white text-xl font-normal font-mono pb-3 pl-3`,
+  className: `text-white text-xl font-normal font-mono pb-3 pl-32`,
 })``;
 
 const PageTextMod = styled.div.attrs({
