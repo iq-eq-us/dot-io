@@ -15,6 +15,7 @@ const ImageSlider = () => {
     // Reset current slide when training level changes
     setCurrent(0);
   }, [trainingLevel]);
+  console.log('From Image Slider the training level is ' + trainingLevel);
 
   if (trainingLevel === 'CHM') {
     slides = SliderDataForCHMTier;
