@@ -76,7 +76,6 @@ const Router = (): ReactElement => {
         <Route path={ROUTER_PATHS.concepts_page}>
           <Navbar />
           <ConceptsPage />
-          <Footer />
         </Route>
 
         {/* This is the route to the Chara Piano page. */}

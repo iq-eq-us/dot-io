@@ -85,29 +85,12 @@ const flashCardStoreActions: flashCardActionModel = {
     }
   }),
 
-  setNextDailyTraining: action((state) => {
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    currentDate.setDate(currentDate.getDate() + 1);
-
-    state.nextTrainingDate = currentDate;
-
-    localStorage.setItem('nextDailyTraining', currentDate.getTime().toString());
-  }),
-
-  loadNextDailyTraining: action((state, payload) => {
-    state.nextTrainingDate = payload;
-  }),
-
   //Actions to generate training data
-  setSessionTrainingData: action((state) => {
+  setSessionTrainingData: action((state, payload) => {
     const activeFlashCards = state.activeFlashCards;
     const sessionTrainingData: sessionTrainingData[] = [];
 
-    while (
-      sessionTrainingData.length < state.numberOfDailyFlashCards &&
-      activeFlashCards.length != 0
-    ) {
+    while (sessionTrainingData.length < payload) {
       const randomIndex = Math.floor(Math.random() * activeFlashCards.length);
       const randomFlashCard = activeFlashCards[randomIndex].flashCard;
 
@@ -210,12 +193,6 @@ const flashCardStoreActions: flashCardActionModel = {
           });
         });
       }
-    }
-    const nextDailyTrainingString = localStorage.getItem('nextDailyTraining');
-    if (nextDailyTrainingString != null) {
-      const nextDailyTraining = new Date(parseInt(nextDailyTrainingString));
-      console.log('Loaded date: ' + nextDailyTraining);
-      actions.loadNextDailyTraining(nextDailyTraining);
     }
     actions.setLoadedFromStorage();
   }),

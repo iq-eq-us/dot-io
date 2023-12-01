@@ -6,9 +6,8 @@ import { ExportFlashCards } from './ExportFlashcards';
 import { AddFlashCard } from './AddFlashcard';
 import { FlashCardColumn } from './FlashCardColumn';
 import { DialogPortal } from './DialogPortal';
-import { TagSetDropdown } from './TagSetDropdown';
+import HashTagMap from './Hashtags';
 import { useStoreActions } from '../../../store/store';
-import ImageSlider from '../imageSlider';
 import {
   ConceptsMasteredManagerPageContainer,
   Table,
@@ -22,13 +21,13 @@ import {
 export const ManagerTier = (): ReactElement => {
   const flashCards = useStoreState((state) => state.flashCards);
   const tags = useStoreState((state) => state.tags);
+  console.log(tags);
+  console.log(flashCards);
 
   const [selectedFlashCards, setSelectedFlashCards] = useState<boolean[]>(
     new Array(flashCards.length).fill(false),
   );
-  const [selectedTag, setSelectedTag] = useState<string>('');
-
-  const setTag = useStoreActions((actions) => actions.setSelectedTag); // Add this line
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
     if (flashCards.length !== selectedFlashCards.length) {
@@ -54,13 +53,6 @@ export const ManagerTier = (): ReactElement => {
     [],
   );
 
-  //filter tags
-  /*const filteredTags =
-    selectedTag === 'All' || selectedTag === ''
-      ? flashCards
-      : flashCards.filter((flashCard) => flashCard.tags.includes(selectedTag));
-      console.log('filteredTags: ' + filteredTags);*/
-
   return (
     <React.Fragment>
       <ConceptsMasteredManagerPageContainer>
@@ -81,9 +73,9 @@ export const ManagerTier = (): ReactElement => {
               <DialogPortal
                 selectedFlashcardIndices={selectedFlashcardIndices}
               />
-              <TagSetDropdown
-                selectedTag={selectedTag}
-                setSelectedTag={setSelectedTag}
+              <HashTagMap
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
               />
             </ConceptsRow>
           </Table>
@@ -92,7 +84,7 @@ export const ManagerTier = (): ReactElement => {
               <FlashCardColumn
                 selected={selectedFlashCards}
                 setSelected={setSelected}
-                selectedTag={selectedTag}
+                selectedTags={selectedTags}
               />
             </Column>
             <div className="h-1 w-6/12 mt-16 bg-[#3A5A42] rounded mb-10" />
