@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-const LazyImage = ({ src, alt, fixedSize }) => {
+interface LazyImageProps {
+  src: string;
+  alt: string;
+  fixedSize?: boolean;
+}
+
+const LazyImage = ({ src, alt, fixedSize }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
 
