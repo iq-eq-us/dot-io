@@ -3,11 +3,13 @@ import Chart from 'react-apexcharts';
 // import store, { useStoreState, useStoreActions } from '../../../store/store';
 import { useStoreState } from '../../../store/store';
 
-interface Props {
+interface CMEbbinghausGraphProps {
   tag: string;
 }
 
-export function CMEbbinghausGraph({ tag }): ReactElement {
+export function CMEbbinghausGraph({
+  tag,
+}: CMEbbinghausGraphProps): ReactElement {
   const flashcard = useStoreState((state) => state.flashCards);
 
   console.log('EBBINGHAUS GRAPH');
@@ -111,7 +113,7 @@ export function CMEbbinghausGraph({ tag }): ReactElement {
   ]);
 
   useEffect(() => {
-    let levelSums = [
+    const levelSums = [
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ];
     flashcard.forEach((card) => {
