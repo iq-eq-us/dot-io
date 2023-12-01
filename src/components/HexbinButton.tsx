@@ -16,7 +16,6 @@ import type { fromPairs } from 'lodash';
 // import { AWPMdashboardAnalytics } from './AWPMdashboardAnalytics';
 // import { TWPMdashboardAnalytics } from './TWPMdashboardAnalytics';
 // import { StMdashboardAnalytics } from './StMdashboardAnalytics';
-import FadeIn from 'react-fade-in';
 import { useRef } from 'react';
 import {
   Chart as ChartJS,

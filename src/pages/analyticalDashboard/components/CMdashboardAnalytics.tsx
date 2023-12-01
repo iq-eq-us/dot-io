@@ -4,9 +4,10 @@ import CMradialGraph from './CMradialGraph';
 import styled from 'styled-components';
 import 'react-dropdown/style.css';
 import { CMEbbinghausGraph } from './CMEbbinhausGraph';
-import FadeIn from 'react-fade-in';
 import { Fade } from 'react-bootstrap';
 import { useStoreState } from '../../../store/store';
+import CMdashboardTable from './CMDashboardTable';
+import FadeIn from './FadeIn';
 // import { flashCardStoreActions } from 'src/store/flashCardStore'
 
 export function CMdashboardAnalytics(): ReactElement {
@@ -49,7 +50,11 @@ export function CMdashboardAnalytics(): ReactElement {
 
   return (
     <FadeIn className="w-full" transitionDuration={1000} delay={40}>
-      <div className="text-[15px] font-semibold	font-mono flex flex-col pr-2">
+      <div className="h-96 w-[555px] pl-1 pr-2 text-center">
+        <CMdashboardTable />
+      </div>
+
+      <div className="text-[15px] font-semibold	font-mono flex flex-col pr-2 ">
         <div className="">
           <p className="text-[22px] mb-3">Select flashcard tag... </p>
 

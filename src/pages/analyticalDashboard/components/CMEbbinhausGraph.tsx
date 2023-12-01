@@ -110,21 +110,22 @@ export function CMEbbinghausGraph({ tag }): ReactElement {
     },
   ]);
 
-  const levelSums = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
-
   useEffect(() => {
+    let levelSums = [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ];
     flashcard.forEach((card) => {
+      console.log('Card:', card);
       card.tags.forEach((tagFromFlashcardSet) => {
-        if (tagFromFlashcardSet == tag) {
+        console.log('Tag from Flashcard Set:', tagFromFlashcardSet);
+        if (tagFromFlashcardSet === tag) {
           levelSums[card.ebbinghausValue] += 1;
         }
       });
     });
-
+    console.log('Before Division' + levelSums);
     levelSums.forEach((levelSum, index) => {
-      levelSums[index] = levelSum / 4;
+      levelSums[index] = levelSum;
     });
 
     console.log(levelSums);
@@ -134,8 +135,6 @@ export function CMEbbinghausGraph({ tag }): ReactElement {
         data: levelSums,
       },
     ]);
-    // maxLevelSum = Math.max(...levelSums);
-    // console.log(maxLevelSum)
     setOptions({
       colors: ['#a855f7'],
       chart: {
@@ -227,15 +226,6 @@ export function CMEbbinghausGraph({ tag }): ReactElement {
       },
     });
   }, [flashcard, tag]);
-
-  // console.log(flashcards)
-
-  // const [series, setSeries] = useState([
-  //   {
-  //     name: 'Memory Retention',
-  //     data: levelSums,
-  //   },
-  // ]);
 
   return (
     <div className=" text-black">

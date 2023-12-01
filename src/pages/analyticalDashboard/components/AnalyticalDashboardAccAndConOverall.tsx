@@ -27,7 +27,7 @@ export function AnalyticalDashboardAccAndConOverall(): ReactElement {
       width: 4,
     },
     title: {
-      text: 'CPM Module Test History',
+      text: 'CPM Tier Test History',
       align: 'left',
       offsetY: 25,
       offsetX: 15,

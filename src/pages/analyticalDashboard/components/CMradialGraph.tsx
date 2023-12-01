@@ -1,7 +1,7 @@
 import type { ApexOptions } from 'apexcharts';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
-import FadeIn from 'react-fade-in';
+import FadeIn from './FadeIn';
 
 interface Props {
   name: string;

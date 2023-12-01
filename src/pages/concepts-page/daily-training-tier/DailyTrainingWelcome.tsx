@@ -25,6 +25,10 @@ export const DailyTrainingWelcome = ({
   const isTrainingAvailable = nextTrainingDate.getTime() < Date.now();
   const isActiveFlashCards = activeFlashCards.length != 0;
 
+  flashCards.forEach((card) => {
+    console.log('Card:', card);
+  });
+
   return (
     <Fill>
       <TrisplitScreen>
