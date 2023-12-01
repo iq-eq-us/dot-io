@@ -20,6 +20,7 @@ export const TrisplitScreen = styled.div`
 export const LabeledAction = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 30px;
 `;
 
@@ -27,3 +28,9 @@ export const ActionButton = styled.button.attrs({
   className:
     'import sc-bYwzuL text-white rounded p-2 mb-4 inline-block ml-2 bg-[#333] hover:bg-[#3b3b3b] active:bg-[#222] position-relative',
 })``;
+
+export const ExplanationHeader = styled.h2`
+  font-size: 1rem;
+  padding: 10px;
+  margin: 10px;
+`;

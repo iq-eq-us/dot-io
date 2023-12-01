@@ -6,7 +6,9 @@ export const FullWidthFullHeightContainer = styled.div.attrs({
 
 export const DailyTrainingContainer = styled.div.attrs({
   className: 'flex flex-col align-center w-full',
-})``;
+})`
+  height: calc(100vh - 191px);
+`;
 
 export const SmallScreenButtons = styled.div.attrs({
   className: 'flex flex-row justify-between w-full mb-4',
@@ -17,7 +19,7 @@ export const HelperContainer = styled.div.attrs({
 })``;
 
 export const ConceptsMasteredManagerPageContainer = styled.section.attrs({
-  className: `text-white body-font min-h-screen bg-[#222424]`,
+  className: `text-white body-font bg-[#222424]`,
 })``;
 
 export const PageContainer = styled.section.attrs({

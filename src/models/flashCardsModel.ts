@@ -57,11 +57,7 @@ export interface flashCardActionModel {
   // Actions to set and remove the selected tag
   setSelectedTag: Action<flashCardStoreStateModel, string>;
 
-  // Actions to get and set the last daily training date of a set
-  setNextDailyTraining: Action<flashCardStoreStateModel>;
-  loadNextDailyTraining: Action<flashCardStoreStateModel, Date>;
-
-  setSessionTrainingData: Action<flashCardStoreStateModel>;
+  setSessionTrainingData: Action<flashCardStoreStateModel, number>;
   setInfiniteSessionTrainingData: Action<
     flashCardStoreStateModel,
     activeFlashCard[]
@@ -81,9 +77,6 @@ export interface flashCardStoreStateModel {
   selectedTags: string;
   sessionTrainingData: sessionTrainingData[];
 
-  nextTrainingDate: Date;
-
-  // Number of flash cards to practice daily
   numberOfDailyFlashCards: number;
 
   activeFlashCards: Computed<flashCardStoreStateModel, activeFlashCard[]>;

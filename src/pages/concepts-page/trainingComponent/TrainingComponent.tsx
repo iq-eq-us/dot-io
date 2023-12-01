@@ -38,7 +38,6 @@ export function TrainingComponent({
     const filteredSessionData = sessionTrainingData.filter(
       (item) => item.completed == false || item.completed == null,
     );
-    console.log(trainingData);
     if (filteredSessionData.length != 0) {
       if (itemsInSession != filteredSessionData.length) {
         setTrainingData([
