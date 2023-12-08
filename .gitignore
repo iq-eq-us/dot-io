@@ -3,6 +3,7 @@ build
 node_modules
 .DS_Store
 .vscode
+.idea
 test.txt
 src/helpers/highlightConversion.js
 ci-cd/.env.js
