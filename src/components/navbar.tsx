@@ -181,7 +181,7 @@ const Navbar = (): ReactElement => {
           <NavMenuLink aria-current="page">
             <NavLinksImage open={false} src={Crown_Icon} alt="" />
           </NavMenuLink>
-          <NavBtnLink href="#/manager" onClick={() => setTrainingLevel('')}>
+          <NavBtnLink target="_blank" href="https://manager.charachorder.com">
             <div className="text-white">Manager</div>
           </NavBtnLink>
           <button
